@@ -1,0 +1,216 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Blog post model
+model BlogPost {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  title       String
+  excerpt     String
+  content     String   @db.Text
+  publishedAt DateTime
+  readTime    Int      // Reading time in minutes
+  category    String
+  tags        String[] // Array of tags
+  imageUrl    String
+  featured    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // Relations
+  author      Author   @relation(fields: [authorId], references: [id])
+  authorId    String
+  comments    Comment[]
+}
+
+// Author model (for blog posts)
+model Author {
+  id        String     @id @default(cuid())
+  name      String
+  title     String     // Job title
+  bio       String?    @db.Text
+  avatar    String     // Avatar image URL
+  email     String?    @unique
+  website   String?
+  linkedIn  String?
+  twitter   String?
+  github    String?
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  
+  // Relations
+  blogPosts BlogPost[]
+}
+
+// Comments on blog posts
+model Comment {
+  id        String   @id @default(cuid())
+  content   String   @db.Text
+  name      String   // Commenter's name
+  email     String   // Commenter's email
+  website   String?  // Commenter's website (optional)
+  approved  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  // Relations
+  post      BlogPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId    String
+}
+
+// Resources (e-books, whitepapers, templates, etc.)
+model Resource {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  type        String   // ebook, whitepaper, template, video, webinar
+  downloadUrl String
+  imageUrl    String
+  publishedAt DateTime
+  featured    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// Portfolio projects
+model Project {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  title       String
+  clientName  String
+  summary     String
+  description String    @db.Text
+  challenge   String?   @db.Text
+  solution    String?   @db.Text
+  outcome     String?   @db.Text
+  imageUrl    String
+  projectUrl  String?
+  githubUrl   String?
+  featured    Boolean   @default(false)
+  completedAt DateTime?
+  category    String
+  tags        String[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  
+  // Relations
+  technologies Technology[] // Many-to-many relation
+  testimonial  Testimonial?
+}
+
+// Technologies used in projects
+model Technology {
+  id          String    @id @default(cuid())
+  name        String    @unique
+  description String?
+  icon        String?
+  category    String?
+  website     String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  
+  // Relations
+  projects    Project[]
+}
+
+// Testimonials
+model Testimonial {
+  id         String   @id @default(cuid())
+  quote      String   @db.Text
+  authorName String
+  position   String
+  company    String
+  avatar     String?
+  rating     Int?     @default(5) // 1-5 rating
+  featured   Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  
+  // Relations - one testimonial per project
+  project    Project  @relation(fields: [projectId], references: [id])
+  projectId  String   @unique
+}
+
+// Team members
+model TeamMember {
+  id         String   @id @default(cuid())
+  name       String
+  position   String
+  bio        String   @db.Text
+  avatar     String
+  order      Int      @default(0) // For ordering in the team display
+  linkedIn   String?
+  twitter    String?
+  github     String?
+  website    String?
+  active     Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+// Services offered
+model Service {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  summary     String
+  description String   @db.Text
+  icon        String
+  imageUrl    String?
+  order       Int      @default(0)
+  featured    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// Contact form submissions
+model ContactSubmission {
+  id        String    @id @default(cuid())
+  name      String
+  email     String
+  company   String?
+  phone     String?
+  message   String    @db.Text
+  service   String?
+  budget    String?
+  timeline  String?
+  source    String?   // How did they find us
+  status    String    @default("pending") // pending, contacted, closed
+  notes     String?   @db.Text
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+// Newsletter subscriptions
+model NewsletterSubscription {
+  id        String    @id @default(cuid())
+  email     String    @unique
+  name      String?
+  active    Boolean   @default(true)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+// User model (for CMS and admin access)
+model User {
+  id            String    @id @default(cuid())
+  name          String
+  email         String    @unique
+  passwordHash  String
+  role          String    @default("user") // user, editor, admin
+  active        Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
