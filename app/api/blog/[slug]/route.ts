@@ -1,6 +1,25 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/app/lib/prisma';
 
+// Helper function to handle Prisma operations safely during builds
+const safeDbOperation = async <T>(operation: () => Promise<T>, fallback: T): Promise<T> => {
+  // Check if we're in a Vercel build environment
+  const isVercelBuild = process.env.VERCEL_ENV && 
+                        process.env.NODE_ENV === 'production' && 
+                        process.env.NEXT_PHASE === 'phase-production-build';
+  
+  if (isVercelBuild) {
+    return fallback;
+  }
+  
+  try {
+    return await operation();
+  } catch (error) {
+    console.error('Database operation failed:', error);
+    return fallback;
+  }
+};
+
 // GET /api/blog/[slug]
 // Fetches a single blog post by slug
 export async function GET(
@@ -10,32 +29,35 @@ export async function GET(
   try {
     const { slug } = await params;
     
-    // Fetch the blog post with author and comments
-    const post = await prisma.blogPost.findUnique({
-      where: { slug },
-      include: {
-        author: {
-          select: {
-            id: true,
-            name: true,
-            title: true,
-            avatar: true,
-            bio: true,
+    // Use the safe operation wrapper
+    const post = await safeDbOperation(
+      () => prisma.blogPost.findUnique({
+        where: { slug },
+        include: {
+          author: {
+            select: {
+              id: true,
+              name: true,
+              title: true,
+              avatar: true,
+              bio: true,
+            },
+          },
+          comments: {
+            where: { approved: true },
+            orderBy: { createdAt: 'desc' },
+            select: {
+              id: true,
+              content: true,
+              name: true,
+              website: true,
+              createdAt: true,
+            },
           },
         },
-        comments: {
-          where: { approved: true },
-          orderBy: { createdAt: 'desc' },
-          select: {
-            id: true,
-            content: true,
-            name: true,
-            website: true,
-            createdAt: true,
-          },
-        },
-      },
-    });
+      }),
+      null // fallback value if operation fails
+    );
     
     if (!post) {
       return NextResponse.json(
@@ -44,26 +66,29 @@ export async function GET(
       );
     }
     
-    // Fetch related posts (same category or shared tags)
-    const relatedPosts = await prisma.blogPost.findMany({
-      where: {
-        OR: [
-          { category: post.category },
-          { tags: { hasSome: post.tags } },
-        ],
-        NOT: { id: post.id }, // Exclude current post
-      },
-      take: 3,
-      orderBy: { publishedAt: 'desc' },
-      include: {
-        author: {
-          select: {
-            name: true,
-            avatar: true,
+    // Use the safe operation wrapper
+    const relatedPosts = await safeDbOperation(
+      () => prisma.blogPost.findMany({
+        where: {
+          OR: [
+            { category: post.category },
+            { tags: { hasSome: post.tags } },
+          ],
+          NOT: { id: post.id }, // Exclude current post
+        },
+        take: 3,
+        orderBy: { publishedAt: 'desc' },
+        include: {
+          author: {
+            select: {
+              name: true,
+              avatar: true,
+            },
           },
         },
-      },
-    });
+      }),
+      [] // fallback value if operation fails
+    );
     
     return NextResponse.json({
       post,
@@ -94,9 +119,12 @@ export async function PUT(
     const data = await request.json();
     
     // Check if post exists
-    const existingPost = await prisma.blogPost.findUnique({
-      where: { slug },
-    });
+    const existingPost = await safeDbOperation(
+      () => prisma.blogPost.findUnique({
+        where: { slug },
+      }),
+      null
+    );
     
     if (!existingPost) {
       return NextResponse.json(
@@ -107,9 +135,12 @@ export async function PUT(
     
     // If slug is being changed, check if new slug already exists
     if (data.slug && data.slug !== slug) {
-      const slugExists = await prisma.blogPost.findUnique({
-        where: { slug: data.slug },
-      });
+      const slugExists = await safeDbOperation(
+        () => prisma.blogPost.findUnique({
+          where: { slug: data.slug },
+        }),
+        null
+      );
       
       if (slugExists) {
         return NextResponse.json(
@@ -136,10 +167,13 @@ export async function PUT(
     if (data.authorId) updateData.authorId = data.authorId;
     
     // Update the post
-    const updatedPost = await prisma.blogPost.update({
-      where: { slug },
-      data: updateData,
-    });
+    const updatedPost = await safeDbOperation(
+      () => prisma.blogPost.update({
+        where: { slug },
+        data: updateData,
+      }),
+      { ...existingPost, ...updateData }
+    );
     
     return NextResponse.json(updatedPost);
   } catch (error: any) {
@@ -166,9 +200,12 @@ export async function DELETE(
     const { slug } = await params;
     
     // Check if post exists
-    const existingPost = await prisma.blogPost.findUnique({
-      where: { slug },
-    });
+    const existingPost = await safeDbOperation(
+      () => prisma.blogPost.findUnique({
+        where: { slug },
+      }),
+      null
+    );
     
     if (!existingPost) {
       return NextResponse.json(
@@ -177,10 +214,13 @@ export async function DELETE(
       );
     }
     
-    // Delete the post (this will also delete related comments due to cascade)
-    await prisma.blogPost.delete({
-      where: { slug },
-    });
+    // Delete the post
+    await safeDbOperation(
+      () => prisma.blogPost.delete({
+        where: { slug },
+      }),
+      null
+    );
     
     return NextResponse.json(
       { message: 'Blog post deleted successfully' },

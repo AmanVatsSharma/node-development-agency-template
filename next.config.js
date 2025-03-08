@@ -16,6 +16,13 @@ module.exports = (phase) => {
       // your project has ESLint errors.
       ignoreDuringBuilds: true,
     },
+    // Disable specific data fetching during build for API routes
+    experimental: {
+      // Prevent API routes from being pre-rendered at build time
+      // This helps with Prisma connection issues during Vercel builds
+      instrumentationHook: true,
+      serverComponentsExternalPackages: ['@prisma/client']
+    },
     // Add any other default configuration here
   };
 
@@ -50,6 +57,7 @@ module.exports = (phase) => {
         minimumCacheTTL: 60,
       },
       experimental: {
+        ...nextConfig.experimental,
         // Enable modern JavaScript features
         optimizeCss: true,
       }

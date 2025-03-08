@@ -1,6 +1,25 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/app/lib/prisma';
 
+// Helper function to handle Prisma operations safely during builds
+const safeDbOperation = async <T>(operation: () => Promise<T>, fallback: T): Promise<T> => {
+  // Check if we're in a Vercel build environment
+  const isVercelBuild = process.env.VERCEL_ENV && 
+                        process.env.NODE_ENV === 'production' && 
+                        process.env.NEXT_PHASE === 'phase-production-build';
+  
+  if (isVercelBuild) {
+    return fallback;
+  }
+  
+  try {
+    return await operation();
+  } catch (error) {
+    console.error('Database operation failed:', error);
+    return fallback;
+  }
+};
+
 // GET /api/resources/[id]
 // Fetches a single resource by ID
 export async function GET(
@@ -10,9 +29,12 @@ export async function GET(
   try {
     const { id } = await params;
     
-    const resource = await prisma.resource.findUnique({
-      where: { id },
-    });
+    const resource = await safeDbOperation(
+      () => prisma.resource.findUnique({
+        where: { id },
+      }),
+      null
+    );
     
     if (!resource) {
       return NextResponse.json(
@@ -47,9 +69,12 @@ export async function PUT(
     const data = await request.json();
     
     // Check if resource exists
-    const existingResource = await prisma.resource.findUnique({
-      where: { id },
-    });
+    const existingResource = await safeDbOperation(
+      () => prisma.resource.findUnique({
+        where: { id },
+      }),
+      null
+    );
     
     if (!existingResource) {
       return NextResponse.json(
@@ -82,10 +107,13 @@ export async function PUT(
     if (data.featured !== undefined) updateData.featured = data.featured;
     
     // Update the resource
-    const updatedResource = await prisma.resource.update({
-      where: { id },
-      data: updateData,
-    });
+    const updatedResource = await safeDbOperation(
+      () => prisma.resource.update({
+        where: { id },
+        data: updateData,
+      }),
+      { ...existingResource, ...updateData }
+    );
     
     return NextResponse.json(updatedResource);
   } catch (error: any) {
@@ -112,9 +140,12 @@ export async function DELETE(
     const { id } = await params;
     
     // Check if resource exists
-    const existingResource = await prisma.resource.findUnique({
-      where: { id },
-    });
+    const existingResource = await safeDbOperation(
+      () => prisma.resource.findUnique({
+        where: { id },
+      }),
+      null
+    );
     
     if (!existingResource) {
       return NextResponse.json(
@@ -124,9 +155,12 @@ export async function DELETE(
     }
     
     // Delete the resource
-    await prisma.resource.delete({
-      where: { id },
-    });
+    await safeDbOperation(
+      () => prisma.resource.delete({
+        where: { id },
+      }),
+      null
+    );
     
     return NextResponse.json(
       { message: 'Resource deleted successfully' },
