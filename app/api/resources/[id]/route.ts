@@ -1,17 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/app/lib/prisma';
 
-interface Params {
-  params: {
-    id: string;
-  };
-}
-
 // GET /api/resources/[id]
 // Fetches a single resource by ID
-export async function GET(request: NextRequest, { params }: Params) {
+export async function GET(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
   try {
-    const { id } = params;
+    const { id } = await params;
     
     const resource = await prisma.resource.findUnique({
       where: { id },
@@ -26,7 +23,7 @@ export async function GET(request: NextRequest, { params }: Params) {
     
     return NextResponse.json(resource);
   } catch (error: any) {
-    console.error(`Error fetching resource with id ${params.id}:`, error);
+    console.error(`Error fetching resource with id ${(await params).id}:`, error);
     return NextResponse.json(
       { error: 'Failed to fetch resource', details: error.message },
       { status: 500 }
@@ -36,14 +33,17 @@ export async function GET(request: NextRequest, { params }: Params) {
 
 // PUT /api/resources/[id]
 // Updates a resource (requires authentication in a real app)
-export async function PUT(request: NextRequest, { params }: Params) {
+export async function PUT(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
   try {
     // In a real app, you would check authentication/authorization here
     // if (!isAuthenticated(request)) {
     //   return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     // }
     
-    const { id } = params;
+    const { id } = await params;
     const data = await request.json();
     
     // Check if resource exists
@@ -89,7 +89,7 @@ export async function PUT(request: NextRequest, { params }: Params) {
     
     return NextResponse.json(updatedResource);
   } catch (error: any) {
-    console.error(`Error updating resource with id ${params.id}:`, error);
+    console.error(`Error updating resource with id ${(await params).id}:`, error);
     return NextResponse.json(
       { error: 'Failed to update resource', details: error.message },
       { status: 500 }
@@ -99,14 +99,17 @@ export async function PUT(request: NextRequest, { params }: Params) {
 
 // DELETE /api/resources/[id]
 // Deletes a resource (requires authentication in a real app)
-export async function DELETE(request: NextRequest, { params }: Params) {
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
   try {
     // In a real app, you would check authentication/authorization here
     // if (!isAuthenticated(request)) {
     //   return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     // }
     
-    const { id } = params;
+    const { id } = await params;
     
     // Check if resource exists
     const existingResource = await prisma.resource.findUnique({
@@ -130,7 +133,7 @@ export async function DELETE(request: NextRequest, { params }: Params) {
       { status: 200 }
     );
   } catch (error: any) {
-    console.error(`Error deleting resource with id ${params.id}:`, error);
+    console.error(`Error deleting resource with id ${(await params).id}:`, error);
     return NextResponse.json(
       { error: 'Failed to delete resource', details: error.message },
       { status: 500 }

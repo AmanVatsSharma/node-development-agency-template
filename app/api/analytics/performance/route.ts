@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { PerformanceMetrics } from '@/app/utils/performanceMonitoring';
+import { PerformanceMetrics } from '@/utils/performanceMonitoring';
 
 export async function POST(request: NextRequest) {
   try {

@@ -7,13 +7,12 @@ import { PrismaClient } from '@prisma/client';
 // https://pris.ly/d/help/next-js-best-practices
 
 // Add prisma to the NodeJS global type
-interface CustomNodeJsGlobal extends NodeJS.Global {
-  prisma: PrismaClient;
+// In newer versions of TypeScript/Node.js, we use a different approach for global types
+declare global {
+  var prisma: PrismaClient | undefined;
 }
 
 // Prevent multiple instances of Prisma Client in development
-declare const global: CustomNodeJsGlobal;
-
 const prisma = global.prisma || new PrismaClient();
 
 if (process.env.NODE_ENV === 'development') {

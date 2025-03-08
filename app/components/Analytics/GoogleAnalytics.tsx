@@ -2,17 +2,14 @@
 
 import Script from 'next/script';
 import { usePathname, useSearchParams } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, Suspense } from 'react';
 
 interface GoogleAnalyticsProps {
   measurementId: string;
 }
 
-/**
- * Google Analytics integration component for Next.js
- * This component initializes GA4 and tracks page views automatically
- */
-export default function GoogleAnalytics({ measurementId }: GoogleAnalyticsProps) {
+// Internal component that uses useSearchParams
+function GoogleAnalyticsContent({ measurementId }: GoogleAnalyticsProps) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   
@@ -32,6 +29,14 @@ export default function GoogleAnalytics({ measurementId }: GoogleAnalyticsProps)
     }
   }, [pathname, searchParams, measurementId]);
   
+  return null;
+}
+
+/**
+ * Google Analytics integration component for Next.js
+ * This component initializes GA4 and tracks page views automatically
+ */
+export default function GoogleAnalytics({ measurementId }: GoogleAnalyticsProps) {
   return (
     <>
       {/* Google Analytics Script */}
@@ -49,6 +54,9 @@ export default function GoogleAnalytics({ measurementId }: GoogleAnalyticsProps)
           });
         `}
       </Script>
+      <Suspense fallback={null}>
+        <GoogleAnalyticsContent measurementId={measurementId} />
+      </Suspense>
     </>
   );
 }

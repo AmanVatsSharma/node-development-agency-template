@@ -259,7 +259,7 @@ export default function BlogPostPage() {
                 </div>
               </div>
               <p className="mt-4 text-gray-600 dark:text-gray-300">
-                {post.author?.bio || `An experienced developer specializing in ${post.category} with a passion for creating innovative solutions for enterprise clients.`}
+                {(post?.author as any)?.bio || `An experienced developer specializing in ${post.category} with a passion for creating innovative solutions for enterprise clients.`}
               </p>
             </div>
             

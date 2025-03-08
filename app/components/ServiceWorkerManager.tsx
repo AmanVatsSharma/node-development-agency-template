@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { registerServiceWorker, updateServiceWorker } from '../utils/serviceWorker';
+import { registerServiceWorker, updateServiceWorker } from '../../utils/serviceWorker';
 
 /**
  * ServiceWorkerManager component

@@ -4,7 +4,7 @@ import "./globals.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import ServiceWorkerManager from './components/ServiceWorkerManager';
-import { initPerformanceMonitoring } from './utils/performanceMonitoring';
+import { initPerformanceMonitoring } from '../utils/performanceMonitoring';
 import GoogleAnalytics from './components/Analytics/GoogleAnalytics';
 
 // Font configuration

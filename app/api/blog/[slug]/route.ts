@@ -1,17 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/app/lib/prisma';
 
-interface Params {
-  params: {
-    slug: string;
-  };
-}
-
 // GET /api/blog/[slug]
 // Fetches a single blog post by slug
-export async function GET(request: NextRequest, { params }: Params) {
+export async function GET(
+  request: NextRequest,
+  { params }: { params: Promise<{ slug: string }> }
+) {
   try {
-    const { slug } = params;
+    const { slug } = await params;
     
     // Fetch the blog post with author and comments
     const post = await prisma.blogPost.findUnique({
@@ -73,7 +70,7 @@ export async function GET(request: NextRequest, { params }: Params) {
       relatedPosts,
     });
   } catch (error: any) {
-    console.error(`Error fetching blog post with slug ${params.slug}:`, error);
+    console.error(`Error fetching blog post with slug ${(await params).slug}:`, error);
     return NextResponse.json(
       { error: 'Failed to fetch blog post', details: error.message },
       { status: 500 }
@@ -83,14 +80,17 @@ export async function GET(request: NextRequest, { params }: Params) {
 
 // PUT /api/blog/[slug]
 // Updates a blog post (requires authentication in a real app)
-export async function PUT(request: NextRequest, { params }: Params) {
+export async function PUT(
+  request: NextRequest,
+  { params }: { params: Promise<{ slug: string }> }
+) {
   try {
     // In a real app, you would check authentication/authorization here
     // if (!isAuthenticated(request)) {
     //   return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     // }
     
-    const { slug } = params;
+    const { slug } = await params;
     const data = await request.json();
     
     // Check if post exists
@@ -143,7 +143,7 @@ export async function PUT(request: NextRequest, { params }: Params) {
     
     return NextResponse.json(updatedPost);
   } catch (error: any) {
-    console.error(`Error updating blog post with slug ${params.slug}:`, error);
+    console.error(`Error updating blog post with slug ${(await params).slug}:`, error);
     return NextResponse.json(
       { error: 'Failed to update blog post', details: error.message },
       { status: 500 }
@@ -153,14 +153,17 @@ export async function PUT(request: NextRequest, { params }: Params) {
 
 // DELETE /api/blog/[slug]
 // Deletes a blog post (requires authentication in a real app)
-export async function DELETE(request: NextRequest, { params }: Params) {
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: Promise<{ slug: string }> }
+) {
   try {
     // In a real app, you would check authentication/authorization here
     // if (!isAuthenticated(request)) {
     //   return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     // }
     
-    const { slug } = params;
+    const { slug } = await params;
     
     // Check if post exists
     const existingPost = await prisma.blogPost.findUnique({
@@ -184,7 +187,7 @@ export async function DELETE(request: NextRequest, { params }: Params) {
       { status: 200 }
     );
   } catch (error: any) {
-    console.error(`Error deleting blog post with slug ${params.slug}:`, error);
+    console.error(`Error deleting blog post with slug ${(await params).slug}:`, error);
     return NextResponse.json(
       { error: 'Failed to delete blog post', details: error.message },
       { status: 500 }

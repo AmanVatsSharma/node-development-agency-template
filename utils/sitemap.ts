@@ -1,5 +1,5 @@
 import { writeFileSync } from 'fs';
-import { blogPosts } from '../data/blogPosts';
+import { blogPosts } from '../app/data/blogPosts';
 
 // Base URL of the website
 const SITE_URL = 'https://enterprisehero.com';
