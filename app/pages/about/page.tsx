@@ -7,20 +7,14 @@ export default function AboutPage() {
       <section className="relative py-20 bg-gray-50 dark:bg-gray-900">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center mb-16">
-            <div className="mb-4">
-              <span className="inline-block px-4 py-2 bg-blue-100 dark:bg-blue-900 rounded-full text-sm font-medium text-blue-600 dark:text-blue-400">
-                Vedpragya Bharat Private Limited | CIN: U47912HR2025PTC131357
-              </span>
-            </div>
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
               About <span className="text-blue-600">Enterprise Hero</span>
             </h1>
             <p className="text-xl text-gray-600 dark:text-gray-300 mb-4">
-              Founded by <strong className="text-blue-600">Aman Kumar Sharma</strong>, we are a globally recognized enterprise-grade Node.js development agency.
+              We are a globally recognized enterprise-grade Node.js development agency delivering world-class digital solutions.
             </p>
             <p className="text-lg text-gray-600 dark:text-gray-300">
-              Operating across <strong>6 countries</strong> with offices in India, Dubai, California, Toronto, and Shenzhen, 
-              we deliver world-class digital solutions to Fortune 500 companies and innovative startups worldwide.
+              Operating across multiple continents with offices worldwide, we serve Fortune 500 companies and innovative startups with cutting-edge technology solutions.
             </p>
           </div>
         </div>
@@ -34,21 +28,13 @@ export default function AboutPage() {
               <h2 className="text-3xl font-bold mb-6">Our Mission & Vision</h2>
               <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
                 <strong>Mission:</strong> To revolutionize global businesses through enterprise-grade Node.js development and cutting-edge 3D solutions. 
-                Founded by Aman Kumar Sharma, Vedpragya Bharat Private Limited operates as Enterprise Hero, delivering mission-critical 
-                applications that power Fortune 500 companies across 6 countries.
+                We deliver mission-critical applications that power Fortune 500 companies worldwide.
               </p>
               <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
                 <strong>Vision:</strong> To be the world's leading Node.js development agency, recognized for our technical excellence, 
                 global presence, and commitment to digital transformation. We envision a future where every enterprise leverages 
                 our innovative solutions to achieve unprecedented growth and efficiency.
               </p>
-              <div className="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl">
-                <h3 className="text-xl font-bold text-blue-600 dark:text-blue-400 mb-3">Legal Compliance</h3>
-                <p className="text-gray-600 dark:text-gray-300">
-                  <strong>CIN:</strong> U47912HR2025PTC131357 | <strong>GST:</strong> 06AALCV0051A1ZV<br/>
-                  Registered in Haryana, India | Fully compliant with international business standards
-                </p>
-              </div>
             </div>
             <div className="relative h-96 rounded-xl overflow-hidden shadow-xl">
               <div className="absolute inset-0 bg-blue-600 opacity-10 rounded-xl"></div>
@@ -130,9 +116,6 @@ export default function AboutPage() {
                 <strong>Noida:</strong> Development center<br/>
                 <strong>Bangalore:</strong> Innovation hub
               </p>
-              <p className="text-sm text-blue-600 dark:text-blue-400">
-                CIN: U47912HR2025PTC131357 | GST: 06AALCV0051A1ZV
-              </p>
             </div>
             
             {/* International Offices */}
@@ -197,9 +180,9 @@ export default function AboutPage() {
                 <div className="md:w-2/3 p-8">
                   <h4 className="text-xl font-bold mb-4 text-blue-600 dark:text-blue-400">Visionary Leader & Tech Entrepreneur</h4>
                   <p className="text-gray-600 dark:text-gray-300 mb-4">
-                    Aman Kumar Sharma founded Vedpragya Bharat Private Limited with a vision to create a globally recognized 
+                    Aman Kumar Sharma founded Enterprise Hero with a vision to create a globally recognized 
                     Node.js development agency that delivers enterprise-grade solutions to clients worldwide. Under his leadership, 
-                    Enterprise Hero has expanded to 6 countries, serving Fortune 500 companies and innovative startups.
+                    the company has expanded internationally, serving Fortune 500 companies and innovative startups.
                   </p>
                   <p className="text-gray-600 dark:text-gray-300 mb-4">
                     His expertise in enterprise architecture, digital transformation, and global business operations has positioned 
@@ -222,9 +205,9 @@ export default function AboutPage() {
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-8">Partner with Enterprise Hero</h2>
           <p className="text-xl mb-8 max-w-4xl mx-auto">
-            Join Fortune 500 companies worldwide who trust <strong>Vedpragya Bharat Private Limited</strong> 
+            Join Fortune 500 companies worldwide who trust Enterprise Hero 
             for their enterprise-grade Node.js development and 3D solutions. 
-            Our global team across <strong>6 countries</strong> is ready to transform your business.
+            Our global team is ready to transform your business.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button className="px-8 py-3 bg-white text-blue-600 hover:bg-gray-100 rounded-full font-medium transition duration-300 transform hover:scale-105">
