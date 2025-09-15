@@ -6,12 +6,21 @@ export default function AboutPage() {
       {/* Hero Section */}
       <section className="relative py-20 bg-gray-50 dark:bg-gray-900">
         <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center mb-16">
+          <div className="max-w-4xl mx-auto text-center mb-16">
+            <div className="mb-4">
+              <span className="inline-block px-4 py-2 bg-blue-100 dark:bg-blue-900 rounded-full text-sm font-medium text-blue-600 dark:text-blue-400">
+                Vedpragya Bharat Private Limited | CIN: U47912HR2025PTC131357
+              </span>
+            </div>
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
               About <span className="text-blue-600">Enterprise Hero</span>
             </h1>
-            <p className="text-xl text-gray-600 dark:text-gray-300">
-              Premium Node.js development and 3D experiences for forward-thinking enterprises.
+            <p className="text-xl text-gray-600 dark:text-gray-300 mb-4">
+              Founded by <strong className="text-blue-600">Aman Kumar Sharma</strong>, we are a globally recognized enterprise-grade Node.js development agency.
+            </p>
+            <p className="text-lg text-gray-600 dark:text-gray-300">
+              Operating across <strong>6 countries</strong> with offices in India, Dubai, California, Toronto, and Shenzhen, 
+              we deliver world-class digital solutions to Fortune 500 companies and innovative startups worldwide.
             </p>
           </div>
         </div>
@@ -22,13 +31,24 @@ export default function AboutPage() {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
             <div>
-              <h2 className="text-3xl font-bold mb-6">Our Mission</h2>
+              <h2 className="text-3xl font-bold mb-6">Our Mission & Vision</h2>
               <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
-                At Enterprise Hero, our mission is to transform businesses through cutting-edge technology solutions that drive growth, efficiency, and innovation. We believe in the power of premium Node.js development and immersive 3D experiences to create digital products that stand out in today's competitive landscape.
+                <strong>Mission:</strong> To revolutionize global businesses through enterprise-grade Node.js development and cutting-edge 3D solutions. 
+                Founded by Aman Kumar Sharma, Vedpragya Bharat Private Limited operates as Enterprise Hero, delivering mission-critical 
+                applications that power Fortune 500 companies across 6 countries.
               </p>
-              <p className="text-lg text-gray-600 dark:text-gray-300">
-                We're committed to delivering enterprise-grade solutions that not only meet but exceed our clients' expectations, helping them achieve their business objectives and stay ahead of the curve.
+              <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
+                <strong>Vision:</strong> To be the world's leading Node.js development agency, recognized for our technical excellence, 
+                global presence, and commitment to digital transformation. We envision a future where every enterprise leverages 
+                our innovative solutions to achieve unprecedented growth and efficiency.
               </p>
+              <div className="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl">
+                <h3 className="text-xl font-bold text-blue-600 dark:text-blue-400 mb-3">Legal Compliance</h3>
+                <p className="text-gray-600 dark:text-gray-300">
+                  <strong>CIN:</strong> U47912HR2025PTC131357 | <strong>GST:</strong> 06AALCV0051A1ZV<br/>
+                  Registered in Haryana, India | Fully compliant with international business standards
+                </p>
+              </div>
             </div>
             <div className="relative h-96 rounded-xl overflow-hidden shadow-xl">
               <div className="absolute inset-0 bg-blue-600 opacity-10 rounded-xl"></div>
@@ -91,56 +111,106 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Team */}
+      {/* Global Offices */}
+      <section className="py-16 bg-gray-50 dark:bg-gray-900">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold mb-12 text-center">Our Global Presence</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* India Offices */}
+            <div className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg p-8">
+              <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mb-6">
+                <svg className="w-8 h-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold mb-4">India Headquarters</h3>
+              <p className="text-gray-600 dark:text-gray-300 mb-4">
+                <strong>Gurugram (HQ):</strong> Main corporate office<br/>
+                <strong>Noida:</strong> Development center<br/>
+                <strong>Bangalore:</strong> Innovation hub
+              </p>
+              <p className="text-sm text-blue-600 dark:text-blue-400">
+                CIN: U47912HR2025PTC131357 | GST: 06AALCV0051A1ZV
+              </p>
+            </div>
+            
+            {/* International Offices */}
+            <div className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg p-8">
+              <div className="w-16 h-16 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center mb-6">
+                <svg className="w-8 h-8 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold mb-4">International Offices</h3>
+              <p className="text-gray-600 dark:text-gray-300 mb-4">
+                <strong>Dubai:</strong> Middle East operations<br/>
+                <strong>California:</strong> Tech research & development<br/>
+                <strong>Toronto:</strong> North American hub<br/>
+                <strong>Shenzhen:</strong> Asia-Pacific center
+              </p>
+              <p className="text-sm text-purple-600 dark:text-purple-400">
+                Serving clients across 6 countries
+              </p>
+            </div>
+            
+            {/* Leadership */}
+            <div className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg p-8">
+              <div className="w-16 h-16 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mb-6">
+                <svg className="w-8 h-8 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold mb-4">Leadership</h3>
+              <p className="text-gray-600 dark:text-gray-300 mb-4">
+                <strong>Founder & CEO:</strong> Aman Kumar Sharma<br/>
+                <strong>Global Operations:</strong> 6 countries<br/>
+                <strong>Team Size:</strong> 50+ professionals<br/>
+                <strong>Experience:</strong> Enterprise-grade solutions
+              </p>
+              <p className="text-sm text-green-600 dark:text-green-400">
+                Leading digital transformation worldwide
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Founder Spotlight */}
       <section className="py-16">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-12 text-center">Meet Our Team</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {/* Team Member 1 */}
+          <h2 className="text-3xl font-bold mb-12 text-center">Meet Our Founder</h2>
+          <div className="max-w-4xl mx-auto">
             <div className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg">
-              <div className="h-64 bg-gray-200 dark:bg-gray-700"></div>
-              <div className="p-6">
-                <h3 className="text-xl font-bold mb-2">John Doe</h3>
-                <p className="text-blue-600 dark:text-blue-400 mb-4">CEO & Founder</p>
-                <p className="text-gray-600 dark:text-gray-300">
-                  With over 15 years of experience in tech leadership, John drives our vision and strategy.
-                </p>
-              </div>
-            </div>
-            
-            {/* Team Member 2 */}
-            <div className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg">
-              <div className="h-64 bg-gray-200 dark:bg-gray-700"></div>
-              <div className="p-6">
-                <h3 className="text-xl font-bold mb-2">Jane Smith</h3>
-                <p className="text-blue-600 dark:text-blue-400 mb-4">CTO</p>
-                <p className="text-gray-600 dark:text-gray-300">
-                  Jane leads our technical strategy and ensures we stay at the cutting edge of Node.js development.
-                </p>
-              </div>
-            </div>
-            
-            {/* Team Member 3 */}
-            <div className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg">
-              <div className="h-64 bg-gray-200 dark:bg-gray-700"></div>
-              <div className="p-6">
-                <h3 className="text-xl font-bold mb-2">Michael Johnson</h3>
-                <p className="text-blue-600 dark:text-blue-400 mb-4">Lead 3D Developer</p>
-                <p className="text-gray-600 dark:text-gray-300">
-                  Michael brings our 3D experiences to life with his expertise in Three.js and WebGL.
-                </p>
-              </div>
-            </div>
-            
-            {/* Team Member 4 */}
-            <div className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg">
-              <div className="h-64 bg-gray-200 dark:bg-gray-700"></div>
-              <div className="p-6">
-                <h3 className="text-xl font-bold mb-2">Sarah Williams</h3>
-                <p className="text-blue-600 dark:text-blue-400 mb-4">UX Director</p>
-                <p className="text-gray-600 dark:text-gray-300">
-                  Sarah ensures our solutions deliver exceptional user experiences that delight and engage.
-                </p>
+              <div className="md:flex">
+                <div className="md:w-1/3 bg-gradient-to-br from-blue-600 to-purple-600 p-8 flex items-center justify-center">
+                  <div className="text-center text-white">
+                    <div className="w-32 h-32 bg-white/20 rounded-full mx-auto mb-4 flex items-center justify-center">
+                      <svg className="w-16 h-16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                      </svg>
+                    </div>
+                    <h3 className="text-2xl font-bold">Aman Kumar Sharma</h3>
+                    <p className="text-blue-200">Founder & CEO</p>
+                  </div>
+                </div>
+                <div className="md:w-2/3 p-8">
+                  <h4 className="text-xl font-bold mb-4 text-blue-600 dark:text-blue-400">Visionary Leader & Tech Entrepreneur</h4>
+                  <p className="text-gray-600 dark:text-gray-300 mb-4">
+                    Aman Kumar Sharma founded Vedpragya Bharat Private Limited with a vision to create a globally recognized 
+                    Node.js development agency that delivers enterprise-grade solutions to clients worldwide. Under his leadership, 
+                    Enterprise Hero has expanded to 6 countries, serving Fortune 500 companies and innovative startups.
+                  </p>
+                  <p className="text-gray-600 dark:text-gray-300 mb-4">
+                    His expertise in enterprise architecture, digital transformation, and global business operations has positioned 
+                    Enterprise Hero as a trusted partner for mission-critical applications and cutting-edge 3D experiences.
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-400 rounded-full text-sm">Enterprise Architecture</span>
+                    <span className="px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-600 dark:text-purple-400 rounded-full text-sm">Global Operations</span>
+                    <span className="px-3 py-1 bg-green-100 dark:bg-green-900 text-green-600 dark:text-green-400 rounded-full text-sm">Digital Transformation</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -150,13 +220,20 @@ export default function AboutPage() {
       {/* CTA */}
       <section className="py-16 bg-blue-600 text-white">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-8">Ready to Work With Us?</h2>
-          <p className="text-xl mb-8 max-w-3xl mx-auto">
-            Let's discuss how our team can help bring your vision to life with premium Node.js development and 3D experiences.
+          <h2 className="text-3xl md:text-4xl font-bold mb-8">Partner with Enterprise Hero</h2>
+          <p className="text-xl mb-8 max-w-4xl mx-auto">
+            Join Fortune 500 companies worldwide who trust <strong>Vedpragya Bharat Private Limited</strong> 
+            for their enterprise-grade Node.js development and 3D solutions. 
+            Our global team across <strong>6 countries</strong> is ready to transform your business.
           </p>
-          <button className="px-8 py-3 bg-white text-blue-600 hover:bg-gray-100 rounded-full font-medium transition duration-300 transform hover:scale-105">
-            Contact Us Today
-          </button>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <button className="px-8 py-3 bg-white text-blue-600 hover:bg-gray-100 rounded-full font-medium transition duration-300 transform hover:scale-105">
+              Contact Our Global Team
+            </button>
+            <button className="px-8 py-3 bg-transparent border-2 border-white hover:bg-white/10 rounded-full font-medium transition duration-300">
+              View Our Services
+            </button>
+          </div>
         </div>
       </section>
     </div>

@@ -147,11 +147,17 @@ export default function ContactPage() {
       <section className="relative py-20 bg-gradient-to-br from-gray-900 to-gray-800 text-white">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
+            <div className="mb-4">
+              <span className="inline-block px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-sm font-medium text-blue-200 border border-white/20">
+                Vedpragya Bharat Private Limited | CIN: U47912HR2025PTC131357
+              </span>
+            </div>
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
               Let's <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">Connect</span>
             </h1>
             <p className="text-xl text-gray-300 mb-8">
-              Ready to discuss your project? Reach out to our team and let's bring your vision to life.
+              Ready to discuss your enterprise project? Reach out to our global team across <strong>6 countries</strong> 
+              and let's bring your vision to life with world-class Node.js development.
             </p>
           </div>
         </div>
@@ -164,50 +170,115 @@ export default function ContactPage() {
             {/* Contact Info */}
             <div className="order-2 lg:order-1">
               <div className="bg-gray-50 dark:bg-gray-800 p-8 rounded-xl">
-                <h2 className="text-2xl font-bold mb-8 text-gray-800 dark:text-white">Contact Information</h2>
+                <h2 className="text-2xl font-bold mb-8 text-gray-800 dark:text-white">Global Contact Information</h2>
                 
-                {/* Contact Details */}
+                {/* Company Details */}
+                <div className="mb-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                  <h3 className="text-lg font-semibold mb-2 text-blue-600 dark:text-blue-400">Vedpragya Bharat Private Limited</h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-300 mb-1">
+                    <strong>CIN:</strong> U47912HR2025PTC131357
+                  </p>
+                  <p className="text-sm text-gray-600 dark:text-gray-300 mb-1">
+                    <strong>GST:</strong> 06AALCV0051A1ZV
+                  </p>
+                  <p className="text-sm text-gray-600 dark:text-gray-300">
+                    <strong>Founder:</strong> Aman Kumar Sharma
+                  </p>
+                </div>
+                
+                {/* Global Offices */}
                 <div className="space-y-6">
-                  {/* Email */}
+                  {/* India HQ */}
                   <div className="flex items-start">
-                    <div className="flex-shrink-0 bg-blue-100 dark:bg-blue-900 rounded-full p-3 mr-4">
-                      <svg className="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                      </svg>
+                    <div className="flex-shrink-0 bg-orange-100 dark:bg-orange-900 rounded-full p-3 mr-4">
+                      <span className="text-lg">🇮🇳</span>
                     </div>
                     <div>
-                      <h3 className="text-lg font-medium mb-1 text-gray-800 dark:text-white">Email</h3>
-                      <p className="text-gray-600 dark:text-gray-300">info@enterprisehero.com</p>
+                      <h3 className="text-lg font-medium mb-1 text-gray-800 dark:text-white">India (Headquarters)</h3>
+                      <p className="text-gray-600 dark:text-gray-300 mb-1">
+                        <strong>Gurugram:</strong> Main corporate office<br/>
+                        <strong>Noida:</strong> Development center<br/>
+                        <strong>Bangalore:</strong> Innovation hub
+                      </p>
+                      <p className="text-sm text-blue-600 dark:text-blue-400">Primary operations</p>
                     </div>
                   </div>
                   
-                  {/* Phone */}
+                  {/* Dubai */}
                   <div className="flex items-start">
                     <div className="flex-shrink-0 bg-green-100 dark:bg-green-900 rounded-full p-3 mr-4">
-                      <svg className="w-6 h-6 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                      </svg>
+                      <span className="text-lg">🇦🇪</span>
                     </div>
                     <div>
-                      <h3 className="text-lg font-medium mb-1 text-gray-800 dark:text-white">Phone</h3>
-                      <p className="text-gray-600 dark:text-gray-300">+1 (555) 123-4567</p>
+                      <h3 className="text-lg font-medium mb-1 text-gray-800 dark:text-white">Dubai</h3>
+                      <p className="text-gray-600 dark:text-gray-300 mb-1">
+                        Middle East operations<br/>
+                        Second major office
+                      </p>
+                      <p className="text-sm text-green-600 dark:text-green-400">MENA region</p>
                     </div>
                   </div>
                   
-                  {/* Address */}
+                  {/* California */}
                   <div className="flex items-start">
-                    <div className="flex-shrink-0 bg-purple-100 dark:bg-purple-900 rounded-full p-3 mr-4">
-                      <svg className="w-6 h-6 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                      </svg>
+                    <div className="flex-shrink-0 bg-blue-100 dark:bg-blue-900 rounded-full p-3 mr-4">
+                      <span className="text-lg">🇺🇸</span>
                     </div>
                     <div>
-                      <h3 className="text-lg font-medium mb-1 text-gray-800 dark:text-white">Address</h3>
-                      <p className="text-gray-600 dark:text-gray-300">
-                        123 Tech Street, Suite 100<br />
-                        San Francisco, CA 94107
+                      <h3 className="text-lg font-medium mb-1 text-gray-800 dark:text-white">California</h3>
+                      <p className="text-gray-600 dark:text-gray-300 mb-1">
+                        Tech research & development<br/>
+                        Innovation hub
                       </p>
+                      <p className="text-sm text-blue-600 dark:text-blue-400">R&D center</p>
+                    </div>
+                  </div>
+                  
+                  {/* Toronto */}
+                  <div className="flex items-start">
+                    <div className="flex-shrink-0 bg-red-100 dark:bg-red-900 rounded-full p-3 mr-4">
+                      <span className="text-lg">🇨🇦</span>
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-medium mb-1 text-gray-800 dark:text-white">Toronto</h3>
+                      <p className="text-gray-600 dark:text-gray-300 mb-1">
+                        North American operations<br/>
+                        Canada office
+                      </p>
+                      <p className="text-sm text-red-600 dark:text-red-400">North America</p>
+                    </div>
+                  </div>
+                  
+                  {/* Shenzhen */}
+                  <div className="flex items-start">
+                    <div className="flex-shrink-0 bg-yellow-100 dark:bg-yellow-900 rounded-full p-3 mr-4">
+                      <span className="text-lg">🇨🇳</span>
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-medium mb-1 text-gray-800 dark:text-white">Shenzhen</h3>
+                      <p className="text-gray-600 dark:text-gray-300 mb-1">
+                        Asia-Pacific center<br/>
+                        China operations
+                      </p>
+                      <p className="text-sm text-yellow-600 dark:text-yellow-400">Asia-Pacific</p>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* General Contact */}
+                <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
+                  <div className="space-y-4">
+                    <div className="flex items-center">
+                      <svg className="w-5 h-5 text-blue-600 dark:text-blue-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                      </svg>
+                      <span className="text-gray-600 dark:text-gray-300">info@enterprisehero.com</span>
+                    </div>
+                    <div className="flex items-center">
+                      <svg className="w-5 h-5 text-green-600 dark:text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <span className="text-gray-600 dark:text-gray-300">24/7 Global Support</span>
                     </div>
                   </div>
                 </div>
@@ -439,9 +510,9 @@ export default function ContactPage() {
       <section className="py-16 bg-white dark:bg-gray-900">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4 text-gray-800 dark:text-white">Frequently Asked Questions</h2>
+            <h2 className="text-3xl font-bold mb-4 text-gray-800 dark:text-white">Enterprise Solutions FAQ</h2>
             <p className="text-gray-600 dark:text-gray-300">
-              Find answers to common questions about our services and process.
+              Common questions about our global enterprise-grade Node.js development services.
             </p>
           </div>
           
@@ -449,40 +520,63 @@ export default function ContactPage() {
             {/* FAQ Item 1 */}
             <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-6">
               <h3 className="text-xl font-bold mb-3 text-gray-800 dark:text-white">
-                What is your typical project timeline?
+                How does your global presence benefit enterprise clients?
               </h3>
               <p className="text-gray-600 dark:text-gray-300">
-                Project timelines vary based on complexity and scope. A typical enterprise project takes 3-6 months from discovery to launch, while smaller projects may be completed in 4-8 weeks. We provide detailed timelines during our initial consultation.
+                With offices across India, Dubai, California, Toronto, and Shenzhen, we provide 24/7 support and development capabilities. 
+                Our global team ensures faster delivery, better timezone coverage, and local compliance expertise. 
+                Enterprise projects benefit from our distributed talent pool and round-the-clock development cycles.
               </p>
             </div>
             
             {/* FAQ Item 2 */}
             <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-6">
               <h3 className="text-xl font-bold mb-3 text-gray-800 dark:text-white">
-                How do you handle project pricing?
+                What enterprise-grade guarantees do you provide?
               </h3>
               <p className="text-gray-600 dark:text-gray-300">
-                We offer flexible pricing models including fixed-price projects, time and materials, and retainer arrangements. After understanding your requirements, we provide transparent pricing with no hidden costs. Enterprise projects typically start at $50,000, with smaller engagements available based on specific needs.
+                We offer 99.9% uptime guarantees, enterprise-grade security compliance, and SLA-backed support agreements. 
+                Our solutions include comprehensive monitoring, automated backups, disaster recovery, and compliance with 
+                international standards including GDPR, SOC 2, and industry-specific regulations.
               </p>
             </div>
             
             {/* FAQ Item 3 */}
             <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-6">
               <h3 className="text-xl font-bold mb-3 text-gray-800 dark:text-white">
-                What is your development process?
+                How do you handle large-scale enterprise projects?
               </h3>
               <p className="text-gray-600 dark:text-gray-300">
-                We follow an agile development methodology with bi-weekly sprints and regular client check-ins. Our process includes discovery, planning, design, development, testing, deployment, and post-launch support. This iterative approach ensures quality deliverables that align with your business objectives.
+                Our enterprise methodology includes dedicated project managers, technical architects, and specialized teams 
+                across our global offices. We follow enterprise-grade project management practices with regular stakeholder 
+                updates, risk management, and scalable architecture planning. Projects typically range from $100K to $2M+ 
+                for Fortune 500 implementations.
               </p>
             </div>
             
             {/* FAQ Item 4 */}
             <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-6">
               <h3 className="text-xl font-bold mb-3 text-gray-800 dark:text-white">
-                Do you provide maintenance and support after launch?
+                What makes Vedpragya Bharat Private Limited legally compliant?
               </h3>
               <p className="text-gray-600 dark:text-gray-300">
-                Yes, we offer ongoing maintenance and support services to ensure your solution continues to perform optimally. Our support packages include monitoring, bug fixes, security updates, and feature enhancements. We tailor support agreements to meet your specific needs and uptime requirements.
+                We are legally registered as Vedpragya Bharat Private Limited (CIN: U47912HR2025PTC131357) with GST 
+                compliance (06AALCV0051A1ZV). Founded by Aman Kumar Sharma, we maintain full legal compliance across 
+                all jurisdictions where we operate, including data protection laws, intellectual property rights, 
+                and international business standards.
+              </p>
+            </div>
+            
+            {/* FAQ Item 5 */}
+            <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-6">
+              <h3 className="text-xl font-bold mb-3 text-gray-800 dark:text-white">
+                Do you provide dedicated support for Fortune 500 companies?
+              </h3>
+              <p className="text-gray-600 dark:text-gray-300">
+                Yes, we offer dedicated enterprise support packages including dedicated account managers, priority 
+                technical support, custom SLA agreements, and enterprise-grade infrastructure. Our Fortune 500 clients 
+                benefit from our global team's expertise in mission-critical applications, high-availability systems, 
+                and enterprise security standards.
               </p>
             </div>
           </div>
