@@ -7,20 +7,23 @@ interface FloatingElementProps {
   delay?: number;
   duration?: number;
   className?: string;
+  style?: React.CSSProperties;
 }
 
 const FloatingElement: React.FC<FloatingElementProps> = ({ 
   children, 
   delay = 0, 
   duration = 6,
-  className = ""
+  className = "",
+  style = {}
 }) => {
   return (
     <div 
       className={`floating-element ${className}`}
       style={{
         animationDelay: `${delay}s`,
-        animationDuration: `${duration}s`
+        animationDuration: `${duration}s`,
+        ...style
       }}
     >
       {children}
