@@ -23,14 +23,14 @@ const poppins = Poppins({
 
 // Metadata for SEO
 export const metadata: Metadata = {
-  title: "Enterprise Hero | Premium Node.js Development Agency",
-  description: "Elevate your business with premium Node.js development, 3D animations, and enterprise-grade solutions by our expert team.",
-  keywords: "Node.js development, 3D animations, enterprise website, premium development, web solutions",
-  authors: [{ name: "Enterprise Hero Team" }],
+  title: "Enterprise Hero | Vedpragya Bharat Private Limited - Global Node.js Development Agency",
+  description: "Leading enterprise-grade Node.js development and 3D solutions by Vedpragya Bharat Private Limited. Global presence across India, Dubai, California, Toronto, and Shenzhen. Founded by Aman Kumar Sharma.",
+  keywords: "Node.js development, enterprise solutions, Vedpragya Bharat, Aman Kumar Sharma, global tech agency, 3D animations, microservices, API development, enterprise architecture, India, Dubai, California, Toronto, Shenzhen",
+  authors: [{ name: "Aman Kumar Sharma - Founder, Vedpragya Bharat Private Limited" }],
   // Add Open Graph data for social sharing
   openGraph: {
-    title: "Enterprise Hero | Premium Node.js Development Agency",
-    description: "Elevate your business with premium Node.js development, 3D animations, and enterprise-grade solutions by our expert team.",
+    title: "Enterprise Hero | Vedpragya Bharat Private Limited - Global Node.js Development Agency",
+    description: "Leading enterprise-grade Node.js development and 3D solutions by Vedpragya Bharat Private Limited. Global presence across India, Dubai, California, Toronto, and Shenzhen.",
     url: "https://enterprisehero.com",
     siteName: "Enterprise Hero",
     locale: "en_US",
