@@ -8,12 +8,12 @@ export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="fixed w-full top-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-sm">
+    <header className="fixed w-full top-0 z-50 glass-morphism shadow-lg">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center">
-            <span className="text-2xl font-bold text-blue-600 dark:text-blue-400">
+          <Link href="/" className="flex items-center group">
+            <span className="text-2xl font-bold premium-text-gradient group-hover:scale-105 transition-transform duration-300">
               Enterprise<span className="text-gray-900 dark:text-white">Hero</span>
             </span>
           </Link>
@@ -38,7 +38,7 @@ export default function Header() {
             <Link href="/pages/resources" className="text-gray-800 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors">
               Resources
             </Link>
-            <Link href="/pages/contact" className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-full font-medium transition-colors">
+            <Link href="/pages/contact" className="premium-btn px-6 py-2 text-white rounded-full font-medium">
               Contact Us
             </Link>
           </nav>
