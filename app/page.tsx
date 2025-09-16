@@ -1,5 +1,6 @@
 import Image from "next/image";
 import HeroAnimationWrapper from "./components/HeroAnimationWrapper";
+import AnimatedIllustration from "./components/AnimatedIllustration";
 
 export default function Home() {
   return (
@@ -8,6 +9,18 @@ export default function Home() {
       <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-900 via-indigo-900 to-purple-900 text-white overflow-hidden">
         <div className="absolute inset-0 opacity-30">
           <HeroAnimationWrapper />
+        </div>
+        
+        {/* Hero Illustration */}
+        <div className="absolute top-20 right-4 sm:right-10 lg:right-20 w-48 h-48 sm:w-64 sm:h-64 lg:w-80 lg:h-80 opacity-20 lg:opacity-30 hidden sm:block">
+          <AnimatedIllustration
+            src="/illustrations/undraw_programming_re_kg9v.svg"
+            alt="Programming illustration"
+            width={320}
+            height={320}
+            animationType="float"
+            delay={0.5}
+          />
         </div>
         
         <div className="container mx-auto px-4 z-10 text-center">
@@ -61,8 +74,30 @@ export default function Home() {
       </section>
 
       {/* Services Highlights */}
-      <section className="py-20 bg-gray-50 dark:bg-gray-900">
-        <div className="container mx-auto px-4">
+      <section className="py-20 bg-gray-50 dark:bg-gray-900 relative overflow-hidden">
+        {/* Background Illustrations */}
+        <div className="absolute top-10 left-4 sm:left-10 w-32 h-32 sm:w-48 sm:h-48 opacity-10 hidden sm:block">
+          <AnimatedIllustration
+            src="/illustrations/undraw_cloud_hosting_a0xv.svg"
+            alt="Cloud hosting illustration"
+            width={192}
+            height={192}
+            animationType="pulse"
+            delay={0.2}
+          />
+        </div>
+        <div className="absolute bottom-10 right-4 sm:right-10 w-32 h-32 sm:w-48 sm:h-48 opacity-10 hidden sm:block">
+          <AnimatedIllustration
+            src="/illustrations/undraw_mobile_app_re_catg.svg"
+            alt="Mobile app illustration"
+            width={192}
+            height={192}
+            animationType="scale"
+            delay={0.8}
+          />
+        </div>
+        
+        <div className="container mx-auto px-4 relative z-10">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">
             Enterprise-Grade <span className="text-blue-600">Solutions</span><br/>
             <span className="text-lg text-gray-600 dark:text-gray-400 font-normal">Serving Global Clients Worldwide</span>
@@ -112,8 +147,28 @@ export default function Home() {
       </section>
 
       {/* Great Product Software by Company */}
-      <section className="py-20 bg-white dark:bg-gray-800">
-        <div className="container mx-auto px-4">
+      <section className="py-20 bg-white dark:bg-gray-800 relative overflow-hidden">
+        {/* Background Illustrations */}
+        <div className="absolute top-20 left-20 w-56 h-56 opacity-5">
+          <Image
+            src="/illustrations/undraw_cloud_hosting_a0xv.svg"
+            alt="Cloud hosting illustration"
+            width={224}
+            height={224}
+            className="w-full h-full object-contain"
+          />
+        </div>
+        <div className="absolute bottom-20 right-20 w-56 h-56 opacity-5">
+          <Image
+            src="/illustrations/undraw_mobile_app_re_catg.svg"
+            alt="Mobile app illustration"
+            width={224}
+            height={224}
+            className="w-full h-full object-contain"
+          />
+        </div>
+        
+        <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               Great Product Software by <span className="text-blue-600">Company</span>
@@ -273,8 +328,30 @@ export default function Home() {
       </section>
       
       {/* CTA Section */}
-      <section className="py-16 bg-blue-600 text-white">
-        <div className="container mx-auto px-4 text-center">
+      <section className="py-16 bg-blue-600 text-white relative overflow-hidden">
+        {/* Background Illustrations */}
+        <div className="absolute top-10 right-4 sm:right-10 w-32 h-32 sm:w-48 sm:h-48 opacity-20 hidden sm:block">
+          <AnimatedIllustration
+            src="/illustrations/undraw_programming_re_kg9v.svg"
+            alt="Programming illustration"
+            width={192}
+            height={192}
+            animationType="rotate"
+            delay={0.3}
+          />
+        </div>
+        <div className="absolute bottom-10 left-4 sm:left-10 w-28 h-28 sm:w-40 sm:h-40 opacity-20 hidden sm:block">
+          <AnimatedIllustration
+            src="/illustrations/undraw_mobile_app_re_catg.svg"
+            alt="Mobile app illustration"
+            width={160}
+            height={160}
+            animationType="float"
+            delay={0.7}
+          />
+        </div>
+        
+        <div className="container mx-auto px-4 text-center relative z-10">
           <h2 className="text-3xl md:text-4xl font-bold mb-8">Ready for Global Digital Excellence?</h2>
           <p className="text-xl mb-8 max-w-4xl mx-auto">
             Partner with Enterprise Hero for enterprise-grade solutions. 

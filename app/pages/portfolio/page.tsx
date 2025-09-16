@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
+import AnimatedIllustration from '../../components/AnimatedIllustration';
 
 // Project data
 const projects = [
@@ -127,8 +128,30 @@ export default function PortfolioPage() {
   return (
     <div className="w-full">
       {/* Hero Section */}
-      <section className="relative py-20 bg-gradient-to-br from-gray-900 to-gray-800 text-white">
-        <div className="container mx-auto px-4">
+      <section className="relative py-20 bg-gradient-to-br from-gray-900 to-gray-800 text-white overflow-hidden">
+        {/* Background Illustrations */}
+        <div className="absolute top-10 right-4 sm:right-10 w-48 h-48 sm:w-64 sm:h-64 opacity-20 hidden sm:block">
+          <AnimatedIllustration
+            src="/illustrations/undraw_programming_re_kg9v.svg"
+            alt="Programming illustration"
+            width={256}
+            height={256}
+            animationType="float"
+            delay={0.2}
+          />
+        </div>
+        <div className="absolute bottom-10 left-4 sm:left-10 w-32 h-32 sm:w-48 sm:h-48 opacity-15 hidden sm:block">
+          <AnimatedIllustration
+            src="/illustrations/undraw_mobile_app_re_catg.svg"
+            alt="Mobile app illustration"
+            width={192}
+            height={192}
+            animationType="scale"
+            delay={0.6}
+          />
+        </div>
+        
+        <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
               Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">Portfolio</span>
@@ -345,8 +368,20 @@ export default function PortfolioPage() {
       </AnimatePresence>
 
       {/* Testimonials */}
-      <section className="py-16 bg-gray-50 dark:bg-gray-800">
-        <div className="container mx-auto px-4">
+      <section className="py-16 bg-gray-50 dark:bg-gray-800 relative overflow-hidden">
+        {/* Background Illustration */}
+        <div className="absolute top-10 left-4 sm:left-10 w-32 h-32 sm:w-48 sm:h-48 opacity-5 hidden sm:block">
+          <AnimatedIllustration
+            src="/illustrations/undraw_cloud_hosting_a0xv.svg"
+            alt="Cloud hosting illustration"
+            width={192}
+            height={192}
+            animationType="pulse"
+            delay={0.3}
+          />
+        </div>
+        
+        <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-3xl mx-auto text-center mb-12">
             <h2 className="text-3xl font-bold mb-4 text-gray-800 dark:text-white">Client Testimonials</h2>
             <p className="text-gray-600 dark:text-gray-300">
