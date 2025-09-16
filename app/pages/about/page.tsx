@@ -1,11 +1,34 @@
 import Image from "next/image";
+import AnimatedIllustration from "../../components/AnimatedIllustration";
 
 export default function AboutPage() {
   return (
     <div className="w-full">
       {/* Hero Section */}
-      <section className="relative py-20 bg-gray-50 dark:bg-gray-900">
-        <div className="container mx-auto px-4">
+      <section className="relative py-20 bg-gray-50 dark:bg-gray-900 overflow-hidden">
+        {/* Background Illustrations */}
+        <div className="absolute top-20 right-4 sm:right-20 w-48 h-48 sm:w-64 sm:h-64 opacity-10 hidden sm:block">
+          <AnimatedIllustration
+            src="/illustrations/undraw_programming_re_kg9v.svg"
+            alt="Programming illustration"
+            width={256}
+            height={256}
+            animationType="rotate"
+            delay={0.3}
+          />
+        </div>
+        <div className="absolute bottom-20 left-4 sm:left-20 w-32 h-32 sm:w-48 sm:h-48 opacity-10 hidden sm:block">
+          <AnimatedIllustration
+            src="/illustrations/undraw_mobile_app_re_catg.svg"
+            alt="Mobile app illustration"
+            width={192}
+            height={192}
+            animationType="scale"
+            delay={0.7}
+          />
+        </div>
+        
+        <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center mb-16">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
               About <span className="text-blue-600">Enterprise Hero</span>
@@ -21,8 +44,20 @@ export default function AboutPage() {
       </section>
 
       {/* Mission & Vision */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
+      <section className="py-16 relative overflow-hidden">
+        {/* Background Illustration */}
+        <div className="absolute top-10 right-4 sm:right-10 w-40 h-40 sm:w-56 sm:h-56 opacity-5 hidden sm:block">
+          <AnimatedIllustration
+            src="/illustrations/undraw_cloud_hosting_a0xv.svg"
+            alt="Cloud hosting illustration"
+            width={224}
+            height={224}
+            animationType="pulse"
+            delay={0.4}
+          />
+        </div>
+        
+        <div className="container mx-auto px-4 relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
             <div>
               <h2 className="text-3xl font-bold mb-6">Our Mission & Vision</h2>
