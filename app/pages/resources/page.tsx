@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import axios from 'axios';
@@ -127,30 +126,22 @@ export default function ResourcesPage() {
     
     try {
       setNewsletterStatus({ submitting: true, success: false, error: null });
-      
       // In a real app, you would send the email to your API
       // await axios.post('/api/newsletter', { email });
-      
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
-      
       setEmail('');
       setNewsletterStatus({
         submitting: false,
         success: true,
         error: null,
       });
-      
       // Clear success message after 5 seconds
       setTimeout(() => {
         setNewsletterStatus(prev => ({ ...prev, success: false }));
       }, 5000);
-    } catch (err: any) {
-      setNewsletterStatus({
-        submitting: false,
-        success: false,
-        error: err.response?.data?.error || 'Failed to subscribe. Please try again.',
-      });
+    } catch (subscribeError) {
+      setNewsletterStatus({ submitting: false, success: false, error: 'Failed to subscribe. Please try again.' });
     }
   };
   
@@ -280,13 +271,13 @@ export default function ResourcesPage() {
                       
                       {/* Download Button */}
                       <a 
-                        href={resource.downloadUrl}
+                        href={`/pages/resources/${resource.id}`}
                         className="inline-flex items-center px-4 py-2 bg-white text-blue-700 rounded-lg font-medium hover:bg-gray-100 transition-colors"
                       >
                         <svg className="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                         </svg>
-                        Download
+                        View & Download
                       </a>
                     </div>
                   </div>
