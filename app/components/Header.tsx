@@ -32,7 +32,7 @@ export default function Header() {
               Services
             </Link>
             <Link href="/pages/portfolio" className="text-gray-800 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors">
-              Portfolio
+              Case Studies
             </Link>
             <Link href="/pages/blog" className="text-gray-800 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors">
               Blog

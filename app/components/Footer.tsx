@@ -81,7 +81,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link href="/pages/portfolio" className="text-gray-400 hover:text-blue-400 transition-colors">
-                  Portfolio
+                  Case Studies
                 </Link>
               </li>
               <li>

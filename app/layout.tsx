@@ -7,6 +7,7 @@ import ServiceWorkerManager from './components/ServiceWorkerManager';
 import { initPerformanceMonitoring } from '../utils/performanceMonitoring';
 import GoogleAnalytics from './components/Analytics/GoogleAnalytics';
 import { OrganizationStructuredData, WebsiteStructuredData } from './components/SEO/StructuredData';
+import FloatingCTA from './components/FloatingCTA';
 
 // Font configuration
 const inter = Inter({
@@ -75,6 +76,7 @@ export default function RootLayout({
         </div>
         {/* Service Worker Manager for updates notification */}
         <ServiceWorkerManager />
+        <FloatingCTA />
       </body>
     </html>
   );

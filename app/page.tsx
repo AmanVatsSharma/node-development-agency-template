@@ -108,6 +108,17 @@ export default function Home() {
               </p>
             </div>
           </div>
+
+          {/* Trust & Certifications */}
+          <div className="mt-16">
+            <h3 className="text-2xl font-bold text-center mb-8">Trusted by Global Teams</h3>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 items-center text-center">
+              <div className="text-gray-600 dark:text-gray-300">GDPR-ready</div>
+              <div className="text-gray-600 dark:text-gray-300">SLA-backed</div>
+              <div className="text-gray-600 dark:text-gray-300">Cloud-native</div>
+              <div className="text-gray-600 dark:text-gray-300">Security-first</div>
+            </div>
+          </div>
         </div>
       </section>
 
