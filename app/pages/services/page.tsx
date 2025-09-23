@@ -219,10 +219,10 @@ export default function ServicesPage() {
                     See Related Projects
                   </Link>
                   <Link 
-                    href="/pages/contact" 
+                    href="/pages/enterprise" 
                     className="px-6 py-3 bg-transparent border-2 border-blue-600 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-gray-800 rounded-full font-medium text-center transition duration-300"
                   >
-                    Discuss Your Project
+                    Explore Enterprise Solutions
                   </Link>
                 </div>
               </div>

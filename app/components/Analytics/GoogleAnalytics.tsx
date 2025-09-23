@@ -79,11 +79,11 @@ export const trackEvent = (
   label: string,
   value?: number
 ) => {
-  window.gtag?.('event', action, {
+  window.gtag?.('event', action as any, {
     event_category: category,
     event_label: label,
     value: value,
-  });
+  } as Record<string, unknown>);
 };
 
 // Example usage:

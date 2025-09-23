@@ -65,6 +65,11 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/pages/enterprise" className="text-gray-400 hover:text-blue-400 transition-colors">
+                  Enterprise
+                </Link>
+              </li>
+              <li>
                 <Link href="/pages/about" className="text-gray-400 hover:text-blue-400 transition-colors">
                   About Us
                 </Link>
@@ -76,7 +81,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link href="/pages/portfolio" className="text-gray-400 hover:text-blue-400 transition-colors">
-                  Portfolio
+                  Case Studies
                 </Link>
               </li>
               <li>
@@ -87,6 +92,11 @@ export default function Footer() {
               <li>
                 <Link href="/pages/resources" className="text-gray-400 hover:text-blue-400 transition-colors">
                   Resources
+                </Link>
+              </li>
+              <li>
+                <Link href="/pages/industries" className="text-gray-400 hover:text-blue-400 transition-colors">
+                  Industries
                 </Link>
               </li>
               <li>

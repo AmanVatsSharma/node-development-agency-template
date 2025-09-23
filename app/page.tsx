@@ -27,12 +27,12 @@ export default function Home() {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-            <button className="px-8 py-3 bg-blue-600 hover:bg-blue-700 rounded-full font-medium transition duration-300 transform hover:scale-105">
-              View Our Global Services
-            </button>
-            <button className="px-8 py-3 bg-transparent border-2 border-white hover:bg-white/10 rounded-full font-medium transition duration-300">
+            <a href="/pages/enterprise" className="px-8 py-3 bg-blue-600 hover:bg-blue-700 rounded-full font-medium transition duration-300 transform hover:scale-105">
+              Explore Enterprise Solutions
+            </a>
+            <a href="/pages/portfolio" className="px-8 py-3 bg-transparent border-2 border-white hover:bg-white/10 rounded-full font-medium transition duration-300">
               Explore Enterprise Portfolio
-            </button>
+            </a>
           </div>
           
           <div className="grid grid-cols-2 md:grid-cols-5 gap-4 max-w-4xl mx-auto">
@@ -106,6 +106,17 @@ export default function Home() {
               <p className="text-gray-600 dark:text-gray-300">
                 End-to-end digital transformation for multinational corporations. Cloud migration, DevOps automation, and compliance-ready solutions across all our global offices.
               </p>
+            </div>
+          </div>
+
+          {/* Trust & Certifications */}
+          <div className="mt-16">
+            <h3 className="text-2xl font-bold text-center mb-8">Trusted by Global Teams</h3>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 items-center text-center">
+              <div className="text-gray-600 dark:text-gray-300">GDPR-ready</div>
+              <div className="text-gray-600 dark:text-gray-300">SLA-backed</div>
+              <div className="text-gray-600 dark:text-gray-300">Cloud-native</div>
+              <div className="text-gray-600 dark:text-gray-300">Security-first</div>
             </div>
           </div>
         </div>
@@ -282,12 +293,12 @@ export default function Home() {
             that drive business growth and digital transformation.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="px-8 py-3 bg-white text-blue-600 hover:bg-gray-100 rounded-full font-medium transition duration-300 transform hover:scale-105">
+            <a href="/pages/contact" className="px-8 py-3 bg-white text-blue-600 hover:bg-gray-100 rounded-full font-medium transition duration-300 transform hover:scale-105">
               Contact Our Global Team
-            </button>
-            <button className="px-8 py-3 bg-transparent border-2 border-white hover:bg-white/10 rounded-full font-medium transition duration-300">
-              View Our Services
-            </button>
+            </a>
+            <a href="/pages/enterprise" className="px-8 py-3 bg-transparent border-2 border-white hover:bg-white/10 rounded-full font-medium transition duration-300">
+              View Enterprise
+            </a>
           </div>
         </div>
       </section>

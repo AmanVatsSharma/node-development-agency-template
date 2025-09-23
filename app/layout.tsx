@@ -6,6 +6,8 @@ import Footer from "./components/Footer";
 import ServiceWorkerManager from './components/ServiceWorkerManager';
 import { initPerformanceMonitoring } from '../utils/performanceMonitoring';
 import GoogleAnalytics from './components/Analytics/GoogleAnalytics';
+import { OrganizationStructuredData, WebsiteStructuredData } from './components/SEO/StructuredData';
+import FloatingCTA from './components/FloatingCTA';
 
 // Font configuration
 const inter = Inter({
@@ -60,6 +62,9 @@ export default function RootLayout({
         
         {/* Google Analytics script - replace with your measurement ID */}
         <GoogleAnalytics measurementId="G-XXXXXXXXXX" />
+        {/* Structured Data */}
+        <OrganizationStructuredData />
+        <WebsiteStructuredData />
       </head>
       <body
         className={`${inter.variable} ${poppins.variable} antialiased bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100`}
@@ -71,6 +76,7 @@ export default function RootLayout({
         </div>
         {/* Service Worker Manager for updates notification */}
         <ServiceWorkerManager />
+        <FloatingCTA />
       </body>
     </html>
   );
