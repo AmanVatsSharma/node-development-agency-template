@@ -3,4 +3,4 @@ User-agent: *
 Allow: /
 
 # Sitemaps
-Sitemap: https://enterprisehero.com/sitemap.xml
+Sitemap: https://vedpragya.com/sitemap.xml

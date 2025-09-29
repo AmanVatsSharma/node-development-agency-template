@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/app/lib/prisma';
+import type { Prisma } from '@prisma/client';
 
 // Helper function to handle Prisma operations safely during builds
 const safeDbOperation = async <T>(operation: () => Promise<T>, fallback: T): Promise<T> => {
@@ -30,7 +31,30 @@ export async function GET(
     const { slug } = await params;
     
     // Use the safe operation wrapper
-    const post = await safeDbOperation(
+    type BlogPostWithRelations = Prisma.BlogPostGetPayload<{
+      include: {
+        author: {
+          select: {
+            id: true,
+            name: true,
+            title: true,
+            avatar: true,
+            bio: true,
+          }
+        },
+        comments: {
+          select: {
+            id: true,
+            content: true,
+            name: true,
+            website: true,
+            createdAt: true,
+          }
+        }
+      }
+    }>;
+
+    const post = await safeDbOperation<BlogPostWithRelations | null>(
       () => prisma.blogPost.findUnique({
         where: { slug },
         include: {
@@ -67,12 +91,23 @@ export async function GET(
     }
     
     // Use the safe operation wrapper
-    const relatedPosts = await safeDbOperation(
+    type RelatedPost = Prisma.BlogPostGetPayload<{
+      include: {
+        author: {
+          select: {
+            name: true,
+            avatar: true,
+          }
+        }
+      }
+    }>;
+
+    const relatedPosts = await safeDbOperation<RelatedPost[]>(
       () => prisma.blogPost.findMany({
         where: {
           OR: [
             { category: post.category },
-            { tags: { hasSome: post.tags } },
+            { tags: { hasSome: (post.tags as string[] | undefined) ?? [] } },
           ],
           NOT: { id: post.id }, // Exclude current post
         },

@@ -16,6 +16,12 @@ module.exports = (phase) => {
       // your project has ESLint errors.
       ignoreDuringBuilds: true,
     },
+    // Ignore TypeScript build errors (requested)
+    typescript: {
+      // Warning: This allows production builds to successfully complete even if
+      // your project has type errors.
+      ignoreBuildErrors: true,
+    },
     // Disable specific data fetching during build for API routes
     // Cleaned up deprecated experimental flags for Next 15+
     serverExternalPackages: ['@prisma/client'],
