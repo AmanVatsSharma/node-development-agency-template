@@ -78,7 +78,7 @@ export default function Home() {
         {/* Background Illustrations */}
         <div className="absolute top-10 left-4 sm:left-10 w-32 h-32 sm:w-48 sm:h-48 opacity-10 hidden sm:block">
           <AnimatedIllustration
-            src="/illustrations/undraw_cloud_hosting_a0xv.svg"
+            src="/illustrations/undraw_cloud_hosting.svg"
             alt="Cloud hosting illustration"
             width={192}
             height={192}
@@ -88,7 +88,7 @@ export default function Home() {
         </div>
         <div className="absolute bottom-10 right-4 sm:right-10 w-32 h-32 sm:w-48 sm:h-48 opacity-10 hidden sm:block">
           <AnimatedIllustration
-            src="/illustrations/undraw_mobile_app_re_catg.svg"
+            src="/illustrations/undraw_mobile_app.svg"
             alt="Mobile app illustration"
             width={192}
             height={192}
@@ -151,7 +151,7 @@ export default function Home() {
         {/* Background Illustrations */}
         <div className="absolute top-20 left-20 w-56 h-56 opacity-5">
           <Image
-            src="/illustrations/undraw_cloud_hosting_a0xv.svg"
+            src="/illustrations/undraw_cloud_hosting.svg"
             alt="Cloud hosting illustration"
             width={224}
             height={224}
@@ -160,7 +160,7 @@ export default function Home() {
         </div>
         <div className="absolute bottom-20 right-20 w-56 h-56 opacity-5">
           <Image
-            src="/illustrations/undraw_mobile_app_re_catg.svg"
+            src="/illustrations/undraw_mobile_app.svg"
             alt="Mobile app illustration"
             width={224}
             height={224}
@@ -332,7 +332,7 @@ export default function Home() {
         {/* Background Illustrations */}
         <div className="absolute top-10 right-4 sm:right-10 w-32 h-32 sm:w-48 sm:h-48 opacity-20 hidden sm:block">
           <AnimatedIllustration
-            src="/illustrations/undraw_programming_re_kg9v.svg"
+            src="/illustrations/undraw_programming.svg"
             alt="Programming illustration"
             width={192}
             height={192}
@@ -342,7 +342,7 @@ export default function Home() {
         </div>
         <div className="absolute bottom-10 left-4 sm:left-10 w-28 h-28 sm:w-40 sm:h-40 opacity-20 hidden sm:block">
           <AnimatedIllustration
-            src="/illustrations/undraw_mobile_app_re_catg.svg"
+            src="/illustrations/undraw_mobile_app.svg"
             alt="Mobile app illustration"
             width={160}
             height={160}

@@ -9,7 +9,7 @@ export default function AboutPage() {
         {/* Background Illustrations */}
         <div className="absolute top-20 right-4 sm:right-20 w-48 h-48 sm:w-64 sm:h-64 opacity-10 hidden sm:block">
           <AnimatedIllustration
-            src="/illustrations/undraw_programming_re_kg9v.svg"
+            src="/illustrations/undraw_programming.svg"
             alt="Programming illustration"
             width={256}
             height={256}
@@ -19,7 +19,7 @@ export default function AboutPage() {
         </div>
         <div className="absolute bottom-20 left-4 sm:left-20 w-32 h-32 sm:w-48 sm:h-48 opacity-10 hidden sm:block">
           <AnimatedIllustration
-            src="/illustrations/undraw_mobile_app_re_catg.svg"
+            src="/illustrations/undraw_mobile_app.svg"
             alt="Mobile app illustration"
             width={192}
             height={192}
@@ -48,7 +48,7 @@ export default function AboutPage() {
         {/* Background Illustration */}
         <div className="absolute top-10 right-4 sm:right-10 w-40 h-40 sm:w-56 sm:h-56 opacity-5 hidden sm:block">
           <AnimatedIllustration
-            src="/illustrations/undraw_cloud_hosting_a0xv.svg"
+            src="/illustrations/undraw_cloud_hosting.svg"
             alt="Cloud hosting illustration"
             width={224}
             height={224}
