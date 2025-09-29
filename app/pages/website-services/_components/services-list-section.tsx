@@ -211,8 +211,8 @@ export function ServicesList() {
                   </div>
                   
                   <Button 
-                    variant="gradient" 
-                    className="rounded-full group"
+                    variant="default" 
+                    className="rounded-full group bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700"
                     asChild
                   >
                     <Link href={service.caseStudyLink} className="flex items-center gap-2">

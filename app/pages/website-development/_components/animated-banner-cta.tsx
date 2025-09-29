@@ -150,9 +150,9 @@ export function AnimatedBannerCta() {
                 className="flex flex-col sm:flex-row gap-4 justify-center"
               >
                 <Button 
-                  variant="gradient" 
+                  variant="default" 
                   size="lg" 
-                  className="rounded-full group relative overflow-hidden"
+                  className="rounded-full group relative overflow-hidden bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700"
                   asChild
                 >
                   <Link href="/contact" className="flex items-center gap-2">

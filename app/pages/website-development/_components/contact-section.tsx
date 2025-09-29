@@ -113,8 +113,8 @@ export function ContactSection() {
                 <div>
                   <Button
                     type="submit"
-                    variant="gradient"
-                    className="w-full py-6 rounded-lg flex items-center justify-center gap-2"
+                    variant="default" 
+                    className="w-full py-6 rounded-lg flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700"
                   >
                     Send Message
                     <Send size={16} />
