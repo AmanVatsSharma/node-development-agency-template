@@ -14,7 +14,7 @@ export default function Home() {
         {/* Hero Illustration */}
         <div className="absolute top-20 right-4 sm:right-10 lg:right-20 w-48 h-48 sm:w-64 sm:h-64 lg:w-80 lg:h-80 opacity-20 lg:opacity-30 hidden sm:block">
           <AnimatedIllustration
-            src="/illustrations/undraw_programming_re_kg9v.svg"
+            src="/illustrations/undraw_programming.svg"
             alt="Programming illustration"
             width={320}
             height={320}
