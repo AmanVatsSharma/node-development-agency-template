@@ -6,6 +6,7 @@ import Footer from "./components/Footer";
 import ServiceWorkerManager from './components/ServiceWorkerManager';
 import { initPerformanceMonitoring } from '../utils/performanceMonitoring';
 import GoogleAnalytics from './components/Analytics/GoogleAnalytics';
+import { ThemeProvider } from "./components/ThemeProvider";
 
 // Font configuration
 const inter = Inter({
@@ -49,7 +50,7 @@ export default function RootLayout({
   }
 
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         {/* Add Web App Manifest for PWA support */}
         <link rel="manifest" href="/manifest.json" />
@@ -64,13 +65,20 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${poppins.variable} antialiased bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100`}
       >
-        <div className="flex flex-col min-h-screen">
-          <Header />
-          <main className="flex-grow pt-20">{children}</main>
-          <Footer />
-        </div>
-        {/* Service Worker Manager for updates notification */}
-        <ServiceWorkerManager />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <div className="flex flex-col min-h-screen">
+            <Header />
+            <main className="flex-grow pt-20">{children}</main>
+            <Footer />
+          </div>
+          {/* Service Worker Manager for updates notification */}
+          <ServiceWorkerManager />
+        </ThemeProvider>
       </body>
     </html>
   );

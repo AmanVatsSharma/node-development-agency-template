@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { ThemeToggle } from "./ThemeToggle";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -41,13 +42,16 @@ export default function Header() {
             <Link href="/pages/contact" className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-full font-medium transition-colors">
               Contact Us
             </Link>
+            <ThemeToggle />
           </nav>
 
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden text-gray-800 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
+          {/* Mobile Menu Button and Theme Toggle */}
+          <div className="md:hidden flex items-center space-x-2">
+            <ThemeToggle />
+            <button
+              className="text-gray-800 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-6 w-6"
@@ -71,7 +75,8 @@ export default function Header() {
                 />
               )}
             </svg>
-          </button>
+            </button>
+          </div>
         </div>
 
         {/* Mobile Menu */}
