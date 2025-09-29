@@ -15,6 +15,7 @@ import {
 import { Button } from "@/app/components/ui/button";
 import { cn } from "@/app/lib/cn";
 import Link from "next/link";
+import { Spotlight } from "@/app/components/ui/spotlight";
 
 // Service card component with hover effects
 const ServiceCard = ({ 

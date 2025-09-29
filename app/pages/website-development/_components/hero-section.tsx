@@ -5,7 +5,6 @@ import { useInView } from "react-intersection-observer";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/app/components/ui/button";
-import { Spotlight } from "@/app/components/ui/spotlight";
 import { ArrowRight, Check, ArrowDown, Code, Server, Layout, Globe } from "lucide-react";
 import { cn } from "@/app/lib/cn";
 import { TextGenerateEffect } from "@/app/components/ui/text-generate-effect";
@@ -181,11 +180,8 @@ export function HeroSection() {
       </div>
 
       {/* Content Container */}
-      <Spotlight
-        className="-top-40 left-0 w-full"
-        fill="white"
-      >
-        <div className="container mx-auto px-4">
+
+        <div className="container mx-auto px-4 md:px-0">
           <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-center">
             {/* Left Column: Text Content */}
             <div className="lg:w-1/2 space-y-8 text-center lg:text-left relative z-10">
@@ -204,7 +200,7 @@ export function HeroSection() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: heroInView ? 1 : 0, y: heroInView ? 0 : 20 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
-                className="text-4xl md:text-6xl lg:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-br from-foreground via-foreground/90 to-foreground/70 leading-tight"
+                className="text-4xl md:text-6xl lg:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-br from-foreground via-foreground/90 to-foreground/70 leading-tight px-4"
                 id="wd-hero-heading"
               >
                 We Build <span className="inline-block bg-clip-text text-transparent bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600">Stunning</span> Websites That Convert
@@ -214,7 +210,7 @@ export function HeroSection() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: heroInView ? 1 : 0, y: heroInView ? 0 : 20 }}
                 transition={{ duration: 0.5, delay: 0.3 }}
-                className="text-xl text-muted-foreground"
+                className="text-xl text-muted-foreground px-4 md:px-0"
               >
                 <TextGenerateEffect words="Transform your online presence with our expert web development services. We craft beautiful, high-performance websites that drive results. Get a free quote today." />
               </motion.p>
@@ -275,7 +271,6 @@ export function HeroSection() {
             </div>
           </div>
         </div>
-      </Spotlight>
 
       {/* Scroll indicator */}
       <motion.div

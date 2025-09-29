@@ -9,6 +9,7 @@ import { AnimatedBannerCta } from "./_components/animated-banner-cta";
 import { ContactSection } from "./_components/contact-section";
 import { HeroParallax } from "@/app/components/ui/hero-parallax";
 import { StickyScroll } from "@/app/components/ui/sticky-scroll-reveal";
+import { Spotlight } from "@/app/components/ui/spotlight";
 
 export const products = [
   {
@@ -29,7 +30,7 @@ export const products = [
     thumbnail:
       "https://aceternity.com/images/products/thumbnails/new/rogue.png",
   },
- 
+
   {
     title: "Editorially",
     link: "https://editorially.org",
@@ -48,7 +49,7 @@ export const products = [
     thumbnail:
       "https://aceternity.com/images/products/thumbnails/new/pixelperfect.png",
   },
- 
+
   {
     title: "Algochurn",
     link: "https://algochurn.com",
@@ -79,7 +80,7 @@ export const products = [
     thumbnail:
       "https://aceternity.com/images/products/thumbnails/new/renderwork.png",
   },
- 
+
   {
     title: "Creme Digital",
     link: "https://cremedigital.com",
@@ -157,18 +158,23 @@ const content = [
 
 export default function Home() {
   return (
-    <>      
+    <>
+      <Spotlight
+        className="-top-40 left-0 w-full"
+        fill="white"
+      >
+        {/* Wrapping each section with an error boundary for resilience and diagnostics */}
+        <SectionErrorBoundary name="HeroSection"><HeroSection /></SectionErrorBoundary>
+        <SectionErrorBoundary name="ServicesSection"><ServicesSection /></SectionErrorBoundary>
+        <SectionErrorBoundary name="HeroParallax"><HeroParallax products={products} /></SectionErrorBoundary>
+        <SectionErrorBoundary name="StickyScroll"><StickyScroll content={content} /></SectionErrorBoundary>
+        <SectionErrorBoundary name="PortfolioSection"><PortfolioSection /></SectionErrorBoundary>
+        <SectionErrorBoundary name="TestimonialsSection"><TestimonialsSection /></SectionErrorBoundary>
+        <SectionErrorBoundary name="FAQSection"><FAQSection /></SectionErrorBoundary>
+        <SectionErrorBoundary name="AnimatedBannerCta"><AnimatedBannerCta /></SectionErrorBoundary>
+        <SectionErrorBoundary name="ContactSection"><ContactSection /></SectionErrorBoundary>
+      </Spotlight>
 
-      {/* Wrapping each section with an error boundary for resilience and diagnostics */}
-      <SectionErrorBoundary name="HeroSection"><HeroSection /></SectionErrorBoundary>
-      <SectionErrorBoundary name="ServicesSection"><ServicesSection /></SectionErrorBoundary>
-      <SectionErrorBoundary name="HeroParallax"><HeroParallax products={products} /></SectionErrorBoundary>
-      <SectionErrorBoundary name="StickyScroll"><StickyScroll content={content} /></SectionErrorBoundary>
-      <SectionErrorBoundary name="PortfolioSection"><PortfolioSection /></SectionErrorBoundary>
-      <SectionErrorBoundary name="TestimonialsSection"><TestimonialsSection /></SectionErrorBoundary>
-      <SectionErrorBoundary name="FAQSection"><FAQSection /></SectionErrorBoundary>
-      <SectionErrorBoundary name="AnimatedBannerCta"><AnimatedBannerCta /></SectionErrorBoundary>
-      <SectionErrorBoundary name="ContactSection"><ContactSection /></SectionErrorBoundary>
     </>
   );
 }
