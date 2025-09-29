@@ -11,7 +11,7 @@ import { HeroParallax } from "@/app/components/ui/hero-parallax";
 import { StickyScroll } from "@/app/components/ui/sticky-scroll-reveal";
 import { Spotlight } from "@/app/components/ui/spotlight";
 
-export const products = [
+const products = [
   {
     title: "Moonbeam",
     link: "https://gomoonbeam.com",
