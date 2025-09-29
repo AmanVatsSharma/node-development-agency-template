@@ -3,6 +3,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import Image from "next/image";
+import Link from "next/link";
 import { Button } from "@/app/components/ui/button";
 import { Spotlight } from "@/app/components/ui/spotlight";
 import { ArrowRight, Check, ArrowDown, Code, Server, Layout, Globe } from "lucide-react";
@@ -215,7 +216,7 @@ export function HeroSection() {
                 className="text-xl text-muted-foreground"
               >
                 Transform your online presence with our expert web development services. 
-                We craft beautiful, high-performance websites that drive results.
+                We craft beautiful, high-performance websites that drive results. Get a free quote today.
               </motion.p>
               
               {/* Feature bullets */}
@@ -248,11 +249,13 @@ export function HeroSection() {
                 <Button 
                   size="lg" 
                   className="group relative overflow-hidden rounded-full px-8 shadow-lg shadow-primary/20 transition-all duration-300 hover:shadow-primary/40"
-                  aria-label="Get started"
+                  asChild
                 >
-                  <div className="absolute inset-0 h-full w-full translate-y-[100%] rounded-full bg-gradient-to-b from-blue-600 to-primary transition-transform duration-300 group-hover:translate-y-[0%]" />
-                  <span className="relative z-10 transition-colors duration-300 group-hover:text-white">Get Started</span>
-                  <ArrowRight className="relative z-10 ml-2 h-4 w-4 transition-colors duration-300 group-hover:text-white" />
+                  <Link href="#contact" aria-label="Get a Free Quote">
+                    <div className="absolute inset-0 h-full w-full translate-y-[100%] rounded-full bg-gradient-to-b from-blue-600 to-primary transition-transform duration-300 group-hover:translate-y-[0%]" />
+                    <span className="relative z-10 transition-colors duration-300 group-hover:text-white">Get a Free Quote</span>
+                    <ArrowRight className="relative z-10 ml-2 h-4 w-4 transition-colors duration-300 group-hover:text-white" />
+                  </Link>
                 </Button>
                 
                 <a 
