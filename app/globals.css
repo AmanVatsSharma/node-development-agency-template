@@ -21,17 +21,16 @@
   --font-heading: var(--font-poppins);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-    --primary: #3b82f6;
-    --primary-dark: #2563eb;
-    --secondary: #8b5cf6;
-    --secondary-dark: #7c3aed;
-    --accent: #22d3ee;
-    --accent-dark: #06b6d4;
-  }
+/* Dark-mode overrides follow the `.dark` class placed on <html> by next-themes */
+html.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  --primary: #3b82f6;
+  --primary-dark: #2563eb;
+  --secondary: #8b5cf6;
+  --secondary-dark: #7c3aed;
+  --accent: #22d3ee;
+  --accent-dark: #06b6d4;
 }
 
 body {
@@ -62,19 +61,17 @@ h1, h2, h3, h4, h5, h6 {
   background: #555;
 }
 
-/* Dark mode scrollbar */
-@media (prefers-color-scheme: dark) {
-  ::-webkit-scrollbar-track {
-    background: #1a1a1a;
-  }
-  
-  ::-webkit-scrollbar-thumb {
-    background: #444;
-  }
-  
-  ::-webkit-scrollbar-thumb:hover {
-    background: #666;
-  }
+/* Dark mode scrollbar (scoped to .dark on <html>) */
+.dark ::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #444;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #666;
 }
 
 /* Smooth scrolling */

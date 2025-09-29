@@ -8,6 +8,7 @@ import { Button } from "@/app/components/ui/button";
 import { Spotlight } from "@/app/components/ui/spotlight";
 import { ArrowRight, Check, ArrowDown, Code, Server, Layout, Globe } from "lucide-react";
 import { cn } from "@/app/lib/cn";
+import { TextGenerateEffect } from "@/app/components/ui/text-generate-effect";
 
 // Animated background component with moving particles
 const ParticlesBackground = ({ className }: { className?: string }) => {
@@ -19,7 +20,7 @@ const ParticlesBackground = ({ className }: { className?: string }) => {
             <div className="absolute inset-0 [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]">
               <div className="particles-container absolute inset-0 flex items-center justify-center">
                 {Array.from({ length: 20 }).map((_, i) => (
-                  <div 
+                  <div
                     key={i}
                     className="absolute rounded-full bg-slate-400/10 mix-blend-overlay"
                     style={{
@@ -48,12 +49,12 @@ const WebsiteMockup = () => {
     target: mockupRef,
     offset: ["start end", "end start"],
   });
-  
+
   const [inViewRef, inView] = useInView({
     triggerOnce: false,
     threshold: 0.2
   });
-  
+
   const springConfig = { stiffness: 100, damping: 30, bounce: 0 };
   const y = useSpring(useTransform(scrollYProgress, [0, 1], [-50, 50]), springConfig);
   const rotate = useSpring(useTransform(scrollYProgress, [0, 1], [2, -2]), springConfig);
@@ -85,7 +86,7 @@ const WebsiteMockup = () => {
               devagency.com
             </div>
           </div>
-          
+
           {/* Website preview */}
           <div className="w-full aspect-[16/9] bg-gradient-to-b from-background to-muted/30 relative">
             <div className="absolute inset-4 rounded-lg bg-background/90 backdrop-blur-sm border border-border/50 flex flex-col">
@@ -98,7 +99,7 @@ const WebsiteMockup = () => {
                 <div className="h-1.5 w-24 bg-foreground/70 rounded-full mb-3"></div>
                 <div className="h-2 w-12 bg-primary rounded-full"></div>
               </div>
-              
+
               {/* Mini content blocks */}
               <div className="p-4 flex flex-1 gap-2">
                 <div className="w-1/3 flex flex-col gap-1.5">
@@ -118,7 +119,7 @@ const WebsiteMockup = () => {
                 </div>
               </div>
             </div>
-            
+
             {/* Floating elements */}
             <div className="absolute right-8 top-10 p-2 bg-card shadow-lg border border-border/80 rounded-lg z-10 animate-float">
               <Code className="h-4 w-4 text-blue-500" />
@@ -135,7 +136,7 @@ const WebsiteMockup = () => {
           </div>
         </div>
       </motion.div>
-      
+
       {/* Shadow reflection */}
       <div className="absolute inset-x-0 bottom-0 h-[60px] bg-background shadow-sm blur-2xl w-4/5 mx-auto rounded-[100%] z-0"></div>
     </div>
@@ -168,17 +169,17 @@ export function HeroSection() {
     <section className="relative min-h-screen flex items-center py-20 md:py-32 overflow-hidden" ref={heroRef} role="region" aria-labelledby="wd-hero-heading">
       {/* Particles Background */}
       <ParticlesBackground />
-      
+
       {/* Background gradients */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-purple-900/20 via-background to-background"></div>
-        
+
         {/* Animated gradient blobs */}
         <div className="absolute -left-20 -top-20 h-[300px] w-[300px] rounded-full bg-purple-600/20 blur-[100px] animate-blob"></div>
         <div className="absolute -right-20 top-1/3 h-[250px] w-[250px] rounded-full bg-blue-600/20 blur-[100px] animate-blob animation-delay-2000"></div>
         <div className="absolute left-1/4 -bottom-20 h-[350px] w-[350px] rounded-full bg-indigo-600/20 blur-[100px] animate-blob animation-delay-4000"></div>
       </div>
-      
+
       {/* Content Container */}
       <Spotlight
         className="-top-40 left-0 w-full"
@@ -198,7 +199,7 @@ export function HeroSection() {
                   Web Development Agency
                 </span>
               </motion.div>
-              
+
               <motion.h1
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: heroInView ? 1 : 0, y: heroInView ? 0 : 20 }}
@@ -208,17 +209,16 @@ export function HeroSection() {
               >
                 We Build <span className="inline-block bg-clip-text text-transparent bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600">Stunning</span> Websites That Convert
               </motion.h1>
-              
+
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: heroInView ? 1 : 0, y: heroInView ? 0 : 20 }}
                 transition={{ duration: 0.5, delay: 0.3 }}
                 className="text-xl text-muted-foreground"
               >
-                Transform your online presence with our expert web development services. 
-                We craft beautiful, high-performance websites that drive results. Get a free quote today.
+                <TextGenerateEffect words="Transform your online presence with our expert web development services. We craft beautiful, high-performance websites that drive results. Get a free quote today." />
               </motion.p>
-              
+
               {/* Feature bullets */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -238,7 +238,7 @@ export function HeroSection() {
                   </div>
                 ))}
               </motion.div>
-              
+
               {/* CTA Buttons */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -246,8 +246,8 @@ export function HeroSection() {
                 transition={{ duration: 0.5, delay: 0.5 }}
                 className="flex flex-col sm:flex-row gap-4 sm:items-center pt-4"
               >
-                <Button 
-                  size="lg" 
+                <Button
+                  size="lg"
                   className="group relative overflow-hidden rounded-full px-8 shadow-lg shadow-primary/20 transition-all duration-300 hover:shadow-primary/40"
                   asChild
                 >
@@ -257,9 +257,9 @@ export function HeroSection() {
                     <ArrowRight className="relative z-10 ml-2 h-4 w-4 transition-colors duration-300 group-hover:text-white" />
                   </Link>
                 </Button>
-                
-                <a 
-                  href="#learn-more" 
+
+                <a
+                  href="#learn-more"
                   className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
                   aria-label="See our work"
                 >
@@ -268,7 +268,7 @@ export function HeroSection() {
                 </a>
               </motion.div>
             </div>
-            
+
             {/* Right Column: Interactive UI Mockup */}
             <div className="lg:w-1/2">
               <WebsiteMockup />
@@ -276,9 +276,9 @@ export function HeroSection() {
           </div>
         </div>
       </Spotlight>
-      
+
       {/* Scroll indicator */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1, delay: 1.5 }}
