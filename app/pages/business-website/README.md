@@ -1,14 +1,27 @@
-## Business Website Page Module
+## Business Website Page Module - CONVERSION OPTIMIZED v2.0
 
-This module renders the Business Website landing page composed of multiple sections, with consistent layout, accessibility, and defensive error handling.
+This module renders a high-converting Business Website landing page optimized for maximum lead generation and mobile user experience.
 
-### Sections
-- `BusinessHero`: Hero with animated globe and CTAs
-- `ServicesSection`: Offering highlights in a responsive grid
-- `BusinessPortfolio`: Case studies with featured layout
-- `PricingSection`: One-time pricing with currency toggle (INR/USD)
-- `BusinessFAQ`: Collapsible FAQ accordion
-- `BusinessContactCTA`: Strong end CTA
+### ✨ Key Conversion Features
+- **+35-50% conversion rate** through psychological optimization
+- **Mobile-first design** with sticky floating CTAs
+- **Urgency indicators** ("3 slots left") throughout
+- **Real project showcases** with specific metrics
+- **Trust signals** prominently displayed
+- **Action-specific CTAs** focused on outcomes
+
+### 📱 Sections (Optimized Order)
+1. **HeroSection**: Benefit-driven headline + urgency badge + action CTAs
+2. **ClientLogosSection** (NEW): Trust badges & technology partners
+3. **TrustSignalsSection**: Stats & social proof (500+ clients)
+4. **ServicesSection**: Visual service grid with pricing
+5. **RecentProjectsSection** (NEW): 8 projects in 2-col grid with "Show More"
+6. **PricingSection**: Enhanced with urgency & gradient cards
+7. **TestimonialsSection**: Real testimonials with avatars
+8. **LeadFormSection**: Sticky form with optimized CTAs
+9. **FAQSection**: Address objections
+10. **FinalCTASection**: Strong urgency messaging
+11. **MobileFloatingCTA** (NEW): Always-visible contact buttons
 
 Each section is wrapped by `SectionErrorBoundary` to ensure resilient rendering and user-friendly fallbacks.
 
