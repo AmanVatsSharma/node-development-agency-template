@@ -11,7 +11,7 @@ This module renders a high-converting Business Website landing page optimized fo
 - **Action-specific CTAs** focused on outcomes
 
 ### 📱 Sections (Optimized Order)
-1. **HeroSection**: Benefit-driven headline + urgency badge + action CTAs
+1. **HeroSection**: Benefit-driven headline + HeroHighlight interactive background + urgency badge
 2. **ClientLogosSection** (NEW): Trust badges & technology partners
 3. **TrustSignalsSection**: Stats & social proof (500+ clients)
 4. **ServicesSection**: Visual service grid with pricing
@@ -21,7 +21,8 @@ This module renders a high-converting Business Website landing page optimized fo
 8. **LeadFormSection**: Sticky form with optimized CTAs
 9. **FAQSection**: Address objections
 10. **FinalCTASection**: Strong urgency messaging
-11. **MobileFloatingCTA** (NEW): Always-visible contact buttons
+11. **ScrollToTop** (NEW): Middle-right smooth rectangle button
+12. **MobileFloatingCTA** (ENHANCED): Professional message + notification badge
 
 Each section is wrapped by `SectionErrorBoundary` to ensure resilient rendering and user-friendly fallbacks.
 

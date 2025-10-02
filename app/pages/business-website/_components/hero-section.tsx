@@ -3,12 +3,14 @@
 /**
  * Hero Section Component
  * High-impact hero with Indian city targeting and immediate lead capture CTA
- * Features: Animated background, trust badges, dual CTAs
+ * Features: Animated dot pattern background, trust badges, dual CTAs
+ * ENHANCED: HeroHighlight with interactive hover effects
  */
 
 import React, { useEffect, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Button } from '@/app/components/ui/button';
+import { HeroHighlight, Highlight } from '@/app/components/ui/hero-highlight';
 import { ArrowRight, MapPin, Phone, Star } from 'lucide-react';
 
 console.log('[Business-Website] HeroSection component loaded');
@@ -36,23 +38,16 @@ export function HeroSection() {
   return (
     <section 
       ref={sectionRef}
-      className="relative min-h-[85vh] md:min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-indigo-50 via-white to-purple-50 dark:from-gray-950 dark:via-gray-900 dark:to-indigo-950"
+      className="relative"
       id="home"
       role="region"
       aria-labelledby="hero-heading"
     >
-      {/* Animated Background Pattern */}
-      <div className="absolute inset-0 opacity-30 dark:opacity-20">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `radial-gradient(circle at 25% 25%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
-                           radial-gradient(circle at 75% 75%, rgba(168, 85, 247, 0.1) 0%, transparent 50%)`
-        }} />
-      </div>
-
-      {/* Grid Pattern */}
-      <div className="absolute inset-0 bg-grid-gray-900/[0.04] dark:bg-grid-gray-100/[0.02]" />
-
-      <div className="container mx-auto px-3 sm:px-4 py-12 sm:py-16 md:py-20 relative z-10">
+      <HeroHighlight 
+        containerClassName="min-h-[85vh] md:min-h-screen"
+        className="w-full"
+      >
+        <div className="container mx-auto px-3 sm:px-4 py-12 sm:py-16 md:py-20 relative z-10">
         <motion.div
           initial="hidden"
           animate={inView ? "show" : "hidden"}
@@ -71,20 +66,28 @@ export function HeroSection() {
             <Star className="h-3 w-3 sm:h-4 sm:w-4 text-yellow-500 fill-yellow-500" />
           </motion.div>
 
-          {/* Main Headline - CONVERSION OPTIMIZED: Benefit-focused */}
+          {/* Main Headline - CONVERSION OPTIMIZED: Benefit-focused with Highlight effect */}
           <motion.h1 
             id="hero-heading"
             variants={fadeInUp}
             className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-extrabold mb-3 sm:mb-4 md:mb-6 tracking-tight leading-tight"
           >
             <span className="text-gray-900 dark:text-white block mb-2">
-              Get More Customers Online
+              Get More Customers{' '}
+              <Highlight className="text-gray-900 dark:text-white">
+                Online
+              </Highlight>
             </span>
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 dark:from-indigo-400 dark:via-purple-400 dark:to-pink-400 block">
-              Professional Websites That Convert
+            <span className="block mb-2">
+              <Highlight className="text-gray-900 dark:text-white bg-gradient-to-r from-indigo-300 to-purple-300 dark:from-indigo-500 dark:to-purple-500">
+                Professional Websites That Convert
+              </Highlight>
             </span>
             <span className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-green-600 dark:text-green-400 block mt-2 sm:mt-3">
-              Starting ₹13,999
+              Starting{' '}
+              <Highlight className="text-green-600 dark:text-green-400 bg-gradient-to-r from-green-200 to-emerald-200 dark:from-green-700 dark:to-emerald-700">
+                ₹13,999
+              </Highlight>
             </span>
           </motion.h1>
 
@@ -189,11 +192,8 @@ export function HeroSection() {
             </div>
           </motion.div>
         </motion.div>
-      </div>
-
-      {/* Floating Elements - Hidden on Mobile */}
-      <div className="hidden md:block absolute top-20 left-10 w-20 h-20 bg-gradient-to-br from-indigo-400 to-purple-400 rounded-full blur-3xl opacity-20 animate-pulse" />
-      <div className="hidden md:block absolute bottom-20 right-10 w-32 h-32 bg-gradient-to-br from-pink-400 to-purple-400 rounded-full blur-3xl opacity-20 animate-pulse delay-1000" />
+        </div>
+      </HeroHighlight>
     </section>
   );
 }

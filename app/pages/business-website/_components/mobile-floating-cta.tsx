@@ -1,7 +1,7 @@
 'use client';
 
 /**
- * Mobile Floating CTA Component
+ * Mobile Floating CTA Component - PROFESSIONAL VERSION
  * CONVERSION OPTIMIZATION: Sticky contact buttons for mobile users
  * Ensures CTAs are always accessible on mobile devices
  * 
@@ -9,27 +9,30 @@
  * - Reduces friction to contact
  * - Always-visible = more conversions
  * - Dual options (call + WhatsApp) cover all preferences
+ * - Professional message creates urgency
  * - Pulse animation draws attention
  * 
- * @version 1.0.0
+ * @version 2.0.0
  */
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Phone, MessageCircle, X } from 'lucide-react';
+import { Phone, MessageCircle, X, Sparkles } from 'lucide-react';
 
-console.log('[Business-Website] MobileFloatingCTA component loaded');
+console.log('[Business-Website] MobileFloatingCTA Professional component loaded');
 
 /**
- * Mobile Floating CTA - Sticky buttons for phone and WhatsApp
+ * Mobile Floating CTA - Professional sticky buttons with message
  * CONVERSION IMPACT: +52% mobile conversion rate, +38% call volume
+ * POSITION: Bottom-right, below scroll-to-top button
  */
 export function MobileFloatingCTA() {
   const [isVisible, setIsVisible] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
+  const [showMessage, setShowMessage] = useState(true);
 
   useEffect(() => {
-    console.log('[Business-Website] MobileFloatingCTA mounted');
+    console.log('[Business-Website] MobileFloatingCTA Professional mounted');
     
     // Show after user scrolls down (reduces initial clutter)
     const handleScroll = () => {
@@ -60,8 +63,14 @@ export function MobileFloatingCTA() {
     window.addEventListener('scroll', throttledScroll, { passive: true });
     handleScroll(); // Check initial position
 
+    // Auto-hide message after 10 seconds
+    const messageTimer = setTimeout(() => {
+      setShowMessage(false);
+    }, 10000);
+
     return () => {
       window.removeEventListener('scroll', throttledScroll);
+      clearTimeout(messageTimer);
       console.log('[Business-Website] MobileFloatingCTA unmounted');
     };
   }, [isVisible]);
@@ -93,16 +102,66 @@ export function MobileFloatingCTA() {
             />
           )}
 
-          {/* Floating CTA Container */}
+          {/* Floating CTA Container - PROFESSIONAL VERSION */}
           <motion.div
             initial={{ opacity: 0, y: 100 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 100 }}
             transition={{ duration: 0.3, ease: 'easeOut' }}
-            className="fixed bottom-4 right-4 z-50 lg:hidden"
+            className="fixed bottom-4 right-4 z-50 lg:hidden max-w-[280px]"
             role="complementary"
             aria-label="Quick contact options"
           >
+            {/* Professional Message Bubble */}
+            <AnimatePresence>
+              {showMessage && !isExpanded && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.8, y: 20 }}
+                  transition={{ duration: 0.4, ease: 'easeOut' }}
+                  className="absolute bottom-20 right-0 mb-2"
+                >
+                  <div className="relative bg-white dark:bg-gray-800 rounded-2xl shadow-2xl border-2 border-indigo-200 dark:border-indigo-700 p-4 pr-8">
+                    {/* Close button */}
+                    <button
+                      onClick={() => setShowMessage(false)}
+                      className="absolute top-2 right-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                      aria-label="Close message"
+                    >
+                      <X className="h-4 w-4" />
+                    </button>
+                    
+                    {/* Sparkles icon */}
+                    <div className="flex items-start gap-2 mb-2">
+                      <div className="w-8 h-8 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 flex items-center justify-center flex-shrink-0">
+                        <Sparkles className="h-4 w-4 text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <p className="text-sm font-bold text-gray-900 dark:text-white mb-1">
+                          Free Consultation! 🎉
+                        </p>
+                        <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
+                          Want free consultation for your website? Get now!
+                        </p>
+                      </div>
+                    </div>
+                    
+                    {/* CTA in message */}
+                    <button
+                      onClick={toggleExpanded}
+                      className="w-full mt-2 py-2 px-3 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white text-xs font-bold rounded-lg transition-all flex items-center justify-center gap-1"
+                    >
+                      <Phone className="h-3 w-3" />
+                      Contact Us Now
+                    </button>
+                    
+                    {/* Arrow pointing to button */}
+                    <div className="absolute -bottom-2 right-6 w-4 h-4 bg-white dark:bg-gray-800 border-r-2 border-b-2 border-indigo-200 dark:border-indigo-700 transform rotate-45" />
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
             {/* Expanded Options */}
             <AnimatePresence>
               {isExpanded && (
@@ -146,19 +205,19 @@ export function MobileFloatingCTA() {
               )}
             </AnimatePresence>
 
-            {/* Main Toggle Button */}
+            {/* Main Toggle Button - PROFESSIONAL */}
             <motion.button
               type="button"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={toggleExpanded}
-              className="relative w-14 h-14 rounded-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-2xl shadow-indigo-500/50 flex items-center justify-center"
+              className="relative w-16 h-16 rounded-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white shadow-2xl shadow-green-500/50 flex items-center justify-center"
               aria-label={isExpanded ? 'Close contact options' : 'Open contact options'}
               aria-expanded={isExpanded}
             >
               {/* Pulse animation ring */}
               {!isExpanded && (
-                <span className="absolute inset-0 rounded-full bg-indigo-600 animate-ping opacity-30" />
+                <span className="absolute inset-0 rounded-full bg-green-600 animate-ping opacity-30" />
               )}
               
               {/* Icon */}
@@ -171,7 +230,7 @@ export function MobileFloatingCTA() {
                     exit={{ rotate: 90, opacity: 0 }}
                     transition={{ duration: 0.2 }}
                   >
-                    <X className="h-6 w-6" />
+                    <X className="h-7 w-7" />
                   </motion.div>
                 ) : (
                   <motion.div
@@ -181,36 +240,23 @@ export function MobileFloatingCTA() {
                     exit={{ rotate: -90, opacity: 0 }}
                     transition={{ duration: 0.2 }}
                   >
-                    <Phone className="h-6 w-6" />
+                    <MessageCircle className="h-7 w-7" />
                   </motion.div>
                 )}
               </AnimatePresence>
 
-              {/* Badge - "Free Call" */}
-              {!isExpanded && (
+              {/* Badge - Notification indicator */}
+              {!isExpanded && showMessage && (
                 <motion.div
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
-                  transition={{ delay: 0.5 }}
-                  className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full border-2 border-white flex items-center justify-center"
+                  transition={{ delay: 0.3 }}
+                  className="absolute -top-1 -right-1 w-6 h-6 bg-red-500 rounded-full border-2 border-white flex items-center justify-center shadow-lg"
                 >
-                  <span className="text-[10px] font-bold">!</span>
+                  <span className="text-[10px] font-bold animate-pulse">1</span>
                 </motion.div>
               )}
             </motion.button>
-
-            {/* Helper text - shows on first appearance */}
-            {!isExpanded && (
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 1, duration: 0.5 }}
-                className="absolute bottom-16 right-0 mb-2 px-3 py-1.5 bg-gray-900 text-white text-xs rounded-lg shadow-lg whitespace-nowrap pointer-events-none"
-              >
-                Tap for quick contact
-                <div className="absolute bottom-0 right-6 w-2 h-2 bg-gray-900 transform rotate-45 translate-y-1" />
-              </motion.div>
-            )}
           </motion.div>
         </>
       )}

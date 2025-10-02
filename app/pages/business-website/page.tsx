@@ -34,6 +34,7 @@ import { LeadFormSection } from './_components/lead-form-section';
 import { FAQSection } from './_components/faq-section';
 import { FinalCTASection } from './_components/final-cta-section';
 import { MobileFloatingCTA } from './_components/mobile-floating-cta';
+import { ScrollToTop } from './_components/scroll-to-top';
 import { SectionErrorBoundary } from './_components/section-error-boundary';
 
 console.log('[Business-Website] Main page component loaded');
@@ -130,7 +131,10 @@ export default function BusinessWebsitePage() {
         <FinalCTASection />
       </SectionErrorBoundary>
 
-      {/* Mobile Floating CTA - NEW: Always-visible on mobile */}
+      {/* Scroll To Top - NEW: Middle-right smooth rectangle */}
+      <ScrollToTop />
+
+      {/* Mobile Floating CTA - ENHANCED: Professional with message */}
       <MobileFloatingCTA />
     </main>
   );
