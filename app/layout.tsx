@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
-import Header from "./components/Header";
+import EnhancedHeader from "./components/EnhancedHeader";
 import Footer from "./components/Footer";
 import ServiceWorkerManager from './components/ServiceWorkerManager';
 import { initPerformanceMonitoring } from '../utils/performanceMonitoring';
@@ -72,7 +72,9 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <div className="flex flex-col min-h-screen">
-            <Header />
+            {/* New Enhanced Header with resizable navbar - Cool scroll effect! */}
+            <EnhancedHeader />
+            {/* Added pt-20 padding to prevent content overlap with fixed navbar */}
             <main className="flex-grow pt-20">{children}</main>
             <Footer />
           </div>

@@ -183,6 +183,20 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-gray-800 mt-12 pt-8">
+          {/* Powered By Section */}
+          <div className="text-center mb-6">
+            <p className="text-gray-500 text-sm">
+              <span className="text-2xl font-bold text-blue-400">Enterprise 
+               <span className="text-white">Hero</span> 
+                </span>
+              <span className="text-gray-400 mx-2">is powered by</span>
+              <span className="text-lg font-semibold text-white">VB</span>
+            </p>
+            <p className="text-gray-500 text-xs mt-1">
+              Vedpragya Bharat Private Limited
+            </p>
+          </div>
+
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="text-gray-400 text-sm">
               <p>&copy; {currentYear} Vedpragya Bharat Private Limited (Enterprise Hero). All rights reserved.</p>
