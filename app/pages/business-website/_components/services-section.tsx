@@ -109,40 +109,39 @@ export function ServicesSection() {
   return (
     <section 
       ref={sectionRef}
-      className="py-20 md:py-28 bg-gray-50 dark:bg-gray-950"
+      className="py-10 sm:py-14 md:py-20 lg:py-28 bg-gray-50 dark:bg-gray-950"
       id="services"
       role="region"
       aria-labelledby="services-heading"
     >
-      <div className="container mx-auto px-4">
-        {/* Section Header */}
+      <div className="container mx-auto px-3 sm:px-4">
+        {/* Section Header - Compact */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-8 sm:mb-12 md:mb-16"
         >
-          <div className="inline-block px-6 py-2 bg-gradient-to-r from-indigo-100 to-purple-100 dark:from-indigo-900/30 dark:to-purple-900/30 rounded-full mb-6 border border-indigo-200 dark:border-indigo-800">
-            <span className="text-sm font-bold text-indigo-700 dark:text-indigo-300 uppercase tracking-wide">
-              Complete Digital Solutions
+          <div className="inline-block px-3 sm:px-4 py-1.5 bg-gradient-to-r from-indigo-100 to-purple-100 dark:from-indigo-900/30 dark:to-purple-900/30 rounded-full mb-3 sm:mb-4 border border-indigo-200 dark:border-indigo-800 text-xs sm:text-sm">
+            <span className="font-bold text-indigo-700 dark:text-indigo-300 uppercase tracking-wide">
+              Complete Solutions
             </span>
           </div>
           
           <h2 
             id="services-heading"
-            className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 text-gray-900 dark:text-white"
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold mb-3 sm:mb-4 md:mb-6 text-gray-900 dark:text-white px-2"
           >
             Everything Your Business Needs
           </h2>
           
-          <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 max-w-4xl mx-auto leading-relaxed">
-            From a simple business website to a complete e-commerce platform with digital marketing - 
-            we provide end-to-end solutions at transparent, affordable prices.
+          <p className="text-sm sm:text-base md:text-lg text-gray-700 dark:text-gray-300 max-w-4xl mx-auto leading-snug sm:leading-relaxed px-2">
+            From business website to e-commerce with digital marketing - all at affordable prices.
           </p>
         </motion.div>
 
-        {/* Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+        {/* Services Grid - 2 cols mobile, 4 cols desktop */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
           {services.map((service, index) => {
             const Icon = service.icon;
             return (
@@ -152,46 +151,46 @@ export function ServicesSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                whileHover={{ y: -8, transition: { duration: 0.2 } }}
-                className="group relative bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6 hover:shadow-2xl hover:border-indigo-300 dark:hover:border-indigo-700 transition-all duration-300"
+                whileHover={{ y: -4, transition: { duration: 0.2 } }}
+                className="group relative bg-white dark:bg-gray-900 rounded-xl sm:rounded-2xl border border-gray-200 dark:border-gray-800 p-3 sm:p-4 md:p-6 hover:shadow-2xl hover:border-indigo-300 dark:hover:border-indigo-700 transition-all duration-300"
                 onClick={() => console.log(`[Business-Website] Service clicked: ${service.title}`)}
               >
                 {/* Gradient Background on Hover */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${service.color} opacity-0 group-hover:opacity-5 dark:group-hover:opacity-10 rounded-2xl transition-opacity duration-300`} />
+                <div className={`absolute inset-0 bg-gradient-to-br ${service.color} opacity-0 group-hover:opacity-5 dark:group-hover:opacity-10 rounded-xl sm:rounded-2xl transition-opacity duration-300`} />
                 
                 <div className="relative z-10">
-                  {/* Icon */}
-                  <div className={`inline-flex items-center justify-center w-14 h-14 rounded-xl bg-gradient-to-br ${service.color} mb-4 shadow-lg`}>
-                    <Icon className="h-7 w-7 text-white" />
+                  {/* Icon - Smaller on mobile */}
+                  <div className={`inline-flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-lg sm:rounded-xl bg-gradient-to-br ${service.color} mb-2 sm:mb-3 shadow-lg`}>
+                    <Icon className="h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7 text-white" />
                   </div>
 
-                  {/* Title */}
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
+                  {/* Title - Compact */}
+                  <h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-bold text-gray-900 dark:text-white mb-1 sm:mb-2 leading-tight">
                     {service.title}
                   </h3>
 
-                  {/* Description */}
-                  <p className="text-gray-600 dark:text-gray-400 mb-4 text-sm leading-relaxed">
+                  {/* Description - Hidden on small mobile */}
+                  <p className="hidden sm:block text-gray-600 dark:text-gray-400 mb-3 sm:mb-4 text-xs md:text-sm leading-snug sm:leading-relaxed">
                     {service.description}
                   </p>
 
-                  {/* Features List */}
-                  <ul className="space-y-2 mb-4">
+                  {/* Features List - Compact */}
+                  <ul className="space-y-1 sm:space-y-1.5 mb-2 sm:mb-3 md:mb-4">
                     {service.features.map((feature, idx) => (
-                      <li key={idx} className="flex items-start gap-2 text-sm text-gray-700 dark:text-gray-300">
-                        <span className="text-green-500 mt-0.5">✓</span>
-                        <span>{feature}</span>
+                      <li key={idx} className="flex items-start gap-1 sm:gap-1.5 text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                        <span className="text-green-500 mt-0.5 text-xs">✓</span>
+                        <span className="leading-tight">{feature}</span>
                       </li>
                     ))}
                   </ul>
 
-                  {/* Price */}
-                  <div className="pt-4 border-t border-gray-200 dark:border-gray-800">
-                    <div className="flex items-baseline justify-between">
-                      <span className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">
-                        Starting from
+                  {/* Price - Compact */}
+                  <div className="pt-2 sm:pt-3 md:pt-4 border-t border-gray-200 dark:border-gray-800">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-baseline justify-between gap-0.5 sm:gap-0">
+                      <span className="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">
+                        From
                       </span>
-                      <span className="text-lg font-bold text-indigo-600 dark:text-indigo-400">
+                      <span className="text-base sm:text-lg md:text-xl font-bold text-indigo-600 dark:text-indigo-400">
                         {service.priceFrom}
                       </span>
                     </div>
@@ -202,23 +201,23 @@ export function ServicesSection() {
           })}
         </div>
 
-        {/* Bottom CTA */}
+        {/* Bottom CTA - Compact */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="text-center mt-16"
+          className="text-center mt-8 sm:mt-12 md:mt-16 px-2"
         >
-          <p className="text-lg text-gray-700 dark:text-gray-300 mb-6">
+          <p className="text-sm sm:text-base md:text-lg text-gray-700 dark:text-gray-300 mb-3 sm:mb-4 md:mb-6 leading-snug">
             <span className="font-bold text-indigo-600 dark:text-indigo-400">
               Don't worry about digital marketing!
             </span>
-            {' '}We'll help you completely manage your online presence. Just one call away! 📞
+            {' '}We manage everything. Just call! 📞
           </p>
-          <div className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-green-100 to-emerald-100 dark:from-green-900/30 dark:to-emerald-900/30 rounded-full border border-green-200 dark:border-green-800">
-            <span className="text-sm font-semibold text-gray-800 dark:text-gray-200">
-              💡 Ask us about our complete digital transformation packages
+          <div className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 md:px-6 py-2 sm:py-2.5 md:py-3 bg-gradient-to-r from-green-100 to-emerald-100 dark:from-green-900/30 dark:to-emerald-900/30 rounded-full border border-green-200 dark:border-green-800 text-xs sm:text-sm">
+            <span className="font-semibold text-gray-800 dark:text-gray-200 text-center">
+              💡 Complete digital transformation packages available
             </span>
           </div>
         </motion.div>
