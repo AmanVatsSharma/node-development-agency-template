@@ -1,24 +1,21 @@
 import Image from "next/image";
 import HeroAnimationWrapper from "./components/HeroAnimationWrapper";
 import AnimatedIllustration from "./components/AnimatedIllustration";
-import SoundManager from "./components/SoundManager";
 
 export default function Home() {
   return (
     <div className="w-full">
-      {/* Ambient Sound System */}
-      <SoundManager />
       {/* Hero Section - HIGH CONTRAST */}
       <section className="relative min-h-screen flex items-center justify-center bg-black text-white overflow-hidden">
-        {/* 3D Background - Full opacity for maximum impact */}
-        <div className="absolute inset-0">
+        {/* 3D Background - Full opacity for maximum impact - Camera controls active here */}
+        <div className="absolute inset-0 pointer-events-auto">
           <HeroAnimationWrapper />
         </div>
         
-        {/* Glassmorphism Text Overlay - COMPACT & POSITIONED LOWER */}
-        <div className="relative z-10 text-center px-4 w-full flex items-end justify-center pb-24">
-          {/* Smaller Glass Card Container */}
-          <div className="inline-block px-8 py-6 md:px-10 md:py-8 rounded-2xl backdrop-blur-sm bg-black/30 border border-white/20 shadow-2xl max-w-2xl">
+        {/* Glassmorphism Text Overlay - COMPACT & POSITIONED LOWER - Blocks camera controls */}
+        <div className="relative z-10 text-center px-4 w-full flex items-end justify-center pb-24 pointer-events-none">
+          {/* Smaller Glass Card Container - Re-enable pointer events only on this card */}
+          <div className="inline-block px-8 py-6 md:px-10 md:py-8 rounded-2xl backdrop-blur-sm bg-black/30 border border-white/20 shadow-2xl max-w-2xl pointer-events-auto">
             {/* Compact Headline */}
             <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-3 leading-tight tracking-tight">
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00ff41] via-[#00ffff] to-[#0080ff] drop-shadow-[0_0_30px_rgba(0,255,255,0.8)]">

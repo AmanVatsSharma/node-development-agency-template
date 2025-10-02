@@ -26,16 +26,16 @@ import React, { useRef, useState, useEffect, useMemo } from "react";
 import * as THREE from "three";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { 
-  Sphere, 
-  Stars, 
-  Environment, 
-  Float, 
+  Sphere,
+  Stars,
+  Environment,
+  Float,
   OrbitControls,
   Line,
   MeshTransmissionMaterial,
   Sparkles,
   Html,
-  Text
+  Image as DreiImage
 } from "@react-three/drei";
 import { Suspense } from "react";
 import { EffectComposer, Bloom, ChromaticAberration } from "@react-three/postprocessing";
@@ -54,56 +54,134 @@ const PURE_WHITE = "#ffffff";    // Maximum contrast text
 console.log("🎨 [HeroAnimation] Initializing HIGH CONTRAST Neural Network visualization...");
 
 // ═══════════════════════════════════════════════════════════════════════════
-// PROGRESSIVE LOADING STATE
+// AMBIENT SOUND SYSTEM
 // ═══════════════════════════════════════════════════════════════════════════
 
-interface LoadingPhase {
-  phase: 'stars' | 'sphere' | 'services' | 'connections' | 'particles' | 'complete';
-  progress: number;
-}
+/**
+ * AmbientSoundManager - Manages ambient tech sounds for immersive experience
+ * Includes: Data flow, server hum, electrical ambience
+ */
+const useAmbientSound = () => {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isMuted, setIsMuted] = useState(true); // Start muted, user can enable
+  const audioContextRef = useRef<AudioContext | null>(null);
+  const oscillatorsRef = useRef<OscillatorNode[]>([]);
+  const gainNodesRef = useRef<GainNode[]>([]);
 
-// Technology Stack Logos Data
-const TECH_STACK = [
-  { name: "Node.js", color: NODE_JS_GREEN, position: [-6, 3, 1] as [number, number, number], icon: "N" },
-  { name: "Python", color: "#3776ab", position: [6, 3, 1] as [number, number, number], icon: "🐍" },
-  { name: "SAP", color: "#0FAAFF", position: [-5, -3, 2] as [number, number, number], icon: "SAP" },
-  { name: "Rust", color: "#ce422b", position: [5, -3, 2] as [number, number, number], icon: "🦀" },
-  { name: "Go", color: "#00ADD8", position: [-7, 0, 3] as [number, number, number], icon: "Go" },
-  { name: "Java", color: "#ED8B00", position: [7, 0, 3] as [number, number, number], icon: "☕" },
-  { name: "React", color: "#61DAFB", position: [-4, 4, 2] as [number, number, number], icon: "⚛️" },
-  { name: "Docker", color: "#2496ED", position: [4, 4, 2] as [number, number, number], icon: "🐳" },
-  { name: "K8s", color: "#326CE5", position: [0, -4, 3] as [number, number, number], icon: "☸" },
-  { name: "AWS", color: "#FF9900", position: [-3, -4, 2] as [number, number, number], icon: "☁️" },
-  { name: "Azure", color: "#0089D6", position: [3, -4, 2] as [number, number, number], icon: "⛅" },
-  { name: "GCP", color: "#4285F4", position: [0, 5, 2] as [number, number, number], icon: "🌐" },
-];
+  useEffect(() => {
+    // Create Web Audio API context
+    if (typeof window !== 'undefined' && !audioContextRef.current) {
+      audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
+      console.log("🔊 [AmbientSound] Audio context created");
+    }
 
-console.log("🎨 [HeroAnimation] Initializing HIGH CONTRAST Neural Network visualization...");
+    return () => {
+      // Cleanup on unmount
+      if (audioContextRef.current) {
+        oscillatorsRef.current.forEach(osc => {
+          try { osc.stop(); } catch (e) { }
+        });
+        audioContextRef.current.close();
+        console.log("🔇 [AmbientSound] Audio context closed");
+      }
+    };
+  }, []);
+
+  const startSound = () => {
+    if (!audioContextRef.current || isPlaying) return;
+    
+    const ctx = audioContextRef.current;
+    
+    // Master gain (volume control)
+    const masterGain = ctx.createGain();
+    masterGain.gain.value = 0.15; // 15% volume - subtle but present
+    masterGain.connect(ctx.destination);
+
+    // Sound 1: Low frequency hum (server/electrical)
+    const hum = ctx.createOscillator();
+    const humGain = ctx.createGain();
+    hum.type = 'sine';
+    hum.frequency.value = 60; // 60Hz hum
+    humGain.gain.value = 0.3;
+    hum.connect(humGain);
+    humGain.connect(masterGain);
+    hum.start();
+
+    // Sound 2: Mid frequency texture (data processing)
+    const texture = ctx.createOscillator();
+    const textureGain = ctx.createGain();
+    texture.type = 'triangle';
+    texture.frequency.value = 200;
+    textureGain.gain.value = 0.1;
+    texture.connect(textureGain);
+    textureGain.connect(masterGain);
+    texture.start();
+
+    // Sound 3: High frequency shimmer (network activity)
+    const shimmer = ctx.createOscillator();
+    const shimmerGain = ctx.createGain();
+    shimmer.type = 'sine';
+    shimmer.frequency.value = 1200;
+    shimmerGain.gain.value = 0.05;
+    shimmer.connect(shimmerGain);
+    shimmerGain.connect(masterGain);
+    shimmer.start();
+
+    // Add subtle modulation to shimmer (makes it less static)
+    const lfo = ctx.createOscillator();
+    const lfoGain = ctx.createGain();
+    lfo.frequency.value = 0.5; // Slow modulation
+    lfoGain.gain.value = 50;
+    lfo.connect(lfoGain);
+    lfoGain.connect(shimmer.frequency);
+    lfo.start();
+
+    oscillatorsRef.current = [hum, texture, shimmer, lfo];
+    gainNodesRef.current = [masterGain, humGain, textureGain, shimmerGain];
+    
+    setIsPlaying(true);
+    console.log("🎵 [AmbientSound] Ambient sounds started");
+  };
+
+  const stopSound = () => {
+    oscillatorsRef.current.forEach(osc => {
+      try {
+        osc.stop();
+      } catch (e) {
+        // Already stopped
+      }
+    });
+    oscillatorsRef.current = [];
+    gainNodesRef.current = [];
+    setIsPlaying(false);
+    console.log("🔇 [AmbientSound] Ambient sounds stopped");
+  };
+
+  const toggleMute = () => {
+    if (isMuted) {
+      startSound();
+      setIsMuted(false);
+    } else {
+      stopSound();
+      setIsMuted(true);
+    }
+  };
+
+  return { isPlaying, isMuted, toggleMute, startSound };
+};
 
 // ═══════════════════════════════════════════════════════════════════════════
 // LOADING SPINNER
 // ═══════════════════════════════════════════════════════════════════════════
 
-const LoadingSpinner = ({ progress = 0, phase = 'Loading...' }: { progress?: number; phase?: string }) => {
-  console.log(`⏳ [LoadingSpinner] ${phase} - ${progress}%`);
+const LoadingSpinner = () => {
+  console.log("⏳ [LoadingSpinner] Rendering loading state...");
   
   return (
     <div className="absolute inset-0 flex items-center justify-center bg-black">
-      <div className="text-center">
-        <div className="relative mb-6">
-          <div className="w-20 h-20 border-4 border-transparent border-t-[#00ff41] rounded-full animate-spin"></div>
-          <div className="absolute top-3 left-3 w-14 h-14 border-4 border-transparent border-t-[#00ffff] rounded-full animate-spin" style={{animationDuration: '1.5s'}}></div>
-        </div>
-        
-        {/* Loading progress */}
-        <div className="text-[#00ff41] font-mono text-sm mb-2">{phase}</div>
-        <div className="w-64 h-2 bg-gray-800 rounded-full overflow-hidden">
-          <div 
-            className="h-full bg-gradient-to-r from-[#00ff41] to-[#00ffff] transition-all duration-500"
-            style={{ width: `${progress}%` }}
-          ></div>
-        </div>
-        <div className="text-[#00ffff] font-mono text-xs mt-2">{Math.round(progress)}%</div>
+      <div className="relative">
+        <div className="w-20 h-20 border-4 border-transparent border-t-[#00ff41] rounded-full animate-spin"></div>
+        <div className="absolute top-3 left-3 w-14 h-14 border-4 border-transparent border-t-[#00ffff] rounded-full animate-spin" style={{animationDuration: '1.5s'}}></div>
       </div>
   </div>
 );
@@ -523,89 +601,6 @@ const CodeWindow = ({ position, label }: { position: [number, number, number]; l
 };
 
 // ═══════════════════════════════════════════════════════════════════════════
-// TECHNOLOGY STACK LOGO
-// ═══════════════════════════════════════════════════════════════════════════
-
-/**
- * TechStackLogo - Floating technology logo with label
- * Shows full tech stack expertise
- */
-const TechStackLogo = ({ tech, delay = 0 }: { tech: typeof TECH_STACK[0]; delay?: number }) => {
-  const groupRef = useRef<THREE.Group>(null);
-  const [visible, setVisible] = useState(false);
-  
-  useEffect(() => {
-    // Progressive reveal with delay
-    setTimeout(() => setVisible(true), delay);
-  }, [delay]);
-  
-  useFrame(({ clock }) => {
-    if (groupRef.current && visible) {
-      groupRef.current.rotation.y = Math.sin(clock.getElapsedTime() * 0.3 + delay) * 0.3;
-      const float = Math.sin(clock.getElapsedTime() * 0.5 + delay) * 0.2;
-      groupRef.current.position.y = tech.position[1] + float;
-    }
-  });
-
-  if (!visible) return null;
-
-  return (
-    <group ref={groupRef} position={tech.position}>
-      {/* Icon badge */}
-      <mesh>
-        <circleGeometry args={[0.4, 32]} />
-        <meshStandardMaterial
-          color={tech.color}
-          emissive={tech.color}
-          emissiveIntensity={0.6}
-          transparent
-          opacity={0.9}
-          toneMapped={false}
-        />
-      </mesh>
-      
-      {/* Outer glow ring */}
-      <mesh>
-        <ringGeometry args={[0.4, 0.5, 32]} />
-        <meshBasicMaterial
-          color={tech.color}
-          transparent
-          opacity={0.3}
-          side={THREE.DoubleSide}
-        />
-      </mesh>
-      
-      {/* Tech label */}
-      <Html position={[0, -0.7, 0]} center distanceFactor={12}>
-        <div 
-          className="px-3 py-1.5 rounded-lg border-2 font-bold text-xs whitespace-nowrap"
-          style={{
-            backgroundColor: 'rgba(0,0,0,0.9)',
-            borderColor: tech.color,
-            color: tech.color,
-            textShadow: `0 0 10px ${tech.color}`
-          }}
-        >
-          {tech.name}
-        </div>
-      </Html>
-      
-      {/* Icon text */}
-      <Text
-        position={[0, 0, 0.01]}
-        fontSize={0.25}
-        color={PURE_WHITE}
-        anchorX="center"
-        anchorY="middle"
-        font="/fonts/Inter-Bold.ttf"
-      >
-        {tech.icon}
-      </Text>
-    </group>
-  );
-};
-
-// ═══════════════════════════════════════════════════════════════════════════
 // NODE.JS LOGO
 // ═══════════════════════════════════════════════════════════════════════════
 
@@ -705,6 +700,255 @@ const DataFlow = ({ start, end, color }: { start: [number, number, number]; end:
         toneMapped={false}
       />
     </mesh>
+  );
+};
+
+// ═══════════════════════════════════════════════════════════════════════════
+// OUTER ORBITAL RINGS - Fill the empty space
+// ═══════════════════════════════════════════════════════════════════════════
+
+/**
+ * OuterRings - Large orbital rings with wave animation
+ * Creates a fuller, more dynamic outer space
+ */
+const OuterRings = () => {
+  const ring1Ref = useRef<THREE.Mesh>(null);
+  const ring2Ref = useRef<THREE.Mesh>(null);
+  const ring3Ref = useRef<THREE.Mesh>(null);
+  const ring4Ref = useRef<THREE.Mesh>(null);
+  
+  useFrame(({ clock }) => {
+    const t = clock.getElapsedTime();
+    
+    // Ring 1 - Slow rotation, wave effect
+    if (ring1Ref.current) {
+      ring1Ref.current.rotation.z = t * 0.1;
+      ring1Ref.current.position.y = Math.sin(t * 0.5) * 0.3;
+    }
+    
+    // Ring 2 - Medium rotation, opposite direction
+    if (ring2Ref.current) {
+      ring2Ref.current.rotation.z = -t * 0.15;
+      ring2Ref.current.position.y = Math.cos(t * 0.6) * 0.4;
+    }
+    
+    // Ring 3 - Fast rotation
+    if (ring3Ref.current) {
+      ring3Ref.current.rotation.z = t * 0.2;
+      ring3Ref.current.position.y = Math.sin(t * 0.4 + 1) * 0.2;
+    }
+    
+    // Ring 4 - Very slow, largest
+    if (ring4Ref.current) {
+      ring4Ref.current.rotation.z = -t * 0.08;
+      ring4Ref.current.position.y = Math.cos(t * 0.3) * 0.5;
+    }
+  });
+
+  return (
+    <>
+      {/* Ring 1 - Innermost */}
+      <mesh ref={ring1Ref} rotation={[Math.PI / 2.5, 0, 0]}>
+        <torusGeometry args={[7, 0.02, 16, 64]} />
+        <meshBasicMaterial
+          color={ELECTRIC_CYAN}
+          transparent
+          opacity={0.4}
+          toneMapped={false}
+        />
+      </mesh>
+      
+      {/* Ring 2 - Middle */}
+      <mesh ref={ring2Ref} rotation={[Math.PI / 2.8, 0, Math.PI / 4]}>
+        <torusGeometry args={[8.5, 0.025, 16, 64]} />
+        <meshBasicMaterial
+          color={NEON_GREEN}
+          transparent
+          opacity={0.3}
+          toneMapped={false}
+        />
+      </mesh>
+      
+      {/* Ring 3 - Outer */}
+      <mesh ref={ring3Ref} rotation={[Math.PI / 2.2, 0, Math.PI / 6]}>
+        <torusGeometry args={[10, 0.03, 16, 64]} />
+        <meshBasicMaterial
+          color={LASER_BLUE}
+          transparent
+          opacity={0.35}
+          toneMapped={false}
+        />
+      </mesh>
+      
+      {/* Ring 4 - Outermost */}
+      <mesh ref={ring4Ref} rotation={[Math.PI / 2.6, 0, -Math.PI / 8]}>
+        <torusGeometry args={[11.5, 0.02, 16, 64]} />
+        <meshBasicMaterial
+          color={ELECTRIC_CYAN}
+          transparent
+          opacity={0.25}
+          toneMapped={false}
+        />
+      </mesh>
+    </>
+  );
+};
+
+/**
+ * WavyGridPlane - Animated grid planes for depth
+ */
+const WavyGridPlanes = () => {
+  const gridRef1 = useRef<THREE.Mesh>(null);
+  const gridRef2 = useRef<THREE.Mesh>(null);
+  
+  useFrame(({ clock }) => {
+    const t = clock.getElapsedTime();
+    
+    if (gridRef1.current) {
+      gridRef1.current.position.y = Math.sin(t * 0.3) * 0.5;
+      gridRef1.current.rotation.z = t * 0.05;
+    }
+    
+    if (gridRef2.current) {
+      gridRef2.current.position.y = Math.cos(t * 0.4) * 0.4;
+      gridRef2.current.rotation.z = -t * 0.06;
+    }
+  });
+
+  return (
+    <>
+      {/* Grid 1 - Top */}
+      <mesh ref={gridRef1} position={[0, 6, -8]} rotation={[-Math.PI / 6, 0, 0]}>
+        <torusGeometry args={[12, 0.015, 8, 32]} />
+        <meshBasicMaterial
+          color={NEON_GREEN}
+          transparent
+          opacity={0.15}
+          toneMapped={false}
+        />
+      </mesh>
+      
+      {/* Grid 2 - Bottom */}
+      <mesh ref={gridRef2} position={[0, -6, -8]} rotation={[Math.PI / 6, 0, 0]}>
+        <torusGeometry args={[12, 0.015, 8, 32]} />
+        <meshBasicMaterial
+          color={LASER_BLUE}
+          transparent
+          opacity={0.15}
+          toneMapped={false}
+        />
+      </mesh>
+    </>
+  );
+};
+
+/**
+ * EnergyWaves - Pulsing wave rings for atmosphere
+ */
+const EnergyWaves = () => {
+  const waves = useRef<THREE.Group>(null);
+  
+  useFrame(({ clock }) => {
+    if (waves.current) {
+      waves.current.rotation.y = clock.getElapsedTime() * 0.1;
+    }
+  });
+
+  return (
+    <group ref={waves}>
+      {[0, 1, 2, 3].map((i) => {
+        const delay = i * 0.5;
+        return (
+          <mesh key={i} position={[0, 0, -5 - i * 2]}>
+            <torusGeometry args={[9 + i * 1.5, 0.01, 16, 64]} />
+            <meshBasicMaterial
+              color={i % 2 === 0 ? ELECTRIC_CYAN : NEON_GREEN}
+              transparent
+              opacity={0.2 - i * 0.04}
+              toneMapped={false}
+            />
+          </mesh>
+        );
+      })}
+    </group>
+  );
+};
+
+// ═══════════════════════════════════════════════════════════════════════════
+// TECHNOLOGY STACK LOGOS
+// ═══════════════════════════════════════════════════════════════════════════
+
+/**
+ * TechStackLogo - Floating 3D logo from image files
+ * Loads actual logo images from /logos/ directory
+ */
+const TechStackLogo = ({ position, name, logoPath }: { position: [number, number, number]; name: string; logoPath: string }) => {
+  const groupRef = useRef<THREE.Group>(null);
+  const [texture, setTexture] = useState<THREE.Texture | null>(null);
+  
+  // Load texture
+  useEffect(() => {
+    const loader = new THREE.TextureLoader();
+    loader.load(
+      logoPath,
+      (loadedTexture) => {
+        setTexture(loadedTexture);
+        console.log(`✅ [TechStackLogo] Loaded logo: ${name}`);
+      },
+      undefined,
+      (error) => {
+        console.warn(`⚠️ [TechStackLogo] Failed to load logo: ${name}`, error);
+      }
+    );
+  }, [logoPath, name]);
+  
+  useFrame(({ clock }) => {
+    if (groupRef.current) {
+      groupRef.current.rotation.y = clock.getElapsedTime() * 0.3;
+      const float = Math.sin(clock.getElapsedTime() * 0.6 + position[0]) * 0.12;
+      groupRef.current.position.y = position[1] + float;
+    }
+  });
+
+  return (
+    <group ref={groupRef} position={position}>
+      {/* Logo plane with texture */}
+      <mesh>
+        <planeGeometry args={[0.8, 0.8]} />
+        {texture ? (
+          <meshBasicMaterial
+            map={texture}
+            transparent
+            opacity={0.9}
+            toneMapped={false}
+          />
+        ) : (
+          <meshBasicMaterial
+            color="#00ff41"
+            transparent
+            opacity={0.6}
+          />
+        )}
+      </mesh>
+      
+      {/* Glow ring around logo */}
+      <mesh>
+        <ringGeometry args={[0.5, 0.55, 32]} />
+        <meshBasicMaterial
+          color="#00ffff"
+          transparent
+          opacity={0.3}
+          toneMapped={false}
+        />
+      </mesh>
+      
+      {/* Label */}
+      <Html position={[0, -0.6, 0]} center distanceFactor={15}>
+        <div className="text-[10px] font-bold bg-black/90 px-2 py-1 rounded border border-[#00ffff]/50 whitespace-nowrap text-[#00ffff]">
+          {name}
+        </div>
+      </Html>
+    </group>
   );
 };
 
@@ -996,81 +1240,7 @@ const BackgroundStars = () => {
 // SCENE CONTENT
 // ═══════════════════════════════════════════════════════════════════════════
 
-/**
- * CameraControlsWithExclusion - Custom camera controls that avoid text card
- */
-const CameraControlsWithExclusion = () => {
-  const { camera, gl } = useThree();
-  const controlsRef = useRef<any>(null);
-  
-  useEffect(() => {
-    // Disable controls when mouse is over the text card area (bottom 30% of screen)
-    const handlePointerMove = (event: PointerEvent) => {
-      const screenHeight = gl.domElement.clientHeight;
-      const bottomThreshold = screenHeight * 0.7; // Top 70% is draggable
-      
-      if (controlsRef.current) {
-        if (event.clientY > bottomThreshold) {
-          // Mouse over text card - disable controls
-          controlsRef.current.enabled = false;
-        } else {
-          // Mouse in 3D area - enable controls
-          controlsRef.current.enabled = true;
-        }
-      }
-    };
-    
-    gl.domElement.addEventListener('pointermove', handlePointerMove);
-    
-    return () => {
-      gl.domElement.removeEventListener('pointermove', handlePointerMove);
-    };
-  }, [gl]);
-  
-  return (
-    <OrbitControls
-      ref={controlsRef}
-      enableZoom={true}
-      minDistance={5}
-      maxDistance={15}
-      enablePan={true}
-      autoRotate={true}
-      autoRotateSpeed={0.3}
-      maxPolarAngle={Math.PI / 1.5}
-      minPolarAngle={Math.PI / 3}
-      enableDamping={true}
-      dampingFactor={0.05}
-      zoomSpeed={0.5}
-      panSpeed={0.5}
-    />
-  );
-};
-
 const SceneContent = () => {
-  const [loadingPhase, setLoadingPhase] = useState<LoadingPhase>({
-    phase: 'stars',
-    progress: 0
-  });
-  
-  useEffect(() => {
-    // Progressive loading sequence
-    const phases = [
-      { phase: 'stars' as const, progress: 20, delay: 100 },
-      { phase: 'sphere' as const, progress: 40, delay: 600 },
-      { phase: 'services' as const, progress: 60, delay: 1200 },
-      { phase: 'connections' as const, progress: 80, delay: 1800 },
-      { phase: 'particles' as const, progress: 95, delay: 2400 },
-      { phase: 'complete' as const, progress: 100, delay: 3000 }
-    ];
-    
-    phases.forEach(({ phase, progress, delay }) => {
-      setTimeout(() => {
-        setLoadingPhase({ phase, progress });
-        console.log(`✅ [Loading] ${phase} - ${progress}%`);
-      }, delay);
-    });
-  }, []);
-  
   console.log("🎬 [SceneContent] Composing HIGH CONTRAST scene...");
 
   return (
@@ -1092,43 +1262,22 @@ const SceneContent = () => {
       <HolographicGrid />
       <FloatingRings />
       
-      {/* MAIN ELEMENTS (Phase 2) */}
-      {loadingPhase.progress >= 40 && (
-        <>
-          <NeuralSphere />
-        </>
-      )}
+      {/* OUTER SPACE ELEMENTS - Fill the void */}
+      <OuterRings />
+      <WavyGridPlanes />
+      <EnergyWaves />
       
-      {/* CONNECTIONS (Phase 4) */}
-      {loadingPhase.progress >= 80 && (
-        <>
-          <ConnectionLines />
-        </>
-      )}
+      {/* MAIN ELEMENTS */}
+      <NeuralSphere />
+      <ConnectionLines />
+      <OrbitingParticles />
       
-      {/* PARTICLES (Phase 5) */}
-      {loadingPhase.progress >= 95 && (
-        <>
-          <OrbitingParticles />
-        </>
-      )}
+      {/* ====== WEB DEVELOPMENT ECOSYSTEM WITH LABELS ====== */}
       
-      {/* ====== WEB DEVELOPMENT ECOSYSTEM WITH LABELS (Phase 3) ====== */}
-      {loadingPhase.progress >= 60 && (
-        <>
-          {/* NODE.JS CORE - CENTER TOP */}
-          <Float speed={1.5} rotationIntensity={0.1} floatIntensity={0.4}>
-            <NodeJSLogo position={[0, 4, -2]} />
-          </Float>
-          
-          {/* TECHNOLOGY STACK LOGOS - Progressive reveal */}
-          {TECH_STACK.map((tech, i) => (
-            <TechStackLogo
-              key={tech.name}
-              tech={tech}
-              delay={i * 150} // Stagger appearance
-            />
-          ))}
+      {/* NODE.JS CORE - CENTER TOP */}
+      <Float speed={1.5} rotationIntensity={0.1} floatIntensity={0.4}>
+        <NodeJSLogo position={[0, 4, -2]} />
+      </Float>
       
       {/* Server Racks - INFRASTRUCTURE LAYER */}
       <Float speed={1.5} rotationIntensity={0.2} floatIntensity={0.3}>
@@ -1192,21 +1341,64 @@ const SceneContent = () => {
       <DataFlow start={[6.5, 0.5, 0]} end={[4.5, 2, -2.5]} color={NEON_GREEN} />
       <DataFlow start={[0, 0, 0]} end={[0, 4, -2]} color={ELECTRIC_CYAN} />
       
-      {/* Extra sparkles for magic - REDUCED for performance */}
-      {loadingPhase.progress >= 100 && (
-        <Sparkles
-          count={50}
-          scale={10}
-          size={2}
-          speed={0.3}
-          color={ELECTRIC_CYAN}
-        />
-      )}
-        </>
-      )}
+      {/* ====== TECHNOLOGY STACK LOGOS ====== */}
+      {/* Enterprise & Web Development Technologies - Tighter arrangement for better visibility */}
+      {[
+        { name: "Node.js", logo: "/logos/nodejs.png", pos: [-4.5, 2, -1] },
+        { name: "Python", logo: "/logos/python.png", pos: [4.5, 2, -1] },
+        { name: "TypeScript", logo: "/logos/typescript.png", pos: [-4.5, -2, -1] },
+        { name: "React", logo: "/logos/react.png", pos: [4.5, -2, -1] },
+        { name: "Docker", logo: "/logos/docker.png", pos: [-3, 3, 0] },
+        { name: "Kubernetes", logo: "/logos/kubernetes.png", pos: [3, 3, 0] },
+        { name: "PostgreSQL", logo: "/logos/postgresql.png", pos: [-3, -3, 0] },
+        { name: "MongoDB", logo: "/logos/mongodb.png", pos: [3, -3, 0] },
+        { name: "Redis", logo: "/logos/redis.png", pos: [-6, 0, -0.5] },
+        { name: "GraphQL", logo: "/logos/graphql.png", pos: [6, 0, -0.5] },
+        { name: "AWS", logo: "/logos/aws.png", pos: [-1.5, 3.5, -1] },
+        { name: "Azure", logo: "/logos/azure.png", pos: [1.5, 3.5, -1] },
+        { name: "Rust", logo: "/logos/rust.png", pos: [-1.5, -3.5, -1] },
+        { name: "Go", logo: "/logos/go.png", pos: [1.5, -3.5, -1] },
+        { name: "Java", logo: "/logos/java.png", pos: [0, 4, -0.5] },
+        { name: "SAP", logo: "/logos/sap.png", pos: [0, -4, -0.5] },
+      ].map((tech, i) => (
+        <Float key={`tech-${i}`} speed={1.5 + i * 0.1} rotationIntensity={0.1} floatIntensity={0.3}>
+          <TechStackLogo 
+            position={tech.pos as [number, number, number]} 
+            name={tech.name} 
+            logoPath={tech.logo}
+          />
+        </Float>
+      ))}
       
-      {/* CAMERA CONTROLS - WITH EXCLUSION ZONE FOR TEXT CARD */}
-      <CameraControlsWithExclusion />
+      {/* Extra sparkles for magic - INCREASED to fill space */}
+      <Sparkles
+        count={100}
+        scale={15}
+        size={3}
+        speed={0.4}
+        color={ELECTRIC_CYAN}
+      />
+      
+      {/* Additional distant sparkles */}
+      <Sparkles
+        count={80}
+        scale={20}
+        size={2}
+        speed={0.2}
+        color={NEON_GREEN}
+      />
+      
+      {/* CAMERA CONTROLS - Rotation ONLY, no zoom, all logos visible */}
+      <OrbitControls
+        enableZoom={false} // NO ZOOM
+        enablePan={false}   // NO PAN
+        autoRotate={false}  // User controls rotation
+        maxPolarAngle={Math.PI / 1.8}
+        minPolarAngle={Math.PI / 3.5}
+        enableDamping
+        dampingFactor={0.08}
+        rotateSpeed={0.6}
+      />
       
       {/* POST-PROCESSING EFFECTS - MAXIMUM BLOOM for HIGH CONTRAST */}
       <EffectComposer>
@@ -1231,15 +1423,23 @@ const SceneContent = () => {
 
 export default function HeroAnimation() {
   const [isClient, setIsClient] = useState(false);
+  const { isPlaying, startSound } = useAmbientSound(); // Sound auto-starts, no toggle needed
   
   useEffect(() => {
     console.log("🚀 [HeroAnimation] Component mounted, enabling HIGH CONTRAST rendering...");
     setIsClient(true);
     
+    // Auto-start ambient sound after component mounts
+    const soundTimer = setTimeout(() => {
+      startSound();
+      console.log("🎵 [HeroAnimation] Auto-starting ambient sounds...");
+    }, 1500); // 1.5 second delay for smooth experience
+    
     return () => {
+      clearTimeout(soundTimer);
       console.log("🔚 [HeroAnimation] Component unmounting...");
     };
-  }, []);
+  }, [startSound]);
   
   if (!isClient) {
     console.log("⏸️ [HeroAnimation] SSR detected, skipping render...");
@@ -1250,9 +1450,20 @@ export default function HeroAnimation() {
   
   return (
     <div className="w-full h-full absolute inset-0 bg-black">
+      {/* Sound indicator - no control button, just shows status */}
+      {isPlaying && (
+        <div className="absolute top-4 right-4 z-50 p-2 bg-black/50 backdrop-blur-sm rounded-full border border-[#00ff41]/30">
+          <div className="flex items-center gap-1">
+            <div className="w-1 h-3 bg-[#00ff41] rounded animate-pulse" style={{ animationDelay: '0ms' }}></div>
+            <div className="w-1 h-4 bg-[#00ff41] rounded animate-pulse" style={{ animationDelay: '150ms' }}></div>
+            <div className="w-1 h-3 bg-[#00ff41] rounded animate-pulse" style={{ animationDelay: '300ms' }}></div>
+          </div>
+        </div>
+      )}
+      
       <Suspense fallback={<LoadingSpinner />}>
         <Canvas
-          camera={{ position: [0, 0, 8], fov: 60 }}
+          camera={{ position: [0, 0, 9], fov: 65 }}
           gl={{
             antialias: true,
             alpha: false,
