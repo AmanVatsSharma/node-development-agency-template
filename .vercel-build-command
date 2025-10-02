@@ -1,0 +1,5 @@
+#!/bin/bash
+# Force npm for Vercel builds
+npm install
+npm run build
+
