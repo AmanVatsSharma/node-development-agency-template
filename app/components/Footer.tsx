@@ -4,14 +4,13 @@
  * @fileoverview Enterprise-Grade Mobile-First Footer Component
  * @description Premium, modern footer with perfect mobile responsiveness
  * @author Development Agency
- * @version 3.0.0
+ * @version 3.1.0
  * 
  * DESIGN FEATURES:
  * - Mobile-first responsive design
  * - Collapsible sections on mobile for better UX
  * - Modern gradient backgrounds with glass morphism
  * - Touch-friendly interface (44px+ touch targets)
- * - Back to top button for mobile users
  * - Smooth animations and transitions
  * - Enterprise-grade professional aesthetics
  * 
@@ -25,10 +24,12 @@
  * - Keyboard navigation support
  * - Screen reader friendly
  * - High contrast ratios
+ * 
+ * NOTE: Back-to-top button is now handled by page-specific ScrollToTop component
  */
 
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import NewsletterSignup from "./NewsletterSignup";
 
 console.log('[Footer] Component loaded');
@@ -82,36 +83,10 @@ function CollapsibleSection({ title, children, defaultOpen = false }: Collapsibl
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
-  const [showBackToTop, setShowBackToTop] = useState(false);
   const [showAllOffices, setShowAllOffices] = useState(false);
 
   console.log('[Footer] Rendering footer');
   console.log('[Footer] Show all offices:', showAllOffices);
-
-  // Back to top button visibility logic
-  useEffect(() => {
-    console.log('[Footer] Setting up scroll listener');
-    
-    const handleScroll = () => {
-      const shouldShow = window.scrollY > 500;
-      if (shouldShow !== showBackToTop) {
-        setShowBackToTop(shouldShow);
-        console.log('[Footer] Back to top visibility:', shouldShow);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => {
-      console.log('[Footer] Cleanup scroll listener');
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [showBackToTop]);
-
-  // Smooth scroll to top
-  const scrollToTop = () => {
-    console.log('[Footer] Scrolling to top');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
 
   return (
     <footer className="relative bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950 text-white overflow-hidden">
@@ -357,25 +332,6 @@ export default function Footer() {
           </div>
         </div>
       </div>
-
-      {/* Back to Top Button - Fixed position, only visible on scroll */}
-      <button
-        onClick={scrollToTop}
-        className={`fixed bottom-6 right-6 z-50 w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white rounded-full shadow-2xl transition-all duration-300 flex items-center justify-center group hover:scale-110 ${
-          showBackToTop ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'
-        }`}
-        aria-label="Back to top"
-      >
-        <svg
-          className="w-6 h-6 group-hover:-translate-y-1 transition-transform duration-200"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          aria-hidden="true"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
-        </svg>
-      </button>
     </footer>
   );
 } 
