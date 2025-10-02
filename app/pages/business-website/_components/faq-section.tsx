@@ -79,34 +79,34 @@ export function FAQSection() {
   return (
     <section
       ref={sectionRef}
-      className="py-20 md:py-28 bg-white dark:bg-gray-900"
+      className="py-10 sm:py-14 md:py-20 lg:py-28 bg-white dark:bg-gray-900"
       id="faq"
       role="region"
       aria-labelledby="faq-heading"
     >
-      <div className="container mx-auto px-4">
-        {/* Section Header */}
+      <div className="container mx-auto px-3 sm:px-4">
+        {/* Section Header - Compact */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-8 sm:mb-12 md:mb-16"
         >
-          <div className="inline-block px-6 py-2 bg-gradient-to-r from-blue-100 to-indigo-100 dark:from-blue-900/30 dark:to-indigo-900/30 rounded-full mb-6 border border-blue-200 dark:border-blue-800">
-            <span className="text-sm font-bold text-blue-700 dark:text-blue-300 uppercase tracking-wide">
+          <div className="inline-block px-3 sm:px-4 py-1.5 bg-gradient-to-r from-blue-100 to-indigo-100 dark:from-blue-900/30 dark:to-indigo-900/30 rounded-full mb-3 sm:mb-4 border border-blue-200 dark:border-blue-800 text-xs sm:text-sm">
+            <span className="font-bold text-blue-700 dark:text-blue-300 uppercase tracking-wide">
               Got Questions?
             </span>
           </div>
 
           <h2
             id="faq-heading"
-            className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 text-gray-900 dark:text-white"
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold mb-3 sm:mb-4 md:mb-6 text-gray-900 dark:text-white px-2"
           >
             Frequently Asked Questions
           </h2>
 
-          <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto">
-            Everything you need to know about our services, pricing, and process
+          <p className="text-sm sm:text-base md:text-lg text-gray-700 dark:text-gray-300 max-w-3xl mx-auto px-2">
+            Everything you need to know
           </p>
         </motion.div>
 
@@ -119,21 +119,21 @@ export function FAQSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: index * 0.05 }}
-              className="mb-4"
+              className="mb-3 sm:mb-4"
             >
-              <div className="bg-gray-50 dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden hover:border-indigo-300 dark:hover:border-indigo-700 transition-colors">
+              <div className="bg-gray-50 dark:bg-gray-800 rounded-xl sm:rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden hover:border-indigo-300 dark:hover:border-indigo-700 transition-colors">
                 <button
                   type="button"
                   onClick={() => toggleFAQ(faq.id)}
-                  className="w-full px-6 md:px-8 py-6 flex items-center justify-between text-left gap-4"
+                  className="w-full px-4 sm:px-5 md:px-6 lg:px-8 py-4 sm:py-5 md:py-6 flex items-center justify-between text-left gap-3 sm:gap-4"
                   aria-expanded={openId === faq.id}
                   aria-controls={`faq-answer-${faq.id}`}
                 >
-                  <span className="text-lg md:text-xl font-bold text-gray-900 dark:text-white pr-4">
+                  <span className="text-sm sm:text-base md:text-lg font-bold text-gray-900 dark:text-white pr-2 sm:pr-4 leading-snug">
                     {faq.question}
                   </span>
                   <ChevronDown
-                    className={`h-6 w-6 text-indigo-600 dark:text-indigo-400 flex-shrink-0 transition-transform duration-300 ${
+                    className={`h-5 w-5 sm:h-6 sm:w-6 text-indigo-600 dark:text-indigo-400 flex-shrink-0 transition-transform duration-300 ${
                       openId === faq.id ? 'rotate-180' : ''
                     }`}
                   />
@@ -149,7 +149,7 @@ export function FAQSection() {
                       transition={{ duration: 0.3, ease: 'easeInOut' }}
                       className="overflow-hidden"
                     >
-                      <div className="px-6 md:px-8 pb-6 text-gray-700 dark:text-gray-300 leading-relaxed">
+                      <div className="px-4 sm:px-5 md:px-6 lg:px-8 pb-4 sm:pb-5 md:pb-6 text-gray-700 dark:text-gray-300 leading-snug sm:leading-relaxed text-xs sm:text-sm md:text-base">
                         {faq.answer}
                       </div>
                     </motion.div>
@@ -160,30 +160,30 @@ export function FAQSection() {
           ))}
         </div>
 
-        {/* Bottom CTA */}
+        {/* Bottom CTA - Compact */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="text-center mt-12"
+          className="text-center mt-8 sm:mt-10 md:mt-12 px-2"
         >
-          <p className="text-lg text-gray-700 dark:text-gray-300 mb-4">
+          <p className="text-sm sm:text-base md:text-lg text-gray-700 dark:text-gray-300 mb-3 sm:mb-4">
             Still have questions?
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-3 md:gap-4 justify-center max-w-lg mx-auto">
             <a
               href="tel:+919876543210"
-              className="inline-flex items-center justify-center px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-full font-semibold transition-colors shadow-lg"
+              className="inline-flex items-center justify-center px-4 sm:px-5 md:px-6 py-2.5 sm:py-3 bg-green-600 hover:bg-green-700 text-white rounded-full font-semibold transition-colors shadow-lg text-sm sm:text-base"
               onClick={() => console.log('[Business-Website] FAQ call CTA clicked')}
             >
-              📞 Call Us: +91 98765 43210
+              📞 Call: +91 98765 43210
             </a>
             <a
               href="https://wa.me/919876543210"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-full font-semibold transition-colors shadow-lg"
+              className="inline-flex items-center justify-center px-4 sm:px-5 md:px-6 py-2.5 sm:py-3 bg-green-600 hover:bg-green-700 text-white rounded-full font-semibold transition-colors shadow-lg text-sm sm:text-base"
               onClick={() => console.log('[Business-Website] FAQ WhatsApp CTA clicked')}
             >
               💬 WhatsApp Us

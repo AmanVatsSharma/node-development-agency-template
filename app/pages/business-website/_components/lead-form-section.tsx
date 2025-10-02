@@ -100,14 +100,14 @@ export function LeadFormSection() {
   return (
     <section
       ref={sectionRef}
-      className="py-20 md:py-28 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 dark:from-gray-950 dark:via-indigo-950 dark:to-purple-950"
+      className="py-10 sm:py-14 md:py-20 lg:py-28 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 dark:from-gray-950 dark:via-indigo-950 dark:to-purple-950"
       id="lead-form"
       role="region"
       aria-labelledby="form-heading"
     >
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-3 sm:px-4">
         <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-12 items-start">
             {/* Left Side - Benefits & Trust Signals */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
@@ -115,36 +115,36 @@ export function LeadFormSection() {
               transition={{ duration: 0.6 }}
               className="lg:sticky lg:top-24"
             >
-              <div className="inline-block px-6 py-2 bg-gradient-to-r from-green-100 to-emerald-100 dark:from-green-900/30 dark:to-emerald-900/30 rounded-full mb-6 border border-green-200 dark:border-green-800">
-                <span className="text-sm font-bold text-green-700 dark:text-green-300 uppercase tracking-wide">
-                  Get Free Consultation
+              <div className="inline-block px-3 sm:px-4 py-1.5 bg-gradient-to-r from-green-100 to-emerald-100 dark:from-green-900/30 dark:to-emerald-900/30 rounded-full mb-3 sm:mb-4 border border-green-200 dark:border-green-800 text-xs sm:text-sm">
+                <span className="font-bold text-green-700 dark:text-green-300 uppercase tracking-wide">
+                  Free Consultation
                 </span>
               </div>
 
               <h2
                 id="form-heading"
-                className="text-4xl md:text-5xl font-extrabold mb-6 text-gray-900 dark:text-white"
+                className="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-3 sm:mb-4 md:mb-6 text-gray-900 dark:text-white"
               >
                 Start Your Digital Journey Today
               </h2>
 
-              <p className="text-lg text-gray-700 dark:text-gray-300 mb-8 leading-relaxed">
-                Fill out the form and get a <span className="font-bold text-indigo-600 dark:text-indigo-400">FREE consultation</span> with our expert team. We'll understand your needs and provide a customized solution.
+              <p className="text-sm sm:text-base md:text-lg text-gray-700 dark:text-gray-300 mb-4 sm:mb-6 md:mb-8 leading-snug sm:leading-relaxed">
+                Get a <span className="font-bold text-indigo-600 dark:text-indigo-400">FREE consultation</span> with our expert team!
               </p>
 
-              {/* Benefits List */}
-              <div className="space-y-4 mb-8">
+              {/* Benefits List - Compact */}
+              <div className="space-y-2 sm:space-y-3 mb-4 sm:mb-6 md:mb-8">
                 {[
-                  { icon: CheckCircle, text: 'Get response within 2 hours', color: 'text-green-600 dark:text-green-400' },
-                  { icon: CheckCircle, text: 'Free consultation & quote', color: 'text-blue-600 dark:text-blue-400' },
-                  { icon: CheckCircle, text: 'No obligation to purchase', color: 'text-purple-600 dark:text-purple-400' },
+                  { icon: CheckCircle, text: 'Response in 2 hours', color: 'text-green-600 dark:text-green-400' },
+                  { icon: CheckCircle, text: 'Free consultation', color: 'text-blue-600 dark:text-blue-400' },
+                  { icon: CheckCircle, text: 'No obligation', color: 'text-purple-600 dark:text-purple-400' },
                   { icon: CheckCircle, text: '100% confidential', color: 'text-indigo-600 dark:text-indigo-400' }
                 ].map((item, index) => {
                   const Icon = item.icon;
                   return (
-                    <div key={index} className="flex items-center gap-3">
-                      <Icon className={`h-6 w-6 ${item.color}`} />
-                      <span className="text-gray-700 dark:text-gray-300 font-medium">
+                    <div key={index} className="flex items-center gap-2 sm:gap-3">
+                      <Icon className={`h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 ${item.color} flex-shrink-0`} />
+                      <span className="text-gray-700 dark:text-gray-300 font-medium text-xs sm:text-sm md:text-base">
                         {item.text}
                       </span>
                     </div>
@@ -152,23 +152,23 @@ export function LeadFormSection() {
                 })}
               </div>
 
-              {/* Quick Contact Options */}
-              <div className="bg-white dark:bg-gray-900 rounded-2xl p-6 border border-gray-200 dark:border-gray-800 shadow-lg">
-                <p className="text-sm font-semibold text-gray-600 dark:text-gray-400 mb-4 uppercase tracking-wide">
+              {/* Quick Contact Options - Compact */}
+              <div className="bg-white dark:bg-gray-900 rounded-xl sm:rounded-2xl p-4 sm:p-5 md:p-6 border border-gray-200 dark:border-gray-800 shadow-lg">
+                <p className="text-xs sm:text-sm font-semibold text-gray-600 dark:text-gray-400 mb-3 sm:mb-4 uppercase tracking-wide">
                   Prefer to talk directly?
                 </p>
-                <div className="space-y-3">
+                <div className="space-y-2 sm:space-y-3">
                   <a 
                     href="tel:+919876543210"
-                    className="flex items-center gap-3 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg hover:bg-green-100 dark:hover:bg-green-900/30 transition-colors group"
+                    className="flex items-center gap-2 sm:gap-3 p-2.5 sm:p-3 bg-green-50 dark:bg-green-900/20 rounded-lg hover:bg-green-100 dark:hover:bg-green-900/30 transition-colors group"
                     onClick={() => console.log('[Business-Website] Quick call clicked')}
                   >
-                    <div className="w-10 h-10 rounded-full bg-green-600 flex items-center justify-center">
-                      <Phone className="h-5 w-5 text-white" />
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-green-600 flex items-center justify-center flex-shrink-0">
+                      <Phone className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
                     </div>
-                    <div>
-                      <div className="text-xs text-gray-600 dark:text-gray-400">Call us now</div>
-                      <div className="font-bold text-gray-900 dark:text-white group-hover:text-green-600 dark:group-hover:text-green-400">
+                    <div className="min-w-0">
+                      <div className="text-[10px] sm:text-xs text-gray-600 dark:text-gray-400">Call us now</div>
+                      <div className="font-bold text-gray-900 dark:text-white group-hover:text-green-600 dark:group-hover:text-green-400 text-sm sm:text-base">
                         +91 98765 43210
                       </div>
                     </div>
@@ -178,15 +178,15 @@ export function LeadFormSection() {
                     href="https://wa.me/919876543210"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-3 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg hover:bg-green-100 dark:hover:bg-green-900/30 transition-colors group"
+                    className="flex items-center gap-2 sm:gap-3 p-2.5 sm:p-3 bg-green-50 dark:bg-green-900/20 rounded-lg hover:bg-green-100 dark:hover:bg-green-900/30 transition-colors group"
                     onClick={() => console.log('[Business-Website] WhatsApp clicked')}
                   >
-                    <div className="w-10 h-10 rounded-full bg-green-600 flex items-center justify-center">
-                      <MessageCircle className="h-5 w-5 text-white" />
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-green-600 flex items-center justify-center flex-shrink-0">
+                      <MessageCircle className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
                     </div>
-                    <div>
-                      <div className="text-xs text-gray-600 dark:text-gray-400">WhatsApp us</div>
-                      <div className="font-bold text-gray-900 dark:text-white group-hover:text-green-600 dark:group-hover:text-green-400">
+                    <div className="min-w-0">
+                      <div className="text-[10px] sm:text-xs text-gray-600 dark:text-gray-400">WhatsApp us</div>
+                      <div className="font-bold text-gray-900 dark:text-white group-hover:text-green-600 dark:group-hover:text-green-400 text-sm sm:text-base">
                         Chat on WhatsApp
                       </div>
                     </div>
@@ -195,18 +195,18 @@ export function LeadFormSection() {
               </div>
             </motion.div>
 
-            {/* Right Side - Form */}
+            {/* Right Side - Form - Compact */}
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               animate={inView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              <div className="bg-white dark:bg-gray-900 rounded-3xl p-8 md:p-10 shadow-2xl border border-gray-200 dark:border-gray-800">
+              <div className="bg-white dark:bg-gray-900 rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 lg:p-10 shadow-2xl border border-gray-200 dark:border-gray-800">
                 {!submitted ? (
-                  <form onSubmit={handleSubmit} className="space-y-6">
+                  <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5 md:space-y-6">
                     {/* Name Field */}
                     <div>
-                      <Label htmlFor="name" className="text-gray-900 dark:text-white font-semibold mb-2 block">
+                      <Label htmlFor="name" className="text-gray-900 dark:text-white font-semibold mb-1.5 sm:mb-2 block text-sm sm:text-base">
                         Your Name <span className="text-red-500">*</span>
                       </Label>
                       <Input
@@ -217,14 +217,14 @@ export function LeadFormSection() {
                         onChange={handleChange}
                         required
                         placeholder="Enter your full name"
-                        className="h-12"
+                        className="h-10 sm:h-11 md:h-12 text-sm sm:text-base"
                       />
                     </div>
 
                     {/* Phone & Email Row */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                       <div>
-                        <Label htmlFor="phone" className="text-gray-900 dark:text-white font-semibold mb-2 block">
+                        <Label htmlFor="phone" className="text-gray-900 dark:text-white font-semibold mb-1.5 sm:mb-2 block text-sm sm:text-base">
                           Phone Number <span className="text-red-500">*</span>
                         </Label>
                         <Input
@@ -235,12 +235,12 @@ export function LeadFormSection() {
                           onChange={handleChange}
                           required
                           placeholder="+91 98765 43210"
-                          className="h-12"
+                          className="h-10 sm:h-11 md:h-12 text-sm sm:text-base"
                         />
                       </div>
 
                       <div>
-                        <Label htmlFor="email" className="text-gray-900 dark:text-white font-semibold mb-2 block">
+                        <Label htmlFor="email" className="text-gray-900 dark:text-white font-semibold mb-1.5 sm:mb-2 block text-sm sm:text-base">
                           Email Address
                         </Label>
                         <Input
@@ -250,15 +250,15 @@ export function LeadFormSection() {
                           value={formData.email}
                           onChange={handleChange}
                           placeholder="your@email.com"
-                          className="h-12"
+                          className="h-10 sm:h-11 md:h-12 text-sm sm:text-base"
                         />
                       </div>
                     </div>
 
                     {/* City & Business Type Row */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                       <div>
-                        <Label htmlFor="city" className="text-gray-900 dark:text-white font-semibold mb-2 block">
+                        <Label htmlFor="city" className="text-gray-900 dark:text-white font-semibold mb-1.5 sm:mb-2 block text-sm sm:text-base">
                           Your City <span className="text-red-500">*</span>
                         </Label>
                         <select
@@ -267,7 +267,7 @@ export function LeadFormSection() {
                           value={formData.city}
                           onChange={handleChange as any}
                           required
-                          className="w-full h-12 rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] outline-none"
+                          className="w-full h-10 sm:h-11 md:h-12 rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] outline-none"
                         >
                           <option value="">Select your city</option>
                           {INDIAN_CITIES.map(city => (
@@ -277,7 +277,7 @@ export function LeadFormSection() {
                       </div>
 
                       <div>
-                        <Label htmlFor="businessType" className="text-gray-900 dark:text-white font-semibold mb-2 block">
+                        <Label htmlFor="businessType" className="text-gray-900 dark:text-white font-semibold mb-1.5 sm:mb-2 block text-sm sm:text-base">
                           Business Type
                         </Label>
                         <select
@@ -285,7 +285,7 @@ export function LeadFormSection() {
                           name="businessType"
                           value={formData.businessType}
                           onChange={handleChange as any}
-                          className="w-full h-12 rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] outline-none"
+                          className="w-full h-10 sm:h-11 md:h-12 rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] outline-none"
                         >
                           <option value="">Select type</option>
                           {BUSINESS_TYPES.map(type => (
@@ -297,7 +297,7 @@ export function LeadFormSection() {
 
                     {/* Message Field */}
                     <div>
-                      <Label htmlFor="message" className="text-gray-900 dark:text-white font-semibold mb-2 block">
+                      <Label htmlFor="message" className="text-gray-900 dark:text-white font-semibold mb-1.5 sm:mb-2 block text-sm sm:text-base">
                         Tell us about your project
                       </Label>
                       <Textarea
@@ -305,8 +305,9 @@ export function LeadFormSection() {
                         name="message"
                         value={formData.message}
                         onChange={handleChange}
-                        placeholder="What kind of website do you need? Any specific requirements?"
-                        rows={4}
+                        placeholder="What kind of website do you need?"
+                        rows={3}
+                        className="text-sm sm:text-base"
                       />
                     </div>
 
@@ -314,7 +315,7 @@ export function LeadFormSection() {
                     <Button
                       type="submit"
                       size="lg"
-                      className="w-full text-base h-14"
+                      className="w-full text-sm sm:text-base h-12 sm:h-13 md:h-14"
                       disabled={loading}
                     >
                       {loading ? (
@@ -322,13 +323,13 @@ export function LeadFormSection() {
                       ) : (
                         <>
                           Get Free Consultation
-                          <ArrowRight className="ml-2 h-5 w-5" />
+                          <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
                         </>
                       )}
                     </Button>
 
-                    <p className="text-xs text-center text-gray-600 dark:text-gray-400">
-                      By submitting, you agree to receive communication from us. We respect your privacy.
+                    <p className="text-[10px] sm:text-xs text-center text-gray-600 dark:text-gray-400 leading-snug">
+                      By submitting, you agree to receive communication from us.
                     </p>
                   </form>
                 ) : (
