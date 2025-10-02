@@ -141,9 +141,9 @@ export function HeroSection() {
               className="text-sm sm:text-base px-5 sm:px-8 py-4 sm:py-6 h-auto bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm w-full sm:w-auto"
               onClick={() => console.log('[Business-Website] Hero CTA - Call Now clicked')}
             >
-              <a href="tel:+919876543210" className="flex items-center justify-center gap-2">
+              <a href="tel:+919963730111" className="flex items-center justify-center gap-2">
                 <Phone className="h-4 w-4 sm:h-5 sm:w-5" />
-                <span>Call: +91 98765 43210</span>
+                <span>Call: +91 99637 30111</span>
               </a>
             </Button>
           </motion.div>

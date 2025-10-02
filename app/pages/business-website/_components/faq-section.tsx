@@ -173,14 +173,14 @@ export function FAQSection() {
           </p>
           <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-3 md:gap-4 justify-center max-w-lg mx-auto">
             <a
-              href="tel:+919876543210"
+              href="tel:+919963730111"
               className="inline-flex items-center justify-center px-4 sm:px-5 md:px-6 py-2.5 sm:py-3 bg-green-600 hover:bg-green-700 text-white rounded-full font-semibold transition-colors shadow-lg text-sm sm:text-base"
               onClick={() => console.log('[Business-Website] FAQ call CTA clicked')}
             >
-              📞 Call: +91 98765 43210
+              📞 Call: +91 99637 30111
             </a>
             <a
-              href="https://wa.me/919876543210"
+              href="https://wa.me/919963730111"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center px-4 sm:px-5 md:px-6 py-2.5 sm:py-3 bg-green-600 hover:bg-green-700 text-white rounded-full font-semibold transition-colors shadow-lg text-sm sm:text-base"

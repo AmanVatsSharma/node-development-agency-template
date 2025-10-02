@@ -159,7 +159,7 @@ export function LeadFormSection() {
                 </p>
                 <div className="space-y-2 sm:space-y-3">
                   <a 
-                    href="tel:+919876543210"
+                    href="tel:+919963730111"
                     className="flex items-center gap-2 sm:gap-3 p-2.5 sm:p-3 bg-green-50 dark:bg-green-900/20 rounded-lg hover:bg-green-100 dark:hover:bg-green-900/30 transition-colors group"
                     onClick={() => console.log('[Business-Website] Quick call clicked')}
                   >
@@ -169,13 +169,13 @@ export function LeadFormSection() {
                     <div className="min-w-0">
                       <div className="text-[10px] sm:text-xs text-gray-600 dark:text-gray-400">Call us now</div>
                       <div className="font-bold text-gray-900 dark:text-white group-hover:text-green-600 dark:group-hover:text-green-400 text-sm sm:text-base">
-                        +91 98765 43210
+                        +91 99637 30111
                       </div>
                     </div>
                   </a>
 
                   <a 
-                    href="https://wa.me/919876543210"
+                    href="https://wa.me/919963730111"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-2 sm:gap-3 p-2.5 sm:p-3 bg-green-50 dark:bg-green-900/20 rounded-lg hover:bg-green-100 dark:hover:bg-green-900/30 transition-colors group"
@@ -234,7 +234,7 @@ export function LeadFormSection() {
                           value={formData.phone}
                           onChange={handleChange}
                           required
-                          placeholder="+91 98765 43210"
+                          placeholder="+91 99637 30111"
                           className="h-10 sm:h-11 md:h-12 text-sm sm:text-base"
                         />
                       </div>
@@ -348,7 +348,7 @@ export function LeadFormSection() {
                       We've received your request. Our team will contact you within 2 hours!
                     </p>
                     <p className="text-sm text-gray-600 dark:text-gray-400">
-                      Check your phone for a call from +91 98765 43210
+                      Check your phone for a call from +91 99637 30111
                     </p>
                   </motion.div>
                 )}

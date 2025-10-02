@@ -125,9 +125,9 @@ export function FinalCTASection() {
               className="border-2 border-white text-white hover:bg-white/10 backdrop-blur-sm text-sm sm:text-base px-6 sm:px-8 py-4 sm:py-5 md:py-6 h-auto w-full sm:w-auto"
               onClick={() => console.log('[Business-Website] Final CTA - Call clicked')}
             >
-              <a href="tel:+919876543210" className="flex items-center justify-center gap-2">
+              <a href="tel:+919963730111" className="flex items-center justify-center gap-2">
                 <Phone className="h-4 w-4 sm:h-5 sm:w-5" />
-                Call: +91 98765 43210
+                Call: +91 99637 30111
               </a>
             </Button>
           </motion.div>
@@ -141,7 +141,7 @@ export function FinalCTASection() {
           >
             <span className="font-semibold">Or reach instantly:</span>
             <a
-              href="https://wa.me/919876543210"
+              href="https://wa.me/919963730111"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-1.5 sm:gap-2 hover:text-white transition-colors"
