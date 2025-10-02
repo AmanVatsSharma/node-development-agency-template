@@ -1,10 +1,13 @@
 import Image from "next/image";
 import HeroAnimationWrapper from "./components/HeroAnimationWrapper";
 import AnimatedIllustration from "./components/AnimatedIllustration";
+import SoundManager from "./components/SoundManager";
 
 export default function Home() {
   return (
     <div className="w-full">
+      {/* Ambient Sound System */}
+      <SoundManager />
       {/* Hero Section - HIGH CONTRAST */}
       <section className="relative min-h-screen flex items-center justify-center bg-black text-white overflow-hidden">
         {/* 3D Background - Full opacity for maximum impact */}
