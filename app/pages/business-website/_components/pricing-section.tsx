@@ -110,35 +110,44 @@ export function PricingSection() {
       aria-labelledby="pricing-heading"
     >
       <div className="container mx-auto px-3 sm:px-4">
-        {/* Section Header - Compact */}
+          {/* Section Header - ENHANCED with urgency */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
           className="text-center mb-8 sm:mb-12 md:mb-16"
         >
-          <div className="inline-block px-3 sm:px-4 py-1.5 bg-gradient-to-r from-green-100 to-emerald-100 dark:from-green-900/30 dark:to-emerald-900/30 rounded-full mb-3 sm:mb-4 border border-green-200 dark:border-green-800 text-xs sm:text-sm">
-            <span className="font-bold text-green-700 dark:text-green-300 uppercase tracking-wide flex items-center gap-1 sm:gap-2">
-              <IndianRupee className="h-3 w-3 sm:h-4 sm:w-4" />
-              No Hidden Costs
+          {/* URGENCY BADGE - Creates scarcity */}
+          <div className="inline-block px-4 sm:px-5 py-2 bg-gradient-to-r from-red-100 to-orange-100 dark:from-red-900/30 dark:to-orange-900/30 rounded-full mb-4 sm:mb-5 border-2 border-red-300 dark:border-red-800 text-xs sm:text-sm shadow-lg">
+            <span className="font-bold text-red-700 dark:text-red-300 uppercase tracking-wide flex items-center gap-2">
+              <span className="relative flex h-2.5 w-2.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-500"></span>
+              </span>
+              🔥 Limited Time Offer - 3 Slots Left!
             </span>
           </div>
 
           <h2
             id="pricing-heading"
-            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold mb-3 sm:mb-4 md:mb-6 text-gray-900 dark:text-white px-2"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4 sm:mb-5 md:mb-7 text-gray-900 dark:text-white px-2 leading-tight"
           >
-            Affordable Packages
+            Transparent, Affordable Pricing
           </h2>
 
-          <p className="text-sm sm:text-base md:text-lg text-gray-700 dark:text-gray-300 max-w-4xl mx-auto leading-snug sm:leading-relaxed mb-4 sm:mb-6 px-2">
-            One-time payment. No recurring fees. GST included. Own forever.
+          <p className="text-base sm:text-lg md:text-xl text-gray-700 dark:text-gray-300 max-w-4xl mx-auto leading-snug sm:leading-relaxed mb-5 sm:mb-7 px-2 font-medium">
+            One-time payment. <span className="text-green-600 dark:text-green-400 font-bold">No recurring fees.</span> GST included. Own forever.
           </p>
 
-          <div className="flex flex-wrap justify-center gap-2 text-xs sm:text-sm px-2">
-            {['✓ 14-21 Days', '✓ Money-Back', '✓ Free Setup', '✓ Lifetime'].map((item, i) => (
-              <span key={i} className="px-2.5 sm:px-3 py-1.5 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 rounded-full font-medium whitespace-nowrap">
-                {item}
+          <div className="flex flex-wrap justify-center gap-2 sm:gap-3 text-xs sm:text-sm px-2">
+            {[
+              { icon: '⚡', text: '14-21 Days Delivery' },
+              { icon: '💯', text: 'Money-Back Guarantee' },
+              { icon: '🎁', text: 'Free Setup & SSL' },
+              { icon: '♾️', text: 'Lifetime Ownership' }
+            ].map((item, i) => (
+              <span key={i} className="px-3 sm:px-4 py-2 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 text-blue-700 dark:text-blue-300 rounded-full font-semibold whitespace-nowrap border border-blue-200 dark:border-blue-800 shadow-sm">
+                {item.icon} {item.text}
               </span>
             ))}
           </div>
@@ -153,10 +162,10 @@ export function PricingSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.15 }}
-              className={`relative rounded-2xl sm:rounded-3xl border-2 p-4 sm:p-6 md:p-8 bg-white dark:bg-gray-800 transition-all duration-300 ${
+              className={`relative rounded-2xl sm:rounded-3xl p-5 sm:p-7 md:p-9 transition-all duration-300 group cursor-pointer ${
                 plan.popular
-                  ? 'border-indigo-500 shadow-2xl shadow-indigo-500/20 lg:scale-105 lg:-mt-4'
-                  : 'border-gray-200 dark:border-gray-700 hover:border-indigo-300 dark:hover:border-indigo-700 hover:shadow-xl'
+                  ? 'bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 dark:from-indigo-900/30 dark:via-purple-900/20 dark:to-pink-900/30 border-4 border-indigo-500 dark:border-indigo-600 shadow-2xl shadow-indigo-500/30 lg:scale-105 lg:-mt-6'
+                  : 'bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 hover:border-indigo-400 dark:hover:border-indigo-600 hover:shadow-2xl hover:scale-105 hover:-translate-y-2'
               }`}
             >
               {/* Popular Badge */}
@@ -208,15 +217,21 @@ export function PricingSection() {
                 ))}
               </ul>
 
-              {/* CTA Button */}
+              {/* CTA Button - CONVERSION OPTIMIZED */}
               <Button
                 asChild
                 variant={plan.popular ? 'default' : 'outline'}
                 size="lg"
-                className="w-full text-sm sm:text-base"
+                className={`w-full text-sm sm:text-base font-bold transition-all ${
+                  plan.popular 
+                    ? 'bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 shadow-lg hover:shadow-xl' 
+                    : 'hover:bg-indigo-50 dark:hover:bg-indigo-900/20'
+                }`}
                 onClick={() => console.log(`[Business-Website] Pricing CTA clicked: ${plan.name}`)}
               >
-                <a href="#lead-form">{plan.cta}</a>
+                <a href="#lead-form" className="flex items-center justify-center gap-2">
+                  {plan.price === 'Custom' ? '📞 Request Custom Quote' : '🚀 Start My Project'}
+                </a>
               </Button>
             </motion.div>
           ))}

@@ -195,13 +195,18 @@ export function LeadFormSection() {
               </div>
             </motion.div>
 
-            {/* Right Side - Form - Compact */}
+            {/* Right Side - Form - MOBILE STICKY OPTIMIZED */}
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               animate={inView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.2 }}
+              className="lg:sticky lg:top-24"
             >
-              <div className="bg-white dark:bg-gray-900 rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 lg:p-10 shadow-2xl border border-gray-200 dark:border-gray-800">
+              <div className="bg-white dark:bg-gray-900 rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 lg:p-10 shadow-2xl border-2 border-indigo-200 dark:border-indigo-800 relative overflow-hidden">
+                {/* Decorative gradient overlay */}
+                <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-indigo-100 to-purple-100 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-full blur-3xl -z-0" />
+                
+                <div className="relative z-10">
                 {!submitted ? (
                   <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5 md:space-y-6">
                     {/* Name Field */}
@@ -311,26 +316,38 @@ export function LeadFormSection() {
                       />
                     </div>
 
-                    {/* Submit Button */}
+                    {/* Submit Button - CONVERSION OPTIMIZED */}
                     <Button
                       type="submit"
                       size="lg"
-                      className="w-full text-sm sm:text-base h-12 sm:h-13 md:h-14"
+                      className="w-full text-sm sm:text-base md:text-lg h-14 sm:h-15 md:h-16 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 shadow-xl hover:shadow-2xl font-bold transition-all hover:scale-[1.02]"
                       disabled={loading}
                     >
                       {loading ? (
-                        <>Processing...</>
+                        <span className="flex items-center gap-2">
+                          <span className="animate-spin h-5 w-5 border-2 border-white border-t-transparent rounded-full"></span>
+                          Processing Your Request...
+                        </span>
                       ) : (
                         <>
-                          Get Free Consultation
-                          <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
+                          💰 Get My Free Quote Now (2-Hour Response!)
+                          <ArrowRight className="ml-2 h-5 w-5" />
                         </>
                       )}
                     </Button>
 
-                    <p className="text-[10px] sm:text-xs text-center text-gray-600 dark:text-gray-400 leading-snug">
-                      By submitting, you agree to receive communication from us.
-                    </p>
+                    {/* Trust Indicators */}
+                    <div className="flex items-center justify-center gap-4 text-xs sm:text-sm text-gray-600 dark:text-gray-400">
+                      <span className="flex items-center gap-1">
+                        ✅ No Spam
+                      </span>
+                      <span className="flex items-center gap-1">
+                        🔒 100% Secure
+                      </span>
+                      <span className="flex items-center gap-1">
+                        ⚡ 2-Hour Response
+                      </span>
+                    </div>
                   </form>
                 ) : (
                   <motion.div
@@ -352,6 +369,7 @@ export function LeadFormSection() {
                     </p>
                   </motion.div>
                 )}
+                </div>
               </div>
             </motion.div>
           </div>

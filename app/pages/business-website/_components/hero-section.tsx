@@ -71,17 +71,20 @@ export function HeroSection() {
             <Star className="h-3 w-3 sm:h-4 sm:w-4 text-yellow-500 fill-yellow-500" />
           </motion.div>
 
-          {/* Main Headline - Optimized for Mobile */}
+          {/* Main Headline - CONVERSION OPTIMIZED: Benefit-focused */}
           <motion.h1 
             id="hero-heading"
             variants={fadeInUp}
             className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-extrabold mb-3 sm:mb-4 md:mb-6 tracking-tight leading-tight"
           >
-            <span className="text-gray-900 dark:text-white block mb-1">
-              Website for Your Business
+            <span className="text-gray-900 dark:text-white block mb-2">
+              Get More Customers Online
             </span>
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 dark:from-indigo-400 dark:via-purple-400 dark:to-pink-400 block">
-              Just ₹13,999
+              Professional Websites That Convert
+            </span>
+            <span className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-green-600 dark:text-green-400 block mt-2 sm:mt-3">
+              Starting ₹13,999
             </span>
           </motion.h1>
 
@@ -117,7 +120,7 @@ export function HeroSection() {
             ))}
           </motion.div>
 
-          {/* CTA Buttons - Stack on Mobile */}
+          {/* CTA Buttons - CONVERSION OPTIMIZED: Action-specific copy */}
           <motion.div 
             variants={fadeInUp}
             className="flex flex-col gap-2.5 sm:gap-3 justify-center items-stretch sm:items-center mb-5 sm:mb-8 max-w-md sm:max-w-none mx-auto px-2"
@@ -125,11 +128,11 @@ export function HeroSection() {
             <Button 
               asChild
               size="lg"
-              className="text-sm sm:text-base px-5 sm:px-8 py-4 sm:py-6 h-auto shadow-xl hover:shadow-2xl transition-shadow w-full sm:w-auto"
-              onClick={() => console.log('[Business-Website] Hero CTA - Get Free Quote clicked')}
+              className="text-sm sm:text-base md:text-lg px-6 sm:px-10 py-5 sm:py-7 h-auto shadow-xl hover:shadow-2xl transition-all hover:scale-105 w-full sm:w-auto bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700"
+              onClick={() => console.log('[Business-Website] Hero CTA - Get My Website Quote clicked')}
             >
-              <a href="#lead-form" className="flex items-center justify-center">
-                Get Free Quote
+              <a href="#lead-form" className="flex items-center justify-center font-bold">
+                💰 Get My Website Quote (Free)
                 <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
               </a>
             </Button>
@@ -138,14 +141,30 @@ export function HeroSection() {
               asChild
               variant="outline"
               size="lg"
-              className="text-sm sm:text-base px-5 sm:px-8 py-4 sm:py-6 h-auto bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm w-full sm:w-auto"
-              onClick={() => console.log('[Business-Website] Hero CTA - Call Now clicked')}
+              className="text-sm sm:text-base px-5 sm:px-8 py-4 sm:py-6 h-auto bg-white dark:bg-gray-800 backdrop-blur-sm w-full sm:w-auto border-2 hover:bg-gray-50 dark:hover:bg-gray-700"
+              onClick={() => console.log('[Business-Website] Hero CTA - Talk to Expert clicked')}
             >
-              <a href="tel:+919963730111" className="flex items-center justify-center gap-2">
+              <a href="tel:+919963730111" className="flex items-center justify-center gap-2 font-semibold">
                 <Phone className="h-4 w-4 sm:h-5 sm:w-5" />
-                <span>Call: +91 99637 30111</span>
+                <span>📞 Talk to Expert Now</span>
               </a>
             </Button>
+          </motion.div>
+
+          {/* URGENCY INDICATOR - Creates FOMO */}
+          <motion.div
+            variants={fadeInUp}
+            className="mb-5 sm:mb-8"
+          >
+            <div className="inline-flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 bg-red-50 dark:bg-red-900/20 border-2 border-red-200 dark:border-red-800 rounded-full">
+              <span className="relative flex h-3 w-3">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+              </span>
+              <span className="text-xs sm:text-sm font-bold text-red-700 dark:text-red-300">
+                ⚡ Only 3 Slots Left This Month - Book Now!
+              </span>
+            </div>
           </motion.div>
 
           {/* City Targeting Pills - Compact */}

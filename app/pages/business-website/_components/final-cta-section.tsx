@@ -55,26 +55,44 @@ export function FinalCTASection() {
             <Rocket className="h-7 w-7 sm:h-8 sm:w-8 md:h-10 md:w-10 text-white" />
           </motion.div>
 
-          {/* Headline - Compact */}
+          {/* Headline - CONVERSION OPTIMIZED */}
           <motion.h2
             id="final-cta-heading"
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-white mb-3 sm:mb-4 md:mb-6 leading-tight px-2"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-4 sm:mb-5 md:mb-7 leading-tight px-2"
           >
-            Ready to Grow Your Business Online?
+            Don't Let Competitors Win Your Customers!
           </motion.h2>
 
-          {/* Subheadline - Compact */}
+          {/* Subheadline - URGENCY FOCUSED */}
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="text-sm sm:text-base md:text-lg lg:text-xl text-white/90 mb-6 sm:mb-8 md:mb-10 max-w-3xl mx-auto leading-snug sm:leading-relaxed px-2"
+            className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/95 mb-4 font-semibold max-w-3xl mx-auto leading-snug sm:leading-relaxed px-2"
           >
-            Join 500+ Indian businesses. Get your website from ₹13,999. Delivered in 14-21 days!
+            🚀 Join 500+ Growing Businesses | 💰 From ₹13,999 | ⚡ Ready in 14-21 Days
           </motion.p>
+
+          {/* URGENCY INDICATOR */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={inView ? { opacity: 1, scale: 1 } : {}}
+            transition={{ duration: 0.5, delay: 0.5 }}
+            className="mb-6 sm:mb-8"
+          >
+            <div className="inline-flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-3 bg-red-500/90 backdrop-blur-sm rounded-full border-2 border-white/50 shadow-2xl">
+              <span className="relative flex h-3 w-3">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-white"></span>
+              </span>
+              <span className="text-sm sm:text-base font-bold text-white">
+                ⏰ Only 3 Slots Left This Month - Act Fast!
+              </span>
+            </div>
+          </motion.div>
 
           {/* Benefits Pills - Compact */}
           <motion.div
@@ -99,22 +117,22 @@ export function FinalCTASection() {
             ))}
           </motion.div>
 
-          {/* CTA Buttons - Stack on mobile */}
+          {/* CTA Buttons - CONVERSION OPTIMIZED */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.6 }}
-            className="flex flex-col gap-2.5 sm:gap-3 md:gap-4 justify-center items-stretch sm:items-center mb-6 sm:mb-8 md:mb-12 max-w-md sm:max-w-none mx-auto px-2"
+            className="flex flex-col gap-3 sm:gap-4 justify-center items-stretch sm:items-center mb-6 sm:mb-8 md:mb-12 max-w-md sm:max-w-none mx-auto px-2"
           >
             <Button
               asChild
               size="lg"
-              className="bg-white text-indigo-600 hover:bg-gray-100 shadow-2xl text-sm sm:text-base px-6 sm:px-8 py-4 sm:py-5 md:py-6 h-auto w-full sm:w-auto"
-              onClick={() => console.log('[Business-Website] Final CTA - Get Quote clicked')}
+              className="bg-white text-indigo-600 hover:bg-gray-50 shadow-2xl hover:shadow-white/50 text-base sm:text-lg md:text-xl px-8 sm:px-12 py-5 sm:py-6 md:py-7 h-auto w-full sm:w-auto font-extrabold transition-all hover:scale-105"
+              onClick={() => console.log('[Business-Website] Final CTA - Claim My Spot clicked')}
             >
               <a href="#lead-form" className="flex items-center justify-center">
-                Get Free Quote Now
-                <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
+                🎯 Claim My Spot Now (3 Left!)
+                <ArrowRight className="ml-2 h-5 w-5 sm:h-6 sm:w-6" />
               </a>
             </Button>
 
@@ -122,12 +140,12 @@ export function FinalCTASection() {
               asChild
               variant="outline"
               size="lg"
-              className="border-2 border-white text-white hover:bg-white/10 backdrop-blur-sm text-sm sm:text-base px-6 sm:px-8 py-4 sm:py-5 md:py-6 h-auto w-full sm:w-auto"
-              onClick={() => console.log('[Business-Website] Final CTA - Call clicked')}
+              className="border-3 border-white text-white hover:bg-white hover:text-indigo-600 backdrop-blur-sm text-sm sm:text-base md:text-lg px-6 sm:px-10 py-4 sm:py-5 md:py-6 h-auto w-full sm:w-auto font-bold transition-all hover:scale-105"
+              onClick={() => console.log('[Business-Website] Final CTA - Speak with Expert clicked')}
             >
               <a href="tel:+919963730111" className="flex items-center justify-center gap-2">
-                <Phone className="h-4 w-4 sm:h-5 sm:w-5" />
-                Call: +91 99637 30111
+                <Phone className="h-5 w-5 sm:h-6 sm:w-6" />
+                📞 Speak with Expert (Free Call)
               </a>
             </Button>
           </motion.div>
