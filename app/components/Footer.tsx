@@ -70,8 +70,8 @@ function CollapsibleSection({ title, children, defaultOpen = false }: Collapsibl
 
       {/* Content - collapsible on mobile, always visible on desktop */}
       <div
-        className={`overflow-hidden transition-all duration-300 md:block ${
-          isOpen ? 'max-h-96 pb-4' : 'max-h-0 md:max-h-full'
+        className={`overflow-hidden transition-all duration-500 md:block ${
+          isOpen ? 'max-h-[800px] pb-4' : 'max-h-0 md:max-h-full'
         }`}
       >
         {children}
@@ -83,8 +83,10 @@ function CollapsibleSection({ title, children, defaultOpen = false }: Collapsibl
 export default function Footer() {
   const currentYear = new Date().getFullYear();
   const [showBackToTop, setShowBackToTop] = useState(false);
+  const [showAllOffices, setShowAllOffices] = useState(false);
 
   console.log('[Footer] Rendering footer');
+  console.log('[Footer] Show all offices:', showAllOffices);
 
   // Back to top button visibility logic
   useEffect(() => {
@@ -128,11 +130,11 @@ export default function Footer() {
             <div className="mb-6">
               <Link href="/" className="inline-block group">
                 <span className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
-                  Enterprise<span className="text-white">Hero</span>
-                </span>
+                Enterprise<span className="text-white">Hero</span>
+              </span>
                 <div className="text-xs text-gray-400 mt-2 font-medium tracking-wide">
-                  Vedpragya Bharat Private Limited
-                </div>
+                Vedpragya Bharat Private Limited
+              </div>
               </Link>
             </div>
             
@@ -174,8 +176,8 @@ export default function Footer() {
                 >
                   <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path fillRule="evenodd" d={social.path} clipRule="evenodd" />
-                  </svg>
-                </a>
+                </svg>
+              </a>
               ))}
             </div>
           </div>
@@ -201,10 +203,10 @@ export default function Footer() {
                     >
                       <span className="w-0 group-hover:w-2 h-0.5 bg-blue-400 transition-all duration-200 mr-0 group-hover:mr-2"></span>
                       {link.label}
-                    </Link>
-                  </li>
+                </Link>
+              </li>
                 ))}
-              </ul>
+            </ul>
             </CollapsibleSection>
           </div>
 
@@ -228,54 +230,81 @@ export default function Footer() {
                     >
                       <span className="w-0 group-hover:w-2 h-0.5 bg-blue-400 transition-all duration-200 mr-0 group-hover:mr-2"></span>
                       {service}
-                    </Link>
-                  </li>
+                </Link>
+              </li>
                 ))}
-              </ul>
+            </ul>
             </CollapsibleSection>
           </div>
 
-          {/* Global Offices - Compact cards on mobile */}
+          {/* Global Offices - Show 3 on desktop, expandable to all 5 */}
           <div className="sm:col-span-2 lg:col-span-2">
-            <CollapsibleSection title="Global Offices">
-              <div className="space-y-4">
+            <CollapsibleSection title="Global Offices" defaultOpen={true}>
+              <div className="space-y-3">
                 {[
                   { flag: '🇮🇳', name: 'India (HQ)', location: 'Gurugram, Noida, Bangalore', tag: 'Headquarters' },
                   { flag: '🇦🇪', name: 'Dubai', location: 'Middle East Operations', tag: 'Regional Hub' },
                   { flag: '🇺🇸', name: 'California', location: 'Tech R&D', tag: 'Innovation' },
                   { flag: '🇨🇦', name: 'Toronto', location: 'North America Ops', tag: 'Canada Office' },
                   { flag: '🇨🇳', name: 'Shenzhen', location: 'Asia-Pacific', tag: 'APAC Center' },
-                ].map((office) => (
-                  <div
-                    key={office.name}
-                    className="group hover:bg-gray-800/30 p-3 rounded-lg transition-all duration-200 border border-transparent hover:border-gray-700/50"
-                  >
-                    <div className="flex items-start space-x-3">
-                      <span className="text-2xl" role="img" aria-label={office.name}>
-                        {office.flag}
-                      </span>
-                      <div className="flex-1 min-w-0">
-                        <div className="text-gray-300 font-semibold text-sm mb-1">
-                          {office.name}
-                        </div>
-                        <div className="text-xs text-gray-500 leading-relaxed">
-                          {office.location}
-                        </div>
-                        <span className="inline-block mt-1 text-[10px] px-2 py-0.5 bg-blue-500/10 text-blue-400 rounded-full border border-blue-500/20">
-                          {office.tag}
+                ]
+                  .slice(0, showAllOffices ? 5 : 3) // Show 3 initially, all 5 when expanded
+                  .map((office) => (
+                    <div
+                      key={office.name}
+                      className="group hover:bg-gray-800/30 p-2.5 sm:p-3 rounded-lg transition-all duration-200 border border-transparent hover:border-gray-700/50"
+                    >
+                      <div className="flex items-start space-x-2 sm:space-x-3">
+                        <span className="text-xl sm:text-2xl flex-shrink-0" role="img" aria-label={office.name}>
+                          {office.flag}
                         </span>
+                        <div className="flex-1 min-w-0">
+                          <div className="text-gray-300 font-semibold text-xs sm:text-sm mb-0.5 sm:mb-1">
+                            {office.name}
+                          </div>
+                          <div className="text-[11px] sm:text-xs text-gray-500 leading-relaxed">
+                            {office.location}
+                          </div>
+                          <span className="inline-block mt-1 text-[9px] sm:text-[10px] px-1.5 sm:px-2 py-0.5 bg-blue-500/10 text-blue-400 rounded-full border border-blue-500/20">
+                            {office.tag}
+                          </span>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+
+                {/* Show More/Less Button - Desktop & Tablet */}
+                <button
+                  onClick={() => {
+                    setShowAllOffices(!showAllOffices);
+                    console.log('[Footer] Toggle offices:', !showAllOffices);
+                  }}
+                  className="w-full mt-2 py-2.5 px-4 text-sm font-medium text-blue-400 hover:text-blue-300 hover:bg-gray-800/30 rounded-lg transition-all duration-200 flex items-center justify-center space-x-2 border border-gray-700/30 hover:border-blue-500/30 group"
+                  aria-label={showAllOffices ? 'Show less offices' : 'Show more offices'}
+                >
+                  <span>
+                    {showAllOffices ? 'Show Less' : `Show All ${5} Offices`}
+                  </span>
+                  <svg
+                    className={`w-4 h-4 transition-transform duration-300 ${
+                      showAllOffices ? 'rotate-180' : ''
+                    }`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
               </div>
             </CollapsibleSection>
           </div>
-
+          
           {/* Newsletter - Full width on mobile */}
           <div className="sm:col-span-2 lg:col-span-3">
             <div className="lg:sticky lg:top-4">
-              <NewsletterSignup />
+            <NewsletterSignup />
             </div>
           </div>
         </div>
@@ -287,7 +316,7 @@ export default function Footer() {
             <p className="text-sm text-gray-500">
               <span className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
                 Enterprise<span className="text-white">Hero</span>
-              </span>
+                </span>
               <span className="text-gray-500 mx-2 text-xs">powered by</span>
               <span className="text-lg font-bold text-white">VB</span>
             </p>
@@ -322,7 +351,7 @@ export default function Footer() {
                   onClick={() => console.log(`[Footer] Legal link clicked: ${link.label}`)}
                 >
                   {link.label}
-                </Link>
+              </Link>
               ))}
             </div>
           </div>
