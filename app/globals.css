@@ -79,6 +79,72 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Animated gradient for hero text */
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient {
+  background-size: 200% auto;
+  animation: gradient 4s ease infinite;
+}
+
+/* Slow spin animation for loading */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 3s linear infinite;
+}
+
+/* HIGH CONTRAST HERO STYLES */
+/* Ensure black backgrounds and bright text */
+.hero-section {
+  background-color: #000000 !important;
+}
+
+/* Glassmorphism effect with high contrast */
+.glass-card {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+/* Neon glow text shadows */
+.text-glow-green {
+  text-shadow: 0 0 30px rgba(0, 255, 65, 0.5);
+}
+
+.text-glow-cyan {
+  text-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+}
+
+.text-glow-blue {
+  text-shadow: 0 0 30px rgba(0, 128, 255, 0.5);
+}
+
+/* Button hover glow effect */
+.btn-neon-glow:hover {
+  box-shadow: 0 0 50px rgba(0, 255, 65, 0.8),
+              0 0 100px rgba(0, 255, 65, 0.4);
+}
+
 /* Container utilities */
 .container {
   width: 100%;

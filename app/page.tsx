@@ -5,70 +5,41 @@ import AnimatedIllustration from "./components/AnimatedIllustration";
 export default function Home() {
   return (
     <div className="w-full">
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-900 via-indigo-900 to-purple-900 text-white overflow-hidden">
-        <div className="absolute inset-0 opacity-30">
+      {/* Hero Section - HIGH CONTRAST */}
+      <section className="relative min-h-screen flex items-center justify-center bg-black text-white overflow-hidden">
+        {/* 3D Background - Full opacity for maximum impact */}
+        <div className="absolute inset-0">
           <HeroAnimationWrapper />
         </div>
         
-        {/* Hero Illustration */}
-        <div className="absolute top-20 right-4 sm:right-10 lg:right-20 w-48 h-48 sm:w-64 sm:h-64 lg:w-80 lg:h-80 opacity-20 lg:opacity-30 hidden sm:block">
-          <AnimatedIllustration
-            src="/illustrations/undraw_programming.svg"
-            alt="Programming illustration"
-            width={320}
-            height={320}
-            animationType="float"
-            delay={0.5}
-          />
-        </div>
-        
-        <div className="container mx-auto px-4 z-10 text-center">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">
-              Enterprise Hero
-            </span><br/>
-            Global <span className="text-blue-400">Node.js</span> Excellence<br/>
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">
-              & 3D Innovation
+        {/* Glassmorphism Text Overlay - COMPACT & POSITIONED LOWER */}
+        <div className="relative z-10 text-center px-4 w-full flex items-end justify-center pb-24">
+          {/* Smaller Glass Card Container */}
+          <div className="inline-block px-8 py-6 md:px-10 md:py-8 rounded-2xl backdrop-blur-sm bg-black/30 border border-white/20 shadow-2xl max-w-2xl">
+            {/* Compact Headline */}
+            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-3 leading-tight tracking-tight">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00ff41] via-[#00ffff] to-[#0080ff] drop-shadow-[0_0_30px_rgba(0,255,255,0.8)]">
+                Enterprise Node.js Solutions
             </span>
           </h1>
           
-          <p className="text-xl md:text-2xl mb-8 max-w-4xl mx-auto text-gray-200">
-            Transforming businesses worldwide with cutting-edge Node.js development and immersive digital experiences. 
-            Serving Fortune 500 companies across multiple continents with enterprise-grade solutions.
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-            <button className="px-8 py-3 bg-blue-600 hover:bg-blue-700 rounded-full font-medium transition duration-300 transform hover:scale-105">
-              View Our Global Services
-            </button>
-            <button className="px-8 py-3 bg-transparent border-2 border-white hover:bg-white/10 rounded-full font-medium transition duration-300">
-              Explore Enterprise Portfolio
+            {/* Minimal Subtitle */}
+            <p className="text-sm md:text-base mb-6 text-white/80 font-light">
+              Scalable <span className="text-[#00ffff]">•</span> Secure <span className="text-[#00ffff]">•</span> High-Performance
+            </p>
+            
+            {/* Compact CTA Button */}
+            <button className="group relative px-8 py-3 bg-gradient-to-r from-[#00ff41] to-[#00ffff] text-black font-semibold text-base rounded-full overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-[0_0_40px_rgba(0,255,65,0.8)]">
+              <span className="relative z-10">Explore Services →</span>
+              <div className="absolute inset-0 bg-gradient-to-r from-[#00ffff] to-[#00ff41] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </button>
           </div>
+          </div>
           
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-4 max-w-4xl mx-auto">
-            <div className="text-center">
-              <div className="text-2xl font-bold text-blue-300">India</div>
-              <div className="text-sm text-gray-300">Gurugram, Noida, Bangalore</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-blue-300">Dubai</div>
-              <div className="text-sm text-gray-300">UAE Office</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-blue-300">California</div>
-              <div className="text-sm text-gray-300">Tech Research</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-blue-300">Toronto</div>
-              <div className="text-sm text-gray-300">Canada Office</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-blue-300">Shenzhen</div>
-              <div className="text-sm text-gray-300">China Office</div>
-            </div>
+        {/* Scroll Indicator */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10 animate-bounce">
+          <div className="w-5 h-8 border-2 border-white/50 rounded-full flex justify-center p-1">
+            <div className="w-1 h-2 bg-[#00ff41] rounded-full"></div>
           </div>
         </div>
       </section>
@@ -99,8 +70,8 @@ export default function Home() {
         
         <div className="container mx-auto px-4 relative z-10">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">
-            Enterprise-Grade <span className="text-blue-600">Solutions</span><br/>
-            <span className="text-lg text-gray-600 dark:text-gray-400 font-normal">Serving Global Clients Worldwide</span>
+            Enterprise-Grade <span className="text-green-600">Node.js</span> <span className="text-blue-600">Solutions</span><br/>
+            <span className="text-lg text-gray-600 dark:text-gray-400 font-normal">Building Scalable Systems for Global Enterprises</span>
           </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -124,9 +95,9 @@ export default function Home() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold mb-4">Enterprise 3D Solutions</h3>
+              <h3 className="text-xl font-bold mb-4">Real-Time Systems & APIs</h3>
               <p className="text-gray-600 dark:text-gray-300">
-                Award-winning 3D experiences for global brands. WebGL optimization, VR/AR integration, and interactive product visualization for enterprise marketing and training.
+                High-performance real-time systems with WebSocket infrastructure, RESTful & GraphQL APIs, event-driven architecture, and streaming data pipelines for enterprise applications.
               </p>
             </div>
             
@@ -352,10 +323,10 @@ export default function Home() {
         </div>
         
         <div className="container mx-auto px-4 text-center relative z-10">
-          <h2 className="text-3xl md:text-4xl font-bold mb-8">Ready for Global Digital Excellence?</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-8">Ready for Node.js Excellence?</h2>
           <p className="text-xl mb-8 max-w-4xl mx-auto">
-            Partner with Enterprise Hero for enterprise-grade solutions. 
-            Our global team delivers world-class Node.js development and 3D experiences 
+            Partner with us for enterprise-grade Node.js solutions. 
+            Our global team delivers world-class scalable architecture, microservices, and real-time systems 
             that drive business growth and digital transformation.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
