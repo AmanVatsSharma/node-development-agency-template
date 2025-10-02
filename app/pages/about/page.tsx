@@ -1,14 +1,12 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "motion/react";
 import { useEffect, useState } from "react";
-import AnimatedIllustration from "../../components/AnimatedIllustration";
 import { LampContainer } from "../../components/lamp";
 import { WorldMap } from "../../components/ui/world-map";
 
 // Console log for page initialization
-console.log("About Page: Initializing enterprise-grade about page component");
+console.log("About Page: Initializing premium enterprise-grade about page component");
 
 export default function AboutPage() {
   // State for animated counters
@@ -19,41 +17,36 @@ export default function AboutPage() {
     team: 0,
   });
 
-  // Animate counters on mount
+  // Instant counter display - no animation delay
   useEffect(() => {
-    console.log("About Page: Starting counter animations");
-    try {
-      const targets = { clients: 500, projects: 1200, countries: 6, team: 50 };
-      const duration = 2000; // 2 seconds
-      const steps = 60;
-      const interval = duration / steps;
+    console.log("About Page: Loading counters");
+    const targets = { clients: 500, projects: 1200, countries: 6, team: 50 };
+    
+    // Quick animation (0.8 seconds total)
+    const duration = 800;
+    const steps = 15;
+    const interval = duration / steps;
 
-      let step = 0;
-      const timer = setInterval(() => {
-        step++;
-        const progress = step / steps;
-        
-        setCounters({
-          clients: Math.floor(targets.clients * progress),
-          projects: Math.floor(targets.projects * progress),
-          countries: Math.floor(targets.countries * progress),
-          team: Math.floor(targets.team * progress),
-        });
+    let step = 0;
+    const timer = setInterval(() => {
+      step++;
+      const progress = Math.min(step / steps, 1);
+      
+      setCounters({
+        clients: Math.floor(targets.clients * progress),
+        projects: Math.floor(targets.projects * progress),
+        countries: Math.floor(targets.countries * progress),
+        team: Math.floor(targets.team * progress),
+      });
 
-        if (step >= steps) {
-          clearInterval(timer);
-          setCounters(targets);
-          console.log("About Page: Counter animations completed");
-        }
-      }, interval);
-
-      return () => {
+      if (step >= steps) {
         clearInterval(timer);
-        console.log("About Page: Cleaning up counter animations");
-      };
-    } catch (error) {
-      console.error("About Page: Error in counter animation:", error);
-    }
+        setCounters(targets);
+        console.log("About Page: Counters loaded");
+      }
+    }, interval);
+
+    return () => clearInterval(timer);
   }, []);
 
   // World map connection data showing global reach
@@ -92,64 +85,80 @@ export default function AboutPage() {
       <section className="relative overflow-hidden">
         <LampContainer>
           <motion.div
-            initial={{ opacity: 0, y: 100 }}
+            initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{
-              delay: 0.3,
-              duration: 0.8,
-              ease: "easeInOut",
+              duration: 0.4,
+              ease: "easeOut",
             }}
             className="mt-8 text-center px-4"
           >
-            <h1 className="bg-gradient-to-br from-slate-300 to-slate-500 py-4 bg-clip-text text-4xl font-bold tracking-tight text-transparent md:text-7xl mb-6">
+            <div className="inline-block mb-4 px-6 py-2 bg-gradient-to-r from-amber-500/10 via-yellow-500/10 to-amber-500/10 border border-amber-500/20 rounded-full backdrop-blur-sm">
+              <span className="text-amber-400 text-sm font-semibold tracking-wider uppercase">Premium Enterprise Solutions</span>
+            </div>
+            <h1 className="bg-gradient-to-br from-amber-200 via-slate-100 to-amber-300 py-4 bg-clip-text text-5xl font-bold tracking-tight text-transparent md:text-8xl mb-6 leading-tight">
               Enterprise Hero
             </h1>
-            <p className="text-xl md:text-2xl text-slate-300 max-w-4xl mx-auto mb-8">
+            <p className="text-xl md:text-2xl text-slate-200 max-w-4xl mx-auto mb-10 font-light leading-relaxed">
               Global Leaders in Enterprise-Grade Node.js Development & Digital Transformation
             </p>
             
-            {/* Trust Indicators */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto mt-12">
-              <div className="text-center">
-                <div className="text-4xl md:text-5xl font-bold text-cyan-400 mb-2">
-                  {counters.clients}+
+            {/* Trust Indicators - Premium Design */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto mt-16">
+              <div className="text-center group">
+                <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-amber-400/20 to-yellow-600/20 border border-amber-500/30 mb-4 group-hover:scale-110 transition-transform duration-300">
+                  <div className="text-3xl md:text-4xl font-bold bg-gradient-to-br from-amber-300 to-yellow-500 bg-clip-text text-transparent">
+                    {counters.clients}+
+                  </div>
                 </div>
-                <div className="text-sm md:text-base text-slate-400">Fortune 500 Clients</div>
+                <div className="text-sm md:text-base text-slate-300 font-medium">Fortune 500 Clients</div>
               </div>
-              <div className="text-center">
-                <div className="text-4xl md:text-5xl font-bold text-cyan-400 mb-2">
-                  {counters.projects}+
+              <div className="text-center group">
+                <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-amber-400/20 to-yellow-600/20 border border-amber-500/30 mb-4 group-hover:scale-110 transition-transform duration-300">
+                  <div className="text-3xl md:text-4xl font-bold bg-gradient-to-br from-amber-300 to-yellow-500 bg-clip-text text-transparent">
+                    {counters.projects}+
+                  </div>
                 </div>
-                <div className="text-sm md:text-base text-slate-400">Projects Delivered</div>
+                <div className="text-sm md:text-base text-slate-300 font-medium">Projects Delivered</div>
               </div>
-              <div className="text-center">
-                <div className="text-4xl md:text-5xl font-bold text-cyan-400 mb-2">
-                  {counters.countries}
+              <div className="text-center group">
+                <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-amber-400/20 to-yellow-600/20 border border-amber-500/30 mb-4 group-hover:scale-110 transition-transform duration-300">
+                  <div className="text-3xl md:text-4xl font-bold bg-gradient-to-br from-amber-300 to-yellow-500 bg-clip-text text-transparent">
+                    {counters.countries}
+                  </div>
                 </div>
-                <div className="text-sm md:text-base text-slate-400">Countries</div>
+                <div className="text-sm md:text-base text-slate-300 font-medium">Global Offices</div>
               </div>
-              <div className="text-center">
-                <div className="text-4xl md:text-5xl font-bold text-cyan-400 mb-2">
-                  {counters.team}+
+              <div className="text-center group">
+                <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-amber-400/20 to-yellow-600/20 border border-amber-500/30 mb-4 group-hover:scale-110 transition-transform duration-300">
+                  <div className="text-3xl md:text-4xl font-bold bg-gradient-to-br from-amber-300 to-yellow-500 bg-clip-text text-transparent">
+                    {counters.team}+
+                  </div>
                 </div>
-                <div className="text-sm md:text-base text-slate-400">Expert Team</div>
+                <div className="text-sm md:text-base text-slate-300 font-medium">Expert Team</div>
               </div>
             </div>
 
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mt-12">
+            {/* CTA Buttons - Premium Design */}
+            <div className="flex flex-col sm:flex-row gap-6 justify-center mt-16">
               <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 bg-cyan-500 hover:bg-cyan-600 text-white rounded-full font-semibold transition duration-300 shadow-lg"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="group relative px-10 py-4 bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-400 hover:via-yellow-400 hover:to-amber-500 text-slate-900 rounded-full font-bold transition-all duration-300 shadow-2xl shadow-amber-500/50 hover:shadow-amber-500/70 overflow-hidden"
                 onClick={() => console.log("About Page: Start Project CTA clicked")}
               >
-                Start Your Project
+                <span className="relative z-10 flex items-center gap-2">
+                  Start Your Project
+                  <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  </svg>
+                </span>
+                <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/30 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
               </motion.button>
               <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 bg-transparent border-2 border-slate-300 hover:border-cyan-400 text-slate-300 hover:text-cyan-400 rounded-full font-semibold transition duration-300"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="px-10 py-4 bg-slate-800/50 border-2 border-amber-500/50 hover:border-amber-400 hover:bg-slate-800/70 text-amber-100 hover:text-amber-50 rounded-full font-bold transition-all duration-300 backdrop-blur-sm"
                 onClick={() => console.log("About Page: View Case Studies CTA clicked")}
               >
                 View Case Studies
@@ -160,88 +169,97 @@ export default function AboutPage() {
       </section>
 
       {/* Global Reach with World Map */}
-      <section className="py-20 bg-white dark:bg-gray-950">
-        <div className="container mx-auto px-4">
+      <section className="relative py-24 bg-gradient-to-br from-slate-50 via-white to-amber-50/30 dark:from-gray-950 dark:via-slate-900 dark:to-gray-950 overflow-hidden">
+        {/* Premium Background Pattern */}
+        <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.02]" style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
+        }}></div>
+        
+        <div className="container mx-auto px-4 relative z-10">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.3 }}
             viewport={{ once: true }}
-            className="text-center mb-12"
+            className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              Our <span className="text-blue-600 dark:text-cyan-400">Global Reach</span>
+            <div className="inline-block mb-6 px-6 py-2 bg-gradient-to-r from-amber-500/10 via-yellow-500/10 to-amber-500/10 border border-amber-500/20 rounded-full backdrop-blur-sm">
+              <span className="text-amber-600 dark:text-amber-400 text-sm font-bold tracking-wider uppercase">Worldwide Presence</span>
+            </div>
+            <h2 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 dark:from-amber-200 dark:via-slate-100 dark:to-amber-200 bg-clip-text text-transparent">
+              Our Global Reach
             </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+            <p className="text-xl md:text-2xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto font-light">
               Delivering enterprise solutions across 6 countries with a network of world-class development centers
             </p>
           </motion.div>
 
-          {/* World Map Component */}
-          <div className="max-w-6xl mx-auto mb-12">
-            <WorldMap dots={worldMapDots} lineColor="#06b6d4" />
+          {/* World Map Component - Premium Gold Theme */}
+          <div className="max-w-6xl mx-auto mb-16 p-6 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm rounded-2xl border border-amber-200/20 dark:border-amber-500/10 shadow-2xl">
+            <WorldMap dots={worldMapDots} lineColor="#f59e0b" />
           </div>
 
-          {/* Office Locations Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-16">
+          {/* Office Locations Grid - Premium Glassmorphism */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-20">
             {[
               {
                 city: "Gurugram",
                 country: "India",
                 type: "Global Headquarters",
                 icon: "🏢",
-                color: "blue",
               },
               {
                 city: "Dubai",
                 country: "UAE",
                 type: "Middle East Hub",
                 icon: "🌆",
-                color: "purple",
               },
               {
                 city: "California",
                 country: "USA",
                 type: "Tech Innovation Center",
                 icon: "🚀",
-                color: "cyan",
               },
               {
                 city: "Toronto",
                 country: "Canada",
                 type: "North American Operations",
                 icon: "🍁",
-                color: "green",
               },
               {
                 city: "Shenzhen",
                 country: "China",
                 type: "Asia-Pacific Hub",
                 icon: "🌏",
-                color: "orange",
               },
               {
                 city: "Bangalore",
                 country: "India",
                 type: "Development Excellence Center",
                 icon: "💻",
-                color: "pink",
               },
             ].map((office, index) => (
               <motion.div
                 key={office.city}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                transition={{ duration: 0.2 }}
                 viewport={{ once: true }}
-                whileHover={{ scale: 1.05, y: -5 }}
-                className="bg-gray-50 dark:bg-gray-900 p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200 dark:border-gray-800"
+                whileHover={{ y: -4 }}
+                className="group relative bg-gradient-to-br from-white via-amber-50/30 to-white dark:from-gray-800 dark:via-gray-800 dark:to-gray-900 p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 border border-amber-200/50 dark:border-amber-500/20 backdrop-blur-sm overflow-hidden"
                 onClick={() => console.log(`About Page: Clicked on ${office.city} office`)}
               >
-                <div className="text-4xl mb-3">{office.icon}</div>
-                <h3 className="text-xl font-bold mb-1">{office.city}</h3>
-                <p className="text-gray-500 dark:text-gray-400 text-sm mb-2">{office.country}</p>
-                <p className="text-sm font-medium text-blue-600 dark:text-cyan-400">{office.type}</p>
+                {/* Premium Shine Effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-amber-100/20 to-transparent translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
+                
+                <div className="relative z-10">
+                  <div className="text-5xl mb-4">{office.icon}</div>
+                  <h3 className="text-2xl font-bold mb-1 text-gray-900 dark:text-white">{office.city}</h3>
+                  <p className="text-gray-600 dark:text-gray-400 text-sm mb-3 font-medium">{office.country}</p>
+                  <div className="inline-block px-4 py-1.5 bg-gradient-to-r from-amber-500/10 to-yellow-500/10 border border-amber-500/30 rounded-full">
+                    <p className="text-xs font-bold text-amber-700 dark:text-amber-400 uppercase tracking-wide">{office.type}</p>
+                  </div>
+                </div>
               </motion.div>
             ))}
           </div>
@@ -252,9 +270,9 @@ export default function AboutPage() {
       <section className="py-20 bg-gray-50 dark:bg-gray-900">
         <div className="container mx-auto px-4">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
             viewport={{ once: true }}
             className="text-center mb-16"
           >
@@ -273,12 +291,12 @@ export default function AboutPage() {
               { label: "On-Time Delivery", value: "100%", icon: "⚡" },
               { label: "Average ROI", value: "340%", icon: "📈" },
               { label: "Years Experience", value: "10+", icon: "🏆" },
-            ].map((metric, index) => (
+              ].map((metric, index) => (
               <motion.div
                 key={metric.label}
-                initial={{ opacity: 0, scale: 0.5 }}
+                initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                transition={{ duration: 0.2 }}
                 viewport={{ once: true }}
                 className="text-center p-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg"
               >
@@ -302,12 +320,12 @@ export default function AboutPage() {
               {["Node.js", "TypeScript", "Python", "SAP"].map((tech, index) => (
                 <motion.div
                   key={tech}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  transition={{ duration: 0.2 }}
                   viewport={{ once: true }}
-                  whileHover={{ scale: 1.1 }}
-                  className="flex flex-col items-center justify-center p-4 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-all"
+                  whileHover={{ scale: 1.05 }}
+                  className="flex flex-col items-center justify-center p-4 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-all duration-200"
                   onClick={() => console.log(`About Page: Tech stack ${tech} clicked`)}
                 >
                   <div className="w-16 h-16 mb-3 bg-gray-100 dark:bg-gray-900 rounded-lg flex items-center justify-center">
@@ -331,9 +349,9 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             {/* Mission */}
             <motion.div
-              initial={{ opacity: 0, x: -50 }}
+              initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
+              transition={{ duration: 0.3 }}
               viewport={{ once: true }}
               className="bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-gray-900 dark:to-gray-800 p-10 rounded-2xl shadow-xl"
             >
@@ -367,9 +385,9 @@ export default function AboutPage() {
 
             {/* Vision */}
             <motion.div
-              initial={{ opacity: 0, x: 50 }}
+              initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
+              transition={{ duration: 0.3 }}
               viewport={{ once: true }}
               className="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-gray-900 dark:to-gray-800 p-10 rounded-2xl shadow-xl"
             >
@@ -409,9 +427,9 @@ export default function AboutPage() {
       <section className="py-20 bg-gray-50 dark:bg-gray-900">
         <div className="container mx-auto px-4">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
             viewport={{ once: true }}
             className="text-center mb-16"
           >
@@ -424,12 +442,12 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Excellence Value */}
             <motion.div
-              initial={{ opacity: 0, y: 50 }}
+              initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0 }}
+              transition={{ duration: 0.2 }}
               viewport={{ once: true }}
-              whileHover={{ scale: 1.05, y: -10 }}
-              className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 dark:border-gray-700"
+              whileHover={{ scale: 1.03, y: -4 }}
+              className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-200 border border-gray-100 dark:border-gray-700"
               onClick={() => console.log("About Page: Value Excellence card clicked")}
             >
               <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mb-6">
@@ -448,12 +466,12 @@ export default function AboutPage() {
 
             {/* Collaboration Value */}
             <motion.div
-              initial={{ opacity: 0, y: 50 }}
+              initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+              transition={{ duration: 0.2 }}
               viewport={{ once: true }}
-              whileHover={{ scale: 1.05, y: -10 }}
-              className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 dark:border-gray-700"
+              whileHover={{ scale: 1.03, y: -4 }}
+              className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-200 border border-gray-100 dark:border-gray-700"
               onClick={() => console.log("About Page: Value Collaboration card clicked")}
             >
               <div className="w-16 h-16 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center mb-6">
@@ -472,12 +490,12 @@ export default function AboutPage() {
 
             {/* Innovation Value */}
             <motion.div
-              initial={{ opacity: 0, y: 50 }}
+              initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
+              transition={{ duration: 0.2 }}
               viewport={{ once: true }}
-              whileHover={{ scale: 1.05, y: -10 }}
-              className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 dark:border-gray-700"
+              whileHover={{ scale: 1.03, y: -4 }}
+              className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-200 border border-gray-100 dark:border-gray-700"
               onClick={() => console.log("About Page: Value Innovation card clicked")}
             >
               <div className="w-16 h-16 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mb-6">
@@ -503,7 +521,7 @@ export default function AboutPage() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.3 }}
             viewport={{ once: true }}
             className="text-center mb-16"
           >
@@ -546,7 +564,7 @@ export default function AboutPage() {
                 key={caseStudy.company}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
+                transition={{ duration: 0.2 }}
                 viewport={{ once: true }}
                 whileHover={{ scale: 1.03 }}
                 className="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer"
@@ -586,7 +604,7 @@ export default function AboutPage() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.3 }}
             viewport={{ once: true }}
             className="text-center mb-16"
           >
@@ -623,7 +641,7 @@ export default function AboutPage() {
                 key={testimonial.author}
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: index * 0.15 }}
+                transition={{ duration: 0.2 }}
                 viewport={{ once: true }}
                 className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg"
               >
@@ -653,7 +671,7 @@ export default function AboutPage() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.3 }}
             viewport={{ once: true }}
             className="text-center mb-16"
           >
@@ -666,7 +684,7 @@ export default function AboutPage() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.3 }}
             viewport={{ once: true }}
             className="max-w-5xl mx-auto"
           >
@@ -746,7 +764,7 @@ export default function AboutPage() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.3 }}
             viewport={{ once: true }}
             className="text-center mb-12"
           >
@@ -769,7 +787,7 @@ export default function AboutPage() {
                 key={cert.name}
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                transition={{ duration: 0.2 }}
                 viewport={{ once: true }}
                 whileHover={{ y: -5 }}
                 className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg text-center"
@@ -787,80 +805,107 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Final CTA with Lamp Effect */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900">
+      {/* Final CTA - Premium Design */}
+      <section className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-amber-950">
+        {/* Premium Background Pattern */}
         <div className="absolute inset-0 bg-[url('/noise.webp')] opacity-10"></div>
-        <div className="container mx-auto px-4 py-20 relative z-10">
+        <div className="absolute inset-0" style={{
+          backgroundImage: `radial-gradient(circle at 50% 50%, rgba(251, 191, 36, 0.1) 0%, transparent 50%)`
+        }}></div>
+        
+        <div className="container mx-auto px-4 py-24 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.3 }}
             viewport={{ once: true }}
-            className="text-center max-w-4xl mx-auto"
+            className="text-center max-w-5xl mx-auto"
           >
+            {/* Premium Glow Effect */}
             <motion.div
               animate={{
-                scale: [1, 1.05, 1],
-                opacity: [0.5, 0.8, 0.5],
+                scale: [1, 1.1, 1],
+                opacity: [0.3, 0.5, 0.3],
               }}
               transition={{
-                duration: 3,
+                duration: 4,
                 repeat: Infinity,
                 ease: "easeInOut",
               }}
-              className="absolute inset-0 bg-cyan-500/20 blur-3xl rounded-full"
+              className="absolute inset-0 bg-gradient-to-r from-amber-500/20 via-yellow-500/20 to-amber-500/20 blur-3xl rounded-full"
             />
             
-            <h2 className="text-4xl md:text-6xl font-bold text-white mb-6 relative z-10">
-              Ready to Transform Your Business?
+            <div className="inline-block mb-6 px-6 py-2 bg-gradient-to-r from-amber-500/20 via-yellow-500/20 to-amber-500/20 border border-amber-500/30 rounded-full backdrop-blur-sm">
+              <span className="text-amber-400 text-sm font-bold tracking-wider uppercase">Transform Your Business</span>
+            </div>
+            
+            <h2 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-amber-200 via-yellow-100 to-amber-200 bg-clip-text text-transparent mb-8 relative z-10 leading-tight">
+              Ready to Achieve Excellence?
             </h2>
-            <p className="text-xl md:text-2xl text-slate-300 mb-8 relative z-10">
+            <p className="text-xl md:text-2xl text-slate-300 mb-12 relative z-10 font-light max-w-3xl mx-auto">
               Join 500+ Fortune 500 companies worldwide who trust Enterprise Hero 
               for their enterprise-grade Node.js development and digital solutions.
             </p>
             
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-14 relative z-10">
               {[
-                { icon: "⚡", text: "24/7 Global Support" },
-                { icon: "🚀", text: "Rapid Deployment" },
-                { icon: "🔒", text: "Enterprise Security" },
+                { icon: "⚡", text: "24/7 Global Support", desc: "Always available" },
+                { icon: "🚀", text: "Rapid Deployment", desc: "Fast delivery" },
+                { icon: "🔒", text: "Enterprise Security", desc: "Bank-grade protection" },
               ].map((feature, index) => (
                 <motion.div
                   key={feature.text}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  transition={{ duration: 0.4, delay: index * 0.1 }}
                   viewport={{ once: true }}
-                  className="bg-white/10 backdrop-blur-sm p-4 rounded-xl"
+                  className="bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-md p-6 rounded-2xl border border-amber-500/20 hover:border-amber-500/40 transition-all duration-300"
                 >
-                  <div className="text-3xl mb-2">{feature.icon}</div>
-                  <div className="text-white font-medium">{feature.text}</div>
+                  <div className="text-5xl mb-3">{feature.icon}</div>
+                  <div className="text-white font-bold text-lg mb-1">{feature.text}</div>
+                  <div className="text-amber-300/70 text-sm">{feature.desc}</div>
                 </motion.div>
               ))}
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center relative z-10">
+            <div className="flex flex-col sm:flex-row gap-6 justify-center relative z-10 mb-8">
               <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-10 py-4 bg-cyan-500 hover:bg-cyan-600 text-white rounded-full font-bold text-lg transition duration-300 shadow-2xl shadow-cyan-500/50"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="group relative px-12 py-5 bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-400 hover:via-yellow-400 hover:to-amber-500 text-slate-900 rounded-full font-bold text-lg transition-all duration-300 shadow-2xl shadow-amber-500/50 hover:shadow-amber-500/70 overflow-hidden"
                 onClick={() => console.log("About Page: Final CTA - Contact Global Team clicked")}
               >
-                Contact Our Global Team
+                <span className="relative z-10 flex items-center gap-2 justify-center">
+                  Contact Our Global Team
+                  <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  </svg>
+                </span>
+                <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/30 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
               </motion.button>
               <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-10 py-4 bg-transparent border-2 border-white hover:bg-white/10 text-white rounded-full font-bold text-lg transition duration-300"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="px-12 py-5 bg-slate-800/50 border-2 border-amber-500/50 hover:border-amber-400 hover:bg-slate-800/70 text-amber-100 hover:text-amber-50 rounded-full font-bold text-lg transition-all duration-300 backdrop-blur-sm"
                 onClick={() => console.log("About Page: Final CTA - Schedule Consultation clicked")}
               >
                 Schedule Consultation
               </motion.button>
             </div>
 
-            <p className="text-slate-400 mt-8 text-sm">
-              🌍 Serving clients in 6 countries • 💼 500+ Fortune 500 clients • ⭐ 99.8% satisfaction rate
-            </p>
+            <div className="flex items-center justify-center gap-6 text-amber-200/80 text-sm relative z-10">
+              <span className="flex items-center gap-2">
+                <span className="text-amber-400">🌍</span> 6 countries
+              </span>
+              <span className="text-amber-500/50">•</span>
+              <span className="flex items-center gap-2">
+                <span className="text-amber-400">💼</span> 500+ clients
+              </span>
+              <span className="text-amber-500/50">•</span>
+              <span className="flex items-center gap-2">
+                <span className="text-amber-400">⭐</span> 99.8% satisfaction
+              </span>
+            </div>
           </motion.div>
         </div>
       </section>

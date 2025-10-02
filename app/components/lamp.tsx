@@ -41,9 +41,8 @@ export const LampContainer = ({
           initial={{ opacity: 0.5, width: "15rem" }}
           whileInView={{ opacity: 1, width: "30rem" }}
           transition={{
-            delay: 0.3,
-            duration: 0.8,
-            ease: "easeInOut",
+            duration: 0.4,
+            ease: "easeOut",
           }}
           style={{
             backgroundImage: `conic-gradient(var(--conic-position), var(--tw-gradient-stops))`,
@@ -57,9 +56,8 @@ export const LampContainer = ({
           initial={{ opacity: 0.5, width: "15rem" }}
           whileInView={{ opacity: 1, width: "30rem" }}
           transition={{
-            delay: 0.3,
-            duration: 0.8,
-            ease: "easeInOut",
+            duration: 0.4,
+            ease: "easeOut",
           }}
           style={{
             backgroundImage: `conic-gradient(var(--conic-position), var(--tw-gradient-stops))`,
@@ -76,9 +74,8 @@ export const LampContainer = ({
           initial={{ width: "8rem" }}
           whileInView={{ width: "16rem" }}
           transition={{
-            delay: 0.3,
-            duration: 0.8,
-            ease: "easeInOut",
+            duration: 0.4,
+            ease: "easeOut",
           }}
           className="absolute inset-auto z-30 h-36 w-64 -translate-y-[6rem] rounded-full bg-cyan-400 blur-2xl"
         ></motion.div>
@@ -86,9 +83,8 @@ export const LampContainer = ({
           initial={{ width: "15rem" }}
           whileInView={{ width: "30rem" }}
           transition={{
-            delay: 0.3,
-            duration: 0.8,
-            ease: "easeInOut",
+            duration: 0.4,
+            ease: "easeOut",
           }}
           className="absolute inset-auto z-50 h-0.5 w-[30rem] -translate-y-[7rem] bg-cyan-400 "
         ></motion.div>
