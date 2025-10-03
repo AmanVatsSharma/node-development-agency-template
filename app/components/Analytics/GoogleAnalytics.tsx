@@ -62,11 +62,13 @@ export default function GoogleAnalytics({ measurementId }: GoogleAnalyticsProps)
 }
 
 // Types for window object with gtag function
+// Extended to support both Google Analytics and Google Ads
 declare global {
   interface Window {
-    gtag: (
-      command: 'config' | 'event' | 'set',
-      targetId: string,
+    dataLayer?: any[];
+    gtag?: (
+      command: 'js' | 'config' | 'event' | 'set' | 'consent',
+      targetIdOrDate: string | Date,
       config?: Record<string, any>,
     ) => void;
   }

@@ -6,6 +6,7 @@ import Footer from "./components/Footer";
 import ServiceWorkerManager from './components/ServiceWorkerManager';
 import { initPerformanceMonitoring } from '../utils/performanceMonitoring';
 import GoogleAnalytics from './components/Analytics/GoogleAnalytics';
+import GoogleAdsTracking from './components/Analytics/GoogleAdsTracking';
 import { ThemeProvider } from "./components/ThemeProvider";
 
 // Font configuration
@@ -61,6 +62,9 @@ export default function RootLayout({
         
         {/* Google Analytics script - replace with your measurement ID */}
         <GoogleAnalytics measurementId="G-XXXXXXXXXX" />
+        
+        {/* Google Ads Conversion Tracking - Search Ads Campaign */}
+        <GoogleAdsTracking conversionId="AW-17606401808" />
       </head>
       <body
         className={`${inter.variable} ${poppins.variable} antialiased bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100`}
