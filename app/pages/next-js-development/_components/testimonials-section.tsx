@@ -94,55 +94,111 @@ export function TestimonialsSection() {
           </p>
         </motion.div>
 
-        {/* Testimonials Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 max-w-6xl mx-auto">
-          {testimonials.map((testimonial, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="relative bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 rounded-2xl sm:rounded-3xl p-6 sm:p-8 border-2 border-gray-200 dark:border-gray-700 hover:border-indigo-300 dark:hover:border-indigo-700 hover:shadow-2xl transition-all duration-300"
-            >
-              {/* Quote Icon */}
-              <div className="absolute top-4 right-4 opacity-10 dark:opacity-5">
-                <Quote className="h-16 w-16 sm:h-20 sm:w-20 text-indigo-600 dark:text-indigo-400" />
-              </div>
-
-              <div className="relative z-10">
-                {/* Rating Stars */}
-                <div className="flex gap-1 mb-4">
-                  {Array.from({ length: testimonial.rating }).map((_, i) => (
-                    <Star key={i} className="h-5 w-5 fill-yellow-400 text-yellow-400" />
-                  ))}
-                </div>
-
-                {/* Quote */}
-                <blockquote className="text-base sm:text-lg text-gray-700 dark:text-gray-300 mb-6 leading-relaxed">
-                  "{testimonial.quote}"
-                </blockquote>
-
-                {/* Author Info */}
-                <div className="flex items-center gap-3 sm:gap-4">
-                  {/* Avatar Placeholder */}
-                  <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-white font-bold text-lg sm:text-xl flex-shrink-0">
-                    {testimonial.name.charAt(0)}
+        {/* Testimonials - MOBILE: Horizontal Scroll */}
+        <div className="max-w-6xl mx-auto">
+          {/* Mobile: Horizontal scroll */}
+          <div className="md:hidden overflow-x-auto pb-4 -mx-4 px-4 hide-scrollbar">
+            <div className="flex gap-4 min-w-max">
+              {testimonials.map((testimonial, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, x: 30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="relative bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 rounded-2xl p-5 border-2 border-gray-200 dark:border-gray-700 hover:border-indigo-300 dark:hover:border-indigo-700 hover:shadow-2xl transition-all duration-300 w-[300px] flex-shrink-0"
+                >
+                  {/* Quote Icon */}
+                  <div className="absolute top-4 right-4 opacity-10 dark:opacity-5">
+                    <Quote className="h-12 w-12 text-indigo-600 dark:text-indigo-400" />
                   </div>
 
-                  {/* Name & Role */}
-                  <div>
-                    <div className="font-bold text-gray-900 dark:text-white text-base sm:text-lg">
-                      {testimonial.name}
+                  <div className="relative z-10">
+                    {/* Rating Stars */}
+                    <div className="flex gap-1 mb-3">
+                      {Array.from({ length: testimonial.rating }).map((_, i) => (
+                        <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                      ))}
                     </div>
-                    <div className="text-sm text-gray-600 dark:text-gray-400">
-                      {testimonial.role}, {testimonial.company}
+
+                    {/* Quote */}
+                    <blockquote className="text-sm text-gray-700 dark:text-gray-300 mb-4 leading-relaxed">
+                      "{testimonial.quote}"
+                    </blockquote>
+
+                    {/* Author Info */}
+                    <div className="flex items-center gap-3">
+                      {/* Avatar Placeholder */}
+                      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
+                        {testimonial.name.charAt(0)}
+                      </div>
+
+                      {/* Name & Role */}
+                      <div>
+                        <div className="font-bold text-gray-900 dark:text-white text-sm">
+                          {testimonial.name}
+                        </div>
+                        <div className="text-xs text-gray-600 dark:text-gray-400">
+                          {testimonial.role}, {testimonial.company}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+
+          {/* Desktop: Grid */}
+          <div className="hidden md:grid grid-cols-2 gap-6 lg:gap-8">
+            {testimonials.map((testimonial, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="relative bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 rounded-3xl p-8 border-2 border-gray-200 dark:border-gray-700 hover:border-indigo-300 dark:hover:border-indigo-700 hover:shadow-2xl transition-all duration-300"
+              >
+                {/* Quote Icon */}
+                <div className="absolute top-4 right-4 opacity-10 dark:opacity-5">
+                  <Quote className="h-20 w-20 text-indigo-600 dark:text-indigo-400" />
+                </div>
+
+                <div className="relative z-10">
+                  {/* Rating Stars */}
+                  <div className="flex gap-1 mb-4">
+                    {Array.from({ length: testimonial.rating }).map((_, i) => (
+                      <Star key={i} className="h-5 w-5 fill-yellow-400 text-yellow-400" />
+                    ))}
+                  </div>
+
+                  {/* Quote */}
+                  <blockquote className="text-lg text-gray-700 dark:text-gray-300 mb-6 leading-relaxed">
+                    "{testimonial.quote}"
+                  </blockquote>
+
+                  {/* Author Info */}
+                  <div className="flex items-center gap-4">
+                    {/* Avatar Placeholder */}
+                    <div className="w-14 h-14 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-white font-bold text-xl flex-shrink-0">
+                      {testimonial.name.charAt(0)}
+                    </div>
+
+                    {/* Name & Role */}
+                    <div>
+                      <div className="font-bold text-gray-900 dark:text-white text-lg">
+                        {testimonial.name}
+                      </div>
+                      <div className="text-sm text-gray-600 dark:text-gray-400">
+                        {testimonial.role}, {testimonial.company}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            ))}
+          </div>
         </div>
 
         {/* Trust Badge */}

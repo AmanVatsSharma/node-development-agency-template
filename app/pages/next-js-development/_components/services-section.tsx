@@ -106,19 +106,79 @@ export function ServicesSection() {
           </p>
         </motion.div>
 
-        {/* Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-10 sm:mb-14">
-          {services.map((service, index) => {
-            const Icon = service.icon;
-            return (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="group relative bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 rounded-2xl sm:rounded-3xl p-6 sm:p-8 border-2 border-gray-200 dark:border-gray-700 hover:border-transparent hover:shadow-2xl transition-all duration-300 overflow-hidden"
-              >
+        {/* Services - MOBILE: Horizontal Scroll */}
+        <div className="mb-10 sm:mb-14">
+          {/* Mobile: Horizontal scroll */}
+          <div className="lg:hidden overflow-x-auto pb-4 -mx-4 px-4 hide-scrollbar">
+            <div className="flex gap-4 min-w-max">
+              {services.map((service, index) => {
+                const Icon = service.icon;
+                return (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, x: 30 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    className="group relative bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 rounded-2xl p-5 border-2 border-gray-200 dark:border-gray-700 hover:border-transparent hover:shadow-2xl transition-all duration-300 overflow-hidden w-[280px] flex-shrink-0"
+                  >
+                    {/* Gradient Overlay */}
+                    <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-10 dark:group-hover:opacity-20 transition-opacity duration-300`} />
+                    
+                    <div className="relative z-10">
+                      {/* Icon */}
+                      <div className={`inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br ${service.gradient} mb-3 shadow-lg`}>
+                        <Icon className="h-6 w-6 text-white" />
+                      </div>
+
+                      {/* Service Name */}
+                      <h3 className="text-base font-black text-gray-900 dark:text-white mb-2 leading-tight">
+                        {service.service}
+                      </h3>
+
+                      {/* Description */}
+                      <p className="text-xs text-gray-600 dark:text-gray-400 mb-2 leading-snug">
+                        {service.description}
+                      </p>
+
+                      {/* Deliverable Badge */}
+                      <div className="inline-block px-2.5 py-1 bg-white dark:bg-gray-950 rounded-full mb-3 border border-gray-300 dark:border-gray-700">
+                        <span className="text-[10px] font-bold text-indigo-600 dark:text-indigo-400">
+                          📦 {service.deliverable}
+                        </span>
+                      </div>
+
+                      {/* Features - Compact */}
+                      <ul className="space-y-1">
+                        {service.features.slice(0, 3).map((feature, idx) => (
+                          <li key={idx} className="flex items-start gap-1.5">
+                            <CheckCircle2 className="h-3 w-3 text-green-500 flex-shrink-0 mt-0.5" />
+                            <span className="text-[10px] text-gray-700 dark:text-gray-300 leading-tight">
+                              {feature}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Desktop: Grid */}
+          <div className="hidden lg:grid grid-cols-3 gap-6 xl:gap-8">
+            {services.map((service, index) => {
+              const Icon = service.icon;
+              return (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="group relative bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 rounded-3xl p-8 border-2 border-gray-200 dark:border-gray-700 hover:border-transparent hover:shadow-2xl transition-all duration-300 overflow-hidden"
+                >
                 {/* Gradient Overlay */}
                 <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-10 dark:group-hover:opacity-20 transition-opacity duration-300`} />
                 
@@ -157,9 +217,48 @@ export function ServicesSection() {
                     ))}
                   </ul>
                 </div>
-              </motion.div>
-            );
-          })}
+                  {/* Gradient Overlay */}
+                  <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-10 dark:group-hover:opacity-20 transition-opacity duration-300`} />
+                  
+                  <div className="relative z-10">
+                    {/* Icon */}
+                    <div className={`inline-flex items-center justify-center w-16 h-16 rounded-xl bg-gradient-to-br ${service.gradient} mb-5 shadow-lg`}>
+                      <Icon className="h-8 w-8 text-white" />
+                    </div>
+
+                    {/* Service Name */}
+                    <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                      {service.service}
+                    </h3>
+
+                    {/* Description */}
+                    <p className="text-base text-gray-600 dark:text-gray-400 mb-3">
+                      {service.description}
+                    </p>
+
+                    {/* Deliverable Badge */}
+                    <div className="inline-block px-3 py-1.5 bg-white dark:bg-gray-950 rounded-full mb-4 border border-gray-300 dark:border-gray-700">
+                      <span className="text-sm font-semibold text-indigo-600 dark:text-indigo-400">
+                        📦 {service.deliverable}
+                      </span>
+                    </div>
+
+                    {/* Features */}
+                    <ul className="space-y-2">
+                      {service.features.map((feature, idx) => (
+                        <li key={idx} className="flex items-start gap-2">
+                          <CheckCircle2 className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
+                          <span className="text-sm text-gray-700 dark:text-gray-300">
+                            {feature}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
         </div>
 
         {/* CTA */}
