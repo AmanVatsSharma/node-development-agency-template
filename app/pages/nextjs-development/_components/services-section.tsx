@@ -32,42 +32,42 @@ export function ServicesSection() {
   const services: Service[] = [
     {
       icon: Globe,
-      service: 'Custom Next.js Website',
-      description: 'End-to-end design → deployment',
-      deliverable: 'Corporate, Portfolio, SaaS',
-      features: ['Custom Design', 'Tailwind CSS', 'SEO Optimized', 'Vercel Deployment'],
+      service: 'Custom Next.js Web Development',
+      description: 'Tailored site from idea → launch',
+      deliverable: 'SaaS, Corporate, Agency',
+      features: ['Custom Design System', 'Responsive UI/UX', 'SEO Optimized', 'Fast Deployment'],
       gradient: 'from-blue-500 to-cyan-500'
     },
     {
       icon: Headphones,
       service: 'Next.js + Headless CMS',
-      description: 'Integrate with Strapi, Sanity, Contentful',
+      description: 'Strapi, Sanity, Contentful integration',
       deliverable: 'Blog, Marketing Site',
       features: ['Content Management', 'API Integration', 'Dynamic Routes', 'Preview Mode'],
       gradient: 'from-purple-500 to-pink-500'
     },
     {
       icon: ShoppingCart,
-      service: 'Next.js + eCommerce',
-      description: 'Shopify / Medusa / Custom Cart',
+      service: 'Next.js E-Commerce',
+      description: 'Shopify Headless / Medusa / Custom Cart',
       deliverable: 'Product Page + Checkout',
-      features: ['Payment Gateway', 'Product Catalog', 'Cart System', 'Order Management'],
+      features: ['Payment Gateway', 'Product Catalog', 'Cart & Wishlist', 'Order Tracking'],
       gradient: 'from-green-500 to-emerald-500'
     },
     {
       icon: Code2,
-      service: 'Next.js + NestJS API',
-      description: 'Enterprise-grade full-stack solution',
-      deliverable: 'Dashboards, Admin Panels',
-      features: ['REST/GraphQL API', 'TypeORM/Prisma', 'Authentication', 'Database Design'],
+      service: 'Next.js + NestJS Full Stack',
+      description: 'REST / GraphQL APIs, auth, dashboards',
+      deliverable: 'Internal Portals, SaaS',
+      features: ['API Development', 'Database Design', 'Authentication', 'Admin Panel'],
       gradient: 'from-orange-500 to-red-500'
     },
     {
       icon: Workflow,
-      service: 'Migration to Next.js',
-      description: 'From WordPress / React / HTML',
-      deliverable: 'SEO-safe migration plan',
-      features: ['Data Migration', 'URL Preservation', 'Performance Boost', 'Zero Downtime'],
+      service: 'Next.js Migration',
+      description: 'Migrate from React / WordPress / HTML',
+      deliverable: 'Keep SEO, get speed + modern stack',
+      features: ['Data Migration', 'URL Preservation', '3x Performance Boost', 'Zero Downtime'],
       gradient: 'from-indigo-500 to-purple-500'
     }
   ];
@@ -171,17 +171,17 @@ export function ServicesSection() {
           className="text-center bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-2xl sm:rounded-3xl p-6 sm:p-8 border-2 border-green-200 dark:border-green-800"
         >
           <p className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-3">
-            Ready to start your project?
+            🎯 Need something else?
           </p>
           <p className="text-sm sm:text-base text-gray-700 dark:text-gray-300 mb-4">
-            Get a free 15-minute consultation call with our Next.js experts
+            We create custom Next.js solutions tailored to your unique requirements
           </p>
           <a 
             href="#lead-form"
             className="inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all hover:scale-105 text-sm sm:text-base"
             onClick={() => console.log('[NextJS-Dev] Services CTA clicked')}
           >
-            🎯 Get a Free Consultation Call (15 min)
+            👉 Get a Custom Proposal
           </a>
         </motion.div>
       </div>

@@ -33,28 +33,28 @@ export function TestimonialsSection() {
       name: 'Ravi K.',
       role: 'Founder',
       company: 'TechNova',
-      quote: 'Working with this team was seamless. The site loads in under 1 second and our leads doubled within the first month!',
+      quote: 'Our site loads under 1 second now and looks premium. They handle everything like a real tech partner.',
       rating: 5
     },
     {
-      name: 'Priya Sharma',
-      role: 'CTO',
-      company: 'FinanceHub',
-      quote: 'The Next.js migration transformed our platform. Page speed improved 4x, and SEO rankings shot up. Best decision we made.',
-      rating: 5
-    },
-    {
-      name: 'Amit Patel',
+      name: 'Priya S.',
       role: 'Marketing Head',
-      company: 'EduConnect',
-      quote: 'They delivered a beautiful, fast website with perfect SEO. Our organic traffic increased by 38% in just 3 months!',
+      company: 'InLocal Store',
+      quote: 'The migration to Next.js was seamless. Our conversion rate jumped 37% and Google indexed us 2× faster!',
+      rating: 5
+    },
+    {
+      name: 'Amit Gupta',
+      role: 'CTO',
+      company: 'EduSpark',
+      quote: 'Professional, transparent, and incredibly skilled. Load time went from 2.8s to 0.8s. Our organic traffic is up 43%.',
       rating: 5
     },
     {
       name: 'Sarah Williams',
       role: 'Product Manager',
       company: 'CloudFlow SaaS',
-      quote: 'Professional team, clean code, and exceptional performance. The dashboard they built handles 10k+ concurrent users effortlessly.',
+      quote: 'Best investment we made this year. The Next.js + NestJS stack they built is rock solid and handles massive traffic.',
       rating: 5
     }
   ];

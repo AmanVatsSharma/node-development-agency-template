@@ -32,30 +32,30 @@ export function WhyNextJsSection() {
   const features: FeatureCard[] = [
     {
       icon: Zap,
-      title: 'Blazing Speed',
-      description: 'Static + SSR + ISR = Lightning-fast loading',
-      benefit: 'Users get instant page loads, reducing bounce rates by up to 40%',
+      title: '⚡ Hybrid Rendering (SSR + SSG + ISR)',
+      description: 'Perfect balance of SEO and speed',
+      benefit: 'Get the best of both worlds: static site performance with dynamic capabilities',
       gradient: 'from-yellow-500 to-orange-500'
     },
     {
       icon: Search,
-      title: 'SEO Advantage',
-      description: 'Server-side rendering ensures perfect crawlability',
-      benefit: 'Rank higher on Google with pre-rendered content',
+      title: '🔍 SEO Supercharged',
+      description: 'Server-rendered pages = Instant indexing by Google',
+      benefit: 'Rank higher with pre-rendered, crawlable content that search engines love',
       gradient: 'from-green-500 to-emerald-500'
     },
     {
       icon: Layers,
-      title: 'Scalable Architecture',
-      description: 'Modular, component-driven, API-ready',
-      benefit: 'Easily add features as your business grows',
+      title: '🧱 Scalable Architecture',
+      description: 'Component-driven + API-first = Enterprise-ready foundation',
+      benefit: 'Build once, scale forever. Add features without refactoring',
       gradient: 'from-blue-500 to-cyan-500'
     },
     {
       icon: Sparkles,
-      title: 'Better UX',
-      description: 'Instant transitions, edge caching, PWA-ready',
-      benefit: 'Deliver app-like experiences that delight users',
+      title: '🔐 Secure by Design',
+      description: 'Built-in XSS protection, edge deployment, environment isolation',
+      benefit: 'Enterprise-grade security out of the box, no configuration needed',
       gradient: 'from-purple-500 to-pink-500'
     }
   ];
@@ -86,15 +86,15 @@ export function WhyNextJsSection() {
             id="why-nextjs-heading"
             className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4 sm:mb-6 text-gray-900 dark:text-white px-2"
           >
-            Why Next.js for Modern Web?
+            Why Next.js Changes Everything for Modern Web Development
           </h2>
 
           <p className="text-base sm:text-lg md:text-xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed px-2">
-            Next.js is the React framework trusted by{' '}
+            Next.js isn't just another framework—it's the{' '}
             <span className="font-bold text-indigo-600 dark:text-indigo-400">
-              Nike, Netflix, Twitch, and thousands of enterprises
+              future of web development
             </span>
-            {' '}worldwide.
+            . Trusted by Nike, Netflix, Twitch, and Fortune 500 companies worldwide.
           </p>
         </motion.div>
 
@@ -142,22 +142,25 @@ export function WhyNextJsSection() {
           })}
         </div>
 
-        {/* CTA */}
+        {/* CTA Banner */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center"
+          className="text-center bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-2xl sm:rounded-3xl p-6 sm:p-8 border-2 border-indigo-200 dark:border-indigo-800"
         >
+          <p className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-4">
+            Ready to leverage Next.js for your project?
+          </p>
           <Button
             asChild
             size="lg"
             className="text-base sm:text-lg px-8 sm:px-10 py-6 sm:py-7 h-auto bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 shadow-xl hover:shadow-2xl font-bold transition-all hover:scale-105"
             onClick={() => console.log('[NextJS-Dev] Why NextJS CTA clicked')}
           >
-            <a href="#services" className="flex items-center gap-2">
-              Let's Build Your Next.js App
+            <a href="#lead-form" className="flex items-center gap-2">
+              👉 Schedule a Free 15-min Consultation
               <ArrowRight className="h-5 w-5" />
             </a>
           </Button>

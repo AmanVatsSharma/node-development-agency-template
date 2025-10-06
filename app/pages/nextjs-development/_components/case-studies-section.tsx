@@ -33,27 +33,27 @@ export function CaseStudiesSection() {
 
   const caseStudies: CaseStudy[] = [
     {
-      icon: Zap,
-      title: 'Next.js Migration Success',
-      description: 'Migrated client site from WordPress to Next.js',
-      metric: '4× faster load times',
-      result: '52% more leads in first month',
+      icon: BarChart,
+      title: 'Case 1: EduSpark (SaaS Platform)',
+      description: 'Migrated from React → Next.js + NestJS',
+      metric: 'Load time: 2.8s → 0.8s',
+      result: '+43% organic traffic',
       gradient: 'from-blue-500 to-cyan-500'
     },
     {
-      icon: BarChart,
-      title: 'SaaS Dashboard Build',
-      description: 'Built SaaS dashboard with NestJS backend',
-      metric: 'Load time: 5s → 0.8s',
-      result: 'User satisfaction increased by 78%',
+      icon: TrendingUp,
+      title: 'Case 2: InLocal Store (E-commerce)',
+      description: 'Headless Shopify + Next.js ISR',
+      metric: 'Indexed 2× faster',
+      result: '+37% conversion rate',
       gradient: 'from-purple-500 to-pink-500'
     },
     {
-      icon: TrendingUp,
-      title: 'Core Web Vitals Optimization',
-      description: 'Optimized existing Next.js site for performance',
-      metric: 'PageSpeed: 65 → 98',
-      result: '+38% SEO traffic in 3 months',
+      icon: Zap,
+      title: 'Case 3: TechNova Agency',
+      description: 'Corporate site rebuild with Next.js',
+      metric: 'Site speed 95/100',
+      result: '+122% leads within 3 months',
       gradient: 'from-green-500 to-emerald-500'
     }
   ];
@@ -220,7 +220,7 @@ export function CaseStudiesSection() {
               onClick={() => console.log('[NextJS-Dev] Case Studies CTA clicked')}
             >
               <a href="#lead-form" className="flex items-center gap-2">
-                Get Similar Results for Your Business
+                📂 Explore Full Case Studies →
               </a>
             </Button>
           </motion.div>

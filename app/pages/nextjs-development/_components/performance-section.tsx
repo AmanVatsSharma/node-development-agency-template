@@ -30,32 +30,32 @@ export function PerformanceSection() {
   const metrics: PerformanceMetric[] = [
     {
       icon: Zap,
-      metric: '90+ PageSpeed',
-      description: 'Desktop & Mobile',
+      metric: 'PageSpeed 95+',
+      description: 'Desktop / 85+ Mobile',
       gradient: 'from-yellow-500 to-orange-500'
     },
     {
       icon: TrendingUp,
-      metric: 'Core Web Vitals',
-      description: 'Fully compliant',
+      metric: 'Core Web Vitals ✅',
+      description: 'LCP < 1.8s | CLS < 0.05 | INP < 200ms',
       gradient: 'from-green-500 to-emerald-500'
     },
     {
       icon: Brain,
-      metric: 'SEO Structured',
-      description: 'Index-ready',
+      metric: 'SEO Schema',
+      description: 'Open Graph + Meta Preload',
       gradient: 'from-blue-500 to-cyan-500'
     },
     {
       icon: Shield,
-      metric: 'Security + Scalability',
-      description: 'Tested & verified',
+      metric: '99.9% Uptime',
+      description: 'Hosting',
       gradient: 'from-purple-500 to-pink-500'
     },
     {
-      icon: RotateCcw,
-      metric: '30-Day Warranty',
-      description: 'Bug-free guarantee',
+      icon: CheckCircle2,
+      metric: 'Responsive',
+      description: 'Accessibility AA Standard',
       gradient: 'from-indigo-500 to-purple-500'
     }
   ];

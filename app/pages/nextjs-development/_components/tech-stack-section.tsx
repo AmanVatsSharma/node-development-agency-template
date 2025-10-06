@@ -28,28 +28,33 @@ export function TechStackSection() {
   const stack: TechCategory[] = [
     {
       category: 'Frontend',
-      technologies: ['Next.js 14+', 'React 18', 'TypeScript', 'Tailwind CSS', 'Framer Motion', 'shadcn/ui'],
+      technologies: ['Next.js 13+', 'React 18', 'Tailwind CSS', 'Framer Motion'],
       gradient: 'from-blue-500 to-cyan-500'
     },
     {
       category: 'Backend',
-      technologies: ['NestJS', 'Node.js', 'TypeORM', 'Prisma', 'GraphQL', 'REST API'],
+      technologies: ['NestJS', 'Node.js', 'TypeORM', 'Prisma'],
       gradient: 'from-green-500 to-emerald-500'
     },
     {
       category: 'Database',
-      technologies: ['PostgreSQL', 'MongoDB', 'Redis', 'Supabase', 'PlanetScale'],
+      technologies: ['PostgreSQL', 'MongoDB'],
       gradient: 'from-purple-500 to-pink-500'
     },
     {
-      category: 'CMS & Integrations',
-      technologies: ['Sanity', 'Strapi', 'Contentful', 'Shopify', 'Stripe', 'SendGrid'],
+      category: 'CMS / Headless',
+      technologies: ['Sanity', 'Strapi', 'Contentful', 'Shopify'],
       gradient: 'from-orange-500 to-red-500'
     },
     {
-      category: 'Hosting & DevOps',
-      technologies: ['Vercel', 'AWS', 'Cloudflare', 'Docker', 'GitHub Actions', 'CI/CD'],
+      category: 'Deployment',
+      technologies: ['Vercel', 'AWS EC2 / S3', 'Cloudflare'],
       gradient: 'from-indigo-500 to-purple-500'
+    },
+    {
+      category: 'Analytics & SEO',
+      technologies: ['Google Tag Manager', 'Schema Markup', 'GA4'],
+      gradient: 'from-pink-500 to-rose-500'
     }
   ];
 

@@ -6,8 +6,8 @@ import { Metadata } from 'next';
  */
 
 export const metadata: Metadata = {
-  title: 'Next.js Web Development Services | Custom Next.js Agency India',
-  description: 'Get blazing-fast, SEO-friendly, full-stack Next.js websites built by experts. Starting ₹14,999. Custom Next.js development, migrations, and enterprise solutions.',
+  title: 'Next.js Web Development — Build Lightning-Fast, Future-Proof Websites',
+  description: 'We build super-fast websites using Next.js + Tailwind CSS + NestJS. SEO-ready, secure & scalable. Starting ₹14,999.',
   keywords: [
     'Next.js development agency',
     'React developer India',
@@ -27,10 +27,10 @@ export const metadata: Metadata = {
   creator: 'Next.js Development Agency',
   publisher: 'Next.js Development Agency',
   openGraph: {
-    title: 'Next.js Web Development Services | Fast, Scalable & SEO-Optimized',
-    description: 'Professional Next.js development agency. Build lightning-fast websites with 100/100 Lighthouse scores. Starting ₹14,999.',
+    title: 'Next.js Web Development — Build Lightning-Fast, Future-Proof Websites',
+    description: 'Build blazing-fast, SEO-ready websites with Next.js. 40+ projects delivered, avg speed 95+, clients across 5 countries. Get free quote.',
     url: 'https://yourdomain.com/pages/nextjs-development',
-    siteName: 'Next.js Development Agency',
+    siteName: 'Next.js Web Development Agency',
     locale: 'en_IN',
     type: 'website',
     images: [

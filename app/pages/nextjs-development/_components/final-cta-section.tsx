@@ -47,16 +47,16 @@ export function FinalCTASection() {
             id="final-cta-heading"
             className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold mb-4 sm:mb-6 text-white leading-tight"
           >
-            Let's Build a Next-Gen Website
+            Your Next Big Project Deserves
             <br className="hidden sm:block" />
-            That <span className="text-yellow-300">Converts</span>
+            a <span className="text-yellow-300">Next.js Foundation</span>
           </h2>
 
           {/* Subheadline */}
           <p className="text-lg sm:text-xl md:text-2xl text-white/90 mb-8 sm:mb-10 md:mb-12 max-w-3xl mx-auto leading-relaxed px-2">
-            Fast. Secure. SEO-Friendly.
+            Let's build a website that's fast, secure & beautiful —
             <br className="hidden sm:block" />
-            Built with <span className="font-bold">Next.js by Experts</span>.
+            and <span className="font-bold">turns visitors into customers</span>.
           </p>
 
           {/* CTA Button */}
@@ -73,7 +73,7 @@ export function FinalCTASection() {
               onClick={() => console.log('[NextJS-Dev] Final CTA clicked')}
             >
               <a href="#lead-form" className="flex items-center gap-2 sm:gap-3">
-                🚀 Get Your Free Quote Now
+                💬 Book Your Free Strategy Call Now
                 <ArrowRight className="h-5 w-5 sm:h-6 sm:w-6" />
               </a>
             </Button>
@@ -86,7 +86,7 @@ export function FinalCTASection() {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="text-base sm:text-lg text-white/80 mb-10 sm:mb-12"
           >
-            ⏱️ Average delivery time: <span className="font-bold text-white">10-21 days</span>
+            Limited slots this month — average delivery <span className="font-bold text-white">10–21 days</span>
           </motion.p>
 
           {/* Trust Indicators */}
