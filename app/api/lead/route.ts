@@ -15,6 +15,20 @@ type LeadPayload = {
   campaign?: string;
   leadSource?: string;
   raw?: Record<string, any>;
+  // Attribution data
+  gclid?: string;
+  utmSource?: string;
+  utmMedium?: string;
+  utmCampaign?: string;
+  utmTerm?: string;
+  utmContent?: string;
+  fbclid?: string;
+  referrer?: string;
+  // Lead quality data
+  budget?: string;
+  timeline?: string;
+  conversionValue?: number;
+  leadScore?: number;
 };
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -32,7 +46,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Invalid email format' }, { status: 400 });
     }
 
-    // Backup locally first
+    // Backup locally first with attribution and quality data
     const lead = await prisma.lead.create({
       data: {
         name: body.name || null,
@@ -44,8 +58,27 @@ export async function POST(req: NextRequest) {
         leadSource: body.leadSource || 'Website',
         raw: body.raw || (body as any),
         status: 'pending',
+        // Attribution tracking
+        gclid: body.gclid || null,
+        utmSource: body.utmSource || null,
+        utmMedium: body.utmMedium || null,
+        utmCampaign: body.utmCampaign || null,
+        utmTerm: body.utmTerm || null,
+        utmContent: body.utmContent || null,
+        fbclid: body.fbclid || null,
+        referrer: body.referrer || null,
+        // Lead quality
+        budget: body.budget || null,
+        timeline: body.timeline || null,
+        conversionValue: body.conversionValue || null,
+        leadScore: body.leadScore || null,
       },
     });
+    
+    // Log attribution data if GCLID present
+    if (body.gclid) {
+      console.log('[Lead API] GCLID captured:', body.gclid, 'Campaign:', body.utmCampaign);
+    }
 
     // Send to Zoho
     let zohoLeadId: string | undefined;

@@ -1,7 +1,12 @@
 type ConversionEventType = 'lead_submit' | 'call_click' | 'whatsapp_click' | 'newsletter_signup';
 
 // Cache per landing page
-let cachedMappings: Record<string, { conversionId: string; labels: Record<string, string> }> = {};
+let cachedMappings: Record<string, { 
+  conversionId: string; 
+  labels: Record<string, string>;
+  defaultLeadValue?: number;
+  enableDynamicValues?: boolean;
+}> = {};
 
 /**
  * Get landing page specific conversion mapping
@@ -23,6 +28,8 @@ async function getMapping(landingPageSlug?: string) {
         cachedMappings[cacheKey] = {
           conversionId: data.conversionId || '',
           labels: data.labels || {},
+          defaultLeadValue: data.defaultLeadValue,
+          enableDynamicValues: data.enableDynamicValues,
         };
         return cachedMappings[cacheKey];
       }
@@ -45,17 +52,25 @@ async function getMapping(landingPageSlug?: string) {
 }
 
 /**
- * Fire Google Ads conversion event
+ * Fire Google Ads conversion event with enhanced tracking
  * @param eventType - Type of conversion event
  * @param landingPageSlug - Optional landing page slug for page-specific conversion labels
- * @param value - Optional conversion value
+ * @param value - Optional conversion value in INR
  * @param currency - Currency code (default: INR)
+ * @param userData - Optional user data for enhanced matching (email, phone, name, city)
  */
 export async function fireConversion(
   eventType: ConversionEventType,
   landingPageSlug?: string,
   value?: number,
-  currency: string = 'INR'
+  currency: string = 'INR',
+  userData?: {
+    email?: string;
+    phone?: string;
+    firstName?: string;
+    lastName?: string;
+    city?: string;
+  }
 ) {
   // Server-side log for reliability
   try {
@@ -67,6 +82,7 @@ export async function fireConversion(
         landingPageSlug,
         value,
         currency,
+        userData,
         ts: Date.now(),
       }),
     });
@@ -84,15 +100,42 @@ export async function fireConversion(
 
     if (typeof window !== 'undefined' && window.gtag && sendTo) {
       const params: Record<string, any> = { send_to: sendTo };
-      if (typeof value === 'number') {
-        params.value = value;
+      
+      // Add conversion value
+      // Use provided value, or fall back to default value from config
+      const conversionValue = value || mapping.defaultLeadValue || 0;
+      if (conversionValue > 0) {
+        params.value = conversionValue;
         params.currency = currency;
       }
+
+      // Add enhanced user data for better conversion matching
+      // Google will automatically hash these values
+      if (userData) {
+        if (userData.email) {
+          params.email = userData.email;
+        }
+        if (userData.phone) {
+          params.phone_number = userData.phone;
+        }
+        if (userData.firstName || userData.lastName || userData.city) {
+          params.address = {
+            first_name: userData.firstName,
+            last_name: userData.lastName,
+            city: userData.city,
+            country: 'IN',
+          };
+        }
+      }
+
       window.gtag('event', 'conversion', params);
+      
       // eslint-disable-next-line no-console
       console.log('[Conversions] Fired', {
         eventType,
         landingPageSlug,
+        value: conversionValue,
+        hasUserData: !!userData,
         params,
       });
     } else {

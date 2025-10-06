@@ -54,6 +54,8 @@ export async function GET(request: NextRequest) {
         whatsapp_click: config.whatsappLabel || '',
         newsletter_signup: config.newsletterLabel || '',
       },
+      defaultLeadValue: config.defaultLeadValue,
+      enableDynamicValues: config.enableDynamicValues,
       active: config.active,
     });
   } catch (error: any) {

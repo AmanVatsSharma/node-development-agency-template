@@ -63,6 +63,8 @@ type LandingPageConfig = {
   callClickLabel?: string | null;
   whatsappLabel?: string | null;
   newsletterLabel?: string | null;
+  defaultLeadValue?: number | null;
+  enableDynamicValues?: boolean;
   active: boolean;
   notes?: string | null;
   createdAt: string;
@@ -378,6 +380,8 @@ export default function IntegrationsAdminPage() {
       callClickLabel: null,
       whatsappLabel: null,
       newsletterLabel: null,
+      defaultLeadValue: null,
+      enableDynamicValues: false,
       active: true,
       notes: null,
       createdAt: new Date().toISOString(),
@@ -943,6 +947,17 @@ export default function IntegrationsAdminPage() {
                                       {page.description}
                                     </p>
                                   )}
+                                  
+                                  {/* Conversion Value Info */}
+                                  {page.defaultLeadValue && (
+                                    <div className="mb-3 p-2 bg-green-50 dark:bg-green-900/20 rounded border border-green-200 dark:border-green-800">
+                                      <span className="text-xs font-semibold text-green-700 dark:text-green-300">
+                                        💰 Default Value: ₹{page.defaultLeadValue.toLocaleString('en-IN')}
+                                        {page.enableDynamicValues && ' (Dynamic values enabled)'}
+                                      </span>
+                                    </div>
+                                  )}
+                                  
                                   <div className="grid grid-cols-2 gap-2 text-xs">
                                     <div>
                                       <span className="font-semibold">Form Submit:</span>{' '}
@@ -1052,6 +1067,60 @@ export default function IntegrationsAdminPage() {
                                 }
                                 rows={2}
                               />
+                            </div>
+
+                            <Separator />
+
+                            {/* Conversion Value Configuration */}
+                            <div className="space-y-4">
+                              <h4 className="font-semibold text-sm">
+                                Conversion Value Configuration
+                              </h4>
+                              
+                              <div className="space-y-2">
+                                <Label htmlFor="default-value">Default Lead Value (₹)</Label>
+                                <Input
+                                  id="default-value"
+                                  type="number"
+                                  placeholder="15000"
+                                  value={editingPage.defaultLeadValue || ''}
+                                  onChange={(e) =>
+                                    setEditingPage({
+                                      ...editingPage,
+                                      defaultLeadValue: e.target.value ? parseInt(e.target.value) : null,
+                                    })
+                                  }
+                                />
+                                <p className="text-xs text-slate-500">
+                                  Average value of a lead from this page (e.g., 15000 for ₹15,000)
+                                </p>
+                              </div>
+
+                              <div className="flex items-center gap-3">
+                                <input
+                                  type="checkbox"
+                                  id="enable-dynamic"
+                                  checked={editingPage.enableDynamicValues || false}
+                                  onChange={(e) =>
+                                    setEditingPage({ ...editingPage, enableDynamicValues: e.target.checked })
+                                  }
+                                  className="h-4 w-4"
+                                />
+                                <Label htmlFor="enable-dynamic">
+                                  Enable dynamic values based on budget/timeline
+                                </Label>
+                              </div>
+                              
+                              {editingPage.enableDynamicValues && (
+                                <div className="bg-blue-50 dark:bg-blue-900/20 p-3 rounded-lg border border-blue-200 dark:border-blue-800">
+                                  <p className="text-xs text-blue-700 dark:text-blue-300">
+                                    ℹ️ When enabled, conversion values will be calculated based on user's selected budget and timeline. Default value will be used as the base.
+                                  </p>
+                                  <p className="text-xs text-blue-600 dark:text-blue-400 mt-2">
+                                    Example: Base ₹15,000 × Budget (2x) × Timeline (1.5x) = ₹45,000
+                                  </p>
+                                </div>
+                              )}
                             </div>
 
                             <Separator />

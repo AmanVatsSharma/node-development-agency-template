@@ -250,11 +250,30 @@ model Lead {
   raw          Json?
   status       String    @default("pending") // pending, pushed, failed
   zohoLeadId   String?
+  
+  // Attribution tracking for Google Ads
+  gclid        String?   // Google Click ID
+  utmSource    String?   // utm_source parameter
+  utmMedium    String?   // utm_medium parameter
+  utmCampaign  String?   // utm_campaign parameter
+  utmTerm      String?   // utm_term parameter
+  utmContent   String?   // utm_content parameter
+  fbclid       String?   // Facebook Click ID
+  referrer     String?   // HTTP referrer
+  
+  // Lead value and quality
+  budget       String?   // Budget range selected by user
+  timeline     String?   // Project timeline/urgency
+  conversionValue Int?   // Calculated conversion value in INR
+  leadScore    Int?      // Lead quality score (0-100)
+  
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
 
   @@index([createdAt])
   @@index([status])
+  @@index([gclid])
+  @@index([utmCampaign])
 }
 
 // Logs for all integration interactions (Zoho + Google)
@@ -308,6 +327,10 @@ model LandingPageConfig {
   callClickLabel    String?                  // Conversion label for call button clicks
   whatsappLabel     String?                  // Conversion label for WhatsApp clicks
   newsletterLabel   String?                  // Conversion label for newsletter signups
+  
+  // Conversion value configuration
+  defaultLeadValue  Int?                     // Default conversion value in INR (e.g., 15000)
+  enableDynamicValues Boolean @default(false) // Use dynamic values based on budget/urgency
   
   // Additional configuration
   active            Boolean   @default(true) // Enable/disable tracking for this landing page

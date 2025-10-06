@@ -22,6 +22,7 @@ import {
   Briefcase
 } from 'lucide-react';
 import { fireConversion } from '@/utils/conversions';
+import { getAttributionData, calculateConversionValue, calculateLeadScore } from '@/utils/attribution';
 
 console.log('[Business-Website] LeadFormSection component loaded');
 
@@ -31,6 +32,8 @@ interface FormData {
   email: string;
   city: string;
   businessType: string;
+  budget: string;
+  timeline: string;
   message: string;
 }
 
@@ -44,6 +47,8 @@ export function LeadFormSection() {
     email: '',
     city: '',
     businessType: '',
+    budget: '',
+    timeline: '',
     message: ''
   });
 
@@ -60,6 +65,26 @@ export function LeadFormSection() {
     console.log('[Business-Website] Lead form submitted:', formData);
     
     setLoading(true);
+    
+    // Get attribution data (GCLID, UTMs, referrer)
+    const attribution = getAttributionData();
+    
+    // Calculate conversion value based on budget and timeline
+    const conversionValue = calculateConversionValue(
+      'business-website',
+      formData.budget,
+      formData.timeline
+    );
+    
+    // Calculate lead quality score
+    const leadScore = calculateLeadScore({
+      budget: formData.budget,
+      timeline: formData.timeline,
+      email: formData.email,
+      phone: formData.phone,
+      message: formData.message,
+    });
+    
     try {
       const res = await fetch('/api/lead', {
         method: 'POST',
@@ -71,10 +96,24 @@ export function LeadFormSection() {
           message: formData.message,
           source: 'business-website',
           leadSource: 'Website',
+          // Attribution data
+          gclid: attribution.gclid,
+          utmSource: attribution.utm_source,
+          utmMedium: attribution.utm_medium,
+          utmCampaign: attribution.utm_campaign,
+          utmTerm: attribution.utm_term,
+          utmContent: attribution.utm_content,
+          referrer: attribution.referrer,
+          // Lead quality
+          budget: formData.budget,
+          timeline: formData.timeline,
+          conversionValue,
+          leadScore,
           raw: {
             city: formData.city,
             businessType: formData.businessType,
             path: typeof window !== 'undefined' ? window.location.pathname : undefined,
+            attribution,
           },
         }),
       });
@@ -82,8 +121,26 @@ export function LeadFormSection() {
       console.log('[Business-Website] Lead API response:', data);
       if (!res.ok) throw new Error(data?.error || 'Lead API failed');
       setSubmitted(true);
-      // Fire Google Ads conversion for this landing page
-      void fireConversion('lead_submit', 'business-website');
+      
+      // Fire Google Ads conversion with dynamic value and user data
+      const [firstName, ...lastNameParts] = formData.name.split(' ');
+      const lastName = lastNameParts.join(' ');
+      
+      void fireConversion(
+        'lead_submit',
+        'business-website',
+        conversionValue, // Dynamic value based on budget/timeline
+        'INR',
+        {
+          email: formData.email,
+          phone: formData.phone,
+          firstName,
+          lastName,
+          city: formData.city,
+        }
+      );
+      
+      console.log('[Business-Website] Conversion fired with value:', conversionValue, 'Lead score:', leadScore);
     } catch (err) {
       console.error('[Business-Website] Lead submit error:', err);
       alert('Something went wrong. Please try again.');
@@ -100,6 +157,8 @@ export function LeadFormSection() {
         email: '',
         city: '',
         businessType: '',
+        budget: '',
+        timeline: '',
         message: ''
       });
     }, 5000);
@@ -120,6 +179,20 @@ export function LeadFormSection() {
   const BUSINESS_TYPES = [
     'Retail/Shop', 'Restaurant/Cafe', 'Services', 'Manufacturing',
     'Healthcare', 'Education', 'Real Estate', 'Technology', 'Other'
+  ];
+
+  const BUDGET_RANGES = [
+    { value: 'under-50k', label: 'Under ₹50,000' },
+    { value: '50k-2lakh', label: '₹50,000 - ₹2 Lakh' },
+    { value: '2lakh-5lakh', label: '₹2-5 Lakh' },
+    { value: '5lakh-plus', label: '₹5 Lakh+' },
+  ];
+
+  const TIMELINES = [
+    { value: 'urgent', label: 'Urgent (Within 1 week)' },
+    { value: 'this-month', label: 'This month' },
+    { value: 'this-quarter', label: 'Next 1-3 months' },
+    { value: 'exploring', label: 'Just exploring' },
   ];
 
   return (
@@ -322,6 +395,51 @@ export function LeadFormSection() {
                             <option key={type} value={type}>{type}</option>
                           ))}
                         </select>
+                      </div>
+                    </div>
+
+                    {/* Budget & Timeline Row */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                      <div>
+                        <Label htmlFor="budget" className="text-gray-900 dark:text-white font-semibold mb-1.5 sm:mb-2 block text-sm sm:text-base">
+                          Project Budget
+                        </Label>
+                        <select
+                          id="budget"
+                          name="budget"
+                          value={formData.budget}
+                          onChange={handleChange as any}
+                          className="w-full h-10 sm:h-11 md:h-12 rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] outline-none"
+                        >
+                          <option value="">Select budget range</option>
+                          {BUDGET_RANGES.map(range => (
+                            <option key={range.value} value={range.value}>{range.label}</option>
+                          ))}
+                        </select>
+                        <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                          Helps us provide accurate quote
+                        </p>
+                      </div>
+
+                      <div>
+                        <Label htmlFor="timeline" className="text-gray-900 dark:text-white font-semibold mb-1.5 sm:mb-2 block text-sm sm:text-base">
+                          When do you need this?
+                        </Label>
+                        <select
+                          id="timeline"
+                          name="timeline"
+                          value={formData.timeline}
+                          onChange={handleChange as any}
+                          className="w-full h-10 sm:h-11 md:h-12 rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] outline-none"
+                        >
+                          <option value="">Select timeline</option>
+                          {TIMELINES.map(timeline => (
+                            <option key={timeline.value} value={timeline.value}>{timeline.label}</option>
+                          ))}
+                        </select>
+                        <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                          Helps us prioritize your project
+                        </p>
                       </div>
                     </div>
 
