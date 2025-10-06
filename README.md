@@ -1,4 +1,21 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+This is a Next.js 15 app (App Router) with Prisma, Auth, and a modular UI system. Below is a quick architecture overview; see `docs/ARCHITECTURE.md` for details.
+
+### Architecture Overview
+
+- App Router under `app/` with API routes in `app/api/*` and UI in `app/components/*`.
+- Data layer powered by Prisma in `prisma/` and `app/lib/prisma.ts`.
+- Auth via NextAuth configuration in `auth.ts` and middleware in `middleware.ts`.
+- Shared utilities in `utils/` and `app/lib/` (e.g., `googleAds.ts`, `zohoService.ts`).
+
+```mermaid
+flowchart TD
+  Browser -->|HTTP| NextJS[Next.js App]
+  NextJS -->|API Routes| API[app/api/*]
+  API --> Prisma[Prisma Client]
+  Prisma --> DB[(Database)]
+  NextJS --> UI[app/components/*]
+  NextJS --> Auth[auth.ts + middleware]
+```
 
 ## Getting Started
 
@@ -29,8 +46,6 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## Deploy
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+You can deploy to Vercel or any Node hosting. Ensure environment variables are configured (see `ENV_VARIABLES.md`) and the database is migrated.
