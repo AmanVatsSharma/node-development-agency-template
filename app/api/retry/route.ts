@@ -2,6 +2,9 @@ import { NextResponse } from 'next/server';
 import prisma from '@/app/lib/prisma';
 import { createZohoLead } from '@/app/lib/zohoService';
 
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 export async function POST() {
   const now = new Date();
   const jobs = await prisma.integrationRetry.findMany({
