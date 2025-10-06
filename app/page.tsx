@@ -36,6 +36,29 @@ export default function Home() {
           </div>
           </div>
           
+        {/* Interactive Hints */}
+        <div className="absolute top-8 left-8 z-10 pointer-events-none">
+          <div className="bg-black/70 border-2 border-cyan-400/50 rounded-xl px-4 py-3 backdrop-blur-sm max-w-xs">
+            <h3 className="text-cyan-400 text-sm font-bold mb-2 flex items-center gap-2">
+              <span className="text-xl">✨</span> Interactive Experience
+            </h3>
+            <ul className="text-white/80 text-xs space-y-1">
+              <li className="flex items-start gap-2">
+                <span className="text-green-400">▸</span>
+                <span>Drag to rotate & explore</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-green-400">▸</span>
+                <span>Hover over elements to highlight</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-green-400">▸</span>
+                <span>Click for detailed information</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        
         {/* Scroll Indicator */}
         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10 animate-bounce">
           <div className="w-5 h-8 border-2 border-white/50 rounded-full flex justify-center p-1">
