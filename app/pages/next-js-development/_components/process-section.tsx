@@ -9,7 +9,7 @@ import React, { useEffect, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Search, Palette, Code, TestTube, Rocket } from 'lucide-react';
 
-console.log('[NextJS-Dev] ProcessSection component loaded');
+console.log('[Next-JS-Dev] ProcessSection component loaded');
 
 interface ProcessStep {
   number: string;
@@ -25,8 +25,8 @@ export function ProcessSection() {
   const inView = useInView(sectionRef, { once: true, amount: 0.1 });
 
   useEffect(() => {
-    console.log('[NextJS-Dev] ProcessSection mounted');
-    return () => console.log('[NextJS-Dev] ProcessSection unmounted');
+    console.log('[Next-JS-Dev] ProcessSection mounted');
+    return () => console.log('[Next-JS-Dev] ProcessSection unmounted');
   }, []);
 
   const steps: ProcessStep[] = [

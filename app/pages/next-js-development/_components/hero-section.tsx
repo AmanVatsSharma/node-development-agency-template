@@ -12,7 +12,7 @@ import { Button } from '@/app/components/ui/button';
 import { HeroHighlight, Highlight } from '@/app/components/ui/hero-highlight';
 import { ArrowRight, Eye, Zap, Globe, Users } from 'lucide-react';
 
-console.log('[NextJS-Dev] HeroSection component loaded');
+console.log('[Next-JS-Dev] HeroSection component loaded');
 
 export function HeroSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -20,7 +20,7 @@ export function HeroSection() {
   const [score, setScore] = useState(0);
 
   useEffect(() => {
-    console.log('[NextJS-Dev] HeroSection mounted');
+    console.log('[Next-JS-Dev] HeroSection mounted');
     
     // Animate score from 0 to 100
     if (inView) {
@@ -121,7 +121,7 @@ export function HeroSection() {
                   asChild
                   size="lg"
                   className="text-base sm:text-lg px-8 sm:px-10 py-6 sm:py-7 h-auto shadow-xl hover:shadow-2xl transition-all hover:scale-105 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-700 hover:via-indigo-700 hover:to-purple-700"
-                  onClick={() => console.log('[NextJS-Dev] Hero CTA - Get Free Quote clicked')}
+                  onClick={() => console.log('[Next-JS-Dev] Hero CTA - Get Free Quote clicked')}
                 >
                   <a href="#lead-form" className="flex items-center justify-center font-bold gap-2">
                     🔹 Get a Free Project Quote
@@ -134,7 +134,7 @@ export function HeroSection() {
                   variant="outline"
                   size="lg"
                   className="text-base sm:text-lg px-8 sm:px-10 py-6 sm:py-7 h-auto bg-white dark:bg-gray-800 backdrop-blur-sm border-2 hover:bg-gray-50 dark:hover:bg-gray-700 font-semibold"
-                  onClick={() => console.log('[NextJS-Dev] Hero CTA - See Our Work clicked')}
+                  onClick={() => console.log('[Next-JS-Dev] Hero CTA - See Our Work clicked')}
                 >
                   <a href="#case-studies" className="flex items-center justify-center gap-2">
                     <Eye className="h-5 w-5" />

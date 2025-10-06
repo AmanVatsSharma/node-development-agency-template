@@ -9,7 +9,7 @@ import React, { useEffect, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Star, Quote } from 'lucide-react';
 
-console.log('[NextJS-Dev] TestimonialsSection component loaded');
+console.log('[Next-JS-Dev] TestimonialsSection component loaded');
 
 interface Testimonial {
   name: string;
@@ -24,8 +24,8 @@ export function TestimonialsSection() {
   const inView = useInView(sectionRef, { once: true, amount: 0.1 });
 
   useEffect(() => {
-    console.log('[NextJS-Dev] TestimonialsSection mounted');
-    return () => console.log('[NextJS-Dev] TestimonialsSection unmounted');
+    console.log('[Next-JS-Dev] TestimonialsSection mounted');
+    return () => console.log('[Next-JS-Dev] TestimonialsSection unmounted');
   }, []);
 
   const testimonials: Testimonial[] = [

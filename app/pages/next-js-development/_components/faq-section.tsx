@@ -9,7 +9,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 
-console.log('[NextJS-Dev] FAQSection component loaded');
+console.log('[Next-JS-Dev] FAQSection component loaded');
 
 interface FAQ {
   question: string;
@@ -22,8 +22,8 @@ export function FAQSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   useEffect(() => {
-    console.log('[NextJS-Dev] FAQSection mounted');
-    return () => console.log('[NextJS-Dev] FAQSection unmounted');
+    console.log('[Next-JS-Dev] FAQSection mounted');
+    return () => console.log('[Next-JS-Dev] FAQSection unmounted');
   }, []);
 
   const faqs: FAQ[] = [
@@ -148,7 +148,7 @@ export function FAQSection() {
             <a 
               href="#lead-form"
               className="inline-flex items-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all hover:scale-105 text-sm sm:text-base"
-              onClick={() => console.log('[NextJS-Dev] FAQ CTA clicked')}
+              onClick={() => console.log('[Next-JS-Dev] FAQ CTA clicked')}
             >
               Ask Us Anything
             </a>

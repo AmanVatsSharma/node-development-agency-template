@@ -10,7 +10,7 @@ import { motion, useInView } from 'framer-motion';
 import { Button } from '@/app/components/ui/button';
 import { ChevronLeft, ChevronRight, TrendingUp, Zap, BarChart } from 'lucide-react';
 
-console.log('[NextJS-Dev] CaseStudiesSection component loaded');
+console.log('[Next-JS-Dev] CaseStudiesSection component loaded');
 
 interface CaseStudy {
   icon: React.ElementType;
@@ -27,8 +27,8 @@ export function CaseStudiesSection() {
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
-    console.log('[NextJS-Dev] CaseStudiesSection mounted');
-    return () => console.log('[NextJS-Dev] CaseStudiesSection unmounted');
+    console.log('[Next-JS-Dev] CaseStudiesSection mounted');
+    return () => console.log('[Next-JS-Dev] CaseStudiesSection unmounted');
   }, []);
 
   const caseStudies: CaseStudy[] = [
@@ -217,7 +217,7 @@ export function CaseStudiesSection() {
               asChild
               size="lg"
               className="text-base sm:text-lg px-8 sm:px-10 py-6 sm:py-7 h-auto bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 shadow-xl font-bold"
-              onClick={() => console.log('[NextJS-Dev] Case Studies CTA clicked')}
+              onClick={() => console.log('[Next-JS-Dev] Case Studies CTA clicked')}
             >
               <a href="#lead-form" className="flex items-center gap-2">
                 📂 Explore Full Case Studies →

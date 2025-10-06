@@ -22,7 +22,7 @@ import {
 } from 'lucide-react';
 import { fireConversion } from '@/utils/conversions';
 
-console.log('[NextJS-Dev] LeadFormSection component loaded');
+console.log('[Next-JS-Dev] LeadFormSection component loaded');
 
 interface FormData {
   name: string;
@@ -50,13 +50,13 @@ export function LeadFormSection() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    console.log('[NextJS-Dev] LeadFormSection mounted');
-    return () => console.log('[NextJS-Dev] LeadFormSection unmounted');
+    console.log('[Next-JS-Dev] LeadFormSection mounted');
+    return () => console.log('[Next-JS-Dev] LeadFormSection unmounted');
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('[NextJS-Dev] Lead form submitted:', formData);
+    console.log('[Next-JS-Dev] Lead form submitted:', formData);
     
     setLoading(true);
     try {
@@ -68,7 +68,7 @@ export function LeadFormSection() {
           email: formData.email,
           phone: formData.phone,
           message: formData.message,
-          source: 'nextjs-development',
+          source: 'next-js-development',
           leadSource: 'Website - Next.js Landing',
           raw: {
             company: formData.company,
@@ -78,13 +78,13 @@ export function LeadFormSection() {
         }),
       });
       const data = await res.json();
-      console.log('[NextJS-Dev] Lead API response:', data);
+      console.log('[Next-JS-Dev] Lead API response:', data);
       if (!res.ok) throw new Error(data?.error || 'Lead API failed');
       setSubmitted(true);
       // Fire Google Ads conversion
       void fireConversion('lead_submit');
     } catch (err) {
-      console.error('[NextJS-Dev] Lead submit error:', err);
+      console.error('[Next-JS-Dev] Lead submit error:', err);
       alert('Something went wrong. Please try again or contact us directly.');
     } finally {
       setLoading(false);
@@ -184,7 +184,7 @@ export function LeadFormSection() {
                   <a 
                     href="tel:+919963730111"
                     className="flex items-center gap-3 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg hover:bg-green-100 dark:hover:bg-green-900/30 transition-colors group"
-                    onClick={() => { console.log('[NextJS-Dev] Quick call clicked'); void fireConversion('call_click'); }}
+                    onClick={() => { console.log('[Next-JS-Dev] Quick call clicked'); void fireConversion('call_click'); }}
                   >
                     <div className="w-10 h-10 rounded-full bg-green-600 flex items-center justify-center flex-shrink-0">
                       <Phone className="h-5 w-5 text-white" />
@@ -202,7 +202,7 @@ export function LeadFormSection() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-3 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg hover:bg-green-100 dark:hover:bg-green-900/30 transition-colors group"
-                    onClick={() => { console.log('[NextJS-Dev] WhatsApp clicked'); void fireConversion('whatsapp_click'); }}
+                    onClick={() => { console.log('[Next-JS-Dev] WhatsApp clicked'); void fireConversion('whatsapp_click'); }}
                   >
                     <div className="w-10 h-10 rounded-full bg-green-600 flex items-center justify-center flex-shrink-0">
                       <MessageCircle className="h-5 w-5 text-white" />

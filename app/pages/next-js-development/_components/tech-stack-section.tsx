@@ -8,7 +8,7 @@
 import React, { useEffect, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 
-console.log('[NextJS-Dev] TechStackSection component loaded');
+console.log('[Next-JS-Dev] TechStackSection component loaded');
 
 interface TechCategory {
   category: string;
@@ -21,8 +21,8 @@ export function TechStackSection() {
   const inView = useInView(sectionRef, { once: true, amount: 0.1 });
 
   useEffect(() => {
-    console.log('[NextJS-Dev] TechStackSection mounted');
-    return () => console.log('[NextJS-Dev] TechStackSection unmounted');
+    console.log('[Next-JS-Dev] TechStackSection mounted');
+    return () => console.log('[Next-JS-Dev] TechStackSection unmounted');
   }, []);
 
   const stack: TechCategory[] = [

@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Next.js Web Development — Build Lightning-Fast, Future-Proof Websites',
     description: 'Build blazing-fast, SEO-ready websites with Next.js. 40+ projects delivered, avg speed 95+, clients across 5 countries. Get free quote.',
-    url: 'https://yourdomain.com/pages/nextjs-development',
+    url: 'https://yourdomain.com/pages/next-js-development',
     siteName: 'Next.js Web Development Agency',
     locale: 'en_IN',
     type: 'website',
@@ -61,7 +61,7 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: 'https://yourdomain.com/pages/nextjs-development',
+    canonical: 'https://yourdomain.com/pages/next-js-development',
   },
   other: {
     'price:currency': 'INR',
@@ -104,7 +104,7 @@ export const structuredData = {
     // Service Schema
     {
       '@type': 'Service',
-      '@id': 'https://yourdomain.com/pages/nextjs-development#service',
+      '@id': 'https://yourdomain.com/pages/next-js-development#service',
       serviceType: 'Next.js Web Development',
       provider: {
         '@id': 'https://yourdomain.com/#organization',
@@ -248,7 +248,7 @@ export const structuredData = {
           '@type': 'ListItem',
           position: 3,
           name: 'Next.js Development',
-          item: 'https://yourdomain.com/pages/nextjs-development',
+          item: 'https://yourdomain.com/pages/next-js-development',
         },
       ],
     },

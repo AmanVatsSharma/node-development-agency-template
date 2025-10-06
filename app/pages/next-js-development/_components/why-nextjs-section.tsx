@@ -10,7 +10,7 @@ import { motion, useInView } from 'framer-motion';
 import { Button } from '@/app/components/ui/button';
 import { Zap, Search, Layers, Sparkles, ArrowRight } from 'lucide-react';
 
-console.log('[NextJS-Dev] WhyNextJsSection component loaded');
+console.log('[Next-JS-Dev] WhyNextJsSection component loaded');
 
 interface FeatureCard {
   icon: React.ElementType;
@@ -25,8 +25,8 @@ export function WhyNextJsSection() {
   const inView = useInView(sectionRef, { once: true, amount: 0.1 });
 
   useEffect(() => {
-    console.log('[NextJS-Dev] WhyNextJsSection mounted');
-    return () => console.log('[NextJS-Dev] WhyNextJsSection unmounted');
+    console.log('[Next-JS-Dev] WhyNextJsSection mounted');
+    return () => console.log('[Next-JS-Dev] WhyNextJsSection unmounted');
   }, []);
 
   const features: FeatureCard[] = [
@@ -157,7 +157,7 @@ export function WhyNextJsSection() {
             asChild
             size="lg"
             className="text-base sm:text-lg px-8 sm:px-10 py-6 sm:py-7 h-auto bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 shadow-xl hover:shadow-2xl font-bold transition-all hover:scale-105"
-            onClick={() => console.log('[NextJS-Dev] Why NextJS CTA clicked')}
+            onClick={() => console.log('[Next-JS-Dev] Why NextJS CTA clicked')}
           >
             <a href="#lead-form" className="flex items-center gap-2">
               👉 Schedule a Free 15-min Consultation

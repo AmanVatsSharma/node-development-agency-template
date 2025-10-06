@@ -10,15 +10,15 @@ import { motion, useInView } from 'framer-motion';
 import { Button } from '@/app/components/ui/button';
 import { ArrowRight, Zap, Shield, Rocket } from 'lucide-react';
 
-console.log('[NextJS-Dev] FinalCTASection component loaded');
+console.log('[Next-JS-Dev] FinalCTASection component loaded');
 
 export function FinalCTASection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const inView = useInView(sectionRef, { once: true, amount: 0.3 });
 
   useEffect(() => {
-    console.log('[NextJS-Dev] FinalCTASection mounted');
-    return () => console.log('[NextJS-Dev] FinalCTASection unmounted');
+    console.log('[Next-JS-Dev] FinalCTASection mounted');
+    return () => console.log('[Next-JS-Dev] FinalCTASection unmounted');
   }, []);
 
   return (
@@ -70,7 +70,7 @@ export function FinalCTASection() {
               asChild
               size="lg"
               className="text-base sm:text-lg md:text-xl px-8 sm:px-12 py-6 sm:py-8 h-auto bg-white text-indigo-600 hover:bg-gray-100 shadow-2xl hover:shadow-3xl font-bold transition-all hover:scale-110"
-              onClick={() => console.log('[NextJS-Dev] Final CTA clicked')}
+              onClick={() => console.log('[Next-JS-Dev] Final CTA clicked')}
             >
               <a href="#lead-form" className="flex items-center gap-2 sm:gap-3">
                 💬 Book Your Free Strategy Call Now

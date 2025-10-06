@@ -28,7 +28,7 @@ export class SectionErrorBoundary extends Component<Props, State> {
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error(`[NextJS-Dev] Error in ${this.props.name}:`, error, errorInfo);
+    console.error(`[Next-JS-Dev] Error in ${this.props.name}:`, error, errorInfo);
   }
 
   render() {

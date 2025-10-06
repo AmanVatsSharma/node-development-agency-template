@@ -10,7 +10,7 @@ import { motion, useInView } from 'framer-motion';
 import { Button } from '@/app/components/ui/button';
 import { CheckCircle2, Sparkles, ArrowRight } from 'lucide-react';
 
-console.log('[NextJS-Dev] PricingSection component loaded');
+console.log('[Next-JS-Dev] PricingSection component loaded');
 
 interface PricingPlan {
   name: string;
@@ -27,8 +27,8 @@ export function PricingSection() {
   const inView = useInView(sectionRef, { once: true, amount: 0.1 });
 
   useEffect(() => {
-    console.log('[NextJS-Dev] PricingSection mounted');
-    return () => console.log('[NextJS-Dev] PricingSection unmounted');
+    console.log('[Next-JS-Dev] PricingSection mounted');
+    return () => console.log('[Next-JS-Dev] PricingSection unmounted');
   }, []);
 
   const plans: PricingPlan[] = [
@@ -212,7 +212,7 @@ export function PricingSection() {
                     ? 'bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 shadow-lg' 
                     : ''
                 }`}
-                onClick={() => console.log(`[NextJS-Dev] Pricing CTA clicked: ${plan.name}`)}
+                onClick={() => console.log(`[Next-JS-Dev] Pricing CTA clicked: ${plan.name}`)}
               >
                 <a href="#lead-form" className="flex items-center justify-center gap-2">
                   Request Detailed Quote

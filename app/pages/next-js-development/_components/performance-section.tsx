@@ -9,7 +9,7 @@ import React, { useEffect, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Zap, TrendingUp, Brain, Shield, RotateCcw, CheckCircle2 } from 'lucide-react';
 
-console.log('[NextJS-Dev] PerformanceSection component loaded');
+console.log('[Next-JS-Dev] PerformanceSection component loaded');
 
 interface PerformanceMetric {
   icon: React.ElementType;
@@ -23,8 +23,8 @@ export function PerformanceSection() {
   const inView = useInView(sectionRef, { once: true, amount: 0.1 });
 
   useEffect(() => {
-    console.log('[NextJS-Dev] PerformanceSection mounted');
-    return () => console.log('[NextJS-Dev] PerformanceSection unmounted');
+    console.log('[Next-JS-Dev] PerformanceSection mounted');
+    return () => console.log('[Next-JS-Dev] PerformanceSection unmounted');
   }, []);
 
   const metrics: PerformanceMetric[] = [
@@ -158,7 +158,7 @@ export function PerformanceSection() {
           <a 
             href="#lead-form"
             className="inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all hover:scale-105 text-sm sm:text-base"
-            onClick={() => console.log('[NextJS-Dev] Speed Audit CTA clicked')}
+            onClick={() => console.log('[Next-JS-Dev] Speed Audit CTA clicked')}
           >
             🚀 Get Your Free Speed Audit
           </a>
