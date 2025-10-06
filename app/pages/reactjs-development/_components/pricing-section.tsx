@@ -1,30 +1,34 @@
 'use client';
 
 /**
- * Pricing Section
- * Transparent pricing with INR-focused packages
+ * Pricing Section - PREMIUM INTERACTIVE PRICING
+ * Beautiful pricing cards with comparison and animations
  */
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Button } from '@/app/components/ui/button';
-import { CheckCircle2, Sparkles, ArrowRight } from 'lucide-react';
+import { CheckCircle2, Sparkles, ArrowRight, Zap, Crown, Rocket } from 'lucide-react';
 
 console.log('[ReactJS-Dev] PricingSection component loaded');
 
 interface PricingPlan {
+  icon: React.ElementType;
   name: string;
+  tagline: string;
   price: string;
   period: string;
   description: string;
   features: string[];
   popular?: boolean;
-  highlight?: string;
+  gradient: string;
+  ctaText: string;
 }
 
 export function PricingSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const inView = useInView(sectionRef, { once: true, amount: 0.1 });
+  const [hoveredPlan, setHoveredPlan] = useState<number | null>(null);
 
   useEffect(() => {
     console.log('[ReactJS-Dev] PricingSection mounted');
@@ -33,210 +37,303 @@ export function PricingSection() {
 
   const plans: PricingPlan[] = [
     {
+      icon: Rocket,
       name: 'Startup MVP',
+      tagline: 'Perfect for launching fast',
       price: '49,999',
-      period: 'Starting from',
-      description: 'New Startups',
+      period: 'one-time',
+      description: 'Get your MVP to market in 4 weeks',
       features: [
         'MVP in 4 weeks',
+        'Core features only',
+        'React 18 + Hooks',
         'Basic UI components',
         'API-ready architecture',
-        'React 18 + Hooks',
         'Responsive design',
-        'Contact form integration',
+        'Contact form',
         'Vercel deployment',
         '14-day bug warranty'
       ],
-      highlight: 'Perfect for launching your idea fast'
+      gradient: 'from-green-400 to-emerald-500',
+      ctaText: 'Start Your MVP'
     },
     {
+      icon: Zap,
       name: 'Growth App',
+      tagline: 'For scaling businesses',
       price: '99,999',
-      period: 'Starting from',
-      description: 'Growing Businesses',
+      period: 'one-time',
+      description: 'Full-featured React application',
       features: [
+        'Everything in Startup',
         'Full-feature React app',
         'Custom component library',
-        'Redux/Zustand state management',
-        'REST/GraphQL API integration',
+        'Redux/Zustand state',
+        'REST/GraphQL API',
         'Admin dashboard',
         'User authentication',
         'Performance optimized',
         'Analytics integration',
         'CI/CD setup',
-        '30-day bug warranty'
+        '30-day bug warranty',
+        'Priority email support'
       ],
       popular: true,
-      highlight: 'Most popular for scaling businesses'
+      gradient: 'from-[#61DAFB] to-[#00C897]',
+      ctaText: 'Scale Your Business'
     },
     {
-      name: 'Enterprise Build',
+      icon: Crown,
+      name: 'Enterprise',
+      tagline: 'Complete solution',
       price: 'Custom',
-      period: 'Quote',
-      description: 'SaaS & Corporates',
+      period: 'quote',
+      description: 'Enterprise-grade React application',
       features: [
+        'Everything in Growth',
         'Custom architecture',
         'TypeScript + React',
         'Advanced state management',
         'Real-time features',
-        'Multi-role authentication',
-        'Payment gateway integration',
+        'Multi-role auth',
+        'Payment integration',
         'Database design',
         'Full backend (Node/Nest)',
         'AWS/Vercel hosting',
         'CI/CD pipeline',
         'Comprehensive docs',
-        'Priority support'
+        'Dedicated support',
+        '90-day warranty'
       ],
-      highlight: 'Complete enterprise solution'
+      gradient: 'from-purple-400 to-pink-500',
+      ctaText: 'Contact Sales'
     }
   ];
 
   return (
     <section
       ref={sectionRef}
-      className="py-16 md:py-20 lg:py-28 bg-gradient-to-br from-gray-50 via-[#61DAFB]/5 to-[#00C897]/5 dark:from-gray-950 dark:via-[#61DAFB]/5 dark:to-[#00C897]/5"
+      className="relative py-16 sm:py-20 md:py-32 lg:py-40 bg-[#F8FAFF] dark:bg-[#0A0A0A] overflow-hidden"
       id="pricing"
       role="region"
       aria-labelledby="pricing-heading"
     >
-      <div className="container mx-auto px-4">
+      {/* Animated Background */}
+      <div className="absolute inset-0">
+        <div className="absolute top-1/4 left-0 w-96 h-96 bg-[#61DAFB]/10 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-[#00C897]/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+      </div>
+
+      <div className="container relative z-10 mx-auto px-4 sm:px-6">
         {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12 md:mb-16"
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="text-center mb-12 sm:mb-16 md:mb-20"
         >
-          <div className="inline-block px-4 sm:px-5 py-2 bg-gradient-to-r from-[#00C897]/20 to-[#61DAFB]/20 rounded-full mb-4 sm:mb-5 border border-[#00C897] text-sm sm:text-base">
-            <span className="font-bold text-[#00C897] dark:text-[#00C897] uppercase tracking-wide">
-              💬 Transparent Pricing
-            </span>
-          </div>
-
-          <h2
-            id="pricing-heading"
-            className="text-[32px] leading-tight sm:text-4xl md:text-5xl lg:text-6xl font-black mb-4 sm:mb-5 text-gray-900 dark:text-white"
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={inView ? { opacity: 1, scale: 1 } : {}}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="inline-flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-[#00C897]/10 to-[#61DAFB]/10 backdrop-blur-xl rounded-full mb-6 sm:mb-8 border border-[#00C897]/30 shadow-lg"
           >
-            Pricing Plans
-          </h2>
+            <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-[#00C897]" />
+            <span className="text-xs sm:text-sm font-bold bg-gradient-to-r from-[#00C897] to-[#61DAFB] bg-clip-text text-transparent uppercase tracking-wider">
+              Investment Plans
+            </span>
+          </motion.div>
 
-          <p className="text-sm sm:text-base md:text-lg text-gray-700 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed mb-5">
-            Choose the perfect plan — all prices in INR
-          </p>
+          <motion.h2
+            id="pricing-heading"
+            initial={{ opacity: 0, y: 20 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black mb-4 sm:mb-6"
+          >
+            <span className="bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
+              Transparent
+            </span>
+            <br />
+            <span className="bg-gradient-to-r from-[#61DAFB] via-[#00C897] to-[#61DAFB] bg-clip-text text-transparent">
+              Pricing
+            </span>
+          </motion.h2>
 
-          <div className="flex flex-wrap justify-center gap-2 text-[10px] sm:text-xs font-bold">
-            {[
-              '✅ No Hidden Costs',
-              '✅ GST Included',
-              '✅ Custom Quotes'
-            ].map((item, i) => (
-              <span key={i} className="px-3 py-2 bg-gradient-to-r from-[#61DAFB]/10 to-[#00C897]/10 text-[#61DAFB] dark:text-[#61DAFB] rounded-full border-2 border-[#61DAFB] shadow-sm">
-                {item}
-              </span>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto mb-6"
+          >
+            Choose the perfect plan for your React journey
+          </motion.p>
+
+          {/* Trust Badges */}
+          <div className="flex flex-wrap justify-center gap-3 sm:gap-4">
+            {['✅ No Hidden Costs', '✅ GST Included', '✅ Money-back Guarantee'].map((badge, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={inView ? { opacity: 1, scale: 1 } : {}}
+                transition={{ delay: 0.5 + i * 0.1 }}
+                className="px-4 py-2 bg-white dark:bg-gray-900 rounded-full border-2 border-[#61DAFB]/30 text-xs sm:text-sm font-bold text-gray-700 dark:text-gray-300"
+              >
+                {badge}
+              </motion.div>
             ))}
           </div>
         </motion.div>
 
         {/* Pricing Cards */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-7xl mx-auto mb-12">
-          {plans.map((plan, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className={`relative rounded-3xl p-6 sm:p-8 transition-all duration-300 ${
-                plan.popular
-                  ? 'bg-gradient-to-br from-[#61DAFB]/10 via-[#00C897]/10 to-[#61DAFB]/10 dark:from-[#61DAFB]/20 dark:via-[#00C897]/20 dark:to-[#61DAFB]/20 border-[3px] border-[#61DAFB] shadow-2xl shadow-[#61DAFB]/40 scale-[1.02] lg:scale-105'
-                  : 'bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 border-2 border-gray-200 dark:border-gray-700 hover:border-[#61DAFB] dark:hover:border-[#61DAFB] hover:shadow-2xl active:scale-95'
-              }`}
-            >
-              {/* Popular Badge */}
-              {plan.popular && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 sm:px-6 py-1.5 sm:py-2 bg-gradient-to-r from-[#61DAFB] to-[#00C897] text-[#1E1E1E] text-xs sm:text-sm font-bold rounded-full shadow-lg flex items-center gap-2">
-                  <Sparkles className="h-4 w-4" />
-                  MOST POPULAR
-                </div>
-              )}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 max-w-7xl mx-auto mb-12">
+          {plans.map((plan, index) => {
+            const Icon = plan.icon;
+            const isHovered = hoveredPlan === index;
+            const isPop = plan.popular;
 
-              {/* Plan Header */}
-              <div className="text-center mb-6">
-                <h3 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-2">
-                  {plan.name}
-                </h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
-                  {plan.description}
-                </p>
-
-                {/* Price */}
-                <div className="mb-2">
-                  <div className="flex items-start justify-center">
-                    <span className="text-2xl text-gray-600 dark:text-gray-400 mt-2">₹</span>
-                    <span className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-gray-900 dark:text-white">
-                      {plan.price}
-                    </span>
-                  </div>
-                  <div className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                    {plan.period}
-                  </div>
-                </div>
-
-                <div className="text-xs sm:text-sm text-[#61DAFB] font-semibold">
-                  {plan.highlight}
-                </div>
-              </div>
-
-              {/* Features List */}
-              <ul className="space-y-3 mb-6">
-                {plan.features.map((feature, idx) => (
-                  <li key={idx} className="flex items-start gap-2">
-                    <CheckCircle2 className="h-5 w-5 text-[#00C897] flex-shrink-0 mt-0.5" />
-                    <span className="text-sm text-gray-700 dark:text-gray-300">
-                      {feature}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-
-              {/* CTA Button */}
-              <Button
-                asChild
-                variant={plan.popular ? 'default' : 'outline'}
-                size="lg"
-                className={`w-full text-sm sm:text-base font-bold ${
-                  plan.popular 
-                    ? 'bg-gradient-to-r from-[#61DAFB] to-[#00C897] hover:from-[#50c9ea] hover:to-[#00b786] text-[#1E1E1E] shadow-lg' 
-                    : 'border-[#61DAFB] hover:bg-[#61DAFB]/10'
-                }`}
-                onClick={() => console.log(`[ReactJS-Dev] Pricing CTA clicked: ${plan.name}`)}
+            return (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{
+                  duration: 0.6,
+                  delay: index * 0.15,
+                  ease: [0.16, 1, 0.3, 1]
+                }}
+                onHoverStart={() => setHoveredPlan(index)}
+                onHoverEnd={() => setHoveredPlan(null)}
+                className={`relative group ${isPop ? 'lg:-mt-4' : ''}`}
               >
-                <a href="#lead-form" className="flex items-center justify-center gap-2">
-                  💬 Book Free Consultation
-                  <ArrowRight className="h-4 w-4" />
-                </a>
-              </Button>
-            </motion.div>
-          ))}
+                {/* Popular Badge */}
+                {isPop && (
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-20 px-6 py-2 bg-gradient-to-r from-[#61DAFB] to-[#00C897] text-white text-sm font-black rounded-full shadow-xl flex items-center gap-2">
+                    <Sparkles className="w-4 h-4" />
+                    MOST POPULAR
+                  </div>
+                )}
+
+                <div className={`relative h-full bg-white dark:bg-gray-900 rounded-3xl sm:rounded-[2rem] p-8 sm:p-10 border-2 overflow-hidden transition-all duration-500 ${
+                  isPop 
+                    ? 'border-[#61DAFB] shadow-2xl shadow-[#61DAFB]/20 scale-105'
+                    : 'border-gray-200 dark:border-gray-800 hover:border-[#61DAFB]/50 hover:shadow-2xl hover:-translate-y-2'
+                }`}>
+                  {/* Gradient Background */}
+                  <div className={`absolute inset-0 bg-gradient-to-br ${plan.gradient} opacity-0 group-hover:opacity-5 dark:group-hover:opacity-10 transition-opacity duration-500`} />
+                  
+                  {/* Glow Effect */}
+                  <motion.div
+                    className={`absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br ${plan.gradient} rounded-full blur-3xl opacity-0 group-hover:opacity-20 transition-opacity duration-500`}
+                    animate={isHovered ? { scale: 1.2 } : { scale: 1 }}
+                  />
+
+                  <div className="relative z-10">
+                    {/* Icon */}
+                    <motion.div
+                      whileHover={{ scale: 1.1, rotate: 5 }}
+                      transition={{ type: "spring", stiffness: 300 }}
+                      className={`inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-2xl sm:rounded-3xl bg-gradient-to-br ${plan.gradient} mb-6 shadow-2xl`}
+                    >
+                      <Icon className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
+                    </motion.div>
+
+                    {/* Plan Name */}
+                    <h3 className="text-2xl sm:text-3xl font-black text-gray-900 dark:text-white mb-2">
+                      {plan.name}
+                    </h3>
+
+                    {/* Tagline */}
+                    <p className="text-sm sm:text-base text-[#61DAFB] font-bold mb-6">
+                      {plan.tagline}
+                    </p>
+
+                    {/* Price */}
+                    <div className="mb-6">
+                      <div className="flex items-start gap-1 mb-2">
+                        <span className="text-2xl text-gray-600 dark:text-gray-400 mt-2">₹</span>
+                        <span className="text-5xl sm:text-6xl font-black bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
+                          {plan.price}
+                        </span>
+                      </div>
+                      <p className="text-sm text-gray-500 dark:text-gray-500">
+                        {plan.period}
+                      </p>
+                    </div>
+
+                    {/* Description */}
+                    <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mb-8">
+                      {plan.description}
+                    </p>
+
+                    {/* Features */}
+                    <ul className="space-y-3 sm:space-y-4 mb-8">
+                      {plan.features.map((feature, idx) => (
+                        <motion.li
+                          key={idx}
+                          initial={{ opacity: 0, x: -10 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          transition={{ delay: index * 0.15 + idx * 0.03 }}
+                          className="flex items-start gap-3"
+                        >
+                          <CheckCircle2 className="w-5 h-5 text-[#00C897] flex-shrink-0 mt-0.5" />
+                          <span className="text-sm sm:text-base text-gray-700 dark:text-gray-300">
+                            {feature}
+                          </span>
+                        </motion.li>
+                      ))}
+                    </ul>
+
+                    {/* CTA Button */}
+                    <Button
+                      asChild
+                      size="lg"
+                      className={`w-full text-base font-bold py-6 rounded-xl sm:rounded-2xl shadow-lg transition-all ${
+                        isPop
+                          ? 'bg-gradient-to-r from-[#61DAFB] to-[#00C897] hover:from-[#50c9ea] hover:to-[#00b786] text-white hover:shadow-xl'
+                          : 'bg-white dark:bg-gray-800 border-2 border-[#61DAFB] text-[#61DAFB] hover:bg-[#61DAFB] hover:text-white dark:hover:bg-[#61DAFB]'
+                      }`}
+                    >
+                      <a href="#lead-form" className="flex items-center justify-center gap-2">
+                        <span>{plan.ctaText}</span>
+                        <ArrowRight className="w-5 h-5" />
+                      </a>
+                    </Button>
+                  </div>
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
 
-        {/* Additional Note */}
+        {/* Custom Quote CTA */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center bg-gradient-to-r from-[#61DAFB]/10 to-[#00C897]/10 rounded-2xl p-6 sm:p-8 border border-[#61DAFB] max-w-3xl mx-auto"
+          transition={{ duration: 0.8 }}
+          className="text-center"
         >
-          <p className="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-2">
-            Need a Custom Solution?
-          </p>
-          <p className="text-sm sm:text-base text-gray-700 dark:text-gray-300">
-            We build custom React applications tailored to your unique requirements.
-            <br className="hidden sm:block" />
-            Contact us for a personalized quote!
-          </p>
+          <div className="inline-flex flex-col sm:flex-row items-center gap-6 p-8 sm:p-10 bg-gradient-to-r from-[#61DAFB]/5 via-[#00C897]/5 to-[#61DAFB]/5 backdrop-blur-xl rounded-3xl border border-[#61DAFB]/20 max-w-3xl">
+            <div className="text-center sm:text-left">
+              <p className="text-xl sm:text-2xl font-black text-gray-900 dark:text-white mb-2">
+                Need Something Custom?
+              </p>
+              <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">
+                We build tailored React solutions for unique requirements
+              </p>
+            </div>
+            <motion.a
+              href="#lead-form"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="flex-shrink-0 inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[#61DAFB] to-[#00C897] text-white font-bold rounded-2xl shadow-xl hover:shadow-2xl transition-all"
+            >
+              <span>Let's Talk</span>
+              <ArrowRight className="w-5 h-5" />
+            </motion.a>
+          </div>
         </motion.div>
       </div>
     </section>
