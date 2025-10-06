@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/app/lib/prisma';
 
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 // Build Zoho OAuth URL (Authorization Code grant)
 // Defaults to India data center; override with env ZOHO_ACCOUNTS_BASE if provided
 function buildZohoAuthUrl(clientId: string, redirectUri: string, scope: string) {

@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/app/lib/prisma';
 import { upsertIntegrationSettingsFromEnv } from '@/app/lib/zohoService';
 
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 // NOTE: In production, protect these routes with auth/role checks.
 
 export async function GET() {
