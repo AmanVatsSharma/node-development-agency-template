@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/app/lib/prisma';
 import { createZohoLead } from '@/app/lib/zohoService';
 import { getClientConversionMapping, logServerConversion } from '@/app/lib/googleAds';
+import { queueServerSideConversion } from '@/app/lib/googleAdsServerSide';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -121,6 +122,13 @@ export async function POST(req: NextRequest) {
 
     // Log and optionally trigger server-side record for Google
     await logServerConversion('lead_submit', { correlationId, zohoLeadId, leadId: lead.id });
+
+    // Queue server-side conversion upload (if GCLID present)
+    if (lead.gclid) {
+      // Fire and forget - don't await
+      void queueServerSideConversion(lead.id, 'lead_submit', body.source || 'business-website');
+      console.log('[Lead API] Queued server-side conversion for GCLID:', lead.gclid);
+    }
 
     // Provide client with conversion mapping
     const mapping = await getClientConversionMapping();
