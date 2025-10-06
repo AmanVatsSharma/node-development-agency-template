@@ -9,7 +9,7 @@
  * {
  *   "crons": [{
  *     "path": "/api/admin/process-conversion-queue",
- *     "schedule": "*/15 * * * *"
+ *     "schedule": "every 15 minutes"
  *   }]
  * }
  */
