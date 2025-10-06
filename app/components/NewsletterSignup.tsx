@@ -3,7 +3,11 @@
 import { useState } from 'react';
 import { fireConversion } from '@/utils/conversions';
 
-export default function NewsletterSignup() {
+interface NewsletterSignupProps {
+  landingPageSlug?: string; // Optional: for landing page-specific conversion tracking
+}
+
+export default function NewsletterSignup({ landingPageSlug }: NewsletterSignupProps = {}) {
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [message, setMessage] = useState('');
@@ -37,7 +41,7 @@ export default function NewsletterSignup() {
       }
       
       setStatus('success');
-      try { void fireConversion('newsletter_signup'); } catch {}
+      try { void fireConversion('newsletter_signup', landingPageSlug); } catch {}
       setMessage(data.message || 'Successfully subscribed to the newsletter');
       setEmail('');
     } catch (error) {

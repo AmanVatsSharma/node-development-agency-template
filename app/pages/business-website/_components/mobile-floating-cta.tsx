@@ -18,6 +18,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Phone, MessageCircle, X, Sparkles } from 'lucide-react';
+import { fireConversion } from '@/utils/conversions';
 
 console.log('[Business-Website] MobileFloatingCTA Professional component loaded');
 
@@ -178,7 +179,7 @@ export function MobileFloatingCTA() {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     className="flex items-center gap-3 px-4 py-3 bg-gradient-to-r from-green-600 to-green-700 text-white rounded-full shadow-2xl hover:shadow-green-500/50 transition-shadow"
-                    onClick={() => console.log('[Business-Website] Mobile floating phone clicked')}
+                    onClick={() => { console.log('[Business-Website] Mobile floating phone clicked'); void fireConversion('call_click', 'business-website'); }}
                   >
                     <Phone className="h-5 w-5" />
                     <span className="font-semibold text-sm whitespace-nowrap">
@@ -194,7 +195,7 @@ export function MobileFloatingCTA() {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     className="flex items-center gap-3 px-4 py-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-full shadow-2xl hover:shadow-green-500/50 transition-shadow"
-                    onClick={() => console.log('[Business-Website] Mobile floating WhatsApp clicked')}
+                    onClick={() => { console.log('[Business-Website] Mobile floating WhatsApp clicked'); void fireConversion('whatsapp_click', 'business-website'); }}
                   >
                     <MessageCircle className="h-5 w-5" />
                     <span className="font-semibold text-sm whitespace-nowrap">

@@ -18,7 +18,7 @@ export function MobileFloatingCTA() {
       <a
         href="tel:+919963730111"
         className="flex-1 flex items-center justify-center gap-2 px-4 py-3.5 bg-gradient-to-r from-green-600 to-emerald-600 text-white font-bold rounded-xl shadow-xl hover:shadow-2xl transition-all"
-        onClick={() => { console.log('[Next-JS-Dev] Mobile call clicked'); void fireConversion('call_click'); }}
+        onClick={() => { console.log('[Next-JS-Dev] Mobile call clicked'); void fireConversion('call_click', 'next-js-development'); }}
       >
         <Phone className="h-5 w-5" />
         <span className="text-sm">Call Now</span>
@@ -30,7 +30,7 @@ export function MobileFloatingCTA() {
         target="_blank"
         rel="noopener noreferrer"
         className="flex-1 flex items-center justify-center gap-2 px-4 py-3.5 bg-gradient-to-r from-green-600 to-emerald-600 text-white font-bold rounded-xl shadow-xl hover:shadow-2xl transition-all"
-        onClick={() => { console.log('[Next-JS-Dev] Mobile WhatsApp clicked'); void fireConversion('whatsapp_click'); }}
+        onClick={() => { console.log('[Next-JS-Dev] Mobile WhatsApp clicked'); void fireConversion('whatsapp_click', 'next-js-development'); }}
       >
         <MessageCircle className="h-5 w-5" />
         <span className="text-sm">WhatsApp</span>

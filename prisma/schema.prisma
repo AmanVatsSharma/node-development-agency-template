@@ -291,3 +291,31 @@ model IntegrationRetry {
   @@index([status, nextRunAt])
   @@index([createdAt])
 }
+
+// Landing Page Conversion Configuration
+// Manages conversion labels per landing page for Google Ads tracking
+model LandingPageConfig {
+  id                String    @id @default(cuid())
+  
+  // Landing page identifier
+  slug              String    @unique        // e.g., "business-website", "seo-audit", "reactjs-development"
+  name              String                   // Display name: "Business Website", "SEO Audit", etc.
+  description       String?                  // Optional description
+  
+  // Google Ads conversion labels for different events
+  // Each landing page can have different conversion labels for each event type
+  leadSubmitLabel   String?                  // Conversion label for form submissions
+  callClickLabel    String?                  // Conversion label for call button clicks
+  whatsappLabel     String?                  // Conversion label for WhatsApp clicks
+  newsletterLabel   String?                  // Conversion label for newsletter signups
+  
+  // Additional configuration
+  active            Boolean   @default(true) // Enable/disable tracking for this landing page
+  notes             String?   @db.Text       // Internal notes for testing/tracking
+  
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  @@index([slug])
+  @@index([active])
+}

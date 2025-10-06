@@ -54,6 +54,21 @@ type Settings = {
   lastZohoTokenRefreshAt?: string | null;
 };
 
+type LandingPageConfig = {
+  id: string;
+  slug: string;
+  name: string;
+  description?: string | null;
+  leadSubmitLabel?: string | null;
+  callClickLabel?: string | null;
+  whatsappLabel?: string | null;
+  newsletterLabel?: string | null;
+  active: boolean;
+  notes?: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
 type IntegrationLog = {
   id: string;
   type: string;
@@ -100,6 +115,11 @@ export default function IntegrationsAdminPage() {
   const [activeTab, setActiveTab] = useState('zoho');
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
   const [logFilter, setLogFilter] = useState<'all' | 'zoho' | 'google_ads'>('all');
+  
+  // Landing Pages State
+  const [landingPages, setLandingPages] = useState<LandingPageConfig[]>([]);
+  const [editingPage, setEditingPage] = useState<LandingPageConfig | null>(null);
+  const [savingPage, setSavingPage] = useState(false);
 
   /**
    * Load initial data on component mount
@@ -193,6 +213,17 @@ export default function IntegrationsAdminPage() {
       setLogsError(String(error?.message || error));
       setLogs([]);
     }
+
+    // 3) Load landing pages
+    try {
+      const pagesRes = await fetchWithTimeout('/api/admin/landing-pages');
+      const pagesData = await pagesRes.json();
+      if (pagesRes.ok && pagesData?.landingPages) {
+        setLandingPages(pagesData.landingPages);
+      }
+    } catch (error: any) {
+      console.error('[Admin Page] Landing pages load failed:', error);
+    }
   };
 
   /**
@@ -282,6 +313,76 @@ export default function IntegrationsAdminPage() {
    */
   const updateSettings = (updates: Partial<Settings>) => {
     setSettings((prev) => (prev ? { ...prev, ...updates } : null));
+  };
+
+  /**
+   * Save landing page configuration
+   */
+  const saveLandingPage = async (page: Partial<LandingPageConfig>) => {
+    setSavingPage(true);
+    try {
+      const res = await fetch('/api/admin/landing-pages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(page),
+      });
+      
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed to save');
+      
+      await loadData();
+      setEditingPage(null);
+    } catch (error: any) {
+      console.error('[Admin Page] Error saving landing page:', error);
+      alert('Failed to save landing page: ' + error.message);
+    } finally {
+      setSavingPage(false);
+    }
+  };
+
+  /**
+   * Delete landing page configuration
+   */
+  const deleteLandingPage = async (id: string) => {
+    if (!confirm('Are you sure you want to delete this landing page configuration?')) {
+      return;
+    }
+
+    try {
+      const res = await fetch(`/api/admin/landing-pages?id=${id}`, {
+        method: 'DELETE',
+      });
+
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || 'Failed to delete');
+      }
+
+      await loadData();
+    } catch (error: any) {
+      console.error('[Admin Page] Error deleting landing page:', error);
+      alert('Failed to delete landing page: ' + error.message);
+    }
+  };
+
+  /**
+   * Create new landing page entry
+   */
+  const createNewLandingPage = () => {
+    setEditingPage({
+      id: '',
+      slug: '',
+      name: '',
+      description: null,
+      leadSubmitLabel: null,
+      callClickLabel: null,
+      whatsappLabel: null,
+      newsletterLabel: null,
+      active: true,
+      notes: null,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    });
   };
 
   /**
@@ -481,7 +582,7 @@ export default function IntegrationsAdminPage() {
             </CardHeader>
             <CardContent>
               <Tabs value={activeTab} onValueChange={setActiveTab}>
-                <TabsList className="w-full grid grid-cols-2 mb-6">
+                <TabsList className="w-full grid grid-cols-3 mb-6">
                   <TabsTrigger value="zoho" className="flex items-center gap-2">
                     <Database className="h-4 w-4" />
                     Zoho CRM
@@ -489,6 +590,10 @@ export default function IntegrationsAdminPage() {
                   <TabsTrigger value="google" className="flex items-center gap-2">
                     <TrendingUp className="h-4 w-4" />
                     Google Ads
+                  </TabsTrigger>
+                  <TabsTrigger value="landing-pages" className="flex items-center gap-2">
+                    <TrendingUp className="h-4 w-4" />
+                    Landing Pages
                   </TabsTrigger>
                 </TabsList>
 
@@ -789,24 +894,320 @@ export default function IntegrationsAdminPage() {
                     )}
                   </div>
                 </TabsContent>
+
+                {/* Landing Pages Tab */}
+                <TabsContent value="landing-pages" className="space-y-6">
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <h3 className="text-lg font-semibold text-slate-900 dark:text-white">
+                          Landing Page Conversion Tracking
+                        </h3>
+                        <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
+                          Configure Google Ads conversion labels for each landing page. Each landing page can have different conversion labels for different events (form submit, call click, WhatsApp, etc.).
+                        </p>
+                      </div>
+                      <Button onClick={createNewLandingPage} size="sm">
+                        + Add Landing Page
+                      </Button>
+                    </div>
+
+                    {/* Landing Pages List */}
+                    <div className="space-y-3">
+                      {landingPages.length === 0 ? (
+                        <div className="text-center py-12 bg-slate-50 dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800">
+                          <TrendingUp className="h-12 w-12 mx-auto mb-3 text-slate-400" />
+                          <p className="text-slate-600 dark:text-slate-400">
+                            No landing pages configured yet. Click "Add Landing Page" to get started.
+                          </p>
+                        </div>
+                      ) : (
+                        landingPages.map((page) => (
+                          <Card key={page.id} className="border-2">
+                            <CardContent className="p-4">
+                              <div className="flex items-start justify-between gap-4">
+                                <div className="flex-1">
+                                  <div className="flex items-center gap-2 mb-2">
+                                    <h4 className="font-bold text-slate-900 dark:text-white">
+                                      {page.name}
+                                    </h4>
+                                    <Badge variant={page.active ? 'success' : 'secondary'}>
+                                      {page.active ? 'Active' : 'Inactive'}
+                                    </Badge>
+                                    <code className="text-xs px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded">
+                                      /{page.slug}
+                                    </code>
+                                  </div>
+                                  {page.description && (
+                                    <p className="text-sm text-slate-600 dark:text-slate-400 mb-3">
+                                      {page.description}
+                                    </p>
+                                  )}
+                                  <div className="grid grid-cols-2 gap-2 text-xs">
+                                    <div>
+                                      <span className="font-semibold">Form Submit:</span>{' '}
+                                      <code className="bg-slate-100 dark:bg-slate-800 px-1 rounded">
+                                        {page.leadSubmitLabel || 'Not set'}
+                                      </code>
+                                    </div>
+                                    <div>
+                                      <span className="font-semibold">Call Click:</span>{' '}
+                                      <code className="bg-slate-100 dark:bg-slate-800 px-1 rounded">
+                                        {page.callClickLabel || 'Not set'}
+                                      </code>
+                                    </div>
+                                    <div>
+                                      <span className="font-semibold">WhatsApp:</span>{' '}
+                                      <code className="bg-slate-100 dark:bg-slate-800 px-1 rounded">
+                                        {page.whatsappLabel || 'Not set'}
+                                      </code>
+                                    </div>
+                                    <div>
+                                      <span className="font-semibold">Newsletter:</span>{' '}
+                                      <code className="bg-slate-100 dark:bg-slate-800 px-1 rounded">
+                                        {page.newsletterLabel || 'Not set'}
+                                      </code>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className="flex gap-2">
+                                  <Button
+                                    variant="outline"
+                                    size="sm"
+                                    onClick={() => setEditingPage(page)}
+                                  >
+                                    Edit
+                                  </Button>
+                                  <Button
+                                    variant="destructive"
+                                    size="sm"
+                                    onClick={() => deleteLandingPage(page.id)}
+                                  >
+                                    Delete
+                                  </Button>
+                                </div>
+                              </div>
+                            </CardContent>
+                          </Card>
+                        ))
+                      )}
+                    </div>
+
+                    {/* Edit/Create Modal */}
+                    {editingPage && (
+                      <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+                        <Card className="max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+                          <CardHeader>
+                            <CardTitle>
+                              {editingPage.id ? 'Edit' : 'Create'} Landing Page Configuration
+                            </CardTitle>
+                            <CardDescription>
+                              Configure conversion tracking labels for this landing page
+                            </CardDescription>
+                          </CardHeader>
+                          <CardContent className="space-y-4">
+                            {/* Slug */}
+                            <div className="space-y-2">
+                              <Label htmlFor="page-slug">
+                                Landing Page Slug <span className="text-red-500">*</span>
+                              </Label>
+                              <Input
+                                id="page-slug"
+                                placeholder="business-website"
+                                value={editingPage.slug}
+                                onChange={(e) =>
+                                  setEditingPage({ ...editingPage, slug: e.target.value })
+                                }
+                                disabled={!!editingPage.id}
+                              />
+                              <p className="text-xs text-slate-500">
+                                URL identifier (e.g., "business-website", "seo-audit")
+                              </p>
+                            </div>
+
+                            {/* Name */}
+                            <div className="space-y-2">
+                              <Label htmlFor="page-name">
+                                Display Name <span className="text-red-500">*</span>
+                              </Label>
+                              <Input
+                                id="page-name"
+                                placeholder="Business Website"
+                                value={editingPage.name}
+                                onChange={(e) =>
+                                  setEditingPage({ ...editingPage, name: e.target.value })
+                                }
+                              />
+                            </div>
+
+                            {/* Description */}
+                            <div className="space-y-2">
+                              <Label htmlFor="page-description">Description</Label>
+                              <Textarea
+                                id="page-description"
+                                placeholder="Main landing page for business websites..."
+                                value={editingPage.description || ''}
+                                onChange={(e) =>
+                                  setEditingPage({ ...editingPage, description: e.target.value })
+                                }
+                                rows={2}
+                              />
+                            </div>
+
+                            <Separator />
+
+                            {/* Conversion Labels */}
+                            <div className="space-y-4">
+                              <h4 className="font-semibold text-sm">
+                                Google Ads Conversion Labels
+                              </h4>
+                              <p className="text-xs text-slate-500">
+                                Enter just the label part (e.g., "AbCdEfGhIj"). The system will automatically combine with your Google Conversion ID.
+                              </p>
+
+                              <div className="space-y-2">
+                                <Label htmlFor="lead-label">Form Submit Label</Label>
+                                <Input
+                                  id="lead-label"
+                                  placeholder="AbCdEfGhIj"
+                                  value={editingPage.leadSubmitLabel || ''}
+                                  onChange={(e) =>
+                                    setEditingPage({
+                                      ...editingPage,
+                                      leadSubmitLabel: e.target.value,
+                                    })
+                                  }
+                                />
+                              </div>
+
+                              <div className="space-y-2">
+                                <Label htmlFor="call-label">Call Click Label</Label>
+                                <Input
+                                  id="call-label"
+                                  placeholder="XyZ123aBcD"
+                                  value={editingPage.callClickLabel || ''}
+                                  onChange={(e) =>
+                                    setEditingPage({
+                                      ...editingPage,
+                                      callClickLabel: e.target.value,
+                                    })
+                                  }
+                                />
+                              </div>
+
+                              <div className="space-y-2">
+                                <Label htmlFor="whatsapp-label">WhatsApp Click Label</Label>
+                                <Input
+                                  id="whatsapp-label"
+                                  placeholder="MnOpQrStUv"
+                                  value={editingPage.whatsappLabel || ''}
+                                  onChange={(e) =>
+                                    setEditingPage({
+                                      ...editingPage,
+                                      whatsappLabel: e.target.value,
+                                    })
+                                  }
+                                />
+                              </div>
+
+                              <div className="space-y-2">
+                                <Label htmlFor="newsletter-label">Newsletter Signup Label</Label>
+                                <Input
+                                  id="newsletter-label"
+                                  placeholder="WxYz456EfG"
+                                  value={editingPage.newsletterLabel || ''}
+                                  onChange={(e) =>
+                                    setEditingPage({
+                                      ...editingPage,
+                                      newsletterLabel: e.target.value,
+                                    })
+                                  }
+                                />
+                              </div>
+                            </div>
+
+                            <Separator />
+
+                            {/* Active Toggle */}
+                            <div className="flex items-center gap-3">
+                              <input
+                                type="checkbox"
+                                id="page-active"
+                                checked={editingPage.active}
+                                onChange={(e) =>
+                                  setEditingPage({ ...editingPage, active: e.target.checked })
+                                }
+                                className="h-4 w-4"
+                              />
+                              <Label htmlFor="page-active">Active (enable tracking)</Label>
+                            </div>
+
+                            {/* Notes */}
+                            <div className="space-y-2">
+                              <Label htmlFor="page-notes">Internal Notes</Label>
+                              <Textarea
+                                id="page-notes"
+                                placeholder="Testing notes, campaign details, etc..."
+                                value={editingPage.notes || ''}
+                                onChange={(e) =>
+                                  setEditingPage({ ...editingPage, notes: e.target.value })
+                                }
+                                rows={3}
+                              />
+                            </div>
+
+                            {/* Action Buttons */}
+                            <div className="flex justify-end gap-3 pt-4">
+                              <Button
+                                variant="outline"
+                                onClick={() => setEditingPage(null)}
+                                disabled={savingPage}
+                              >
+                                Cancel
+                              </Button>
+                              <Button
+                                onClick={() => saveLandingPage(editingPage)}
+                                disabled={savingPage || !editingPage.slug || !editingPage.name}
+                              >
+                                {savingPage ? (
+                                  <>
+                                    <RefreshCw className="h-4 w-4 mr-2 animate-spin" />
+                                    Saving...
+                                  </>
+                                ) : (
+                                  <>
+                                    <Save className="h-4 w-4 mr-2" />
+                                    Save Landing Page
+                                  </>
+                                )}
+                              </Button>
+                            </div>
+                          </CardContent>
+                        </Card>
+                      </div>
+                    )}
+                  </div>
+                </TabsContent>
               </Tabs>
 
-              {/* Save Button */}
-              <div className="mt-6 pt-6 border-t border-slate-200 dark:border-slate-800">
-                <Button onClick={save} disabled={saving || !hasUnsavedChanges} size="lg">
-                  {saving ? (
-                    <>
-                      <RefreshCw className="h-4 w-4 mr-2 animate-spin" />
-                      Saving Changes...
-                    </>
-                  ) : (
-                    <>
-                      <Save className="h-4 w-4 mr-2" />
-                      Save Settings
-                    </>
-                  )}
-                </Button>
-              </div>
+              {/* Save Button - Only for Zoho/Google tabs */}
+              {(activeTab === 'zoho' || activeTab === 'google') && (
+                <div className="mt-6 pt-6 border-t border-slate-200 dark:border-slate-800">
+                  <Button onClick={save} disabled={saving || !hasUnsavedChanges} size="lg">
+                    {saving ? (
+                      <>
+                        <RefreshCw className="h-4 w-4 mr-2 animate-spin" />
+                        Saving Changes...
+                      </>
+                    ) : (
+                      <>
+                        <Save className="h-4 w-4 mr-2" />
+                        Save Settings
+                      </>
+                    )}
+                  </Button>
+                </div>
+              )}
             </CardContent>
           </Card>
 

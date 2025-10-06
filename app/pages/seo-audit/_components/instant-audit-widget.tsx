@@ -87,7 +87,7 @@ export function InstantAuditWidget() {
       });
 
       if (leadRes.ok) {
-        void fireConversion('lead_submit');
+        void fireConversion('lead_submit', 'seo-audit');
       }
 
       setResult(scanData);
