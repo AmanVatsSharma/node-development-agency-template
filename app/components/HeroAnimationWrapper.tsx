@@ -10,8 +10,8 @@ const AnimationFallback = () => (
   </div>
 );
 
-// Dynamically import the 3D animation with no SSR to avoid hydration issues
-const HeroAnimation = dynamic(() => import("../animations/HeroAnimation"), {
+// Dynamically import the WORLD-CLASS 3D animation - fully visible, high contrast, impressive
+const HeroAnimation = dynamic(() => import("../animations/HeroAnimationWorldClass"), {
   ssr: false,
   loading: () => <AnimationFallback />
 });
