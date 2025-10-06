@@ -39,7 +39,7 @@ import { MobileFloatingCTA } from './_components/mobile-floating-cta';
 import { ScrollToTop } from './_components/scroll-to-top';
 import { SectionErrorBoundary } from './_components/section-error-boundary';
 
-console.log('[NextJS-Dev] Main page component loaded');
+console.log('[Next-JS-Dev] Main page component loaded');
 
 /**
  * Next.js Web Development Landing Page Component
@@ -70,9 +70,9 @@ console.log('[NextJS-Dev] Main page component loaded');
  */
 export default function NextJsDevelopmentPage() {
   useEffect(() => {
-    console.log('[NextJS-Dev] Page mounted');
-    console.log('[NextJS-Dev] User Agent:', navigator.userAgent);
-    console.log('[NextJS-Dev] Viewport:', {
+    console.log('[Next-JS-Dev] Page mounted');
+    console.log('[Next-JS-Dev] User Agent:', navigator.userAgent);
+    console.log('[Next-JS-Dev] Viewport:', {
       width: window.innerWidth,
       height: window.innerHeight
     });
@@ -82,12 +82,12 @@ export default function NextJsDevelopmentPage() {
       (window as any).gtag('event', 'page_view', {
         page_title: 'Next.js Web Development Services',
         page_location: window.location.href,
-        page_path: '/pages/nextjs-development'
+        page_path: '/pages/next-js-development'
       });
     }
 
     return () => {
-      console.log('[NextJS-Dev] Page unmounted');
+      console.log('[Next-JS-Dev] Page unmounted');
     };
   }, []);
 

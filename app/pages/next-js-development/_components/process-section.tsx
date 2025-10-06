@@ -9,7 +9,7 @@ import React, { useEffect, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Search, Palette, Code, TestTube, Rocket } from 'lucide-react';
 
-console.log('[NextJS-Dev] ProcessSection component loaded');
+console.log('[Next-JS-Dev] ProcessSection component loaded');
 
 interface ProcessStep {
   number: string;
@@ -25,49 +25,49 @@ export function ProcessSection() {
   const inView = useInView(sectionRef, { once: true, amount: 0.1 });
 
   useEffect(() => {
-    console.log('[NextJS-Dev] ProcessSection mounted');
-    return () => console.log('[NextJS-Dev] ProcessSection unmounted');
+    console.log('[Next-JS-Dev] ProcessSection mounted');
+    return () => console.log('[Next-JS-Dev] ProcessSection unmounted');
   }, []);
 
   const steps: ProcessStep[] = [
     {
-      number: '01',
+      number: '1️⃣',
       icon: Search,
-      title: 'Discovery',
-      description: 'Understand goals, brand, tech stack',
-      deliverables: ['Requirements document', 'Project timeline', 'Tech stack plan'],
+      title: 'Discovery & Strategy',
+      description: 'We analyze your brand, goals & competitors',
+      deliverables: ['Brand analysis', 'Competitor research', 'Technical roadmap'],
       gradient: 'from-blue-500 to-cyan-500'
     },
     {
-      number: '02',
+      number: '2️⃣',
       icon: Palette,
-      title: 'UI/UX Design',
-      description: 'Tailwind-powered pixel-perfect layouts',
-      deliverables: ['Figma wireframes', 'Design system', 'Responsive mockups'],
+      title: 'Design & Wireframing',
+      description: 'Figma prototypes → Tailwind design system',
+      deliverables: ['Figma wireframes', 'Design system', 'Component library'],
       gradient: 'from-purple-500 to-pink-500'
     },
     {
-      number: '03',
+      number: '3️⃣',
       icon: Code,
-      title: 'Development',
-      description: 'Next.js + TypeScript + API integration',
-      deliverables: ['Clean codebase', 'Component library', 'API endpoints'],
+      title: 'Development & Integration',
+      description: 'Next.js 13+ App Router + API routes',
+      deliverables: ['Clean codebase', 'API integration', 'Database setup'],
       gradient: 'from-green-500 to-emerald-500'
     },
     {
-      number: '04',
+      number: '4️⃣',
       icon: TestTube,
-      title: 'Testing & SEO',
-      description: 'Core Web Vitals, accessibility, schema',
-      deliverables: ['Performance report', 'SEO audit', 'Accessibility check'],
+      title: 'Testing & SEO Optimization',
+      description: 'Lighthouse, Core Web Vitals, accessibility',
+      deliverables: ['Performance report', 'SEO optimization', 'A11y compliance'],
       gradient: 'from-orange-500 to-red-500'
     },
     {
-      number: '05',
+      number: '5️⃣',
       icon: Rocket,
-      title: 'Launch & Support',
-      description: 'Deployed on Vercel / AWS + 30-day support',
-      deliverables: ['Production deployment', 'Documentation', '30-day warranty'],
+      title: 'Deployment & Support',
+      description: 'Vercel / AWS deployment + 30-day free support',
+      deliverables: ['Production deployment', 'SSL setup', '30-day warranty'],
       gradient: 'from-indigo-500 to-purple-500'
     }
   ];
@@ -98,7 +98,7 @@ export function ProcessSection() {
             id="process-heading"
             className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4 sm:mb-6 text-gray-900 dark:text-white px-2"
           >
-            From Vision → Live Website in 5 Steps
+            Our 5-Phase Next.js Development Process
           </h2>
 
           <p className="text-base sm:text-lg md:text-xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed px-2">

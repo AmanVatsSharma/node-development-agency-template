@@ -8,7 +8,7 @@
 import React, { useEffect, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 
-console.log('[NextJS-Dev] TechStackSection component loaded');
+console.log('[Next-JS-Dev] TechStackSection component loaded');
 
 interface TechCategory {
   category: string;
@@ -21,35 +21,40 @@ export function TechStackSection() {
   const inView = useInView(sectionRef, { once: true, amount: 0.1 });
 
   useEffect(() => {
-    console.log('[NextJS-Dev] TechStackSection mounted');
-    return () => console.log('[NextJS-Dev] TechStackSection unmounted');
+    console.log('[Next-JS-Dev] TechStackSection mounted');
+    return () => console.log('[Next-JS-Dev] TechStackSection unmounted');
   }, []);
 
   const stack: TechCategory[] = [
     {
       category: 'Frontend',
-      technologies: ['Next.js 14+', 'React 18', 'TypeScript', 'Tailwind CSS', 'Framer Motion', 'shadcn/ui'],
+      technologies: ['Next.js 13+', 'React 18', 'Tailwind CSS', 'Framer Motion'],
       gradient: 'from-blue-500 to-cyan-500'
     },
     {
       category: 'Backend',
-      technologies: ['NestJS', 'Node.js', 'TypeORM', 'Prisma', 'GraphQL', 'REST API'],
+      technologies: ['NestJS', 'Node.js', 'TypeORM', 'Prisma'],
       gradient: 'from-green-500 to-emerald-500'
     },
     {
       category: 'Database',
-      technologies: ['PostgreSQL', 'MongoDB', 'Redis', 'Supabase', 'PlanetScale'],
+      technologies: ['PostgreSQL', 'MongoDB'],
       gradient: 'from-purple-500 to-pink-500'
     },
     {
-      category: 'CMS & Integrations',
-      technologies: ['Sanity', 'Strapi', 'Contentful', 'Shopify', 'Stripe', 'SendGrid'],
+      category: 'CMS / Headless',
+      technologies: ['Sanity', 'Strapi', 'Contentful', 'Shopify'],
       gradient: 'from-orange-500 to-red-500'
     },
     {
-      category: 'Hosting & DevOps',
-      technologies: ['Vercel', 'AWS', 'Cloudflare', 'Docker', 'GitHub Actions', 'CI/CD'],
+      category: 'Deployment',
+      technologies: ['Vercel', 'AWS EC2 / S3', 'Cloudflare'],
       gradient: 'from-indigo-500 to-purple-500'
+    },
+    {
+      category: 'Analytics & SEO',
+      technologies: ['Google Tag Manager', 'Schema Markup', 'GA4'],
+      gradient: 'from-pink-500 to-rose-500'
     }
   ];
 
@@ -87,8 +92,8 @@ export function TechStackSection() {
           </p>
         </motion.div>
 
-        {/* Tech Stack Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto">
+        {/* Tech Stack - MOBILE: 2-COLUMN GRID */}
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 max-w-6xl mx-auto">
           {stack.map((category, index) => (
             <motion.div
               key={index}
@@ -96,25 +101,25 @@ export function TechStackSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="group relative bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 rounded-2xl sm:rounded-3xl p-6 sm:p-8 border-2 border-gray-200 dark:border-gray-700 hover:border-transparent hover:shadow-2xl transition-all duration-300 overflow-hidden"
+              className="group relative bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 rounded-xl sm:rounded-2xl lg:rounded-3xl p-4 sm:p-6 lg:p-8 border-2 border-gray-200 dark:border-gray-700 hover:border-transparent hover:shadow-2xl transition-all duration-300 overflow-hidden"
             >
               {/* Gradient Overlay */}
               <div className={`absolute inset-0 bg-gradient-to-br ${category.gradient} opacity-0 group-hover:opacity-10 dark:group-hover:opacity-20 transition-opacity duration-300`} />
               
               <div className="relative z-10">
                 {/* Category Header */}
-                <div className={`inline-block px-4 py-2 bg-gradient-to-r ${category.gradient} rounded-xl mb-4 sm:mb-5`}>
-                  <h3 className="text-lg sm:text-xl font-bold text-white">
+                <div className={`inline-block px-3 py-1.5 sm:px-4 sm:py-2 bg-gradient-to-r ${category.gradient} rounded-lg sm:rounded-xl mb-3 sm:mb-4`}>
+                  <h3 className="text-xs sm:text-base lg:text-lg font-black text-white">
                     {category.category}
                   </h3>
                 </div>
 
-                {/* Technologies */}
-                <div className="flex flex-wrap gap-2">
+                {/* Technologies - MOBILE: Compact */}
+                <div className="flex flex-wrap gap-1.5 sm:gap-2">
                   {category.technologies.map((tech, idx) => (
                     <span 
                       key={idx}
-                      className="px-3 py-1.5 bg-white dark:bg-gray-950 rounded-lg text-xs sm:text-sm font-semibold text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 hover:scale-105 transition-transform"
+                      className="px-2 py-1 sm:px-3 sm:py-1.5 bg-white dark:bg-gray-950 rounded-md sm:rounded-lg text-[10px] sm:text-xs lg:text-sm font-bold text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 hover:scale-105 transition-transform"
                     >
                       {tech}
                     </span>

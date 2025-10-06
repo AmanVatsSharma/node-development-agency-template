@@ -9,7 +9,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowUp } from 'lucide-react';
 
-console.log('[NextJS-Dev] ScrollToTop component loaded');
+console.log('[Next-JS-Dev] ScrollToTop component loaded');
 
 export function ScrollToTop() {
   const [isVisible, setIsVisible] = useState(false);

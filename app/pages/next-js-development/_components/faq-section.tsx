@@ -9,7 +9,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 
-console.log('[NextJS-Dev] FAQSection component loaded');
+console.log('[Next-JS-Dev] FAQSection component loaded');
 
 interface FAQ {
   question: string;
@@ -22,42 +22,30 @@ export function FAQSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   useEffect(() => {
-    console.log('[NextJS-Dev] FAQSection mounted');
-    return () => console.log('[NextJS-Dev] FAQSection unmounted');
+    console.log('[Next-JS-Dev] FAQSection mounted');
+    return () => console.log('[Next-JS-Dev] FAQSection unmounted');
   }, []);
 
   const faqs: FAQ[] = [
     {
-      question: 'Do you offer design services too?',
-      answer: 'Yes! We provide complete design services including custom UI/UX design with Figma prototypes, design systems with Tailwind CSS, and mobile-first responsive layouts. Our designers work closely with developers to ensure pixel-perfect implementation.'
+      question: '1️⃣ Do you provide UI/UX design?',
+      answer: 'Yes, custom Figma + Tailwind UI system. We create beautiful, conversion-optimized designs that align with your brand and business goals.'
     },
     {
-      question: 'What about hosting and domain setup?',
-      answer: 'We handle everything! We set up your site on Vercel (free tier available) or AWS, configure your custom domain, set up SSL certificates, and provide complete documentation. You own everything — no vendor lock-in.'
+      question: '2️⃣ Can you host it for me?',
+      answer: 'Yes, we set up Vercel / AWS + domain integration. We handle SSL certificates, DNS configuration, and ensure 99.9% uptime with CDN optimization.'
     },
     {
-      question: 'Is it SEO-ready out of the box?',
-      answer: 'Absolutely! Every site includes optimized meta tags, structured data (Schema.org), Open Graph tags for social sharing, XML sitemaps, robots.txt, and Lighthouse optimization. We ensure your site is fully crawlable and indexable by search engines.'
+      question: '3️⃣ Do you offer maintenance?',
+      answer: 'Yes, plans start ₹9,999/month. Includes security updates, content updates, performance monitoring, bug fixes, and priority support.'
     },
     {
-      question: 'Can you maintain my site monthly?',
-      answer: 'Yes, we offer ongoing maintenance plans starting at ₹9,999/month. This includes security updates, content updates, performance monitoring, bug fixes, backup management, and priority support.'
+      question: '4️⃣ Will it be SEO-ready?',
+      answer: 'Fully optimized meta, structured data, Core Web Vitals. Every site includes Schema markup, Open Graph tags, XML sitemaps, and passes Lighthouse audits.'
     },
     {
-      question: 'What if I need changes after launch?',
-      answer: 'All packages include a 30-day bug warranty. Any bugs or issues found within 30 days are fixed free of charge. For feature additions or design changes, we offer flexible hourly rates or monthly retainer packages.'
-    },
-    {
-      question: 'How long does it take to build a Next.js site?',
-      answer: 'Timeline depends on complexity: Starter (3 pages): 7-10 days, Professional (6-8 pages): 14-21 days, Enterprise: 3-6 weeks. Rush delivery available for urgent projects with additional fees.'
-    },
-    {
-      question: 'Do you provide the source code?',
-      answer: 'Yes! You get complete source code ownership with documentation, GitHub repository access, deployment scripts, and technical handover. We use clean, well-commented code following industry best practices.'
-    },
-    {
-      question: 'Can you integrate with existing systems?',
-      answer: 'Absolutely! We have experience integrating with CRM systems (Zoho, HubSpot, Salesforce), payment gateways (Stripe, Razorpay, PayPal), email services (SendGrid, Mailchimp), analytics tools, and custom APIs.'
+      question: '5️⃣ What is the payment schedule?',
+      answer: '50% advance | 30% mid | 20% on delivery. No hidden costs. We provide detailed invoices and milestone-based payment terms.'
     }
   ];
 
@@ -160,7 +148,7 @@ export function FAQSection() {
             <a 
               href="#lead-form"
               className="inline-flex items-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all hover:scale-105 text-sm sm:text-base"
-              onClick={() => console.log('[NextJS-Dev] FAQ CTA clicked')}
+              onClick={() => console.log('[Next-JS-Dev] FAQ CTA clicked')}
             >
               Ask Us Anything
             </a>

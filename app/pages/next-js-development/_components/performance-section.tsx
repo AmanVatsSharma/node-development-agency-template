@@ -9,7 +9,7 @@ import React, { useEffect, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Zap, TrendingUp, Brain, Shield, RotateCcw, CheckCircle2 } from 'lucide-react';
 
-console.log('[NextJS-Dev] PerformanceSection component loaded');
+console.log('[Next-JS-Dev] PerformanceSection component loaded');
 
 interface PerformanceMetric {
   icon: React.ElementType;
@@ -23,39 +23,39 @@ export function PerformanceSection() {
   const inView = useInView(sectionRef, { once: true, amount: 0.1 });
 
   useEffect(() => {
-    console.log('[NextJS-Dev] PerformanceSection mounted');
-    return () => console.log('[NextJS-Dev] PerformanceSection unmounted');
+    console.log('[Next-JS-Dev] PerformanceSection mounted');
+    return () => console.log('[Next-JS-Dev] PerformanceSection unmounted');
   }, []);
 
   const metrics: PerformanceMetric[] = [
     {
       icon: Zap,
-      metric: '90+ PageSpeed',
-      description: 'Desktop & Mobile',
+      metric: 'PageSpeed 95+',
+      description: 'Desktop / 85+ Mobile',
       gradient: 'from-yellow-500 to-orange-500'
     },
     {
       icon: TrendingUp,
-      metric: 'Core Web Vitals',
-      description: 'Fully compliant',
+      metric: 'Core Web Vitals ✅',
+      description: 'LCP < 1.8s | CLS < 0.05 | INP < 200ms',
       gradient: 'from-green-500 to-emerald-500'
     },
     {
       icon: Brain,
-      metric: 'SEO Structured',
-      description: 'Index-ready',
+      metric: 'SEO Schema',
+      description: 'Open Graph + Meta Preload',
       gradient: 'from-blue-500 to-cyan-500'
     },
     {
       icon: Shield,
-      metric: 'Security + Scalability',
-      description: 'Tested & verified',
+      metric: '99.9% Uptime',
+      description: 'Hosting',
       gradient: 'from-purple-500 to-pink-500'
     },
     {
-      icon: RotateCcw,
-      metric: '30-Day Warranty',
-      description: 'Bug-free guarantee',
+      icon: CheckCircle2,
+      metric: 'Responsive',
+      description: 'Accessibility AA Standard',
       gradient: 'from-indigo-500 to-purple-500'
     }
   ];
@@ -98,43 +98,87 @@ export function PerformanceSection() {
           </p>
         </motion.div>
 
-        {/* Metrics Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6 mb-10 sm:mb-14 max-w-6xl mx-auto">
-          {metrics.map((metric, index) => {
-            const Icon = metric.icon;
-            return (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="group text-center"
-              >
-                <div className="relative bg-white dark:bg-gray-900 rounded-2xl p-4 sm:p-6 border-2 border-gray-200 dark:border-gray-800 hover:border-transparent hover:shadow-2xl transition-all duration-300 overflow-hidden">
+        {/* Metrics - MOBILE: Horizontal Scroll, Desktop: Grid */}
+        <div className="mb-10 sm:mb-14">
+          {/* Mobile: Horizontal scroll */}
+          <div className="lg:hidden overflow-x-auto pb-4 -mx-4 px-4 hide-scrollbar">
+            <div className="flex gap-3 min-w-max">
+              {metrics.map((metric, index) => {
+                const Icon = metric.icon;
+                return (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    className="group text-center w-[160px] flex-shrink-0"
+                  >
+                    <div className="relative bg-white dark:bg-gray-900 rounded-xl p-4 border-2 border-gray-200 dark:border-gray-800 hover:border-transparent hover:shadow-2xl transition-all duration-300 overflow-hidden h-full">
+                      {/* Gradient Background */}
+                      <div className={`absolute inset-0 bg-gradient-to-br ${metric.gradient} opacity-0 group-hover:opacity-10 dark:group-hover:opacity-20 transition-opacity duration-300`} />
+                      
+                      <div className="relative z-10">
+                        {/* Icon */}
+                        <div className={`inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br ${metric.gradient} mb-3 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                          <Icon className="h-6 w-6 text-white" />
+                        </div>
+
+                        {/* Metric */}
+                        <h3 className="text-sm font-black text-gray-900 dark:text-white mb-1 leading-tight">
+                          {metric.metric}
+                        </h3>
+
+                        {/* Description */}
+                        <p className="text-[10px] text-gray-600 dark:text-gray-400 leading-tight">
+                          {metric.description}
+                        </p>
+                      </div>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Desktop: Grid */}
+          <div className="hidden lg:grid grid-cols-5 gap-6 max-w-6xl mx-auto">
+            {metrics.map((metric, index) => {
+              const Icon = metric.icon;
+              return (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="group text-center"
+                >
+                  <div className="relative bg-white dark:bg-gray-900 rounded-2xl p-6 border-2 border-gray-200 dark:border-gray-800 hover:border-transparent hover:shadow-2xl transition-all duration-300 overflow-hidden">
                   {/* Gradient Background */}
                   <div className={`absolute inset-0 bg-gradient-to-br ${metric.gradient} opacity-0 group-hover:opacity-10 dark:group-hover:opacity-20 transition-opacity duration-300`} />
                   
-                  <div className="relative z-10">
-                    {/* Icon */}
-                    <div className={`inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-xl bg-gradient-to-br ${metric.gradient} mb-3 sm:mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-                      <Icon className="h-7 w-7 sm:h-8 sm:w-8 text-white" />
+                    <div className="relative z-10">
+                      {/* Icon */}
+                      <div className={`inline-flex items-center justify-center w-16 h-16 rounded-xl bg-gradient-to-br ${metric.gradient} mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                        <Icon className="h-8 w-8 text-white" />
+                      </div>
+
+                      {/* Metric */}
+                      <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1">
+                        {metric.metric}
+                      </h3>
+
+                      {/* Description */}
+                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                        {metric.description}
+                      </p>
                     </div>
-
-                    {/* Metric */}
-                    <h3 className="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-1">
-                      {metric.metric}
-                    </h3>
-
-                    {/* Description */}
-                    <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
-                      {metric.description}
-                    </p>
                   </div>
-                </div>
-              </motion.div>
-            );
-          })}
+                </motion.div>
+              );
+            })}
+          </div>
         </div>
 
         {/* Free Speed Audit CTA */}
@@ -158,7 +202,7 @@ export function PerformanceSection() {
           <a 
             href="#lead-form"
             className="inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all hover:scale-105 text-sm sm:text-base"
-            onClick={() => console.log('[NextJS-Dev] Speed Audit CTA clicked')}
+            onClick={() => console.log('[Next-JS-Dev] Speed Audit CTA clicked')}
           >
             🚀 Get Your Free Speed Audit
           </a>

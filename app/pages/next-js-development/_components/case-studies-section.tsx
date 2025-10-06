@@ -10,7 +10,7 @@ import { motion, useInView } from 'framer-motion';
 import { Button } from '@/app/components/ui/button';
 import { ChevronLeft, ChevronRight, TrendingUp, Zap, BarChart } from 'lucide-react';
 
-console.log('[NextJS-Dev] CaseStudiesSection component loaded');
+console.log('[Next-JS-Dev] CaseStudiesSection component loaded');
 
 interface CaseStudy {
   icon: React.ElementType;
@@ -27,33 +27,33 @@ export function CaseStudiesSection() {
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
-    console.log('[NextJS-Dev] CaseStudiesSection mounted');
-    return () => console.log('[NextJS-Dev] CaseStudiesSection unmounted');
+    console.log('[Next-JS-Dev] CaseStudiesSection mounted');
+    return () => console.log('[Next-JS-Dev] CaseStudiesSection unmounted');
   }, []);
 
   const caseStudies: CaseStudy[] = [
     {
-      icon: Zap,
-      title: 'Next.js Migration Success',
-      description: 'Migrated client site from WordPress to Next.js',
-      metric: '4× faster load times',
-      result: '52% more leads in first month',
+      icon: BarChart,
+      title: 'Case 1: EduSpark (SaaS Platform)',
+      description: 'Migrated from React → Next.js + NestJS',
+      metric: 'Load time: 2.8s → 0.8s',
+      result: '+43% organic traffic',
       gradient: 'from-blue-500 to-cyan-500'
     },
     {
-      icon: BarChart,
-      title: 'SaaS Dashboard Build',
-      description: 'Built SaaS dashboard with NestJS backend',
-      metric: 'Load time: 5s → 0.8s',
-      result: 'User satisfaction increased by 78%',
+      icon: TrendingUp,
+      title: 'Case 2: InLocal Store (E-commerce)',
+      description: 'Headless Shopify + Next.js ISR',
+      metric: 'Indexed 2× faster',
+      result: '+37% conversion rate',
       gradient: 'from-purple-500 to-pink-500'
     },
     {
-      icon: TrendingUp,
-      title: 'Core Web Vitals Optimization',
-      description: 'Optimized existing Next.js site for performance',
-      metric: 'PageSpeed: 65 → 98',
-      result: '+38% SEO traffic in 3 months',
+      icon: Zap,
+      title: 'Case 3: TechNova Agency',
+      description: 'Corporate site rebuild with Next.js',
+      metric: 'Site speed 95/100',
+      result: '+122% leads within 3 months',
       gradient: 'from-green-500 to-emerald-500'
     }
   ];
@@ -217,10 +217,10 @@ export function CaseStudiesSection() {
               asChild
               size="lg"
               className="text-base sm:text-lg px-8 sm:px-10 py-6 sm:py-7 h-auto bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 shadow-xl font-bold"
-              onClick={() => console.log('[NextJS-Dev] Case Studies CTA clicked')}
+              onClick={() => console.log('[Next-JS-Dev] Case Studies CTA clicked')}
             >
               <a href="#lead-form" className="flex items-center gap-2">
-                Get Similar Results for Your Business
+                📂 Explore Full Case Studies →
               </a>
             </Button>
           </motion.div>
