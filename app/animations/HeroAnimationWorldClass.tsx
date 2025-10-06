@@ -147,14 +147,54 @@ interface TechLogoProps {
 
 const TechLogo3D: React.FC<TechLogoProps> = ({ position, name, color, onFocus }) => {
   const meshRef = useRef<THREE.Mesh>(null);
+  const spriteRef = useRef<THREE.Sprite>(null);
   const [hovered, setHovered] = useState(false);
+  const [texture, setTexture] = useState<THREE.Texture | null>(null);
   
-  useFrame(({ clock }) => {
+  // Load logo texture
+  useEffect(() => {
+    const logoMap: Record<string, string> = {
+      "Node.js": "/logos/nodejs.png",
+      "Python": "/logos/python.png",
+      "TypeScript": "/logos/typescript.png",
+      "SAP": "/logos/sap.png",
+      "Next.js": "/logos/nextjs.png",
+      "NestJS": "/logos/nestjs.png",
+      "React": "/logos/react.png",
+      "Docker": "/logos/docker.png",
+      "Kubernetes": "/logos/kubernetes.png",
+      "PostgreSQL": "/logos/postgresql.png",
+      "MongoDB": "/logos/mongodb.png",
+      "Redis": "/logos/redis.png",
+      "GraphQL": "/logos/graphql.png",
+      "AWS": "/logos/aws.png",
+      "Azure": "/logos/azure.png",
+      "Rust": "/logos/rust.png",
+      "Go": "/logos/go.png",
+      "Java": "/logos/java.png",
+      "AI/ML": "/logos/ai.png",
+      "TensorFlow": "/logos/tensorflow.png",
+    };
+    
+    const logoPath = logoMap[name];
+    if (logoPath) {
+      const loader = new THREE.TextureLoader();
+      loader.load(
+        logoPath,
+        (loadedTexture) => {
+          setTexture(loadedTexture);
+          console.log(`✅ Loaded logo: ${name}`);
+        },
+        undefined,
+        (error) => {
+          console.warn(`⚠️ Failed to load logo: ${name} at ${logoPath}`);
+        }
+      );
+    }
+  }, [name]);
+  
+  useFrame(({ clock, camera }) => {
     if (meshRef.current) {
-      // Gentle rotation
-      meshRef.current.rotation.y = clock.getElapsedTime() * 0.3;
-      meshRef.current.rotation.x = Math.sin(clock.getElapsedTime() * 0.2) * 0.1;
-      
       // Float animation
       meshRef.current.position.y = position[1] + Math.sin(clock.getElapsedTime() * 0.5 + position[0]) * 0.15;
       
@@ -166,11 +206,16 @@ const TechLogo3D: React.FC<TechLogoProps> = ({ position, name, color, onFocus })
         meshRef.current.scale.setScalar(1);
       }
     }
+    
+    // Make sprite always face camera
+    if (spriteRef.current && camera) {
+      spriteRef.current.quaternion.copy(camera.quaternion);
+    }
   });
 
   return (
     <group position={position}>
-      {/* Main glowing sphere - VISIBLE FROM ALL ANGLES */}
+      {/* Background glow sphere */}
       <mesh
         ref={meshRef}
         onPointerOver={() => {
@@ -183,20 +228,44 @@ const TechLogo3D: React.FC<TechLogoProps> = ({ position, name, color, onFocus })
         }}
         onClick={onFocus}
       >
-        <sphereGeometry args={[0.6, 32, 32]} />
+        <sphereGeometry args={[0.65, 32, 32]} />
         <meshStandardMaterial
           color={color}
           emissive={color}
-          emissiveIntensity={hovered ? 3 : 2}
+          emissiveIntensity={hovered ? 2 : 1}
           metalness={0.8}
           roughness={0.2}
           toneMapped={false}
+          transparent
+          opacity={0.3}
         />
       </mesh>
       
-      {/* Outer glow ring - also visible from all angles */}
+      {/* ACTUAL LOGO IMAGE - Always facing camera */}
+      <sprite
+        ref={spriteRef}
+        scale={[1.2, 1.2, 1]}
+        onPointerOver={() => {
+          setHovered(true);
+          document.body.style.cursor = 'pointer';
+        }}
+        onPointerOut={() => {
+          setHovered(false);
+          document.body.style.cursor = 'auto';
+        }}
+        onClick={onFocus}
+      >
+        <spriteMaterial
+          map={texture}
+          transparent
+          opacity={hovered ? 1 : 0.95}
+          toneMapped={false}
+        />
+      </sprite>
+      
+      {/* Outer glow ring */}
       <mesh>
-        <torusGeometry args={[0.75, 0.05, 16, 32]} />
+        <torusGeometry args={[0.8, 0.05, 16, 32]} />
         <meshBasicMaterial
           color={color}
           transparent
@@ -205,21 +274,22 @@ const TechLogo3D: React.FC<TechLogoProps> = ({ position, name, color, onFocus })
         />
       </mesh>
       
-      {/* 3D Text label - always facing camera */}
+      {/* 3D Text label */}
       <Text
-        position={[0, -1, 0]}
-        fontSize={0.25}
+        position={[0, -1.1, 0]}
+        fontSize={0.28}
         color={color}
         anchorX="center"
         anchorY="middle"
-        outlineWidth={0.02}
+        outlineWidth={0.03}
         outlineColor="#000000"
+        fontWeight="bold"
       >
         {name}
       </Text>
       
-      {/* Point light for extra glow */}
-      <pointLight position={[0, 0, 0]} intensity={hovered ? 2 : 1} color={color} distance={3} />
+      {/* Point light for glow */}
+      <pointLight position={[0, 0, 0]} intensity={hovered ? 2.5 : 1.5} color={color} distance={3} />
     </group>
   );
 };
@@ -763,11 +833,13 @@ const CinematicTour = ({
 const SceneContent = ({
   onTechFocus,
   tourEnabled,
-  onTourStopChange
+  onTourStopChange,
+  onUserInteraction
 }: {
   onTechFocus: (name: string, color: string) => void;
   tourEnabled: boolean;
   onTourStopChange: (stop: TourStop | null) => void;
+  onUserInteraction: () => void;
 }) => {
   return (
     <>
@@ -904,21 +976,21 @@ const SceneContent = ({
       <Sparkles count={100} scale={20} size={4} speed={0.4} color={ELECTRIC_CYAN} />
       <Sparkles count={80} scale={25} size={3} speed={0.3} color={HOT_PINK} />
       
-      {/* Camera controls */}
-      {!tourEnabled && (
-        <OrbitControls
-          enableZoom={true}
-          minDistance={8}
-          maxDistance={25}
-          enablePan={false}
-          autoRotate={false}
-          maxPolarAngle={Math.PI / 1.5}
-          minPolarAngle={Math.PI / 4}
-          enableDamping
-          dampingFactor={0.05}
-          rotateSpeed={0.5}
-        />
-      )}
+      {/* Camera controls - always enabled but tour overrides */}
+      <OrbitControls
+        enableZoom={true}
+        minDistance={8}
+        maxDistance={25}
+        enablePan={false}
+        autoRotate={false}
+        maxPolarAngle={Math.PI / 1.5}
+        minPolarAngle={Math.PI / 4}
+        enableDamping
+        dampingFactor={0.05}
+        rotateSpeed={0.5}
+        enabled={!tourEnabled}
+        onChange={onUserInteraction}
+      />
       
       {/* Cinematic tour */}
       <CinematicTour enabled={tourEnabled} onStopChange={onTourStopChange} />
@@ -1196,16 +1268,43 @@ export default function HeroAnimationWorldClass() {
     features: string[];
     color: string;
   } | null>(null);
+  const [lastInteractionTime, setLastInteractionTime] = useState(Date.now());
+  const idleTimerRef = useRef<NodeJS.Timeout | null>(null);
   
   useEffect(() => {
     setIsClient(true);
     
-    // Auto-start tour after 2 seconds
+    // Auto-start tour after 3 seconds
     const tourTimer = setTimeout(() => {
       setTourEnabled(true);
-    }, 2000);
+    }, 3000);
     
     return () => clearTimeout(tourTimer);
+  }, []);
+  
+  // Auto-resume tour after 3 seconds of inactivity
+  useEffect(() => {
+    const checkIdle = () => {
+      const now = Date.now();
+      if (!tourEnabled && now - lastInteractionTime > 3000) {
+        console.log("🎬 Auto-resuming tour after 3 seconds of inactivity");
+        setTourEnabled(true);
+      }
+    };
+    
+    idleTimerRef.current = setInterval(checkIdle, 500);
+    
+    return () => {
+      if (idleTimerRef.current) {
+        clearInterval(idleTimerRef.current);
+      }
+    };
+  }, [tourEnabled, lastInteractionTime]);
+  
+  const handleUserInteraction = useCallback(() => {
+    console.log("👆 User interaction detected - pausing tour");
+    setTourEnabled(false);
+    setLastInteractionTime(Date.now());
   }, []);
   
   const handleTechFocus = useCallback((name: string, color: string) => {
@@ -1277,11 +1376,15 @@ export default function HeroAnimationWorldClass() {
             toneMappingExposure: 1.2
           }}
           dpr={[1, 2]}
+          onPointerDown={handleUserInteraction}
+          onWheel={handleUserInteraction}
+          onTouchStart={handleUserInteraction}
         >
           <SceneContent 
             onTechFocus={handleTechFocus}
             tourEnabled={tourEnabled}
             onTourStopChange={handleTourStopChange}
+            onUserInteraction={handleUserInteraction}
           />
         </Canvas>
       </Suspense>
