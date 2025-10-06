@@ -1,0 +1,168 @@
+'use client';
+
+/**
+ * Why Choose Next.js Section
+ * Educational content establishing authority and benefits
+ */
+
+import React, { useEffect, useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
+import { Button } from '@/app/components/ui/button';
+import { Zap, Search, Layers, Sparkles, ArrowRight } from 'lucide-react';
+
+console.log('[NextJS-Dev] WhyNextJsSection component loaded');
+
+interface FeatureCard {
+  icon: React.ElementType;
+  title: string;
+  description: string;
+  benefit: string;
+  gradient: string;
+}
+
+export function WhyNextJsSection() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const inView = useInView(sectionRef, { once: true, amount: 0.1 });
+
+  useEffect(() => {
+    console.log('[NextJS-Dev] WhyNextJsSection mounted');
+    return () => console.log('[NextJS-Dev] WhyNextJsSection unmounted');
+  }, []);
+
+  const features: FeatureCard[] = [
+    {
+      icon: Zap,
+      title: 'Blazing Speed',
+      description: 'Static + SSR + ISR = Lightning-fast loading',
+      benefit: 'Users get instant page loads, reducing bounce rates by up to 40%',
+      gradient: 'from-yellow-500 to-orange-500'
+    },
+    {
+      icon: Search,
+      title: 'SEO Advantage',
+      description: 'Server-side rendering ensures perfect crawlability',
+      benefit: 'Rank higher on Google with pre-rendered content',
+      gradient: 'from-green-500 to-emerald-500'
+    },
+    {
+      icon: Layers,
+      title: 'Scalable Architecture',
+      description: 'Modular, component-driven, API-ready',
+      benefit: 'Easily add features as your business grows',
+      gradient: 'from-blue-500 to-cyan-500'
+    },
+    {
+      icon: Sparkles,
+      title: 'Better UX',
+      description: 'Instant transitions, edge caching, PWA-ready',
+      benefit: 'Deliver app-like experiences that delight users',
+      gradient: 'from-purple-500 to-pink-500'
+    }
+  ];
+
+  return (
+    <section
+      ref={sectionRef}
+      className="py-12 sm:py-16 md:py-24 lg:py-32 bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50 dark:from-gray-950 dark:via-blue-950 dark:to-indigo-950"
+      id="why-nextjs"
+      role="region"
+      aria-labelledby="why-nextjs-heading"
+    >
+      <div className="container mx-auto px-3 sm:px-4">
+        {/* Section Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-10 sm:mb-14 md:mb-20"
+        >
+          <div className="inline-block px-4 sm:px-5 py-2 bg-gradient-to-r from-blue-100 to-indigo-100 dark:from-blue-900/30 dark:to-indigo-900/30 rounded-full mb-4 sm:mb-5 border border-blue-200 dark:border-blue-800 text-sm sm:text-base">
+            <span className="font-bold text-blue-700 dark:text-blue-300 uppercase tracking-wide">
+              Technology That Converts
+            </span>
+          </div>
+
+          <h2
+            id="why-nextjs-heading"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4 sm:mb-6 text-gray-900 dark:text-white px-2"
+          >
+            Why Next.js for Modern Web?
+          </h2>
+
+          <p className="text-base sm:text-lg md:text-xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed px-2">
+            Next.js is the React framework trusted by{' '}
+            <span className="font-bold text-indigo-600 dark:text-indigo-400">
+              Nike, Netflix, Twitch, and thousands of enterprises
+            </span>
+            {' '}worldwide.
+          </p>
+        </motion.div>
+
+        {/* Feature Cards Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8 mb-10 sm:mb-14">
+          {features.map((feature, index) => {
+            const Icon = feature.icon;
+            return (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="group relative bg-white dark:bg-gray-900 rounded-2xl sm:rounded-3xl p-6 sm:p-8 border-2 border-gray-200 dark:border-gray-800 hover:border-transparent hover:shadow-2xl transition-all duration-300 overflow-hidden"
+              >
+                {/* Gradient Background on Hover */}
+                <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-10 dark:group-hover:opacity-20 transition-opacity duration-300`} />
+                
+                <div className="relative z-10">
+                  {/* Icon */}
+                  <div className={`inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl bg-gradient-to-br ${feature.gradient} mb-4 sm:mb-5 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                    <Icon className="h-7 w-7 sm:h-8 sm:w-8 text-white" />
+                  </div>
+
+                  {/* Title */}
+                  <h3 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-2 sm:mb-3">
+                    {feature.title}
+                  </h3>
+
+                  {/* Description */}
+                  <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mb-3 sm:mb-4 leading-relaxed">
+                    {feature.description}
+                  </p>
+
+                  {/* Benefit */}
+                  <div className="pt-3 sm:pt-4 border-t border-gray-200 dark:border-gray-800">
+                    <p className="text-xs sm:text-sm text-indigo-600 dark:text-indigo-400 font-semibold">
+                      💡 {feature.benefit}
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
+
+        {/* CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center"
+        >
+          <Button
+            asChild
+            size="lg"
+            className="text-base sm:text-lg px-8 sm:px-10 py-6 sm:py-7 h-auto bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 shadow-xl hover:shadow-2xl font-bold transition-all hover:scale-105"
+            onClick={() => console.log('[NextJS-Dev] Why NextJS CTA clicked')}
+          >
+            <a href="#services" className="flex items-center gap-2">
+              Let's Build Your Next.js App
+              <ArrowRight className="h-5 w-5" />
+            </a>
+          </Button>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
