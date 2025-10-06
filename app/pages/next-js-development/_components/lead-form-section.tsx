@@ -123,14 +123,14 @@ export function LeadFormSection() {
   return (
     <section
       ref={sectionRef}
-      className="py-12 sm:py-16 md:py-24 lg:py-32 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 dark:from-gray-950 dark:via-indigo-950 dark:to-purple-950"
+      className="py-16 md:py-20 lg:py-28 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 dark:from-gray-950 dark:via-indigo-950 dark:to-purple-950"
       id="lead-form"
       role="region"
       aria-labelledby="form-heading"
     >
-      <div className="container mx-auto px-3 sm:px-4">
+      <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
             {/* Left Side - Benefits & Trust Signals */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
@@ -146,28 +146,28 @@ export function LeadFormSection() {
 
               <h2
                 id="form-heading"
-                className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 sm:mb-6 text-gray-900 dark:text-white"
+                className="text-[28px] leading-tight sm:text-3xl md:text-4xl lg:text-5xl font-black mb-4 sm:mb-5 text-gray-900 dark:text-white"
               >
-                Let's Build a Next-Gen Website That Converts
+                Build Your Next-Gen Website
               </h2>
 
-              <p className="text-base sm:text-lg text-gray-700 dark:text-gray-300 mb-6 sm:mb-8 leading-relaxed">
-                Get a <span className="font-bold text-indigo-600 dark:text-indigo-400">FREE project quote</span> and technical consultation with our Next.js experts!
+              <p className="text-sm sm:text-base md:text-lg text-gray-700 dark:text-gray-300 mb-6 leading-relaxed">
+                Get a <span className="font-bold text-indigo-600 dark:text-indigo-400">FREE quote</span> + technical consultation!
               </p>
 
-              {/* Benefits List */}
-              <div className="space-y-3 sm:space-y-4 mb-6 sm:mb-8">
+              {/* Benefits List - MOBILE OPTIMIZED */}
+              <div className="space-y-3 mb-6">
                 {[
-                  { icon: CheckCircle, text: 'Response within 2 hours', color: 'text-green-600 dark:text-green-400' },
-                  { icon: Code2, text: 'Technical consultation included', color: 'text-blue-600 dark:text-blue-400' },
-                  { icon: Briefcase, text: 'Detailed project roadmap', color: 'text-purple-600 dark:text-purple-400' },
+                  { icon: CheckCircle, text: '2-hour response', color: 'text-green-600 dark:text-green-400' },
+                  { icon: Code2, text: 'Tech consultation', color: 'text-blue-600 dark:text-blue-400' },
+                  { icon: Briefcase, text: 'Project roadmap', color: 'text-purple-600 dark:text-purple-400' },
                   { icon: CheckCircle, text: '100% confidential', color: 'text-indigo-600 dark:text-indigo-400' }
                 ].map((item, index) => {
                   const Icon = item.icon;
                   return (
-                    <div key={index} className="flex items-center gap-3">
-                      <Icon className={`h-6 w-6 ${item.color} flex-shrink-0`} />
-                      <span className="text-gray-700 dark:text-gray-300 font-medium text-sm sm:text-base">
+                    <div key={index} className="flex items-center gap-2.5">
+                      <Icon className={`h-5 w-5 sm:h-6 sm:w-6 ${item.color} flex-shrink-0`} />
+                      <span className="text-gray-700 dark:text-gray-300 font-bold text-sm sm:text-base">
                         {item.text}
                       </span>
                     </div>
@@ -175,23 +175,23 @@ export function LeadFormSection() {
                 })}
               </div>
 
-              {/* Quick Contact Options */}
-              <div className="bg-white dark:bg-gray-900 rounded-2xl p-5 sm:p-6 border border-gray-200 dark:border-gray-800 shadow-lg">
-                <p className="text-sm font-semibold text-gray-600 dark:text-gray-400 mb-4 uppercase tracking-wide">
-                  Prefer to talk directly?
+              {/* Quick Contact Options - MOBILE OPTIMIZED */}
+              <div className="bg-white dark:bg-gray-900 rounded-2xl p-5 border-2 border-gray-200 dark:border-gray-800 shadow-xl">
+                <p className="text-xs sm:text-sm font-black text-gray-600 dark:text-gray-400 mb-3 uppercase tracking-wide">
+                  Or Contact Directly
                 </p>
-                <div className="space-y-3">
+                <div className="space-y-2.5">
                   <a 
                     href="tel:+919963730111"
-                    className="flex items-center gap-3 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg hover:bg-green-100 dark:hover:bg-green-900/30 transition-colors group"
+                    className="flex items-center gap-3 p-3.5 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-xl border-2 border-green-200 dark:border-green-800 hover:border-green-400 dark:hover:border-green-600 active:scale-95 transition-all group shadow-md"
                     onClick={() => { console.log('[Next-JS-Dev] Quick call clicked'); void fireConversion('call_click'); }}
                   >
-                    <div className="w-10 h-10 rounded-full bg-green-600 flex items-center justify-center flex-shrink-0">
-                      <Phone className="h-5 w-5 text-white" />
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-green-600 to-emerald-600 flex items-center justify-center flex-shrink-0 shadow-lg">
+                      <Phone className="h-6 w-6 text-white" />
                     </div>
                     <div>
-                      <div className="text-xs text-gray-600 dark:text-gray-400">Call us now</div>
-                      <div className="font-bold text-gray-900 dark:text-white group-hover:text-green-600 dark:group-hover:text-green-400">
+                      <div className="text-[10px] font-bold text-gray-600 dark:text-gray-400 uppercase">Call Now</div>
+                      <div className="font-black text-sm text-gray-900 dark:text-white group-hover:text-green-600 dark:group-hover:text-green-400">
                         +91 99637 30111
                       </div>
                     </div>
@@ -201,16 +201,16 @@ export function LeadFormSection() {
                     href="https://wa.me/919963730111"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-3 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg hover:bg-green-100 dark:hover:bg-green-900/30 transition-colors group"
+                    className="flex items-center gap-3 p-3.5 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-xl border-2 border-green-200 dark:border-green-800 hover:border-green-400 dark:hover:border-green-600 active:scale-95 transition-all group shadow-md"
                     onClick={() => { console.log('[Next-JS-Dev] WhatsApp clicked'); void fireConversion('whatsapp_click'); }}
                   >
-                    <div className="w-10 h-10 rounded-full bg-green-600 flex items-center justify-center flex-shrink-0">
-                      <MessageCircle className="h-5 w-5 text-white" />
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-green-600 to-emerald-600 flex items-center justify-center flex-shrink-0 shadow-lg">
+                      <MessageCircle className="h-6 w-6 text-white" />
                     </div>
                     <div>
-                      <div className="text-xs text-gray-600 dark:text-gray-400">WhatsApp us</div>
-                      <div className="font-bold text-gray-900 dark:text-white group-hover:text-green-600 dark:group-hover:text-green-400">
-                        Chat on WhatsApp
+                      <div className="text-[10px] font-bold text-gray-600 dark:text-gray-400 uppercase">WhatsApp</div>
+                      <div className="font-black text-sm text-gray-900 dark:text-white group-hover:text-green-600 dark:group-hover:text-green-400">
+                        Chat Now
                       </div>
                     </div>
                   </a>
@@ -225,16 +225,16 @@ export function LeadFormSection() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="lg:sticky lg:top-24"
             >
-              <div className="bg-white dark:bg-gray-900 rounded-3xl p-6 sm:p-8 lg:p-10 shadow-2xl border-2 border-indigo-200 dark:border-indigo-800 relative overflow-hidden">
+              <div className="bg-white dark:bg-gray-900 rounded-3xl p-6 sm:p-8 shadow-2xl border-[3px] border-indigo-300 dark:border-indigo-700 relative overflow-hidden">
                 {/* Decorative gradient overlay */}
-                <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-indigo-100 to-purple-100 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-full blur-3xl -z-0" />
+                <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-indigo-200 to-purple-200 dark:from-indigo-900/30 dark:to-purple-900/30 rounded-full blur-3xl -z-0" />
                 
                 <div className="relative z-10">
                 {!submitted ? (
-                  <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6">
-                    {/* Name Field */}
+                  <form onSubmit={handleSubmit} className="space-y-5">
+                    {/* Name Field - MOBILE OPTIMIZED */}
                     <div>
-                      <Label htmlFor="name" className="text-gray-900 dark:text-white font-semibold mb-2 block">
+                      <Label htmlFor="name" className="text-gray-900 dark:text-white font-black mb-2 block text-sm">
                         Your Name <span className="text-red-500">*</span>
                       </Label>
                       <Input
@@ -245,15 +245,15 @@ export function LeadFormSection() {
                         onChange={handleChange}
                         required
                         placeholder="Enter your full name"
-                        className="h-12"
+                        className="h-14 text-base border-2 rounded-xl shadow-sm"
                       />
                     </div>
 
-                    {/* Phone & Email Row */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {/* Phone & Email - MOBILE OPTIMIZED */}
+                    <div className="space-y-5 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-4">
                       <div>
-                        <Label htmlFor="phone" className="text-gray-900 dark:text-white font-semibold mb-2 block">
-                          Phone Number <span className="text-red-500">*</span>
+                        <Label htmlFor="phone" className="text-gray-900 dark:text-white font-black mb-2 block text-sm">
+                          Phone <span className="text-red-500">*</span>
                         </Label>
                         <Input
                           type="tel"
@@ -263,13 +263,13 @@ export function LeadFormSection() {
                           onChange={handleChange}
                           required
                           placeholder="+91 99637 30111"
-                          className="h-12"
+                          className="h-14 text-base border-2 rounded-xl shadow-sm"
                         />
                       </div>
 
                       <div>
-                        <Label htmlFor="email" className="text-gray-900 dark:text-white font-semibold mb-2 block">
-                          Email Address
+                        <Label htmlFor="email" className="text-gray-900 dark:text-white font-black mb-2 block text-sm">
+                          Email
                         </Label>
                         <Input
                           type="email"
@@ -278,7 +278,7 @@ export function LeadFormSection() {
                           value={formData.email}
                           onChange={handleChange}
                           placeholder="your@email.com"
-                          className="h-12"
+                          className="h-14 text-base border-2 rounded-xl shadow-sm"
                         />
                       </div>
                     </div>
@@ -334,11 +334,11 @@ export function LeadFormSection() {
                       />
                     </div>
 
-                    {/* Submit Button */}
+                    {/* Submit Button - MOBILE OPTIMIZED */}
                     <Button
                       type="submit"
                       size="lg"
-                      className="w-full text-lg h-16 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 hover:from-indigo-700 hover:via-purple-700 hover:to-pink-700 shadow-xl hover:shadow-2xl font-bold transition-all hover:scale-[1.02]"
+                      className="w-full text-base sm:text-lg h-16 sm:h-18 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 hover:from-indigo-700 hover:via-purple-700 hover:to-pink-700 shadow-2xl hover:shadow-[0_20px_60px_-15px_rgba(99,102,241,0.6)] font-black rounded-2xl active:scale-95 transition-all"
                       disabled={loading}
                     >
                       {loading ? (
@@ -348,28 +348,24 @@ export function LeadFormSection() {
                         </span>
                       ) : (
                         <>
-                          💻 Get Your Free Quote Now
+                          💻 Get Free Quote
                           <ArrowRight className="ml-2 h-5 w-5" />
                         </>
                       )}
                     </Button>
 
-                    {/* Trust Indicators */}
-                    <div className="flex items-center justify-center gap-4 text-sm text-gray-600 dark:text-gray-400">
+                    {/* Trust Indicators - MOBILE OPTIMIZED */}
+                    <div className="flex flex-wrap items-center justify-center gap-3 text-[10px] sm:text-xs text-gray-600 dark:text-gray-400 font-bold">
                       <span className="flex items-center gap-1">
                         ✅ No Spam
                       </span>
                       <span className="flex items-center gap-1">
-                        🔒 100% Secure
+                        🔒 Secure
                       </span>
                       <span className="flex items-center gap-1">
-                        ⚡ 2-Hour Response
+                        ⚡ 2-Hr Response
                       </span>
                     </div>
-
-                    <p className="text-xs text-center text-gray-500 dark:text-gray-400">
-                      Average delivery time: 10-21 days
-                    </p>
                   </form>
                 ) : (
                   <motion.div
