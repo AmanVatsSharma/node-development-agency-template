@@ -83,6 +83,9 @@ export default function IntegrationsAdminPage() {
   const [settings, setSettings] = useState<Settings | null>(null);
   const [originalSettings, setOriginalSettings] = useState<Settings | null>(null);
   const [logs, setLogs] = useState<IntegrationLog[]>([]);
+  const [settingsError, setSettingsError] = useState<string | null>(null);
+  const [logsError, setLogsError] = useState<string | null>(null);
+  const [authRequired, setAuthRequired] = useState(false);
   const [saving, setSaving] = useState(false);
   const [testing, setTesting] = useState<{ zoho: boolean; google: boolean; lead: boolean }>({
     zoho: false,
@@ -120,17 +123,75 @@ export default function IntegrationsAdminPage() {
    * Load data from API
    */
   const loadData = async () => {
+    setSettingsError(null);
+    setLogsError(null);
+    setAuthRequired(false);
+
+    // Helper: fetch with timeout to avoid hanging UI
+    const fetchWithTimeout = (url: string, options: RequestInit = {}, timeoutMs = 15000): Promise<Response> => {
+      return new Promise((resolve, reject) => {
+        const id = setTimeout(() => reject(new Error('Request timed out')), timeoutMs);
+        fetch(url, { cache: 'no-store', ...options })
+          .then((res) => {
+            clearTimeout(id);
+            resolve(res);
+          })
+          .catch((err) => {
+            clearTimeout(id);
+            reject(err);
+          });
+      });
+    };
+
+    // 1) Load settings first; if this fails we show an error state
     try {
-      const settingsRes = await fetch('/api/admin/integrations');
-      const settingsData = await settingsRes.json();
+      const settingsRes = await fetchWithTimeout('/api/admin/integrations');
+      let settingsData: any = null;
+      try {
+        settingsData = await settingsRes.json();
+      } catch (e) {
+        // Non-JSON response (e.g., HTML error page)
+        settingsData = null;
+      }
+
+      if (!settingsRes.ok || !settingsData?.settings) {
+        const status = settingsRes.status;
+        const message = settingsData?.error || `Failed to load settings (status ${status || 'unknown'})`;
+        setSettingsError(message);
+        setAuthRequired(status === 401);
+        return; // Stop here; keep UI in error state
+      }
+
       setSettings(settingsData.settings);
       setOriginalSettings(settingsData.settings);
+    } catch (error: any) {
+      console.error('[Admin Page] Settings load failed:', error);
+      setSettingsError(String(error?.message || error));
+      return;
+    }
 
-      const logsRes = await fetch('/api/admin/logs?take=100');
-      const logsData = await logsRes.json();
-      setLogs(logsData.logs || []);
-    } catch (error) {
-      console.error('[Admin Page] Error loading data:', error);
+    // 2) Load logs independently; failure should not block settings/UI
+    try {
+      const logsRes = await fetchWithTimeout('/api/admin/logs?take=100');
+      let logsData: any = null;
+      try {
+        logsData = await logsRes.json();
+      } catch (e) {
+        logsData = null;
+      }
+
+      if (!logsRes.ok) {
+        const status = logsRes.status;
+        const message = logsData?.error || `Failed to load logs (status ${status || 'unknown'})`;
+        setLogsError(message);
+        setLogs([]);
+      } else {
+        setLogs(Array.isArray(logsData?.logs) ? logsData.logs : []);
+      }
+    } catch (error: any) {
+      console.error('[Admin Page] Logs load failed:', error);
+      setLogsError(String(error?.message || error));
+      setLogs([]);
     }
   };
 
@@ -247,12 +308,36 @@ export default function IntegrationsAdminPage() {
   if (!settings) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950">
-        <div className="text-center space-y-4">
-          <RefreshCw className="h-12 w-12 animate-spin mx-auto text-primary" />
-          <p className="text-lg font-medium text-slate-700 dark:text-slate-300">
-            Loading integrations dashboard...
-          </p>
-        </div>
+        {settingsError ? (
+          <div className="max-w-md w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-6 shadow-sm">
+            <div className="flex items-start gap-3">
+              <AlertCircle className="h-6 w-6 text-red-600 mt-0.5" />
+              <div className="space-y-3">
+                <div>
+                  <p className="text-lg font-semibold text-slate-900 dark:text-white">Failed to load dashboard</p>
+                  <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">{settingsError}</p>
+                </div>
+                <div className="flex flex-wrap gap-3">
+                  <Button variant="outline" onClick={loadData}>
+                    <RefreshCw className="h-4 w-4 mr-2" /> Retry
+                  </Button>
+                  {authRequired && (
+                    <Button onClick={() => (window.location.href = '/login?callbackUrl=/pages/admin/integrations')}>
+                      <Shield className="h-4 w-4 mr-2" /> Sign in
+                    </Button>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="text-center space-y-4">
+            <RefreshCw className="h-12 w-12 animate-spin mx-auto text-primary" />
+            <p className="text-lg font-medium text-slate-700 dark:text-slate-300">
+              Loading integrations dashboard...
+            </p>
+          </div>
+        )}
       </div>
     );
   }
@@ -749,6 +834,13 @@ export default function IntegrationsAdminPage() {
               </div>
             </CardHeader>
             <CardContent>
+              {logsError && (
+                <Alert variant="destructive" className="mb-4">
+                  <AlertCircle className="h-4 w-4" />
+                  <AlertTitle>Logs unavailable</AlertTitle>
+                  <AlertDescription>{logsError}</AlertDescription>
+                </Alert>
+              )}
               {/* Filter Tabs */}
               <div className="mb-4">
                 <Tabs value={logFilter} onValueChange={(v) => setLogFilter(v as any)}>
