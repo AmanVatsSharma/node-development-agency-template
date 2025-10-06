@@ -180,6 +180,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             {navItems.map((item) => {
               const Icon = item.icon;
               const active = isActiveRoute(item.href);
+              const iconClassName = cn('h-5 w-5', active ? 'text-white' : 'text-slate-500 dark:text-slate-400');
 
               return (
                 <Link
@@ -193,7 +194,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                       : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'
                   )}
                 >
-                  <Icon className={cn('h-5 w-5', active ? 'text-white' : 'text-slate-500 dark:text-slate-400')} />
+                  <Icon className={iconClassName} />
                   <div className="flex-1 min-w-0">
                     <div className="font-medium text-sm">{item.label}</div>
                     {item.description && !active && (
