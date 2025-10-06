@@ -30,6 +30,18 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
+# general logs/cache
+logs
+*.log
+.eslintcache
+
+# IDE settings
+.idea
+.vscode
+
+# turbo repo cache
+.turbo
+
 # env files (can opt-in for committing if needed)
 .env*
 

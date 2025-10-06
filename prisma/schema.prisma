@@ -214,3 +214,80 @@ model User {
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 }
+
+// Centralized integration settings for Zoho and Google Ads
+model IntegrationSettings {
+  id                      String    @id @default(cuid())
+  // Zoho CRM credentials and token state
+  zohoClientId            String?
+  zohoClientSecret        String?
+  zohoRefreshToken        String?
+  zohoAccessToken         String?
+  zohoTokenExpiresAt      DateTime?
+  lastZohoTokenRefreshAt  DateTime?
+
+  // Google Ads basic configuration (client-side conversions)
+  googleConversionId      String?   // e.g. AW-XXXXXXXXXX
+  googleApiKey            String?
+  // Mapping of event types to Google Ads conversion labels
+  // Example: { "lead_submit": "abcdEFGHijk", "call_click": "LmnoPQRStuv" }
+  googleEventLabels       Json?
+
+  createdAt               DateTime  @default(now())
+  updatedAt               DateTime  @updatedAt
+}
+
+// Local backup of leads and processing status
+model Lead {
+  id           String    @id @default(cuid())
+  name         String?
+  email        String?
+  phone        String?
+  message      String?
+  source       String?
+  campaign     String?
+  leadSource   String?
+  raw          Json?
+  status       String    @default("pending") // pending, pushed, failed
+  zohoLeadId   String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@index([createdAt])
+  @@index([status])
+}
+
+// Logs for all integration interactions (Zoho + Google)
+model IntegrationLog {
+  id            String    @id @default(cuid())
+  type          String               // e.g. "lead_submit", "call_click", "whatsapp_click", "newsletter_signup"
+  provider      String               // e.g. "zoho", "google_ads"
+  level         String    @default("info") // info, warn, error
+  message       String
+  statusCode    Int?
+  request       Json?
+  response      Json?
+  error         String?
+  correlationId String?
+  createdAt     DateTime  @default(now())
+
+  @@index([provider, createdAt])
+  @@index([level, createdAt])
+}
+
+// Simple retry queue for failed submissions
+model IntegrationRetry {
+  id           String    @id @default(cuid())
+  type         String               // "zoho_lead", "google_conversion"
+  payload      Json
+  attempts     Int       @default(0)
+  maxAttempts  Int       @default(5)
+  nextRunAt    DateTime  @default(now())
+  lastError    String?
+  status       String    @default("queued") // queued, succeeded, failed
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@index([status, nextRunAt])
+  @@index([createdAt])
+}
