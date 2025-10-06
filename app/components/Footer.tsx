@@ -1,10 +1,10 @@
 'use client';
 
 /**
- * @fileoverview Enterprise-Grade Mobile-First Footer Component
- * @description Premium, modern footer with perfect mobile responsiveness
+ * @fileoverview Enterprise-Grade Mobile-First Footer Component with Complete Navigation
+ * @description Premium, modern footer with perfect mobile responsiveness and all landing pages
  * @author Development Agency
- * @version 3.1.0
+ * @version 4.0.0
  * 
  * DESIGN FEATURES:
  * - Mobile-first responsive design
@@ -13,6 +13,7 @@
  * - Touch-friendly interface (44px+ touch targets)
  * - Smooth animations and transitions
  * - Enterprise-grade professional aesthetics
+ * - Complete landing pages navigation
  * 
  * RESPONSIVENESS:
  * - Mobile (< 640px): Single column, collapsible sections
@@ -24,15 +25,14 @@
  * - Keyboard navigation support
  * - Screen reader friendly
  * - High contrast ratios
- * 
- * NOTE: Back-to-top button is now handled by page-specific ScrollToTop component
  */
 
 import Link from "next/link";
 import { useState } from "react";
 import NewsletterSignup from "./NewsletterSignup";
+import { footerNavigation } from "../data/navigation";
 
-console.log('[Footer] Component loaded');
+console.log('[Footer] Component loaded with complete navigation');
 
 // Collapsible section for mobile
 interface CollapsibleSectionProps {
@@ -100,16 +100,16 @@ export default function Footer() {
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-8">
           
-          {/* Company Info - Spans full width on mobile, 2 cols on large screens */}
+          {/* Company Info - Spans full width on mobile, 3 cols on large screens */}
           <div className="sm:col-span-2 lg:col-span-3">
             <div className="mb-6">
               <Link href="/" className="inline-block group">
                 <span className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
-                Enterprise<span className="text-white">Hero</span>
-              </span>
+                  Enterprise<span className="text-white">Hero</span>
+                </span>
                 <div className="text-xs text-gray-400 mt-2 font-medium tracking-wide">
-                Vedpragya Bharat Private Limited
-              </div>
+                  Vedpragya Bharat Private Limited
+                </div>
               </Link>
             </div>
             
@@ -151,8 +151,8 @@ export default function Footer() {
                 >
                   <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path fillRule="evenodd" d={social.path} clipRule="evenodd" />
-                </svg>
-              </a>
+                  </svg>
+                </a>
               ))}
             </div>
           </div>
@@ -161,15 +161,7 @@ export default function Footer() {
           <div className="sm:col-span-1 lg:col-span-2">
             <CollapsibleSection title="Quick Links">
               <ul className="space-y-3">
-                {[
-                  { href: '/', label: 'Home' },
-                  { href: '/pages/about', label: 'About Us' },
-                  { href: '/pages/services', label: 'Services' },
-                  { href: '/pages/portfolio', label: 'Portfolio' },
-                  { href: '/pages/blog', label: 'Blog' },
-                  { href: '/pages/resources', label: 'Resources' },
-                  { href: '/pages/contact', label: 'Contact' },
-                ].map((link) => (
+                {footerNavigation.quickLinks.map((link) => (
                   <li key={link.href}>
                     <Link
                       href={link.href}
@@ -178,42 +170,55 @@ export default function Footer() {
                     >
                       <span className="w-0 group-hover:w-2 h-0.5 bg-blue-400 transition-all duration-200 mr-0 group-hover:mr-2"></span>
                       {link.label}
-                </Link>
-              </li>
+                    </Link>
+                  </li>
                 ))}
-            </ul>
+              </ul>
             </CollapsibleSection>
           </div>
 
-          {/* Services */}
+          {/* Development Services */}
           <div className="sm:col-span-1 lg:col-span-2">
-            <CollapsibleSection title="Our Services">
+            <CollapsibleSection title="Development Services">
               <ul className="space-y-3">
-                {[
-                  'Node.js Development',
-                  '3D Animations',
-                  'Microservices Architecture',
-                  'API Development',
-                  'Enterprise Solutions',
-                  'Technical Consulting',
-                ].map((service) => (
-                  <li key={service}>
+                {footerNavigation.developmentServices.map((service) => (
+                  <li key={service.href}>
                     <Link
-                      href="/pages/services"
+                      href={service.href}
                       className="text-gray-400 hover:text-blue-400 transition-colors duration-200 text-sm inline-flex items-center group"
-                      onClick={() => console.log(`[Footer] Service clicked: ${service}`)}
+                      onClick={() => console.log(`[Footer] Service clicked: ${service.label}`)}
                     >
                       <span className="w-0 group-hover:w-2 h-0.5 bg-blue-400 transition-all duration-200 mr-0 group-hover:mr-2"></span>
-                      {service}
-                </Link>
-              </li>
+                      {service.label}
+                    </Link>
+                  </li>
                 ))}
-            </ul>
+              </ul>
             </CollapsibleSection>
           </div>
 
-          {/* Global Offices - Show 3 on desktop, expandable to all 5 */}
-          <div className="sm:col-span-2 lg:col-span-2">
+          {/* Business Solutions */}
+          <div className="sm:col-span-1 lg:col-span-2">
+            <CollapsibleSection title="Business Solutions">
+              <ul className="space-y-3">
+                {footerNavigation.businessSolutions.map((solution) => (
+                  <li key={solution.href}>
+                    <Link
+                      href={solution.href}
+                      className="text-gray-400 hover:text-blue-400 transition-colors duration-200 text-sm inline-flex items-center group"
+                      onClick={() => console.log(`[Footer] Solution clicked: ${solution.label}`)}
+                    >
+                      <span className="w-0 group-hover:w-2 h-0.5 bg-blue-400 transition-all duration-200 mr-0 group-hover:mr-2"></span>
+                      {solution.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </CollapsibleSection>
+          </div>
+
+          {/* Global Offices */}
+          <div className="sm:col-span-2 lg:col-span-3">
             <CollapsibleSection title="Global Offices" defaultOpen={true}>
               <div className="space-y-3">
                 {[
@@ -223,7 +228,7 @@ export default function Footer() {
                   { flag: '🇨🇦', name: 'Toronto', location: 'North America Ops', tag: 'Canada Office' },
                   { flag: '🇨🇳', name: 'Shenzhen', location: 'Asia-Pacific', tag: 'APAC Center' },
                 ]
-                  .slice(0, showAllOffices ? 5 : 3) // Show 3 initially, all 5 when expanded
+                  .slice(0, showAllOffices ? 5 : 3)
                   .map((office) => (
                     <div
                       key={office.name}
@@ -248,7 +253,6 @@ export default function Footer() {
                     </div>
                   ))}
 
-                {/* Show More/Less Button - Desktop & Tablet */}
                 <button
                   onClick={() => {
                     setShowAllOffices(!showAllOffices);
@@ -275,12 +279,12 @@ export default function Footer() {
               </div>
             </CollapsibleSection>
           </div>
-          
-          {/* Newsletter - Full width on mobile */}
-          <div className="sm:col-span-2 lg:col-span-3">
-            <div className="lg:sticky lg:top-4">
+        </div>
+
+        {/* Newsletter Section - Full Width */}
+        <div className="mt-12 pt-8 border-t border-gray-800/50">
+          <div className="max-w-2xl mx-auto">
             <NewsletterSignup />
-            </div>
           </div>
         </div>
 
@@ -291,7 +295,7 @@ export default function Footer() {
             <p className="text-sm text-gray-500">
               <span className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
                 Enterprise<span className="text-white">Hero</span>
-                </span>
+              </span>
               <span className="text-gray-500 mx-2 text-xs">powered by</span>
               <span className="text-lg font-bold text-white">VB</span>
             </p>
@@ -300,7 +304,7 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* Copyright and Links - Stacked on mobile */}
+          {/* Copyright and Links */}
           <div className="flex flex-col lg:flex-row justify-between items-center space-y-6 lg:space-y-0 text-center lg:text-left">
             <div className="text-gray-500 text-xs sm:text-sm space-y-2">
               <p>
@@ -311,14 +315,9 @@ export default function Footer() {
               </p>
             </div>
 
-            {/* Legal Links - Wrap on mobile */}
+            {/* Legal Links */}
             <div className="flex flex-wrap justify-center lg:justify-end gap-3 sm:gap-6">
-              {[
-                { href: '/legal/privacy-policy', label: 'Privacy' },
-                { href: '/legal/terms-of-service', label: 'Terms' },
-                { href: '/legal/company-info', label: 'Company' },
-                { href: '/sitemap', label: 'Sitemap' },
-              ].map((link) => (
+              {footerNavigation.legal.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
@@ -326,7 +325,7 @@ export default function Footer() {
                   onClick={() => console.log(`[Footer] Legal link clicked: ${link.label}`)}
                 >
                   {link.label}
-              </Link>
+                </Link>
               ))}
             </div>
           </div>
@@ -334,4 +333,4 @@ export default function Footer() {
       </div>
     </footer>
   );
-} 
+}
