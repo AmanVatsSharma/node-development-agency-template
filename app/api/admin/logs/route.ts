@@ -5,20 +5,31 @@ export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 export async function GET(req: NextRequest) {
-  const { searchParams } = new URL(req.url);
-  const provider = searchParams.get('provider') || undefined;
-  const level = searchParams.get('level') || undefined;
-  const take = Math.min(Number(searchParams.get('take') || 50), 200);
+  try {
+    const url = new URL(req.url);
+    const takeParam = url.searchParams.get('take');
+    const provider = url.searchParams.get('provider') || undefined; // 'zoho' | 'google_ads'
+    const level = url.searchParams.get('level') || undefined; // 'info' | 'warn' | 'error'
 
-  const logs = await prisma.integrationLog.findMany({
-    where: {
-      provider,
-      level,
-    },
-    orderBy: { createdAt: 'desc' },
-    take,
-  });
-  return NextResponse.json({ logs });
+    let take = Number(takeParam ?? 100);
+    if (!Number.isFinite(take) || take <= 0) take = 100;
+    if (take > 500) take = 500;
+
+    const where: any = {};
+    if (provider) where.provider = provider;
+    if (level) where.level = level;
+
+    const logs = await prisma.integrationLog.findMany({
+      where,
+      orderBy: { createdAt: 'desc' },
+      take,
+    });
+
+    return NextResponse.json({ logs });
+  } catch (error: any) {
+    return NextResponse.json(
+      { error: String(error?.message || error) },
+      { status: 500 }
+    );
+  }
 }
-
-
