@@ -7,21 +7,22 @@
  * 
  * Features:
  * - Beautiful mega menu with categorized services
+ * - Enhanced mobile menu with expandable cards
  * - Scroll-responsive resizing and styling
  * - Glassmorphic effects
  * - Dark mode support with theme toggle
- * - Mobile-responsive design with collapsible sections
- * - Smooth animations
+ * - Smooth animations with Framer Motion
  * - Proper accessibility
  * 
  * @module EnhancedHeader
  * @author Enterprise Hero Development Team
  * @created 2025-10-02
- * @updated 2025-10-06 - Added Mega Menu
+ * @updated 2025-10-06 - Added Mega Menu & Enhanced Mobile Menu
  */
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { AnimatePresence } from "motion/react";
 import { ThemeToggle } from "./ThemeToggle";
 import {
   Navbar,
@@ -30,13 +31,13 @@ import {
   NavbarButton,
   MobileNav,
   MobileNavHeader,
-  MobileNavMenu,
   MobileNavToggle,
 } from "./ui/resizable-navbar";
 import { mainNavigation, servicesMegaMenu } from "../data/navigation";
+import EnhancedMobileMenu from "./EnhancedMobileMenu";
 
 // Console log for component initialization
-console.log("🎨 [EnhancedHeader] Component module loaded with Mega Menu");
+console.log("🎨 [EnhancedHeader] Component module loaded with Mega Menu & Enhanced Mobile Menu");
 
 /**
  * Mega Menu Dropdown Component
@@ -200,7 +201,6 @@ function DesktopNavigation({ onMegaMenuToggle, isMegaMenuOpen }: {
 export default function EnhancedHeader() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const [isMegaMenuOpen, setIsMegaMenuOpen] = useState<boolean>(false);
-  const [expandedMobileSection, setExpandedMobileSection] = useState<string | null>(null);
 
   // Log component lifecycle
   useEffect(() => {
@@ -226,7 +226,6 @@ export default function EnhancedHeader() {
   const handleMobileMenuClose = () => {
     console.log("📱 [EnhancedHeader] Closing mobile menu");
     setIsMobileMenuOpen(false);
-    setExpandedMobileSection(null);
   };
 
   /**
@@ -234,20 +233,6 @@ export default function EnhancedHeader() {
    */
   const handleMegaMenuToggle = () => {
     setIsMegaMenuOpen(!isMegaMenuOpen);
-  };
-
-  /**
-   * Handle navigation item click
-   */
-  const handleNavClick = (itemName: string) => {
-    console.log(`🔗 [EnhancedHeader] Navigation clicked: ${itemName}`);
-  };
-
-  /**
-   * Toggle mobile section
-   */
-  const toggleMobileSection = (sectionTitle: string) => {
-    setExpandedMobileSection(expandedMobileSection === sectionTitle ? null : sectionTitle);
   };
 
   return (
@@ -314,7 +299,7 @@ export default function EnhancedHeader() {
         />
       </Navbar>
 
-      {/* Mobile Navigation */}
+      {/* Mobile Navigation Header */}
       <Navbar className="pt-4">
         <MobileNav>
           <MobileNavHeader>
@@ -337,127 +322,18 @@ export default function EnhancedHeader() {
               />
             </div>
           </MobileNavHeader>
-
-          {/* Mobile Menu Dropdown */}
-          <MobileNavMenu
-            isOpen={isMobileMenuOpen}
-            onClose={handleMobileMenuClose}
-          >
-            {/* Mobile Navigation Links */}
-            {mainNavigation.map((item, idx) => (
-              <Link
-                key={`mobile-link-${idx}`}
-                href={item.link}
-                onClick={() => {
-                  handleNavClick(item.name);
-                  handleMobileMenuClose();
-                }}
-                className="w-full text-left px-4 py-3 text-neutral-700 dark:text-neutral-200 hover:bg-gray-100 dark:hover:bg-neutral-800 rounded-lg transition-colors font-medium"
-              >
-                {item.name}
-              </Link>
-            ))}
-
-            {/* Mobile Services Accordion */}
-            <div className="border-t border-gray-200 dark:border-gray-700 mt-2 pt-2">
-              <button
-                onClick={() => toggleMobileSection("services")}
-                className="w-full flex items-center justify-between px-4 py-3 text-neutral-700 dark:text-neutral-200 hover:bg-gray-100 dark:hover:bg-neutral-800 rounded-lg transition-colors font-medium"
-              >
-                <span>Services</span>
-                <svg
-                  className={`w-5 h-5 transition-transform ${
-                    expandedMobileSection === "services" ? "rotate-180" : ""
-                  }`}
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg>
-              </button>
-
-              {/* Expanded Services */}
-              {expandedMobileSection === "services" && (
-                <div className="pl-4 space-y-1 mt-2">
-                  {servicesMegaMenu.sections.map((section, sectionIdx) => (
-                    <div key={sectionIdx} className="mb-4">
-                      <h4 className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider px-4 py-2">
-                        {section.title}
-                      </h4>
-                      {section.items.map((item, itemIdx) => (
-                        <Link
-                          key={itemIdx}
-                          href={item.link}
-                          onClick={handleMobileMenuClose}
-                          className="flex items-center gap-2 px-4 py-2.5 text-sm text-neutral-700 dark:text-neutral-200 hover:bg-gray-100 dark:hover:bg-neutral-800 rounded-lg transition-colors"
-                        >
-                          {item.icon && <span className="text-lg">{item.icon}</span>}
-                          <div className="flex-1">
-                            <div className="flex items-center gap-2">
-                              <span className="font-medium">{item.name}</span>
-                              {item.badge && (
-                                <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-bold">
-                                  {item.badge}
-                                </span>
-                              )}
-                            </div>
-                          </div>
-                        </Link>
-                      ))}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* Client Dashboard Login Button for Mobile */}
-            <a
-              href="https://client.vedpragya.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={handleMobileMenuClose}
-              className="w-full flex items-center gap-2 px-4 py-3 text-neutral-700 dark:text-neutral-200 hover:bg-gray-100 dark:hover:bg-neutral-800 rounded-lg transition-colors font-medium border-t border-gray-200 dark:border-gray-700 mt-2 pt-4"
-            >
-              <svg 
-                xmlns="http://www.w3.org/2000/svg" 
-                className="w-5 h-5" 
-                fill="none" 
-                viewBox="0 0 24 24" 
-                stroke="currentColor"
-              >
-                <path 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round" 
-                  strokeWidth={2} 
-                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" 
-                />
-              </svg>
-              Client Dashboard Login
-            </a>
-
-            {/* Mobile Contact Button */}
-            <Link
-              href="/pages/contact"
-              onClick={handleMobileMenuClose}
-              className="w-full mt-4"
-            >
-              <NavbarButton
-                variant="gradient"
-                as="button"
-                className="w-full text-center"
-              >
-                Contact Us
-              </NavbarButton>
-            </Link>
-          </MobileNavMenu>
         </MobileNav>
       </Navbar>
+
+      {/* Enhanced Mobile Menu with Expandable Cards */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <EnhancedMobileMenu
+            isOpen={isMobileMenuOpen}
+            onClose={handleMobileMenuClose}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 }
