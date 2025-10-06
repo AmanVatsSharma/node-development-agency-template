@@ -21,6 +21,7 @@ import {
   MapPin,
   Briefcase
 } from 'lucide-react';
+import { fireConversion } from '@/utils/conversions';
 
 console.log('[Business-Website] LeadFormSection component loaded');
 
@@ -59,12 +60,36 @@ export function LeadFormSection() {
     console.log('[Business-Website] Lead form submitted:', formData);
     
     setLoading(true);
-    
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
-    setLoading(false);
-    setSubmitted(true);
+    try {
+      const res = await fetch('/api/lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          message: formData.message,
+          source: 'business-website',
+          leadSource: 'Website',
+          raw: {
+            city: formData.city,
+            businessType: formData.businessType,
+            path: typeof window !== 'undefined' ? window.location.pathname : undefined,
+          },
+        }),
+      });
+      const data = await res.json();
+      console.log('[Business-Website] Lead API response:', data);
+      if (!res.ok) throw new Error(data?.error || 'Lead API failed');
+      setSubmitted(true);
+      // Fire Google Ads conversion
+      void fireConversion('lead_submit');
+    } catch (err) {
+      console.error('[Business-Website] Lead submit error:', err);
+      alert('Something went wrong. Please try again.');
+    } finally {
+      setLoading(false);
+    }
     
     // Reset form after 5 seconds
     setTimeout(() => {
@@ -161,7 +186,7 @@ export function LeadFormSection() {
                   <a 
                     href="tel:+919963730111"
                     className="flex items-center gap-2 sm:gap-3 p-2.5 sm:p-3 bg-green-50 dark:bg-green-900/20 rounded-lg hover:bg-green-100 dark:hover:bg-green-900/30 transition-colors group"
-                    onClick={() => console.log('[Business-Website] Quick call clicked')}
+                    onClick={() => { console.log('[Business-Website] Quick call clicked'); void fireConversion('call_click'); }}
                   >
                     <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-green-600 flex items-center justify-center flex-shrink-0">
                       <Phone className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
@@ -179,7 +204,7 @@ export function LeadFormSection() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-2 sm:gap-3 p-2.5 sm:p-3 bg-green-50 dark:bg-green-900/20 rounded-lg hover:bg-green-100 dark:hover:bg-green-900/30 transition-colors group"
-                    onClick={() => console.log('[Business-Website] WhatsApp clicked')}
+                    onClick={() => { console.log('[Business-Website] WhatsApp clicked'); void fireConversion('whatsapp_click'); }}
                   >
                     <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-green-600 flex items-center justify-center flex-shrink-0">
                       <MessageCircle className="h-4 w-4 sm:h-5 sm:w-5 text-white" />

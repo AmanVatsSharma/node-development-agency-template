@@ -8,6 +8,7 @@ import { initPerformanceMonitoring } from '../utils/performanceMonitoring';
 import GoogleAnalytics from './components/Analytics/GoogleAnalytics';
 import GoogleAdsTracking from './components/Analytics/GoogleAdsTracking';
 import { ThemeProvider } from "./components/ThemeProvider";
+import { Providers } from "./providers";
 
 // Font configuration
 const inter = Inter({
@@ -69,22 +70,24 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${poppins.variable} antialiased bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100`}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <div className="flex flex-col min-h-screen">
-            {/* New Enhanced Header with resizable navbar - Cool scroll effect! */}
-            <EnhancedHeader />
-            {/* Added pt-20 padding to prevent content overlap with fixed navbar */}
-            <main className="flex-grow pt-20">{children}</main>
-            <Footer />
-          </div>
-          {/* Service Worker Manager for updates notification */}
-          <ServiceWorkerManager />
-        </ThemeProvider>
+        <Providers>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <div className="flex flex-col min-h-screen">
+              {/* New Enhanced Header with resizable navbar - Cool scroll effect! */}
+              <EnhancedHeader />
+              {/* Added pt-20 padding to prevent content overlap with fixed navbar */}
+              <main className="flex-grow pt-20">{children}</main>
+              <Footer />
+            </div>
+            {/* Service Worker Manager for updates notification */}
+            <ServiceWorkerManager />
+          </ThemeProvider>
+        </Providers>
       </body>
     </html>
   );

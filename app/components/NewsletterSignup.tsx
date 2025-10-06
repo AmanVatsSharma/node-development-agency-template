@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from 'react';
+import { fireConversion } from '@/utils/conversions';
 
 export default function NewsletterSignup() {
   const [email, setEmail] = useState('');
@@ -36,6 +37,7 @@ export default function NewsletterSignup() {
       }
       
       setStatus('success');
+      try { void fireConversion('newsletter_signup'); } catch {}
       setMessage(data.message || 'Successfully subscribed to the newsletter');
       setEmail('');
     } catch (error) {

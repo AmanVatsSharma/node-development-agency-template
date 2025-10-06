@@ -11,3 +11,19 @@
 Result: `pnpm build` compiles successfully and static pages are generated.
 
 
+### Integrations (Zoho CRM + Google Ads)
+
+- Added Prisma models: `IntegrationSettings`, `Lead`, `IntegrationLog`, `IntegrationRetry`.
+- Services:
+  - `app/lib/zohoService.ts`: Zoho token refresh + lead creation with logs and retries.
+  - `app/lib/googleAds.ts`: Google conversion config and server-side intent logging.
+- API routes:
+  - `POST /api/lead`: persist → Zoho → return Google mapping.
+  - `GET/POST /api/admin/integrations`: manage credentials and labels.
+  - `GET /api/admin/logs`: list logs.
+  - `POST /api/retry`: process queued failures.
+  - `GET /api/google-config`: provide client mapping.
+  - `POST /api/track`: server-side conversion intent logging.
+- Client utility: `utils/conversions.ts` with `fireConversion()`.
+- `business-website` lead form posts to `/api/lead` and fires conversions; call/WhatsApp clicks tracked.
+

@@ -462,3 +462,27 @@ The implementation includes:
 **Project:** Enterprise Hero - Node Development Agency Template  
 **Status:** ✅ Ready for Production
 
+---
+
+## Unified Conversion Events (Integration Layer)
+
+- lead_submit: Fired on successful lead submission (client + server log)
+- call_click: Fired on phone call click
+- whatsapp_click: Fired on WhatsApp click
+- newsletter_signup: Fired after newsletter subscribe success
+
+### Client Integration Points
+
+- `app/pages/business-website/_components/lead-form-section.tsx` triggers `lead_submit`, `call_click`, `whatsapp_click` via `fireConversion()`
+- `app/components/NewsletterSignup.tsx` triggers `newsletter_signup` via `fireConversion()`
+
+### Admin Configuration
+
+- Manage `googleConversionId` and event labels in `/admin/integrations`
+- Labels may be full `send_to` (AW-XXXX/label) or just `label`
+
+### Server Endpoints
+
+- `GET /api/google-config` returns `{ conversionId, labels }` for client utility
+- `POST /api/track` logs server-side conversion intent for reliability
+
