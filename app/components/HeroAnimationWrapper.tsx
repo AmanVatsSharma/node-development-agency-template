@@ -10,8 +10,8 @@ const AnimationFallback = () => (
   </div>
 );
 
-// Dynamically import the COMPLETE 3D animation with ALL features and tech stacks
-const HeroAnimation = dynamic(() => import("../animations/HeroAnimationComplete"), {
+// Dynamically import the WORLD-CLASS 3D animation - fully visible, high contrast, impressive
+const HeroAnimation = dynamic(() => import("../animations/HeroAnimationWorldClass"), {
   ssr: false,
   loading: () => <AnimationFallback />
 });
