@@ -25,6 +25,7 @@ const blogPosts = [
 ];
 
 // Define your static pages here
+// NOTE: Admin pages and login are intentionally excluded from sitemap for SEO
 const staticPages = [
   {
     url: '/',
@@ -138,6 +139,11 @@ const generateRobotsTxt = () => {
   const robotsTxt = `# https://www.robotstxt.org/robotstxt.html
 User-agent: *
 Allow: /
+
+# Block admin pages and login from search engines
+Disallow: /pages/admin/
+Disallow: /api/admin/
+Disallow: /login
 
 # Sitemaps
 Sitemap: ${SITE_URL}/sitemap.xml
