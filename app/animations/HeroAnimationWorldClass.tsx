@@ -242,6 +242,7 @@ const BrightServerRack: React.FC<ServerRackProps> = ({ position, label, color, o
   useFrame(({ clock }) => {
     if (groupRef.current) {
       groupRef.current.position.y = position[1] + Math.sin(clock.getElapsedTime() * 0.4) * 0.1;
+      groupRef.current.rotation.y = clock.getElapsedTime() * 0.15; // ROTATE so visible from all sides
       
       if (hovered) {
         const scale = 1 + Math.sin(clock.getElapsedTime() * 6) * 0.08;
@@ -266,63 +267,104 @@ const BrightServerRack: React.FC<ServerRackProps> = ({ position, label, color, o
       }}
       onClick={onFocus}
     >
-      {/* Main frame - DARK BUT WITH OUTLINE */}
-      <RoundedBox args={[1.5, 2.5, 0.8]} radius={0.05}>
+      {/* Main frame - GLOWING ON ALL SIDES */}
+      <RoundedBox args={[1.5, 2.5, 1.2]} radius={0.05}>
         <meshStandardMaterial
-          color="#1a1a1a"
-          metalness={0.9}
+          color={color}
+          emissive={color}
+          emissiveIntensity={hovered ? 1.5 : 0.8}
+          metalness={0.8}
           roughness={0.3}
-          emissive={hovered ? color : "#000000"}
-          emissiveIntensity={hovered ? 0.5 : 0}
+          toneMapped={false}
         />
       </RoundedBox>
       
-      {/* Bright glowing edges */}
+      {/* Bright glowing edges - VISIBLE FROM ALL ANGLES */}
       <lineSegments>
-        <edgesGeometry args={[new THREE.BoxGeometry(1.5, 2.5, 0.8)]} />
-        <lineBasicMaterial color={color} linewidth={2} />
+        <edgesGeometry args={[new THREE.BoxGeometry(1.5, 2.5, 1.2)]} />
+        <lineBasicMaterial color={ELECTRIC_CYAN} linewidth={3} />
       </lineSegments>
       
-      {/* Server blades - BRIGHT PANELS */}
+      {/* Server blades - ON FRONT SIDE */}
       {[0, 1, 2, 3, 4, 5, 6, 7].map((i) => (
-        <group key={i}>
-          {/* Glowing panel */}
-          <mesh position={[0, 1.0 - i * 0.28, 0.41]}>
+        <group key={`front-${i}`}>
+          <mesh position={[0, 1.0 - i * 0.28, 0.61]}>
             <boxGeometry args={[1.3, 0.22, 0.02]} />
             <meshStandardMaterial
-              color={color}
-              emissive={color}
-              emissiveIntensity={hovered ? 2.5 : 1.5}
+              color={NEON_GREEN}
+              emissive={NEON_GREEN}
+              emissiveIntensity={hovered ? 3 : 2}
               toneMapped={false}
             />
           </mesh>
           
-          {/* LED lights */}
           {[0, 1, 2, 3, 4, 5].map((led) => (
-            <mesh key={led} position={[-0.5 + led * 0.2, 1.0 - i * 0.28, 0.42]}>
+            <mesh key={led} position={[-0.5 + led * 0.2, 1.0 - i * 0.28, 0.62]}>
               <sphereGeometry args={[0.03, 8, 8]} />
-              <meshBasicMaterial
-                color={led % 2 === 0 ? NEON_GREEN : ELECTRIC_CYAN}
-                toneMapped={false}
-              />
-              <pointLight position={[0, 0, 0]} intensity={0.5} color={led % 2 === 0 ? NEON_GREEN : ELECTRIC_CYAN} distance={0.5} />
+              <meshBasicMaterial color={ELECTRIC_CYAN} toneMapped={false} />
+              <pointLight position={[0, 0, 0]} intensity={1} color={ELECTRIC_CYAN} distance={0.5} />
             </mesh>
           ))}
         </group>
       ))}
       
-      {/* Glow light */}
-      <pointLight position={[0, 0, 0.5]} intensity={hovered ? 3 : 2} color={color} distance={4} />
+      {/* Server blades - ON BACK SIDE (so visible when rotated) */}
+      {[0, 1, 2, 3, 4, 5, 6, 7].map((i) => (
+        <group key={`back-${i}`}>
+          <mesh position={[0, 1.0 - i * 0.28, -0.61]}>
+            <boxGeometry args={[1.3, 0.22, 0.02]} />
+            <meshStandardMaterial
+              color={LASER_BLUE}
+              emissive={LASER_BLUE}
+              emissiveIntensity={hovered ? 3 : 2}
+              toneMapped={false}
+            />
+          </mesh>
+        </group>
+      ))}
       
-      {/* Label */}
+      {/* Server blades - ON LEFT SIDE */}
+      {[0, 1, 2, 3, 4, 5, 6, 7].map((i) => (
+        <mesh key={`left-${i}`} position={[-0.76, 1.0 - i * 0.28, 0]}>
+          <boxGeometry args={[0.02, 0.22, 1.0]} />
+          <meshStandardMaterial
+            color={HOT_PINK}
+            emissive={HOT_PINK}
+            emissiveIntensity={hovered ? 2.5 : 1.5}
+            toneMapped={false}
+          />
+        </mesh>
+      ))}
+      
+      {/* Server blades - ON RIGHT SIDE */}
+      {[0, 1, 2, 3, 4, 5, 6, 7].map((i) => (
+        <mesh key={`right-${i}`} position={[0.76, 1.0 - i * 0.28, 0]}>
+          <boxGeometry args={[0.02, 0.22, 1.0]} />
+          <meshStandardMaterial
+            color={VIBRANT_ORANGE}
+            emissive={VIBRANT_ORANGE}
+            emissiveIntensity={hovered ? 2.5 : 1.5}
+            toneMapped={false}
+          />
+        </mesh>
+      ))}
+      
+      {/* Multiple point lights around the rack */}
+      <pointLight position={[0, 0, 0.8]} intensity={hovered ? 4 : 2} color={color} distance={4} />
+      <pointLight position={[0, 0, -0.8]} intensity={hovered ? 4 : 2} color={color} distance={4} />
+      <pointLight position={[0.8, 0, 0]} intensity={hovered ? 3 : 1.5} color={color} distance={3} />
+      <pointLight position={[-0.8, 0, 0]} intensity={hovered ? 3 : 1.5} color={color} distance={3} />
+      
+      {/* Label - always facing camera */}
       <Text
         position={[0, -1.5, 0]}
-        fontSize={0.3}
+        fontSize={0.35}
         color={color}
         anchorX="center"
         anchorY="middle"
-        outlineWidth={0.02}
+        outlineWidth={0.03}
         outlineColor="#000000"
+        fontWeight="bold"
       >
         {label}
       </Text>
@@ -347,7 +389,7 @@ const BrightDatabase: React.FC<DatabaseProps> = ({ position, label, color, onFoc
   
   useFrame(({ clock }) => {
     if (groupRef.current) {
-      groupRef.current.rotation.y = clock.getElapsedTime() * 0.5;
+      groupRef.current.rotation.y = clock.getElapsedTime() * 0.5; // ROTATING so visible from all sides
       groupRef.current.position.y = position[1] + Math.sin(clock.getElapsedTime() * 0.7) * 0.15;
       
       if (hovered) {
@@ -373,18 +415,19 @@ const BrightDatabase: React.FC<DatabaseProps> = ({ position, label, color, onFoc
       }}
       onClick={onFocus}
     >
-      {/* Database disks - BRIGHT AND GLOWING */}
+      {/* Database disks - GLOWING ON ALL SIDES */}
       {[0, 1, 2].map((i) => (
         <group key={i} position={[0, 0.5 - i * 0.5, 0]}>
-          {/* Main cylinder */}
+          {/* Main cylinder - GLOWING MATERIAL ALL AROUND */}
           <mesh>
             <cylinderGeometry args={[0.8, 0.8, 0.35, 48]} />
             <meshStandardMaterial
-              color="#2a2a2a"
-              metalness={0.9}
-              roughness={0.2}
+              color={color}
               emissive={color}
-              emissiveIntensity={hovered ? 0.5 : 0.2}
+              emissiveIntensity={hovered ? 1.5 : 1}
+              metalness={0.7}
+              roughness={0.3}
+              toneMapped={false}
             />
           </mesh>
           
@@ -392,47 +435,82 @@ const BrightDatabase: React.FC<DatabaseProps> = ({ position, label, color, onFoc
           <mesh position={[0, 0.18, 0]} rotation={[-Math.PI / 2, 0, 0]}>
             <circleGeometry args={[0.8, 48]} />
             <meshStandardMaterial
-              color={color}
-              emissive={color}
-              emissiveIntensity={hovered ? 2 : 1.2}
+              color={NEON_GREEN}
+              emissive={NEON_GREEN}
+              emissiveIntensity={hovered ? 3 : 2}
               toneMapped={false}
             />
           </mesh>
           
-          {/* Glowing rings */}
+          {/* Bright bottom surface - visible when rotated */}
+          <mesh position={[0, -0.18, 0]} rotation={[Math.PI / 2, 0, 0]}>
+            <circleGeometry args={[0.8, 48]} />
+            <meshStandardMaterial
+              color={ELECTRIC_CYAN}
+              emissive={ELECTRIC_CYAN}
+              emissiveIntensity={hovered ? 3 : 2}
+              toneMapped={false}
+            />
+          </mesh>
+          
+          {/* Multiple glowing rings at different heights */}
           <mesh position={[0, 0.19, 0]}>
             <torusGeometry args={[0.6, 0.04, 16, 48]} />
+            <meshBasicMaterial color={NEON_GREEN} toneMapped={false} />
+          </mesh>
+          
+          <mesh position={[0, 0, 0]}>
+            <torusGeometry args={[0.65, 0.03, 16, 48]} />
             <meshBasicMaterial color={ELECTRIC_CYAN} toneMapped={false} />
           </mesh>
           
-          {/* Data indicator lights */}
-          {[0, 1, 2, 3, 4, 5].map((light) => {
-            const angle = (light / 6) * Math.PI * 2;
-            const x = Math.cos(angle) * 0.5;
-            const z = Math.sin(angle) * 0.5;
+          <mesh position={[0, -0.19, 0]}>
+            <torusGeometry args={[0.6, 0.04, 16, 48]} />
+            <meshBasicMaterial color={LASER_BLUE} toneMapped={false} />
+          </mesh>
+          
+          {/* Data indicator lights - AROUND THE CYLINDER */}
+          {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((light) => {
+            const angle = (light / 12) * Math.PI * 2;
+            const x = Math.cos(angle) * 0.75;
+            const z = Math.sin(angle) * 0.75;
             return (
-              <mesh key={light} position={[x, 0.2, z]}>
+              <mesh key={light} position={[x, 0, z]}>
                 <sphereGeometry args={[0.04, 8, 8]} />
-                <meshBasicMaterial color={NEON_GREEN} toneMapped={false} />
-                <pointLight position={[0, 0, 0]} intensity={0.8} color={NEON_GREEN} distance={0.5} />
+                <meshBasicMaterial 
+                  color={light % 3 === 0 ? NEON_GREEN : light % 3 === 1 ? ELECTRIC_CYAN : HOT_PINK} 
+                  toneMapped={false} 
+                />
+                <pointLight 
+                  position={[0, 0, 0]} 
+                  intensity={1.5} 
+                  color={light % 3 === 0 ? NEON_GREEN : light % 3 === 1 ? ELECTRIC_CYAN : HOT_PINK} 
+                  distance={0.8} 
+                />
               </mesh>
             );
           })}
         </group>
       ))}
       
-      {/* Main glow light */}
-      <pointLight position={[0, 0, 0]} intensity={hovered ? 4 : 2.5} color={color} distance={5} />
+      {/* Multiple point lights for 360-degree illumination */}
+      <pointLight position={[0, 0.5, 0]} intensity={hovered ? 5 : 3} color={NEON_GREEN} distance={5} />
+      <pointLight position={[0, -0.5, 0]} intensity={hovered ? 5 : 3} color={ELECTRIC_CYAN} distance={5} />
+      <pointLight position={[1, 0, 0]} intensity={hovered ? 3 : 2} color={color} distance={3} />
+      <pointLight position={[-1, 0, 0]} intensity={hovered ? 3 : 2} color={color} distance={3} />
+      <pointLight position={[0, 0, 1]} intensity={hovered ? 3 : 2} color={color} distance={3} />
+      <pointLight position={[0, 0, -1]} intensity={hovered ? 3 : 2} color={color} distance={3} />
       
-      {/* Label */}
+      {/* Label - always facing camera */}
       <Text
         position={[0, -1.2, 0]}
-        fontSize={0.3}
+        fontSize={0.35}
         color={color}
         anchorX="center"
         anchorY="middle"
-        outlineWidth={0.02}
+        outlineWidth={0.03}
         outlineColor="#000000"
+        fontWeight="bold"
       >
         {label}
       </Text>
