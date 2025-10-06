@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createZohoLead } from '@/app/lib/zohoService';
 
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 export async function POST(_req: NextRequest) {
   try {
     const res = await createZohoLead({

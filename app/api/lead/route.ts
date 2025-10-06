@@ -3,6 +3,9 @@ import prisma from '@/app/lib/prisma';
 import { createZohoLead } from '@/app/lib/zohoService';
 import { getClientConversionMapping, logServerConversion } from '@/app/lib/googleAds';
 
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 type LeadPayload = {
   name?: string;
   email?: string;

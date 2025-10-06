@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { testZohoConnection } from '@/app/lib/zohoService';
 import { testGoogleConfig } from '@/app/lib/googleAds';
 
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const provider = searchParams.get('provider');
