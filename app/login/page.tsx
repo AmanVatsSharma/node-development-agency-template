@@ -24,14 +24,14 @@
 
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { signIn } from 'next-auth/react';
 import { useSearchParams } from 'next/navigation';
 import { Button } from '@/app/components/ui/button';
 import { Input } from '@/app/components/ui/input';
 import { Label } from '@/app/components/ui/label';
 
-export default function LoginPage() {
+function LoginForm() {
   // Form state
   const [email, setEmail] = useState('admin@example.com');
   const [password, setPassword] = useState('password123');
@@ -207,4 +207,26 @@ export default function LoginPage() {
   );
 }
 
+export default function LoginPage() {
+  return (
+    <Suspense fallback={
+      <main className="min-h-screen flex items-center justify-center p-6 bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-950 dark:to-slate-900">
+        <div className="w-full max-w-md">
+          <div className="bg-white dark:bg-slate-800 shadow-2xl rounded-2xl p-8 border border-slate-200 dark:border-slate-700">
+            <div className="text-center mb-8">
+              <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">
+                Admin Portal
+              </h1>
+              <p className="text-slate-600 dark:text-slate-400">
+                Loading...
+              </p>
+            </div>
+          </div>
+        </div>
+      </main>
+    }>
+      <LoginForm />
+    </Suspense>
+  );
+}
 
