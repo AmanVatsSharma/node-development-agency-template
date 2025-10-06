@@ -210,9 +210,20 @@ function LoginForm() {
 export default function LoginPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen flex items-center justify-center p-6 bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-950 dark:to-slate-900">
-        <div className="text-lg text-slate-700 dark:text-slate-300">Loading...</div>
-      </div>
+      <main className="min-h-screen flex items-center justify-center p-6 bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-950 dark:to-slate-900">
+        <div className="w-full max-w-md">
+          <div className="bg-white dark:bg-slate-800 shadow-2xl rounded-2xl p-8 border border-slate-200 dark:border-slate-700">
+            <div className="text-center mb-8">
+              <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">
+                Admin Portal
+              </h1>
+              <p className="text-slate-600 dark:text-slate-400">
+                Loading...
+              </p>
+            </div>
+          </div>
+        </div>
+      </main>
     }>
       <LoginForm />
     </Suspense>
