@@ -5,6 +5,7 @@ import { blogPosts } from '../app/data/blogPosts';
 const SITE_URL = 'https://enterprisehero.com';
 
 // Define your static pages here
+// NOTE: Admin pages and login are intentionally excluded from sitemap for SEO
 const staticPages = [
   {
     url: '/',
@@ -48,6 +49,9 @@ const staticPages = [
     changeFreq: 'monthly',
     priority: 0.7
   },
+  // Admin pages are NOT included for SEO purposes
+  // /pages/admin/* - excluded
+  // /login - excluded
 ];
 
 // Function to generate a sitemap entry
