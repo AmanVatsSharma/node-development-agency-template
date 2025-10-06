@@ -9,11 +9,11 @@ Copy this configuration to your `.env.local` file and fill in your values.
 DATABASE_URL="postgresql://user:password@localhost:5432/agency_db"
 
 # ============================================
-# NextAuth Configuration
+# Simple Admin Authentication
 # ============================================
-# Generate with: openssl rand -base64 32
-NEXTAUTH_SECRET="your-secret-key-here-replace-with-random-string"
-NEXTAUTH_URL="http://localhost:3000"
+# Simple password for admin panel access
+# Change this to a secure password in production!
+ADMIN_PASSWORD="your-secure-admin-password-here"
 
 # ============================================
 # Zoho CRM Integration
@@ -34,18 +34,23 @@ GA_MEASUREMENT_ID="G-XXXXXXXXXX"
 ## Setup Instructions
 
 1. **Copy configuration**: Create `.env.local` in project root
-2. **Generate secret**: Run `openssl rand -base64 32` for NEXTAUTH_SECRET
+2. **Set admin password**: Choose a strong password for ADMIN_PASSWORD
 3. **Configure Zoho**: Get credentials from https://api-console.zoho.com/
 4. **Configure Google**: Get conversion ID from Google Ads console
 5. **Run migrations**: `pnpm db:push`
-6. **Seed database**: `pnpm db:seed`
-7. **Start server**: `pnpm dev`
+6. **Start server**: `pnpm dev`
 
-## Default Admin Credentials
+## Admin Access
 
-After seeding:
-- Email: `admin@example.com`
-- Password: `password123`
-- Role: `admin`
+- URL: `/login`
+- Password: Set via `ADMIN_PASSWORD` environment variable
+- No database or user management required
 
-**⚠️ Change password immediately in production!**
+**⚠️ Use a strong password in production!**
+
+## SEO Notes
+
+Admin pages are protected from search engines:
+- Blocked in `robots.txt`
+- Not included in `sitemap.xml`
+- Include `noindex, nofollow` meta tags
