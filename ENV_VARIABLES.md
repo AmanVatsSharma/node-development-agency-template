@@ -29,6 +29,13 @@ ZOHO_DOMAIN="https://www.zohoapis.com"
 GOOGLE_CONVERSION_ID="AW-123456789"
 GOOGLE_API_KEY="your-google-api-key"
 GA_MEASUREMENT_ID="G-XXXXXXXXXX"
+
+# ============================================
+# AI Sales Agent (Optional - Configure via Admin)
+# ============================================
+# Configure your AI sales agent via the admin panel at /admin/ai-agent
+# Supported providers: OpenAI, Claude (Anthropic), Google Gemini
+# API keys are stored encrypted in database (configured via admin UI)
 ```
 
 ## Setup Instructions
