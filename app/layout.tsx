@@ -9,6 +9,7 @@ import GoogleAnalytics from './components/Analytics/GoogleAnalytics';
 import GoogleAdsTracking from './components/Analytics/GoogleAdsTracking';
 import { ThemeProvider } from "./components/ThemeProvider";
 import { Providers } from "./providers";
+import AIAgentWidget from './components/AIAgent/AIAgentWidget';
 
 // Font configuration
 const inter = Inter({
@@ -86,6 +87,8 @@ export default function RootLayout({
             </div>
             {/* Service Worker Manager for updates notification */}
             <ServiceWorkerManager />
+            {/* AI Sales Agent - Available on every page */}
+            <AIAgentWidget />
           </ThemeProvider>
         </Providers>
       </body>

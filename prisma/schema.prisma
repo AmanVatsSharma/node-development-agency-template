@@ -291,3 +291,72 @@ model IntegrationRetry {
   @@index([status, nextRunAt])
   @@index([createdAt])
 }
+
+// AI Agent Configuration (OpenAI, Claude, Gemini)
+model AIAgentConfig {
+  id              String   @id @default(cuid())
+  provider        String   @default("openai") // "openai", "claude", "gemini"
+  apiKey          String?  // Encrypted API key
+  model           String   @default("gpt-4o") // Model name (gpt-4o, claude-sonnet-4-5, gemini-2.0-flash-exp)
+  agentName       String   @default("Nova") // Brand name for the AI agent
+  agentRole       String   @default("AI Sales Assistant") // Agent's role
+  companyName     String   @default("Vedpragya Bharat") // Your company name
+  welcomeMessage  String   @default("Hi! I'm Nova, your AI assistant. How can I help you today?")
+  systemPrompt    String   @db.Text // Base system prompt for the AI
+  temperature     Float    @default(0.7) // AI creativity (0.0-1.0)
+  maxTokens       Int      @default(2000) // Max response length
+  enabled         Boolean  @default(true) // Enable/disable globally
+  leadQualification Boolean @default(true) // Auto-qualify leads
+  autoGreeting    Boolean  @default(true) // Show greeting on load
+  greetingDelay   Int      @default(3000) // Delay in ms before showing greeting
+  widgetPosition  String   @default("bottom-right") // Widget position
+  primaryColor    String   @default("#3b82f6") // Widget theme color
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([enabled])
+}
+
+// AI Conversation History
+model AIConversation {
+  id              String   @id @default(cuid())
+  sessionId       String   @unique // Unique session identifier
+  visitorId       String?  // Anonymous visitor ID (from cookies)
+  leadId          String?  // Links to Lead model if converted
+  pageUrl         String   // Current page URL
+  pagePath        String   // URL path (e.g., /pages/shopify-product-page-customization)
+  pageTitle       String?  // Page title for context
+  pageContext     Json?    // Page-specific context (services, pricing, etc.)
+  messages        Json     // Array of {role: 'user'|'assistant', content: string, timestamp: string}
+  metadata        Json?    // Additional metadata (user agent, location, etc.)
+  status          String   @default("active") // active, converted, abandoned, closed
+  leadCaptured    Boolean  @default(false) // Has lead information been captured?
+  conversionData  Json?    // Captured lead data {name, email, phone, company, requirements}
+  sentimentScore  Float?   // Overall conversation sentiment (-1 to 1)
+  leadScore       Int?     // Lead quality score (0-100)
+  messageCount    Int      @default(0) // Total messages in conversation
+  lastMessageAt   DateTime @default(now()) // Last message timestamp
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([sessionId])
+  @@index([leadCaptured])
+  @@index([status])
+  @@index([createdAt])
+  @@index([lastMessageAt])
+}
+
+// AI Analytics and Performance Metrics
+model AIAnalytics {
+  id              String   @id @default(cuid())
+  date            DateTime @db.Date // Daily metrics
+  conversationId  String?  // Optional link to specific conversation
+  pageUrl         String   // Page where interaction happened
+  metric          String   // Metric type (engagement, conversion, cost, etc.)
+  value           Float    // Metric value
+  metadata        Json?    // Additional metric data
+  createdAt       DateTime @default(now())
+
+  @@index([date, metric])
+  @@index([pageUrl])
+}

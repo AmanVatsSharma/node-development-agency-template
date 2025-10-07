@@ -369,14 +369,21 @@ export default function IntegrationsAdminPage() {
                 </div>
               </div>
 
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleLogout}
-              >
-                <LogOut className="h-4 w-4 mr-2" />
-                Sign Out
-              </Button>
+              <div className="flex items-center gap-3">
+                <Button variant="outline" size="sm" asChild>
+                  <a href="/admin/ai-agent">
+                    <Zap className="h-4 w-4 mr-2" /> AI Agent
+                  </a>
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleLogout}
+                >
+                  <LogOut className="h-4 w-4 mr-2" />
+                  Sign Out
+                </Button>
+              </div>
             </div>
           </div>
         </header>
