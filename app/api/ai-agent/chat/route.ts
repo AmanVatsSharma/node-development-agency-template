@@ -105,7 +105,7 @@ export async function POST(request: NextRequest) {
       conversation = await prisma.aIConversation.update({
         where: { id: conversation.id },
         data: {
-          messages: updatedHistory,
+          messages: updatedHistory as any, // Cast to any for Prisma Json type
           messageCount: updatedHistory.length,
           lastMessageAt: new Date(),
           leadCaptured: leadDetection.captured || conversation.leadCaptured,
@@ -121,8 +121,8 @@ export async function POST(request: NextRequest) {
           pageUrl,
           pagePath,
           pageTitle: pageTitle || pageUrl,
-          pageContext,
-          messages: updatedHistory,
+          pageContext: pageContext as any, // Cast to any for Prisma Json type
+          messages: updatedHistory as any, // Cast to any for Prisma Json type
           messageCount: updatedHistory.length,
           lastMessageAt: new Date(),
           leadCaptured: leadDetection.captured,
@@ -131,10 +131,35 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    // If lead captured, create lead record
+    // If lead captured, create lead record automatically
     if (leadDetection.captured && !conversation.leadCaptured) {
-      // TODO: Extract lead data from conversation and create Lead record
-      // This will be implemented in the lead conversion integration
+      try {
+        // Call the convert-lead API internally
+        const leadData = leadDetection.leadData || {};
+        
+        const convertResponse = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/ai-agent/convert-lead`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            conversationId: conversation.id,
+            sessionId: conversation.sessionId,
+            leadData: {
+              name: leadData.name || 'AI Agent Lead',
+              email: leadData.email,
+              phone: leadData.phone,
+              company: leadData.company,
+              requirements: leadData.requirements,
+              message: leadData.requirements || 'Lead captured via AI Agent conversation',
+            }
+          })
+        });
+
+        const convertResult = await convertResponse.json();
+        console.log('[AI Agent Chat] Lead conversion result:', convertResult);
+      } catch (error) {
+        console.error('[AI Agent Chat] Failed to convert lead:', error);
+        // Don't fail the chat response if lead conversion fails
+      }
     }
 
     // Track analytics

@@ -337,7 +337,9 @@ export default function ChatWidget({ config }: ChatWidgetProps) {
                       onKeyPress={handleKeyPress}
                       placeholder="Type a message..."
                       className="flex-1 px-4 py-2 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl resize-none focus:outline-none focus:ring-2 focus:ring-opacity-50 text-gray-900 dark:text-white"
-                      style={{ focusRing: config.primaryColor }}
+                      style={{ 
+                        boxShadow: `0 0 0 2px ${config.primaryColor}20`,
+                      }}
                       rows={1}
                       disabled={isLoading}
                     />

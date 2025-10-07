@@ -434,36 +434,100 @@ export function detectLeadCapture(messages: Array<{role: string, content: string
     requirements?: string;
   };
 } {
-  // This is a simple implementation. In production, you might want to use
-  // more sophisticated NLP or have the AI explicitly signal when lead is captured
-  
-  const conversation = messages.map(m => m.content).join(' ').toLowerCase();
+  // Join all messages to analyze
+  const conversation = messages.map(m => m.content).join('\n');
+  const conversationLower = conversation.toLowerCase();
   
   // Look for email pattern
-  const emailMatch = conversation.match(/[\w.-]+@[\w.-]+\.\w+/);
+  const emailMatch = conversation.match(/[\w.-]+@[\w.-]+\.\w+/i);
   
-  // Look for phone pattern (Indian format)
-  const phoneMatch = conversation.match(/(?:\+91|91)?[\s-]?[6-9]\d{9}/);
+  // Look for phone patterns (multiple formats)
+  const phonePatterns = [
+    /(?:\+91|91)?[\s-]?[6-9]\d{9}/,  // Indian format
+    /\+?1?[\s-]?\(?\d{3}\)?[\s-]?\d{3}[\s-]?\d{4}/, // US format
+    /\+\d{1,3}[\s-]?\d{6,14}/, // International format
+  ];
+  let phoneMatch = null;
+  for (const pattern of phonePatterns) {
+    phoneMatch = conversation.match(pattern);
+    if (phoneMatch) break;
+  }
   
-  // If we have both email and phone, consider it a captured lead
-  if (emailMatch && phoneMatch) {
+  // Look for name patterns (after "my name is", "I am", "I'm", etc.)
+  const namePatterns = [
+    /(?:my name is|i am|i'm|this is|call me)\s+([A-Z][a-z]+(?:\s+[A-Z][a-z]+)?)/i,
+    /^([A-Z][a-z]+\s+[A-Z][a-z]+)$/m, // Full name on a line
+  ];
+  let nameMatch = null;
+  for (const pattern of namePatterns) {
+    nameMatch = conversation.match(pattern);
+    if (nameMatch) break;
+  }
+  
+  // Look for company name patterns
+  const companyPatterns = [
+    /(?:work at|from|company is|represent|with)\s+([A-Z][\w\s&]+(?:Inc|LLC|Ltd|Pvt|Private|Limited)?)/i,
+    /(?:company[:\s]+)([A-Z][\w\s&]+)/i,
+  ];
+  let companyMatch = null;
+  for (const pattern of companyPatterns) {
+    companyMatch = conversation.match(pattern);
+    if (companyMatch) break;
+  }
+  
+  // Extract requirements from user messages
+  const userMessages = messages.filter(m => m.role === 'user');
+  const requirements = userMessages
+    .slice(0, 3) // First 3 user messages usually contain requirements
+    .map(m => m.content)
+    .join(' | ');
+  
+  // Lead is captured if we have email (minimum requirement)
+  if (emailMatch) {
+    const leadData = {
+      email: emailMatch[0],
+      phone: phoneMatch ? phoneMatch[0] : undefined,
+      name: nameMatch ? nameMatch[1]?.trim() : undefined,
+      company: companyMatch ? companyMatch[1]?.trim() : undefined,
+      requirements: requirements || undefined,
+    };
+    
+    return {
+      captured: true,
+      leadData,
+    };
+  }
+  
+  // If we have both phone and name (without email), still capture
+  if (phoneMatch && nameMatch) {
     return {
       captured: true,
       leadData: {
-        email: emailMatch[0],
         phone: phoneMatch[0],
-        // Extract other info from context
+        name: nameMatch[1]?.trim(),
+        company: companyMatch ? companyMatch[1]?.trim() : undefined,
+        requirements: requirements || undefined,
       }
     };
   }
   
-  // Check if AI has signaled lead capture
+  // Check if AI has explicitly signaled lead capture
   const hasLeadCaptureSignal = messages.some(
     m => m.role === 'assistant' && m.content.includes('LEAD_CAPTURED')
   );
   
   if (hasLeadCaptureSignal) {
-    return { captured: true };
+    // Try to extract any available info
+    return { 
+      captured: true,
+      leadData: {
+        email: emailMatch ? emailMatch[0] : undefined,
+        phone: phoneMatch ? phoneMatch[0] : undefined,
+        name: nameMatch ? nameMatch[1]?.trim() : undefined,
+        company: companyMatch ? companyMatch[1]?.trim() : undefined,
+        requirements: requirements || undefined,
+      }
+    };
   }
   
   return { captured: false };
