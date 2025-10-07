@@ -17,21 +17,55 @@
  */
 
 import Image from "next/image";
+import dynamic from "next/dynamic";
 import HeroAnimationWrapper from "./components/HeroAnimationWrapper";
 import AnimatedIllustration from "./components/AnimatedIllustration";
 
-// Import premium home page components
+// PERFORMANCE OPTIMIZATION: Dynamic imports for below-fold components
+// This reduces initial bundle size and speeds up First Contentful Paint
+console.log('[HomePage] Loading enterprise home page with optimized imports');
+
+// Critical above-fold component (loaded immediately)
 import StatsCounter from "./components/home/StatsCounter";
-import TechStackShowcase from "./components/home/TechStackShowcase";
-import IndustryShowcase from "./components/home/IndustryShowcase";
-import WhyChooseUs from "./components/home/WhyChooseUs";
-import TestimonialCarousel from "./components/home/TestimonialCarousel";
-import ProcessTimeline from "./components/home/ProcessTimeline";
-import CaseStudyShowcase from "./components/home/CaseStudyShowcase";
-import GlobalPresence from "./components/home/GlobalPresence";
+
+// Below-fold components (lazy loaded for performance)
+const TechStackShowcase = dynamic(() => import("./components/home/TechStackShowcase"), {
+  loading: () => <div className="py-20 bg-white dark:bg-gray-900 flex items-center justify-center"><div className="w-12 h-12 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin"></div></div>,
+  ssr: true // Enable SSR for SEO
+});
+
+const IndustryShowcase = dynamic(() => import("./components/home/IndustryShowcase"), {
+  loading: () => <div className="py-20 bg-gray-50 dark:bg-gray-800 flex items-center justify-center"><div className="w-12 h-12 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin"></div></div>,
+  ssr: true
+});
+
+const WhyChooseUs = dynamic(() => import("./components/home/WhyChooseUs"), {
+  loading: () => <div className="py-20 bg-white dark:bg-gray-900 flex items-center justify-center"><div className="w-12 h-12 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin"></div></div>,
+  ssr: true
+});
+
+const CaseStudyShowcase = dynamic(() => import("./components/home/CaseStudyShowcase"), {
+  loading: () => <div className="py-20 bg-white dark:bg-gray-900 flex items-center justify-center"><div className="w-12 h-12 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin"></div></div>,
+  ssr: true
+});
+
+const TestimonialCarousel = dynamic(() => import("./components/home/TestimonialCarousel"), {
+  loading: () => <div className="py-20 bg-gradient-to-br from-gray-900 to-blue-900 flex items-center justify-center"><div className="w-12 h-12 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin"></div></div>,
+  ssr: true
+});
+
+const ProcessTimeline = dynamic(() => import("./components/home/ProcessTimeline"), {
+  loading: () => <div className="py-20 bg-gray-50 dark:bg-gray-800 flex items-center justify-center"><div className="w-12 h-12 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin"></div></div>,
+  ssr: true
+});
+
+const GlobalPresence = dynamic(() => import("./components/home/GlobalPresence"), {
+  loading: () => <div className="py-20 bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 flex items-center justify-center"><div className="w-12 h-12 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin"></div></div>,
+  ssr: true
+});
 
 // Console log for debugging
-console.log('[HomePage] Loading enterprise home page');
+console.log('[HomePage] Dynamic imports configured for optimal performance');
 
 export default function Home() {
   console.log('[HomePage] Rendering home page');
@@ -39,68 +73,106 @@ export default function Home() {
   return (
     <div className="w-full">
       {/* ========================================
-          SECTION 1: 3D HERO - WORLD CLASS
+          SECTION 1: 3D HERO - WORLD CLASS PREMIUM
           ======================================== */}
-      <section className="relative min-h-screen flex items-center justify-center bg-black text-white overflow-hidden">
+      <section className="relative min-h-screen flex items-center justify-center bg-black text-white overflow-hidden isolate">
         {/* 3D Background - Full opacity for maximum impact - Camera controls active here */}
         <div className="absolute inset-0 pointer-events-auto">
           <HeroAnimationWrapper />
         </div>
         
-        {/* Glassmorphism Text Overlay - COMPACT & POSITIONED LOWER - Blocks camera controls */}
+        {/* Premium Gradient Overlay for Depth */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-black/40 pointer-events-none"></div>
+        
+        {/* Animated Particles/Grid Background */}
+        <div className="absolute inset-0 opacity-10 pointer-events-none">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `radial-gradient(circle at 2px 2px, rgba(0, 255, 255, 0.15) 1px, transparent 0)`,
+            backgroundSize: '40px 40px',
+            animation: 'grid-flow 20s linear infinite'
+          }}></div>
+        </div>
+        
+        {/* Glassmorphism Text Overlay - PREMIUM ENHANCED */}
         <div className="relative z-10 text-center px-4 w-full flex items-end justify-center pb-24 pointer-events-none">
-          {/* Smaller Glass Card Container - Re-enable pointer events only on this card */}
-          <div className="inline-block px-8 py-6 md:px-10 md:py-8 rounded-2xl backdrop-blur-sm bg-black/30 border border-white/20 shadow-2xl max-w-2xl pointer-events-auto">
-            {/* Compact Headline */}
-            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-3 leading-tight tracking-tight">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00ff41] via-[#00ffff] to-[#0080ff] drop-shadow-[0_0_30px_rgba(0,255,255,0.8)]">
-                Enterprise Node.js Solutions
-            </span>
-          </h1>
-          
-            {/* Minimal Subtitle */}
-            <p className="text-sm md:text-base mb-6 text-white/80 font-light">
-              Scalable <span className="text-[#00ffff]">•</span> Secure <span className="text-[#00ffff]">•</span> High-Performance
-            </p>
+          {/* Premium Glass Card with Enhanced Effects */}
+          <div className="inline-block px-10 py-8 md:px-14 md:py-10 rounded-3xl backdrop-blur-xl bg-gradient-to-br from-black/40 via-black/30 to-black/40 border border-white/30 shadow-[0_8px_32px_0_rgba(0,255,255,0.2)] max-w-3xl pointer-events-auto relative group">
+            {/* Premium Glow Effect */}
+            <div className="absolute -inset-0.5 bg-gradient-to-r from-[#00ff41] via-[#00ffff] to-[#0080ff] rounded-3xl opacity-20 blur-xl group-hover:opacity-30 transition-opacity duration-500"></div>
             
-            {/* Compact CTA Button */}
-            <a 
-              href="/pages/contact"
-              className="group relative inline-block px-8 py-3 bg-gradient-to-r from-[#00ff41] to-[#00ffff] text-black font-semibold text-base rounded-full overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-[0_0_40px_rgba(0,255,65,0.8)]"
-            >
-              <span className="relative z-10">Explore Services →</span>
-              <div className="absolute inset-0 bg-gradient-to-r from-[#00ffff] to-[#00ff41] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            </a>
+            {/* Inner Border Glow */}
+            <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-cyan-500/10 via-transparent to-green-500/10"></div>
+            
+            <div className="relative z-10">
+              {/* Premium Headline with Enhanced Glow */}
+              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4 leading-tight tracking-tight">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00ff41] via-[#00ffff] to-[#0080ff] drop-shadow-[0_0_40px_rgba(0,255,255,1)] animate-pulse-glow">
+                  Enterprise Node.js Solutions
+                </span>
+              </h1>
+              
+              {/* Premium Subtitle with Better Spacing */}
+              <p className="text-base md:text-lg mb-8 text-white/90 font-light tracking-wide">
+                <span className="inline-block">Scalable</span> 
+                <span className="text-[#00ffff] mx-2">•</span> 
+                <span className="inline-block">Secure</span> 
+                <span className="text-[#00ffff] mx-2">•</span> 
+                <span className="inline-block">High-Performance</span>
+              </p>
+              
+              {/* Premium CTA Button with Enhanced Effects */}
+              <a 
+                href="/pages/contact"
+                className="group/btn relative inline-block px-10 py-4 bg-gradient-to-r from-[#00ff41] to-[#00ffff] text-black font-bold text-lg rounded-full overflow-hidden transition-all duration-500 hover:scale-110 hover:shadow-[0_0_60px_rgba(0,255,65,1)] shadow-[0_0_30px_rgba(0,255,255,0.5)]"
+              >
+                {/* Button Shimmer Effect */}
+                <div className="absolute inset-0 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
+                
+                <span className="relative z-10 flex items-center gap-2">
+                  Explore Services 
+                  <svg className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  </svg>
+                </span>
+                
+                {/* Animated Background */}
+                <div className="absolute inset-0 bg-gradient-to-r from-[#00ffff] to-[#00ff41] opacity-0 group-hover/btn:opacity-100 transition-opacity duration-500"></div>
+              </a>
+            </div>
           </div>
-          </div>
+        </div>
           
-        {/* Interactive Hints */}
-        <div className="absolute top-8 left-8 z-10 pointer-events-none">
-          <div className="bg-black/70 border-2 border-cyan-400/50 rounded-xl px-4 py-3 backdrop-blur-sm max-w-xs">
-            <h3 className="text-cyan-400 text-sm font-bold mb-2 flex items-center gap-2">
-              <span className="text-xl">✨</span> Interactive Experience
+        {/* Interactive Hints - FIXED: Stays within hero section only */}
+        <div className="absolute top-8 left-8 z-10 pointer-events-none hidden lg:block">
+          <div className="bg-black/80 border-2 border-cyan-400/60 rounded-2xl px-5 py-4 backdrop-blur-md max-w-xs shadow-[0_0_30px_rgba(0,255,255,0.3)]">
+            <h3 className="text-cyan-400 text-sm font-bold mb-3 flex items-center gap-2">
+              <span className="text-2xl animate-pulse">✨</span> 
+              <span>Interactive 3D Experience</span>
             </h3>
-            <ul className="text-white/80 text-xs space-y-1">
+            <ul className="text-white/90 text-xs space-y-2">
               <li className="flex items-start gap-2">
-                <span className="text-green-400">▸</span>
-                <span>Drag to rotate & explore</span>
+                <span className="text-green-400 font-bold">▸</span>
+                <span>Drag to rotate & explore the scene</span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-green-400">▸</span>
+                <span className="text-green-400 font-bold">▸</span>
                 <span>Hover over elements to highlight</span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-green-400">▸</span>
+                <span className="text-green-400 font-bold">▸</span>
                 <span>Click for detailed information</span>
               </li>
             </ul>
           </div>
         </div>
         
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10 animate-bounce">
-          <div className="w-5 h-8 border-2 border-white/50 rounded-full flex justify-center p-1">
-            <div className="w-1 h-2 bg-[#00ff41] rounded-full"></div>
+        {/* Premium Scroll Indicator */}
+        <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-10 animate-bounce">
+          <div className="flex flex-col items-center gap-2">
+            <span className="text-white/60 text-xs font-medium tracking-wider uppercase">Scroll to Explore</span>
+            <div className="w-6 h-10 border-2 border-cyan-400/60 rounded-full flex justify-center p-1 shadow-[0_0_20px_rgba(0,255,255,0.4)]">
+              <div className="w-1.5 h-3 bg-gradient-to-b from-[#00ff41] to-[#00ffff] rounded-full animate-scroll-pulse"></div>
+            </div>
           </div>
         </div>
       </section>
@@ -111,11 +183,23 @@ export default function Home() {
       <StatsCounter />
 
       {/* ========================================
-          SECTION 3: SERVICES HIGHLIGHTS (ENHANCED)
+          SECTION 3: SERVICES HIGHLIGHTS (PREMIUM)
           ======================================== */}
-      <section className="py-20 bg-gray-50 dark:bg-gray-900 relative overflow-hidden">
-        {/* Background Illustrations */}
-        <div className="absolute top-10 left-4 sm:left-10 w-32 h-32 sm:w-48 sm:h-48 opacity-10 hidden sm:block">
+      <section className="py-20 lg:py-28 bg-gradient-to-br from-gray-50 via-white to-gray-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 relative overflow-hidden">
+        {/* Premium Background Pattern */}
+        <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05]">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `radial-gradient(circle at 1px 1px, rgba(0, 255, 255, 0.4) 1px, transparent 0)`,
+            backgroundSize: '50px 50px'
+          }}></div>
+        </div>
+        
+        {/* Gradient Orbs */}
+        <div className="absolute top-20 -left-20 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl animate-float"></div>
+        <div className="absolute bottom-20 -right-20 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
+        
+        {/* Background Illustrations - Desktop Only */}
+        <div className="absolute top-10 left-10 w-48 h-48 opacity-5 hidden xl:block pointer-events-none">
           <AnimatedIllustration
             src="/illustrations/undraw_cloud_hosting.svg"
             alt="Cloud hosting illustration"
@@ -125,7 +209,7 @@ export default function Home() {
             delay={0.2}
           />
         </div>
-        <div className="absolute bottom-10 right-4 sm:right-10 w-32 h-32 sm:w-48 sm:h-48 opacity-10 hidden sm:block">
+        <div className="absolute bottom-10 right-10 w-48 h-48 opacity-5 hidden xl:block pointer-events-none">
           <AnimatedIllustration
             src="/illustrations/undraw_mobile_app.svg"
             alt="Mobile app illustration"
@@ -136,68 +220,94 @@ export default function Home() {
           />
         </div>
         
-        <div className="container mx-auto px-4 relative z-10">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
-            Enterprise-Grade <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-emerald-600">Node.js</span> <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-600">Solutions</span>
-          </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-400 text-center mb-16 max-w-3xl mx-auto">
-            Building Scalable Systems for Global Enterprises with Cutting-Edge Technology
-          </p>
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          {/* Premium Header */}
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6">
+              Enterprise-Grade{' '}
+              <span className="gradient-text-premium inline-block">Node.js Solutions</span>
+            </h2>
+            <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed">
+              Building Scalable Systems for Global Enterprises with Cutting-Edge Technology
+            </p>
+          </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Service 1 */}
-            <div className="group bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 border-2 border-transparent hover:border-cyan-500">
-              <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                <svg className="w-8 h-8 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h14M12 5l7 7-7 7" />
-                </svg>
+          {/* Premium Service Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 max-w-7xl mx-auto">
+            {/* Service 1 - Premium Card */}
+            <div className="premium-card group glass-premium dark:glass-premium-dark p-8 lg:p-10 rounded-2xl hover:shadow-[0_20px_60px_rgba(0,255,255,0.3)] transition-all duration-500 hover:scale-105 gpu-accelerated">
+              {/* Premium Icon */}
+              <div className="relative w-20 h-20 mb-6">
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl blur-lg opacity-50 group-hover:opacity-75 transition-opacity"></div>
+                <div className="relative w-20 h-20 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 shadow-xl">
+                  <svg className="w-10 h-10 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </div>
               </div>
-              <h3 className="text-xl font-bold mb-4 text-gray-800 dark:text-white">Enterprise Node.js Development</h3>
-              <p className="text-gray-600 dark:text-gray-300 mb-6">
+              
+              <h3 className="text-2xl font-bold mb-4 text-gray-800 dark:text-white group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-blue-500 group-hover:to-cyan-500 transition-all">
+                Enterprise Node.js Development
+              </h3>
+              <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
                 Mission-critical Node.js solutions for Fortune 500 companies. Microservices architecture, API-first design, and 99.9% uptime guarantees.
               </p>
-              <a href="/pages/services" className="text-cyan-600 dark:text-cyan-400 font-semibold inline-flex items-center group-hover:underline">
+              <a href="/pages/services" className="inline-flex items-center gap-2 text-cyan-600 dark:text-cyan-400 font-bold group-hover:gap-4 transition-all">
                 Learn More
-                <svg className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
               </a>
             </div>
             
-            {/* Service 2 */}
-            <div className="group bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 border-2 border-transparent hover:border-purple-500">
-              <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                <svg className="w-8 h-8 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                </svg>
+            {/* Service 2 - Premium Card */}
+            <div className="premium-card group glass-premium dark:glass-premium-dark p-8 lg:p-10 rounded-2xl hover:shadow-[0_20px_60px_rgba(168,85,247,0.3)] transition-all duration-500 hover:scale-105 gpu-accelerated">
+              {/* Premium Icon */}
+              <div className="relative w-20 h-20 mb-6">
+                <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl blur-lg opacity-50 group-hover:opacity-75 transition-opacity"></div>
+                <div className="relative w-20 h-20 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 shadow-xl">
+                  <svg className="w-10 h-10 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                  </svg>
+                </div>
               </div>
-              <h3 className="text-xl font-bold mb-4 text-gray-800 dark:text-white">Real-Time Systems & APIs</h3>
-              <p className="text-gray-600 dark:text-gray-300 mb-6">
+              
+              <h3 className="text-2xl font-bold mb-4 text-gray-800 dark:text-white group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-purple-500 group-hover:to-pink-500 transition-all">
+                Real-Time Systems & APIs
+              </h3>
+              <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
                 High-performance real-time systems with WebSocket infrastructure, RESTful & GraphQL APIs, and event-driven architecture.
               </p>
-              <a href="/pages/services" className="text-purple-600 dark:text-purple-400 font-semibold inline-flex items-center group-hover:underline">
+              <a href="/pages/services" className="inline-flex items-center gap-2 text-purple-600 dark:text-purple-400 font-bold group-hover:gap-4 transition-all">
                 Learn More
-                <svg className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
               </a>
             </div>
             
-            {/* Service 3 */}
-            <div className="group bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 border-2 border-transparent hover:border-green-500">
-              <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-500 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                <svg className="w-8 h-8 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
+            {/* Service 3 - Premium Card */}
+            <div className="premium-card group glass-premium dark:glass-premium-dark p-8 lg:p-10 rounded-2xl hover:shadow-[0_20px_60px_rgba(34,197,94,0.3)] transition-all duration-500 hover:scale-105 gpu-accelerated">
+              {/* Premium Icon */}
+              <div className="relative w-20 h-20 mb-6">
+                <div className="absolute inset-0 bg-gradient-to-br from-green-500 to-emerald-500 rounded-2xl blur-lg opacity-50 group-hover:opacity-75 transition-opacity"></div>
+                <div className="relative w-20 h-20 bg-gradient-to-br from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 shadow-xl">
+                  <svg className="w-10 h-10 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                </div>
               </div>
-              <h3 className="text-xl font-bold mb-4 text-gray-800 dark:text-white">Global Digital Transformation</h3>
-              <p className="text-gray-600 dark:text-gray-300 mb-6">
+              
+              <h3 className="text-2xl font-bold mb-4 text-gray-800 dark:text-white group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-green-500 group-hover:to-emerald-500 transition-all">
+                Global Digital Transformation
+              </h3>
+              <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
                 End-to-end digital transformation for multinational corporations. Cloud migration, DevOps automation, and compliance-ready solutions.
               </p>
-              <a href="/pages/services" className="text-green-600 dark:text-green-400 font-semibold inline-flex items-center group-hover:underline">
+              <a href="/pages/services" className="inline-flex items-center gap-2 text-green-600 dark:text-green-400 font-bold group-hover:gap-4 transition-all">
                 Learn More
-                <svg className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
               </a>
             </div>
