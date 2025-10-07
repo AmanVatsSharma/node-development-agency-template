@@ -11,7 +11,8 @@ import { Button } from '@/app/components/ui/button';
 import { Input } from '@/app/components/ui/input';
 import { Textarea } from '@/app/components/ui/textarea';
 import { Label } from '@/app/components/ui/label';
-import { CheckCircle2, Send, X } from 'lucide-react';
+import { CheckCircle2, Send, X, Phone, MessageCircle } from 'lucide-react';
+import { fireConversion } from '@/utils/conversions';
 
 console.log('[AI-Chatbot-Dev] LeadFormSection component loaded');
 
@@ -52,12 +53,8 @@ export function LeadFormSection() {
       });
 
       // Track conversion
-      if (typeof window !== 'undefined' && (window as any).gtag) {
-        (window as any).gtag('event', 'generate_lead', {
-          event_category: 'Lead Form',
-          event_label: 'AI Chatbot Consultation Request'
-        });
-      }
+      console.log('[AI-Chatbot-Dev] Lead submit conversion fired');
+      void fireConversion('ai_chatbot_development_lead_submit');
     }, 1500);
   };
 

@@ -82,7 +82,8 @@ export function LeadFormSection() {
       if (!res.ok) throw new Error(data?.error || 'Lead API failed');
       setSubmitted(true);
       // Fire Google Ads conversion
-      void fireConversion('lead_submit');
+      console.log('[Next-JS-Dev] Lead submit conversion fired');
+      void fireConversion('nextjs_development_lead_submit');
     } catch (err) {
       console.error('[Next-JS-Dev] Lead submit error:', err);
       alert('Something went wrong. Please try again or contact us directly.');
@@ -184,7 +185,7 @@ export function LeadFormSection() {
                   <a 
                     href="tel:+919963730111"
                     className="flex items-center gap-3 p-3.5 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-xl border-2 border-green-200 dark:border-green-800 hover:border-green-400 dark:hover:border-green-600 active:scale-95 transition-all group shadow-md"
-                    onClick={() => { console.log('[Next-JS-Dev] Quick call clicked'); void fireConversion('call_click'); }}
+                    onClick={() => { console.log('[Next-JS-Dev] Quick call clicked'); void fireConversion('nextjs_development_call_click'); }}
                   >
                     <div className="w-12 h-12 rounded-full bg-gradient-to-br from-green-600 to-emerald-600 flex items-center justify-center flex-shrink-0 shadow-lg">
                       <Phone className="h-6 w-6 text-white" />
@@ -202,7 +203,7 @@ export function LeadFormSection() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-3 p-3.5 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-xl border-2 border-green-200 dark:border-green-800 hover:border-green-400 dark:hover:border-green-600 active:scale-95 transition-all group shadow-md"
-                    onClick={() => { console.log('[Next-JS-Dev] WhatsApp clicked'); void fireConversion('whatsapp_click'); }}
+                    onClick={() => { console.log('[Next-JS-Dev] WhatsApp clicked'); void fireConversion('nextjs_development_whatsapp_click'); }}
                   >
                     <div className="w-12 h-12 rounded-full bg-gradient-to-br from-green-600 to-emerald-600 flex items-center justify-center flex-shrink-0 shadow-lg">
                       <MessageCircle className="h-6 w-6 text-white" />

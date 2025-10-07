@@ -9,6 +9,7 @@ import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { MessageCircle, Calendar, ArrowRight, Sparkles } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
+import { fireConversion } from '@/utils/conversions';
 
 console.log('[Shopify-Headless] FinalCTASection component loaded');
 
@@ -18,19 +19,13 @@ export function FinalCTASection() {
 
   const handleWhatsAppClick = () => {
     console.log('[Shopify-Headless] WhatsApp CTA clicked');
+    console.log('[Shopify Headless Migration] WhatsApp click conversion fired');
+    void fireConversion('shopify_headless_migration_whatsapp_click');
     
     if (typeof window !== 'undefined') {
-      // Replace with actual WhatsApp number
-      const phoneNumber = '919876543210'; // Update with real number
+      const phoneNumber = '919963730111';
       const message = encodeURIComponent('Hi! I\'m interested in your Shopify Headless Migration services. Can we discuss?');
       window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
-      
-      if ((window as any).gtag) {
-        (window as any).gtag('event', 'whatsapp_click', {
-          location: 'final_cta',
-          page_path: '/pages/shopify-headless-migration'
-        });
-      }
     }
   };
 

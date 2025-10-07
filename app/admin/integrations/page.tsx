@@ -715,7 +715,7 @@ export default function IntegrationsAdminPage() {
                       <Label htmlFor="google-event-labels">Event Labels (JSON)</Label>
                       <Textarea
                         id="google-event-labels"
-                        placeholder='{"lead_submit": "AW-XXXX/label", "call_click": "AW-XXXX/label2"}'
+                        placeholder='{"business_website_lead_submit": "AW-XXXX/abc123", "business_website_call_click": "AW-XXXX/def456"}'
                         value={JSON.stringify(settings.googleEventLabels || {}, null, 2)}
                         onChange={(e) => {
                           try {
@@ -724,12 +724,120 @@ export default function IntegrationsAdminPage() {
                             // Invalid JSON, ignore
                           }
                         }}
-                        rows={6}
+                        rows={12}
                         className="font-mono text-sm"
                       />
                       <p className="text-xs text-slate-500 dark:text-slate-400">
-                        Map event types to Google Ads conversion labels
+                        Map event types to Google Ads conversion labels. See conversion guide below.
                       </p>
+                      
+                      {/* Conversion Events Reference */}
+                      <details className="mt-4 p-4 bg-slate-100 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700">
+                        <summary className="cursor-pointer font-semibold text-sm text-slate-900 dark:text-white">
+                          📋 All Conversion Events Reference (Click to expand)
+                        </summary>
+                        <div className="mt-4 space-y-3 text-xs font-mono">
+                          <div>
+                            <p className="font-bold text-blue-600 dark:text-blue-400 mb-1">Business Website (3)</p>
+                            <ul className="list-disc list-inside text-slate-600 dark:text-slate-400 ml-2 space-y-1">
+                              <li>business_website_lead_submit</li>
+                              <li>business_website_call_click</li>
+                              <li>business_website_whatsapp_click</li>
+                            </ul>
+                          </div>
+                          <div>
+                            <p className="font-bold text-purple-600 dark:text-purple-400 mb-1">AI Voice Agents (3)</p>
+                            <ul className="list-disc list-inside text-slate-600 dark:text-slate-400 ml-2 space-y-1">
+                              <li>ai_voice_agents_lead_submit</li>
+                              <li>ai_voice_agents_call_click</li>
+                              <li>ai_voice_agents_whatsapp_click</li>
+                            </ul>
+                          </div>
+                          <div>
+                            <p className="font-bold text-green-600 dark:text-green-400 mb-1">Next.js Development (3)</p>
+                            <ul className="list-disc list-inside text-slate-600 dark:text-slate-400 ml-2 space-y-1">
+                              <li>nextjs_development_lead_submit</li>
+                              <li>nextjs_development_call_click</li>
+                              <li>nextjs_development_whatsapp_click</li>
+                            </ul>
+                          </div>
+                          <div>
+                            <p className="font-bold text-cyan-600 dark:text-cyan-400 mb-1">React.js Development (3)</p>
+                            <ul className="list-disc list-inside text-slate-600 dark:text-slate-400 ml-2 space-y-1">
+                              <li>reactjs_development_lead_submit</li>
+                              <li>reactjs_development_call_click</li>
+                              <li>reactjs_development_whatsapp_click</li>
+                            </ul>
+                          </div>
+                          <div>
+                            <p className="font-bold text-green-600 dark:text-green-400 mb-1">WhatsApp Business API (3)</p>
+                            <ul className="list-disc list-inside text-slate-600 dark:text-slate-400 ml-2 space-y-1">
+                              <li>whatsapp_business_api_lead_submit</li>
+                              <li>whatsapp_business_api_call_click</li>
+                              <li>whatsapp_business_api_whatsapp_click</li>
+                            </ul>
+                          </div>
+                          <div>
+                            <p className="font-bold text-yellow-600 dark:text-yellow-400 mb-1">AI Chatbot Development (3)</p>
+                            <ul className="list-disc list-inside text-slate-600 dark:text-slate-400 ml-2 space-y-1">
+                              <li>ai_chatbot_development_lead_submit</li>
+                              <li>ai_chatbot_development_call_click</li>
+                              <li>ai_chatbot_development_whatsapp_click</li>
+                            </ul>
+                          </div>
+                          <div>
+                            <p className="font-bold text-pink-600 dark:text-pink-400 mb-1">Shopify Product Page (3)</p>
+                            <ul className="list-disc list-inside text-slate-600 dark:text-slate-400 ml-2 space-y-1">
+                              <li>shopify_product_page_lead_submit</li>
+                              <li>shopify_product_page_call_click</li>
+                              <li>shopify_product_page_whatsapp_click</li>
+                            </ul>
+                          </div>
+                          <div>
+                            <p className="font-bold text-red-600 dark:text-red-400 mb-1">Google Ads Management (3)</p>
+                            <ul className="list-disc list-inside text-slate-600 dark:text-slate-400 ml-2 space-y-1">
+                              <li>google_ads_management_lead_submit</li>
+                              <li>google_ads_management_call_click</li>
+                              <li>google_ads_management_whatsapp_click</li>
+                            </ul>
+                          </div>
+                          <div>
+                            <p className="font-bold text-indigo-600 dark:text-indigo-400 mb-1">CRM Solutions (3)</p>
+                            <ul className="list-disc list-inside text-slate-600 dark:text-slate-400 ml-2 space-y-1">
+                              <li>crm_solutions_lead_submit</li>
+                              <li>crm_solutions_call_click</li>
+                              <li>crm_solutions_whatsapp_click</li>
+                            </ul>
+                          </div>
+                          <div>
+                            <p className="font-bold text-orange-600 dark:text-orange-400 mb-1">Shopify Headless Migration (3)</p>
+                            <ul className="list-disc list-inside text-slate-600 dark:text-slate-400 ml-2 space-y-1">
+                              <li>shopify_headless_migration_lead_submit</li>
+                              <li>shopify_headless_migration_call_click</li>
+                              <li>shopify_headless_migration_whatsapp_click</li>
+                            </ul>
+                          </div>
+                          <div>
+                            <p className="font-bold text-teal-600 dark:text-teal-400 mb-1">SEO Audit (3)</p>
+                            <ul className="list-disc list-inside text-slate-600 dark:text-slate-400 ml-2 space-y-1">
+                              <li>seo_audit_lead_submit</li>
+                              <li>seo_audit_call_click</li>
+                              <li>seo_audit_whatsapp_click</li>
+                            </ul>
+                          </div>
+                          <div>
+                            <p className="font-bold text-slate-600 dark:text-slate-400 mb-1">Global (2)</p>
+                            <ul className="list-disc list-inside text-slate-600 dark:text-slate-400 ml-2 space-y-1">
+                              <li>newsletter_signup</li>
+                              <li>contact_form_submit</li>
+                            </ul>
+                          </div>
+                          <p className="mt-4 p-3 bg-blue-50 dark:bg-blue-900/20 rounded border border-blue-200 dark:border-blue-800 text-blue-900 dark:text-blue-100">
+                            <strong>Total: 35 conversion actions</strong><br/>
+                            Configure each in Google Ads, then paste the conversion labels here.
+                          </p>
+                        </div>
+                      </details>
                     </div>
                   </div>
 

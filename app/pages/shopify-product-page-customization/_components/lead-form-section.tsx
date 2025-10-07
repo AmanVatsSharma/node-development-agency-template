@@ -20,6 +20,7 @@ import {
   SelectValue,
 } from '@/app/components/ui/select';
 import { MessageCircle, Send, CheckCircle2 } from 'lucide-react';
+import { fireConversion } from '@/utils/conversions';
 
 console.log('[Shopify-Product-Page] LeadFormSection component loaded');
 
@@ -48,13 +49,8 @@ export function LeadFormSection() {
     setIsSubmitting(true);
 
     // Track conversion event for Google Ads
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('event', 'conversion', {
-        send_to: 'AW-CONVERSION_ID/CONVERSION_LABEL',
-        value: 35000,
-        currency: 'INR',
-      });
-    }
+    console.log('[Shopify Product Page] Lead submit conversion fired');
+    void fireConversion('shopify_product_page_lead_submit');
 
     // Simulate API call
     await new Promise((resolve) => setTimeout(resolve, 2000));
@@ -65,10 +61,11 @@ export function LeadFormSection() {
 
   const handleWhatsApp = () => {
     console.log('[Shopify-Product-Page] WhatsApp quick contact clicked');
+    void fireConversion('shopify_product_page_whatsapp_click');
     const message = encodeURIComponent(
       'Hi! I want to customize my Shopify product page. Can we discuss?'
     );
-    window.open(`https://wa.me/919999999999?text=${message}`, '_blank');
+    window.open(`https://wa.me/919963730111?text=${message}`, '_blank');
   };
 
   if (isSubmitted) {

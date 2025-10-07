@@ -9,6 +9,7 @@ import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/app/components/ui/button';
 import { MessageCircle, Phone } from 'lucide-react';
+import { fireConversion } from '@/utils/conversions';
 
 console.log('[ReactJS-Dev] MobileFloatingCTA component loaded');
 
@@ -57,9 +58,9 @@ export function MobileFloatingCTA() {
               asChild
               size="lg"
               className="flex-1 text-base px-6 py-6 h-auto shadow-2xl bg-white dark:bg-gray-800 border-2 border-[#61DAFB] hover:bg-[#61DAFB]/10 font-bold rounded-full"
-              onClick={() => console.log('[ReactJS-Dev] Mobile CTA - Call clicked')}
+              onClick={() => { console.log('[ReactJS-Dev] Mobile CTA - Call clicked'); void fireConversion('reactjs_development_call_click'); }}
             >
-              <a href="tel:+1234567890" className="flex items-center justify-center gap-2">
+              <a href="tel:+919963730111" className="flex items-center justify-center gap-2">
                 <Phone className="h-5 w-5" />
                 Call Now
               </a>

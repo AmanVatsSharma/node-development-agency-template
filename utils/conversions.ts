@@ -29,23 +29,55 @@
 // ============================================
 
 /**
- * Supported conversion event types
- * Add new event types here as you create new conversion actions
+ * Supported conversion event types - ALL 10 LANDING PAGES
+ * 3 conversion types per page: lead_submit, call_click, whatsapp_click
  */
 export type ConversionEventType = 
-  // Business Website Landing Page
+  // 1. Business Website
   | 'business_website_lead_submit'
-  | 'business_website_whatsapp_click'
   | 'business_website_call_click'
-  // AI Voice Agents Landing Page (example for scalability)
+  | 'business_website_whatsapp_click'
+  // 2. AI Voice Agents
   | 'ai_voice_agents_lead_submit'
-  | 'ai_voice_agents_whatsapp_click'
   | 'ai_voice_agents_call_click'
-  // SEO Audit Landing Page (example for scalability)
+  | 'ai_voice_agents_whatsapp_click'
+  // 3. Next.js Development
+  | 'nextjs_development_lead_submit'
+  | 'nextjs_development_call_click'
+  | 'nextjs_development_whatsapp_click'
+  // 4. React.js Development
+  | 'reactjs_development_lead_submit'
+  | 'reactjs_development_call_click'
+  | 'reactjs_development_whatsapp_click'
+  // 5. WhatsApp Business API
+  | 'whatsapp_business_api_lead_submit'
+  | 'whatsapp_business_api_call_click'
+  | 'whatsapp_business_api_whatsapp_click'
+  // 6. AI Chatbot Development
+  | 'ai_chatbot_development_lead_submit'
+  | 'ai_chatbot_development_call_click'
+  | 'ai_chatbot_development_whatsapp_click'
+  // 7. Shopify Product Page Customization
+  | 'shopify_product_page_lead_submit'
+  | 'shopify_product_page_call_click'
+  | 'shopify_product_page_whatsapp_click'
+  // 8. Google Ads Management
+  | 'google_ads_management_lead_submit'
+  | 'google_ads_management_call_click'
+  | 'google_ads_management_whatsapp_click'
+  // 9. CRM Solutions
+  | 'crm_solutions_lead_submit'
+  | 'crm_solutions_call_click'
+  | 'crm_solutions_whatsapp_click'
+  // 10. Shopify Headless Migration
+  | 'shopify_headless_migration_lead_submit'
+  | 'shopify_headless_migration_call_click'
+  | 'shopify_headless_migration_whatsapp_click'
+  // SEO Audit
   | 'seo_audit_lead_submit'
-  | 'seo_audit_whatsapp_click'
   | 'seo_audit_call_click'
-  // Global conversions (shared across all pages)
+  | 'seo_audit_whatsapp_click'
+  // Global conversions
   | 'newsletter_signup'
   | 'contact_form_submit';
 

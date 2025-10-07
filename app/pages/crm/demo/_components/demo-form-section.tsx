@@ -28,6 +28,7 @@ import {
   List,
   MessageSquare
 } from 'lucide-react';
+import { fireConversion } from '@/utils/conversions';
 
 console.log('[CRM-Demo] DemoFormSection component loaded');
 
@@ -100,6 +101,10 @@ export function DemoFormSection() {
 
       console.log('[CRM-Demo] Form submitted successfully');
       setSubmitStatus('success');
+      
+      // Track conversion
+      console.log('[CRM Solutions] Lead submit conversion fired');
+      void fireConversion('crm_solutions_lead_submit');
       
       // Reset form
       setFormData({
