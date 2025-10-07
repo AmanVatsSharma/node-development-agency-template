@@ -12,6 +12,7 @@ import { Send, CheckCircle2, Loader2 } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
 import { Input } from '@/app/components/ui/input';
 import { Label } from '@/app/components/ui/label';
+import { fireConversion } from '@/utils/conversions';
 import { 
   Select,
   SelectContent,
@@ -53,13 +54,8 @@ export function LeadFormSection() {
     setIsSubmitting(true);
 
     // Track conversion
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('event', 'generate_lead', {
-        event_category: 'Lead Form',
-        event_label: 'WhatsApp API Lead',
-        value: 1
-      });
-    }
+    console.log('[WhatsApp Business API] Lead submit conversion fired');
+    void fireConversion('whatsapp_business_api_lead_submit');
 
     try {
       // TODO: Replace with actual API endpoint

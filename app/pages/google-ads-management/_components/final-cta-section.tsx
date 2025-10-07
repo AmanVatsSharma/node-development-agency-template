@@ -13,6 +13,7 @@ import { Label } from '@/app/components/ui/label';
 import { Textarea } from '@/app/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/app/components/ui/select';
 import { ArrowRight, Phone, CheckCircle2 } from 'lucide-react';
+import { fireConversion } from '@/utils/conversions';
 
 console.log('[Google-Ads] FinalCTASection component loaded');
 
@@ -40,13 +41,8 @@ export function FinalCTASection() {
     console.log('[Google-Ads] Lead Form submitted:', formData);
     
     // Track form submission
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('event', 'generate_lead', {
-        event_category: 'Lead Form',
-        event_label: 'Google Ads Management',
-        value: formData.budget
-      });
-    }
+    console.log('[Google Ads Management] Lead submit conversion fired');
+    void fireConversion('google_ads_management_lead_submit');
 
     setSubmitted(true);
     
