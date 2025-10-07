@@ -58,12 +58,24 @@ export function LeadFormSection() {
     void fireConversion('whatsapp_business_api_lead_submit');
 
     try {
-      // TODO: Replace with actual API endpoint
-      const response = await fetch('/api/leads/whatsapp-api', {
+      const response = await fetch('/api/lead', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          message: formData.message,
+          source: 'whatsapp-business-api',
+          leadSource: 'Website - WhatsApp Business API Landing',
+          raw: {
+            company: formData.company,
+            businessType: formData.businessType,
+            path: typeof window !== 'undefined' ? window.location.pathname : undefined,
+          },
+        }),
       });
+      const data = await response.json();
 
       if (response.ok) {
         console.log('[LeadFormSection] Form submitted successfully');
@@ -82,7 +94,7 @@ export function LeadFormSection() {
           });
         }, 5000);
       } else {
-        throw new Error('Submission failed');
+        throw new Error(data?.error || 'Submission failed');
       }
     } catch (error) {
       console.error('[LeadFormSection] Error submitting form:', error);

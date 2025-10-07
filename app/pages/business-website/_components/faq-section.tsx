@@ -177,7 +177,7 @@ export function FAQSection() {
               className="inline-flex items-center justify-center px-4 sm:px-5 md:px-6 py-2.5 sm:py-3 bg-green-600 hover:bg-green-700 text-white rounded-full font-semibold transition-colors shadow-lg text-sm sm:text-base"
               onClick={() => console.log('[Business-Website] FAQ call CTA clicked')}
             >
-              📞 Call: +91 99637 30111
+              📞 Call: +91 9963730111
             </a>
             <a
               href="https://wa.me/919963730111"

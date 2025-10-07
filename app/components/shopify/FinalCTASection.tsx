@@ -27,8 +27,7 @@ const FinalCTASection = () => {
 
   const handleWhatsApp = () => {
     console.log('[FinalCTASection] WhatsApp button clicked');
-    // Replace with actual WhatsApp number
-    const phoneNumber = '919876543210'; // Example number
+    const phoneNumber = '919963730111';
     const message = encodeURIComponent('Hi! I\'m interested in your Shopify Store Setup services.');
     window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
   };

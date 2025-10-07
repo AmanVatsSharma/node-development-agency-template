@@ -180,7 +180,7 @@ export function MobileFloatingCTA() {
                     whileTap={{ scale: 0.95 }}
                     className="flex items-center gap-3 px-4 py-3 bg-gradient-to-r from-green-600 to-green-700 text-white rounded-full shadow-2xl hover:shadow-green-500/50 transition-shadow"
                     onClick={() => {
-                      console.log('[Business-Website] Mobile floating phone clicked - Phone: +91 99637 30111');
+                      console.log('[Business-Website] Mobile floating phone clicked - Phone: +91 9963730111');
                       console.log('[Business-Website] Firing call_click conversion to Google Ads');
                       void fireConversion('business_website_call_click');
                     }}

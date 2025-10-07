@@ -178,7 +178,7 @@ export function LeadFormSection() {
                     </div>
                     <div>
                       <div className="text-xs font-bold text-gray-600 dark:text-gray-400">Call Now</div>
-                      <div className="font-black text-sm text-gray-900 dark:text-white">+91 99637 30111</div>
+                      <div className="font-black text-sm text-gray-900 dark:text-white">+91 9963730111</div>
                     </div>
                   </a>
 
@@ -253,7 +253,7 @@ export function LeadFormSection() {
                         value={formData.phone}
                         onChange={handleChange}
                         required
-                        placeholder="+91 99637 30111"
+                        placeholder="+91 9963730111"
                         className="h-14 text-base border-2 rounded-xl"
                       />
                     </div>
@@ -348,7 +348,7 @@ export function LeadFormSection() {
                       Your AI Voice Agent Demo is being scheduled within 24 hrs.
                     </p>
                     <p className="text-sm text-gray-600 dark:text-gray-400">
-                      Check your phone for a call from +91 99637 30111
+                      Check your phone for a call from +91 9963730111
                     </p>
                   </motion.div>
                 )}

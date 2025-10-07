@@ -193,7 +193,7 @@ export function LeadFormSection() {
                     <div>
                       <div className="text-[10px] font-bold text-gray-600 dark:text-gray-400 uppercase">Call Now</div>
                       <div className="font-black text-sm text-gray-900 dark:text-white group-hover:text-green-600 dark:group-hover:text-green-400">
-                        +91 99637 30111
+                        +91 9963730111
                       </div>
                     </div>
                   </a>
@@ -263,7 +263,7 @@ export function LeadFormSection() {
                           value={formData.phone}
                           onChange={handleChange}
                           required
-                          placeholder="+91 99637 30111"
+                          placeholder="+91 9963730111"
                           className="h-14 text-base border-2 rounded-xl shadow-sm"
                         />
                       </div>
@@ -384,7 +384,7 @@ export function LeadFormSection() {
                       We've received your request. Our Next.js expert will contact you within 2 hours!
                     </p>
                     <p className="text-sm text-gray-600 dark:text-gray-400">
-                      Check your phone for a call from +91 99637 30111
+                      Check your phone for a call from +91 9963730111
                     </p>
                   </motion.div>
                 )}

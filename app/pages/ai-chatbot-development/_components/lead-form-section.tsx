@@ -40,9 +40,28 @@ export function LeadFormSection() {
 
     console.log('[AI-Chatbot-Dev] Form submitted:', formData);
 
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubmitting(false);
+    try {
+      const res = await fetch('/api/lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.name,
+          phone: formData.whatsapp,
+          message: `Website: ${formData.website}, Goal: ${formData.goal}`,
+          source: 'ai-chatbot-development',
+          leadSource: 'Website - AI Chatbot Development Landing',
+          raw: {
+            businessName: formData.businessName,
+            website: formData.website,
+            whatsapp: formData.whatsapp,
+            goal: formData.goal,
+            path: typeof window !== 'undefined' ? window.location.pathname : undefined,
+          },
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data?.error || 'Lead API failed');
+      
       setShowSuccess(true);
       setFormData({
         name: '',
@@ -55,7 +74,12 @@ export function LeadFormSection() {
       // Track conversion
       console.log('[AI-Chatbot-Dev] Lead submit conversion fired');
       void fireConversion('ai_chatbot_development_lead_submit');
-    }, 1500);
+    } catch (err) {
+      console.error('[AI-Chatbot-Dev] Lead submit error:', err);
+      alert('Something went wrong. Please try again or contact us directly.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
