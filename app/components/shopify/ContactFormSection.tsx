@@ -90,15 +90,26 @@ const ContactFormSection = () => {
     setIsSubmitting(true);
 
     try {
-      // TODO: Replace with actual API endpoint
-      // const response = await fetch('/api/contact', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify(formData),
-      // });
-
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      const response = await fetch('/api/lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          message: formData.message,
+          source: 'shopify-store-setup',
+          leadSource: 'Website - Shopify Store Setup Contact Form',
+          raw: {
+            path: typeof window !== 'undefined' ? window.location.pathname : undefined,
+          },
+        }),
+      });
+      const data = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(data?.error || 'Submission failed');
+      }
 
       console.log('[ContactFormSection] Form submission successful');
       setIsSuccess(true);

@@ -36,29 +36,56 @@ export function FinalCTASection() {
     return () => console.log('[Google-Ads] FinalCTASection unmounted');
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log('[Google-Ads] Lead Form submitted:', formData);
     
-    // Track form submission
-    console.log('[Google Ads Management] Lead submit conversion fired');
-    void fireConversion('google_ads_management_lead_submit');
-
-    setSubmitted(true);
-    
-    // Reset form after 5 seconds
-    setTimeout(() => {
-      setSubmitted(false);
-      setFormData({
-        name: '',
-        businessName: '',
-        website: '',
-        budget: '',
-        phone: '',
-        goal: '',
-        message: ''
+    try {
+      const res = await fetch('/api/lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.website,
+          phone: formData.phone,
+          message: formData.message,
+          source: 'google-ads-management',
+          leadSource: 'Website - Google Ads Management Landing',
+          raw: {
+            businessName: formData.businessName,
+            website: formData.website,
+            budget: formData.budget,
+            goal: formData.goal,
+            path: typeof window !== 'undefined' ? window.location.pathname : undefined,
+          },
+        }),
       });
-    }, 5000);
+      const data = await res.json();
+      if (!res.ok) throw new Error(data?.error || 'Lead API failed');
+      
+      // Track form submission
+      console.log('[Google Ads Management] Lead submit conversion fired');
+      void fireConversion('google_ads_management_lead_submit');
+
+      setSubmitted(true);
+      
+      // Reset form after 5 seconds
+      setTimeout(() => {
+        setSubmitted(false);
+        setFormData({
+          name: '',
+          businessName: '',
+          website: '',
+          budget: '',
+          phone: '',
+          goal: '',
+          message: ''
+        });
+      }, 5000);
+    } catch (err) {
+      console.error('[Google-Ads] Lead submit error:', err);
+      alert('Something went wrong. Please try again or contact us directly.');
+    }
   };
 
   const handleChange = (field: string, value: string) => {

@@ -48,15 +48,38 @@ export function LeadFormSection() {
     console.log('[Shopify-Product-Page] Form submitted', formData);
     setIsSubmitting(true);
 
-    // Track conversion event for Google Ads
-    console.log('[Shopify Product Page] Lead submit conversion fired');
-    void fireConversion('shopify_product_page_lead_submit');
+    try {
+      const res = await fetch('/api/lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          message: formData.message,
+          source: 'shopify-product-page-customization',
+          leadSource: 'Website - Shopify Product Page Customization Landing',
+          raw: {
+            storeName: formData.storeName,
+            package: formData.package,
+            path: typeof window !== 'undefined' ? window.location.pathname : undefined,
+          },
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data?.error || 'Lead API failed');
+      
+      // Track conversion event for Google Ads
+      console.log('[Shopify Product Page] Lead submit conversion fired');
+      void fireConversion('shopify_product_page_lead_submit');
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-
-    setIsSubmitting(false);
-    setIsSubmitted(true);
+      setIsSubmitted(true);
+    } catch (error) {
+      console.error('[Shopify-Product-Page] Lead submit error:', error);
+      alert('Something went wrong. Please try again or contact us directly.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleWhatsApp = () => {

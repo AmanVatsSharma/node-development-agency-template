@@ -35,11 +35,41 @@ export function LeadFormSection() {
     setIsSubmitting(true);
     console.log('[ReactJS-Dev] Form submitted:', formData);
     
-    // Simulate submission
-    setTimeout(() => {
+    try {
+      const res = await fetch('/api/lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+          source: 'reactjs-development',
+          leadSource: 'Website - ReactJS Development Landing',
+          raw: {
+            projectType: formData.projectType,
+            path: typeof window !== 'undefined' ? window.location.pathname : undefined,
+          },
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data?.error || 'Lead API failed');
+      
+      // Reset form on success
+      setFormData({
+        name: '',
+        email: '',
+        projectType: '',
+        message: ''
+      });
+      
+      console.log('[ReactJS-Dev] Lead submitted successfully');
+      alert('Thank you! We\'ll contact you within 24 hours.');
+    } catch (err) {
+      console.error('[ReactJS-Dev] Lead submit error:', err);
+      alert('Something went wrong. Please try again or contact us directly.');
+    } finally {
       setIsSubmitting(false);
-      // Add your actual form submission logic here
-    }, 2000);
+    }
   };
 
   return (
