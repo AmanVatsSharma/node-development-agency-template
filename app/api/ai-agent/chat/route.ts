@@ -4,7 +4,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@/app/lib/prisma';
+import prisma from '@/app/lib/prisma';
 import { AIProviderFactory, AIMessage } from '@/app/lib/ai/providers';
 import { buildPageContext, generateSystemPrompt, detectLeadCapture } from '@/app/lib/ai/contextEngine';
 import { v4 as uuidv4 } from 'uuid';

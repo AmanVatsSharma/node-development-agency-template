@@ -5,8 +5,9 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@/app/lib/prisma';
-import { getServerSession } from 'next-auth';
+import prisma from '@/app/lib/prisma';
+
+const ADMIN_COOKIE_NAME = 'admin_session';
 
 /**
  * GET - Fetch public AI agent configuration
@@ -51,6 +52,7 @@ export async function GET(request: NextRequest) {
         agentRole: config.agentRole,
         companyName: config.companyName,
         welcomeMessage: config.welcomeMessage,
+        systemPrompt: config.systemPrompt,
         temperature: config.temperature,
         maxTokens: config.maxTokens,
         enabled: config.enabled,
@@ -76,9 +78,12 @@ export async function GET(request: NextRequest) {
  */
 export async function POST(request: NextRequest) {
   try {
-    // Check authentication
-    const session = await getServerSession();
-    if (!session) {
+    // Check authentication using cookie-based auth
+    const sessionCookie = request.cookies.get(ADMIN_COOKIE_NAME)?.value;
+    const adminPassword = process.env.ADMIN_PASSWORD || 'changeme';
+    const isAuthorized = sessionCookie === adminPassword;
+    
+    if (!isAuthorized) {
       return NextResponse.json(
         { success: false, error: 'Unauthorized' },
         { status: 401 }
@@ -137,6 +142,7 @@ export async function POST(request: NextRequest) {
         agentRole: config.agentRole,
         companyName: config.companyName,
         welcomeMessage: config.welcomeMessage,
+        systemPrompt: config.systemPrompt,
         temperature: config.temperature,
         maxTokens: config.maxTokens,
         enabled: config.enabled,
