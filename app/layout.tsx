@@ -10,6 +10,7 @@ import GoogleAdsTracking from './components/Analytics/GoogleAdsTracking';
 import { ThemeProvider } from "./components/ThemeProvider";
 import { Providers } from "./providers";
 import AIAgentWidget from './components/AIAgent/AIAgentWidget';
+import { headers } from 'next/headers';
 
 // Font configuration
 const inter = Inter({
@@ -42,7 +43,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -51,6 +52,11 @@ export default function RootLayout({
   if (typeof window !== 'undefined') {
     initPerformanceMonitoring();
   }
+
+  // Check if the current route is an admin route
+  const headersList = await headers();
+  const pathname = headersList.get('x-pathname') || '';
+  const isAdminRoute = pathname.startsWith('/admin');
 
   return (
     <html lang="en" suppressHydrationWarning>
@@ -78,17 +84,25 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <div className="flex flex-col min-h-screen">
-              {/* New Enhanced Header with resizable navbar - Cool scroll effect! */}
-              <EnhancedHeader />
-              {/* Added pt-20 padding to prevent content overlap with fixed navbar */}
-              <main className="flex-grow pt-20">{children}</main>
-              <Footer />
-            </div>
+            {isAdminRoute ? (
+              // Admin pages: no header/footer, no padding
+              <>
+                {children}
+              </>
+            ) : (
+              // Regular pages: with header and footer
+              <div className="flex flex-col min-h-screen">
+                {/* New Enhanced Header with resizable navbar - Cool scroll effect! */}
+                <EnhancedHeader />
+                {/* Added pt-20 padding to prevent content overlap with fixed navbar */}
+                <main className="flex-grow pt-20">{children}</main>
+                <Footer />
+              </div>
+            )}
             {/* Service Worker Manager for updates notification */}
             <ServiceWorkerManager />
-            {/* AI Sales Agent - Available on every page */}
-            <AIAgentWidget />
+            {/* AI Sales Agent - Available on every page except admin */}
+            {!isAdminRoute && <AIAgentWidget />}
           </ThemeProvider>
         </Providers>
       </body>

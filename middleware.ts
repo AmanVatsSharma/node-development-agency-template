@@ -43,7 +43,10 @@ export async function middleware(req: NextRequest) {
   // Allow public routes to pass through
   if (!needsAuth) {
     console.log('[Middleware] Public route, allowing access:', pathname);
-    return NextResponse.next();
+    // Add pathname to headers for all routes
+    const response = NextResponse.next();
+    response.headers.set('x-pathname', pathname);
+    return response;
   }
 
   console.log('[Middleware] Protected route detected, checking admin access for:', pathname);
@@ -57,7 +60,10 @@ export async function middleware(req: NextRequest) {
 
   if (isAuthorized) {
     console.log('[Middleware] Access granted - valid session');
-    return NextResponse.next();
+    // Add pathname to headers for authenticated admin routes
+    const response = NextResponse.next();
+    response.headers.set('x-pathname', pathname);
+    return response;
   }
 
   // User is NOT authorized
@@ -84,13 +90,22 @@ export async function middleware(req: NextRequest) {
  * Middleware configuration
  * Specifies which routes this middleware should run on
  * 
- * Updated to use new /admin/* path structure
- * This provides clean separation from website routes
+ * Updated to run on all routes to:
+ * 1. Set pathname header for layout detection
+ * 2. Protect admin routes with authentication
+ * 
+ * Excludes static files and Next.js internal routes
  */
 export const config = {
   matcher: [
-    '/admin/:path*',      // Admin dashboard pages
-    '/api/admin/:path*',  // Admin API endpoints
+    /*
+     * Match all request paths except for the ones starting with:
+     * - api (API routes - handled separately)
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     */
+    '/((?!_next/static|_next/image|favicon.ico).*)',
   ],
 };
 
