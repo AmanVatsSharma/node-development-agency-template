@@ -17,7 +17,8 @@ import {
   Cloud, 
   ArrowRight,
   Link2,
-  Database
+  Database,
+  Users
 } from 'lucide-react';
 
 console.log('[CRM] CustomizationSection component loaded');
