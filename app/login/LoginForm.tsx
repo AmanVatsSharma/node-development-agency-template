@@ -1,3 +1,5 @@
+'use client';
+
 /**
  * Login Form Component
  * 
@@ -14,8 +16,6 @@
  * - [LoginForm] Login successful - Successful authentication
  * - [LoginForm] Login failed - Failed authentication
  */
-
-'use client';
 
 import { useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';

@@ -1,3 +1,5 @@
+'use client';
+
 /**
  * Admin Layout with Sidebar Navigation
  * 
@@ -16,10 +18,6 @@
  * - [Admin Layout] Error logging out - Logout failures
  * - [Admin Layout] Route change detected - Navigation tracking
  */
-
-console.log('[Admin Layout] Initializing enterprise admin dashboard layout');
-
-'use client';
 
 import React, { useState } from 'react';
 import Link from 'next/link';
@@ -119,9 +117,10 @@ const navItems: NavItem[] = [
   },
 ];
 
-console.log('[Admin Layout] Navigation items loaded:', navItems.length, 'items');
-
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
+  console.log('[Admin Layout] Initializing enterprise admin dashboard layout');
+  console.log('[Admin Layout] Navigation items loaded:', navItems.length, 'items');
+  
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
