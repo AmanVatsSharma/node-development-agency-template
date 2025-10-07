@@ -1,11 +1,46 @@
+/**
+ * @fileoverview Home Page - Enterprise Hero Website
+ * @description Premium enterprise-grade home page with 12+ sections
+ * Features:
+ * - World-class 3D hero animation
+ * - Animated statistics counters
+ * - Technology stack showcase
+ * - Industry verticals
+ * - Client testimonials
+ * - Global presence map
+ * - Case studies with metrics
+ * - Process timeline
+ * - Trust signals and certifications
+ * 
+ * Built by: Vedpragya Bharat Private Limited
+ * Founder: Aman Kumar Sharma
+ */
+
 import Image from "next/image";
 import HeroAnimationWrapper from "./components/HeroAnimationWrapper";
 import AnimatedIllustration from "./components/AnimatedIllustration";
 
+// Import premium home page components
+import StatsCounter from "./components/home/StatsCounter";
+import TechStackShowcase from "./components/home/TechStackShowcase";
+import IndustryShowcase from "./components/home/IndustryShowcase";
+import WhyChooseUs from "./components/home/WhyChooseUs";
+import TestimonialCarousel from "./components/home/TestimonialCarousel";
+import ProcessTimeline from "./components/home/ProcessTimeline";
+import CaseStudyShowcase from "./components/home/CaseStudyShowcase";
+import GlobalPresence from "./components/home/GlobalPresence";
+
+// Console log for debugging
+console.log('[HomePage] Loading enterprise home page');
+
 export default function Home() {
+  console.log('[HomePage] Rendering home page');
+  
   return (
     <div className="w-full">
-      {/* Hero Section - HIGH CONTRAST */}
+      {/* ========================================
+          SECTION 1: 3D HERO - WORLD CLASS
+          ======================================== */}
       <section className="relative min-h-screen flex items-center justify-center bg-black text-white overflow-hidden">
         {/* 3D Background - Full opacity for maximum impact - Camera controls active here */}
         <div className="absolute inset-0 pointer-events-auto">
@@ -29,10 +64,13 @@ export default function Home() {
             </p>
             
             {/* Compact CTA Button */}
-            <button className="group relative px-8 py-3 bg-gradient-to-r from-[#00ff41] to-[#00ffff] text-black font-semibold text-base rounded-full overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-[0_0_40px_rgba(0,255,65,0.8)]">
+            <a 
+              href="/pages/contact"
+              className="group relative inline-block px-8 py-3 bg-gradient-to-r from-[#00ff41] to-[#00ffff] text-black font-semibold text-base rounded-full overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-[0_0_40px_rgba(0,255,65,0.8)]"
+            >
               <span className="relative z-10">Explore Services →</span>
               <div className="absolute inset-0 bg-gradient-to-r from-[#00ffff] to-[#00ff41] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            </button>
+            </a>
           </div>
           </div>
           
@@ -67,7 +105,14 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Services Highlights */}
+      {/* ========================================
+          SECTION 2: STATISTICS COUNTER
+          ======================================== */}
+      <StatsCounter />
+
+      {/* ========================================
+          SECTION 3: SERVICES HIGHLIGHTS (ENHANCED)
+          ======================================== */}
       <section className="py-20 bg-gray-50 dark:bg-gray-900 relative overflow-hidden">
         {/* Background Illustrations */}
         <div className="absolute top-10 left-4 sm:left-10 w-32 h-32 sm:w-48 sm:h-48 opacity-10 hidden sm:block">
@@ -92,55 +137,97 @@ export default function Home() {
         </div>
         
         <div className="container mx-auto px-4 relative z-10">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">
-            Enterprise-Grade <span className="text-green-600">Node.js</span> <span className="text-blue-600">Solutions</span><br/>
-            <span className="text-lg text-gray-600 dark:text-gray-400 font-normal">Building Scalable Systems for Global Enterprises</span>
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
+            Enterprise-Grade <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-emerald-600">Node.js</span> <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-600">Solutions</span>
           </h2>
+          <p className="text-lg text-gray-600 dark:text-gray-400 text-center mb-16 max-w-3xl mx-auto">
+            Building Scalable Systems for Global Enterprises with Cutting-Edge Technology
+          </p>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Service 1 */}
-            <div className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg transition-transform duration-300 hover:scale-105">
-              <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mb-6">
-                <svg className="w-8 h-8 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div className="group bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 border-2 border-transparent hover:border-cyan-500">
+              <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                <svg className="w-8 h-8 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold mb-4">Enterprise Node.js Development</h3>
-              <p className="text-gray-600 dark:text-gray-300">
-                Mission-critical Node.js solutions for Fortune 500 companies. Microservices architecture, API-first design, and 99.9% uptime guarantees across our global infrastructure.
+              <h3 className="text-xl font-bold mb-4 text-gray-800 dark:text-white">Enterprise Node.js Development</h3>
+              <p className="text-gray-600 dark:text-gray-300 mb-6">
+                Mission-critical Node.js solutions for Fortune 500 companies. Microservices architecture, API-first design, and 99.9% uptime guarantees.
               </p>
+              <a href="/pages/services" className="text-cyan-600 dark:text-cyan-400 font-semibold inline-flex items-center group-hover:underline">
+                Learn More
+                <svg className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </a>
             </div>
             
             {/* Service 2 */}
-            <div className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg transition-transform duration-300 hover:scale-105">
-              <div className="w-16 h-16 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center mb-6">
-                <svg className="w-8 h-8 text-purple-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div className="group bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 border-2 border-transparent hover:border-purple-500">
+              <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                <svg className="w-8 h-8 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold mb-4">Real-Time Systems & APIs</h3>
-              <p className="text-gray-600 dark:text-gray-300">
-                High-performance real-time systems with WebSocket infrastructure, RESTful & GraphQL APIs, event-driven architecture, and streaming data pipelines for enterprise applications.
+              <h3 className="text-xl font-bold mb-4 text-gray-800 dark:text-white">Real-Time Systems & APIs</h3>
+              <p className="text-gray-600 dark:text-gray-300 mb-6">
+                High-performance real-time systems with WebSocket infrastructure, RESTful & GraphQL APIs, and event-driven architecture.
               </p>
+              <a href="/pages/services" className="text-purple-600 dark:text-purple-400 font-semibold inline-flex items-center group-hover:underline">
+                Learn More
+                <svg className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </a>
             </div>
             
             {/* Service 3 */}
-            <div className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg transition-transform duration-300 hover:scale-105">
-              <div className="w-16 h-16 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mb-6">
-                <svg className="w-8 h-8 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div className="group bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 border-2 border-transparent hover:border-green-500">
+              <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-500 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                <svg className="w-8 h-8 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold mb-4">Global Digital Transformation</h3>
-              <p className="text-gray-600 dark:text-gray-300">
-                End-to-end digital transformation for multinational corporations. Cloud migration, DevOps automation, and compliance-ready solutions across all our global offices.
+              <h3 className="text-xl font-bold mb-4 text-gray-800 dark:text-white">Global Digital Transformation</h3>
+              <p className="text-gray-600 dark:text-gray-300 mb-6">
+                End-to-end digital transformation for multinational corporations. Cloud migration, DevOps automation, and compliance-ready solutions.
               </p>
+              <a href="/pages/services" className="text-green-600 dark:text-green-400 font-semibold inline-flex items-center group-hover:underline">
+                Learn More
+                <svg className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </a>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Great Product Software by Company */}
+      {/* ========================================
+          SECTION 4: TECHNOLOGY STACK
+          ======================================== */}
+      <TechStackShowcase />
+
+      {/* ========================================
+          SECTION 5: INDUSTRIES WE SERVE
+          ======================================== */}
+      <IndustryShowcase />
+
+      {/* ========================================
+          SECTION 6: WHY CHOOSE US
+          ======================================== */}
+      <WhyChooseUs />
+
+      {/* ========================================
+          SECTION 7: CASE STUDIES / SUCCESS STORIES
+          ======================================== */}
+      <CaseStudyShowcase />
+
+      {/* ========================================
+          SECTION 8: GREAT PRODUCT SOFTWARE
+          ======================================== */}
       <section className="py-20 bg-white dark:bg-gray-800 relative overflow-hidden">
         {/* Background Illustrations */}
         <div className="absolute top-20 left-20 w-56 h-56 opacity-5">
@@ -320,9 +407,32 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* ========================================
+          SECTION 9: CLIENT TESTIMONIALS
+          ======================================== */}
+      <TestimonialCarousel />
+
+      {/* ========================================
+          SECTION 10: OUR DEVELOPMENT PROCESS
+          ======================================== */}
+      <ProcessTimeline />
+
+      {/* ========================================
+          SECTION 11: GLOBAL PRESENCE
+          ======================================== */}
+      <GlobalPresence />
       
-      {/* CTA Section */}
-      <section className="py-16 bg-blue-600 text-white relative overflow-hidden">
+      {/* ========================================
+          SECTION 12: FINAL CTA (ENHANCED)
+          ======================================== */}
+      <section className="py-20 bg-gradient-to-br from-blue-600 via-cyan-600 to-blue-700 text-white relative overflow-hidden">
+        {/* Animated Background */}
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute top-20 left-20 w-96 h-96 bg-white rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-20 right-20 w-80 h-80 bg-cyan-300 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
+        </div>
+        
         {/* Background Illustrations */}
         <div className="absolute top-10 right-4 sm:right-10 w-32 h-32 sm:w-48 sm:h-48 opacity-20 hidden sm:block">
           <AnimatedIllustration
@@ -346,19 +456,50 @@ export default function Home() {
         </div>
         
         <div className="container mx-auto px-4 text-center relative z-10">
-          <h2 className="text-3xl md:text-4xl font-bold mb-8">Ready for Node.js Excellence?</h2>
-          <p className="text-xl mb-8 max-w-4xl mx-auto">
-            Partner with us for enterprise-grade Node.js solutions. 
-            Our global team delivers world-class scalable architecture, microservices, and real-time systems 
-            that drive business growth and digital transformation.
+          <h2 className="text-4xl md:text-5xl font-bold mb-6">
+            Ready to Build Something <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 to-yellow-400">Amazing</span>?
+          </h2>
+          <p className="text-xl md:text-2xl mb-4 max-w-4xl mx-auto font-light">
+            Partner with Vedpragya Bharat Private Limited for enterprise-grade solutions
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="px-8 py-3 bg-white text-blue-600 hover:bg-gray-100 rounded-full font-medium transition duration-300 transform hover:scale-105">
-              Contact Our Global Team
-            </button>
-            <button className="px-8 py-3 bg-transparent border-2 border-white hover:bg-white/10 rounded-full font-medium transition duration-300">
-              View Our Services
-            </button>
+          <p className="text-lg mb-10 max-w-3xl mx-auto text-white/90">
+            Our global team delivers world-class scalable architecture, microservices, and real-time systems 
+            that drive business growth and digital transformation across continents.
+          </p>
+          
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+            <a 
+              href="/pages/contact"
+              className="px-10 py-4 bg-white text-blue-600 hover:bg-gray-100 rounded-full font-semibold text-lg transition duration-300 transform hover:scale-105 shadow-xl hover:shadow-2xl"
+            >
+              Start Your Project →
+            </a>
+            <a 
+              href="/pages/services"
+              className="px-10 py-4 bg-transparent border-2 border-white hover:bg-white/20 backdrop-blur-sm rounded-full font-semibold text-lg transition duration-300 shadow-lg"
+            >
+              Explore Services
+            </a>
+          </div>
+          
+          {/* Trust Indicators */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto pt-8 border-t border-white/30">
+            <div>
+              <p className="text-3xl font-bold mb-1">500+</p>
+              <p className="text-sm text-white/80">Projects Delivered</p>
+            </div>
+            <div>
+              <p className="text-3xl font-bold mb-1">200+</p>
+              <p className="text-sm text-white/80">Happy Clients</p>
+            </div>
+            <div>
+              <p className="text-3xl font-bold mb-1">5</p>
+              <p className="text-sm text-white/80">Global Offices</p>
+            </div>
+            <div>
+              <p className="text-3xl font-bold mb-1">24/7</p>
+              <p className="text-sm text-white/80">Support Available</p>
+            </div>
           </div>
         </div>
       </section>
