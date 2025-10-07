@@ -355,11 +355,12 @@ export default function AIAgentAdminPage() {
             </CardHeader>
             <CardContent>
               <Tabs defaultValue="provider" className="space-y-6">
-                <TabsList className="grid w-full grid-cols-4">
+                <TabsList className="grid w-full grid-cols-5">
                   <TabsTrigger value="provider">Provider & Model</TabsTrigger>
                   <TabsTrigger value="personality">Personality</TabsTrigger>
                   <TabsTrigger value="behavior">Behavior</TabsTrigger>
                   <TabsTrigger value="appearance">Appearance</TabsTrigger>
+                  <TabsTrigger value="analytics">Analytics</TabsTrigger>
                 </TabsList>
 
                 {/* Provider & Model Tab */}
@@ -671,6 +672,103 @@ export default function AIAgentAdminPage() {
                         {config?.welcomeMessage || 'Hi! How can I help you today?'}
                       </div>
                     </div>
+                  </div>
+                </TabsContent>
+
+                {/* Analytics Tab */}
+                <TabsContent value="analytics" className="space-y-4">
+                  <div className="space-y-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {/* Today's Stats */}
+                      <Card>
+                        <CardHeader>
+                          <CardTitle className="text-lg">Today's Performance</CardTitle>
+                        </CardHeader>
+                        <CardContent className="space-y-3">
+                          <div className="flex justify-between items-center">
+                            <span className="text-sm text-slate-600 dark:text-slate-400">Total Conversations</span>
+                            <span className="text-2xl font-bold text-slate-900 dark:text-white">{stats?.totalToday || 0}</span>
+                          </div>
+                          <Separator />
+                          <div className="flex justify-between items-center">
+                            <span className="text-sm text-slate-600 dark:text-slate-400">Leads Captured</span>
+                            <span className="text-2xl font-bold text-green-600 dark:text-green-400">{stats?.conversionsToday || 0}</span>
+                          </div>
+                          <Separator />
+                          <div className="flex justify-between items-center">
+                            <span className="text-sm text-slate-600 dark:text-slate-400">Conversion Rate</span>
+                            <span className="text-2xl font-bold text-purple-600 dark:text-purple-400">{stats?.conversionRate || 0}%</span>
+                          </div>
+                        </CardContent>
+                      </Card>
+
+                      {/* Configuration Info */}
+                      <Card>
+                        <CardHeader>
+                          <CardTitle className="text-lg">Current Configuration</CardTitle>
+                        </CardHeader>
+                        <CardContent className="space-y-3">
+                          <div className="flex justify-between items-center">
+                            <span className="text-sm text-slate-600 dark:text-slate-400">AI Provider</span>
+                            <span className="text-sm font-semibold text-slate-900 dark:text-white capitalize">{config?.provider || 'Not Set'}</span>
+                          </div>
+                          <Separator />
+                          <div className="flex justify-between items-center">
+                            <span className="text-sm text-slate-600 dark:text-slate-400">Model</span>
+                            <span className="text-sm font-semibold text-slate-900 dark:text-white">{config?.model || 'Not Set'}</span>
+                          </div>
+                          <Separator />
+                          <div className="flex justify-between items-center">
+                            <span className="text-sm text-slate-600 dark:text-slate-400">Status</span>
+                            <span className={`text-sm font-semibold ${config?.enabled ? 'text-green-600' : 'text-red-600'}`}>
+                              {config?.enabled ? '✓ Active' : '✗ Disabled'}
+                            </span>
+                          </div>
+                          <Separator />
+                          <div className="flex justify-between items-center">
+                            <span className="text-sm text-slate-600 dark:text-slate-400">API Key</span>
+                            <span className={`text-sm font-semibold ${config?.hasApiKey ? 'text-green-600' : 'text-red-600'}`}>
+                              {config?.hasApiKey ? '✓ Configured' : '✗ Not Set'}
+                            </span>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </div>
+
+                    {/* Performance Tips */}
+                    <Card>
+                      <CardHeader>
+                        <CardTitle className="text-lg">Performance Tips</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="space-y-2 text-sm">
+                          <div className="flex items-start gap-2">
+                            <CheckCircle2 className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
+                            <p className="text-slate-600 dark:text-slate-400">
+                              <strong>Lower temperature (0.5-0.7)</strong> gives more consistent, focused responses
+                            </p>
+                          </div>
+                          <div className="flex items-start gap-2">
+                            <CheckCircle2 className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
+                            <p className="text-slate-600 dark:text-slate-400">
+                              <strong>Enable auto-greeting</strong> to proactively engage visitors
+                            </p>
+                          </div>
+                          <div className="flex items-start gap-2">
+                            <CheckCircle2 className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
+                            <p className="text-slate-600 dark:text-slate-400">
+                              <strong>Lead qualification on</strong> automatically captures contact info
+                            </p>
+                          </div>
+                          <div className="flex items-start gap-2">
+                            <CheckCircle2 className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
+                            <p className="text-slate-600 dark:text-slate-400">
+                              <strong>GPT-4o or Claude Sonnet 4.5</strong> recommended for best results
+                            </p>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
                   </div>
                 </TabsContent>
               </Tabs>

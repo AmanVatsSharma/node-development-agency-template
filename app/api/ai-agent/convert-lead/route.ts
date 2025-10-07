@@ -124,22 +124,23 @@ export async function POST(request: NextRequest) {
 async function pushToZohoCRM(lead: any) {
   try {
     // Use existing Zoho service
-    const zohoService = await import('@/app/lib/zohoService');
+    const { createZohoLead } = await import('@/app/lib/zohoService');
     
     const zohoData = {
-      Last_Name: lead.name || 'AI Agent Lead',
-      Email: lead.email,
-      Phone: lead.phone || '',
-      Company: (lead.raw as any)?.leadData?.company || 'Not Provided',
-      Lead_Source: lead.leadSource || 'AI Agent',
-      Description: lead.message || 'Lead captured via AI Agent',
-      Lead_Status: 'Not Contacted',
+      name: lead.name || 'AI Agent Lead',
+      email: lead.email,
+      phone: lead.phone || '',
+      message: lead.message || 'Lead captured via AI Agent',
+      source: 'ai_agent',
+      campaign: lead.campaign || '',
+      leadSource: lead.leadSource || 'AI Agent',
+      raw: lead.raw,
     };
 
-    const result = await zohoService.createLead(zohoData);
+    const result = await createZohoLead(zohoData);
     
     // Update lead with Zoho ID
-    if (result.success && result.zohoLeadId) {
+    if (result.zohoLeadId) {
       await prisma.lead.update({
         where: { id: lead.id },
         data: {
@@ -147,12 +148,28 @@ async function pushToZohoCRM(lead: any) {
           status: 'pushed',
         }
       });
+      
+      console.log(`[AI Agent] Lead ${lead.id} pushed to Zoho with ID: ${result.zohoLeadId}`);
     }
 
-    return result;
-  } catch (error) {
+    return { success: true, zohoLeadId: result.zohoLeadId };
+  } catch (error: any) {
     console.error('[Zoho Push] Error:', error);
-    throw error;
+    
+    // Log the error
+    await prisma.integrationLog.create({
+      data: {
+        type: 'ai_agent_zoho_push',
+        provider: 'zoho',
+        level: 'error',
+        message: 'Failed to push AI agent lead to Zoho',
+        error: error.message,
+        request: { leadId: lead.id },
+      }
+    }).catch(console.error);
+    
+    // Don't throw - we don't want to fail the whole lead creation
+    return { success: false, error: error.message };
   }
 }
 
