@@ -74,6 +74,10 @@ export default function AIAgentAdminPage() {
   useEffect(() => {
     if (config && originalConfig) {
       const changed = JSON.stringify(config) !== JSON.stringify(originalConfig);
+      console.log('[AI Agent Admin] Config changed:', changed, {
+        config,
+        originalConfig,
+      });
       setHasChanges(changed);
     }
   }, [config, originalConfig]);
@@ -84,9 +88,17 @@ export default function AIAgentAdminPage() {
       const configRes = await fetch('/api/ai-agent/config');
       const configData = await configRes.json();
       
+      console.log('[AI Agent Admin] Config loaded:', configData);
+      
       if (configData.success) {
-        setConfig(configData.config);
-        setOriginalConfig(configData.config);
+        // Deep clone to avoid reference issues
+        const loadedConfig = JSON.parse(JSON.stringify(configData.config));
+        setConfig(loadedConfig);
+        setOriginalConfig(JSON.parse(JSON.stringify(configData.config)));
+        console.log('[AI Agent Admin] Config state set:', loadedConfig);
+      } else {
+        console.error('[AI Agent Admin] Failed to load config:', configData.error);
+        alert('Failed to load configuration: ' + (configData.error || 'Unknown error'));
       }
 
       // Load conversations stats
@@ -98,13 +110,15 @@ export default function AIAgentAdminPage() {
         setStats(conversationsData.stats || {});
       }
     } catch (error) {
-      console.error('Failed to load data:', error);
+      console.error('[AI Agent Admin] Failed to load data:', error);
+      alert('Failed to load configuration. Please check console for details.');
     } finally {
       setLoading(false);
     }
   };
 
   const handleSave = async () => {
+    console.log('[AI Agent Admin] Saving configuration:', config);
     setSaving(true);
     try {
       const response = await fetch('/api/ai-agent/config', {
@@ -114,18 +128,21 @@ export default function AIAgentAdminPage() {
       });
 
       const data = await response.json();
+      console.log('[AI Agent Admin] Save response:', data);
 
       if (data.success) {
-        setConfig(data.config);
-        setOriginalConfig(data.config);
+        const savedConfig = JSON.parse(JSON.stringify(data.config));
+        setConfig(savedConfig);
+        setOriginalConfig(JSON.parse(JSON.stringify(data.config)));
         setHasChanges(false);
-        alert('Configuration saved successfully!');
+        alert('✅ Configuration saved successfully!');
       } else {
-        alert('Failed to save configuration: ' + data.error);
+        console.error('[AI Agent Admin] Save failed:', data.error);
+        alert('❌ Failed to save configuration: ' + data.error);
       }
     } catch (error) {
-      console.error('Save error:', error);
-      alert('Failed to save configuration');
+      console.error('[AI Agent Admin] Save error:', error);
+      alert('❌ Failed to save configuration. Check console for details.');
     } finally {
       setSaving(false);
     }
@@ -361,7 +378,12 @@ export default function AIAgentAdminPage() {
                       <Switch
                         id="enabled"
                         checked={config?.enabled || false}
-                        onCheckedChange={(checked) => setConfig({ ...config, enabled: checked })}
+                        onCheckedChange={(checked) => {
+                          console.log('[AI Agent Admin] Enable switch toggled:', checked);
+                          const newConfig = { ...config, enabled: checked };
+                          console.log('[AI Agent Admin] New config:', newConfig);
+                          setConfig(newConfig);
+                        }}
                       />
                     </div>
 
@@ -657,9 +679,10 @@ export default function AIAgentAdminPage() {
               <div className="mt-6 pt-6 border-t border-slate-200 dark:border-slate-800 flex gap-3">
                 <Button
                   onClick={handleSave}
-                  disabled={saving || !hasChanges}
+                  disabled={saving || !config}
                   size="lg"
                   className="flex-1"
+                  variant={hasChanges ? "default" : "outline"}
                 >
                   {saving ? (
                     <>
@@ -669,7 +692,7 @@ export default function AIAgentAdminPage() {
                   ) : (
                     <>
                       <Save className="h-4 w-4 mr-2" />
-                      Save Configuration
+                      {hasChanges ? 'Save Configuration' : 'Save Configuration (No Changes)'}
                     </>
                   )}
                 </Button>
