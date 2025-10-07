@@ -43,7 +43,7 @@ export function AutomationWorkflowsSection() {
       description: 'Instantly answer common questions 24/7',
       example: {
         user: 'What are your business hours?',
-        bot: 'Hi! 👋 We're open Monday-Saturday, 9 AM - 7 PM. Our AI assistant is available 24/7 to help you!'
+        bot: "Hi! 👋 We're open Monday-Saturday, 9 AM - 7 PM. Our AI assistant is available 24/7 to help you!"
       },
       stats: '95% questions answered instantly'
     },
@@ -103,7 +103,7 @@ export function AutomationWorkflowsSection() {
       description: 'Collect payments via Razorpay links',
       example: {
         user: 'I want to pay',
-        bot: 'Great! 💳 Your invoice total is ₹5,000. Pay securely here: [Razorpay Link]. We'll confirm once payment is received!'
+        bot: "Great! 💳 Your invoice total is ₹5,000. Pay securely here: [Razorpay Link]. We'll confirm once payment is received!"
       },
       stats: '70% faster payment collection'
     },
