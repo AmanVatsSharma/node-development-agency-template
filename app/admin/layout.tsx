@@ -40,6 +40,7 @@ import {
   Server,
   Database,
   Shield,
+  Bot,
 } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
 import { cn } from '@/app/lib/utils';
@@ -108,6 +109,12 @@ const navItems: NavItem[] = [
     href: '/admin/newsletter',
     icon: Mail,
     description: 'Email subscriptions',
+  },
+  {
+    label: 'AI Agent',
+    href: '/admin/ai-agent',
+    icon: Bot,
+    description: 'AI sales assistant config',
   },
   {
     label: 'Integrations',

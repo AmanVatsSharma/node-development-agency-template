@@ -6,7 +6,7 @@
  * @author Vedpragya Bharat Pvt. Ltd.
  */
 
-import { prisma } from '@/app/lib/prisma';
+import prisma from '@/app/lib/prisma';
 
 export interface PageContext {
   pagePath: string;

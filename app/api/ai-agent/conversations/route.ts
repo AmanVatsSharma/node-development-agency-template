@@ -4,8 +4,9 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@/app/lib/prisma';
-import { getServerSession } from 'next-auth';
+import prisma from '@/app/lib/prisma';
+
+const ADMIN_COOKIE_NAME = 'admin_session';
 
 /**
  * GET - Fetch conversation history
@@ -16,9 +17,12 @@ import { getServerSession } from 'next-auth';
  */
 export async function GET(request: NextRequest) {
   try {
-    // Check authentication
-    const session = await getServerSession();
-    if (!session) {
+    // Check authentication using cookie-based auth
+    const sessionCookie = request.cookies.get(ADMIN_COOKIE_NAME)?.value;
+    const adminPassword = process.env.ADMIN_PASSWORD || 'changeme';
+    const isAuthorized = sessionCookie === adminPassword;
+    
+    if (!isAuthorized) {
       return NextResponse.json(
         { success: false, error: 'Unauthorized' },
         { status: 401 }
@@ -91,11 +95,17 @@ export async function GET(request: NextRequest) {
 
 /**
  * GET - Fetch single conversation details
+ * Note: This is a helper function, not an HTTP route handler
+ * To use this, create a dynamic route at /app/api/ai-agent/conversations/[id]/route.ts
  */
-export async function GET_SINGLE(conversationId: string) {
+export async function GET_SINGLE(conversationId: string, request: NextRequest) {
   try {
-    const session = await getServerSession();
-    if (!session) {
+    // Check authentication using cookie-based auth
+    const sessionCookie = request.cookies.get(ADMIN_COOKIE_NAME)?.value;
+    const adminPassword = process.env.ADMIN_PASSWORD || 'changeme';
+    const isAuthorized = sessionCookie === adminPassword;
+    
+    if (!isAuthorized) {
       return NextResponse.json(
         { success: false, error: 'Unauthorized' },
         { status: 401 }
