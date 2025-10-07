@@ -1,0 +1,439 @@
+╔════════════════════════════════════════════════════════════════════════════════╗
+║                  GOOGLE ADS CONVERSION TRACKING - COMPLETE FLOW                 ║
+║                         Business-Website Landing Page                           ║
+║                              Version 2.0.0 - Scalable                           ║
+╚════════════════════════════════════════════════════════════════════════════════╝
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                         PART 1: PAGE LOAD & INITIALIZATION                    │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+User visits:
+https://your-domain.com/pages/business-website
+        │
+        ├─────────────────────────────────────────────────────────────┐
+        │                                                               │
+        ▼                                                               ▼
+┌────────────────┐                                              ┌──────────────┐
+│   app/         │  ◀──── Root Layout loads first ────────────  │   Next.js    │
+│   layout.tsx   │                                              │   Server     │
+└────────┬───────┘                                              └──────────────┘
+         │
+         │  1. Load GoogleAdsTracking component
+         │
+         ▼
+┌─────────────────────────────────────────────────┐
+│  <GoogleAdsTracking conversionId="AW-17606401808" />  │
+│  - Loads gtag.js script from Google               │
+│  - Initializes window.dataLayer[]                 │
+│  - Configures Google Ads tag                      │
+│  - Sets up gtag() function globally               │
+└─────────────────────┬───────────────────────────┘
+                      │
+                      │  2. Scripts loaded asynchronously
+                      │
+                      ▼
+┌─────────────────────────────────────────────────┐
+│  Google Tag Manager Script                      │
+│  https://www.googletagmanager.com/gtag/js?id=AW-17606401808  │
+│                                                  │
+│  window.gtag = function() {                     │
+│    dataLayer.push(arguments);                   │
+│  }                                               │
+│                                                  │
+│  gtag('js', new Date());                        │
+│  gtag('config', 'AW-17606401808');             │
+└─────────────────────┬───────────────────────────┘
+                      │
+                      │  3. Page component loads
+                      │
+                      ▼
+┌─────────────────────────────────────────────────┐
+│  app/pages/business-website/page.tsx            │
+│  - Renders all sections                         │
+│  - Hero, Lead Form, Mobile CTA, etc.            │
+│  - Each section has conversion tracking         │
+└─────────────────────────────────────────────────┘
+
+Console logs at this point:
+[GoogleAdsTracking] Component initialized
+[GoogleAdsTracking] Conversion ID: AW-17606401808
+[GoogleAdsTracking] Google Ads script loaded successfully
+[GoogleAdsTracking] gtag function is available
+[Business-Website] Main page component loaded
+[Business-Website] CONVERSION OPTIMIZED Page mounted
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                      PART 2: USER INTERACTION - FORM SUBMIT                   │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+User fills form and clicks "Get My Free Quote Now"
+        │
+        ▼
+┌─────────────────────────────────────────────────┐
+│  Lead Form Submit Handler                       │
+│  app/pages/business-website/_components/        │
+│  lead-form-section.tsx                          │
+│                                                  │
+│  handleSubmit = async (e) => {                  │
+│    e.preventDefault();                          │
+│    setLoading(true);                            │
+│                                                  │
+│    // Step 1: Save to database & Zoho          │
+│    const res = await fetch('/api/lead', {      │
+│      method: 'POST',                            │
+│      body: JSON.stringify(formData)             │
+│    });                                          │
+│                                                  │
+│    // Step 2: Fire conversion                   │
+│    fireConversion('business_website_lead_submit');│
+│  }                                               │
+└─────────────────────┬───────────────────────────┘
+                      │
+                      ├──── PARALLEL EXECUTION ────┐
+                      │                             │
+                      ▼                             ▼
+         ┌─────────────────────┐      ┌─────────────────────┐
+         │  POST /api/lead     │      │  fireConversion()   │
+         │  (Database & Zoho)  │      │  (Google Ads)       │
+         └─────────┬───────────┘      └─────────┬───────────┘
+                   │                             │
+                   │                             │
+         [See PART 3 below]          [See PART 4 below]
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                    PART 3: DATABASE & ZOHO INTEGRATION                        │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+POST /api/lead
+        │
+        ▼
+┌─────────────────────────────────────────────────┐
+│  app/api/lead/route.ts                          │
+│                                                  │
+│  1. Validate input (name, email, phone)         │
+│  2. Save to PostgreSQL database (Lead table)    │
+│     status: 'pending'                           │
+│                                                  │
+│  3. Get Zoho access token                       │
+│     - Check if expired                          │
+│     - Refresh if needed                         │
+│                                                  │
+│  4. Send to Zoho CRM API                        │
+│     POST https://www.zohoapis.in/crm/v2/Leads   │
+│     Authorization: Zoho-oauthtoken XXX          │
+│                                                  │
+│  5. Update database:                            │
+│     status: 'pushed'                            │
+│     zohoLeadId: 'XXX'                           │
+│                                                  │
+│  6. Log conversion event (server-side backup)   │
+│     await logServerConversion(                  │
+│       'business_website_lead_submit',           │
+│       { leadId, zohoLeadId }                    │
+│     )                                            │
+│                                                  │
+│  7. Return success + conversion mapping         │
+│     { success: true, leadId, zohoLeadId,       │
+│       google: { conversionId, labels } }       │
+└─────────────────────┬───────────────────────────┘
+                      │
+                      │  Database writes:
+                      │
+                      ├─────────────────────────────────┐
+                      │                                  │
+                      ▼                                  ▼
+         ┌─────────────────────┐         ┌──────────────────────┐
+         │  Lead table         │         │  IntegrationLog      │
+         │  ─────────────────  │         │  ──────────────────  │
+         │  id: xxx            │         │  type: business_     │
+         │  name: John Doe     │         │        website_lead_  │
+         │  phone: +91 999...  │         │        submit        │
+         │  email: john@...    │         │  provider: google_ads│
+         │  status: pushed     │         │  level: info         │
+         │  zohoLeadId: 123    │         │  message: Conversion │
+         │  createdAt: ...     │         │           event      │
+         └─────────────────────┘         │           logged     │
+                                          │  createdAt: ...      │
+                                          └──────────────────────┘
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                    PART 4: GOOGLE ADS CONVERSION TRACKING                     │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+fireConversion('business_website_lead_submit')
+        │
+        ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  utils/conversions.ts                                                        │
+│                                                                              │
+│  Step 1: SERVER-SIDE BACKUP LOG                                             │
+│  ───────────────────────────────────────────────────────────────────────── │
+│  void fetch('/api/track', {                                                 │
+│    method: 'POST',                                                          │
+│    body: JSON.stringify({                                                   │
+│      eventType: 'business_website_lead_submit',                            │
+│      ts: Date.now(),                                                        │
+│      userAgent: navigator.userAgent,                                        │
+│      pageUrl: window.location.href                                          │
+│    })                                                                        │
+│  });                                                                         │
+│                                                                              │
+│  Console: [Conversions] ✅ Server-side backup log dispatched               │
+│                                                                              │
+│  ──────────────────────────────────────────────────────────────────────────│
+│                                                                              │
+│  Step 2: FETCH CONVERSION MAPPING FROM DATABASE                             │
+│  ───────────────────────────────────────────────────────────────────────── │
+│  const mapping = await getMapping();                                        │
+│    └──▶ GET /api/google-config                                             │
+│          └──▶ Read from IntegrationSettings table                          │
+│                {                                                            │
+│                  conversionId: "AW-17606401808",                           │
+│                  labels: {                                                  │
+│                    business_website_lead_submit: "Y3bsCKXpn6gbEJC-sctB"   │
+│                  }                                                          │
+│                }                                                            │
+│                                                                              │
+│  Console: [Conversions] ✅ Mapping retrieved                               │
+│                                                                              │
+│  ──────────────────────────────────────────────────────────────────────────│
+│                                                                              │
+│  Step 3: BUILD CONVERSION PAYLOAD                                           │
+│  ───────────────────────────────────────────────────────────────────────── │
+│  label = mapping.labels['business_website_lead_submit']                    │
+│        = "Y3bsCKXpn6gbEJC-sctB"                                            │
+│                                                                              │
+│  sendTo = mapping.conversionId + "/" + label                               │
+│         = "AW-17606401808/Y3bsCKXpn6gbEJC-sctB"                           │
+│                                                                              │
+│  params = {                                                                 │
+│    send_to: "AW-17606401808/Y3bsCKXpn6gbEJC-sctB"                         │
+│  }                                                                           │
+│                                                                              │
+│  Console: [Conversions] Label for event type: Y3bsCKXpn6gbEJC-sctB        │
+│           [Conversions] Send To: AW-17606401808/Y3bsCKXpn6gbEJC-sctB      │
+│                                                                              │
+│  ──────────────────────────────────────────────────────────────────────────│
+│                                                                              │
+│  Step 4: FIRE CLIENT-SIDE GTAG CONVERSION                                  │
+│  ───────────────────────────────────────────────────────────────────────── │
+│  window.gtag('event', 'conversion', params);                               │
+│    └──▶ Pushes to dataLayer                                                │
+│          └──▶ Sent to Google Analytics/Ads servers                         │
+│                └──▶ Conversion recorded in Google Ads!                     │
+│                                                                              │
+│  Console: [Conversions] ✅ gtag function is available                     │
+│           [Conversions] Conversion parameters: {...}                       │
+│           [Conversions] ✅ CONVERSION FIRED SUCCESSFULLY                  │
+│                                                                              │
+└──────────────────────────────┬───────────────────────────────────────────────┘
+                               │
+                               │  Network request to Google:
+                               │
+                               ▼
+                ┌──────────────────────────────────────┐
+                │  https://www.google-analytics.com/   │
+                │  g/collect?...                        │
+                │                                       │
+                │  Payload includes:                    │
+                │  - Conversion ID                      │
+                │  - Conversion Label                   │
+                │  - Timestamp                          │
+                │  - User info (cookie-based)           │
+                │  - Page URL                           │
+                └──────────────┬───────────────────────┘
+                               │
+                               ▼
+                     ┌──────────────────┐
+                     │  Google Ads      │
+                     │  Servers         │
+                     │                  │
+                     │  Conversion      │
+                     │  Recorded! ✅    │
+                     │                  │
+                     │  (Appears in     │
+                     │  dashboard in    │
+                     │  3-24 hours)     │
+                     └──────────────────┘
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                   PART 5: WHATSAPP & CALL BUTTON CLICKS                       │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+User clicks "WhatsApp us" button
+        │
+        ▼
+onClick={() => {
+  console.log('[Business-Website] WhatsApp clicked - Opening WhatsApp');
+  fireConversion('business_website_whatsapp_click');
+}}
+        │
+        ├─────────────────────────────────────────────┐
+        │                                              │
+        ▼                                              ▼
+Opens WhatsApp:                         Conversion tracking:
+https://wa.me/919963730111              fireConversion('business_website_whatsapp_click')
+        │                                              │
+        │                                              ▼
+        │                               [Same flow as PART 4]
+        │                               Label: XO54CKjpn6gbEJC-sctB
+        │                               SendTo: AW-17606401808/XO54CKjpn6gbEJC-sctB
+        │                               gtag('event', 'conversion', {...})
+        │                                              │
+        │                                              ▼
+        │                               ✅ Conversion recorded in Google Ads
+        │
+        ▼
+User chats on WhatsApp with +91 9963730111
+
+
+Similarly for Call button:
+onClick={() => fireConversion('business_website_call_click') }
+Opens: tel:+919963730111
+Label: [YOUR_CALL_LABEL]
+SendTo: AW-17606401808/[YOUR_CALL_LABEL]
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                        PART 6: VERIFICATION & DEBUGGING                       │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+1. CONSOLE LOGS (Real-time)
+   ───────────────────────────
+   [Business-Website] Lead form submitted
+   [Conversions] 🎯 CONVERSION EVENT TRIGGERED
+   [Conversions] Event Type: business_website_lead_submit
+   [Conversions] Step 1: Sending server-side backup log
+   [Conversions] ✅ Server-side backup log dispatched
+   [Conversions] Step 2: Fetching conversion mapping
+   [Conversions] ✅ Mapping retrieved
+   [Conversions] Step 3: Building conversion payload
+   [Conversions] Label for event type: Y3bsCKXpn6gbEJC-sctB
+   [Conversions] Send To: AW-17606401808/Y3bsCKXpn6gbEJC-sctB
+   [Conversions] Step 4: Firing client-side gtag conversion
+   [Conversions] ✅ gtag function is available
+   [Conversions] ✅ CONVERSION FIRED SUCCESSFULLY
+
+2. NETWORK TAB (Chrome DevTools)
+   ──────────────────────────────
+   ✅ POST /api/lead → 200 OK
+   ✅ POST /api/track → 200 OK
+   ✅ GET /api/google-config → 200 OK
+   ✅ GET https://www.google-analytics.com/g/collect?... → 200 OK
+      ↑ This is the conversion tracking pixel
+
+3. DATABASE VERIFICATION
+   ──────────────────────
+   SELECT * FROM "Lead" ORDER BY "createdAt" DESC LIMIT 1;
+   ✅ Lead record exists with zohoLeadId
+
+   SELECT * FROM "IntegrationLog" 
+   WHERE type = 'business_website_lead_submit' 
+   ORDER BY "createdAt" DESC LIMIT 1;
+   ✅ Conversion log exists
+
+4. ZOHO CRM VERIFICATION
+   ──────────────────────
+   Login to Zoho → Leads module
+   ✅ Test lead appears with correct details
+
+5. GOOGLE ADS DASHBOARD VERIFICATION (Wait 3-24 hours)
+   ───────────────────────────────────────────────────
+   Google Ads → Tools & Settings → Conversions
+   ✅ "Submit Lead Form - Business-Website" shows 1 conversion
+   ✅ "Contact - WhatsApp - Business-Website" shows X conversions
+   ✅ "Contact - Phone Call - Business-Website" shows X conversions
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                          SCALABILITY FOR NEW PAGES                            │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+To add AI Voice Agents landing page:
+
+1. Create 3 new conversion actions in Google Ads:
+   - Submit Lead Form - AI-Voice-Agents → Get label: xxxxx
+   - Contact - WhatsApp - AI-Voice-Agents → Get label: yyyyy
+   - Contact - Phone Call - AI-Voice-Agents → Get label: zzzzz
+
+2. Update IntegrationSettings.googleEventLabels in database:
+   {
+     "business_website_lead_submit": "Y3bsCKXpn6gbEJC-sctB",
+     "business_website_whatsapp_click": "XO54CKjpn6gbEJC-sctB",
+     "business_website_call_click": "[CALL_LABEL]",
+     "ai_voice_agents_lead_submit": "xxxxx",      ← NEW
+     "ai_voice_agents_whatsapp_click": "yyyyy",   ← NEW
+     "ai_voice_agents_call_click": "zzzzz"        ← NEW
+   }
+
+3. In AI Voice Agents page components, use:
+   fireConversion('ai_voice_agents_lead_submit')
+   fireConversion('ai_voice_agents_whatsapp_click')
+   fireConversion('ai_voice_agents_call_click')
+
+4. ✅ That's it! No other code changes needed.
+
+
+╔════════════════════════════════════════════════════════════════════════════════╗
+║                            KEY CONFIGURATION FILES                             ║
+╚════════════════════════════════════════════════════════════════════════════════╝
+
+1. app/layout.tsx
+   └─ <GoogleAdsTracking conversionId="AW-17606401808" />
+
+2. utils/conversions.ts
+   └─ fireConversion() function with comprehensive logging
+
+3. app/lib/googleAds.ts
+   └─ getGoogleConfig() - reads from database
+   └─ logServerConversion() - server-side backup
+
+4. app/api/google-config/route.ts
+   └─ GET endpoint returning conversionId + labels
+
+5. app/api/track/route.ts
+   └─ POST endpoint for server-side conversion logging
+
+6. app/api/lead/route.ts
+   └─ POST endpoint for lead submission + Zoho sync
+
+7. Database: IntegrationSettings table
+   └─ googleConversionId: "AW-17606401808"
+   └─ googleEventLabels: { ... }
+
+8. Vercel Environment Variables
+   └─ GOOGLE_CONVERSION_ID
+   └─ GOOGLE_LEAD_SUBMIT_LABEL
+   └─ GOOGLE_WHATSAPP_CLICK_LABEL
+   └─ GOOGLE_CALL_CLICK_LABEL
+
+
+╔════════════════════════════════════════════════════════════════════════════════╗
+║                             TROUBLESHOOTING GUIDE                              ║
+╚════════════════════════════════════════════════════════════════════════════════╝
+
+Issue: "gtag is not available"
+Fix: Check GoogleAdsTracking component in layout.tsx, disable ad blocker
+
+Issue: "No conversion label configured"
+Fix: Initialize IntegrationSettings table with labels
+
+Issue: Conversions not showing in Google Ads
+Fix: Wait 24 hours, verify labels match exactly, use Google Tag Assistant
+
+Issue: Lead saved but not in Zoho
+Fix: Check IntegrationLog for errors, verify Zoho credentials
+
+Issue: "Failed to fetch google-config"
+Fix: Verify DATABASE_URL, check IntegrationSettings table exists
+
+
+═══════════════════════════════════════════════════════════════════════════════
+                              END OF FLOW DIAGRAM
+═══════════════════════════════════════════════════════════════════════════════
