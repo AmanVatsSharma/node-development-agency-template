@@ -7,7 +7,17 @@
  * - Dark mode support
  * - User session display
  * - Quick actions
+ * - Isolated from website layout (no header/footer)
+ * 
+ * Location: /app/admin/layout.tsx
+ * Routes: /admin/*
+ * 
+ * Console Logs:
+ * - [Admin Layout] Error logging out - Logout failures
+ * - [Admin Layout] Route change detected - Navigation tracking
  */
+
+console.log('[Admin Layout] Initializing enterprise admin dashboard layout');
 
 'use client';
 
@@ -44,87 +54,115 @@ type NavItem = {
   description?: string;
 };
 
+// Navigation items configuration
+// Updated to use new /admin/* path structure (removed /pages prefix)
 const navItems: NavItem[] = [
   {
     label: 'Dashboard',
-    href: '/pages/admin',
+    href: '/admin',
     icon: LayoutDashboard,
     description: 'Overview and analytics',
   },
   {
     label: 'Services',
-    href: '/pages/admin/services',
+    href: '/admin/services',
     icon: Wrench,
     description: 'Manage service offerings',
   },
   {
     label: 'Portfolio',
-    href: '/pages/admin/portfolio',
+    href: '/admin/portfolio',
     icon: Briefcase,
     description: 'Project showcase management',
   },
   {
     label: 'Resources',
-    href: '/pages/admin/resources',
+    href: '/admin/resources',
     icon: BookOpen,
     description: 'Ebooks, guides, templates',
   },
   {
     label: 'Blog Posts',
-    href: '/pages/admin/blog',
+    href: '/admin/blog',
     icon: FileText,
     description: 'Content management',
   },
   {
     label: 'Team',
-    href: '/pages/admin/team',
+    href: '/admin/team',
     icon: Users,
     description: 'Team member profiles',
   },
   {
     label: 'Contacts',
-    href: '/pages/admin/contacts',
+    href: '/admin/contacts',
     icon: MessageSquare,
     description: 'Form submissions',
   },
   {
     label: 'Newsletter',
-    href: '/pages/admin/newsletter',
+    href: '/admin/newsletter',
     icon: Mail,
     description: 'Email subscriptions',
   },
   {
     label: 'Integrations',
-    href: '/pages/admin/integrations',
+    href: '/admin/integrations',
     icon: Settings,
     description: 'Zoho, Google Ads',
   },
   {
     label: 'Logs',
-    href: '/pages/admin/logs',
+    href: '/admin/logs',
     icon: Activity,
     description: 'System activity logs',
   },
 ];
 
+console.log('[Admin Layout] Navigation items loaded:', navItems.length, 'items');
+
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
+  /**
+   * Handle user logout
+   * Clears session cookie and redirects to login page
+   */
   const handleLogout = async () => {
+    console.log('[Admin Layout] Logout initiated');
     try {
-      await fetch('/api/auth/logout', { method: 'POST' });
-      window.location.href = '/login';
+      const response = await fetch('/api/auth/logout', { method: 'POST' });
+      console.log('[Admin Layout] Logout response status:', response.status);
+      
+      if (response.ok) {
+        console.log('[Admin Layout] Logout successful, redirecting to login');
+        window.location.href = '/login';
+      } else {
+        console.error('[Admin Layout] Logout failed with status:', response.status);
+      }
     } catch (error) {
       console.error('[Admin Layout] Error logging out:', error);
+      // Still redirect to login on error
+      window.location.href = '/login';
     }
   };
 
+  /**
+   * Check if a route is currently active
+   * Special handling for dashboard root route
+   */
   const isActiveRoute = (href: string) => {
-    if (href === '/pages/admin') {
-      return pathname === href;
+    // Dashboard root route - exact match
+    if (href === '/admin') {
+      const isActive = pathname === href;
+      console.log('[Admin Layout] Checking dashboard route:', { href, pathname, isActive });
+      return isActive;
     }
-    return pathname?.startsWith(href);
+    // Sub-routes - prefix match
+    const isActive = pathname?.startsWith(href);
+    console.log('[Admin Layout] Checking route:', { href, pathname, isActive });
+    return isActive;
   };
 
   return (

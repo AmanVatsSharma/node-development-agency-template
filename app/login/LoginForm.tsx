@@ -3,6 +3,16 @@
  * 
  * Client component for handling login form submission.
  * Wrapped in Suspense by parent to handle useSearchParams.
+ * 
+ * Routes:
+ * - Success: Redirects to /admin (dashboard)
+ * - Callback: Supports custom callback URLs
+ * 
+ * Console Logs:
+ * - [LoginForm] Initializing - Component mount
+ * - [LoginForm] Submitting credentials - Login attempt
+ * - [LoginForm] Login successful - Successful authentication
+ * - [LoginForm] Login failed - Failed authentication
  */
 
 'use client';
@@ -20,12 +30,17 @@ function LoginFormContent() {
   const [error, setError] = useState<string | null>(null);
 
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get('callbackUrl') || '/pages/admin/integrations';
+  // Updated default redirect to new /admin path structure
+  const callbackUrl = searchParams.get('callbackUrl') || '/admin';
+  
+  console.log('[LoginForm] Initializing with callback URL:', callbackUrl);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
+
+    console.log('[LoginForm] Submitting credentials');
 
     try {
       const res = await fetch('/api/auth/login', {
@@ -34,16 +49,20 @@ function LoginFormContent() {
         body: JSON.stringify({ password }),
       });
 
+      console.log('[LoginForm] Login response status:', res.status);
       const data = await res.json();
 
       if (res.ok && data.success) {
+        console.log('[LoginForm] Login successful, redirecting to:', callbackUrl);
         // Redirect to callback URL on success
         window.location.href = callbackUrl;
       } else {
+        console.error('[LoginForm] Login failed:', data.error || 'Invalid password');
         setError(data.error || 'Invalid password');
         setLoading(false);
       }
     } catch (err) {
+      console.error('[LoginForm] Login error:', err);
       setError('An error occurred. Please try again.');
       setLoading(false);
     }

@@ -16,8 +16,13 @@
  * - Simple password comparison (no database needed)
  * 
  * Protected Routes:
- * - /pages/admin/* - Admin UI pages
+ * - /admin/* - Admin UI pages (top-level, no website header/footer)
  * - /api/admin/* - Admin API endpoints
+ * 
+ * Console Logs:
+ * - [Middleware] Checking admin access - Route protection checks
+ * - [Middleware] Access granted - Successful authentication
+ * - [Middleware] Access denied - Failed authentication
  */
 
 import { NextResponse } from 'next/server';
@@ -29,16 +34,19 @@ export async function middleware(req: NextRequest) {
   const url = req.nextUrl;
   const pathname = url.pathname;
   
+  console.log('[Middleware] Processing request:', pathname);
+  
   // Determine request type
   const isApi = pathname.startsWith('/api/');
-  const needsAuth = pathname.startsWith('/pages/admin') || pathname.startsWith('/api/admin');
+  const needsAuth = pathname.startsWith('/admin') || pathname.startsWith('/api/admin');
 
   // Allow public routes to pass through
   if (!needsAuth) {
+    console.log('[Middleware] Public route, allowing access:', pathname);
     return NextResponse.next();
   }
 
-  console.log('[Middleware] Checking admin access for:', pathname);
+  console.log('[Middleware] Protected route detected, checking admin access for:', pathname);
 
   // Check for admin session cookie
   const sessionCookie = req.cookies.get(ADMIN_COOKIE_NAME)?.value;
@@ -75,12 +83,17 @@ export async function middleware(req: NextRequest) {
 /**
  * Middleware configuration
  * Specifies which routes this middleware should run on
+ * 
+ * Updated to use new /admin/* path structure
+ * This provides clean separation from website routes
  */
 export const config = {
   matcher: [
-    '/pages/admin/:path*',
-    '/api/admin/:path*',
+    '/admin/:path*',      // Admin dashboard pages
+    '/api/admin/:path*',  // Admin API endpoints
   ],
 };
+
+console.log('[Middleware] Configuration loaded - Protecting routes:', config.matcher);
 
 console.log('[Middleware] Simple admin auth middleware loaded');

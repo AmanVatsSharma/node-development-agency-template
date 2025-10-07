@@ -10,17 +10,17 @@ export async function GET(req: NextRequest) {
   const error = searchParams.get('error');
 
   if (error) {
-    return NextResponse.redirect(`/pages/admin/integrations?zoho_error=${encodeURIComponent(error)}`);
+    return NextResponse.redirect(`/admin/integrations?zoho_error=${encodeURIComponent(error)}`);
   }
 
   if (!code) {
-    return NextResponse.redirect('/pages/admin/integrations?zoho_error=missing_code');
+    return NextResponse.redirect('/admin/integrations?zoho_error=missing_code');
   }
 
   try {
     const settings = await prisma.integrationSettings.findFirst();
     if (!settings?.zohoClientId || !settings?.zohoClientSecret) {
-      return NextResponse.redirect('/pages/admin/integrations?zoho_error=missing_credentials');
+      return NextResponse.redirect('/admin/integrations?zoho_error=missing_credentials');
     }
 
     // Exchange code for tokens
@@ -52,7 +52,7 @@ export async function GET(req: NextRequest) {
     });
 
     if (!resp.ok || !data.refresh_token) {
-      return NextResponse.redirect('/pages/admin/integrations?zoho_error=exchange_failed');
+      return NextResponse.redirect('/admin/integrations?zoho_error=exchange_failed');
     }
 
     // Save refresh token and access token
@@ -68,10 +68,10 @@ export async function GET(req: NextRequest) {
       },
     });
 
-    return NextResponse.redirect('/pages/admin/integrations?zoho_connected=1');
+    return NextResponse.redirect('/admin/integrations?zoho_connected=1');
   } catch (e: any) {
     console.error('[Zoho OAuth Callback] Error:', e);
-    return NextResponse.redirect('/pages/admin/integrations?zoho_error=exception');
+    return NextResponse.redirect('/admin/integrations?zoho_error=exception');
   }
 }
 

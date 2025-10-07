@@ -104,7 +104,7 @@ export default function AdminDashboardPage() {
       {/* Quick Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Blog Posts */}
-        <Link href="/pages/admin/blog">
+        <Link href="/admin/blog">
           <Card className="hover:shadow-lg transition-shadow cursor-pointer border-l-4 border-l-blue-500">
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
@@ -135,7 +135,7 @@ export default function AdminDashboardPage() {
         </Link>
 
         {/* Portfolio Projects */}
-        <Link href="/pages/admin/portfolio">
+        <Link href="/admin/portfolio">
           <Card className="hover:shadow-lg transition-shadow cursor-pointer border-l-4 border-l-purple-500">
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
@@ -164,7 +164,7 @@ export default function AdminDashboardPage() {
         </Link>
 
         {/* Resources */}
-        <Link href="/pages/admin/resources">
+        <Link href="/admin/resources">
           <Card className="hover:shadow-lg transition-shadow cursor-pointer border-l-4 border-l-green-500">
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
@@ -191,7 +191,7 @@ export default function AdminDashboardPage() {
         </Link>
 
         {/* Services */}
-        <Link href="/pages/admin/services">
+        <Link href="/admin/services">
           <Card className="hover:shadow-lg transition-shadow cursor-pointer border-l-4 border-l-orange-500">
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
@@ -217,7 +217,7 @@ export default function AdminDashboardPage() {
         </Link>
 
         {/* Team Members */}
-        <Link href="/pages/admin/team">
+        <Link href="/admin/team">
           <Card className="hover:shadow-lg transition-shadow cursor-pointer border-l-4 border-l-cyan-500">
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
@@ -243,7 +243,7 @@ export default function AdminDashboardPage() {
         </Link>
 
         {/* Contact Submissions */}
-        <Link href="/pages/admin/contacts">
+        <Link href="/admin/contacts">
           <Card className="hover:shadow-lg transition-shadow cursor-pointer border-l-4 border-l-pink-500">
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
@@ -276,7 +276,7 @@ export default function AdminDashboardPage() {
         </Link>
 
         {/* Newsletter */}
-        <Link href="/pages/admin/newsletter">
+        <Link href="/admin/newsletter">
           <Card className="hover:shadow-lg transition-shadow cursor-pointer border-l-4 border-l-indigo-500">
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
@@ -400,49 +400,49 @@ export default function AdminDashboardPage() {
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-2 gap-3">
-              <Link href="/pages/admin/blog">
+              <Link href="/admin/blog">
                 <Button variant="outline" className="w-full h-auto py-4 flex-col gap-2">
                   <FileText className="h-5 w-5" />
                   <span className="text-xs">New Blog Post</span>
                 </Button>
               </Link>
-              <Link href="/pages/admin/portfolio">
+              <Link href="/admin/portfolio">
                 <Button variant="outline" className="w-full h-auto py-4 flex-col gap-2">
                   <Briefcase className="h-5 w-5" />
                   <span className="text-xs">Add Project</span>
                 </Button>
               </Link>
-              <Link href="/pages/admin/resources">
+              <Link href="/admin/resources">
                 <Button variant="outline" className="w-full h-auto py-4 flex-col gap-2">
                   <BookOpen className="h-5 w-5" />
                   <span className="text-xs">Upload Resource</span>
                 </Button>
               </Link>
-              <Link href="/pages/admin/services">
+              <Link href="/admin/services">
                 <Button variant="outline" className="w-full h-auto py-4 flex-col gap-2">
                   <BarChart3 className="h-5 w-5" />
                   <span className="text-xs">Add Service</span>
                 </Button>
               </Link>
-              <Link href="/pages/admin/team">
+              <Link href="/admin/team">
                 <Button variant="outline" className="w-full h-auto py-4 flex-col gap-2">
                   <Users className="h-5 w-5" />
                   <span className="text-xs">Team Member</span>
                 </Button>
               </Link>
-              <Link href="/pages/admin/contacts">
+              <Link href="/admin/contacts">
                 <Button variant="outline" className="w-full h-auto py-4 flex-col gap-2">
                   <MessageSquare className="h-5 w-5" />
                   <span className="text-xs">View Contacts</span>
                 </Button>
               </Link>
-              <Link href="/pages/admin/integrations">
+              <Link href="/admin/integrations">
                 <Button variant="outline" className="w-full h-auto py-4 flex-col gap-2">
                   <Activity className="h-5 w-5" />
                   <span className="text-xs">Integrations</span>
                 </Button>
               </Link>
-              <Link href="/pages/admin/logs">
+              <Link href="/admin/logs">
                 <Button variant="outline" className="w-full h-auto py-4 flex-col gap-2">
                   <Calendar className="h-5 w-5" />
                   <span className="text-xs">System Logs</span>
