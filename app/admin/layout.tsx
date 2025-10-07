@@ -92,6 +92,12 @@ const navItems: NavItem[] = [
     description: 'Team member profiles',
   },
   {
+    label: 'All Leads',
+    href: '/admin/leads',
+    icon: Database,
+    description: 'Unified leads view',
+  },
+  {
     label: 'Contacts',
     href: '/admin/contacts',
     icon: MessageSquare,

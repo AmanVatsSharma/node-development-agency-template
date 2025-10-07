@@ -222,7 +222,7 @@ export default function TeamAdminPage() {
 
       {editingMember && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-          <Card className="w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+          <Card className="w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-white dark:bg-slate-900">
             <CardHeader>
               <div className="flex items-center justify-between">
                 <CardTitle>

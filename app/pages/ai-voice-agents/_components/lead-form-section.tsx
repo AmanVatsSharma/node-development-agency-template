@@ -65,7 +65,8 @@ export function LeadFormSection() {
       const data = await res.json();
       if (!res.ok) throw new Error(data?.error || 'Lead API failed');
       setSubmitted(true);
-      void fireConversion('lead_submit');
+      console.log('[AI Voice Agents] Lead submit conversion fired');
+      void fireConversion('ai_voice_agents_lead_submit');
     } catch (err) {
       console.error('Lead submit error:', err);
       alert('Something went wrong. Please try again or contact us directly.');
@@ -169,6 +170,7 @@ export function LeadFormSection() {
                 <div className="space-y-2.5">
                   <a 
                     href="tel:+919963730111"
+                    onClick={() => { console.log('[AI Voice Agents] Call button clicked'); void fireConversion('ai_voice_agents_call_click'); }}
                     className="flex items-center gap-3 p-3.5 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-xl border-2 border-green-200 dark:border-green-800 hover:border-green-400 active:scale-95 transition-all group"
                   >
                     <div className="w-12 h-12 rounded-full bg-gradient-to-br from-green-600 to-emerald-600 flex items-center justify-center">
@@ -184,6 +186,7 @@ export function LeadFormSection() {
                     href="https://wa.me/919963730111"
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={() => { console.log('[AI Voice Agents] WhatsApp button clicked'); void fireConversion('ai_voice_agents_whatsapp_click'); }}
                     className="flex items-center gap-3 p-3.5 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-xl border-2 border-green-200 dark:border-green-800 hover:border-green-400 active:scale-95 transition-all group"
                   >
                     <div className="w-12 h-12 rounded-full bg-gradient-to-br from-green-600 to-emerald-600 flex items-center justify-center">

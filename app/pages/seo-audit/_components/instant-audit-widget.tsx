@@ -87,7 +87,8 @@ export function InstantAuditWidget() {
       });
 
       if (leadRes.ok) {
-        void fireConversion('lead_submit');
+        console.log('[SEO Audit] Lead submit conversion fired');
+        void fireConversion('seo_audit_lead_submit');
       }
 
       setResult(scanData);
