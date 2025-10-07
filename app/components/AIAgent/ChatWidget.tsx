@@ -183,35 +183,39 @@ export default function ChatWidget({ config }: ChatWidgetProps) {
       {/* Floating Greeting Bubble */}
       {showGreeting && !isOpen && (
         <div
-          className={`fixed ${positionClasses} mb-20 z-[9998] animate-fade-in`}
-          style={{ maxWidth: '300px' }}
+          className={`fixed ${positionClasses} mb-16 sm:mb-20 z-[9998] animate-fade-in`}
+          style={{ 
+            maxWidth: 'calc(100vw - 2rem)',
+            width: '280px',
+          }}
         >
-          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-4 relative border border-gray-200 dark:border-gray-700">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-3 sm:p-4 relative border border-gray-200 dark:border-gray-700">
             <button
               onClick={() => setShowGreeting(false)}
               className="absolute top-2 right-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+              aria-label="Close greeting"
             >
-              <X className="w-4 h-4" />
+              <X className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </button>
-            <div className="flex items-start gap-3">
+            <div className="flex items-start gap-2 sm:gap-3">
               <div
-                className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0"
+                className="w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center flex-shrink-0"
                 style={{ backgroundColor: config.primaryColor }}
               >
-                <Sparkles className="w-5 h-5 text-white" />
+                <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
               </div>
-              <div className="flex-1">
-                <p className="text-sm font-semibold text-gray-900 dark:text-white mb-1">
+              <div className="flex-1 min-w-0 pr-6">
+                <p className="text-xs sm:text-sm font-semibold text-gray-900 dark:text-white mb-1">
                   {config.agentName}
                 </p>
-                <p className="text-sm text-gray-600 dark:text-gray-300">
+                <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 break-words">
                   {config.welcomeMessage}
                 </p>
               </div>
             </div>
             <button
               onClick={handleOpen}
-              className="mt-3 w-full py-2 px-4 rounded-lg text-white text-sm font-medium hover:opacity-90 transition-opacity"
+              className="mt-2.5 sm:mt-3 w-full py-2 px-3 sm:px-4 rounded-lg text-white text-xs sm:text-sm font-medium hover:opacity-90 transition-opacity"
               style={{ backgroundColor: config.primaryColor }}
             >
               Chat with {config.agentName}
@@ -226,38 +230,44 @@ export default function ChatWidget({ config }: ChatWidgetProps) {
           className={`fixed ${positionClasses} z-[9999] animate-slide-up`}
           style={{
             width: '400px',
-            maxWidth: 'calc(100vw - 2rem)',
+            maxWidth: 'calc(100vw - 1rem)',
             height: isMinimized ? 'auto' : '600px',
-            maxHeight: 'calc(100vh - 2rem)',
+            maxHeight: 'calc(100vh - 1rem)',
           }}
         >
-          <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl flex flex-col h-full border border-gray-200 dark:border-gray-800 overflow-hidden">
+          <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl flex flex-col h-full border border-gray-200 dark:border-gray-800 overflow-hidden"
+            style={{
+              borderRadius: typeof window !== 'undefined' && window.innerWidth < 640 ? '1rem' : '1rem',
+            }}
+          >
             {/* Header */}
             <div
-              className="px-4 py-3 flex items-center justify-between border-b border-gray-200 dark:border-gray-800"
+              className="px-3 sm:px-4 py-2.5 sm:py-3 flex items-center justify-between border-b border-gray-200 dark:border-gray-800"
               style={{ backgroundColor: config.primaryColor }}
             >
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
-                  <Sparkles className="w-5 h-5 text-white" />
+              <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-white bg-opacity-20 rounded-full flex items-center justify-center flex-shrink-0">
+                  <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                 </div>
-                <div>
-                  <h3 className="text-white font-semibold">{config.agentName}</h3>
-                  <p className="text-white text-opacity-80 text-xs">Online • Ready to help</p>
+                <div className="min-w-0 flex-1">
+                  <h3 className="text-white font-semibold text-sm sm:text-base truncate">{config.agentName}</h3>
+                  <p className="text-white text-opacity-80 text-xs hidden sm:block">Online • Ready to help</p>
                 </div>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
                 <button
                   onClick={() => setIsMinimized(!isMinimized)}
-                  className="text-white hover:bg-white hover:bg-opacity-20 p-2 rounded-lg transition-colors"
+                  className="text-white hover:bg-white hover:bg-opacity-20 p-1.5 sm:p-2 rounded-lg transition-colors"
+                  aria-label="Minimize chat"
                 >
-                  <Minimize2 className="w-4 h-4" />
+                  <Minimize2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 </button>
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="text-white hover:bg-white hover:bg-opacity-20 p-2 rounded-lg transition-colors"
+                  className="text-white hover:bg-white hover:bg-opacity-20 p-1.5 sm:p-2 rounded-lg transition-colors"
+                  aria-label="Close chat"
                 >
-                  <X className="w-4 h-4" />
+                  <X className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 </button>
               </div>
             </div>
@@ -265,19 +275,19 @@ export default function ChatWidget({ config }: ChatWidgetProps) {
             {!isMinimized && (
               <>
                 {/* Messages */}
-                <div className="flex-1 overflow-y-auto p-4 space-y-4">
+                <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-3 sm:space-y-4">
                   {messages.map((msg, idx) => (
                     <div
                       key={idx}
                       className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
                     >
                       <div
-                        className={`flex gap-2 max-w-[80%] ${
+                        className={`flex gap-1.5 sm:gap-2 max-w-[85%] sm:max-w-[80%] ${
                           msg.role === 'user' ? 'flex-row-reverse' : 'flex-row'
                         }`}
                       >
                         <div
-                          className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
+                          className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
                             msg.role === 'user'
                               ? 'bg-gray-200 dark:bg-gray-700'
                               : 'bg-opacity-20'
@@ -285,20 +295,20 @@ export default function ChatWidget({ config }: ChatWidgetProps) {
                           style={msg.role === 'assistant' ? { backgroundColor: config.primaryColor + '33' } : {}}
                         >
                           {msg.role === 'user' ? (
-                            <User className="w-4 h-4 text-gray-600 dark:text-gray-300" />
+                            <User className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gray-600 dark:text-gray-300" />
                           ) : (
-                            <Sparkles className="w-4 h-4" style={{ color: config.primaryColor }} />
+                            <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4" style={{ color: config.primaryColor }} />
                           )}
                         </div>
                         <div
-                          className={`px-4 py-2 rounded-2xl ${
+                          className={`px-3 sm:px-4 py-2 rounded-2xl ${
                             msg.role === 'user'
                               ? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white'
                               : 'bg-opacity-10 text-gray-900 dark:text-white'
                           }`}
                           style={msg.role === 'assistant' ? { backgroundColor: config.primaryColor + '1A' } : {}}
                         >
-                          <p className="text-sm whitespace-pre-wrap">{msg.content}</p>
+                          <p className="text-xs sm:text-sm whitespace-pre-wrap break-words">{msg.content}</p>
                         </div>
                       </div>
                     </div>
@@ -306,18 +316,18 @@ export default function ChatWidget({ config }: ChatWidgetProps) {
                   
                   {isLoading && (
                     <div className="flex justify-start">
-                      <div className="flex gap-2 max-w-[80%]">
+                      <div className="flex gap-1.5 sm:gap-2 max-w-[85%] sm:max-w-[80%]">
                         <div
-                          className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 bg-opacity-20"
+                          className="w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center flex-shrink-0 bg-opacity-20"
                           style={{ backgroundColor: config.primaryColor + '33' }}
                         >
-                          <Sparkles className="w-4 h-4" style={{ color: config.primaryColor }} />
+                          <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4" style={{ color: config.primaryColor }} />
                         </div>
-                        <div className="px-4 py-3 rounded-2xl bg-opacity-10" style={{ backgroundColor: config.primaryColor + '1A' }}>
+                        <div className="px-3 sm:px-4 py-2.5 sm:py-3 rounded-2xl bg-opacity-10" style={{ backgroundColor: config.primaryColor + '1A' }}>
                           <div className="flex gap-1">
-                            <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
-                            <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
-                            <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                            <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                            <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                            <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
                           </div>
                         </div>
                       </div>
@@ -328,7 +338,7 @@ export default function ChatWidget({ config }: ChatWidgetProps) {
                 </div>
 
                 {/* Input */}
-                <div className="p-4 border-t border-gray-200 dark:border-gray-800">
+                <div className="p-3 sm:p-4 border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900">
                   <div className="flex gap-2">
                     <textarea
                       ref={inputRef}
@@ -336,9 +346,11 @@ export default function ChatWidget({ config }: ChatWidgetProps) {
                       onChange={(e) => setInputValue(e.target.value)}
                       onKeyPress={handleKeyPress}
                       placeholder="Type a message..."
-                      className="flex-1 px-4 py-2 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl resize-none focus:outline-none focus:ring-2 focus:ring-opacity-50 text-gray-900 dark:text-white"
+                      className="flex-1 px-3 sm:px-4 py-2 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl resize-none focus:outline-none focus:ring-2 focus:ring-opacity-50 text-gray-900 dark:text-white text-sm"
                       style={{ 
                         boxShadow: `0 0 0 2px ${config.primaryColor}20`,
+                        minHeight: '40px',
+                        maxHeight: '120px',
                       }}
                       rows={1}
                       disabled={isLoading}
@@ -346,13 +358,14 @@ export default function ChatWidget({ config }: ChatWidgetProps) {
                     <button
                       onClick={handleSend}
                       disabled={!inputValue.trim() || isLoading}
-                      className="px-4 py-2 rounded-xl text-white font-medium hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="px-3 sm:px-4 py-2 rounded-xl text-white font-medium hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0"
                       style={{ backgroundColor: config.primaryColor }}
+                      aria-label="Send message"
                     >
-                      <Send className="w-5 h-5" />
+                      <Send className="w-4 h-4 sm:w-5 sm:h-5" />
                     </button>
                   </div>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-2 text-center">
+                  <p className="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400 mt-1.5 sm:mt-2 text-center">
                     Powered by AI • Your data is secure
                   </p>
                 </div>
@@ -366,12 +379,13 @@ export default function ChatWidget({ config }: ChatWidgetProps) {
       {!isOpen && (
         <button
           onClick={handleOpen}
-          className={`fixed ${positionClasses} z-[9999] w-16 h-16 rounded-full shadow-2xl flex items-center justify-center hover:scale-110 transition-transform animate-fade-in`}
+          className={`fixed ${positionClasses} z-[9999] w-14 h-14 sm:w-16 sm:h-16 rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-transform animate-fade-in`}
           style={{ backgroundColor: config.primaryColor }}
+          aria-label={`Open chat with ${config.agentName}`}
         >
-          <MessageCircle className="w-7 h-7 text-white" />
+          <MessageCircle className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
           {unreadCount > 0 && (
-            <span className="absolute -top-1 -right-1 w-6 h-6 bg-red-500 text-white text-xs font-bold rounded-full flex items-center justify-center">
+            <span className="absolute -top-1 -right-1 w-5 h-5 sm:w-6 sm:h-6 bg-red-500 text-white text-[10px] sm:text-xs font-bold rounded-full flex items-center justify-center">
               {unreadCount}
             </span>
           )}

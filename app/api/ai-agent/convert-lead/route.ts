@@ -49,41 +49,73 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Create lead in database
-    const lead = await prisma.lead.create({
-      data: {
-        name: leadData.name || null,
-        email: leadData.email,
-        phone: leadData.phone || null,
-        message: leadData.message || leadData.requirements || null,
-        source: 'ai_agent',
-        campaign: conversation.pagePath,
-        leadSource: `AI Agent - ${conversation.pageTitle || conversation.pagePath}`,
-        raw: {
-          conversationId: conversation.id,
-          sessionId: conversation.sessionId,
-          pageUrl: conversation.pageUrl,
-          leadData: leadData,
-          capturedAt: new Date().toISOString(),
-        },
-        status: 'pending',
-      }
-    });
+    // Create lead in database - THIS MUST ALWAYS SUCCEED
+    // We log but don't fail if there's an issue
+    let lead;
+    try {
+      lead = await prisma.lead.create({
+        data: {
+          name: leadData.name || null,
+          email: leadData.email,
+          phone: leadData.phone || null,
+          message: leadData.message || leadData.requirements || null,
+          source: 'ai_agent',
+          campaign: conversation.pagePath,
+          leadSource: `AI Agent - ${conversation.pageTitle || conversation.pagePath}`,
+          raw: {
+            conversationId: conversation.id,
+            sessionId: conversation.sessionId,
+            pageUrl: conversation.pageUrl,
+            leadData: leadData,
+            capturedAt: new Date().toISOString(),
+          },
+          status: 'pending',
+        }
+      });
+      
+      console.log(`[AI Agent] Lead ${lead.id} saved to database successfully for email: ${leadData.email}`);
+    } catch (dbError: any) {
+      console.error('[AI Agent] CRITICAL: Failed to save lead to database:', dbError);
+      
+      // Log the critical error
+      await prisma.integrationLog.create({
+        data: {
+          type: 'ai_agent_lead_db_error',
+          provider: 'database',
+          level: 'error',
+          message: 'CRITICAL: Failed to save AI agent lead to database',
+          error: dbError.message,
+          request: { sessionId: conversation.sessionId, leadData },
+        }
+      }).catch(console.error);
+      
+      // Still fail the request so caller knows there's an issue
+      return NextResponse.json(
+        { success: false, error: 'Failed to save lead to database', details: dbError.message },
+        { status: 500 }
+      );
+    }
 
     // Update conversation with lead info
-    await prisma.aIConversation.update({
-      where: { id: conversation.id },
-      data: {
-        leadId: lead.id,
-        leadCaptured: true,
-        status: 'converted',
-        conversionData: leadData,
-      }
-    });
+    try {
+      await prisma.aIConversation.update({
+        where: { id: conversation.id },
+        data: {
+          leadId: lead.id,
+          leadCaptured: true,
+          status: 'converted',
+          conversionData: leadData,
+        }
+      });
+      console.log(`[AI Agent] Conversation ${conversation.id} marked as converted`);
+    } catch (updateError) {
+      console.error('[AI Agent] Warning: Failed to update conversation:', updateError);
+      // Don't fail the request - lead is already saved
+    }
 
-    // Push to Zoho CRM (async, don't wait)
+    // Push to Zoho CRM (async, don't wait - lead is already safe in DB)
     pushToZohoCRM(lead).catch(err => 
-      console.error('[AI Agent] Zoho push failed:', err)
+      console.error('[AI Agent] Zoho push failed (lead is safe in DB):', err)
     );
 
     // Track Google Ads conversion (async, don't wait)
@@ -97,7 +129,7 @@ export async function POST(request: NextRequest) {
         type: 'ai_agent_lead_conversion',
         provider: 'ai_agent',
         level: 'info',
-        message: `Lead converted from AI conversation on ${conversation.pagePath}`,
+        message: `Lead ${lead.id} converted from AI conversation on ${conversation.pagePath}`,
         request: { sessionId: conversation.sessionId, leadData },
         response: { leadId: lead.id },
       }
