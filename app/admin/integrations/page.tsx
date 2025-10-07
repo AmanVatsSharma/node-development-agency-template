@@ -322,7 +322,7 @@ export default function IntegrationsAdminPage() {
                     <RefreshCw className="h-4 w-4 mr-2" /> Retry
                   </Button>
                   {authRequired && (
-                    <Button onClick={() => (window.location.href = '/login?callbackUrl=/pages/admin/integrations')}>
+                    <Button onClick={() => (window.location.href = '/login?callbackUrl=/admin/integrations')}>
                       <Shield className="h-4 w-4 mr-2" /> Sign in
                     </Button>
                   )}
