@@ -16,7 +16,7 @@ const differentiators = [
   {
     icon: CheckCircle2,
     title: 'Proven Shopify Optimization Systems',
-    description: 'We've optimized 40+ Shopify stores with an average conversion rate increase of 28%.',
+    description: 'We have optimized 40+ Shopify stores with an average conversion rate increase of 28%.',
     color: 'from-green-500 to-emerald-600',
   },
   {
@@ -71,7 +71,7 @@ export function WhyVedpragyaSection() {
             🧠 Why Choose <span className="text-[#FFB400]">Vedpragya Bharat</span>
           </h2>
           <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-            We don't guess. We test, measure, and optimize till it converts.
+            We do not guess. We test, measure, and optimize till it converts.
           </p>
         </motion.div>
 
@@ -118,7 +118,7 @@ export function WhyVedpragyaSection() {
             <div className="relative z-10">
               <div className="text-6xl mb-4">💬</div>
               <blockquote className="text-2xl md:text-3xl font-black text-white mb-4 leading-relaxed">
-                "We don't guess. We test, measure, and optimize till it converts."
+                &quot;We do not guess. We test, measure, and optimize till it converts.&quot;
               </blockquote>
               <p className="text-lg text-gray-300">
                 — <span className="font-bold text-[#FFB400]">Vedpragya Bharat</span>, Shopify Plus Experts

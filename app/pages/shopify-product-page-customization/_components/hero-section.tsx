@@ -109,7 +109,7 @@ export function HeroSection() {
                 variants={fadeInUp}
                 className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-700 dark:text-gray-300 mb-8 leading-relaxed font-medium"
               >
-                Your product page isn't just a page — <span className="font-black text-[#0A2540] dark:text-[#FFB400]">it's your salesperson</span>.<br />
+                Your product page is not just a page — <span className="font-black text-[#0A2540] dark:text-[#FFB400]">it is your salesperson</span>.<br />
                 We transform boring Shopify pages into{' '}
                 <span className="font-black text-green-600 dark:text-green-400">interactive, high-converting experiences</span>.
               </motion.p>
