@@ -41,7 +41,7 @@ export const servicesMegaMenu: MegaMenuCategory = {
   name: "Services",
   sections: [
     {
-      title: "Development Services",
+      title: "Web Development",
       items: [
         {
           name: "Next.js Development",
@@ -69,17 +69,11 @@ export const servicesMegaMenu: MegaMenuCategory = {
           description: "Professional websites",
           icon: "💻",
         },
-      ],
-    },
-    {
-      title: "Business Solutions",
-      items: [
         {
           name: "Business Websites",
           link: "/pages/business-website",
           description: "Complete business solutions",
           icon: "🏢",
-          badge: "Premium",
         },
         {
           name: "Website Services",
@@ -87,31 +81,93 @@ export const servicesMegaMenu: MegaMenuCategory = {
           description: "Comprehensive web services",
           icon: "🚀",
         },
+      ],
+    },
+    {
+      title: "E-Commerce Solutions",
+      items: [
         {
-          name: "All Services",
-          link: "/pages/services",
-          description: "View all our services",
-          icon: "📋",
+          name: "Shopify Headless Migration",
+          link: "/pages/shopify-headless-migration",
+          description: "Modern headless commerce",
+          icon: "🛒",
+          badge: "New",
+        },
+        {
+          name: "Shopify Product Pages",
+          link: "/pages/shopify-product-page-customization",
+          description: "Custom product experiences",
+          icon: "📦",
+        },
+        {
+          name: "Shopify Store Setup",
+          link: "/pages/shopify-store-setup",
+          description: "Complete store solutions",
+          icon: "🏪",
         },
       ],
     },
     {
-      title: "Marketing & SEO",
+      title: "AI & Automation",
       items: [
+        {
+          name: "AI Chatbot Development",
+          link: "/pages/ai-chatbot-development",
+          description: "Intelligent conversational AI",
+          icon: "🤖",
+          badge: "AI",
+        },
+        {
+          name: "AI Voice Agents",
+          link: "/pages/ai-voice-agents",
+          description: "Advanced voice AI solutions",
+          icon: "🎙️",
+          badge: "AI",
+        },
+        {
+          name: "WhatsApp Business API",
+          link: "/pages/whatsapp-business-api",
+          description: "Business automation via WhatsApp",
+          icon: "💬",
+        },
+        {
+          name: "CRM Solutions",
+          link: "/pages/crm",
+          description: "Customer relationship management",
+          icon: "📊",
+        },
+      ],
+    },
+    {
+      title: "Marketing & Growth",
+      items: [
+        {
+          name: "Google Ads Management",
+          link: "/pages/google-ads-management",
+          description: "ROI-focused ad campaigns",
+          icon: "📈",
+          badge: "Premium",
+        },
         {
           name: "SEO Audit",
           link: "/pages/seo-audit",
-          description: "Free SEO analysis",
+          description: "Free SEO analysis & insights",
           icon: "🔍",
           badge: "Free",
+        },
+        {
+          name: "All Services",
+          link: "/pages/services",
+          description: "View complete service catalog",
+          icon: "📋",
         },
       ],
     },
   ],
   featured: {
-    title: "🌟 Featured Service",
-    description: "Get a comprehensive SEO audit for your website - completely free! Discover optimization opportunities.",
-    link: "/pages/seo-audit",
+    title: "🌟 Featured: AI Voice Agents",
+    description: "Transform customer engagement with cutting-edge AI voice technology. Automate calls, support, and sales with natural conversations.",
+    link: "/pages/ai-voice-agents",
   },
 };
 
@@ -130,12 +186,22 @@ export const footerNavigation = {
     { href: "/pages/reactjs-development", label: "React.js Development" },
     { href: "/pages/web-development", label: "Web Development" },
     { href: "/pages/website-development", label: "Website Development" },
-  ],
-  businessSolutions: [
     { href: "/pages/business-website", label: "Business Websites" },
     { href: "/pages/website-services", label: "Website Services" },
-    { href: "/pages/services", label: "All Services" },
+  ],
+  businessSolutions: [
+    { href: "/pages/ai-chatbot-development", label: "AI Chatbot Development" },
+    { href: "/pages/ai-voice-agents", label: "AI Voice Agents" },
+    { href: "/pages/whatsapp-business-api", label: "WhatsApp Business API" },
+    { href: "/pages/crm", label: "CRM Solutions" },
+    { href: "/pages/google-ads-management", label: "Google Ads Management" },
     { href: "/pages/seo-audit", label: "SEO Audit (Free)" },
+  ],
+  ecommerceSolutions: [
+    { href: "/pages/shopify-headless-migration", label: "Shopify Headless Migration" },
+    { href: "/pages/shopify-product-page-customization", label: "Shopify Product Pages" },
+    { href: "/pages/shopify-store-setup", label: "Shopify Store Setup" },
+    { href: "/pages/services", label: "All Services" },
   ],
   legal: [
     { href: "/pages/legal/privacy-policy", label: "Privacy Policy" },

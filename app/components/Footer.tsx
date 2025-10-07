@@ -98,7 +98,7 @@ export default function Footer() {
 
       <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 pt-12 sm:pt-16 pb-6">
         {/* Main Footer Content */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-6">
           
           {/* Company Info - Spans full width on mobile, 3 cols on large screens */}
           <div className="sm:col-span-2 lg:col-span-3">
@@ -217,8 +217,28 @@ export default function Footer() {
             </CollapsibleSection>
           </div>
 
+          {/* E-Commerce Solutions */}
+          <div className="sm:col-span-1 lg:col-span-2">
+            <CollapsibleSection title="E-Commerce Solutions">
+              <ul className="space-y-3">
+                {footerNavigation.ecommerceSolutions.map((solution) => (
+                  <li key={solution.href}>
+                    <Link
+                      href={solution.href}
+                      className="text-gray-400 hover:text-blue-400 transition-colors duration-200 text-sm inline-flex items-center group"
+                      onClick={() => console.log(`[Footer] E-Commerce clicked: ${solution.label}`)}
+                    >
+                      <span className="w-0 group-hover:w-2 h-0.5 bg-blue-400 transition-all duration-200 mr-0 group-hover:mr-2"></span>
+                      {solution.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </CollapsibleSection>
+          </div>
+
           {/* Global Offices */}
-          <div className="sm:col-span-2 lg:col-span-3">
+          <div className="sm:col-span-2 lg:col-span-2">
             <CollapsibleSection title="Global Offices" defaultOpen={true}>
               <div className="space-y-3">
                 {[
