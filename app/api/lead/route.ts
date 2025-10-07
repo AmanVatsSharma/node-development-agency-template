@@ -32,7 +32,8 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Invalid email format' }, { status: 400 });
     }
 
-    // Backup locally first
+    // Save to database FIRST - this is the most critical step
+    // We ALWAYS save the lead locally before attempting CRM sync
     const lead = await prisma.lead.create({
       data: {
         name: body.name || null,
@@ -46,8 +47,11 @@ export async function POST(req: NextRequest) {
         status: 'pending',
       },
     });
+    
+    console.log(`[API/Lead] Lead ${lead.id} saved to database successfully. Email: ${lead.email || 'N/A'}, Source: ${lead.source}`);
 
-    // Send to Zoho
+    // Send to Zoho CRM (optional - lead is already safe in DB)
+    // If this fails, we queue for retry but still return success to user
     let zohoLeadId: string | undefined;
     try {
       const zohoResult = await createZohoLead({
@@ -62,7 +66,9 @@ export async function POST(req: NextRequest) {
       });
       zohoLeadId = zohoResult.zohoLeadId;
       await prisma.lead.update({ where: { id: lead.id }, data: { status: 'pushed', zohoLeadId } });
+      console.log(`[API/Lead] Lead ${lead.id} successfully pushed to Zoho CRM with ID: ${zohoLeadId}`);
     } catch (err: any) {
+      console.error(`[API/Lead] Zoho push failed for lead ${lead.id}, queuing for retry:`, err.message);
       await prisma.lead.update({ where: { id: lead.id }, data: { status: 'failed' } });
       await prisma.integrationRetry.create({
         data: {
@@ -79,11 +85,12 @@ export async function POST(req: NextRequest) {
           type: 'lead_submit',
           provider: 'zoho',
           level: 'error',
-          message: 'Zoho submission failed; queued for retry',
+          message: `Zoho submission failed for lead ${lead.id}; queued for retry`,
           error: String(err?.message || err),
           correlationId,
         },
       });
+      // NOTE: We don't throw here - lead is safe in database
     }
 
     // Log and optionally trigger server-side record for Google
