@@ -47,7 +47,7 @@ export function HeroSection() {
         containerClassName="min-h-[85vh] md:min-h-screen"
         className="w-full"
       >
-        <div className="container mx-auto px-3 sm:px-4 py-12 sm:py-16 md:py-20 relative z-10">
+        <div className="container mx-auto px-3 sm:px-4 pt-28 pb-12 sm:pt-32 sm:pb-16 md:pt-36 md:pb-20 relative z-10">
         <motion.div
           initial="hidden"
           animate={inView ? "show" : "hidden"}

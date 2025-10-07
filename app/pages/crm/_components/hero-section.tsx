@@ -81,7 +81,7 @@ export function HeroSection() {
         {/* Background Gradient - Bharat Blue with Gold Accents */}
         <div className="absolute inset-0 bg-gradient-to-br from-[#002F9E] via-[#0041E2] to-[#00C897] opacity-5 dark:opacity-10" />
         
-        <div className="container mx-auto px-4 py-16 md:py-20 lg:py-24 relative z-10">
+        <div className="container mx-auto px-4 pt-28 pb-16 md:pt-32 md:pb-20 lg:pt-36 lg:pb-24 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center max-w-7xl mx-auto">
             
             {/* LEFT: Copy + CTA */}

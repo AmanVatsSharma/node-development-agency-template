@@ -165,7 +165,7 @@ export function HeroSection() {
   ];
 
   return (
-    <section className="relative min-h-screen flex items-center py-20 md:py-32 overflow-hidden" ref={heroRef} role="region" aria-labelledby="wd-hero-heading">
+    <section className="relative min-h-screen flex items-center pt-28 pb-20 md:pt-36 md:pb-32 overflow-hidden" ref={heroRef} role="region" aria-labelledby="wd-hero-heading">
       {/* Particles Background */}
       <ParticlesBackground />
 

@@ -58,7 +58,7 @@ export function HeroSection() {
         containerClassName="min-h-screen"
         className="w-full"
       >
-        <div className="container mx-auto px-4 py-12 md:py-16 lg:py-20 relative z-10">
+        <div className="container mx-auto px-4 pt-28 pb-12 md:pt-36 md:pb-16 lg:pt-40 lg:pb-20 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center max-w-7xl mx-auto">
             
             {/* LEFT: Copy + CTA */}
