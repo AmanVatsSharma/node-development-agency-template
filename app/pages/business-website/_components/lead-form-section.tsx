@@ -23,6 +23,9 @@ import {
 } from 'lucide-react';
 import { fireConversion } from '@/utils/conversions';
 
+// Business-Website specific conversion event types
+// These map to Google Ads conversion actions configured in admin panel
+
 console.log('[Business-Website] LeadFormSection component loaded');
 
 interface FormData {
@@ -82,8 +85,11 @@ export function LeadFormSection() {
       console.log('[Business-Website] Lead API response:', data);
       if (!res.ok) throw new Error(data?.error || 'Lead API failed');
       setSubmitted(true);
-      // Fire Google Ads conversion
-      void fireConversion('lead_submit');
+      
+      // Fire Google Ads conversion - Business Website Lead Submit
+      console.log('[Business-Website] Firing lead_submit conversion to Google Ads');
+      void fireConversion('business_website_lead_submit');
+      console.log('[Business-Website] ✅ Lead saved to database, Zoho CRM updated, Google Ads conversion fired');
     } catch (err) {
       console.error('[Business-Website] Lead submit error:', err);
       alert('Something went wrong. Please try again.');
@@ -186,7 +192,11 @@ export function LeadFormSection() {
                   <a 
                     href="tel:+919963730111"
                     className="flex items-center gap-2 sm:gap-3 p-2.5 sm:p-3 bg-green-50 dark:bg-green-900/20 rounded-lg hover:bg-green-100 dark:hover:bg-green-900/30 transition-colors group"
-                    onClick={() => { console.log('[Business-Website] Quick call clicked'); void fireConversion('call_click'); }}
+                    onClick={() => { 
+                      console.log('[Business-Website] Quick call clicked - Phone: +91 99637 30111'); 
+                      console.log('[Business-Website] Firing call_click conversion to Google Ads');
+                      void fireConversion('business_website_call_click'); 
+                    }}
                   >
                     <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-green-600 flex items-center justify-center flex-shrink-0">
                       <Phone className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
@@ -204,7 +214,11 @@ export function LeadFormSection() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-2 sm:gap-3 p-2.5 sm:p-3 bg-green-50 dark:bg-green-900/20 rounded-lg hover:bg-green-100 dark:hover:bg-green-900/30 transition-colors group"
-                    onClick={() => { console.log('[Business-Website] WhatsApp clicked'); void fireConversion('whatsapp_click'); }}
+                    onClick={() => { 
+                      console.log('[Business-Website] WhatsApp clicked - Opening WhatsApp chat');
+                      console.log('[Business-Website] Firing whatsapp_click conversion to Google Ads'); 
+                      void fireConversion('business_website_whatsapp_click'); 
+                    }}
                   >
                     <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-green-600 flex items-center justify-center flex-shrink-0">
                       <MessageCircle className="h-4 w-4 sm:h-5 sm:w-5 text-white" />

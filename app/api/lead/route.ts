@@ -87,7 +87,24 @@ export async function POST(req: NextRequest) {
     }
 
     // Log and optionally trigger server-side record for Google
-    await logServerConversion('lead_submit', { correlationId, zohoLeadId, leadId: lead.id });
+    // Note: This logs to business_website by default. For other pages, pass source-specific event type
+    const source = body.source || 'business-website';
+    let conversionEventType: any = 'business_website_lead_submit'; // default
+    
+    // Map source to appropriate conversion event type
+    if (source === 'ai-voice-agents') {
+      conversionEventType = 'ai_voice_agents_lead_submit';
+    } else if (source === 'seo-audit') {
+      conversionEventType = 'seo_audit_lead_submit';
+    }
+    
+    console.log('[API/Lead] Logging conversion event:', conversionEventType);
+    await logServerConversion(conversionEventType, { 
+      correlationId, 
+      zohoLeadId, 
+      leadId: lead.id,
+      source,
+    });
 
     // Provide client with conversion mapping
     const mapping = await getClientConversionMapping();
