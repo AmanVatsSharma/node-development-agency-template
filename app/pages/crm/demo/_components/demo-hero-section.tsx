@@ -20,7 +20,7 @@ export function DemoHeroSection() {
   return (
     <section 
       ref={sectionRef}
-      className="relative py-20 md:py-32 overflow-hidden"
+      className="relative pt-28 pb-20 md:pt-36 md:pb-32 overflow-hidden"
       id="demo-hero"
     >
       {/* Background */}

@@ -26,7 +26,7 @@ export function HeroSection() {
   return (
     <section 
       ref={sectionRef}
-      className="relative bg-gradient-to-br from-blue-50 via-white to-green-50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 pt-20 pb-16 md:pt-32 md:pb-24 overflow-hidden"
+      className="relative bg-gradient-to-br from-blue-50 via-white to-green-50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 pt-28 pb-16 md:pt-36 md:pb-24 overflow-hidden"
       id="home"
       role="region"
       aria-labelledby="hero-heading"

@@ -107,7 +107,7 @@ export function HeroSection() {
       <div className="absolute top-20 left-10 w-72 h-72 bg-[#00E0B8] rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse" />
       <div className="absolute bottom-20 right-10 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse" style={{ animationDelay: '2s' }} />
 
-      <div className="container mx-auto px-4 py-16 md:py-20 lg:py-24 relative z-10">
+      <div className="container mx-auto px-4 pt-28 pb-16 md:pt-32 md:pb-20 lg:pt-36 lg:pb-24 relative z-10">
         <div className="max-w-7xl mx-auto">
           
           {/* Main Content Grid */}
