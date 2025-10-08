@@ -17,12 +17,14 @@ import { AnimatePresence, motion } from "motion/react";
 import { useOutsideClick } from "../hooks/use-outside-click";
 import { mainNavigation, servicesMegaMenu } from "../data/navigation";
 import { NavbarButton } from "./ui/resizable-navbar";
+import { ServiceIcon } from "./ServiceIcon";
 
 interface ServiceCard {
   name: string;
   link: string;
-  description: string;
-  icon: string;
+  description?: string;
+  icon?: string;
+  iconKey?: string;
   badge?: string;
   category: string;
 }
@@ -274,11 +276,11 @@ function ServiceCardItem({
       <div className="relative flex items-center gap-4">
         {/* Icon */}
         <motion.div 
-          className="text-4xl flex-shrink-0 group-hover:scale-110 transition-transform"
+          className="flex-shrink-0 group-hover:scale-110 transition-transform"
           whileHover={{ rotate: [0, -10, 10, -10, 0] }}
           transition={{ duration: 0.5 }}
         >
-          {card.icon}
+          <ServiceIcon iconKey={card.iconKey as any} emoji={card.icon} size={28} className="text-blue-600 dark:text-blue-400" />
         </motion.div>
 
         {/* Content */}
@@ -379,12 +381,12 @@ function ExpandedCardModal({ card, onClose, onNavigate, layoutId }: ExpandedCard
           {/* Header with Icon */}
           <div className="relative bg-gradient-to-br from-blue-500 to-cyan-500 p-8 text-center">
             <motion.div
-              className="text-7xl mb-4"
+              className="mb-4"
               initial={{ scale: 0, rotate: -180 }}
               animate={{ scale: 1, rotate: 0 }}
               transition={{ type: "spring", damping: 15 }}
             >
-              {card.icon}
+              <ServiceIcon iconKey={card.iconKey as any} emoji={card.icon} size={64} className="text-white" />
             </motion.div>
             <motion.h3
               className="text-2xl font-bold text-white mb-2"
