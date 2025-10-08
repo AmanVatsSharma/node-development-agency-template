@@ -8,6 +8,7 @@ export interface NavigationItem {
   link: string;
   description?: string;
   icon?: string;
+  iconKey?: string;
   badge?: string;
 }
 
@@ -48,6 +49,7 @@ export const servicesMegaMenu: MegaMenuCategory = {
           link: "/pages/next-js-development",
           description: "Enterprise-grade Next.js applications",
           icon: "⚛️",
+          iconKey: "nextjs",
           badge: "Popular",
         },
         {
@@ -55,6 +57,7 @@ export const servicesMegaMenu: MegaMenuCategory = {
           link: "/pages/reactjs-development",
           description: "Modern React solutions",
           icon: "⚛️",
+          iconKey: "react",
           badge: "Hot",
         },
         {
@@ -62,24 +65,28 @@ export const servicesMegaMenu: MegaMenuCategory = {
           link: "/pages/web-development",
           description: "Custom web applications",
           icon: "🌐",
+          iconKey: "world",
         },
         {
           name: "Website Development",
           link: "/pages/website-development",
           description: "Professional websites",
           icon: "💻",
+          iconKey: "desktop",
         },
         {
           name: "Business Websites",
           link: "/pages/business-website",
           description: "Complete business solutions",
           icon: "🏢",
+          iconKey: "building",
         },
         {
           name: "Website Services",
           link: "/pages/website-services",
           description: "Comprehensive web services",
           icon: "🚀",
+          iconKey: "rocket",
         },
       ],
     },
@@ -91,6 +98,7 @@ export const servicesMegaMenu: MegaMenuCategory = {
           link: "/pages/shopify-headless-migration",
           description: "Modern headless commerce",
           icon: "🛒",
+          iconKey: "shoppingCart",
           badge: "New",
         },
         {
@@ -98,12 +106,14 @@ export const servicesMegaMenu: MegaMenuCategory = {
           link: "/pages/shopify-product-page-customization",
           description: "Custom product experiences",
           icon: "📦",
+          iconKey: "package",
         },
         {
           name: "Shopify Store Setup",
           link: "/pages/shopify-store-setup",
           description: "Complete store solutions",
           icon: "🏪",
+          iconKey: "store",
         },
       ],
     },
@@ -115,6 +125,7 @@ export const servicesMegaMenu: MegaMenuCategory = {
           link: "/pages/ai-chatbot-development",
           description: "Intelligent conversational AI",
           icon: "🤖",
+          iconKey: "robot",
           badge: "AI",
         },
         {
@@ -122,6 +133,7 @@ export const servicesMegaMenu: MegaMenuCategory = {
           link: "/pages/ai-voice-agents",
           description: "Advanced voice AI solutions",
           icon: "🎙️",
+          iconKey: "microphone",
           badge: "AI",
         },
         {
@@ -129,12 +141,14 @@ export const servicesMegaMenu: MegaMenuCategory = {
           link: "/pages/whatsapp-business-api",
           description: "Business automation via WhatsApp",
           icon: "💬",
+          iconKey: "whatsapp",
         },
         {
           name: "CRM Solutions",
           link: "/pages/crm",
           description: "Customer relationship management",
           icon: "📊",
+          iconKey: "chartBar",
         },
       ],
     },
@@ -146,6 +160,7 @@ export const servicesMegaMenu: MegaMenuCategory = {
           link: "/pages/google-ads-management",
           description: "ROI-focused ad campaigns",
           icon: "📈",
+          iconKey: "chartLine",
           badge: "Premium",
         },
         {
@@ -153,6 +168,7 @@ export const servicesMegaMenu: MegaMenuCategory = {
           link: "/pages/seo-audit",
           description: "Free SEO analysis & insights",
           icon: "🔍",
+          iconKey: "search",
           badge: "Free",
         },
         {
@@ -160,12 +176,13 @@ export const servicesMegaMenu: MegaMenuCategory = {
           link: "/pages/services",
           description: "View complete service catalog",
           icon: "📋",
+          iconKey: "list",
         },
       ],
     },
   ],
   featured: {
-    title: "🌟 Featured: AI Voice Agents",
+    title: "Featured: AI Voice Agents",
     description: "Transform customer engagement with cutting-edge AI voice technology. Automate calls, support, and sales with natural conversations.",
     link: "/pages/ai-voice-agents",
   },

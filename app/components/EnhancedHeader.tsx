@@ -35,6 +35,7 @@ import {
 } from "./ui/resizable-navbar";
 import { mainNavigation, servicesMegaMenu } from "../data/navigation";
 import EnhancedMobileMenu from "./EnhancedMobileMenu";
+import { ServiceIcon } from "./ServiceIcon";
 
 // Console log for component initialization
 console.log("🎨 [EnhancedHeader] Component module loaded with Mega Menu & Enhanced Mobile Menu");
@@ -72,11 +73,7 @@ function MegaMenuDropdown({ isOpen, onClose }: MegaMenuProps) {
                         onClick={onClose}
                         className="group flex items-start space-x-3 p-3 rounded-xl hover:bg-gradient-to-r hover:from-blue-50 hover:to-cyan-50 dark:hover:from-blue-900/20 dark:hover:to-cyan-900/20 transition-all duration-200"
                       >
-                        {item.icon && (
-                          <span className="text-2xl flex-shrink-0 group-hover:scale-110 transition-transform">
-                            {item.icon}
-                          </span>
-                        )}
+                        <ServiceIcon iconKey={item.iconKey as any} emoji={item.icon} size={22} className="text-blue-600 dark:text-blue-400 flex-shrink-0 group-hover:scale-110 transition-transform" />
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2 mb-1">
                             <span className="font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
