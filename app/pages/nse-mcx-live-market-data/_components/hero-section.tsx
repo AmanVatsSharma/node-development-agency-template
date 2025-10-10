@@ -89,7 +89,7 @@ export function HeroSection() {
       aria-labelledby="hero-heading"
     >
       <HeroHighlight 
-        containerClassName="min-h-screen pt-36 sm:pt-40 md:pt-44 lg:pt-36"
+        containerClassName="min-h-screen pt-56 sm:pt-72 md:pt-80 lg:pt-36"
         className="w-full bg-gradient-to-br from-[#0B1E39] via-[#0a1929] to-[#050b14]"
       >
         {/* Animated Grid Background */}
@@ -105,7 +105,7 @@ export function HeroSection() {
         <div className="absolute bottom-20 right-10 w-96 h-96 bg-[#FFD700] rounded-full filter blur-[150px] opacity-10 animate-pulse" />
 
         {/* Live Stock Ticker Bar - lowered on mobile to avoid header overlap */}
-        <div className="absolute left-0 right-0 bg-black/40 backdrop-blur-md border-y border-[#00FF88]/30 py-3 overflow-hidden z-20 top-36 sm:top-36 md:top-24 lg:top-20">
+        <div className="absolute left-0 right-0 bg-black/40 backdrop-blur-md border-y border-[#00FF88]/30 py-3 overflow-hidden z-20 top-56 sm:top-72 md:top-28 lg:top-20">
           <motion.div
             animate={{ x: [0, -1000] }}
             transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
@@ -124,7 +124,7 @@ export function HeroSection() {
           </motion.div>
         </div>
 
-        <div className="container mx-auto px-4 pt-40 pb-14 sm:pt-44 sm:pb-16 md:pt-48 md:pb-20 lg:pt-48 lg:pb-24 relative z-10">
+        <div className="container mx-auto px-4 pt-60 pb-14 sm:pt-72 sm:pb-16 md:pt-80 md:pb-20 lg:pt-48 lg:pb-24 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center max-w-7xl mx-auto">
             
             {/* LEFT: Copy + CTAs */}
