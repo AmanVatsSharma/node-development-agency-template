@@ -4,13 +4,6 @@
  * @fileoverview Hero Section - NSE/MCX Live Market Data Landing Page
  * @description Futuristic animated hero with live stock ticker and data visualization
  * @version 1.0.0
- * 
- * FEATURES:
- * - Animated live stock ticker
- * - 3D candlestick chart visualization
- * - Real-time market status indicator
- * - Glowing neon effects
- * - Particle background animation
  */
 
 import React, { useEffect, useRef, useState } from 'react';
@@ -29,9 +22,6 @@ import {
   Sparkles
 } from 'lucide-react';
 
-/**
- * Stock Data Interface
- */
 interface StockData {
   symbol: string;
   price: number;
@@ -39,17 +29,12 @@ interface StockData {
   changePercent: number;
 }
 
-/**
- * Hero Section Component
- */
 export function HeroSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const inView = useInView(sectionRef, { once: true, amount: 0.3 });
   
-  // Market Status
-  const [marketStatus, setMarketStatus] = useState<'OPEN' | 'CLOSED'>('OPEN');
+  const [marketStatus] = useState<'OPEN' | 'CLOSED'>('OPEN');
   
-  // Live Stock Ticker Data
   const [tickerStocks, setTickerStocks] = useState<StockData[]>([
     { symbol: 'NIFTY 50', price: 19674.25, change: 125.30, changePercent: 0.64 },
     { symbol: 'BANKNIFTY', price: 44235.80, change: -89.50, changePercent: -0.20 },
@@ -61,8 +46,7 @@ export function HeroSection() {
     { symbol: 'SILVER', price: 74523.50, change: -234.50, changePercent: -0.31 },
   ]);
 
-  // Candlestick animation data
-  const [candleData, setCandleData] = useState([
+  const [candleData] = useState([
     { height: 60, color: 'green' },
     { height: 40, color: 'red' },
     { height: 75, color: 'green' },
@@ -72,7 +56,6 @@ export function HeroSection() {
     { height: 30, color: 'red' },
   ]);
 
-  // Simulate live price updates
   useEffect(() => {
     console.log('[HeroSection] Component mounted, view status:', inView);
 
@@ -112,10 +95,7 @@ export function HeroSection() {
         {/* Animated Grid Background */}
         <div className="absolute inset-0 opacity-20">
           <div className="absolute inset-0" style={{
-            backgroundImage: `
-              linear-gradient(to right, #00FF88 1px, transparent 1px),
-              linear-gradient(to bottom, #00FF88 1px, transparent 1px)
-            `,
+            backgroundImage: `linear-gradient(to right, #00FF88 1px, transparent 1px), linear-gradient(to bottom, #00FF88 1px, transparent 1px)`,
             backgroundSize: '40px 40px'
           }} />
         </div>
@@ -274,12 +254,9 @@ export function HeroSection() {
               transition={{ duration: 0.8, delay: 0.3 }}
               className="relative order-1 lg:order-2"
             >
-              {/* Dashboard Container */}
               <div className="relative mx-auto max-w-xl">
-                {/* Main Dashboard Card */}
                 <div className="relative bg-gradient-to-br from-gray-900/90 to-black/90 backdrop-blur-xl rounded-3xl shadow-2xl border border-[#00FF88]/30 overflow-hidden">
                   
-                  {/* Dashboard Header */}
                   <div className="bg-gradient-to-r from-[#00FF88]/20 to-[#FFD700]/20 backdrop-blur-xl border-b border-[#00FF88]/30 p-4">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
@@ -297,9 +274,7 @@ export function HeroSection() {
                     </div>
                   </div>
 
-                  {/* Live Candlestick Chart Visualization */}
                   <div className="p-6">
-                    {/* Chart Area */}
                     <div className="bg-black/40 rounded-xl p-4 mb-4 border border-[#00FF88]/20">
                       <div className="flex items-end justify-between h-32 gap-1">
                         {candleData.map((candle, index) => (
@@ -320,7 +295,7 @@ export function HeroSection() {
                             }}
                           />
                         ))}
-                      </motion.div>
+                      </div>
                       <div className="flex justify-between mt-2 text-xs text-white/50">
                         <span>9:15</span>
                         <span>11:30</span>
@@ -329,7 +304,6 @@ export function HeroSection() {
                       </div>
                     </div>
 
-                    {/* Live Stock Cards */}
                     <div className="space-y-2">
                       {tickerStocks.slice(0, 3).map((stock, index) => (
                         <motion.div
@@ -358,7 +332,6 @@ export function HeroSection() {
                       ))}
                     </div>
 
-                    {/* Stats Footer */}
                     <div className="grid grid-cols-3 gap-2 mt-4">
                       {[
                         { label: 'Latency', value: '<1ms', icon: <Zap className="h-4 w-4" /> },
@@ -377,7 +350,6 @@ export function HeroSection() {
                   </div>
                 </div>
 
-                {/* Glow Effect */}
                 <div className="absolute -inset-4 bg-gradient-to-r from-[#00FF88]/20 via-[#FFD700]/20 to-[#00FF88]/20 rounded-[3rem] blur-3xl -z-10 animate-pulse" />
               </div>
             </motion.div>
