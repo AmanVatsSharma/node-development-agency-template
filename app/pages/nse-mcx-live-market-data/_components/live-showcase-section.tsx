@@ -77,7 +77,7 @@ export function LiveShowcaseSection() {
   return (
     <section 
       ref={sectionRef}
-      className="py-20 md:py-28 bg-gradient-to-br from-[#0B1E39] via-[#0a1929] to-[#050b14] relative overflow-hidden"
+      className="py-16 sm:py-18 md:py-24 lg:py-28 bg-gradient-to-br from-[#0B1E39] via-[#0a1929] to-[#050b14] relative overflow-hidden"
       id="live-showcase"
     >
       {/* Animated Background */}
@@ -162,7 +162,7 @@ export function LiveShowcaseSection() {
             </div>
 
             {/* Data Table */}
-            <div className="p-6">
+            <div className="p-4 sm:p-6">
               <AnimatePresence mode="wait">
                 {activeTab === 'equity' && (
                   <motion.div
@@ -173,7 +173,7 @@ export function LiveShowcaseSection() {
                     className="space-y-3"
                   >
                     {/* Table Header */}
-                    <div className="grid grid-cols-6 gap-4 px-4 py-2 bg-white/5 rounded-lg text-xs font-bold text-white/70">
+                    <div className="grid grid-cols-6 gap-3 sm:gap-4 px-2 sm:px-4 py-2 bg-white/5 rounded-lg text-[10px] sm:text-xs font-bold text-white/70">
                       <div>SYMBOL</div>
                       <div className="text-right">LTP</div>
                       <div className="text-right">CHANGE</div>
@@ -187,7 +187,7 @@ export function LiveShowcaseSection() {
                         key={stock.symbol}
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
-                        className="grid grid-cols-6 gap-4 px-4 py-3 bg-white/5 hover:bg-white/10 rounded-lg border border-white/10 transition-all"
+                        className="grid grid-cols-6 gap-3 sm:gap-4 px-2 sm:px-4 py-2 sm:py-3 bg-white/5 hover:bg-white/10 rounded-lg border border-white/10 transition-all"
                       >
                         <div className="font-bold text-white">{stock.symbol}</div>
                         <div className="text-right text-[#FFD700] font-mono">₹{stock.ltp.toFixed(2)}</div>
@@ -212,7 +212,7 @@ export function LiveShowcaseSection() {
                     className="space-y-3"
                   >
                     {/* Table Header */}
-                    <div className="grid grid-cols-5 gap-4 px-4 py-2 bg-white/5 rounded-lg text-xs font-bold text-white/70">
+                    <div className="grid grid-cols-5 gap-3 sm:gap-4 px-2 sm:px-4 py-2 bg-white/5 rounded-lg text-[10px] sm:text-xs font-bold text-white/70">
                       <div>STRIKE</div>
                       <div className="text-right">LTP</div>
                       <div className="text-right">CHANGE</div>
@@ -225,7 +225,7 @@ export function LiveShowcaseSection() {
                         key={option.strike}
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
-                        className="grid grid-cols-5 gap-4 px-4 py-3 bg-white/5 hover:bg-white/10 rounded-lg border border-white/10 transition-all"
+                        className="grid grid-cols-5 gap-3 sm:gap-4 px-2 sm:px-4 py-2 sm:py-3 bg-white/5 hover:bg-white/10 rounded-lg border border-white/10 transition-all"
                       >
                         <div className="font-bold text-white">{option.strike}</div>
                         <div className="text-right text-[#FFD700] font-mono">₹{option.ltp.toFixed(2)}</div>
@@ -248,7 +248,7 @@ export function LiveShowcaseSection() {
                     className="space-y-3"
                   >
                     {/* Table Header */}
-                    <div className="grid grid-cols-5 gap-4 px-4 py-2 bg-white/5 rounded-lg text-xs font-bold text-white/70">
+                    <div className="grid grid-cols-5 gap-3 sm:gap-4 px-2 sm:px-4 py-2 bg-white/5 rounded-lg text-[10px] sm:text-xs font-bold text-white/70">
                       <div>SYMBOL</div>
                       <div className="text-right">LTP</div>
                       <div className="text-right">CHANGE</div>
@@ -261,7 +261,7 @@ export function LiveShowcaseSection() {
                         key={future.symbol}
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
-                        className="grid grid-cols-5 gap-4 px-4 py-3 bg-white/5 hover:bg-white/10 rounded-lg border border-white/10 transition-all"
+                        className="grid grid-cols-5 gap-3 sm:gap-4 px-2 sm:px-4 py-2 sm:py-3 bg-white/5 hover:bg-white/10 rounded-lg border border-white/10 transition-all"
                       >
                         <div className="font-bold text-white">{future.symbol}</div>
                         <div className="text-right text-[#FFD700] font-mono">₹{future.ltp.toFixed(2)}</div>

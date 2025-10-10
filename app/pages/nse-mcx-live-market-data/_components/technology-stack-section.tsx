@@ -54,7 +54,7 @@ export function TechnologyStackSection() {
   return (
     <section 
       ref={sectionRef}
-      className="py-20 md:py-28 bg-gradient-to-br from-[#0B1E39] via-[#0a1929] to-[#050b14] relative overflow-hidden"
+      className="py-16 sm:py-18 md:py-24 lg:py-28 bg-gradient-to-br from-[#0B1E39] via-[#0a1929] to-[#050b14] relative overflow-hidden"
       id="technology"
     >
       {/* Background Elements */}
@@ -86,7 +86,7 @@ export function TechnologyStackSection() {
         </motion.div>
 
         {/* Tech Stack Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 gap-6 sm:gap-7 md:gap-8 mb-12 sm:mb-14 md:mb-16 max-w-6xl mx-auto">
           {techStack.map((tech, index) => (
             <motion.div
               key={index}

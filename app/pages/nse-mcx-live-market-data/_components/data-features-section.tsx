@@ -92,7 +92,7 @@ export function DataFeaturesSection() {
   return (
     <section 
       ref={sectionRef}
-      className="py-20 md:py-28 bg-gradient-to-b from-gray-50 to-white dark:from-black dark:to-gray-900 relative overflow-hidden"
+      className="py-16 sm:py-18 md:py-24 lg:py-28 bg-gradient-to-b from-gray-50 to-white dark:from-black dark:to-gray-900 relative overflow-hidden"
       id="data-features"
     >
       {/* Background Glow */}
@@ -120,7 +120,7 @@ export function DataFeaturesSection() {
         </motion.div>
 
         {/* Features Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 md:gap-6">
           {features.map((feature, index) => (
             <motion.div
               key={index}

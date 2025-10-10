@@ -137,6 +137,41 @@ Background:
 7. **Final CTA**: "Start Free Trial Now" (with urgency)
 8. **Mobile Floating CTA**: Always visible on mobile
 
+## 🔗 Lead & Conversion Flow
+
+- Centralized lead submit: the form posts to `/api/lead` with `source: 'nse-mcx-live-market-data'` and `leadSource: 'Website'`.
+- Database-first save, Zoho CRM sync, and server-side conversion log happen in `app/api/lead/route.ts`.
+- Client-side Google Ads conversion fires using `fireConversion('nse_mcx_live_market_data_lead_submit')` from `utils/conversions.ts` after a successful submit.
+- Mobile call CTA fires `fireConversion('nse_mcx_live_market_data_call_click')` on click.
+- Google Ads scripts are loaded globally via `app/layout.tsx` with `<GoogleAdsTracking conversionId="AW-17606401808" />`.
+
+### 🧪 Testing conversions
+
+In your browser console, load the helper (already included at `/public/conversion-test-helper.js`) and run:
+
+```js
+listAllEvents();
+testPage('nse-mcx-live-market-data');
+// or a specific event
+testEvent('nse_mcx_live_market_data_lead_submit');
+```
+
+### 📈 Flow diagram (high-level)
+
+```
+User submits form
+   ↓
+POST /api/lead  (source: nse-mcx-live-market-data)
+   ↓                      ↓
+Save Lead (DB)         Server log → IntegrationLog
+   ↓
+Zoho CRM sync (best-effort)
+   ↓
+fireConversion('nse_mcx_live_market_data_lead_submit')
+   ↓
+gtag('event','conversion', { send_to: <AW-ID/LABEL> })
+```
+
 ## 🔧 Customization
 
 ### Update Pricing
@@ -155,6 +190,13 @@ Each section has its own component file for easy editing
 - ✅ Optimized animations (GPU accelerated)
 - ✅ Lazy loading ready
 - ✅ Mobile-optimized
+
+## 📱 Mobile Layout Notes
+
+- Adjusted hero top padding and ticker offset to avoid overlap with the sticky header on small screens.
+- Standardized section paddings to `py-16/18/24/28` responsive scale.
+- Tightened grids and gaps for small screens (sm and md breakpoints) for better alignment.
+- Added `scroll-mt-24 md:scroll-mt-28` on `lead-form` section to ensure anchor jumps clear the header.
 
 ## 🎯 Marketing Notes
 

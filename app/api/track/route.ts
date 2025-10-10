@@ -29,6 +29,10 @@ const ALLOWED_EVENT_TYPES = new Set<ConversionEventType>([
   'ai_voice_agents_lead_submit',
   'ai_voice_agents_whatsapp_click',
   'ai_voice_agents_call_click',
+  // NSE/MCX Live Market Data
+  'nse_mcx_live_market_data_lead_submit',
+  'nse_mcx_live_market_data_whatsapp_click',
+  'nse_mcx_live_market_data_call_click',
   // SEO Audit
   'seo_audit_lead_submit',
   'seo_audit_whatsapp_click',
