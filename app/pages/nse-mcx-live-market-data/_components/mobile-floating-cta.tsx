@@ -8,6 +8,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Phone, X } from 'lucide-react';
+import { fireConversion } from '@/utils/conversions';
 
 export function MobileFloatingCTA() {
   const [isVisible, setIsVisible] = useState(true);
@@ -39,6 +40,11 @@ export function MobileFloatingCTA() {
               <a
                 href="tel:+919876543210"
                 className="flex items-center gap-3 p-3 bg-gradient-to-r from-[#00FF88] to-[#00CC70] rounded-xl text-[#0B1E39] font-bold hover:shadow-lg transition-all"
+                onClick={() => {
+                  console.log('[Market-Data-API] Call CTA clicked - Phone: +91-9876543210');
+                  console.log('[Market-Data-API] Firing call_click conversion to Google Ads');
+                  void fireConversion('nse_mcx_live_market_data_call_click');
+                }}
               >
                 <Phone className="h-5 w-5" />
                 <span>Call: +91-9876543210</span>

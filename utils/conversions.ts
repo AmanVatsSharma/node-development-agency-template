@@ -77,6 +77,10 @@ export type ConversionEventType =
   | 'seo_audit_lead_submit'
   | 'seo_audit_call_click'
   | 'seo_audit_whatsapp_click'
+  // NSE/MCX Live Market Data
+  | 'nse_mcx_live_market_data_lead_submit'
+  | 'nse_mcx_live_market_data_call_click'
+  | 'nse_mcx_live_market_data_whatsapp_click'
   // Global conversions
   | 'newsletter_signup'
   | 'contact_form_submit';

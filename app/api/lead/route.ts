@@ -97,12 +97,14 @@ export async function POST(req: NextRequest) {
     // Note: This logs to business_website by default. For other pages, pass source-specific event type
     const source = body.source || 'business-website';
     let conversionEventType: any = 'business_website_lead_submit'; // default
-    
+
     // Map source to appropriate conversion event type
     if (source === 'ai-voice-agents') {
       conversionEventType = 'ai_voice_agents_lead_submit';
     } else if (source === 'seo-audit') {
       conversionEventType = 'seo_audit_lead_submit';
+    } else if (source === 'nse-mcx-live-market-data') {
+      conversionEventType = 'nse_mcx_live_market_data_lead_submit';
     }
     
     console.log('[API/Lead] Logging conversion event:', conversionEventType);

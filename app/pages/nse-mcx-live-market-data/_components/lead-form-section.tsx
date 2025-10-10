@@ -8,6 +8,7 @@
 import React, { useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Rocket, Mail, User, Phone, Building, CheckCircle2 } from 'lucide-react';
+import { fireConversion } from '@/utils/conversions';
 
 export function LeadFormSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -23,22 +24,49 @@ export function LeadFormSection() {
   });
 
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('[Market-Data-API] Form submitted:', formData);
-    
-    // Track conversion
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('event', 'generate_lead', {
-        event_category: 'Lead Generation',
-        event_label: 'Market Data API Form',
-        value: 1
+    console.log('[Market-Data-API] Lead form submitted:', formData);
+
+    setLoading(true);
+    try {
+      // Submit to centralized lead API
+      const res = await fetch('/api/lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          message: formData.message,
+          source: 'nse-mcx-live-market-data',
+          leadSource: 'Website',
+          raw: {
+            company: formData.company,
+            useCase: formData.useCase,
+            path: typeof window !== 'undefined' ? window.location.pathname : undefined,
+          },
+        }),
       });
+      const data = await res.json();
+      console.log('[Market-Data-API] Lead API response:', data);
+      if (!res.ok) throw new Error(data?.error || 'Lead API failed');
+
+      setSubmitted(true);
+
+      // Fire Google Ads conversion for this page
+      console.log('[Market-Data-API] Firing lead_submit conversion to Google Ads');
+      void fireConversion('nse_mcx_live_market_data_lead_submit');
+      console.log('[Market-Data-API] ✅ Lead saved, CRM sync initiated, conversion fired');
+    } catch (err) {
+      console.error('[Market-Data-API] Lead submit error:', err);
+      alert('Something went wrong. Please try again.');
+    } finally {
+      setLoading(false);
     }
 
-    setSubmitted(true);
-    
     // Reset form after 5 seconds
     setTimeout(() => {
       setSubmitted(false);
@@ -223,10 +251,11 @@ export function LeadFormSection() {
                 {/* Submit Button */}
                 <button
                   type="submit"
-                  className="w-full py-4 px-6 bg-gradient-to-r from-[#00FF88] to-[#00CC70] text-[#0B1E39] font-black rounded-xl text-lg shadow-lg hover:shadow-2xl hover:shadow-[#00FF88]/50 transition-all duration-300 hover:scale-105 flex items-center justify-center gap-2"
+                  disabled={loading}
+                  className="w-full py-4 px-6 bg-gradient-to-r from-[#00FF88] to-[#00CC70] text-[#0B1E39] font-black rounded-xl text-lg shadow-lg hover:shadow-2xl hover:shadow-[#00FF88]/50 transition-all duration-300 hover:scale-105 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
                   <Rocket className="h-6 w-6" />
-                  Start Free Trial Now
+                  {loading ? 'Processing Your Request...' : 'Start Free Trial Now'}
                 </button>
 
                 {/* Trust Line */}
