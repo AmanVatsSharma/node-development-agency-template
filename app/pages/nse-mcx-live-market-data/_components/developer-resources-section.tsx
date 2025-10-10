@@ -61,7 +61,7 @@ export function DeveloperResourcesSection() {
   return (
     <section 
       ref={sectionRef}
-      className="py-20 md:py-28 bg-gradient-to-br from-[#0B1E39] via-[#0a1929] to-[#050b14] relative overflow-hidden"
+      className="py-16 sm:py-18 md:py-24 lg:py-28 bg-gradient-to-br from-[#0B1E39] via-[#0a1929] to-[#050b14] relative overflow-hidden"
       id="developer-resources"
     >
       {/* Background */}
@@ -93,7 +93,7 @@ export function DeveloperResourcesSection() {
         </motion.div>
 
         {/* Resources Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 max-w-6xl mx-auto">
           {resources.map((resource, index) => (
             <motion.a
               key={index}

@@ -100,7 +100,7 @@ export function LeadFormSection() {
   return (
     <section 
       ref={sectionRef}
-      className="py-20 md:py-28 bg-gradient-to-br from-[#0B1E39] via-[#0a1929] to-[#050b14] relative overflow-hidden"
+      className="py-20 md:py-28 bg-gradient-to-br from-[#0B1E39] via-[#0a1929] to-[#050b14] relative overflow-hidden scroll-mt-24 md:scroll-mt-28"
       id="lead-form"
     >
       {/* Animated Background */}

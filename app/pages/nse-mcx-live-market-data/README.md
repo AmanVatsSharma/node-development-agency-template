@@ -191,6 +191,13 @@ Each section has its own component file for easy editing
 - ✅ Lazy loading ready
 - ✅ Mobile-optimized
 
+## 📱 Mobile Layout Notes
+
+- Adjusted hero top padding and ticker offset to avoid overlap with the sticky header on small screens.
+- Standardized section paddings to `py-16/18/24/28` responsive scale.
+- Tightened grids and gaps for small screens (sm and md breakpoints) for better alignment.
+- Added `scroll-mt-24 md:scroll-mt-28` on `lead-form` section to ensure anchor jumps clear the header.
+
 ## 🎯 Marketing Notes
 
 **Primary Keywords:**

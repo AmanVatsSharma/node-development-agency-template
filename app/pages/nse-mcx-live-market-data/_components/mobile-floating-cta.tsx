@@ -27,7 +27,7 @@ export function MobileFloatingCTA() {
         initial={{ y: 100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 1, duration: 0.5 }}
-        className="fixed bottom-4 left-4 right-4 z-50 lg:hidden"
+        className="fixed bottom-4 left-4 right-4 z-[60] lg:hidden"
       >
         <AnimatePresence>
           {showOptions && (

@@ -61,7 +61,7 @@ export function CaseStudiesSection() {
   return (
     <section 
       ref={sectionRef}
-      className="py-20 md:py-28 bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-black relative overflow-hidden"
+      className="py-16 sm:py-18 md:py-24 lg:py-28 bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-black relative overflow-hidden"
       id="case-studies"
     >
       <div className="container mx-auto px-4 relative z-10">
@@ -85,7 +85,7 @@ export function CaseStudiesSection() {
         </motion.div>
 
         {/* Case Studies Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7 md:gap-8 max-w-7xl mx-auto">
           {caseStudies.map((study, index) => (
             <motion.div
               key={index}
