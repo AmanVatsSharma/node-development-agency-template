@@ -32,6 +32,7 @@ import {
 import { Suspense } from "react";
 import { EffectComposer, Bloom, ChromaticAberration } from "@react-three/postprocessing";
 import { BlendFunction } from "postprocessing";
+import WasmParticles from "./components/WasmParticles";
 
 // ═══════════════════════════════════════════════════════════════════════════
 // VIBRANT COLORS - HIGH CONTRAST
@@ -859,6 +860,17 @@ const SceneContent = ({
       
       {/* Central neural sphere */}
       <BrightNeuralSphere />
+
+      {/* WASM-accelerated particle field (JS fallback with console logs) */}
+      <WasmParticles
+        count={700}
+        radiusMin={3}
+        radiusMax={6}
+        speed={0.5}
+        color={ELECTRIC_CYAN}
+        size={0.12}
+        opacity={0.9}
+      />
       
       {/* Tech logos in organized layers */}
       {/* Backend layer */}
