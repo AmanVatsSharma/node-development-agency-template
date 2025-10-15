@@ -40,6 +40,11 @@ export default function ChatWidget({ config }: ChatWidgetProps) {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
+  const STORAGE_KEYS = {
+    sessionId: 'ai_agent_session_id',
+    messages: 'ai_agent_messages',
+  } as const;
+
   // Show widget only if enabled
   if (!config.enabled) {
     return null;
@@ -58,6 +63,43 @@ export default function ChatWidget({ config }: ChatWidgetProps) {
   // Auto-scroll to bottom
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
+
+  // Load persisted session and messages
+  useEffect(() => {
+    try {
+      const persistedSessionId = typeof window !== 'undefined' ? localStorage.getItem(STORAGE_KEYS.sessionId) : null;
+      const persistedMessages = typeof window !== 'undefined' ? localStorage.getItem(STORAGE_KEYS.messages) : null;
+      if (persistedSessionId) {
+        console.log('[Chat Widget] Restored sessionId from localStorage');
+        setSessionId(persistedSessionId);
+      }
+      if (persistedMessages) {
+        try {
+          const parsed: Message[] = JSON.parse(persistedMessages);
+          if (Array.isArray(parsed)) {
+            console.log('[Chat Widget] Restored messages from localStorage', { count: parsed.length });
+            setMessages(parsed);
+          }
+        } catch (e) {
+          console.warn('[Chat Widget] Failed to parse persisted messages');
+        }
+      }
+    } catch (e) {
+      console.error('[Chat Widget] Failed to access localStorage', e);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Persist messages on change
+  useEffect(() => {
+    try {
+      if (typeof window !== 'undefined') {
+        localStorage.setItem(STORAGE_KEYS.messages, JSON.stringify(messages));
+      }
+    } catch (e) {
+      console.error('[Chat Widget] Failed to persist messages', e);
+    }
   }, [messages]);
 
   // Focus input when opened
@@ -128,6 +170,13 @@ export default function ChatWidget({ config }: ChatWidgetProps) {
 
         setMessages(prev => [...prev, assistantMessage]);
         setSessionId(data.sessionId);
+        try {
+          if (typeof window !== 'undefined') {
+            localStorage.setItem(STORAGE_KEYS.sessionId, data.sessionId);
+          }
+        } catch (e) {
+          console.error('[Chat Widget] Failed to persist sessionId', e);
+        }
 
         // If lead captured, track conversion
         if (data.leadCaptured) {

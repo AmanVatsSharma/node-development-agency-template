@@ -241,6 +241,7 @@ Search for logs:
 | `/admin/team` | Team member management |
 | `/admin/contacts` | Contact submissions |
 | `/admin/newsletter` | Newsletter subscribers |
+| `/admin/conversations` | AI agent conversations |
 | `/admin/integrations` | Zoho & Google Ads |
 | `/admin/logs` | System activity logs |
 
@@ -257,6 +258,8 @@ Search for logs:
 | `/api/admin/newsletter` | GET | Newsletter subscribers |
 | `/api/admin/integrations` | GET/POST | Integration settings |
 | `/api/admin/logs` | GET | System logs |
+| `/api/ai-agent/conversations` | GET | List AI conversations (admin) |
+| `/api/ai-agent/conversations/[id]` | GET | Single conversation details (admin) |
 
 ---
 
