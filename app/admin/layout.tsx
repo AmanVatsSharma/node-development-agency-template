@@ -105,6 +105,12 @@ const navItems: NavItem[] = [
     description: 'Form submissions',
   },
   {
+    label: 'Conversations',
+    href: '/admin/conversations',
+    icon: MessageSquare,
+    description: 'AI agent chat history',
+  },
+  {
     label: 'Newsletter',
     href: '/admin/newsletter',
     icon: Mail,
