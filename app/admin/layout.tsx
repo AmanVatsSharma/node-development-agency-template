@@ -117,6 +117,12 @@ const navItems: NavItem[] = [
     description: 'AI sales assistant config',
   },
   {
+    label: 'Conversations',
+    href: '/admin/conversations',
+    icon: MessageSquare,
+    description: 'AI agent chat history',
+  },
+  {
     label: 'Integrations',
     href: '/admin/integrations',
     icon: Settings,
