@@ -28,6 +28,8 @@ export default function AdminConversationsListPage() {
   const [leadFilter, setLeadFilter] = useState<string>(searchParams.get('lead') || '');
   const [query, setQuery] = useState<string>('');
   const [limit, setLimit] = useState<number>(parseInt(searchParams.get('limit') || '50'));
+  const listRef = React.useRef<HTMLDivElement>(null);
+  const [isFetchingMore, setIsFetchingMore] = useState(false);
 
   // Selection + detail state for split-view
   const initialSelected = searchParams.get('id') || null;
@@ -71,6 +73,43 @@ export default function AdminConversationsListPage() {
       setLoading(false);
     }
   };
+
+  // Infinite scroll observer
+  useEffect(() => {
+    const el = listRef.current;
+    if (!el) return;
+
+    const onScroll = async () => {
+      if (isFetchingMore || loading || error) return;
+      const threshold = 120; // px from bottom
+      if (el.scrollTop + el.clientHeight >= el.scrollHeight - threshold) {
+        // fetch more
+        setIsFetchingMore(true);
+        try {
+          const nextLimit = limit + 50;
+          const params = new URLSearchParams();
+          params.set('limit', String(nextLimit));
+          if (statusFilter) params.set('status', statusFilter);
+          if (leadFilter === 'leads') params.set('leadCaptured', 'true');
+          if (leadFilter === 'no_leads') params.set('leadCaptured', 'false');
+          const res = await fetch(`/api/ai-agent/conversations?${params.toString()}`);
+          const data = await res.json();
+          if (res.ok && data.success) {
+            setLimit(nextLimit);
+            setConversations(data.conversations || []);
+            setStats(data.stats || {});
+          }
+        } catch (e) {
+          console.error('[Admin Conversations] Infinite scroll load failed', e);
+        } finally {
+          setIsFetchingMore(false);
+        }
+      }
+    };
+
+    el.addEventListener('scroll', onScroll);
+    return () => el.removeEventListener('scroll', onScroll);
+  }, [limit, statusFilter, leadFilter, isFetchingMore, loading, error]);
 
   const pushQueryToUrl = useCallback((nextSelectedId: string | null) => {
     const params = new URLSearchParams();
@@ -305,7 +344,7 @@ export default function AdminConversationsListPage() {
                 No conversations found
               </div>
             ) : (
-              <div className="max-h-[70vh] overflow-auto">
+              <div ref={listRef} className="max-h-[70vh] overflow-auto">
                 <ul className="space-y-2">
                   {filteredConversations.map((c) => {
                     const isSelected = c.id === selectedId;
@@ -341,6 +380,9 @@ export default function AdminConversationsListPage() {
                     );
                   })}
                 </ul>
+                {isFetchingMore && (
+                  <div className="py-3 text-center text-xs text-slate-500">Loading more...</div>
+                )}
               </div>
             )}
             <div className="mt-3 flex justify-center">
