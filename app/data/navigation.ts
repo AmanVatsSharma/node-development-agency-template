@@ -153,6 +153,27 @@ export const servicesMegaMenu: MegaMenuCategory = {
       ],
     },
     {
+      title: "Trading & Finance",
+      items: [
+        {
+          name: "Trading Software for Brokers",
+          link: "/pages/trading-software",
+          description: "Enterprise trading platform",
+          icon: "📊",
+          iconKey: "chartLine",
+          badge: "New",
+        },
+        {
+          name: "Live Market Data API",
+          link: "/pages/nse-mcx-live-market-data",
+          description: "NSE, BSE, MCX real-time data",
+          icon: "📈",
+          iconKey: "trendingUp",
+          badge: "Live",
+        },
+      ],
+    },
+    {
       title: "Marketing & Growth",
       items: [
         {
@@ -213,6 +234,10 @@ export const footerNavigation = {
     { href: "/pages/crm", label: "CRM Solutions" },
     { href: "/pages/google-ads-management", label: "Google Ads Management" },
     { href: "/pages/seo-audit", label: "SEO Audit (Free)" },
+  ],
+  tradingFinance: [
+    { href: "/pages/trading-software", label: "Trading Software for Brokers" },
+    { href: "/pages/nse-mcx-live-market-data", label: "Live Market Data API" },
   ],
   ecommerceSolutions: [
     { href: "/pages/shopify-headless-migration", label: "Shopify Headless Migration" },

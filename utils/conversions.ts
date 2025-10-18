@@ -81,6 +81,10 @@ export type ConversionEventType =
   | 'nse_mcx_live_market_data_lead_submit'
   | 'nse_mcx_live_market_data_call_click'
   | 'nse_mcx_live_market_data_whatsapp_click'
+  // Trading Software for Brokers
+  | 'trading_software_lead_submit'
+  | 'trading_software_call_click'
+  | 'trading_software_whatsapp_click'
   // Global conversions
   | 'newsletter_signup'
   | 'contact_form_submit';
