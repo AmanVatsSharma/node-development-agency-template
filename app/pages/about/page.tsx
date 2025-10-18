@@ -2,14 +2,12 @@
 
 import { motion } from "motion/react";
 import { useEffect, useState } from "react";
-import { LampContainer } from "../../components/lamp";
-import { WorldMap } from "../../components/ui/world-map";
 
-// Console log for page initialization
-console.log("About Page: Initializing premium enterprise-grade about page component");
+// Console log for page initialization - debugging support
+console.log("About Page: Initializing lightweight instant-load about page");
 
 export default function AboutPage() {
-  // State for animated counters
+  // State for animated counters - lightweight implementation
   const [counters, setCounters] = useState({
     clients: 0,
     projects: 0,
@@ -17,14 +15,14 @@ export default function AboutPage() {
     team: 0,
   });
 
-  // Instant counter display - no animation delay
+  // Quick counter animation on mount
   useEffect(() => {
     console.log("About Page: Loading counters");
     const targets = { clients: 500, projects: 1200, countries: 6, team: 50 };
     
-    // Quick animation (0.8 seconds total)
-    const duration = 800;
-    const steps = 15;
+    // Fast animation (500ms total)
+    const duration = 500;
+    const steps = 10;
     const interval = duration / steps;
 
     let step = 0;
@@ -49,61 +47,35 @@ export default function AboutPage() {
     return () => clearInterval(timer);
   }, []);
 
-  // World map connection data showing global reach
-  const worldMapDots = [
-    {
-      start: { lat: 28.7041, lng: 77.1025 }, // Delhi/Gurugram (HQ)
-      end: { lat: 25.2048, lng: 55.2708 }, // Dubai
-    },
-    {
-      start: { lat: 28.7041, lng: 77.1025 }, // Delhi/Gurugram
-      end: { lat: 37.7749, lng: -122.4194 }, // San Francisco/California
-    },
-    {
-      start: { lat: 28.7041, lng: 77.1025 }, // Delhi/Gurugram
-      end: { lat: 43.6532, lng: -79.3832 }, // Toronto
-    },
-    {
-      start: { lat: 28.7041, lng: 77.1025 }, // Delhi/Gurugram
-      end: { lat: 22.5431, lng: 114.0579 }, // Shenzhen
-    },
-    {
-      start: { lat: 28.7041, lng: 77.1025 }, // Delhi/Gurugram
-      end: { lat: 12.9716, lng: 77.5946 }, // Bangalore
-    },
-    {
-      start: { lat: 28.7041, lng: 77.1025 }, // Delhi/Gurugram
-      end: { lat: 28.5355, lng: 77.3910 }, // Noida
-    },
-  ];
-
-  console.log("About Page: Rendering with world map connections:", worldMapDots.length);
+  console.log("About Page: Rendering lightweight version");
 
   return (
     <div className="w-full">
-      {/* Hero Section with Lamp Component */}
-      <section className="relative overflow-hidden">
-        <LampContainer>
+      {/* Hero Section - Simple and Fast */}
+      <section className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white py-20 lg:py-32">
+        {/* Simple background pattern */}
+        <div className="absolute inset-0 opacity-10" style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
+        }}></div>
+        
+        <div className="container mx-auto px-4 relative z-10">
           <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{
-              duration: 0.4,
-              ease: "easeOut",
-            }}
-            className="mt-8 text-center px-4"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-center"
           >
-            <div className="inline-block mb-4 px-6 py-2 bg-gradient-to-r from-amber-500/10 via-yellow-500/10 to-amber-500/10 border border-amber-500/20 rounded-full backdrop-blur-sm">
+            <div className="inline-block mb-4 px-6 py-2 bg-gradient-to-r from-amber-500/20 via-yellow-500/20 to-amber-500/20 border border-amber-500/30 rounded-full backdrop-blur-sm">
               <span className="text-amber-400 text-sm font-semibold tracking-wider uppercase">Premium Enterprise Solutions</span>
             </div>
-            <h1 className="bg-gradient-to-br from-amber-200 via-slate-100 to-amber-300 py-4 bg-clip-text text-5xl font-bold tracking-tight text-transparent md:text-8xl mb-6 leading-tight">
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-br from-amber-200 via-slate-100 to-amber-300 bg-clip-text text-transparent">
               Enterprise Hero
             </h1>
             <p className="text-xl md:text-2xl text-slate-200 max-w-4xl mx-auto mb-10 font-light leading-relaxed">
               Global Leaders in Enterprise-Grade Node.js Development & Digital Transformation
             </p>
             
-            {/* Trust Indicators - Premium Design */}
+            {/* Trust Indicators - Instant Load */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto mt-16">
               <div className="text-center group">
                 <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-amber-400/20 to-yellow-600/20 border border-amber-500/30 mb-4 group-hover:scale-110 transition-transform duration-300">
@@ -139,68 +111,59 @@ export default function AboutPage() {
               </div>
             </div>
 
-            {/* CTA Buttons - Premium Design */}
+            {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-6 justify-center mt-16">
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="group relative px-10 py-4 bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-400 hover:via-yellow-400 hover:to-amber-500 text-slate-900 rounded-full font-bold transition-all duration-300 shadow-2xl shadow-amber-500/50 hover:shadow-amber-500/70 overflow-hidden"
+              <motion.a
+                href="/pages/contact"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="group px-10 py-4 bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-400 hover:via-yellow-400 hover:to-amber-500 text-slate-900 rounded-full font-bold transition-all duration-300 shadow-2xl shadow-amber-500/50 hover:shadow-amber-500/70"
                 onClick={() => console.log("About Page: Start Project CTA clicked")}
               >
-                <span className="relative z-10 flex items-center gap-2">
+                <span className="flex items-center gap-2 justify-center">
                   Start Your Project
                   <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                   </svg>
                 </span>
-                <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/30 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+              </motion.a>
+              <motion.a
+                href="/pages/portfolio"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 className="px-10 py-4 bg-slate-800/50 border-2 border-amber-500/50 hover:border-amber-400 hover:bg-slate-800/70 text-amber-100 hover:text-amber-50 rounded-full font-bold transition-all duration-300 backdrop-blur-sm"
                 onClick={() => console.log("About Page: View Case Studies CTA clicked")}
               >
                 View Case Studies
-              </motion.button>
+              </motion.a>
             </div>
           </motion.div>
-        </LampContainer>
+        </div>
       </section>
 
-      {/* Global Reach with World Map */}
-      <section className="relative py-24 bg-gradient-to-br from-slate-50 via-white to-amber-50/30 dark:from-gray-950 dark:via-slate-900 dark:to-gray-950 overflow-hidden">
-        {/* Premium Background Pattern */}
-        <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.02]" style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
-        }}></div>
-        
-        <div className="container mx-auto px-4 relative z-10">
+      {/* Global Reach Section - Simple and Clean */}
+      <section className="py-20 bg-gradient-to-br from-slate-50 via-white to-amber-50/30 dark:from-gray-950 dark:via-slate-900 dark:to-gray-950">
+        <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.4 }}
             viewport={{ once: true }}
             className="text-center mb-16"
           >
             <div className="inline-block mb-6 px-6 py-2 bg-gradient-to-r from-amber-500/10 via-yellow-500/10 to-amber-500/10 border border-amber-500/20 rounded-full backdrop-blur-sm">
               <span className="text-amber-600 dark:text-amber-400 text-sm font-bold tracking-wider uppercase">Worldwide Presence</span>
             </div>
-            <h2 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 dark:from-amber-200 dark:via-slate-100 dark:to-amber-200 bg-clip-text text-transparent">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 dark:from-amber-200 dark:via-slate-100 dark:to-amber-200 bg-clip-text text-transparent">
               Our Global Reach
             </h2>
             <p className="text-xl md:text-2xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto font-light">
-              Delivering enterprise solutions across 6 countries with a network of world-class development centers
+              Delivering enterprise solutions across 6 countries with world-class development centers
             </p>
           </motion.div>
 
-          {/* World Map Component - Premium Gold Theme */}
-          <div className="max-w-6xl mx-auto mb-16 p-6 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm rounded-2xl border border-amber-200/20 dark:border-amber-500/10 shadow-2xl">
-            <WorldMap dots={worldMapDots} lineColor="#f59e0b" />
-          </div>
-
-          {/* Office Locations Grid - Premium Glassmorphism */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-20">
+          {/* Office Locations Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
             {[
               {
                 city: "Gurugram",
@@ -243,22 +206,16 @@ export default function AboutPage() {
                 key={office.city}
                 initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.2 }}
+                transition={{ duration: 0.3, delay: index * 0.05 }}
                 viewport={{ once: true }}
-                whileHover={{ y: -4 }}
-                className="group relative bg-gradient-to-br from-white via-amber-50/30 to-white dark:from-gray-800 dark:via-gray-800 dark:to-gray-900 p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 border border-amber-200/50 dark:border-amber-500/20 backdrop-blur-sm overflow-hidden"
+                className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-amber-200/30 dark:border-amber-500/20"
                 onClick={() => console.log(`About Page: Clicked on ${office.city} office`)}
               >
-                {/* Premium Shine Effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-amber-100/20 to-transparent translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
-                
-                <div className="relative z-10">
-                  <div className="text-5xl mb-4">{office.icon}</div>
-                  <h3 className="text-2xl font-bold mb-1 text-gray-900 dark:text-white">{office.city}</h3>
-                  <p className="text-gray-600 dark:text-gray-400 text-sm mb-3 font-medium">{office.country}</p>
-                  <div className="inline-block px-4 py-1.5 bg-gradient-to-r from-amber-500/10 to-yellow-500/10 border border-amber-500/30 rounded-full">
-                    <p className="text-xs font-bold text-amber-700 dark:text-amber-400 uppercase tracking-wide">{office.type}</p>
-                  </div>
+                <div className="text-5xl mb-4">{office.icon}</div>
+                <h3 className="text-2xl font-bold mb-1 text-gray-900 dark:text-white">{office.city}</h3>
+                <p className="text-gray-600 dark:text-gray-400 text-sm mb-3 font-medium">{office.country}</p>
+                <div className="inline-block px-4 py-1.5 bg-gradient-to-r from-amber-500/10 to-yellow-500/10 border border-amber-500/30 rounded-full">
+                  <p className="text-xs font-bold text-amber-700 dark:text-amber-400 uppercase tracking-wide">{office.type}</p>
                 </div>
               </motion.div>
             ))}
@@ -266,13 +223,13 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Social Proof - Client Logos & Stats */}
+      {/* Social Proof Section */}
       <section className="py-20 bg-gray-50 dark:bg-gray-900">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.4 }}
             viewport={{ once: true }}
             className="text-center mb-16"
           >
@@ -291,12 +248,12 @@ export default function AboutPage() {
               { label: "On-Time Delivery", value: "100%", icon: "⚡" },
               { label: "Average ROI", value: "340%", icon: "📈" },
               { label: "Years Experience", value: "10+", icon: "🏆" },
-              ].map((metric, index) => (
+            ].map((metric, index) => (
               <motion.div
                 key={metric.label}
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.2 }}
+                transition={{ duration: 0.3, delay: index * 0.05 }}
                 viewport={{ once: true }}
                 className="text-center p-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg"
               >
@@ -311,7 +268,7 @@ export default function AboutPage() {
             ))}
           </div>
 
-          {/* Technology Stack Logos */}
+          {/* Technology Stack */}
           <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg">
             <h3 className="text-2xl font-bold text-center mb-8">
               Enterprise Technology Stack
@@ -322,9 +279,8 @@ export default function AboutPage() {
                   key={tech}
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
-                  transition={{ duration: 0.2 }}
+                  transition={{ duration: 0.3, delay: index * 0.05 }}
                   viewport={{ once: true }}
-                  whileHover={{ scale: 1.05 }}
                   className="flex flex-col items-center justify-center p-4 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-all duration-200"
                   onClick={() => console.log(`About Page: Tech stack ${tech} clicked`)}
                 >
@@ -343,7 +299,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Mission & Vision - Enhanced */}
+      {/* Mission & Vision */}
       <section className="py-20 bg-white dark:bg-gray-950">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -351,7 +307,7 @@ export default function AboutPage() {
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.3 }}
+              transition={{ duration: 0.4 }}
               viewport={{ once: true }}
               className="bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-gray-900 dark:to-gray-800 p-10 rounded-2xl shadow-xl"
             >
@@ -363,8 +319,7 @@ export default function AboutPage() {
               <h2 className="text-3xl font-bold mb-6">Our Mission</h2>
               <p className="text-lg text-gray-700 dark:text-gray-300 mb-6 leading-relaxed">
                 To revolutionize global businesses through enterprise-grade Node.js development and cutting-edge digital solutions. 
-                We deliver mission-critical applications that power Fortune 500 companies worldwide, ensuring scalability, 
-                security, and performance at every level.
+                We deliver mission-critical applications that power Fortune 500 companies worldwide.
               </p>
               <ul className="space-y-3">
                 {[
@@ -387,7 +342,7 @@ export default function AboutPage() {
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.3 }}
+              transition={{ duration: 0.4 }}
               viewport={{ once: true }}
               className="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-gray-900 dark:to-gray-800 p-10 rounded-2xl shadow-xl"
             >
@@ -399,9 +354,8 @@ export default function AboutPage() {
               </div>
               <h2 className="text-3xl font-bold mb-6">Our Vision</h2>
               <p className="text-lg text-gray-700 dark:text-gray-300 mb-6 leading-relaxed">
-                To be the world's leading Node.js development agency, recognized for our technical excellence, 
-                global presence, and commitment to digital transformation. We envision a future where every enterprise 
-                leverages our innovative solutions to achieve unprecedented growth and operational efficiency.
+                To be the world's leading Node.js development agency, recognized for technical excellence, 
+                global presence, and commitment to digital transformation.
               </p>
               <ul className="space-y-3">
                 {[
@@ -423,13 +377,13 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Core Values - Enhanced */}
+      {/* Core Values */}
       <section className="py-20 bg-gray-50 dark:bg-gray-900">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.4 }}
             viewport={{ once: true }}
             className="text-center mb-16"
           >
@@ -440,77 +394,54 @@ export default function AboutPage() {
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Excellence Value */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.2 }}
-              viewport={{ once: true }}
-              whileHover={{ scale: 1.03, y: -4 }}
-              className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-200 border border-gray-100 dark:border-gray-700"
-              onClick={() => console.log("About Page: Value Excellence card clicked")}
-            >
-              <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mb-6">
-                <svg className="w-8 h-8 text-blue-600 dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                </svg>
-              </div>
-              <h3 className="text-2xl font-bold mb-4">Excellence</h3>
-              <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-                We strive for excellence in everything we do, from code quality to client communication. Our commitment to delivering premium solutions drives us to continuously improve and innovate.
-              </p>
-              <div className="inline-block px-4 py-2 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-full text-sm font-semibold">
-                99.8% Quality Score
-              </div>
-            </motion.div>
-
-            {/* Collaboration Value */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.2 }}
-              viewport={{ once: true }}
-              whileHover={{ scale: 1.03, y: -4 }}
-              className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-200 border border-gray-100 dark:border-gray-700"
-              onClick={() => console.log("About Page: Value Collaboration card clicked")}
-            >
-              <div className="w-16 h-16 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center mb-6">
-                <svg className="w-8 h-8 text-purple-600 dark:text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
-              </div>
-              <h3 className="text-2xl font-bold mb-4">Collaboration</h3>
-              <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-                We believe in the power of collaboration, both within our team and with our clients. By working together, we create solutions that truly address business needs and exceed expectations.
-              </p>
-              <div className="inline-block px-4 py-2 bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400 rounded-full text-sm font-semibold">
-                500+ Team Projects
-              </div>
-            </motion.div>
-
-            {/* Innovation Value */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.2 }}
-              viewport={{ once: true }}
-              whileHover={{ scale: 1.03, y: -4 }}
-              className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-200 border border-gray-100 dark:border-gray-700"
-              onClick={() => console.log("About Page: Value Innovation card clicked")}
-            >
-              <div className="w-16 h-16 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mb-6">
-                <svg className="w-8 h-8 text-green-600 dark:text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                </svg>
-              </div>
-              <h3 className="text-2xl font-bold mb-4">Innovation</h3>
-              <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-                Innovation is at the heart of what we do. We constantly explore new technologies and approaches to deliver cutting-edge solutions that help our clients stay ahead in their industries.
-              </p>
-              <div className="inline-block px-4 py-2 bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 rounded-full text-sm font-semibold">
-                150+ Innovations
-              </div>
-            </motion.div>
+            {[
+              {
+                title: "Excellence",
+                description: "We strive for excellence in everything we do, from code quality to client communication. Our commitment to delivering premium solutions drives us to continuously improve and innovate.",
+                icon: "shield",
+                badge: "99.8% Quality Score",
+                color: "blue"
+              },
+              {
+                title: "Collaboration",
+                description: "We believe in the power of collaboration, both within our team and with our clients. By working together, we create solutions that truly address business needs.",
+                icon: "users",
+                badge: "500+ Team Projects",
+                color: "purple"
+              },
+              {
+                title: "Innovation",
+                description: "Innovation is at the heart of what we do. We constantly explore new technologies and approaches to deliver cutting-edge solutions.",
+                icon: "lightbulb",
+                badge: "150+ Innovations",
+                color: "green"
+              }
+            ].map((value, index) => (
+              <motion.div
+                key={value.title}
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 dark:border-gray-700"
+                onClick={() => console.log(`About Page: Value ${value.title} card clicked`)}
+              >
+                <div className={`w-16 h-16 bg-${value.color}-100 dark:bg-${value.color}-900 rounded-full flex items-center justify-center mb-6`}>
+                  <svg className={`w-8 h-8 text-${value.color}-600 dark:text-${value.color}-400`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    {value.icon === "shield" && <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />}
+                    {value.icon === "users" && <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />}
+                    {value.icon === "lightbulb" && <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />}
+                  </svg>
+                </div>
+                <h3 className="text-2xl font-bold mb-4">{value.title}</h3>
+                <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+                  {value.description}
+                </p>
+                <div className={`inline-block px-4 py-2 bg-${value.color}-50 dark:bg-${value.color}-900/20 text-${value.color}-600 dark:text-${value.color}-400 rounded-full text-sm font-semibold`}>
+                  {value.badge}
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
@@ -521,7 +452,7 @@ export default function AboutPage() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.4 }}
             viewport={{ once: true }}
             className="text-center mb-16"
           >
@@ -562,11 +493,10 @@ export default function AboutPage() {
             ].map((caseStudy, index) => (
               <motion.div
                 key={caseStudy.company}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.2 }}
+                transition={{ duration: 0.3, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                whileHover={{ scale: 1.03 }}
                 className="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer"
                 onClick={() => console.log(`About Page: Case study ${caseStudy.company} clicked`)}
               >
@@ -604,7 +534,7 @@ export default function AboutPage() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.4 }}
             viewport={{ once: true }}
             className="text-center mb-16"
           >
@@ -619,19 +549,19 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               {
-                quote: "Enterprise Hero transformed our digital infrastructure. Their expertise in Node.js and enterprise architecture is unmatched. A true partner in our digital transformation journey.",
+                quote: "Enterprise Hero transformed our digital infrastructure. Their expertise in Node.js and enterprise architecture is unmatched.",
                 author: "Sarah Johnson",
                 role: "CTO, Fortune 500 Tech Company",
                 rating: 5,
               },
               {
-                quote: "The team's professionalism and technical depth exceeded our expectations. They delivered a mission-critical application on time and within budget. Highly recommended!",
+                quote: "The team's professionalism and technical depth exceeded our expectations. They delivered on time and within budget.",
                 author: "Michael Chen",
                 role: "VP Engineering, Global FinTech",
                 rating: 5,
               },
               {
-                quote: "Working with Enterprise Hero was a game-changer for our business. Their global team provided round-the-clock support and delivered exceptional results.",
+                quote: "Working with Enterprise Hero was a game-changer. Their global team provided round-the-clock support and exceptional results.",
                 author: "Emma Rodriguez",
                 role: "CEO, Healthcare Startup",
                 rating: 5,
@@ -641,7 +571,7 @@ export default function AboutPage() {
                 key={testimonial.author}
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.2 }}
+                transition={{ duration: 0.3, delay: index * 0.1 }}
                 viewport={{ once: true }}
                 className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg"
               >
@@ -665,13 +595,13 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Founder Spotlight - Enhanced */}
+      {/* Founder Spotlight */}
       <section className="py-20 bg-white dark:bg-gray-950">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.4 }}
             viewport={{ once: true }}
             className="text-center mb-16"
           >
@@ -682,23 +612,20 @@ export default function AboutPage() {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.4 }}
             viewport={{ once: true }}
             className="max-w-5xl mx-auto"
           >
             <div className="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 rounded-3xl overflow-hidden shadow-2xl">
               <div className="md:flex">
                 <div className="md:w-2/5 bg-gradient-to-br from-blue-600 to-purple-600 p-12 flex flex-col items-center justify-center text-white">
-                  <motion.div
-                    whileHover={{ scale: 1.1, rotate: 5 }}
-                    className="w-40 h-40 bg-white/20 rounded-full mb-6 flex items-center justify-center backdrop-blur-sm"
-                  >
+                  <div className="w-40 h-40 bg-white/20 rounded-full mb-6 flex items-center justify-center backdrop-blur-sm">
                     <svg className="w-20 h-20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                     </svg>
-                  </motion.div>
+                  </div>
                   <h3 className="text-3xl font-bold mb-2">Aman Kumar Sharma</h3>
                   <p className="text-blue-100 text-lg mb-6">Founder & CEO</p>
                   <div className="space-y-2 text-center">
@@ -713,12 +640,11 @@ export default function AboutPage() {
                   </h4>
                   <p className="text-gray-700 dark:text-gray-300 mb-4 leading-relaxed">
                     Aman Kumar Sharma founded Enterprise Hero with a vision to create a globally recognized 
-                    Node.js development agency that delivers enterprise-grade solutions to clients worldwide. Under his leadership, 
-                    the company has expanded to 6 countries, serving Fortune 500 companies and innovative startups.
+                    Node.js development agency that delivers enterprise-grade solutions to clients worldwide.
                   </p>
                   <p className="text-gray-700 dark:text-gray-300 mb-6 leading-relaxed">
                     His expertise in enterprise architecture, digital transformation, and global business operations has positioned 
-                    Enterprise Hero as a trusted partner for mission-critical applications and cutting-edge technological solutions.
+                    Enterprise Hero as a trusted partner for mission-critical applications.
                   </p>
                   
                   <div className="space-y-3 mb-6">
@@ -728,7 +654,7 @@ export default function AboutPage() {
                         "Built global team across 6 countries",
                         "Delivered 1200+ enterprise projects",
                         "Achieved 99.8% client satisfaction rate",
-                        "Led digital transformation for Fortune 500 companies"
+                        "Led digital transformation for Fortune 500"
                       ].map((achievement, index) => (
                         <li key={index} className="flex items-start text-gray-700 dark:text-gray-300">
                           <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -739,18 +665,6 @@ export default function AboutPage() {
                       ))}
                     </ul>
                   </div>
-
-                  <div className="flex flex-wrap gap-2">
-                    <span className="px-4 py-2 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 rounded-full text-sm font-medium">
-                      Enterprise Architecture
-                    </span>
-                    <span className="px-4 py-2 bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300 rounded-full text-sm font-medium">
-                      Global Operations
-                    </span>
-                    <span className="px-4 py-2 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 rounded-full text-sm font-medium">
-                      Digital Transformation
-                    </span>
-                  </div>
                 </div>
               </div>
             </div>
@@ -758,13 +672,13 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Enterprise Certifications & Partnerships */}
+      {/* Enterprise Certifications */}
       <section className="py-20 bg-gray-50 dark:bg-gray-900">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.4 }}
             viewport={{ once: true }}
             className="text-center mb-12"
           >
@@ -772,7 +686,7 @@ export default function AboutPage() {
               Certified & <span className="text-blue-600 dark:text-cyan-400">Trusted</span>
             </h2>
             <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-              Industry certifications and strategic partnerships that validate our expertise
+              Industry certifications and strategic partnerships
             </p>
           </motion.div>
 
@@ -787,9 +701,8 @@ export default function AboutPage() {
                 key={cert.name}
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.2 }}
+                transition={{ duration: 0.3, delay: index * 0.05 }}
                 viewport={{ once: true }}
-                whileHover={{ y: -5 }}
                 className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg text-center"
               >
                 <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full mx-auto mb-4 flex items-center justify-center">
@@ -805,49 +718,31 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Final CTA - Premium Design */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-amber-950">
-        {/* Premium Background Pattern */}
+      {/* Final CTA */}
+      <section className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-amber-950 py-24">
         <div className="absolute inset-0 bg-[url('/noise.webp')] opacity-10"></div>
-        <div className="absolute inset-0" style={{
-          backgroundImage: `radial-gradient(circle at 50% 50%, rgba(251, 191, 36, 0.1) 0%, transparent 50%)`
-        }}></div>
         
-        <div className="container mx-auto px-4 py-24 relative z-10">
+        <div className="container mx-auto px-4 relative z-10">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.4 }}
             viewport={{ once: true }}
             className="text-center max-w-5xl mx-auto"
           >
-            {/* Premium Glow Effect */}
-            <motion.div
-              animate={{
-                scale: [1, 1.1, 1],
-                opacity: [0.3, 0.5, 0.3],
-              }}
-              transition={{
-                duration: 4,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-              className="absolute inset-0 bg-gradient-to-r from-amber-500/20 via-yellow-500/20 to-amber-500/20 blur-3xl rounded-full"
-            />
-            
             <div className="inline-block mb-6 px-6 py-2 bg-gradient-to-r from-amber-500/20 via-yellow-500/20 to-amber-500/20 border border-amber-500/30 rounded-full backdrop-blur-sm">
               <span className="text-amber-400 text-sm font-bold tracking-wider uppercase">Transform Your Business</span>
             </div>
             
-            <h2 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-amber-200 via-yellow-100 to-amber-200 bg-clip-text text-transparent mb-8 relative z-10 leading-tight">
+            <h2 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-amber-200 via-yellow-100 to-amber-200 bg-clip-text text-transparent mb-8">
               Ready to Achieve Excellence?
             </h2>
-            <p className="text-xl md:text-2xl text-slate-300 mb-12 relative z-10 font-light max-w-3xl mx-auto">
-              Join 500+ Fortune 500 companies worldwide who trust Enterprise Hero 
-              for their enterprise-grade Node.js development and digital solutions.
+            <p className="text-xl md:text-2xl text-slate-300 mb-12 font-light max-w-3xl mx-auto">
+              Join 500+ Fortune 500 companies who trust Enterprise Hero 
+              for their enterprise-grade Node.js development.
             </p>
             
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-14 relative z-10">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-14">
               {[
                 { icon: "⚡", text: "24/7 Global Support", desc: "Always available" },
                 { icon: "🚀", text: "Rapid Deployment", desc: "Fast delivery" },
@@ -859,7 +754,7 @@ export default function AboutPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: index * 0.1 }}
                   viewport={{ once: true }}
-                  className="bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-md p-6 rounded-2xl border border-amber-500/20 hover:border-amber-500/40 transition-all duration-300"
+                  className="bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-md p-6 rounded-2xl border border-amber-500/20"
                 >
                   <div className="text-5xl mb-3">{feature.icon}</div>
                   <div className="text-white font-bold text-lg mb-1">{feature.text}</div>
@@ -868,32 +763,33 @@ export default function AboutPage() {
               ))}
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-6 justify-center relative z-10 mb-8">
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="group relative px-12 py-5 bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-400 hover:via-yellow-400 hover:to-amber-500 text-slate-900 rounded-full font-bold text-lg transition-all duration-300 shadow-2xl shadow-amber-500/50 hover:shadow-amber-500/70 overflow-hidden"
+            <div className="flex flex-col sm:flex-row gap-6 justify-center mb-8">
+              <motion.a
+                href="/pages/contact"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-12 py-5 bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-400 hover:via-yellow-400 hover:to-amber-500 text-slate-900 rounded-full font-bold text-lg transition-all duration-300 shadow-2xl shadow-amber-500/50"
                 onClick={() => console.log("About Page: Final CTA - Contact Global Team clicked")}
               >
-                <span className="relative z-10 flex items-center gap-2 justify-center">
+                <span className="flex items-center gap-2 justify-center">
                   Contact Our Global Team
-                  <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                   </svg>
                 </span>
-                <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/30 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="px-12 py-5 bg-slate-800/50 border-2 border-amber-500/50 hover:border-amber-400 hover:bg-slate-800/70 text-amber-100 hover:text-amber-50 rounded-full font-bold text-lg transition-all duration-300 backdrop-blur-sm"
+              </motion.a>
+              <motion.a
+                href="/pages/services"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-12 py-5 bg-slate-800/50 border-2 border-amber-500/50 hover:border-amber-400 hover:bg-slate-800/70 text-amber-100 rounded-full font-bold text-lg transition-all duration-300 backdrop-blur-sm"
                 onClick={() => console.log("About Page: Final CTA - Schedule Consultation clicked")}
               >
                 Schedule Consultation
-              </motion.button>
+              </motion.a>
             </div>
 
-            <div className="flex items-center justify-center gap-6 text-amber-200/80 text-sm relative z-10">
+            <div className="flex items-center justify-center gap-6 text-amber-200/80 text-sm">
               <span className="flex items-center gap-2">
                 <span className="text-amber-400">🌍</span> 6 countries
               </span>
@@ -913,4 +809,4 @@ export default function AboutPage() {
   );
 }
 
-console.log("About Page: Component definition completed successfully"); 
+console.log("About Page: Lightweight component definition completed successfully");
