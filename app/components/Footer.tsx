@@ -237,6 +237,26 @@ export default function Footer() {
             </CollapsibleSection>
           </div>
 
+          {/* Trading & Finance */}
+          <div className="sm:col-span-1 lg:col-span-2">
+            <CollapsibleSection title="Trading & Finance">
+              <ul className="space-y-3">
+                {footerNavigation.tradingFinance.map((solution) => (
+                  <li key={solution.href}>
+                    <Link
+                      href={solution.href}
+                      className="text-gray-400 hover:text-blue-400 transition-colors duration-200 text-sm inline-flex items-center group"
+                      onClick={() => console.log(`[Footer] Trading/Finance clicked: ${solution.label}`)}
+                    >
+                      <span className="w-0 group-hover:w-2 h-0.5 bg-blue-400 transition-all duration-200 mr-0 group-hover:mr-2"></span>
+                      {solution.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </CollapsibleSection>
+          </div>
+
           {/* Global Offices */}
           <div className="sm:col-span-2 lg:col-span-2">
             <CollapsibleSection title="Global Offices" defaultOpen={true}>

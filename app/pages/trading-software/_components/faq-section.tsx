@@ -63,7 +63,7 @@ export function FAQSection() {
     },
     {
       question: 'What are the hardware/infrastructure requirements?',
-      answer: 'The platform is cloud-hosted on AWS/GCP, so you don't need any server infrastructure. Only standard computers with internet connection are required for your team.'
+      answer: "The platform is cloud-hosted on AWS/GCP, so you don't need any server infrastructure. Only standard computers with internet connection are required for your team."
     }
   ];
 

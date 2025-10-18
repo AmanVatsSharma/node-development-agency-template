@@ -186,7 +186,7 @@ export function HeroSection() {
               >
                 <span>✅ SEBI Compliant</span>
                 <span>🔒 ISO 27001 Certified</span>
-                <span>⚡ < 50ms Execution</span>
+                <span>⚡ &lt; 50ms Execution</span>
               </motion.div>
             </motion.div>
 
