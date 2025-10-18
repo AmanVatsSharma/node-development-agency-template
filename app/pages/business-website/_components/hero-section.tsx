@@ -1,10 +1,24 @@
 'use client';
 
 /**
- * Hero Section Component
- * High-impact hero with Indian city targeting and immediate lead capture CTA
- * Features: Animated dot pattern background, trust badges, dual CTAs
- * ENHANCED: HeroHighlight with interactive hover effects
+ * Hero Section Component - CLEAN TEXT-ONLY VERSION
+ * High-impact hero with strong copy and clear CTAs
+ * 
+ * FEATURES:
+ * - Clean, focused text content
+ * - Strong value proposition
+ * - Clear call-to-action buttons
+ * - Urgency indicators
+ * - City targeting
+ * - Mobile-first responsive design
+ * 
+ * CONVERSION OPTIMIZATION:
+ * - No visual distractions
+ * - Focus on copy and CTAs
+ * - Clear messaging
+ * - Simple, effective layout
+ * 
+ * @version 4.0.0 - Simplified Text-Only Hero
  */
 
 import React, { useEffect, useRef } from 'react';
@@ -13,14 +27,14 @@ import { Button } from '@/app/components/ui/button';
 import { HeroHighlight, Highlight } from '@/app/components/ui/hero-highlight';
 import { ArrowRight, MapPin, Phone, Star } from 'lucide-react';
 
-console.log('[Business-Website] HeroSection component loaded');
+console.log('[Business-Website] HeroSection component loaded - TEXT-ONLY VERSION');
 
 export function HeroSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const inView = useInView(sectionRef, { once: true, amount: 0.3 });
 
   useEffect(() => {
-    console.log('[Business-Website] HeroSection mounted');
+    console.log('[Business-Website] HeroSection mounted - Text-only, no illustrations');
     return () => console.log('[Business-Website] HeroSection unmounted');
   }, []);
 
@@ -48,6 +62,8 @@ export function HeroSection() {
         className="w-full"
       >
         <div className="container mx-auto px-3 sm:px-4 pt-28 pb-12 sm:pt-32 sm:pb-16 md:pt-36 md:pb-20 relative z-10">
+        
+        {/* HERO: Centered Text Content Only */}
         <motion.div
           initial="hidden"
           animate={inView ? "show" : "hidden"}
@@ -66,11 +82,11 @@ export function HeroSection() {
             <Star className="h-3 w-3 sm:h-4 sm:w-4 text-yellow-500 fill-yellow-500" />
           </motion.div>
 
-          {/* Main Headline - CONVERSION OPTIMIZED: Benefit-focused with Highlight effect */}
+          {/* Main Headline */}
           <motion.h1 
             id="hero-heading"
             variants={fadeInUp}
-            className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-extrabold mb-3 sm:mb-4 md:mb-6 tracking-tight leading-tight"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold mb-3 sm:mb-4 md:mb-6 tracking-tight leading-tight"
           >
             <span className="text-gray-900 dark:text-white block mb-2">
               Get More Customers{' '}
@@ -83,7 +99,7 @@ export function HeroSection() {
                 Professional Websites That Convert
               </Highlight>
             </span>
-            <span className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-green-600 dark:text-green-400 block mt-2 sm:mt-3">
+            <span className="text-2xl sm:text-3xl md:text-4xl text-green-600 dark:text-green-400 block mt-2 sm:mt-3">
               Starting{' '}
               <Highlight className="text-green-600 dark:text-green-400 bg-gradient-to-r from-green-200 to-emerald-200 dark:from-green-700 dark:to-emerald-700">
                 ₹13,999
@@ -91,10 +107,10 @@ export function HeroSection() {
             </span>
           </motion.h1>
 
-          {/* Subheadline - Compact for Mobile */}
+          {/* Subheadline */}
           <motion.p 
             variants={fadeInUp}
-            className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-700 dark:text-gray-300 max-w-4xl mx-auto mb-4 sm:mb-6 leading-snug sm:leading-relaxed px-2"
+            className="text-sm sm:text-base md:text-lg text-gray-700 dark:text-gray-300 max-w-4xl mx-auto mb-4 sm:mb-6 leading-snug sm:leading-relaxed px-2"
           >
             Professional, Fast Website for{' '}
             <span className="font-semibold text-indigo-600 dark:text-indigo-400">
@@ -103,7 +119,7 @@ export function HeroSection() {
             {' '}& All India 🇮🇳
           </motion.p>
 
-          {/* Key Benefits - Compact Grid */}
+          {/* Key Benefits */}
           <motion.div 
             variants={fadeInUp}
             className="grid grid-cols-2 sm:flex sm:flex-wrap justify-center gap-2 sm:gap-3 mb-5 sm:mb-8 text-xs sm:text-sm max-w-lg sm:max-w-none mx-auto"
@@ -123,7 +139,7 @@ export function HeroSection() {
             ))}
           </motion.div>
 
-          {/* CTA Buttons - CONVERSION OPTIMIZED: Action-specific copy */}
+          {/* CTA Buttons */}
           <motion.div 
             variants={fadeInUp}
             className="flex flex-col gap-2.5 sm:gap-3 justify-center items-stretch sm:items-center mb-5 sm:mb-8 max-w-md sm:max-w-none mx-auto px-2"
@@ -154,10 +170,10 @@ export function HeroSection() {
             </Button>
           </motion.div>
 
-          {/* URGENCY INDICATOR - Creates FOMO */}
+          {/* URGENCY INDICATOR */}
           <motion.div
             variants={fadeInUp}
-            className="mb-5 sm:mb-8"
+            className="mb-5 sm:mb-8 flex justify-center"
           >
             <div className="inline-flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 bg-red-50 dark:bg-red-900/20 border-2 border-red-200 dark:border-red-800 rounded-full">
               <span className="relative flex h-3 w-3">
@@ -170,7 +186,7 @@ export function HeroSection() {
             </div>
           </motion.div>
 
-          {/* City Targeting Pills - Compact */}
+          {/* City Targeting Pills */}
           <motion.div 
             variants={fadeInUp}
             className="flex flex-wrap justify-center gap-1.5 sm:gap-2 max-w-xl mx-auto text-xs px-2"
@@ -197,4 +213,3 @@ export function HeroSection() {
     </section>
   );
 }
-
