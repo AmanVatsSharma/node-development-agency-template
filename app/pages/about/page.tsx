@@ -1,383 +1,235 @@
-"use client";
+'use client';
 
-import { motion } from "motion/react";
-import { useEffect, useState } from "react";
-import { LampContainer } from "../../components/lamp";
-import { WorldMap } from "../../components/ui/world-map";
+/**
+ * @fileoverview About Us - Premium Techy Modern Landing Page
+ * @description Ultra-compact, mobile-first, illustration-rich About page
+ * @version 3.0.0 - TECHY MODERN PREMIUM
+ */
 
-// Console log for page initialization
-console.log("About Page: Initializing premium enterprise-grade about page component");
+import React, { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
+import Link from 'next/link';
+import AnimatedIllustration from '../../components/AnimatedIllustration';
+
+console.log('[About] v3.0 - Techy Modern Premium loaded');
 
 export default function AboutPage() {
-  // State for animated counters
-  const [counters, setCounters] = useState({
-    clients: 0,
-    projects: 0,
-    countries: 0,
-    team: 0,
-  });
+  const [counters, setCounters] = useState({ clients: 0, projects: 0, countries: 0, team: 0 });
 
-  // Instant counter display - no animation delay
   useEffect(() => {
-    console.log("About Page: Loading counters");
-    const targets = { clients: 500, projects: 1200, countries: 6, team: 50 };
+    console.log('[About] Initializing...');
     
-    // Quick animation (0.8 seconds total)
-    const duration = 800;
-    const steps = 15;
-    const interval = duration / steps;
-
+    // Fast counter animation
+    const targets = { clients: 500, projects: 1200, countries: 6, team: 50 };
+    const duration = 1000;
+    const steps = 30;
     let step = 0;
+
     const timer = setInterval(() => {
       step++;
       const progress = Math.min(step / steps, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
       
       setCounters({
-        clients: Math.floor(targets.clients * progress),
-        projects: Math.floor(targets.projects * progress),
-        countries: Math.floor(targets.countries * progress),
-        team: Math.floor(targets.team * progress),
+        clients: Math.floor(targets.clients * eased),
+        projects: Math.floor(targets.projects * eased),
+        countries: Math.floor(targets.countries * eased),
+        team: Math.floor(targets.team * eased),
       });
 
       if (step >= steps) {
         clearInterval(timer);
         setCounters(targets);
-        console.log("About Page: Counters loaded");
       }
-    }, interval);
+    }, duration / steps);
 
     return () => clearInterval(timer);
   }, []);
 
-  // World map connection data showing global reach
-  const worldMapDots = [
-    {
-      start: { lat: 28.7041, lng: 77.1025 }, // Delhi/Gurugram (HQ)
-      end: { lat: 25.2048, lng: 55.2708 }, // Dubai
-    },
-    {
-      start: { lat: 28.7041, lng: 77.1025 }, // Delhi/Gurugram
-      end: { lat: 37.7749, lng: -122.4194 }, // San Francisco/California
-    },
-    {
-      start: { lat: 28.7041, lng: 77.1025 }, // Delhi/Gurugram
-      end: { lat: 43.6532, lng: -79.3832 }, // Toronto
-    },
-    {
-      start: { lat: 28.7041, lng: 77.1025 }, // Delhi/Gurugram
-      end: { lat: 22.5431, lng: 114.0579 }, // Shenzhen
-    },
-    {
-      start: { lat: 28.7041, lng: 77.1025 }, // Delhi/Gurugram
-      end: { lat: 12.9716, lng: 77.5946 }, // Bangalore
-    },
-    {
-      start: { lat: 28.7041, lng: 77.1025 }, // Delhi/Gurugram
-      end: { lat: 28.5355, lng: 77.3910 }, // Noida
-    },
-  ];
-
-  console.log("About Page: Rendering with world map connections:", worldMapDots.length);
-
   return (
     <div className="w-full">
-      {/* Hero Section with Lamp Component */}
-      <section className="relative overflow-hidden">
-        <LampContainer>
+      {/* HERO - Techy Modern */}
+      <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 text-white overflow-hidden">
+        {/* Tech grid background */}
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `
+              linear-gradient(rgba(6, 182, 212, 0.1) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(6, 182, 212, 0.1) 1px, transparent 1px)
+            `,
+            backgroundSize: '50px 50px'
+          }}></div>
+        </div>
+
+        {/* Floating illustrations */}
+        <div className="absolute top-10 right-10 w-32 h-32 md:w-48 md:h-48 opacity-30 hidden sm:block">
+          <AnimatedIllustration
+            src="/illustrations/undraw_programming.svg"
+            alt="Programming"
+            width={192}
+            height={192}
+            animationType="float"
+            delay={0.2}
+          />
+        </div>
+        <div className="absolute bottom-10 left-10 w-32 h-32 md:w-40 md:h-40 opacity-25 hidden sm:block">
+          <AnimatedIllustration
+            src="/illustrations/undraw_cloud_hosting.svg"
+            alt="Cloud"
+            width={160}
+            height={160}
+            animationType="pulse"
+            delay={0.5}
+          />
+        </div>
+
+        <div className="container mx-auto px-4 py-16 md:py-20 relative z-10">
           <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{
-              duration: 0.4,
-              ease: "easeOut",
-            }}
-            className="mt-8 text-center px-4"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-center max-w-4xl mx-auto"
           >
-            <div className="inline-block mb-4 px-6 py-2 bg-gradient-to-r from-amber-500/10 via-yellow-500/10 to-amber-500/10 border border-amber-500/20 rounded-full backdrop-blur-sm">
-              <span className="text-amber-400 text-sm font-semibold tracking-wider uppercase">Premium Enterprise Solutions</span>
+            {/* Badge */}
+            <div className="inline-block mb-4 px-4 py-2 bg-cyan-500/10 border border-cyan-500/30 rounded-full backdrop-blur-sm">
+              <span className="text-cyan-400 text-xs md:text-sm font-bold uppercase tracking-wider">Since 2015 • CIN: U47912HR2025PTC131357</span>
             </div>
-            <h1 className="bg-gradient-to-br from-amber-200 via-slate-100 to-amber-300 py-4 bg-clip-text text-5xl font-bold tracking-tight text-transparent md:text-8xl mb-6 leading-tight">
+
+            {/* Heading */}
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4 bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
               Enterprise Hero
             </h1>
-            <p className="text-xl md:text-2xl text-slate-200 max-w-4xl mx-auto mb-10 font-light leading-relaxed">
-              Global Leaders in Enterprise-Grade Node.js Development & Digital Transformation
-            </p>
             
-            {/* Trust Indicators - Premium Design */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto mt-16">
-              <div className="text-center group">
-                <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-amber-400/20 to-yellow-600/20 border border-amber-500/30 mb-4 group-hover:scale-110 transition-transform duration-300">
-                  <div className="text-3xl md:text-4xl font-bold bg-gradient-to-br from-amber-300 to-yellow-500 bg-clip-text text-transparent">
-                    {counters.clients}+
-                  </div>
-                </div>
-                <div className="text-sm md:text-base text-slate-300 font-medium">Fortune 500 Clients</div>
-              </div>
-              <div className="text-center group">
-                <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-amber-400/20 to-yellow-600/20 border border-amber-500/30 mb-4 group-hover:scale-110 transition-transform duration-300">
-                  <div className="text-3xl md:text-4xl font-bold bg-gradient-to-br from-amber-300 to-yellow-500 bg-clip-text text-transparent">
-                    {counters.projects}+
-                  </div>
-                </div>
-                <div className="text-sm md:text-base text-slate-300 font-medium">Projects Delivered</div>
-              </div>
-              <div className="text-center group">
-                <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-amber-400/20 to-yellow-600/20 border border-amber-500/30 mb-4 group-hover:scale-110 transition-transform duration-300">
-                  <div className="text-3xl md:text-4xl font-bold bg-gradient-to-br from-amber-300 to-yellow-500 bg-clip-text text-transparent">
-                    {counters.countries}
-                  </div>
-                </div>
-                <div className="text-sm md:text-base text-slate-300 font-medium">Global Offices</div>
-              </div>
-              <div className="text-center group">
-                <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-amber-400/20 to-yellow-600/20 border border-amber-500/30 mb-4 group-hover:scale-110 transition-transform duration-300">
-                  <div className="text-3xl md:text-4xl font-bold bg-gradient-to-br from-amber-300 to-yellow-500 bg-clip-text text-transparent">
-                    {counters.team}+
-                  </div>
-                </div>
-                <div className="text-sm md:text-base text-slate-300 font-medium">Expert Team</div>
-              </div>
-            </div>
-
-            {/* CTA Buttons - Premium Design */}
-            <div className="flex flex-col sm:flex-row gap-6 justify-center mt-16">
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="group relative px-10 py-4 bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-400 hover:via-yellow-400 hover:to-amber-500 text-slate-900 rounded-full font-bold transition-all duration-300 shadow-2xl shadow-amber-500/50 hover:shadow-amber-500/70 overflow-hidden"
-                onClick={() => console.log("About Page: Start Project CTA clicked")}
-              >
-                <span className="relative z-10 flex items-center gap-2">
-                  Start Your Project
-                  <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                  </svg>
-                </span>
-                <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/30 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="px-10 py-4 bg-slate-800/50 border-2 border-amber-500/50 hover:border-amber-400 hover:bg-slate-800/70 text-amber-100 hover:text-amber-50 rounded-full font-bold transition-all duration-300 backdrop-blur-sm"
-                onClick={() => console.log("About Page: View Case Studies CTA clicked")}
-              >
-                View Case Studies
-              </motion.button>
-            </div>
-          </motion.div>
-        </LampContainer>
-      </section>
-
-      {/* Global Reach with World Map */}
-      <section className="relative py-24 bg-gradient-to-br from-slate-50 via-white to-amber-50/30 dark:from-gray-950 dark:via-slate-900 dark:to-gray-950 overflow-hidden">
-        {/* Premium Background Pattern */}
-        <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.02]" style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
-        }}></div>
-        
-        <div className="container mx-auto px-4 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <div className="inline-block mb-6 px-6 py-2 bg-gradient-to-r from-amber-500/10 via-yellow-500/10 to-amber-500/10 border border-amber-500/20 rounded-full backdrop-blur-sm">
-              <span className="text-amber-600 dark:text-amber-400 text-sm font-bold tracking-wider uppercase">Worldwide Presence</span>
-            </div>
-            <h2 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 dark:from-amber-200 dark:via-slate-100 dark:to-amber-200 bg-clip-text text-transparent">
-              Our Global Reach
-            </h2>
-            <p className="text-xl md:text-2xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto font-light">
-              Delivering enterprise solutions across 6 countries with a network of world-class development centers
+            <p className="text-lg md:text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+              Global Node.js Development Agency Trusted by <span className="text-cyan-400 font-bold">500+ Fortune 500</span> Companies
             </p>
-          </motion.div>
 
-          {/* World Map Component - Premium Gold Theme */}
-          <div className="max-w-6xl mx-auto mb-16 p-6 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm rounded-2xl border border-amber-200/20 dark:border-amber-500/10 shadow-2xl">
-            <WorldMap dots={worldMapDots} lineColor="#f59e0b" />
-          </div>
-
-          {/* Office Locations Grid - Premium Glassmorphism */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-20">
-            {[
-              {
-                city: "Gurugram",
-                country: "India",
-                type: "Global Headquarters",
-                icon: "🏢",
-              },
-              {
-                city: "Dubai",
-                country: "UAE",
-                type: "Middle East Hub",
-                icon: "🌆",
-              },
-              {
-                city: "California",
-                country: "USA",
-                type: "Tech Innovation Center",
-                icon: "🚀",
-              },
-              {
-                city: "Toronto",
-                country: "Canada",
-                type: "North American Operations",
-                icon: "🍁",
-              },
-              {
-                city: "Shenzhen",
-                country: "China",
-                type: "Asia-Pacific Hub",
-                icon: "🌏",
-              },
-              {
-                city: "Bangalore",
-                country: "India",
-                type: "Development Excellence Center",
-                icon: "💻",
-              },
-            ].map((office, index) => (
-              <motion.div
-                key={office.city}
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.2 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -4 }}
-                className="group relative bg-gradient-to-br from-white via-amber-50/30 to-white dark:from-gray-800 dark:via-gray-800 dark:to-gray-900 p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 border border-amber-200/50 dark:border-amber-500/20 backdrop-blur-sm overflow-hidden"
-                onClick={() => console.log(`About Page: Clicked on ${office.city} office`)}
-              >
-                {/* Premium Shine Effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-amber-100/20 to-transparent translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
-                
-                <div className="relative z-10">
-                  <div className="text-5xl mb-4">{office.icon}</div>
-                  <h3 className="text-2xl font-bold mb-1 text-gray-900 dark:text-white">{office.city}</h3>
-                  <p className="text-gray-600 dark:text-gray-400 text-sm mb-3 font-medium">{office.country}</p>
-                  <div className="inline-block px-4 py-1.5 bg-gradient-to-r from-amber-500/10 to-yellow-500/10 border border-amber-500/30 rounded-full">
-                    <p className="text-xs font-bold text-amber-700 dark:text-amber-400 uppercase tracking-wide">{office.type}</p>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Social Proof - Client Logos & Stats */}
-      <section className="py-20 bg-gray-50 dark:bg-gray-900">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.3 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              Trusted by Industry Leaders
-            </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-              We partner with Fortune 500 companies and innovative startups to deliver mission-critical applications
-            </p>
-          </motion.div>
-
-          {/* Key Metrics */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16">
-            {[
-              { label: "Client Satisfaction", value: "99.8%", icon: "⭐" },
-              { label: "On-Time Delivery", value: "100%", icon: "⚡" },
-              { label: "Average ROI", value: "340%", icon: "📈" },
-              { label: "Years Experience", value: "10+", icon: "🏆" },
-              ].map((metric, index) => (
-              <motion.div
-                key={metric.label}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.2 }}
-                viewport={{ once: true }}
-                className="text-center p-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg"
-              >
-                <div className="text-4xl mb-3">{metric.icon}</div>
-                <div className="text-3xl md:text-4xl font-bold text-blue-600 dark:text-cyan-400 mb-2">
-                  {metric.value}
-                </div>
-                <div className="text-sm md:text-base text-gray-600 dark:text-gray-300">
-                  {metric.label}
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Technology Stack Logos */}
-          <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg">
-            <h3 className="text-2xl font-bold text-center mb-8">
-              Enterprise Technology Stack
-            </h3>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 items-center">
-              {["Node.js", "TypeScript", "Python", "SAP"].map((tech, index) => (
+            {/* Quick stats - Compact */}
+            <div className="grid grid-cols-4 gap-3 md:gap-6 mb-8 max-w-3xl mx-auto">
+              {[
+                { value: counters.clients, suffix: '+', label: 'Clients' },
+                { value: counters.projects, suffix: '+', label: 'Projects' },
+                { value: counters.countries, suffix: '', label: 'Countries' },
+                { value: counters.team, suffix: '+', label: 'Team' }
+              ].map((stat, i) => (
                 <motion.div
-                  key={tech}
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  transition={{ duration: 0.2 }}
-                  viewport={{ once: true }}
-                  whileHover={{ scale: 1.05 }}
-                  className="flex flex-col items-center justify-center p-4 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-all duration-200"
-                  onClick={() => console.log(`About Page: Tech stack ${tech} clicked`)}
+                  key={i}
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.3 + i * 0.1, duration: 0.3 }}
+                  className="bg-white/5 backdrop-blur-sm border border-cyan-500/20 rounded-xl p-3 md:p-4 hover:bg-white/10 hover:border-cyan-500/40 transition-all"
                 >
-                  <div className="w-16 h-16 mb-3 bg-gray-100 dark:bg-gray-900 rounded-lg flex items-center justify-center">
-                    <span className="text-2xl font-bold text-gray-600 dark:text-gray-300">
-                      {tech.substring(0, 2)}
-                    </span>
-                  </div>
-                  <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                    {tech}
-                  </span>
+                  <div className="text-2xl md:text-3xl font-bold text-cyan-400">{stat.value}{stat.suffix}</div>
+                  <div className="text-xs md:text-sm text-gray-400">{stat.label}</div>
                 </motion.div>
               ))}
             </div>
+
+            {/* CTAs - Compact */}
+            <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center">
+              <Link href="/pages/contact" className="px-6 md:px-8 py-3 md:py-4 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-400 hover:to-blue-400 text-white rounded-lg font-bold transition-all duration-300 shadow-lg shadow-cyan-500/50">
+                Start Project →
+              </Link>
+              <Link href="/pages/portfolio" className="px-6 md:px-8 py-3 md:py-4 bg-white/10 border border-white/20 hover:bg-white/20 text-white rounded-lg font-bold transition-all backdrop-blur-sm">
+                View Work
+              </Link>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* GLOBAL OFFICES - Compact Grid */}
+      <section className="py-12 md:py-20 bg-white dark:bg-gray-900 relative overflow-hidden">
+        {/* Background illustration */}
+        <div className="absolute top-10 right-10 w-48 h-48 opacity-5 hidden lg:block">
+          <AnimatedIllustration
+            src="/illustrations/undraw_mobile_app.svg"
+            alt="Mobile"
+            width={192}
+            height={192}
+            animationType="scale"
+            delay={0.3}
+          />
+        </div>
+
+        <div className="container mx-auto px-4 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-8 md:mb-12"
+          >
+            <div className="inline-block mb-3 px-4 py-1.5 bg-blue-500/10 border border-blue-500/20 rounded-full">
+              <span className="text-blue-600 dark:text-blue-400 text-xs font-bold uppercase">Global Presence</span>
+            </div>
+            <h2 className="text-3xl md:text-5xl font-bold mb-3 md:mb-4">6 Global Offices</h2>
+            <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">24/7 development across continents</p>
+          </motion.div>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 max-w-4xl mx-auto">
+            {[
+              { city: 'Gurugram', country: 'India', icon: '🇮🇳', type: 'HQ' },
+              { city: 'Dubai', country: 'UAE', icon: '🇦🇪', type: 'Hub' },
+              { city: 'California', country: 'USA', icon: '🇺🇸', type: 'R&D' },
+              { city: 'Toronto', country: 'Canada', icon: '🇨🇦', type: 'Ops' },
+              { city: 'Shenzhen', country: 'China', icon: '🇨🇳', type: 'APAC' },
+              { city: 'Bangalore', country: 'India', icon: '🇮🇳', type: 'Dev' }
+            ].map((office, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.05 }}
+                className="bg-gradient-to-br from-gray-50 to-white dark:from-gray-800 dark:to-gray-700 p-4 md:p-6 rounded-xl shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all border border-gray-200 dark:border-gray-600"
+              >
+                <div className="text-3xl md:text-4xl mb-2">{office.icon}</div>
+                <h3 className="text-lg md:text-xl font-bold mb-0.5">{office.city}</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">{office.country}</p>
+                <span className="inline-block px-2 py-0.5 bg-blue-500/10 text-blue-600 dark:text-blue-400 rounded text-xs font-semibold">{office.type}</span>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Mission & Vision - Enhanced */}
-      <section className="py-20 bg-white dark:bg-gray-950">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      {/* MISSION & VALUES - Split Compact */}
+      <section className="py-12 md:py-20 bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 text-white relative overflow-hidden">
+        {/* Illustrations */}
+        <div className="absolute bottom-10 right-10 w-40 h-40 opacity-20 hidden lg:block">
+          <AnimatedIllustration
+            src="/illustrations/undraw_programming.svg"
+            alt="Code"
+            width={160}
+            height={160}
+            animationType="rotate"
+            delay={0.4}
+          />
+        </div>
+
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-5xl mx-auto">
             {/* Mission */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.3 }}
               viewport={{ once: true }}
-              className="bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-gray-900 dark:to-gray-800 p-10 rounded-2xl shadow-xl"
+              className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-xl p-6 md:p-8"
             >
-              <div className="w-16 h-16 bg-blue-600 dark:bg-cyan-500 rounded-full flex items-center justify-center mb-6">
-                <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center mb-4">
+                <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
               </div>
-              <h2 className="text-3xl font-bold mb-6">Our Mission</h2>
-              <p className="text-lg text-gray-700 dark:text-gray-300 mb-6 leading-relaxed">
-                To revolutionize global businesses through enterprise-grade Node.js development and cutting-edge digital solutions. 
-                We deliver mission-critical applications that power Fortune 500 companies worldwide, ensuring scalability, 
-                security, and performance at every level.
+              <h2 className="text-2xl md:text-3xl font-bold mb-3">Our Mission</h2>
+              <p className="text-gray-300 mb-4 leading-relaxed">
+                Deliver enterprise-grade Node.js solutions that power Fortune 500 companies worldwide.
               </p>
-              <ul className="space-y-3">
-                {[
-                  "Enterprise-Grade Solutions",
-                  "24/7 Global Support",
-                  "Scalable Architecture",
-                  "Security First Approach",
-                ].map((item, index) => (
-                  <li key={index} className="flex items-center text-gray-700 dark:text-gray-300">
-                    <svg className="w-5 h-5 text-blue-600 dark:text-cyan-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    {item}
+              <ul className="space-y-2 text-sm">
+                {['Enterprise Solutions', '24/7 Support', 'Scalable Architecture'].map((item, i) => (
+                  <li key={i} className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 rounded-full bg-cyan-400"></div>
+                    <span>{item}</span>
                   </li>
                 ))}
               </ul>
@@ -387,34 +239,24 @@ export default function AboutPage() {
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.3 }}
               viewport={{ once: true }}
-              className="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-gray-900 dark:to-gray-800 p-10 rounded-2xl shadow-xl"
+              className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-xl p-6 md:p-8"
             >
-              <div className="w-16 h-16 bg-purple-600 dark:bg-pink-500 rounded-full flex items-center justify-center mb-6">
-                <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center mb-4">
+                <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                 </svg>
               </div>
-              <h2 className="text-3xl font-bold mb-6">Our Vision</h2>
-              <p className="text-lg text-gray-700 dark:text-gray-300 mb-6 leading-relaxed">
-                To be the world's leading Node.js development agency, recognized for our technical excellence, 
-                global presence, and commitment to digital transformation. We envision a future where every enterprise 
-                leverages our innovative solutions to achieve unprecedented growth and operational efficiency.
+              <h2 className="text-2xl md:text-3xl font-bold mb-3">Our Vision</h2>
+              <p className="text-gray-300 mb-4 leading-relaxed">
+                Be the world's leading Node.js agency recognized for technical excellence and global impact.
               </p>
-              <ul className="space-y-3">
-                {[
-                  "Global Market Leadership",
-                  "Innovation & Research",
-                  "Sustainable Growth",
-                  "Client Success Partnership",
-                ].map((item, index) => (
-                  <li key={index} className="flex items-center text-gray-700 dark:text-gray-300">
-                    <svg className="w-5 h-5 text-purple-600 dark:text-pink-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    {item}
+              <ul className="space-y-2 text-sm">
+                {['Market Leadership', 'Innovation Focus', 'Client Success'].map((item, i) => (
+                  <li key={i} className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 rounded-full bg-purple-400"></div>
+                    <span>{item}</span>
                   </li>
                 ))}
               </ul>
@@ -423,241 +265,142 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Core Values - Enhanced */}
-      <section className="py-20 bg-gray-50 dark:bg-gray-900">
-        <div className="container mx-auto px-4">
+      {/* FOUNDER - Compact Card */}
+      <section className="py-12 md:py-20 bg-white dark:bg-gray-900 relative overflow-hidden">
+        {/* Illustration */}
+        <div className="absolute top-10 left-10 w-48 h-48 opacity-5 hidden lg:block">
+          <AnimatedIllustration
+            src="/illustrations/undraw_cloud_hosting.svg"
+            alt="Cloud"
+            width={192}
+            height={192}
+            animationType="float"
+            delay={0.2}
+          />
+        </div>
+
+        <div className="container mx-auto px-4 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-8"
+          >
+            <div className="inline-block mb-3 px-4 py-1.5 bg-purple-500/10 border border-purple-500/20 rounded-full">
+              <span className="text-purple-600 dark:text-purple-400 text-xs font-bold uppercase">Leadership</span>
+            </div>
+            <h2 className="text-3xl md:text-5xl font-bold">Meet Our Founder</h2>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="max-w-3xl mx-auto"
+          >
+            <div className="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-700 rounded-xl overflow-hidden shadow-xl border border-gray-200 dark:border-gray-600">
+              <div className="md:flex">
+                <div className="md:w-2/5 bg-gradient-to-br from-blue-600 to-purple-600 p-8 flex flex-col items-center justify-center text-white">
+                  <div className="w-24 h-24 rounded-full bg-white/20 flex items-center justify-center mb-4 border-4 border-white/30">
+                    <svg className="w-12 h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl md:text-2xl font-bold text-center">Aman Kumar Sharma</h3>
+                  <p className="text-blue-100 mb-4">Founder & CEO</p>
+                  <div className="grid grid-cols-2 gap-2 text-center text-sm">
+                    <div className="bg-white/10 rounded-lg p-2">
+                      <div className="font-bold">10+</div>
+                      <div className="text-xs opacity-80">Years</div>
+                    </div>
+                    <div className="bg-white/10 rounded-lg p-2">
+                      <div className="font-bold">500+</div>
+                      <div className="text-xs opacity-80">Clients</div>
+                    </div>
+                  </div>
+                </div>
+                <div className="md:w-3/5 p-6 md:p-8">
+                  <h4 className="text-lg md:text-xl font-bold mb-3 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 dark:from-cyan-400 dark:to-pink-400">
+                    Visionary Tech Entrepreneur
+                  </h4>
+                  <p className="text-gray-700 dark:text-gray-300 mb-4 text-sm md:text-base leading-relaxed">
+                    Founded Enterprise Hero in 2015, expanding to 6 countries and serving 500+ Fortune 500 companies. 
+                    Expert in enterprise architecture and digital transformation.
+                  </p>
+                  <div className="space-y-2 text-sm">
+                    {['Built global team across 6 countries', 'Delivered 1200+ enterprise projects', '99.8% client satisfaction'].map((item, i) => (
+                      <div key={i} className="flex items-start gap-2">
+                        <svg className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span className="text-gray-700 dark:text-gray-300">{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* TESTIMONIALS - Compact Grid */}
+      <section className="py-12 md:py-20 bg-gray-50 dark:bg-gray-800 relative overflow-hidden">
+        {/* Illustration */}
+        <div className="absolute bottom-10 right-10 w-40 h-40 opacity-5 hidden lg:block">
+          <AnimatedIllustration
+            src="/illustrations/undraw_mobile_app.svg"
+            alt="Mobile"
+            width={160}
+            height={160}
+            animationType="pulse"
+            delay={0.3}
+          />
+        </div>
+
+        <div className="container mx-auto px-4 relative z-10">
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.3 }}
             viewport={{ once: true }}
-            className="text-center mb-16"
+            className="text-center mb-8 md:mb-12"
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">Our Core Values</h2>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-              The principles that drive our success and shape our culture
-            </p>
+            <div className="inline-block mb-3 px-4 py-1.5 bg-yellow-500/10 border border-yellow-500/20 rounded-full">
+              <span className="text-yellow-600 dark:text-yellow-400 text-xs font-bold uppercase">Client Success</span>
+            </div>
+            <h2 className="text-3xl md:text-5xl font-bold">Trusted Worldwide</h2>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Excellence Value */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.2 }}
-              viewport={{ once: true }}
-              whileHover={{ scale: 1.03, y: -4 }}
-              className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-200 border border-gray-100 dark:border-gray-700"
-              onClick={() => console.log("About Page: Value Excellence card clicked")}
-            >
-              <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mb-6">
-                <svg className="w-8 h-8 text-blue-600 dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                </svg>
-              </div>
-              <h3 className="text-2xl font-bold mb-4">Excellence</h3>
-              <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-                We strive for excellence in everything we do, from code quality to client communication. Our commitment to delivering premium solutions drives us to continuously improve and innovate.
-              </p>
-              <div className="inline-block px-4 py-2 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-full text-sm font-semibold">
-                99.8% Quality Score
-              </div>
-            </motion.div>
-
-            {/* Collaboration Value */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.2 }}
-              viewport={{ once: true }}
-              whileHover={{ scale: 1.03, y: -4 }}
-              className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-200 border border-gray-100 dark:border-gray-700"
-              onClick={() => console.log("About Page: Value Collaboration card clicked")}
-            >
-              <div className="w-16 h-16 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center mb-6">
-                <svg className="w-8 h-8 text-purple-600 dark:text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
-              </div>
-              <h3 className="text-2xl font-bold mb-4">Collaboration</h3>
-              <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-                We believe in the power of collaboration, both within our team and with our clients. By working together, we create solutions that truly address business needs and exceed expectations.
-              </p>
-              <div className="inline-block px-4 py-2 bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400 rounded-full text-sm font-semibold">
-                500+ Team Projects
-              </div>
-            </motion.div>
-
-            {/* Innovation Value */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.2 }}
-              viewport={{ once: true }}
-              whileHover={{ scale: 1.03, y: -4 }}
-              className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-200 border border-gray-100 dark:border-gray-700"
-              onClick={() => console.log("About Page: Value Innovation card clicked")}
-            >
-              <div className="w-16 h-16 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mb-6">
-                <svg className="w-8 h-8 text-green-600 dark:text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                </svg>
-              </div>
-              <h3 className="text-2xl font-bold mb-4">Innovation</h3>
-              <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-                Innovation is at the heart of what we do. We constantly explore new technologies and approaches to deliver cutting-edge solutions that help our clients stay ahead in their industries.
-              </p>
-              <div className="inline-block px-4 py-2 bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 rounded-full text-sm font-semibold">
-                150+ Innovations
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Case Studies Preview */}
-      <section className="py-20 bg-white dark:bg-gray-950">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              Success <span className="text-blue-600 dark:text-cyan-400">Stories</span>
-            </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-              Real results from real clients across industries
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 max-w-5xl mx-auto">
             {[
-              {
-                industry: "E-Commerce",
-                company: "Fortune 500 Retailer",
-                challenge: "Legacy system modernization",
-                result: "300% performance improvement",
-                roi: "450% ROI in 6 months",
-                icon: "🛒",
-              },
-              {
-                industry: "Healthcare",
-                company: "Global Health Provider",
-                challenge: "HIPAA-compliant platform",
-                result: "5M+ patients served",
-                roi: "Zero security incidents",
-                icon: "🏥",
-              },
-              {
-                industry: "FinTech",
-                company: "Digital Banking Platform",
-                challenge: "Real-time transaction processing",
-                result: "10K transactions/sec",
-                roi: "99.99% uptime achieved",
-                icon: "💳",
-              },
-            ].map((caseStudy, index) => (
+              { name: 'Sarah J.', role: 'CTO, Tech Corp', quote: 'Exceptional Node.js expertise. Transformed our infrastructure.' },
+              { name: 'Michael C.', role: 'VP Eng, FinTech', quote: 'Professional team. Delivered on time and exceeded expectations.' },
+              { name: 'Emma R.', role: 'CEO, HealthTech', quote: 'Game-changer for our business. 24/7 global support is amazing.' }
+            ].map((t, i) => (
               <motion.div
-                key={caseStudy.company}
-                initial={{ opacity: 0, y: 30 }}
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.2 }}
                 viewport={{ once: true }}
-                whileHover={{ scale: 1.03 }}
-                className="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer"
-                onClick={() => console.log(`About Page: Case study ${caseStudy.company} clicked`)}
+                transition={{ delay: i * 0.1 }}
+                className="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700"
               >
-                <div className="text-5xl mb-4">{caseStudy.icon}</div>
-                <div className="text-sm font-semibold text-blue-600 dark:text-cyan-400 mb-2">
-                  {caseStudy.industry}
-                </div>
-                <h3 className="text-xl font-bold mb-4">{caseStudy.company}</h3>
-                <div className="space-y-3 mb-6">
-                  <div>
-                    <div className="text-sm text-gray-500 dark:text-gray-400">Challenge</div>
-                    <div className="font-medium">{caseStudy.challenge}</div>
-                  </div>
-                  <div>
-                    <div className="text-sm text-gray-500 dark:text-gray-400">Result</div>
-                    <div className="font-bold text-green-600 dark:text-green-400">{caseStudy.result}</div>
-                  </div>
-                  <div>
-                    <div className="text-sm text-gray-500 dark:text-gray-400">Impact</div>
-                    <div className="font-bold text-purple-600 dark:text-purple-400">{caseStudy.roi}</div>
-                  </div>
-                </div>
-                <button className="text-blue-600 dark:text-cyan-400 font-semibold hover:underline">
-                  Read Full Case Study →
-                </button>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials */}
-      <section className="py-20 bg-gray-50 dark:bg-gray-900">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              What Our Clients Say
-            </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-              Trusted by industry leaders worldwide
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                quote: "Enterprise Hero transformed our digital infrastructure. Their expertise in Node.js and enterprise architecture is unmatched. A true partner in our digital transformation journey.",
-                author: "Sarah Johnson",
-                role: "CTO, Fortune 500 Tech Company",
-                rating: 5,
-              },
-              {
-                quote: "The team's professionalism and technical depth exceeded our expectations. They delivered a mission-critical application on time and within budget. Highly recommended!",
-                author: "Michael Chen",
-                role: "VP Engineering, Global FinTech",
-                rating: 5,
-              },
-              {
-                quote: "Working with Enterprise Hero was a game-changer for our business. Their global team provided round-the-clock support and delivered exceptional results.",
-                author: "Emma Rodriguez",
-                role: "CEO, Healthcare Startup",
-                rating: 5,
-              },
-            ].map((testimonial, index) => (
-              <motion.div
-                key={testimonial.author}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.2 }}
-                viewport={{ once: true }}
-                className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg"
-              >
-                <div className="flex mb-4">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <svg key={i} className="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                <div className="flex gap-1 mb-3">
+                  {[...Array(5)].map((_, i) => (
+                    <svg key={i} className="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
                       <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
                     </svg>
                   ))}
                 </div>
-                <p className="text-gray-700 dark:text-gray-300 mb-6 italic leading-relaxed">
-                  "{testimonial.quote}"
-                </p>
-                <div className="border-t border-gray-200 dark:border-gray-700 pt-4">
-                  <div className="font-bold text-gray-900 dark:text-white">{testimonial.author}</div>
-                  <div className="text-sm text-gray-500 dark:text-gray-400">{testimonial.role}</div>
+                <p className="text-gray-700 dark:text-gray-300 mb-4 text-sm italic">"{t.quote}"</p>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center text-white font-bold text-sm">
+                    {t.name.split(' ').map(n => n[0]).join('')}
+                  </div>
+                  <div>
+                    <div className="font-bold text-sm">{t.name}</div>
+                    <div className="text-xs text-gray-600 dark:text-gray-400">{t.role}</div>
+                  </div>
                 </div>
               </motion.div>
             ))}
@@ -665,246 +408,95 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Founder Spotlight - Enhanced */}
-      <section className="py-20 bg-white dark:bg-gray-950">
+      {/* CERTIFICATIONS - Compact Icons */}
+      <section className="py-12 md:py-20 bg-white dark:bg-gray-900">
         <div className="container mx-auto px-4">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="text-center mb-16"
+            className="text-center mb-8"
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">Meet Our Founder</h2>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-              Visionary leadership driving global innovation
-            </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-            viewport={{ once: true }}
-            className="max-w-5xl mx-auto"
-          >
-            <div className="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 rounded-3xl overflow-hidden shadow-2xl">
-              <div className="md:flex">
-                <div className="md:w-2/5 bg-gradient-to-br from-blue-600 to-purple-600 p-12 flex flex-col items-center justify-center text-white">
-                  <motion.div
-                    whileHover={{ scale: 1.1, rotate: 5 }}
-                    className="w-40 h-40 bg-white/20 rounded-full mb-6 flex items-center justify-center backdrop-blur-sm"
-                  >
-                    <svg className="w-20 h-20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                    </svg>
-                  </motion.div>
-                  <h3 className="text-3xl font-bold mb-2">Aman Kumar Sharma</h3>
-                  <p className="text-blue-100 text-lg mb-6">Founder & CEO</p>
-                  <div className="space-y-2 text-center">
-                    <p className="text-sm">🌍 6 Countries</p>
-                    <p className="text-sm">💼 500+ Clients</p>
-                    <p className="text-sm">🏆 10+ Years Experience</p>
-                  </div>
-                </div>
-                <div className="md:w-3/5 p-10">
-                  <h4 className="text-2xl font-bold mb-6 text-blue-600 dark:text-cyan-400">
-                    Visionary Leader & Tech Entrepreneur
-                  </h4>
-                  <p className="text-gray-700 dark:text-gray-300 mb-4 leading-relaxed">
-                    Aman Kumar Sharma founded Enterprise Hero with a vision to create a globally recognized 
-                    Node.js development agency that delivers enterprise-grade solutions to clients worldwide. Under his leadership, 
-                    the company has expanded to 6 countries, serving Fortune 500 companies and innovative startups.
-                  </p>
-                  <p className="text-gray-700 dark:text-gray-300 mb-6 leading-relaxed">
-                    His expertise in enterprise architecture, digital transformation, and global business operations has positioned 
-                    Enterprise Hero as a trusted partner for mission-critical applications and cutting-edge technological solutions.
-                  </p>
-                  
-                  <div className="space-y-3 mb-6">
-                    <h5 className="font-bold text-gray-900 dark:text-white">Key Achievements:</h5>
-                    <ul className="space-y-2">
-                      {[
-                        "Built global team across 6 countries",
-                        "Delivered 1200+ enterprise projects",
-                        "Achieved 99.8% client satisfaction rate",
-                        "Led digital transformation for Fortune 500 companies"
-                      ].map((achievement, index) => (
-                        <li key={index} className="flex items-start text-gray-700 dark:text-gray-300">
-                          <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                          </svg>
-                          {achievement}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div className="flex flex-wrap gap-2">
-                    <span className="px-4 py-2 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 rounded-full text-sm font-medium">
-                      Enterprise Architecture
-                    </span>
-                    <span className="px-4 py-2 bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300 rounded-full text-sm font-medium">
-                      Global Operations
-                    </span>
-                    <span className="px-4 py-2 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 rounded-full text-sm font-medium">
-                      Digital Transformation
-                    </span>
-                  </div>
-                </div>
-              </div>
+            <div className="inline-block mb-3 px-4 py-1.5 bg-green-500/10 border border-green-500/20 rounded-full">
+              <span className="text-green-600 dark:text-green-400 text-xs font-bold uppercase">Certified</span>
             </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Enterprise Certifications & Partnerships */}
-      <section className="py-20 bg-gray-50 dark:bg-gray-900">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              Certified & <span className="text-blue-600 dark:text-cyan-400">Trusted</span>
-            </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-              Industry certifications and strategic partnerships that validate our expertise
-            </p>
+            <h2 className="text-3xl md:text-5xl font-bold">Industry Validated</h2>
           </motion.div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
             {[
-              { name: "ISO 27001", desc: "Security Certified" },
-              { name: "AWS Partner", desc: "Advanced Tier" },
-              { name: "Microsoft Gold", desc: "Partner Status" },
-              { name: "SOC 2 Type II", desc: "Compliance" },
-            ].map((cert, index) => (
+              { name: 'ISO 27001', icon: '🔒' },
+              { name: 'AWS Partner', icon: '☁️' },
+              { name: 'Microsoft', icon: '⭐' },
+              { name: 'SOC 2', icon: '✅' }
+            ].map((cert, i) => (
               <motion.div
-                key={cert.name}
+                key={i}
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.2 }}
                 viewport={{ once: true }}
-                whileHover={{ y: -5 }}
-                className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg text-center"
+                transition={{ delay: i * 0.1 }}
+                className="bg-gradient-to-br from-gray-50 to-white dark:from-gray-800 dark:to-gray-700 p-6 rounded-xl text-center hover:shadow-xl transition-all border border-gray-200 dark:border-gray-600"
               >
-                <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full mx-auto mb-4 flex items-center justify-center">
-                  <svg className="w-8 h-8 text-blue-600 dark:text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-                  </svg>
-                </div>
-                <h3 className="font-bold text-lg mb-1">{cert.name}</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400">{cert.desc}</p>
+                <div className="text-4xl mb-2">{cert.icon}</div>
+                <div className="font-bold text-sm">{cert.name}</div>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Final CTA - Premium Design */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-amber-950">
-        {/* Premium Background Pattern */}
-        <div className="absolute inset-0 bg-[url('/noise.webp')] opacity-10"></div>
-        <div className="absolute inset-0" style={{
-          backgroundImage: `radial-gradient(circle at 50% 50%, rgba(251, 191, 36, 0.1) 0%, transparent 50%)`
-        }}></div>
-        
-        <div className="container mx-auto px-4 py-24 relative z-10">
+      {/* FINAL CTA - Compact & Powerful */}
+      <section className="py-16 md:py-24 bg-gradient-to-br from-cyan-600 via-blue-600 to-purple-600 text-white relative overflow-hidden">
+        {/* Illustrations */}
+        <div className="absolute top-10 right-10 w-40 h-40 opacity-20 hidden lg:block">
+          <AnimatedIllustration
+            src="/illustrations/undraw_programming.svg"
+            alt="Code"
+            width={160}
+            height={160}
+            animationType="float"
+            delay={0.2}
+          />
+        </div>
+        <div className="absolute bottom-10 left-10 w-32 h-32 opacity-15 hidden lg:block">
+          <AnimatedIllustration
+            src="/illustrations/undraw_cloud_hosting.svg"
+            alt="Cloud"
+            width={128}
+            height={128}
+            animationType="scale"
+            delay={0.5}
+          />
+        </div>
+
+        <div className="container mx-auto px-4 text-center relative z-10">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
             viewport={{ once: true }}
-            className="text-center max-w-5xl mx-auto"
           >
-            {/* Premium Glow Effect */}
-            <motion.div
-              animate={{
-                scale: [1, 1.1, 1],
-                opacity: [0.3, 0.5, 0.3],
-              }}
-              transition={{
-                duration: 4,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-              className="absolute inset-0 bg-gradient-to-r from-amber-500/20 via-yellow-500/20 to-amber-500/20 blur-3xl rounded-full"
-            />
-            
-            <div className="inline-block mb-6 px-6 py-2 bg-gradient-to-r from-amber-500/20 via-yellow-500/20 to-amber-500/20 border border-amber-500/30 rounded-full backdrop-blur-sm">
-              <span className="text-amber-400 text-sm font-bold tracking-wider uppercase">Transform Your Business</span>
-            </div>
-            
-            <h2 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-amber-200 via-yellow-100 to-amber-200 bg-clip-text text-transparent mb-8 relative z-10 leading-tight">
-              Ready to Achieve Excellence?
+            <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6">
+              Ready to Build<br className="md:hidden" /> Something Great?
             </h2>
-            <p className="text-xl md:text-2xl text-slate-300 mb-12 relative z-10 font-light max-w-3xl mx-auto">
-              Join 500+ Fortune 500 companies worldwide who trust Enterprise Hero 
-              for their enterprise-grade Node.js development and digital solutions.
+            <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto opacity-90">
+              Join 500+ Fortune 500 companies who trust us for enterprise Node.js development
             </p>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-14 relative z-10">
-              {[
-                { icon: "⚡", text: "24/7 Global Support", desc: "Always available" },
-                { icon: "🚀", text: "Rapid Deployment", desc: "Fast delivery" },
-                { icon: "🔒", text: "Enterprise Security", desc: "Bank-grade protection" },
-              ].map((feature, index) => (
-                <motion.div
-                  key={feature.text}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  className="bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-md p-6 rounded-2xl border border-amber-500/20 hover:border-amber-500/40 transition-all duration-300"
-                >
-                  <div className="text-5xl mb-3">{feature.icon}</div>
-                  <div className="text-white font-bold text-lg mb-1">{feature.text}</div>
-                  <div className="text-amber-300/70 text-sm">{feature.desc}</div>
-                </motion.div>
-              ))}
+
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+              <Link href="/pages/contact" className="px-8 py-4 bg-white text-blue-600 hover:bg-gray-100 rounded-lg font-bold text-lg transition-all shadow-xl">
+                Get Started →
+              </Link>
+              <Link href="/pages/services" className="px-8 py-4 bg-white/10 border-2 border-white/30 hover:bg-white/20 text-white rounded-lg font-bold text-lg transition-all backdrop-blur-sm">
+                Our Services
+              </Link>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-6 justify-center relative z-10 mb-8">
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="group relative px-12 py-5 bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-400 hover:via-yellow-400 hover:to-amber-500 text-slate-900 rounded-full font-bold text-lg transition-all duration-300 shadow-2xl shadow-amber-500/50 hover:shadow-amber-500/70 overflow-hidden"
-                onClick={() => console.log("About Page: Final CTA - Contact Global Team clicked")}
-              >
-                <span className="relative z-10 flex items-center gap-2 justify-center">
-                  Contact Our Global Team
-                  <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                  </svg>
-                </span>
-                <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/30 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="px-12 py-5 bg-slate-800/50 border-2 border-amber-500/50 hover:border-amber-400 hover:bg-slate-800/70 text-amber-100 hover:text-amber-50 rounded-full font-bold text-lg transition-all duration-300 backdrop-blur-sm"
-                onClick={() => console.log("About Page: Final CTA - Schedule Consultation clicked")}
-              >
-                Schedule Consultation
-              </motion.button>
-            </div>
-
-            <div className="flex items-center justify-center gap-6 text-amber-200/80 text-sm relative z-10">
-              <span className="flex items-center gap-2">
-                <span className="text-amber-400">🌍</span> 6 countries
-              </span>
-              <span className="text-amber-500/50">•</span>
-              <span className="flex items-center gap-2">
-                <span className="text-amber-400">💼</span> 500+ clients
-              </span>
-              <span className="text-amber-500/50">•</span>
-              <span className="flex items-center gap-2">
-                <span className="text-amber-400">⭐</span> 99.8% satisfaction
-              </span>
+            <div className="flex flex-wrap justify-center gap-6 text-sm opacity-80">
+              <span>🌍 6 Countries</span>
+              <span>💼 500+ Clients</span>
+              <span>⭐ 99.8% Satisfaction</span>
+              <span>📊 1200+ Projects</span>
             </div>
           </motion.div>
         </div>
@@ -913,4 +505,4 @@ export default function AboutPage() {
   );
 }
 
-console.log("About Page: Component definition completed successfully"); 
+console.log('[About] v3.0 Component loaded successfully');
