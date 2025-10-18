@@ -13,6 +13,7 @@
  * - Premium glassmorphism design
  * - Floating UI elements (SEO icons, speed indicators, forms)
  * - Synchronized content display across all devices
+ * - MOBILE OPTIMIZED: No horizontal overflow on any screen size
  * 
  * CONVERSION PSYCHOLOGY:
  * - Demonstrates responsive design capability
@@ -24,7 +25,7 @@
  * Integrated at the top of Recent Projects section to showcase
  * responsive design before showing actual project examples
  * 
- * @version 1.0.0
+ * @version 1.1.0 - Fixed mobile viewport overflow
  */
 
 import React, { useEffect, useRef } from 'react';
@@ -102,19 +103,19 @@ export function DeviceShowcase() {
         </motion.div>
 
         {/* Main Device Showcase */}
-        <div className="relative max-w-6xl mx-auto min-h-[400px] sm:min-h-[500px] md:min-h-[600px] flex items-center justify-center">
+        <div className="relative max-w-6xl mx-auto min-h-[400px] sm:min-h-[500px] md:min-h-[600px] flex items-center justify-center overflow-hidden px-4">
           
           {/* Desktop Device - Center Back */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8, y: 50 }}
             animate={inView ? { opacity: 1, scale: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="absolute z-10"
+            className="absolute z-10 left-1/2 transform -translate-x-1/2"
             style={{ top: '10%' }}
           >
             <div className="relative">
               {/* Monitor Frame */}
-              <div className="w-64 sm:w-80 md:w-96 lg:w-[28rem] bg-gradient-to-br from-gray-800 to-gray-900 dark:from-gray-700 dark:to-gray-800 rounded-2xl p-3 shadow-2xl">
+              <div className="w-48 sm:w-64 md:w-80 lg:w-96 xl:w-[28rem] bg-gradient-to-br from-gray-800 to-gray-900 dark:from-gray-700 dark:to-gray-800 rounded-2xl p-2 sm:p-3 shadow-2xl">
                 {/* Screen */}
                 <div className="w-full aspect-video bg-gradient-to-br from-white to-gray-50 dark:from-gray-900 dark:to-gray-800 rounded-lg overflow-hidden border border-gray-300 dark:border-gray-600">
                   {/* Website Content Mockup */}
@@ -148,13 +149,13 @@ export function DeviceShowcase() {
               <div className="w-16 sm:w-20 h-3 bg-gray-900 dark:bg-gray-800 mx-auto rounded-b-lg" />
               
               {/* Desktop Label */}
-              <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 flex items-center gap-2 px-3 py-1.5 bg-white dark:bg-gray-800 rounded-full shadow-lg border border-gray-200 dark:border-gray-700">
-                <Monitor className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />
-                <span className="text-xs font-bold text-gray-900 dark:text-white">Desktop</span>
+              <div className="absolute -top-6 sm:-top-8 left-1/2 transform -translate-x-1/2 flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-1 sm:py-1.5 bg-white dark:bg-gray-800 rounded-full shadow-lg border border-gray-200 dark:border-gray-700">
+                <Monitor className="h-3 w-3 sm:h-4 sm:w-4 text-indigo-600 dark:text-indigo-400" />
+                <span className="text-[10px] sm:text-xs font-bold text-gray-900 dark:text-white">Desktop</span>
               </div>
               
               {/* Glow Effect */}
-              <div className="absolute -inset-4 bg-gradient-to-r from-indigo-500/20 to-purple-500/20 rounded-3xl blur-2xl -z-10" />
+              <div className="absolute -inset-2 sm:-inset-4 bg-gradient-to-r from-indigo-500/20 to-purple-500/20 rounded-3xl blur-xl sm:blur-2xl -z-10" />
             </div>
           </motion.div>
 
@@ -163,12 +164,12 @@ export function DeviceShowcase() {
             initial={{ opacity: 0, x: -80, y: 50 }}
             animate={inView ? { opacity: 1, x: 0, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="absolute z-20 left-0 sm:left-10 md:left-20"
+            className="absolute z-20 left-2 sm:left-8 md:left-16 lg:left-20"
             style={{ top: '30%' }}
           >
             <div className="relative">
               {/* Tablet Frame */}
-              <div className="w-32 sm:w-40 md:w-48 lg:w-56 bg-gradient-to-br from-gray-800 to-gray-900 dark:from-gray-700 dark:to-gray-800 rounded-xl p-2 shadow-2xl">
+              <div className="w-24 sm:w-32 md:w-40 lg:w-48 xl:w-56 bg-gradient-to-br from-gray-800 to-gray-900 dark:from-gray-700 dark:to-gray-800 rounded-xl p-1.5 sm:p-2 shadow-2xl">
                 {/* Screen */}
                 <div className="w-full aspect-[3/4] bg-gradient-to-br from-white to-gray-50 dark:from-gray-900 dark:to-gray-800 rounded-lg overflow-hidden border border-gray-300 dark:border-gray-600">
                   {/* Website Content Mockup */}
@@ -185,13 +186,13 @@ export function DeviceShowcase() {
               </div>
               
               {/* Tablet Label */}
-              <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 flex items-center gap-2 px-3 py-1.5 bg-white dark:bg-gray-800 rounded-full shadow-lg border border-gray-200 dark:border-gray-700">
-                <Tablet className="h-4 w-4 text-purple-600 dark:text-purple-400" />
-                <span className="text-xs font-bold text-gray-900 dark:text-white">Tablet</span>
+              <div className="absolute -top-6 sm:-top-8 left-1/2 transform -translate-x-1/2 flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-1 sm:py-1.5 bg-white dark:bg-gray-800 rounded-full shadow-lg border border-gray-200 dark:border-gray-700">
+                <Tablet className="h-3 w-3 sm:h-4 sm:w-4 text-purple-600 dark:text-purple-400" />
+                <span className="text-[10px] sm:text-xs font-bold text-gray-900 dark:text-white">Tablet</span>
               </div>
               
               {/* Glow Effect */}
-              <div className="absolute -inset-4 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-2xl blur-2xl -z-10" />
+              <div className="absolute -inset-2 sm:-inset-4 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-2xl blur-xl sm:blur-2xl -z-10" />
             </div>
           </motion.div>
 
@@ -200,12 +201,12 @@ export function DeviceShowcase() {
             initial={{ opacity: 0, x: 80, y: 50 }}
             animate={inView ? { opacity: 1, x: 0, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="absolute z-30 right-0 sm:right-10 md:right-20"
+            className="absolute z-30 right-2 sm:right-8 md:right-16 lg:right-20"
             style={{ top: '35%' }}
           >
             <div className="relative">
               {/* Phone Frame */}
-              <div className="w-20 sm:w-24 md:w-28 lg:w-32 bg-gradient-to-br from-gray-800 to-gray-900 dark:from-gray-700 dark:to-gray-800 rounded-2xl p-2 shadow-2xl">
+              <div className="w-16 sm:w-20 md:w-24 lg:w-28 xl:w-32 bg-gradient-to-br from-gray-800 to-gray-900 dark:from-gray-700 dark:to-gray-800 rounded-2xl p-1.5 sm:p-2 shadow-2xl">
                 {/* Screen */}
                 <div className="w-full aspect-[9/16] bg-gradient-to-br from-white to-gray-50 dark:from-gray-900 dark:to-gray-800 rounded-xl overflow-hidden border border-gray-300 dark:border-gray-600">
                   {/* Website Content Mockup */}
@@ -224,13 +225,13 @@ export function DeviceShowcase() {
               </div>
               
               {/* Mobile Label */}
-              <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 flex items-center gap-2 px-3 py-1.5 bg-white dark:bg-gray-800 rounded-full shadow-lg border border-gray-200 dark:border-gray-700 whitespace-nowrap">
-                <Smartphone className="h-4 w-4 text-pink-600 dark:text-pink-400" />
-                <span className="text-xs font-bold text-gray-900 dark:text-white">Mobile</span>
+              <div className="absolute -top-6 sm:-top-8 left-1/2 transform -translate-x-1/2 flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-1 sm:py-1.5 bg-white dark:bg-gray-800 rounded-full shadow-lg border border-gray-200 dark:border-gray-700 whitespace-nowrap">
+                <Smartphone className="h-3 w-3 sm:h-4 sm:w-4 text-pink-600 dark:text-pink-400" />
+                <span className="text-[10px] sm:text-xs font-bold text-gray-900 dark:text-white">Mobile</span>
               </div>
               
               {/* Glow Effect */}
-              <div className="absolute -inset-4 bg-gradient-to-r from-pink-500/20 to-red-500/20 rounded-2xl blur-2xl -z-10" />
+              <div className="absolute -inset-2 sm:-inset-4 bg-gradient-to-r from-pink-500/20 to-red-500/20 rounded-2xl blur-xl sm:blur-2xl -z-10" />
             </div>
           </motion.div>
 
