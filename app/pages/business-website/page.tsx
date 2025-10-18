@@ -22,13 +22,12 @@
 
 import React, { useEffect } from 'react';
 
-// Section Components - CONVERSION OPTIMIZED with NEW ILLUSTRATIONS
-import { HeroSection } from './_components/hero-section'; // ✅ Option 1: Website Transformation
+// Section Components - SIMPLIFIED WITH DEVICE SHOWCASE ONLY
+import { HeroSection } from './_components/hero-section'; // Clean text-only hero
 import { ClientLogosSection } from './_components/client-logos-section';
 import { TrustSignalsSection } from './_components/trust-signals-section';
-import { GrowthDashboardSection } from './_components/growth-dashboard-section'; // ✅ Option 2: Growth Dashboard
 import { ServicesSection } from './_components/services-section';
-import { DeviceShowcase } from './_components/device-showcase'; // ✅ Option 3: 3-Device Showcase
+import { DeviceShowcase } from './_components/device-showcase'; // ✅ ONLY ILLUSTRATION - User loved this!
 import { RecentProjectsSection } from './_components/recent-projects-section';
 import { PricingSection } from './_components/pricing-section';
 import { TestimonialsSection } from './_components/testimonials-section';
@@ -45,20 +44,19 @@ console.log('[Business-Website] Main page component loaded');
  * Business Website Landing Page Component
  * CONVERSION OPTIMIZED VERSION 2.0
  * 
- * CONVERSION-FOCUSED FLOW WITH 3 NEW VISUAL ILLUSTRATIONS:
- * 1. Hero - ✅ OPTION 1: Website Transformation Visualization (Old vs New)
- * 2. Client Logos - Instant credibility with tech partners & certifications
+ * CONVERSION-FOCUSED FLOW WITH DEVICE SHOWCASE ONLY:
+ * 1. Hero - Clean text-only (no illustration)
+ * 2. Client Logos - Instant credibility with tech partners
  * 3. Trust Signals - Stats and social proof (500+ clients)
- * 4. Growth Dashboard - ✅ OPTION 2: Indian Business Growth Dashboard (NEW!)
- * 5. Services - Visual service grid with pricing
- * 6. Device Showcase - ✅ OPTION 3: 3-Device Responsive Design (NEW!)
- * 7. Recent Projects - Real results with metrics
- * 8. Pricing - Enhanced with urgency & better CTAs
- * 9. Testimonials - Photos + specific results
- * 10. Lead Form - Sticky on desktop, optimized CTAs
- * 11. FAQ - Address final objections
- * 12. Final CTA - Strong urgency & FOMO
- * 13. Mobile Floating CTA - Always-visible contact buttons
+ * 4. Services - Visual service grid with pricing
+ * 5. Device Showcase - ✅ ONLY ILLUSTRATION: 3-Device Responsive Design
+ * 6. Recent Projects - Real results with metrics
+ * 7. Pricing - Enhanced with urgency & better CTAs
+ * 8. Testimonials - Photos + specific results
+ * 9. Lead Form - Sticky on desktop, optimized CTAs
+ * 10. FAQ - Address final objections
+ * 11. Final CTA - Strong urgency & FOMO
+ * 12. Mobile Floating CTA - Always-visible contact buttons
  * 
  * KEY IMPROVEMENTS V2.0:
  * - ✅ Option 1: Website Transformation in Hero (before/after comparison)
@@ -73,7 +71,7 @@ console.log('[Business-Website] Main page component loaded');
  */
 export default function BusinessWebsitePage() {
   useEffect(() => {
-    console.log('[Business-Website] CONVERSION OPTIMIZED Page mounted - WITH 3 NEW ILLUSTRATIONS');
+    console.log('[Business-Website] SIMPLIFIED Page mounted - Device Showcase ONLY');
     console.log('[Business-Website] User Agent:', navigator.userAgent);
     console.log('[Business-Website] Viewport:', {
       width: window.innerWidth,
@@ -88,7 +86,7 @@ export default function BusinessWebsitePage() {
 
   return (
     <main className="min-h-screen">
-      {/* Hero Section - ✅ OPTION 1: Website Transformation Visualization */}
+      {/* Hero Section - Clean text-only, no illustrations */}
       <SectionErrorBoundary name="HeroSection">
         <HeroSection />
       </SectionErrorBoundary>
@@ -101,11 +99,6 @@ export default function BusinessWebsitePage() {
       {/* Trust Signals - Build Credibility with Stats */}
       <SectionErrorBoundary name="TrustSignalsSection">
         <TrustSignalsSection />
-      </SectionErrorBoundary>
-
-      {/* Growth Dashboard - ✅ OPTION 2: Indian Business Growth Dashboard */}
-      <SectionErrorBoundary name="GrowthDashboardSection">
-        <GrowthDashboardSection />
       </SectionErrorBoundary>
 
       {/* Services - Show Complete Solutions */}
