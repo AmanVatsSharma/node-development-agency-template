@@ -28,6 +28,11 @@ console.log('[HomePage] Loading enterprise home page with optimized imports');
 // Critical above-fold component (loaded immediately)
 import StatsCounter from "./components/home/StatsCounter";
 
+// FREE CONSULTATION COMPONENTS - Import for conversion optimization
+import FreeConsultationBanner from "./components/consultation/FreeConsultationBanner";
+import FloatingConsultationButton from "./components/consultation/FloatingConsultationButton";
+console.log('[HomePage] Free consultation components loaded for conversion optimization');
+
 // Below-fold components (lazy loaded for performance)
 const TechStackShowcase = dynamic(() => import("./components/home/TechStackShowcase"), {
   loading: () => <div className="py-20 bg-white dark:bg-gray-900 flex items-center justify-center"><div className="w-12 h-12 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin"></div></div>,
@@ -120,24 +125,44 @@ export default function Home() {
                 <span className="inline-block">High-Performance</span>
               </p>
               
-              {/* Premium CTA Button with Enhanced Effects */}
-              <a 
-                href="/pages/contact"
-                className="group/btn relative inline-block px-10 py-4 bg-gradient-to-r from-[#00ff41] to-[#00ffff] text-black font-bold text-lg rounded-full overflow-hidden transition-all duration-500 hover:scale-110 hover:shadow-[0_0_60px_rgba(0,255,65,1)] shadow-[0_0_30px_rgba(0,255,255,0.5)]"
-              >
-                {/* Button Shimmer Effect */}
-                <div className="absolute inset-0 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
-                
-                <span className="relative z-10 flex items-center gap-2">
-                  Explore Services 
-                  <svg className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                  </svg>
-                </span>
-                
-                {/* Animated Background */}
-                <div className="absolute inset-0 bg-gradient-to-r from-[#00ffff] to-[#00ff41] opacity-0 group-hover/btn:opacity-100 transition-opacity duration-500"></div>
-              </a>
+              {/* Premium CTA Buttons with Enhanced Effects */}
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <a 
+                  href="/pages/contact"
+                  className="group/btn relative inline-block px-10 py-4 bg-gradient-to-r from-[#00ff41] to-[#00ffff] text-black font-bold text-lg rounded-full overflow-hidden transition-all duration-500 hover:scale-110 hover:shadow-[0_0_60px_rgba(0,255,65,1)] shadow-[0_0_30px_rgba(0,255,255,0.5)]"
+                >
+                  {/* Button Shimmer Effect */}
+                  <div className="absolute inset-0 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
+                  
+                  <span className="relative z-10 flex items-center gap-2">
+                    Explore Services 
+                    <svg className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                  </span>
+                  
+                  {/* Animated Background */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#00ffff] to-[#00ff41] opacity-0 group-hover/btn:opacity-100 transition-opacity duration-500"></div>
+                </a>
+
+                {/* FREE CONSULTATION CTA - Secondary Button */}
+                <button
+                  onClick={() => {
+                    console.log('[HomePage Hero] Free consultation button clicked');
+                    // Scroll to consultation banner
+                    document.querySelector('[data-consultation-banner]')?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  className="group/consult relative inline-block px-10 py-4 bg-transparent border-2 border-[#00ff41] text-[#00ff41] hover:bg-[#00ff41] hover:text-black font-bold text-lg rounded-full overflow-hidden transition-all duration-500 hover:scale-110 hover:shadow-[0_0_40px_rgba(0,255,65,0.8)] shadow-[0_0_20px_rgba(0,255,65,0.3)]"
+                >
+                  <span className="relative z-10 flex items-center gap-2">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    Free Consultation
+                    <span className="w-2 h-2 bg-[#00ff41] group-hover/consult:bg-black rounded-full animate-pulse"></span>
+                  </span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -181,6 +206,12 @@ export default function Home() {
           SECTION 2: STATISTICS COUNTER
           ======================================== */}
       <StatsCounter />
+
+      {/* ========================================
+          SECTION 2.5: FREE CONSULTATION BANNER
+          (CONVERSION OPTIMIZATION)
+          ======================================== */}
+      <FreeConsultationBanner />
 
       {/* ========================================
           SECTION 3: SERVICES HIGHLIGHTS (PREMIUM)
@@ -613,6 +644,12 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* ========================================
+          FLOATING CONSULTATION BUTTON
+          (Always visible - sticky positioning)
+          ======================================== */}
+      <FloatingConsultationButton />
     </div>
   );
 }
