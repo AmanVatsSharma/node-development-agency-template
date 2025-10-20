@@ -42,7 +42,7 @@ npm run dev
 
 ### Desktop Testing:
 1. Open http://localhost:3000
-2. See floating button in bottom-right ✓
+2. See floating button in TOP-RIGHT (positioned to avoid AI chatbot) ✓
 3. Click hero "Free Consultation" button → Scroll to banner ✓
 4. Click banner "Schedule Your Free Consultation" → Modal opens ✓
 5. Click floating button → Modal opens ✓

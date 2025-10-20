@@ -5,8 +5,9 @@
  * 
  * Features:
  * - Sticky positioning (always visible while scrolling)
+ * - TOP-RIGHT position to avoid AI chatbot conflict
  * - Premium pulse animation
- * - Mobile responsive
+ * - Mobile responsive (bottom bar on mobile)
  * - Opens consultation modal on click
  * - Console logging for debugging
  * 
@@ -43,13 +44,13 @@ export default function FloatingConsultationButton() {
 
   return (
     <>
-      {/* Floating Button - Desktop */}
+      {/* Floating Button - Desktop (TOP-RIGHT to avoid AI chatbot) */}
       <motion.button
         onClick={handleClick}
         initial={{ opacity: 0, scale: 0 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 1, duration: 0.5, type: 'spring' }}
-        className="hidden md:flex fixed bottom-8 right-8 z-40 items-center gap-3 px-6 py-4 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white rounded-full font-bold shadow-2xl hover:shadow-cyan-500/50 transition-all duration-300 hover:scale-110 group"
+        className="hidden md:flex fixed top-24 right-8 z-40 items-center gap-3 px-6 py-4 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white rounded-full font-bold shadow-2xl hover:shadow-cyan-500/50 transition-all duration-300 hover:scale-110 group"
         aria-label="Book free consultation"
       >
         {/* Pulse Animation Ring */}

@@ -31,7 +31,7 @@ The Free Consultation feature has been successfully implemented on your vusiness
 - Location: `app/components/consultation/ConsultationModal.tsx`
 
 #### ✅ FloatingConsultationButton.tsx
-- Sticky bottom-right button (desktop)
+- Sticky TOP-RIGHT button (desktop) - positioned to avoid AI chatbot
 - Sticky bottom bar (mobile)
 - Pulse animation
 - Always visible while scrolling

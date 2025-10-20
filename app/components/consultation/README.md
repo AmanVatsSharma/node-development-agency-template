@@ -85,7 +85,7 @@ const [isOpen, setIsOpen] = useState(false);
 Sticky floating button always visible while scrolling.
 
 **Features:**
-- Sticky positioning (bottom-right on desktop, bottom bar on mobile)
+- Sticky positioning (TOP-RIGHT on desktop to avoid AI chatbot, bottom bar on mobile)
 - Premium pulse animation
 - Opens consultation modal on click
 - Google Analytics click tracking
