@@ -19,6 +19,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import ConsultationModal from './ConsultationModal';
+import ConsultationErrorBoundary from './ErrorBoundary';
 
 // Console log for debugging
 console.log('[FreeConsultationBanner] Component loaded');
@@ -187,14 +188,16 @@ export default function FreeConsultationBanner() {
         </div>
       </section>
 
-      {/* Consultation Modal */}
-      <ConsultationModal 
-        isOpen={isModalOpen} 
-        onClose={() => {
-          console.log('[FreeConsultationBanner] Closing modal');
-          setIsModalOpen(false);
-        }} 
-      />
+      {/* Consultation Modal with Error Boundary */}
+      <ConsultationErrorBoundary>
+        <ConsultationModal 
+          isOpen={isModalOpen} 
+          onClose={() => {
+            console.log('[FreeConsultationBanner] Closing modal');
+            setIsModalOpen(false);
+          }} 
+        />
+      </ConsultationErrorBoundary>
     </>
   );
 }

@@ -19,6 +19,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import ConsultationModal from './ConsultationModal';
+import ConsultationErrorBoundary from './ErrorBoundary';
 
 // Console log for debugging
 console.log('[FloatingConsultationButton] Component loaded');
@@ -92,14 +93,16 @@ export default function FloatingConsultationButton() {
         </button>
       </motion.div>
 
-      {/* Consultation Modal */}
-      <ConsultationModal 
-        isOpen={isModalOpen} 
-        onClose={() => {
-          console.log('[FloatingConsultationButton] Closing modal');
-          setIsModalOpen(false);
-        }} 
-      />
+      {/* Consultation Modal with Error Boundary */}
+      <ConsultationErrorBoundary>
+        <ConsultationModal 
+          isOpen={isModalOpen} 
+          onClose={() => {
+            console.log('[FloatingConsultationButton] Closing modal');
+            setIsModalOpen(false);
+          }} 
+        />
+      </ConsultationErrorBoundary>
     </>
   );
 }

@@ -174,56 +174,100 @@ export default function ConsultationForm({
       
       console.log('[ConsultationForm] Form data:', formData);
       
-      // Call the API endpoint
-      const response = await fetch('/api/consultation', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-      });
+      // Call the API endpoint with timeout and better error handling
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
       
-      const data = await response.json();
-      console.log('[ConsultationForm] API response:', data);
-      
-      if (!response.ok) {
-        throw new Error(data.error || 'Failed to submit the consultation request');
-      }
-      
-      console.log('[ConsultationForm] Consultation request submitted successfully');
-      setSubmitSuccess(true);
-      
-      // Call success callback
-      if (onSuccess) {
-        onSuccess();
-      }
-      
-      // Reset form after successful submission
-      setForm({
-        name: { value: '', error: '', touched: false },
-        email: { value: '', error: '', touched: false },
-        phone: { value: '', error: '', touched: false },
-        company: { value: '', error: '', touched: false },
-        serviceInterest: { value: '', error: '', touched: false },
-        preferredDate: { value: '', error: '', touched: false },
-        preferredTime: { value: '', error: '', touched: false },
-        message: { value: '', error: '', touched: false },
-      });
-
-      // Track conversion event
-      if (typeof window !== 'undefined' && (window as any).gtag) {
-        console.log('[ConsultationForm] Tracking Google Analytics conversion');
-        (window as any).gtag('event', 'conversion', {
-          'send_to': 'AW-CONVERSION_ID/CONVERSION_LABEL',
-          'event_category': 'Consultation',
-          'event_label': 'Free Consultation Booking',
-          'value': 1
+      try {
+        const response = await fetch('/api/consultation', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(formData),
+          signal: controller.signal
         });
+        
+        clearTimeout(timeoutId);
+        
+        // Try to parse JSON response
+        let data;
+        try {
+          data = await response.json();
+        } catch (parseError) {
+          console.error('[ConsultationForm] Failed to parse response:', parseError);
+          throw new Error('Server returned an invalid response. Database migration may be pending.');
+        }
+        
+        console.log('[ConsultationForm] API response:', data);
+        
+        if (!response.ok) {
+          // Handle specific error cases
+          if (response.status === 500) {
+            throw new Error('Database error: Please run Prisma migration first (npx prisma migrate dev)');
+          }
+          throw new Error(data.error || `Server error (${response.status}): ${data.message || 'Failed to submit'}`);
+        }
+        
+        console.log('[ConsultationForm] Consultation request submitted successfully');
+        setSubmitSuccess(true);
+        
+        // Call success callback
+        if (onSuccess) {
+          onSuccess();
+        }
+        
+        // Reset form after successful submission
+        setForm({
+          name: { value: '', error: '', touched: false },
+          email: { value: '', error: '', touched: false },
+          phone: { value: '', error: '', touched: false },
+          company: { value: '', error: '', touched: false },
+          serviceInterest: { value: '', error: '', touched: false },
+          preferredDate: { value: '', error: '', touched: false },
+          preferredTime: { value: '', error: '', touched: false },
+          message: { value: '', error: '', touched: false },
+        });
+
+        // Track conversion event
+        if (typeof window !== 'undefined' && (window as any).gtag) {
+          console.log('[ConsultationForm] Tracking Google Analytics conversion');
+          (window as any).gtag('event', 'conversion', {
+            'send_to': 'AW-CONVERSION_ID/CONVERSION_LABEL',
+            'event_category': 'Consultation',
+            'event_label': 'Free Consultation Booking',
+            'value': 1
+          });
+        }
+        
+      } catch (fetchError: any) {
+        clearTimeout(timeoutId);
+        
+        // Handle network errors
+        if (fetchError.name === 'AbortError') {
+          throw new Error('Request timeout: Server is taking too long to respond');
+        }
+        if (fetchError.message?.includes('Failed to fetch')) {
+          throw new Error('Network error: Unable to connect to server. Please check your connection.');
+        }
+        throw fetchError;
       }
       
     } catch (error) {
       console.error('[ConsultationForm] Error submitting form:', error);
-      const errorMessage = error instanceof Error ? error.message : 'An error occurred while submitting the form. Please try again.';
+      
+      // User-friendly error messages
+      let errorMessage = 'An error occurred while submitting the form.';
+      
+      if (error instanceof Error) {
+        errorMessage = error.message;
+      }
+      
+      // Add helpful hint if it's likely a database issue
+      if (errorMessage.includes('Prisma') || errorMessage.includes('Database') || errorMessage.includes('500')) {
+        errorMessage += '\n\nℹ️ This is likely because database migration is pending. Run: npx prisma migrate dev';
+      }
+      
       setSubmitError(errorMessage);
       
       // Call error callback
@@ -443,7 +487,15 @@ export default function ConsultationForm({
       {/* Error Message */}
       {submitError && (
         <div className="bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 text-red-800 dark:text-red-200 p-4 rounded-lg">
-          {submitError}
+          <div className="flex items-start gap-3">
+            <svg className="w-5 h-5 text-red-600 dark:text-red-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <div className="flex-1">
+              <p className="font-medium mb-1">Unable to Submit</p>
+              <p className="text-sm whitespace-pre-line">{submitError}</p>
+            </div>
+          </div>
         </div>
       )}
       
