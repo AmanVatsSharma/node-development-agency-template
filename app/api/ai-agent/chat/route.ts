@@ -137,7 +137,11 @@ export async function POST(request: NextRequest) {
         // Call the convert-lead API internally
         const leadData = leadDetection.leadData || {};
         
-        const convertResponse = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/ai-agent/convert-lead`, {
+        // Build absolute URL based on the incoming request origin to avoid localhost issues in production
+        const origin = request.nextUrl.origin;
+        const convertUrl = `${origin}/api/ai-agent/convert-lead`;
+        
+        const convertResponse = await fetch(convertUrl, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -155,7 +159,7 @@ export async function POST(request: NextRequest) {
         });
 
         const convertResult = await convertResponse.json();
-        console.log('[AI Agent Chat] Lead conversion result:', convertResult);
+        console.log('[AI Agent Chat] Lead conversion result:', { url: convertUrl, status: convertResponse.status, result: convertResult });
       } catch (error) {
         console.error('[AI Agent Chat] Failed to convert lead:', error);
         // Don't fail the chat response if lead conversion fails
