@@ -57,18 +57,56 @@ export default function AdminConversationsListPage() {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(`/api/ai-agent/conversations?${buildQueryParams}`);
-      const data = await res.json();
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+      
+      const res = await fetch(`/api/ai-agent/conversations?${buildQueryParams}`, {
+        signal: controller.signal
+      });
+      
+      clearTimeout(timeoutId);
+      
+      // Try to parse JSON response
+      let data;
+      try {
+        data = await res.json();
+      } catch (parseError) {
+        console.error('[Admin Conversations] Failed to parse response:', parseError);
+        throw new Error('Server returned invalid response. Database may not be initialized.');
+      }
+      
       if (!res.ok || !data.success) {
         console.error('[Admin Conversations] Failed to load conversations', data);
-        throw new Error(data.error || 'Failed to load conversations');
+        
+        // Handle specific error cases
+        if (res.status === 500) {
+          throw new Error(
+            'Database error: AIConversation table may not exist.\n\n' +
+            'Run: npx prisma migrate dev\n' +
+            'Then refresh this page.'
+          );
+        }
+        
+        throw new Error(data.error || data.message || 'Failed to load conversations');
       }
       console.log('[Admin Conversations] Conversations loaded', { count: data.conversations?.length || 0, stats: data.stats });
       setConversations(data.conversations || []);
       setStats(data.stats || {});
     } catch (err: any) {
       console.error('[Admin Conversations] Error:', err);
-      setError(err.message || 'Failed to load conversations');
+      
+      // User-friendly error messages
+      let errorMessage = 'Failed to load conversations';
+      
+      if (err.name === 'AbortError') {
+        errorMessage = 'Request timeout: Server is taking too long to respond';
+      } else if (err.message?.includes('Failed to fetch')) {
+        errorMessage = 'Network error: Unable to connect to server';
+      } else if (err.message) {
+        errorMessage = err.message;
+      }
+      
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -127,15 +165,37 @@ export default function AdminConversationsListPage() {
     setSelectedLoading(true);
     setSelectedError(null);
     try {
-      const res = await fetch(`/api/ai-agent/conversations/${id}`);
-      const data = await res.json();
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000);
+      
+      const res = await fetch(`/api/ai-agent/conversations/${id}`, {
+        signal: controller.signal
+      });
+      
+      clearTimeout(timeoutId);
+      
+      let data;
+      try {
+        data = await res.json();
+      } catch (parseError) {
+        throw new Error('Server returned invalid response');
+      }
+      
       if (!res.ok || !data.success) {
         throw new Error(data.error || 'Failed to load conversation');
       }
       setSelectedConversation(data.conversation);
     } catch (err: any) {
       console.error('[Admin Conversations] Failed to load detail', err);
-      setSelectedError(err.message || 'Failed to load conversation');
+      
+      let errorMessage = 'Failed to load conversation';
+      if (err.name === 'AbortError') {
+        errorMessage = 'Request timeout';
+      } else if (err.message) {
+        errorMessage = err.message;
+      }
+      
+      setSelectedError(errorMessage);
       setSelectedConversation(null);
     } finally {
       setSelectedLoading(false);
@@ -334,9 +394,17 @@ export default function AdminConversationsListPage() {
                 Loading conversations...
               </div>
             ) : error ? (
-              <div className="text-center py-10 text-red-600">
-                <AlertCircle className="h-6 w-6 mx-auto mb-2" />
-                {error}
+              <div className="bg-red-50 dark:bg-red-900/30 border-2 border-red-200 dark:border-red-800 text-red-800 dark:text-red-200 p-6 rounded-lg">
+                <div className="flex items-start gap-3">
+                  <AlertCircle className="h-6 w-6 flex-shrink-0 mt-0.5" />
+                  <div className="flex-1">
+                    <p className="font-bold text-lg mb-2">Unable to Load Conversations</p>
+                    <p className="whitespace-pre-line text-sm mb-4">{error}</p>
+                    <Button variant="outline" size="sm" onClick={loadConversations}>
+                      <RefreshCw className="h-4 w-4 mr-2" /> Try Again
+                    </Button>
+                  </div>
+                </div>
               </div>
             ) : filteredConversations.length === 0 ? (
               <div className="text-center py-10 text-slate-500">
@@ -418,9 +486,10 @@ export default function AdminConversationsListPage() {
                 Loading conversation...
               </div>
             ) : selectedError ? (
-              <div className="text-center py-10 text-red-600">
+              <div className="bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 text-red-800 dark:text-red-200 p-6 rounded-lg text-center">
                 <AlertCircle className="h-6 w-6 mx-auto mb-2" />
-                {selectedError}
+                <p className="font-medium mb-2">Unable to Load Details</p>
+                <p className="text-sm">{selectedError}</p>
               </div>
             ) : !selectedConversation ? (
               <div className="text-center py-10 text-slate-500">No data</div>

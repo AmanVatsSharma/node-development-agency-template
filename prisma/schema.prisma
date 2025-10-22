@@ -360,3 +360,26 @@ model AIAnalytics {
   @@index([date, metric])
   @@index([pageUrl])
 }
+
+// Free Consultation Requests
+model ConsultationRequest {
+  id              String    @id @default(cuid())
+  name            String
+  email           String
+  phone           String?
+  company         String?
+  serviceInterest String
+  preferredDate   String    // Stored as string (YYYY-MM-DD)
+  preferredTime   String    // Stored as string (HH:MM)
+  message         String?   @db.Text
+  status          String    @default("pending") // pending, confirmed, completed, cancelled
+  notes           String?   @db.Text // Admin notes
+  source          String?   // Where the request came from (landing_page, modal, banner)
+  zohoLeadId      String?   // Link to Zoho CRM if synced
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@index([status])
+  @@index([createdAt])
+  @@index([email])
+}
