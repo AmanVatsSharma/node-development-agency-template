@@ -240,7 +240,7 @@ export function PricingSection() {
 
         {/* Pricing Cards */}
         <motion.div 
-          className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16"
+          className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 mb-16"
           variants={staggerContainer}
           initial="hidden"
           animate={inView ? "show" : "hidden"}
@@ -248,11 +248,11 @@ export function PricingSection() {
           {pricingPlans.map((plan, index) => (
             <motion.div
               key={plan.id}
-              className={`relative bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 ${
+              className={`relative bg-white dark:bg-gray-800 rounded-2xl p-6 sm:p-8 shadow-lg hover:shadow-xl transition-all duration-300 ${
                 plan.popular ? 'ring-2 ring-green-500 scale-105' : ''
               }`}
               variants={fadeInUp}
-              whileHover={{ scale: plan.popular ? 1.05 : 1.02, y: -5 }}
+              whileHover={{ scale: plan.popular ? 1.03 : 1.01, y: -2 }}
             >
               {/* Popular Badge */}
               {plan.popular && (
@@ -265,32 +265,32 @@ export function PricingSection() {
               )}
 
               {/* Plan Header */}
-              <div className="text-center mb-8">
-                <div className={`w-16 h-16 bg-gradient-to-r ${plan.color} rounded-2xl flex items-center justify-center mx-auto mb-4`}>
-                  <plan.icon className="w-8 h-8 text-white" />
+              <div className="text-center mb-6 sm:mb-8">
+                <div className={`w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-r ${plan.color} rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-4`}>
+                  <plan.icon className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
                 </div>
-                <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">
+                <h3 className="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white mb-2">
                   {plan.name}
                 </h3>
-                <p className="text-gray-600 dark:text-gray-300 mb-4">
+                <p className="text-gray-600 dark:text-gray-300 mb-3 sm:mb-4 text-sm sm:text-base">
                   {plan.description}
                 </p>
-                <div className="flex items-center justify-center gap-2 text-sm text-gray-500 dark:text-gray-400">
-                  <Clock className="w-4 h-4" />
+                <div className="flex items-center justify-center gap-2 text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+                  <Clock className="w-3 h-3 sm:w-4 sm:h-4" />
                   <span>Duration: {plan.duration}</span>
                 </div>
               </div>
 
               {/* Pricing */}
-              <div className="text-center mb-8">
-                <div className="text-4xl font-bold text-gray-800 dark:text-white mb-2">
+              <div className="text-center mb-6 sm:mb-8">
+                <div className="text-3xl sm:text-4xl font-bold text-gray-800 dark:text-white mb-2">
                   {formatPrice(plan.price[billingCycle as keyof typeof plan.price])}
                 </div>
-                <div className="text-gray-600 dark:text-gray-400">
+                <div className="text-gray-600 dark:text-gray-400 text-sm sm:text-base">
                   {billingCycle === 'one-time' ? 'One-time payment' : 'Per month'}
                 </div>
                 {billingCycle === 'monthly' && (
-                  <div className="text-sm text-green-600 dark:text-green-400 mt-2">
+                  <div className="text-xs sm:text-sm text-green-600 dark:text-green-400 mt-2">
                     Save 20% with annual billing
                   </div>
                 )}

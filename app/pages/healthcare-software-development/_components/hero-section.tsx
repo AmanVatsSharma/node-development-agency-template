@@ -142,11 +142,11 @@ export function HeroSection() {
 
       {/* Main Content */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="flex flex-col lg:flex-row items-center min-h-screen py-20">
+        <div className="flex flex-col lg:flex-row items-center min-h-screen py-12 sm:py-16 lg:py-20">
           
           {/* Left Content */}
           <motion.div 
-            className="lg:w-1/2 lg:pr-12 mb-12 lg:mb-0"
+            className="w-full lg:w-1/2 lg:pr-12 mb-8 sm:mb-12 lg:mb-0 px-4 sm:px-0"
             variants={staggerContainer}
             initial="hidden"
             animate={inView ? "show" : "hidden"}
@@ -162,7 +162,7 @@ export function HeroSection() {
 
             {/* Main Headline */}
             <motion.h1 
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight"
               variants={fadeInUp}
             >
               Transform Healthcare with{' '}
@@ -173,7 +173,7 @@ export function HeroSection() {
 
             {/* Subheadline */}
             <motion.p 
-              className="text-xl sm:text-2xl text-gray-300 mb-8 leading-relaxed"
+              className="text-lg sm:text-xl md:text-2xl text-gray-300 mb-6 sm:mb-8 leading-relaxed"
               variants={fadeInUp}
             >
               Build HIPAA-compliant healthcare solutions that save lives, 
@@ -182,43 +182,43 @@ export function HeroSection() {
 
             {/* Key Benefits */}
             <motion.div 
-              className="grid grid-cols-2 gap-4 mb-8"
+              className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-6 sm:mb-8"
               variants={fadeInUp}
             >
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-green-500/20 rounded-full flex items-center justify-center">
-                  <TrendingUp className="w-4 h-4 text-green-400" />
+              <div className="flex items-center gap-2 sm:gap-3">
+                <div className="w-6 h-6 sm:w-8 sm:h-8 bg-green-500/20 rounded-full flex items-center justify-center flex-shrink-0">
+                  <TrendingUp className="w-3 h-3 sm:w-4 sm:h-4 text-green-400" />
                 </div>
-                <span className="text-gray-300">60% Faster Operations</span>
+                <span className="text-gray-300 text-sm sm:text-base">60% Faster Operations</span>
               </div>
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-blue-500/20 rounded-full flex items-center justify-center">
-                  <Shield className="w-4 h-4 text-blue-400" />
+              <div className="flex items-center gap-2 sm:gap-3">
+                <div className="w-6 h-6 sm:w-8 sm:h-8 bg-blue-500/20 rounded-full flex items-center justify-center flex-shrink-0">
+                  <Shield className="w-3 h-3 sm:w-4 sm:h-4 text-blue-400" />
                 </div>
-                <span className="text-gray-300">100% HIPAA Compliant</span>
+                <span className="text-gray-300 text-sm sm:text-base">100% HIPAA Compliant</span>
               </div>
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-cyan-500/20 rounded-full flex items-center justify-center">
-                  <Users className="w-4 h-4 text-cyan-400" />
+              <div className="flex items-center gap-2 sm:gap-3">
+                <div className="w-6 h-6 sm:w-8 sm:h-8 bg-cyan-500/20 rounded-full flex items-center justify-center flex-shrink-0">
+                  <Users className="w-3 h-3 sm:w-4 sm:h-4 text-cyan-400" />
                 </div>
-                <span className="text-gray-300">10,000+ Patients Served</span>
+                <span className="text-gray-300 text-sm sm:text-base">10,000+ Patients Served</span>
               </div>
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-purple-500/20 rounded-full flex items-center justify-center">
-                  <Clock className="w-4 h-4 text-purple-400" />
+              <div className="flex items-center gap-2 sm:gap-3">
+                <div className="w-6 h-6 sm:w-8 sm:h-8 bg-purple-500/20 rounded-full flex items-center justify-center flex-shrink-0">
+                  <Clock className="w-3 h-3 sm:w-4 sm:h-4 text-purple-400" />
                 </div>
-                <span className="text-gray-300">24/7 Support</span>
+                <span className="text-gray-300 text-sm sm:text-base">24/7 Support</span>
               </div>
             </motion.div>
 
             {/* CTA Buttons */}
             <motion.div 
-              className="flex flex-col sm:flex-row gap-4"
+              className="flex flex-col sm:flex-row gap-3 sm:gap-4"
               variants={fadeInUp}
             >
               <Button 
                 size="lg" 
-                className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white px-8 py-4 text-lg font-semibold rounded-full shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
+                className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-semibold rounded-full shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 w-full sm:w-auto"
                 onClick={() => {
                   console.log('[Healthcare-Software-Dev] Primary CTA clicked');
                   // Track conversion
@@ -231,38 +231,42 @@ export function HeroSection() {
                   }
                 }}
               >
-                Get Free Healthcare Consultation
-                <ArrowRight className="ml-2 w-5 h-5" />
+                <span className="flex items-center justify-center gap-2">
+                  Get Free Healthcare Consultation
+                  <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
+                </span>
               </Button>
               
               <Button 
                 variant="outline" 
                 size="lg"
-                className="border-2 border-white/30 text-white hover:bg-white/10 px-8 py-4 text-lg font-semibold rounded-full backdrop-blur-sm"
+                className="border-2 border-white/30 text-white hover:bg-white/10 px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-semibold rounded-full backdrop-blur-sm w-full sm:w-auto"
                 onClick={() => {
                   console.log('[Healthcare-Software-Dev] Secondary CTA clicked');
                 }}
               >
-                <Play className="mr-2 w-5 h-5" />
-                Watch Demo
+                <span className="flex items-center justify-center gap-2">
+                  <Play className="w-4 h-4 sm:w-5 sm:h-5" />
+                  Watch Demo
+                </span>
               </Button>
             </motion.div>
 
             {/* Trust Indicators */}
             <motion.div 
-              className="mt-8 flex items-center gap-6 text-sm text-gray-400"
+              className="mt-6 sm:mt-8 flex flex-wrap items-center gap-4 sm:gap-6 text-xs sm:text-sm text-gray-400"
               variants={fadeInUp}
             >
-              <div className="flex items-center gap-2">
-                <Shield className="w-4 h-4 text-green-400" />
+              <div className="flex items-center gap-1 sm:gap-2">
+                <Shield className="w-3 h-3 sm:w-4 sm:h-4 text-green-400" />
                 <span>HIPAA Compliant</span>
               </div>
-              <div className="flex items-center gap-2">
-                <Users className="w-4 h-4 text-blue-400" />
-                <span>100+ Healthcare Providers</span>
+              <div className="flex items-center gap-1 sm:gap-2">
+                <Users className="w-3 h-3 sm:w-4 sm:h-4 text-blue-400" />
+                <span>100+ Providers</span>
               </div>
-              <div className="flex items-center gap-2">
-                <TrendingUp className="w-4 h-4 text-cyan-400" />
+              <div className="flex items-center gap-1 sm:gap-2">
+                <TrendingUp className="w-3 h-3 sm:w-4 sm:h-4 text-cyan-400" />
                 <span>99% Success Rate</span>
               </div>
             </motion.div>
@@ -270,45 +274,45 @@ export function HeroSection() {
 
           {/* Right Content - Animated Stats */}
           <motion.div 
-            className="lg:w-1/2 lg:pl-12"
+            className="w-full lg:w-1/2 lg:pl-12 px-4 sm:px-0"
             variants={fadeInUp}
             initial="hidden"
             animate={inView ? "show" : "hidden"}
           >
-            <div className="bg-white/5 backdrop-blur-sm rounded-3xl p-8 border border-white/10">
-              <h3 className="text-2xl font-bold mb-6 text-center">Healthcare Impact Metrics</h3>
+            <div className="bg-white/5 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-8 border border-white/10">
+              <h3 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-center">Healthcare Impact Metrics</h3>
               
-              <div className="grid grid-cols-2 gap-6">
+              <div className="grid grid-cols-2 gap-4 sm:gap-6">
                 {/* Patients Served */}
                 <div className="text-center">
-                  <div className="text-4xl font-bold text-green-400 mb-2">
+                  <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-green-400 mb-1 sm:mb-2">
                     {metrics.patients.toLocaleString()}+
                   </div>
-                  <div className="text-gray-300 text-sm">Patients Served</div>
+                  <div className="text-gray-300 text-xs sm:text-sm">Patients Served</div>
                 </div>
                 
                 {/* Hospitals */}
                 <div className="text-center">
-                  <div className="text-4xl font-bold text-blue-400 mb-2">
+                  <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-blue-400 mb-1 sm:mb-2">
                     {metrics.hospitals}+
                   </div>
-                  <div className="text-gray-300 text-sm">Hospitals & Clinics</div>
+                  <div className="text-gray-300 text-xs sm:text-sm">Hospitals & Clinics</div>
                 </div>
                 
                 {/* Efficiency */}
                 <div className="text-center">
-                  <div className="text-4xl font-bold text-cyan-400 mb-2">
+                  <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-cyan-400 mb-1 sm:mb-2">
                     {metrics.efficiency}%
                   </div>
-                  <div className="text-gray-300 text-sm">Efficiency Gain</div>
+                  <div className="text-gray-300 text-xs sm:text-sm">Efficiency Gain</div>
                 </div>
                 
                 {/* Compliance */}
                 <div className="text-center">
-                  <div className="text-4xl font-bold text-purple-400 mb-2">
+                  <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-purple-400 mb-1 sm:mb-2">
                     {metrics.compliance}%
                   </div>
-                  <div className="text-gray-300 text-sm">Compliance Rate</div>
+                  <div className="text-gray-300 text-xs sm:text-sm">Compliance Rate</div>
                 </div>
               </div>
               

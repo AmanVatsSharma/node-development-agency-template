@@ -178,7 +178,7 @@ export function ProblemSolutionSection() {
 
         {/* Problems vs Solutions Grid */}
         <motion.div 
-          className="grid grid-cols-1 lg:grid-cols-2 gap-12"
+          className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12"
           variants={staggerContainer}
           initial="hidden"
           animate={inView ? "show" : "hidden"}
@@ -197,28 +197,28 @@ export function ProblemSolutionSection() {
               </h3>
             </motion.div>
 
-            <div className="space-y-6">
+            <div className="space-y-4 sm:space-y-6">
               {problems.map((problem, index) => (
                 <motion.div
                   key={index}
-                  className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border-l-4 border-red-500"
+                  className="bg-white dark:bg-gray-800 rounded-xl p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 border-l-4 border-red-500"
                   variants={fadeInUp}
-                  whileHover={{ scale: 1.02, x: 10 }}
+                  whileHover={{ scale: 1.01, x: 5 }}
                 >
-                  <div className="flex items-start gap-4">
-                    <div className={`w-10 h-10 bg-red-100 dark:bg-red-900/20 rounded-full flex items-center justify-center flex-shrink-0 ${problem.color}`}>
-                      <problem.icon className="w-5 h-5" />
+                  <div className="flex items-start gap-3 sm:gap-4">
+                    <div className={`w-8 h-8 sm:w-10 sm:h-10 bg-red-100 dark:bg-red-900/20 rounded-full flex items-center justify-center flex-shrink-0 ${problem.color}`}>
+                      <problem.icon className="w-4 h-4 sm:w-5 sm:h-5" />
                     </div>
-                    <div className="flex-1">
-                      <h4 className="text-lg font-semibold text-gray-800 dark:text-white mb-2">
+                    <div className="flex-1 min-w-0">
+                      <h4 className="text-base sm:text-lg font-semibold text-gray-800 dark:text-white mb-2">
                         {problem.title}
                       </h4>
-                      <p className="text-gray-600 dark:text-gray-300 mb-3">
+                      <p className="text-gray-600 dark:text-gray-300 mb-3 text-sm sm:text-base">
                         {problem.description}
                       </p>
-                      <div className="inline-flex items-center gap-2 px-3 py-1 bg-red-100 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-full text-sm font-medium">
-                        <AlertTriangle className="w-4 h-4" />
-                        {problem.impact}
+                      <div className="inline-flex items-center gap-1 sm:gap-2 px-2 sm:px-3 py-1 bg-red-100 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-full text-xs sm:text-sm font-medium">
+                        <AlertTriangle className="w-3 h-3 sm:w-4 sm:h-4" />
+                        <span className="truncate">{problem.impact}</span>
                       </div>
                     </div>
                   </div>

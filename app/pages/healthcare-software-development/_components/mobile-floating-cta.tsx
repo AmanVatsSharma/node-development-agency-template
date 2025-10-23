@@ -128,44 +128,44 @@ export function MobileFloatingCTA() {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-6 w-80 border border-gray-200 dark:border-gray-700"
+              className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-4 sm:p-6 w-72 sm:w-80 border border-gray-200 dark:border-gray-700"
             >
               {/* Header */}
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-bold text-gray-800 dark:text-white">
+              <div className="flex items-center justify-between mb-3 sm:mb-4">
+                <h3 className="text-base sm:text-lg font-bold text-gray-800 dark:text-white">
                   Get Free Consultation
                 </h3>
                 <button
                   onClick={() => setShowExpanded(false)}
-                  className="w-8 h-8 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+                  className="w-7 h-7 sm:w-8 sm:h-8 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
                 >
-                  <X className="w-4 h-4 text-gray-600 dark:text-gray-300" />
+                  <X className="w-3 h-3 sm:w-4 sm:h-4 text-gray-600 dark:text-gray-300" />
                 </button>
               </div>
 
               {/* Benefits */}
-              <div className="space-y-2 mb-6">
-                <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
-                  <CheckCircle className="w-4 h-4 text-green-500" />
+              <div className="space-y-1.5 sm:space-y-2 mb-4 sm:mb-6">
+                <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-600 dark:text-gray-300">
+                  <CheckCircle className="w-3 h-3 sm:w-4 sm:h-4 text-green-500 flex-shrink-0" />
                   <span>Free 30-min consultation</span>
                 </div>
-                <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
-                  <Clock className="w-4 h-4 text-blue-500" />
+                <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-600 dark:text-gray-300">
+                  <Clock className="w-3 h-3 sm:w-4 sm:h-4 text-blue-500 flex-shrink-0" />
                   <span>Response within 2 hours</span>
                 </div>
-                <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
-                  <Shield className="w-4 h-4 text-purple-500" />
+                <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-600 dark:text-gray-300">
+                  <Shield className="w-3 h-3 sm:w-4 sm:h-4 text-purple-500 flex-shrink-0" />
                   <span>HIPAA compliant solutions</span>
                 </div>
               </div>
 
               {/* Action Buttons */}
-              <div className="space-y-3">
+              <div className="space-y-2 sm:space-y-3">
                 <button
                   onClick={handleCall}
-                  className="w-full bg-gradient-to-r from-green-500 to-emerald-500 text-white py-3 px-4 rounded-lg font-semibold flex items-center justify-center gap-2 hover:shadow-lg transition-all duration-300"
+                  className="w-full bg-gradient-to-r from-green-500 to-emerald-500 text-white py-2.5 sm:py-3 px-4 rounded-lg font-semibold flex items-center justify-center gap-2 hover:shadow-lg transition-all duration-300 text-sm sm:text-base"
                 >
-                  <Phone className="w-5 h-5" />
+                  <Phone className="w-4 h-4 sm:w-5 sm:h-5" />
                   Call Now
                 </button>
                 
