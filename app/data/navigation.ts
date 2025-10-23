@@ -68,6 +68,14 @@ export const servicesMegaMenu: MegaMenuCategory = {
           iconKey: "world",
         },
         {
+          name: "Mumbai Web Development",
+          link: "/pages/web-development-mumbai",
+          description: "Mumbai's #1 Web Development Company",
+          icon: "🏙️",
+          iconKey: "city",
+          badge: "Mumbai",
+        },
+        {
           name: "Website Development",
           link: "/pages/website-development",
           description: "Professional websites",
@@ -223,6 +231,7 @@ export const footerNavigation = {
     { href: "/pages/next-js-development", label: "Next.js Development" },
     { href: "/pages/reactjs-development", label: "React.js Development" },
     { href: "/pages/web-development", label: "Web Development" },
+    { href: "/pages/web-development-mumbai", label: "Mumbai Web Development" },
     { href: "/pages/website-development", label: "Website Development" },
     { href: "/pages/business-website", label: "Business Websites" },
     { href: "/pages/website-services", label: "Website Services" },
