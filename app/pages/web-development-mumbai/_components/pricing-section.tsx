@@ -1,316 +1,339 @@
 'use client';
 
 /**
- * Pricing Section Component - MUMBAI-FOCUSED PRICING
- * Transparent pricing with Mumbai market focus and INR pricing
+ * Pricing Section Component - MUMBAI WEB DEVELOPMENT PRICING
+ * Premium pricing section with transparent INR pricing
  * 
- * FEATURES:
- * - Mumbai-specific pricing
- * - INR currency focus
- * - Three main packages
- * - Mobile-responsive design
- * 
- * CONVERSION OPTIMIZATION:
- * - Clear pricing tiers
- * - Value proposition
- * - Urgency indicators
- * - Mobile optimization
- * 
- * @version 1.0.0 - Mumbai-Focused Pricing
+ * @version 2.0.0 - Production Ready Pricing
  */
 
 import React, { useEffect, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Button } from '@/app/components/ui/button';
-import { CheckCircle2, IndianRupee, Sparkles, ArrowRight, Phone } from 'lucide-react';
+import { 
+  CheckCircle2, 
+  IndianRupee, 
+  Sparkles, 
+  ArrowRight, 
+  Phone,
+  Star,
+  Clock,
+  Shield,
+  Zap,
+  Users,
+  Award
+} from 'lucide-react';
 
 console.log('[Mumbai-Web-Development] PricingSection component loaded');
 
-interface PricingPlan {
-  name: string;
-  price: string;
-  period: string;
-  description: string;
-  features: string[];
-  popular?: boolean;
-  cta: string;
-  color: string;
-  bgColor: string;
-}
-
 export function PricingSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const inView = useInView(sectionRef, { once: true, amount: 0.1 });
+  const inView = useInView(sectionRef, { once: true, amount: 0.2 });
 
   useEffect(() => {
     console.log('[Mumbai-Web-Development] PricingSection mounted');
     return () => console.log('[Mumbai-Web-Development] PricingSection unmounted');
   }, []);
 
-  const plans: PricingPlan[] = [
+  const pricingPlans = [
     {
-      name: 'Starter Website',
-      price: '15,999',
-      period: 'One-time payment',
-      description: 'Perfect for small Mumbai businesses and startups looking to establish online presence',
+      name: "Starter",
+      description: "Perfect for small Mumbai businesses getting started online",
+      price: "15,999",
+      originalPrice: "24,999",
+      discount: "36% OFF",
+      period: "One-time payment",
+      popular: false,
+      color: "from-blue-500 to-cyan-500",
+      bgColor: "from-blue-500/10 to-cyan-500/10",
+      borderColor: "border-blue-500/20",
       features: [
-        '5-7 Page Website',
-        'Mobile Responsive Design',
-        'Contact Form Integration',
-        'Google Maps Integration',
-        'Basic SEO Setup',
-        'Social Media Links',
-        'WhatsApp Integration',
-        '1 Month Free Support',
-        'Free SSL Certificate',
-        'Fast Loading Speed',
-        'Mumbai Local SEO',
-        'Hindi/English Support'
+        "5-7 Page Website",
+        "Mobile-Responsive Design",
+        "Basic SEO Setup",
+        "Contact Form Integration",
+        "Google Analytics Setup",
+        "SSL Certificate",
+        "1 Month Free Support",
+        "Mumbai Local SEO"
       ],
-      cta: 'Get Started Now',
-      color: 'from-blue-500 to-blue-600',
-      bgColor: 'bg-blue-50 dark:bg-blue-900/20'
+      notIncluded: [
+        "E-commerce Functionality",
+        "Advanced Customization",
+        "Priority Support"
+      ]
     },
     {
-      name: 'Professional Website',
-      price: '49,999',
-      period: 'One-time payment',
-      description: 'Complete solution for growing Mumbai businesses with advanced features and integrations',
-      features: [
-        '10-15 Page Dynamic Website',
-        'Advanced SEO Optimization',
-        'Google Analytics Integration',
-        'CRM Integration (Zoho/HubSpot)',
-        'Blog System (CMS)',
-        'Email Marketing Setup',
-        'Social Media Integration',
-        'Live Chat Support',
-        'Payment Gateway (if needed)',
-        'Admin Dashboard',
-        '3 Months Free Support',
-        'Performance Optimization',
-        'Security & Backup Setup',
-        'Mumbai Local Business Listings',
-        'Multi-language Support',
-        'Advanced Mobile Optimization'
-      ],
+      name: "Professional",
+      description: "Most popular choice for growing Mumbai businesses",
+      price: "49,999",
+      originalPrice: "79,999",
+      discount: "38% OFF",
+      period: "One-time payment",
       popular: true,
-      cta: 'Most Popular - Get Quote',
-      color: 'from-indigo-500 to-purple-600',
-      bgColor: 'bg-indigo-50 dark:bg-indigo-900/20'
+      color: "from-purple-500 to-pink-500",
+      bgColor: "from-purple-500/10 to-pink-500/10",
+      borderColor: "border-purple-500/20",
+      features: [
+        "10-15 Page Website",
+        "Advanced Mobile Design",
+        "Complete SEO Optimization",
+        "E-commerce Integration",
+        "Payment Gateway Setup",
+        "Admin Dashboard",
+        "3 Months Free Support",
+        "Mumbai Local SEO + Google My Business",
+        "Social Media Integration",
+        "Performance Optimization",
+        "Content Management System",
+        "Priority Support"
+      ],
+      notIncluded: [
+        "Custom Mobile App",
+        "Advanced Analytics Dashboard"
+      ]
     },
     {
-      name: 'Enterprise Solution',
-      price: '95,000',
-      period: 'Starting from',
-      description: 'Complete e-commerce or custom web application with all advanced features for Mumbai enterprises',
+      name: "Enterprise",
+      description: "Complete solution for large Mumbai businesses and corporations",
+      price: "95,000",
+      originalPrice: "1,50,000",
+      discount: "37% OFF",
+      period: "One-time payment",
+      popular: false,
+      color: "from-orange-500 to-red-500",
+      bgColor: "from-orange-500/10 to-red-500/10",
+      borderColor: "border-orange-500/20",
       features: [
-        'Unlimited Pages',
-        'E-Commerce Platform (Shopify/WooCommerce/Custom)',
-        'Custom Web Application',
-        'Advanced CRM Integration',
-        'Multi-language Support (Hindi, Marathi, English)',
-        'Advanced Analytics & Reporting',
-        'Custom API Development',
-        'Third-party Integrations',
-        'Inventory Management',
-        'Order Management System',
-        'Payment Gateway Integration',
-        'SMS & Email Notifications',
-        '6 Months Free Support',
-        'Dedicated Account Manager',
-        'Priority 24/7 Support',
-        'Mumbai Market Research',
-        'Competitor Analysis',
-        'Custom Mobile App (Optional)'
+        "Unlimited Pages",
+        "Custom Design & Development",
+        "Advanced E-commerce Platform",
+        "Multi-language Support",
+        "Custom Integrations",
+        "Advanced Analytics Dashboard",
+        "6 Months Free Support",
+        "Complete Mumbai Local SEO Strategy",
+        "Social Media Management Setup",
+        "Email Marketing Integration",
+        "Custom Mobile App (Basic)",
+        "Dedicated Project Manager",
+        "24/7 Priority Support",
+        "Monthly Performance Reports"
       ],
-      cta: 'Contact for Custom Quote',
-      color: 'from-purple-500 to-pink-600',
-      bgColor: 'bg-purple-50 dark:bg-purple-900/20'
+      notIncluded: [
+        "Ongoing Content Creation",
+        "Advanced Mobile App Features"
+      ]
     }
   ];
 
   const fadeInUp = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: 30 },
     show: { 
       opacity: 1, 
       y: 0,
-      transition: { duration: 0.6, ease: 'easeOut' }
+      transition: { duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }
+    }
+  };
+
+  const staggerContainer = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2
+      }
     }
   };
 
   return (
     <section
       ref={sectionRef}
-      className="py-12 sm:py-16 md:py-20 bg-white dark:bg-gray-900"
+      className="py-16 sm:py-20 md:py-24 bg-white dark:bg-slate-900"
       id="pricing"
       role="region"
       aria-labelledby="pricing-heading"
     >
-      <div className="container mx-auto px-3 sm:px-4">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
           initial="hidden"
           animate={inView ? "show" : "hidden"}
           variants={fadeInUp}
-          className="text-center mb-8 sm:mb-12"
+          className="text-center mb-12 sm:mb-16"
         >
-          {/* URGENCY BADGE */}
-          <div className="inline-block px-4 sm:px-5 py-2 bg-gradient-to-r from-red-100 to-orange-100 dark:from-red-900/30 dark:to-orange-900/30 rounded-full mb-4 sm:mb-5 border-2 border-red-300 dark:border-red-800 text-xs sm:text-sm shadow-lg">
-            <span className="font-bold text-red-700 dark:text-red-300 uppercase tracking-wide flex items-center gap-2">
-              <span className="relative flex h-2.5 w-2.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-500"></span>
-              </span>
-              🔥 Limited Time Offer - 2 Slots Left!
-            </span>
-          </div>
-
           <h2
             id="pricing-heading"
-            className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4"
+            className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4"
           >
-            Transparent, Mumbai-Focused Pricing
+            Transparent Pricing for Mumbai Businesses
           </h2>
-
-          <p className="text-base sm:text-lg text-gray-700 dark:text-gray-300 max-w-4xl mx-auto leading-snug sm:leading-relaxed mb-5 sm:mb-7">
-            One-time payment. <span className="text-green-600 dark:text-green-400 font-bold">No recurring fees.</span> GST included. Own forever.
+          <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">
+            No hidden costs, no recurring fees. Choose the perfect plan for your Mumbai business and get started today.
           </p>
-
-          <div className="flex flex-wrap justify-center gap-2 sm:gap-3 text-xs sm:text-sm px-2">
-            {[
-              { icon: '⚡', text: '14-21 Days Delivery' },
-              { icon: '💯', text: 'Money-Back Guarantee' },
-              { icon: '🎁', text: 'Free Setup & SSL' },
-              { icon: '♾️', text: 'Lifetime Ownership' },
-              { icon: '🇮🇳', text: 'Mumbai Support' }
-            ].map((item, i) => (
-              <span key={i} className="px-3 sm:px-4 py-2 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 text-blue-700 dark:text-blue-300 rounded-full font-semibold whitespace-nowrap border border-blue-200 dark:border-blue-800 shadow-sm">
-                {item.icon} {item.text}
-              </span>
-            ))}
-          </div>
         </motion.div>
 
         {/* Pricing Cards */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 max-w-7xl mx-auto">
-          {plans.map((plan, index) => (
+        <motion.div
+          initial="hidden"
+          animate={inView ? "show" : "hidden"}
+          variants={staggerContainer}
+          className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12"
+        >
+          {pricingPlans.map((plan, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.15 }}
-              className={`relative rounded-2xl sm:rounded-3xl p-6 sm:p-8 transition-all duration-300 group cursor-pointer ${
-                plan.popular
-                  ? 'bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 dark:from-indigo-900/30 dark:via-purple-900/20 dark:to-pink-900/30 border-4 border-indigo-500 dark:border-indigo-600 shadow-2xl shadow-indigo-500/30 lg:scale-105 lg:-mt-6'
-                  : 'bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 hover:border-indigo-400 dark:hover:border-indigo-600 hover:shadow-2xl hover:scale-105 hover:-translate-y-2'
-              }`}
+              variants={fadeInUp}
+              className={`relative p-8 rounded-2xl border-2 ${
+                plan.popular 
+                  ? 'border-purple-500 shadow-2xl scale-105' 
+                  : 'border-slate-200 dark:border-slate-700 shadow-lg'
+              } bg-white dark:bg-slate-800 hover:shadow-2xl transition-all duration-300`}
             >
               {/* Popular Badge */}
               {plan.popular && (
-                <div className="absolute -top-3 sm:-top-5 left-1/2 -translate-x-1/2 px-3 sm:px-6 py-1 sm:py-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-xs sm:text-sm font-bold rounded-full shadow-lg flex items-center gap-1 sm:gap-2">
-                  <Sparkles className="h-3 w-3 sm:h-4 sm:w-4" />
-                  MOST POPULAR
+                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                  <div className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-6 py-2 rounded-full text-sm font-bold flex items-center">
+                    <Star className="h-4 w-4 mr-2" />
+                    Most Popular
+                  </div>
                 </div>
               )}
 
               {/* Plan Header */}
-              <div className="text-center mb-6 sm:mb-8">
-                <h3 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-2">
-                  {plan.name}
-                </h3>
-                <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 leading-snug">
-                  {plan.description}
-                </p>
-
-                {/* Price */}
+              <div className="text-center mb-8">
+                <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">{plan.name}</h3>
+                <p className="text-slate-600 dark:text-slate-300 text-sm mb-4">{plan.description}</p>
+                
+                {/* Pricing */}
                 <div className="mb-4">
-                  <div className="flex items-start justify-center">
-                    <span className="text-gray-600 dark:text-gray-400 text-2xl sm:text-3xl mt-1 sm:mt-2">
-                      <IndianRupee className="h-6 w-6 sm:h-8 sm:w-8 inline" />
-                    </span>
-                    <span className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 dark:text-white">
-                      {plan.price}
+                  <div className="flex items-center justify-center mb-2">
+                    <IndianRupee className="h-8 w-8 text-slate-900 dark:text-white" />
+                    <span className="text-4xl font-bold text-slate-900 dark:text-white">{plan.price}</span>
+                  </div>
+                  <div className="flex items-center justify-center gap-2">
+                    <span className="text-slate-400 line-through">₹{plan.originalPrice}</span>
+                    <span className="bg-green-100 dark:bg-green-900/20 text-green-600 dark:text-green-400 px-2 py-1 rounded-full text-xs font-bold">
+                      {plan.discount}
                     </span>
                   </div>
-                  <div className="text-sm text-gray-500 dark:text-gray-400 mt-2">
-                    {plan.period}
-                  </div>
+                  <p className="text-slate-500 dark:text-slate-400 text-sm mt-2">{plan.period}</p>
                 </div>
-
-                {plan.popular && (
-                  <div className="mt-3 text-sm text-green-600 dark:text-green-400 font-semibold">
-                    💰 Save ₹30,000+
-                  </div>
-                )}
               </div>
 
-              {/* Features List */}
-              <ul className="space-y-3 mb-6 sm:mb-8">
-                {plan.features.map((feature, idx) => (
-                  <li key={idx} className="flex items-start gap-3">
-                    <CheckCircle2 className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-700 dark:text-gray-300 text-sm leading-tight">
+              {/* Features */}
+              <div className="space-y-4 mb-8">
+                <h4 className="font-semibold text-slate-900 dark:text-white flex items-center">
+                  <CheckCircle2 className="h-5 w-5 text-green-500 mr-2" />
+                  What's Included
+                </h4>
+                <ul className="space-y-3">
+                  {plan.features.map((feature, featureIndex) => (
+                    <li key={featureIndex} className="flex items-start text-sm text-slate-600 dark:text-slate-300">
+                      <CheckCircle2 className="h-4 w-4 text-green-500 mr-3 flex-shrink-0 mt-0.5" />
                       {feature}
-                    </span>
-                  </li>
-                ))}
-              </ul>
+                    </li>
+                  ))}
+                </ul>
+              </div>
 
               {/* CTA Button */}
               <Button
                 asChild
-                variant={plan.popular ? 'default' : 'outline'}
                 size="lg"
-                className={`w-full text-sm sm:text-base font-bold transition-all ${
-                  plan.popular 
-                    ? 'bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 shadow-lg hover:shadow-xl' 
-                    : 'hover:bg-indigo-50 dark:hover:bg-indigo-900/20'
-                }`}
-                onClick={() => console.log(`[Mumbai-Web-Development] Pricing CTA clicked: ${plan.name}`)}
+                className={`w-full ${
+                  plan.popular
+                    ? 'bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white'
+                    : 'bg-gradient-to-r from-slate-600 to-slate-700 hover:from-slate-700 hover:to-slate-800 text-white'
+                } font-semibold py-4 text-lg shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105`}
+                onClick={() => console.log(`[Mumbai-Web-Development] Pricing CTA - ${plan.name} clicked`)}
               >
-                <a href="#lead-form" className="flex items-center justify-center gap-2">
-                  {plan.price === 'Custom' ? '📞 Request Custom Quote' : '🚀 Start My Project'}
-                  <ArrowRight className="h-4 w-4" />
+                <a href="#lead-form" className="flex items-center justify-center">
+                  Choose {plan.name}
+                  <ArrowRight className="ml-2 h-5 w-5" />
                 </a>
               </Button>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
 
-        {/* Additional Info */}
+        {/* Trust Indicators */}
         <motion.div
           initial="hidden"
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="mt-8 sm:mt-12 text-center px-2"
+          animate={inView ? "show" : "hidden"}
+          variants={fadeInUp}
+          className="bg-gradient-to-r from-slate-50 to-blue-50 dark:from-slate-800 dark:to-blue-900/20 rounded-2xl p-8 mb-12"
         >
-          <div className="inline-block px-4 sm:px-6 py-3 sm:py-4 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-xl sm:rounded-2xl border border-purple-200 dark:border-purple-800 max-w-3xl">
-            <p className="text-gray-800 dark:text-gray-200 text-sm sm:text-base md:text-lg mb-2">
-              <span className="font-bold">Need Something Custom for Your Mumbai Business?</span>
-            </p>
-            <p className="text-gray-600 dark:text-gray-400 text-xs sm:text-sm leading-snug sm:leading-relaxed mb-4">
-              We build Shopify, WordPress, Next.js apps & custom solutions. Contact for personalized quote!
-            </p>
-            <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <a
-                href="tel:+919963730111"
-                className="inline-flex items-center justify-center px-4 py-2 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-colors duration-300"
-                onClick={() => console.log('[Mumbai-Web-Development] Custom Quote CTA - Call clicked')}
-              >
-                <Phone className="h-4 w-4 mr-2" />
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 text-center">
+            <div className="flex flex-col items-center">
+              <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center mb-4">
+                <Shield className="h-8 w-8 text-white" />
+              </div>
+              <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">No Hidden Costs</h3>
+              <p className="text-slate-600 dark:text-slate-300 text-sm">Transparent pricing with no surprise charges</p>
+            </div>
+            <div className="flex flex-col items-center">
+              <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center mb-4">
+                <Clock className="h-8 w-8 text-white" />
+              </div>
+              <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">14-21 Days Delivery</h3>
+              <p className="text-slate-600 dark:text-slate-300 text-sm">Fast turnaround time for your project</p>
+            </div>
+            <div className="flex flex-col items-center">
+              <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mb-4">
+                <Award className="h-8 w-8 text-white" />
+              </div>
+              <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">Money-Back Guarantee</h3>
+              <p className="text-slate-600 dark:text-slate-300 text-sm">100% satisfaction guarantee or your money back</p>
+            </div>
+            <div className="flex flex-col items-center">
+              <div className="w-16 h-16 bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl flex items-center justify-center mb-4">
+                <Users className="h-8 w-8 text-white" />
+              </div>
+              <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">Mumbai Support</h3>
+              <p className="text-slate-600 dark:text-slate-300 text-sm">Local team with Mumbai market expertise</p>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Custom Quote CTA */}
+        <motion.div
+          initial="hidden"
+          animate={inView ? "show" : "hidden"}
+          variants={fadeInUp}
+          className="text-center bg-gradient-to-r from-blue-600 to-cyan-600 rounded-2xl p-8 sm:p-12"
+        >
+          <h3 className="text-2xl sm:text-3xl font-bold text-white mb-4">
+            Need a Custom Solution?
+          </h3>
+          <p className="text-blue-100 mb-8 max-w-2xl mx-auto">
+            Every Mumbai business is unique. Let us create a custom web solution tailored to your specific needs and budget.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button
+              asChild
+              size="lg"
+              className="bg-white text-blue-600 hover:bg-blue-50 font-semibold px-8 py-4 text-lg shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
+              onClick={() => console.log('[Mumbai-Web-Development] Custom Quote CTA clicked')}
+            >
+              <a href="#lead-form" className="flex items-center">
+                Get Custom Quote
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </a>
+            </Button>
+            <Button
+              asChild
+              variant="outline"
+              size="lg"
+              className="border-2 border-white text-white hover:bg-white hover:text-blue-600 font-semibold px-8 py-4 text-lg"
+              onClick={() => console.log('[Mumbai-Web-Development] Call Expert CTA clicked')}
+            >
+              <a href="tel:+919963730111" className="flex items-center">
+                <Phone className="mr-2 h-5 w-5" />
                 Call Mumbai Expert
               </a>
-              <a
-                href="#lead-form"
-                className="inline-flex items-center justify-center px-4 py-2 border-2 border-purple-600 text-purple-600 dark:text-purple-400 font-semibold rounded-lg hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-colors duration-300"
-                onClick={() => console.log('[Mumbai-Web-Development] Custom Quote CTA - Get Quote clicked')}
-              >
-                Get Custom Quote
-              </a>
-            </div>
+            </Button>
           </div>
         </motion.div>
       </div>

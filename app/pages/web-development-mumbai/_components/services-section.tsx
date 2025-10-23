@@ -1,26 +1,15 @@
 'use client';
 
 /**
- * Services Section Component - MUMBAI-FOCUSED WEB DEVELOPMENT
- * Comprehensive services grid showcasing web development expertise
+ * Services Section Component - MUMBAI WEB DEVELOPMENT SERVICES
+ * Premium services showcase with professional icons and animations
  * 
- * FEATURES:
- * - Complete web development services
- * - Mumbai market focus
- * - Interactive service cards
- * - Mobile-responsive grid
- * 
- * CONVERSION OPTIMIZATION:
- * - Clear service offerings
- * - Visual appeal
- * - Easy navigation
- * - Mobile optimization
- * 
- * @version 1.0.0 - Mumbai-Focused Services
+ * @version 2.0.0 - Production Ready Services
  */
 
 import React, { useEffect, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
+import { Button } from '@/app/components/ui/button';
 import { 
   Code, 
   Smartphone, 
@@ -29,9 +18,15 @@ import {
   Database, 
   Shield, 
   Zap, 
-  Globe,
-  ArrowRight,
-  CheckCircle
+  Globe, 
+  ArrowRight, 
+  CheckCircle,
+  Monitor,
+  Smartphone as Mobile,
+  BarChart3,
+  Cloud,
+  Lock,
+  Settings
 } from 'lucide-react';
 
 console.log('[Mumbai-Web-Development] ServicesSection component loaded');
@@ -48,111 +43,122 @@ export function ServicesSection() {
   const services = [
     {
       icon: Code,
-      title: 'Custom Web Development',
-      description: 'Tailored websites built with modern technologies like React, Next.js, and Node.js',
-      features: ['Responsive Design', 'Custom Functionality', 'Modern Tech Stack', 'Scalable Architecture'],
-      color: 'from-blue-500 to-blue-600',
-      bgColor: 'bg-blue-50 dark:bg-blue-900/20',
-      iconColor: 'text-blue-600'
+      title: "Custom Web Development",
+      description: "Tailored web applications built with modern technologies for Mumbai businesses",
+      features: ["React & Next.js", "Node.js Backend", "API Integration", "Custom Features"],
+      color: "from-blue-500 to-cyan-500",
+      bgColor: "from-blue-500/10 to-cyan-500/10",
+      borderColor: "border-blue-500/20"
     },
     {
-      icon: Smartphone,
-      title: 'Mobile-First Design',
-      description: 'Websites optimized for mobile devices with touch-friendly interfaces',
-      features: ['Mobile Responsive', 'Touch Optimized', 'Fast Loading', 'Cross-Platform'],
-      color: 'from-green-500 to-green-600',
-      bgColor: 'bg-green-50 dark:bg-green-900/20',
-      iconColor: 'text-green-600'
+      icon: Mobile,
+      title: "Mobile-First Design",
+      description: "Responsive websites optimized for all devices with Mumbai mobile users in mind",
+      features: ["Mobile Optimization", "Touch-Friendly UI", "Fast Loading", "Cross-Platform"],
+      color: "from-green-500 to-emerald-500",
+      bgColor: "from-green-500/10 to-emerald-500/10",
+      borderColor: "border-green-500/20"
     },
     {
       icon: Search,
-      title: 'SEO Optimization',
-      description: 'Search engine optimized websites to help Mumbai businesses rank higher',
-      features: ['Google Ranking', 'Local SEO', 'Meta Optimization', 'Speed Optimization'],
-      color: 'from-purple-500 to-purple-600',
-      bgColor: 'bg-purple-50 dark:bg-purple-900/20',
-      iconColor: 'text-purple-600'
+      title: "SEO Optimization",
+      description: "Search engine optimized websites to help Mumbai businesses rank higher",
+      features: ["Local SEO", "Google My Business", "Meta Optimization", "Speed Optimization"],
+      color: "from-purple-500 to-pink-500",
+      bgColor: "from-purple-500/10 to-pink-500/10",
+      borderColor: "border-purple-500/20"
     },
     {
       icon: ShoppingCart,
-      title: 'E-Commerce Solutions',
-      description: 'Online stores and payment gateways for Mumbai businesses to sell online',
-      features: ['Payment Gateway', 'Inventory Management', 'Order Tracking', 'Multi-currency'],
-      color: 'from-orange-500 to-orange-600',
-      bgColor: 'bg-orange-50 dark:bg-orange-900/20',
-      iconColor: 'text-orange-600'
+      title: "E-Commerce Solutions",
+      description: "Complete online stores for Mumbai businesses to sell products and services",
+      features: ["Payment Integration", "Inventory Management", "Order Tracking", "Multi-Vendor"],
+      color: "from-orange-500 to-red-500",
+      bgColor: "from-orange-500/10 to-red-500/10",
+      borderColor: "border-orange-500/20"
     },
     {
       icon: Database,
-      title: 'Backend Development',
-      description: 'Robust server-side solutions and database management systems',
-      features: ['API Development', 'Database Design', 'Server Management', 'Security'],
-      color: 'from-indigo-500 to-indigo-600',
-      bgColor: 'bg-indigo-50 dark:bg-indigo-900/20',
-      iconColor: 'text-indigo-600'
+      title: "Backend Development",
+      description: "Robust server-side solutions to power your Mumbai business operations",
+      features: ["Database Design", "API Development", "Server Management", "Data Security"],
+      color: "from-indigo-500 to-purple-500",
+      bgColor: "from-indigo-500/10 to-purple-500/10",
+      borderColor: "border-indigo-500/20"
     },
     {
       icon: Shield,
-      title: 'Security & Maintenance',
-      description: 'Website security, updates, and ongoing maintenance services',
-      features: ['SSL Certificates', 'Regular Updates', 'Backup Systems', '24/7 Monitoring'],
-      color: 'from-red-500 to-red-600',
-      bgColor: 'bg-red-50 dark:bg-red-900/20',
-      iconColor: 'text-red-600'
+      title: "Security & Maintenance",
+      description: "Ongoing security updates and maintenance to keep your website safe",
+      features: ["SSL Certificates", "Regular Updates", "Backup Systems", "24/7 Monitoring"],
+      color: "from-red-500 to-pink-500",
+      bgColor: "from-red-500/10 to-pink-500/10",
+      borderColor: "border-red-500/20"
     },
     {
       icon: Zap,
-      title: 'Performance Optimization',
-      description: 'Fast-loading websites with optimized performance for better user experience',
-      features: ['Speed Optimization', 'Image Compression', 'Caching', 'CDN Setup'],
-      color: 'from-yellow-500 to-yellow-600',
-      bgColor: 'bg-yellow-50 dark:bg-yellow-900/20',
-      iconColor: 'text-yellow-600'
+      title: "Performance Optimization",
+      description: "Lightning-fast websites that provide excellent user experience",
+      features: ["Speed Optimization", "CDN Integration", "Image Optimization", "Caching"],
+      color: "from-yellow-500 to-orange-500",
+      bgColor: "from-yellow-500/10 to-orange-500/10",
+      borderColor: "border-yellow-500/20"
     },
     {
       icon: Globe,
-      title: 'Multi-Language Support',
-      description: 'Websites with multiple language support for diverse Mumbai audience',
-      features: ['Hindi/English', 'Regional Languages', 'RTL Support', 'Cultural Adaptation'],
-      color: 'from-teal-500 to-teal-600',
-      bgColor: 'bg-teal-50 dark:bg-teal-900/20',
-      iconColor: 'text-teal-600'
+      title: "Multi-Language Support",
+      description: "Websites that speak to Mumbai's diverse multilingual audience",
+      features: ["Hindi & English", "Regional Languages", "RTL Support", "Cultural Adaptation"],
+      color: "from-teal-500 to-cyan-500",
+      bgColor: "from-teal-500/10 to-cyan-500/10",
+      borderColor: "border-teal-500/20"
     }
   ];
 
   const fadeInUp = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: 30 },
     show: { 
       opacity: 1, 
       y: 0,
-      transition: { duration: 0.6, ease: 'easeOut' }
+      transition: { duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }
+    }
+  };
+
+  const staggerContainer = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2
+      }
     }
   };
 
   return (
     <section
       ref={sectionRef}
-      className="py-12 sm:py-16 md:py-20 bg-white dark:bg-gray-900"
+      className="py-16 sm:py-20 md:py-24 bg-white dark:bg-slate-900"
       id="services"
       role="region"
       aria-labelledby="services-heading"
     >
-      <div className="container mx-auto px-3 sm:px-4">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
           initial="hidden"
           animate={inView ? "show" : "hidden"}
           variants={fadeInUp}
-          className="text-center mb-8 sm:mb-12"
+          className="text-center mb-12 sm:mb-16"
         >
           <h2
             id="services-heading"
-            className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4"
+            className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4"
           >
-            Complete Web Development Services
+            Comprehensive Web Development Services
           </h2>
-          <p className="text-base sm:text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-            From concept to launch, we provide end-to-end web development solutions for Mumbai businesses
+          <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">
+            From custom web applications to e-commerce solutions, we provide everything Mumbai businesses need to succeed online.
           </p>
         </motion.div>
 
@@ -160,47 +166,76 @@ export function ServicesSection() {
         <motion.div
           initial="hidden"
           animate={inView ? "show" : "hidden"}
-          variants={{ show: { transition: { staggerChildren: 0.1 } } }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+          variants={staggerContainer}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12"
         >
           {services.map((service, index) => (
             <motion.div
               key={index}
               variants={fadeInUp}
-              className="group bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border border-gray-200 dark:border-gray-700"
+              className={`group p-6 bg-gradient-to-br ${service.bgColor} backdrop-blur-sm border ${service.borderColor} rounded-2xl hover:shadow-xl transition-all duration-300 hover:-translate-y-2`}
             >
-              {/* Service Icon */}
-              <div className={`inline-flex items-center justify-center w-12 h-12 rounded-lg ${service.bgColor} mb-4 group-hover:scale-110 transition-transform duration-300`}>
-                <service.icon className={`h-6 w-6 ${service.iconColor}`} />
+              {/* Icon */}
+              <div className={`inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-r ${service.color} mb-4 group-hover:scale-110 transition-transform duration-300`}>
+                <service.icon className="h-8 w-8 text-white" />
               </div>
 
-              {/* Service Title */}
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors duration-300">
+              {/* Title */}
+              <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">
                 {service.title}
               </h3>
 
-              {/* Service Description */}
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-4 leading-relaxed">
+              {/* Description */}
+              <p className="text-slate-600 dark:text-slate-300 text-sm mb-4 leading-relaxed">
                 {service.description}
               </p>
 
-              {/* Service Features */}
-              <ul className="space-y-2 mb-4">
+              {/* Features */}
+              <ul className="space-y-2 mb-6">
                 {service.features.map((feature, featureIndex) => (
-                  <li key={featureIndex} className="flex items-center text-xs text-gray-500 dark:text-gray-400">
-                    <CheckCircle className="h-3 w-3 text-green-500 mr-2 flex-shrink-0" />
+                  <li key={featureIndex} className="flex items-center text-sm text-slate-600 dark:text-slate-400">
+                    <CheckCircle className="h-4 w-4 text-green-500 mr-2 flex-shrink-0" />
                     {feature}
                   </li>
                 ))}
               </ul>
 
               {/* Learn More Link */}
-              <div className="flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 group-hover:text-indigo-700 dark:group-hover:text-indigo-300 transition-colors duration-300">
-                <span>Learn More</span>
-                <ArrowRight className="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform duration-300" />
-              </div>
+              <button className="flex items-center text-sm font-medium text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
+                Learn More
+                <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
+              </button>
             </motion.div>
           ))}
+        </motion.div>
+
+        {/* Technology Stack */}
+        <motion.div
+          initial="hidden"
+          animate={inView ? "show" : "hidden"}
+          variants={fadeInUp}
+          className="bg-gradient-to-r from-slate-50 to-blue-50 dark:from-slate-800 dark:to-blue-900/20 rounded-2xl p-8 mb-12"
+        >
+          <h3 className="text-2xl font-bold text-slate-900 dark:text-white text-center mb-8">
+            Modern Technology Stack
+          </h3>
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+            {[
+              { name: "React", icon: Code, color: "text-blue-500" },
+              { name: "Next.js", icon: Monitor, color: "text-black dark:text-white" },
+              { name: "Node.js", icon: Database, color: "text-green-500" },
+              { name: "TypeScript", icon: Code, color: "text-blue-600" },
+              { name: "MongoDB", icon: Database, color: "text-green-600" },
+              { name: "AWS", icon: Cloud, color: "text-orange-500" }
+            ].map((tech, index) => (
+              <div key={index} className="text-center group">
+                <div className="w-12 h-12 mx-auto mb-2 bg-white dark:bg-slate-700 rounded-xl flex items-center justify-center shadow-md group-hover:shadow-lg transition-shadow duration-300">
+                  <tech.icon className={`h-6 w-6 ${tech.color}`} />
+                </div>
+                <div className="text-sm font-medium text-slate-700 dark:text-slate-300">{tech.name}</div>
+              </div>
+            ))}
+          </div>
         </motion.div>
 
         {/* CTA Section */}
@@ -208,34 +243,25 @@ export function ServicesSection() {
           initial="hidden"
           animate={inView ? "show" : "hidden"}
           variants={fadeInUp}
-          className="mt-12 text-center"
+          className="text-center"
         >
-          <div className="bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-2xl p-8">
-            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-              Need a Custom Solution?
-            </h3>
-            <p className="text-gray-600 dark:text-gray-400 mb-6 max-w-2xl mx-auto">
-              We specialize in creating unique web solutions tailored to Mumbai's diverse business landscape. 
-              Let's discuss your specific requirements.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href="#lead-form"
-                className="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold rounded-lg hover:from-indigo-700 hover:to-purple-700 transition-all duration-300 hover:scale-105"
-                onClick={() => console.log('[Mumbai-Web-Development] Services CTA - Get Custom Quote clicked')}
-              >
-                Get Custom Quote
-                <ArrowRight className="h-4 w-4 ml-2" />
-              </a>
-              <a
-                href="tel:+919963730111"
-                className="inline-flex items-center justify-center px-6 py-3 border-2 border-indigo-600 text-indigo-600 dark:text-indigo-400 font-semibold rounded-lg hover:bg-indigo-50 dark:hover:bg-indigo-900/20 transition-all duration-300"
-                onClick={() => console.log('[Mumbai-Web-Development] Services CTA - Call Expert clicked')}
-              >
-                Call Mumbai Expert
-              </a>
-            </div>
-          </div>
+          <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">
+            Need a Custom Solution?
+          </h3>
+          <p className="text-slate-600 dark:text-slate-300 mb-8 max-w-2xl mx-auto">
+            Every Mumbai business is unique. Let us create a custom web solution tailored to your specific needs and goals.
+          </p>
+          <Button
+            asChild
+            size="lg"
+            className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-semibold px-8 py-4 text-lg shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
+            onClick={() => console.log('[Mumbai-Web-Development] Services CTA - Custom Solution clicked')}
+          >
+            <a href="#lead-form" className="flex items-center">
+              Get Custom Quote
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </a>
+          </Button>
         </motion.div>
       </div>
     </section>

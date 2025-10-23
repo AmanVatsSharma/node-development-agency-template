@@ -2,14 +2,14 @@
 
 /**
  * Process Section Component - 5-STEP DEVELOPMENT PROCESS
- * Shows our systematic approach to web development
+ * Premium process section with professional design
  * 
- * @version 1.0.0 - Development Process
+ * @version 2.0.0 - Production Ready Process
  */
 
 import React, { useEffect, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { Search, PenTool, Code, Rocket, CheckCircle } from 'lucide-react';
+import { Search, PenTool, Code, Rocket, CheckCircle, Users, Clock, Shield } from 'lucide-react';
 
 console.log('[Mumbai-Web-Development] ProcessSection component loaded');
 
@@ -26,94 +26,179 @@ export function ProcessSection() {
     {
       number: '01',
       title: 'Discovery & Planning',
-      description: 'We understand your business goals, target audience, and requirements',
+      description: 'We understand your business goals, target audience, and requirements through detailed consultation',
       icon: Search,
-      color: 'from-blue-500 to-blue-600'
+      color: 'from-blue-500 to-cyan-500',
+      bgColor: 'from-blue-500/10 to-cyan-500/10',
+      borderColor: 'border-blue-500/20',
+      features: ['Business Analysis', 'Target Audience Research', 'Competitor Analysis', 'Project Scope Definition']
     },
     {
       number: '02',
       title: 'Design & Prototyping',
-      description: 'Create wireframes, mockups, and interactive prototypes',
+      description: 'Create wireframes, mockups, and interactive prototypes that align with your brand',
       icon: PenTool,
-      color: 'from-purple-500 to-purple-600'
+      color: 'from-purple-500 to-pink-500',
+      bgColor: 'from-purple-500/10 to-pink-500/10',
+      borderColor: 'border-purple-500/20',
+      features: ['UI/UX Design', 'Wireframing', 'Prototyping', 'Brand Integration']
     },
     {
       number: '03',
       title: 'Development & Coding',
-      description: 'Build your website using modern technologies and best practices',
+      description: 'Build your website using modern technologies and best practices for optimal performance',
       icon: Code,
-      color: 'from-green-500 to-green-600'
+      color: 'from-green-500 to-emerald-500',
+      bgColor: 'from-green-500/10 to-emerald-500/10',
+      borderColor: 'border-green-500/20',
+      features: ['Frontend Development', 'Backend Development', 'Database Design', 'API Integration']
     },
     {
       number: '04',
       title: 'Testing & Optimization',
-      description: 'Thorough testing across devices and performance optimization',
+      description: 'Thorough testing across devices and performance optimization for the best user experience',
       icon: CheckCircle,
-      color: 'from-orange-500 to-orange-600'
+      color: 'from-orange-500 to-red-500',
+      bgColor: 'from-orange-500/10 to-red-500/10',
+      borderColor: 'border-orange-500/20',
+      features: ['Quality Assurance', 'Performance Testing', 'Cross-Browser Testing', 'Mobile Optimization']
     },
     {
       number: '05',
       title: 'Launch & Support',
-      description: 'Deploy your website and provide ongoing maintenance support',
+      description: 'Deploy your website and provide ongoing maintenance support for continued success',
       icon: Rocket,
-      color: 'from-indigo-500 to-indigo-600'
+      color: 'from-indigo-500 to-purple-500',
+      bgColor: 'from-indigo-500/10 to-purple-500/10',
+      borderColor: 'border-indigo-500/20',
+      features: ['Website Deployment', 'Domain Setup', 'SSL Configuration', 'Ongoing Support']
     }
   ];
 
   const fadeInUp = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: 30 },
     show: { 
       opacity: 1, 
       y: 0,
-      transition: { duration: 0.6, ease: 'easeOut' }
+      transition: { duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }
+    }
+  };
+
+  const staggerContainer = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2
+      }
     }
   };
 
   return (
     <section
       ref={sectionRef}
-      className="py-12 sm:py-16 md:py-20 bg-white dark:bg-gray-900"
+      className="py-16 sm:py-20 md:py-24 bg-white dark:bg-slate-900"
       id="process"
       role="region"
       aria-labelledby="process-heading"
     >
-      <div className="container mx-auto px-3 sm:px-4">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section Header */}
         <motion.div
           initial="hidden"
           animate={inView ? "show" : "hidden"}
           variants={fadeInUp}
-          className="text-center mb-8 sm:mb-12"
+          className="text-center mb-12 sm:mb-16"
         >
           <h2
             id="process-heading"
-            className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4"
+            className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4"
           >
             Our 5-Step Development Process
           </h2>
-          <p className="text-base sm:text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-            A systematic approach that ensures your Mumbai business gets a world-class website
+          <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">
+            A systematic approach that ensures your Mumbai business gets a world-class website delivered on time and within budget.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
+        {/* Process Steps */}
+        <motion.div
+          initial="hidden"
+          animate={inView ? "show" : "hidden"}
+          variants={staggerContainer}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-16"
+        >
           {steps.map((step, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="text-center"
+              variants={fadeInUp}
+              className="text-center group"
             >
-              <div className={`inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-r ${step.color} text-white mb-4 mx-auto`}>
-                <step.icon className="h-8 w-8" />
+              {/* Step Number */}
+              <div className="text-4xl font-bold text-slate-400 mb-4 group-hover:text-slate-600 dark:group-hover:text-slate-300 transition-colors duration-300">
+                {step.number}
               </div>
-              <div className="text-2xl font-bold text-gray-400 mb-2">{step.number}</div>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">{step.title}</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400">{step.description}</p>
+
+              {/* Icon */}
+              <div className={`inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-r ${step.color} mb-6 group-hover:scale-110 transition-transform duration-300`}>
+                <step.icon className="h-10 w-10 text-white" />
+              </div>
+
+              {/* Title */}
+              <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
+                {step.title}
+              </h3>
+
+              {/* Description */}
+              <p className="text-slate-600 dark:text-slate-300 text-sm mb-4 leading-relaxed">
+                {step.description}
+              </p>
+
+              {/* Features */}
+              <ul className="space-y-2 text-xs text-slate-500 dark:text-slate-400">
+                {step.features.map((feature, featureIndex) => (
+                  <li key={featureIndex} className="flex items-center justify-center">
+                    <CheckCircle className="h-3 w-3 text-green-500 mr-2 flex-shrink-0" />
+                    {feature}
+                  </li>
+                ))}
+              </ul>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
+
+        {/* Process Benefits */}
+        <motion.div
+          initial="hidden"
+          animate={inView ? "show" : "hidden"}
+          variants={fadeInUp}
+          className="bg-gradient-to-r from-slate-50 to-blue-50 dark:from-slate-800 dark:to-blue-900/20 rounded-2xl p-8"
+        >
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+            <div className="flex flex-col items-center">
+              <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center mb-4">
+                <Users className="h-8 w-8 text-white" />
+              </div>
+              <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Collaborative Approach</h3>
+              <p className="text-slate-600 dark:text-slate-300 text-sm">We work closely with you throughout the entire process</p>
+            </div>
+            <div className="flex flex-col items-center">
+              <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center mb-4">
+                <Clock className="h-8 w-8 text-white" />
+              </div>
+              <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Timely Delivery</h3>
+              <p className="text-slate-600 dark:text-slate-300 text-sm">14-21 days average delivery time with regular updates</p>
+            </div>
+            <div className="flex flex-col items-center">
+              <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mb-4">
+                <Shield className="h-8 w-8 text-white" />
+              </div>
+              <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Quality Assurance</h3>
+              <p className="text-slate-600 dark:text-slate-300 text-sm">Rigorous testing ensures your website works perfectly</p>
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
