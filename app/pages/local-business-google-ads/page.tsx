@@ -6,9 +6,6 @@ import { SectionErrorBoundary } from './_components/section-error-boundary';
 import { HeroSection } from './_components/hero-section';
 import { ProblemSolutionSection } from './_components/problem-solution-section';
 import { ServiceFeaturesSection } from './_components/service-features-section';
-import { LocalStrategySection } from './_components/local-strategy-section';
-import { LocalCampaignsSection } from './_components/local-campaigns-section';
-import { GoogleMyBusinessSection } from './_components/google-my-business-section';
 import { PricingSection } from './_components/pricing-section';
 import { CaseStudiesSection } from './_components/case-studies-section';
 import { TestimonialsSection } from './_components/testimonials-section';
@@ -49,20 +46,6 @@ export default function LocalBusinessGoogleAdsPage() {
         <ServiceFeaturesSection />
       </SectionErrorBoundary>
 
-      {/* Local Strategy Section */}
-      <SectionErrorBoundary name="LocalStrategySection">
-        <LocalStrategySection />
-      </SectionErrorBoundary>
-
-      {/* Local Campaigns Section */}
-      <SectionErrorBoundary name="LocalCampaignsSection">
-        <LocalCampaignsSection />
-      </SectionErrorBoundary>
-
-      {/* Google My Business Section */}
-      <SectionErrorBoundary name="GoogleMyBusinessSection">
-        <GoogleMyBusinessSection />
-      </SectionErrorBoundary>
 
       {/* Pricing Section */}
       <SectionErrorBoundary name="PricingSection">

@@ -6,9 +6,6 @@ import { SectionErrorBoundary } from './_components/section-error-boundary';
 import { HeroSection } from './_components/hero-section';
 import { ProblemSolutionSection } from './_components/problem-solution-section';
 import { ServiceFeaturesSection } from './_components/service-features-section';
-import { EcommerceStrategySection } from './_components/ecommerce-strategy-section';
-import { CampaignTypesSection } from './_components/campaign-types-section';
-import { ConversionOptimizationSection } from './_components/conversion-optimization-section';
 import { PricingSection } from './_components/pricing-section';
 import { CaseStudiesSection } from './_components/case-studies-section';
 import { TestimonialsSection } from './_components/testimonials-section';
@@ -49,20 +46,6 @@ export default function EcommerceGoogleAdsOptimizationPage() {
         <ServiceFeaturesSection />
       </SectionErrorBoundary>
 
-      {/* E-commerce Strategy Section */}
-      <SectionErrorBoundary name="EcommerceStrategySection">
-        <EcommerceStrategySection />
-      </SectionErrorBoundary>
-
-      {/* Campaign Types Section */}
-      <SectionErrorBoundary name="CampaignTypesSection">
-        <CampaignTypesSection />
-      </SectionErrorBoundary>
-
-      {/* Conversion Optimization Section */}
-      <SectionErrorBoundary name="ConversionOptimizationSection">
-        <ConversionOptimizationSection />
-      </SectionErrorBoundary>
 
       {/* Pricing Section */}
       <SectionErrorBoundary name="PricingSection">

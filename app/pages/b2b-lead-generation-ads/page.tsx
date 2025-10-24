@@ -6,9 +6,6 @@ import { SectionErrorBoundary } from './_components/section-error-boundary';
 import { HeroSection } from './_components/hero-section';
 import { ProblemSolutionSection } from './_components/problem-solution-section';
 import { ServiceFeaturesSection } from './_components/service-features-section';
-import { B2BStrategySection } from './_components/b2b-strategy-section';
-import { LeadGenerationSection } from './_components/lead-generation-section';
-import { TargetingSection } from './_components/targeting-section';
 import { PricingSection } from './_components/pricing-section';
 import { CaseStudiesSection } from './_components/case-studies-section';
 import { TestimonialsSection } from './_components/testimonials-section';
@@ -49,20 +46,6 @@ export default function B2BLeadGenerationAdsPage() {
         <ServiceFeaturesSection />
       </SectionErrorBoundary>
 
-      {/* B2B Strategy Section */}
-      <SectionErrorBoundary name="B2BStrategySection">
-        <B2BStrategySection />
-      </SectionErrorBoundary>
-
-      {/* Lead Generation Section */}
-      <SectionErrorBoundary name="LeadGenerationSection">
-        <LeadGenerationSection />
-      </SectionErrorBoundary>
-
-      {/* Targeting Section */}
-      <SectionErrorBoundary name="TargetingSection">
-        <TargetingSection />
-      </SectionErrorBoundary>
 
       {/* Pricing Section */}
       <SectionErrorBoundary name="PricingSection">
