@@ -27,6 +27,12 @@ export default function Header() {
             <Link href="/pages/about" className="text-gray-800 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors">
               About
             </Link>
+            <Link href="/pages/google-ads-ecosystem" className="text-gray-800 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors relative group">
+              Google Ads Ecosystem
+              <span className="absolute -top-1 -right-1 bg-gradient-to-r from-yellow-400 to-orange-500 text-black text-xs px-1.5 py-0.5 rounded-full font-bold">
+                Master
+              </span>
+            </Link>
             <Link href="/pages/services" className="text-gray-800 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors">
               Services
             </Link>
@@ -96,6 +102,16 @@ export default function Header() {
                 onClick={() => setIsMenuOpen(false)}
               >
                 About
+              </Link>
+              <Link
+                href="/pages/google-ads-ecosystem"
+                className="text-gray-800 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors px-4 flex items-center gap-2"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Google Ads Ecosystem
+                <span className="bg-gradient-to-r from-yellow-400 to-orange-500 text-black text-xs px-1.5 py-0.5 rounded-full font-bold">
+                  Master
+                </span>
               </Link>
               <Link
                 href="/pages/services"
