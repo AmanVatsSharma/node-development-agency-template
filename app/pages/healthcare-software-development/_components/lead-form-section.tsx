@@ -61,20 +61,65 @@ export function LeadFormSection() {
     
     console.log('[Healthcare-Software-Dev] Form submitted:', formData);
     
-    // Track conversion
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('event', 'conversion', {
-        event_category: 'Lead Form',
-        event_label: 'Healthcare Software Inquiry',
-        value: 1
+    try {
+      // Submit to centralized lead API
+      const res = await fetch('/api/lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          message: formData.message,
+          source: 'healthcare-software-development',
+          leadSource: 'Healthcare Software Landing Page',
+          campaign: 'Healthcare Software Development India',
+          raw: {
+            organization: formData.organization,
+            position: formData.position,
+            healthcareType: formData.healthcareType,
+            currentSystem: formData.currentSystem,
+            budget: formData.budget,
+            timeline: formData.timeline,
+            requirements: formData.requirements,
+            path: typeof window !== 'undefined' ? window.location.pathname : undefined,
+            userAgent: typeof window !== 'undefined' ? window.navigator.userAgent : undefined,
+            timestamp: new Date().toISOString(),
+            formVersion: 'v1.0',
+            pageTitle: 'Healthcare Software Development India',
+            conversionType: 'healthcare_software_inquiry'
+          }
+        }),
       });
+      
+      const data = await res.json();
+      console.log('[Healthcare-Software-Dev] Lead API response:', data);
+      
+      if (!res.ok) {
+        throw new Error(data?.error || 'Lead API failed');
+      }
+      
+      setIsSubmitted(true);
+      
+      // Track conversion
+      if (typeof window !== 'undefined' && (window as any).gtag) {
+        (window as any).gtag('event', 'conversion', {
+          event_category: 'Healthcare Lead Form',
+          event_label: 'Healthcare Software Inquiry',
+          value: 1,
+          lead_id: data.leadId,
+          correlation_id: data.correlationId
+        });
+      }
+      
+      console.log('[Healthcare-Software-Dev] ✅ Lead saved to database, Zoho CRM updated, Google Ads conversion fired');
+      
+    } catch (error) {
+      console.error('[Healthcare-Software-Dev] Lead submit error:', error);
+      alert('Something went wrong. Please try again or contact us directly.');
+    } finally {
+      setIsSubmitting(false);
     }
-    
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    setIsSubmitting(false);
-    setIsSubmitted(true);
   };
 
   const healthcareTypes = [

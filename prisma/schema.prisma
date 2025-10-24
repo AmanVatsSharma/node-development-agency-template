@@ -253,6 +253,9 @@ model Lead {
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
 
+  // Relations
+  healthcareMetadata HealthcareLeadMetadata?
+
   @@index([createdAt])
   @@index([status])
 }
@@ -359,4 +362,70 @@ model AIAnalytics {
 
   @@index([date, metric])
   @@index([pageUrl])
+}
+
+// Healthcare Lead Metadata - Extended lead information for healthcare software inquiries
+model HealthcareLeadMetadata {
+  id                String    @id @default(cuid())
+  leadId            String    @unique // Links to main Lead model
+  lead              Lead      @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  
+  // Healthcare-specific fields
+  organization      String?   // Healthcare organization name
+  position          String?   // Job position/title
+  healthcareType    String?   // Type of healthcare facility (Hospital, Clinic, etc.)
+  currentSystem     String?   // Current system they're using
+  budget            String?   // Budget range
+  timeline          String?   // Project timeline
+  requirements      String?   @db.Text // Detailed requirements
+  complianceNeeds   String[]  // Array of compliance requirements (HIPAA, GDPR, etc.)
+  integrationNeeds  String[]  // Required integrations (HL7, FHIR, DICOM, etc.)
+  userCount         Int?      // Expected number of users
+  patientVolume     String?   // Expected patient volume
+  
+  // Technical requirements
+  platformPreference String?  // Web, Mobile, Desktop, Cloud
+  deploymentType     String?   // On-premise, Cloud, Hybrid
+  dataMigration      Boolean?  // Needs data migration
+  trainingRequired   Boolean?  // Needs training services
+  supportLevel       String?   // Support level required
+  
+  // Project context
+  projectStage       String?   // Planning, RFP, Implementation, etc.
+  decisionMakers     String[]  // Array of decision maker roles
+  budgetApproved     Boolean?  // Is budget approved
+  timelineUrgent     Boolean?  // Is timeline urgent
+  previousVendor     String?   // Previous software vendor
+  
+  // Lead scoring and qualification
+  leadScore          Int?      @default(0) // 0-100 lead quality score
+  qualificationLevel String?   // Hot, Warm, Cold
+  priority           String?   // High, Medium, Low
+  followUpDate       DateTime? // When to follow up
+  notes              String?   @db.Text // Internal notes
+  
+  // Tracking and analytics
+  sourcePage         String?   // Source landing page
+  utmSource          String?   // UTM source
+  utmMedium          String?   // UTM medium
+  utmCampaign        String?   // UTM campaign
+  utmTerm            String?   // UTM term
+  utmContent         String?   // UTM content
+  referrer          String?   // HTTP referrer
+  userAgent         String?   // User agent string
+  ipAddress         String?   // IP address
+  country           String?   // Country
+  city              String?   // City
+  deviceType        String?   // Desktop, Mobile, Tablet
+  browserType       String?   // Chrome, Firefox, Safari, etc.
+  
+  // Timestamps
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  @@index([leadId])
+  @@index([healthcareType])
+  @@index([leadScore])
+  @@index([qualificationLevel])
+  @@index([createdAt])
 }
