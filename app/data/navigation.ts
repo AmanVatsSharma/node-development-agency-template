@@ -153,6 +153,19 @@ export const servicesMegaMenu: MegaMenuCategory = {
       ],
     },
     {
+      title: "Healthcare Solutions",
+      items: [
+        {
+          name: "Healthcare Software Development",
+          link: "/pages/healthcare-software-development",
+          description: "HIPAA-compliant healthcare solutions",
+          icon: "🏥",
+          iconKey: "hospital",
+          badge: "New",
+        },
+      ],
+    },
+    {
       title: "Trading & Finance",
       items: [
         {
@@ -226,12 +239,14 @@ export const footerNavigation = {
     { href: "/pages/website-development", label: "Website Development" },
     { href: "/pages/business-website", label: "Business Websites" },
     { href: "/pages/website-services", label: "Website Services" },
+    { href: "/pages/healthcare-software-development", label: "Healthcare Software Development" },
   ],
   businessSolutions: [
     { href: "/pages/ai-chatbot-development", label: "AI Chatbot Development" },
     { href: "/pages/ai-voice-agents", label: "AI Voice Agents" },
     { href: "/pages/whatsapp-business-api", label: "WhatsApp Business API" },
     { href: "/pages/crm", label: "CRM Solutions" },
+    { href: "/pages/healthcare-software-development", label: "Healthcare Software Development" },
     { href: "/pages/google-ads-management", label: "Google Ads Management" },
     { href: "/pages/seo-audit", label: "SEO Audit (Free)" },
   ],
