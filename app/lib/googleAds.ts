@@ -1,23 +1,24 @@
 /**
  * @fileoverview Google Ads Integration Library - Scalable Multi-Page Support
- * @description Server-side Google Ads conversion tracking with database-backed configuration
- * @version 2.0.0 - Scalable Architecture
+ * @description Server-side Google Ads conversion tracking with hardcoded configuration
+ * @version 3.0.0 - Hardcoded Configuration
  * 
  * FEATURES:
  * - Multi-landing-page conversion tracking
- * - Database-backed configuration (no hard-coded values)
+ * - Hardcoded configuration in config/conversion-labels.ts
  * - Comprehensive logging to IntegrationLog table
  * - Support for future Google Ads API integration
  * 
  * FLOW:
- * 1. Admin configures conversion labels in database via /admin/integrations
- * 2. getGoogleConfig() reads from IntegrationSettings table
+ * 1. Configuration stored in config/conversion-labels.ts
+ * 2. getGoogleConfig() reads from hardcoded config file
  * 3. Client-side code fetches config via /api/google-config
  * 4. Conversions fire via gtag with proper labels
  * 5. Server-side logs provide backup tracking
  */
 
 import prisma from './prisma';
+import { getGoogleAdsConfig } from '@/config/conversion-labels';
 
 // ============================================
 // TYPE DEFINITIONS
@@ -85,32 +86,23 @@ export type ConversionEventType =
 // ============================================
 
 /**
- * Get Google Ads configuration from database
+ * Get Google Ads configuration from hardcoded config file
  * @returns {Promise<{conversionId: string, labels: Record<string, string>}>}
  */
 export async function getGoogleConfig() {
   console.log('[GoogleAds] getGoogleConfig called');
   
   try {
-    const settings = await prisma.integrationSettings.findFirst();
+    const config = getGoogleAdsConfig();
     
-    if (!settings) {
-      console.error('[GoogleAds] IntegrationSettings not found in database');
-      console.error('[GoogleAds] Action: Initialize settings via /admin/integrations or run seed script');
-      throw new Error('IntegrationSettings not found');
-    }
-    
-    const labels = (settings.googleEventLabels as any) || {};
-    const conversionId = settings.googleConversionId || '';
-    
-    console.log('[GoogleAds] Configuration retrieved:');
-    console.log('[GoogleAds] - Conversion ID:', conversionId || 'NOT CONFIGURED');
-    console.log('[GoogleAds] - Labels configured:', Object.keys(labels).length);
-    console.log('[GoogleAds] - Label details:', JSON.stringify(labels, null, 2));
+    console.log('[GoogleAds] Configuration retrieved from hardcoded config:');
+    console.log('[GoogleAds] - Conversion ID:', config.conversionId || 'NOT CONFIGURED');
+    console.log('[GoogleAds] - Labels configured:', Object.keys(config.labels).length);
+    console.log('[GoogleAds] - Label details:', JSON.stringify(config.labels, null, 2));
     
     return {
-      conversionId,
-      labels,
+      conversionId: config.conversionId,
+      labels: config.labels,
     };
   } catch (error) {
     console.error('[GoogleAds] Error retrieving config:', error);
