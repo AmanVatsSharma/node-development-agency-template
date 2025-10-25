@@ -77,7 +77,7 @@ export function HeroSection() {
           >
             <Star className="h-3 w-3 sm:h-4 sm:w-4 text-yellow-500 fill-yellow-500" />
             <span className="font-semibold text-gray-800 dark:text-gray-200">
-              4.9/5 by 500+ Indian Businesses
+              4.9/5 by 500+ Indian Businesses | 12 Projects Booked This Week
             </span>
             <Star className="h-3 w-3 sm:h-4 sm:w-4 text-yellow-500 fill-yellow-500" />
           </motion.div>
@@ -89,21 +89,24 @@ export function HeroSection() {
             className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold mb-3 sm:mb-4 md:mb-6 tracking-tight leading-tight"
           >
             <span className="text-gray-900 dark:text-white block mb-2">
-              Get More Customers{' '}
+              Premium Websites That{' '}
               <Highlight className="text-gray-900 dark:text-white">
-                Online
+                Convert Visitors to Customers
               </Highlight>
             </span>
             <span className="block mb-2">
               <Highlight className="text-gray-900 dark:text-white bg-gradient-to-r from-indigo-300 to-purple-300 dark:from-indigo-500 dark:to-purple-500">
-                Professional Websites That Convert
+                Professional Design + SEO + Content + Graphics
               </Highlight>
             </span>
             <span className="text-2xl sm:text-3xl md:text-4xl text-green-600 dark:text-green-400 block mt-2 sm:mt-3">
               Starting{' '}
               <Highlight className="text-green-600 dark:text-green-400 bg-gradient-to-r from-green-200 to-emerald-200 dark:from-green-700 dark:to-emerald-700">
-                ₹13,999
+                ₹9,999
               </Highlight>
+              <span className="text-lg sm:text-xl text-red-600 dark:text-red-400 ml-2">
+                (40% OFF!)
+              </span>
             </span>
           </motion.h1>
 
@@ -112,7 +115,7 @@ export function HeroSection() {
             variants={fadeInUp}
             className="text-sm sm:text-base md:text-lg text-gray-700 dark:text-gray-300 max-w-4xl mx-auto mb-4 sm:mb-6 leading-snug sm:leading-relaxed px-2"
           >
-            Professional, Fast Website for{' '}
+            Complete digital solution with design, development, SEO, content writing & graphics for{' '}
             <span className="font-semibold text-indigo-600 dark:text-indigo-400">
               Mumbai, Delhi, Bangalore
             </span>
@@ -127,7 +130,11 @@ export function HeroSection() {
             {[
               '✅ 14-21 Days',
               '✅ Mobile-First',
-              '✅ SEO Ready',
+              '✅ SEO + Content',
+              '✅ Design + Graphics',
+              '✅ 40% OFF',
+              '✅ 100% Money-Back',
+              '✅ Free Consultation',
               '✅ No Hidden Cost'
             ].map((benefit, index) => (
               <div 
@@ -151,7 +158,7 @@ export function HeroSection() {
               onClick={() => console.log('[Business-Website] Hero CTA - Get My Website Quote clicked')}
             >
               <a href="#lead-form" className="flex items-center justify-center font-bold">
-                💰 Get My Website Quote (Free)
+                💰 Get Free Quote in 2 Minutes (Save ₹4,000+)
                 <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
               </a>
             </Button>
@@ -165,7 +172,7 @@ export function HeroSection() {
             >
               <a href="tel:+919963730111" className="flex items-center justify-center gap-2 font-semibold">
                 <Phone className="h-4 w-4 sm:h-5 sm:w-5" />
-                <span>📞 Talk to Expert Now</span>
+                <span>📞 Speak to Expert (No Sales Pressure)</span>
               </a>
             </Button>
           </motion.div>
@@ -181,7 +188,7 @@ export function HeroSection() {
                 <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
               </span>
               <span className="text-xs sm:text-sm font-bold text-red-700 dark:text-red-300">
-                ⚡ Only 3 Slots Left This Month - Book Now!
+                ⚡ Premium Packages 40% OFF - Only 5 Slots Left! (Others charge ₹15,000+)
               </span>
             </div>
           </motion.div>

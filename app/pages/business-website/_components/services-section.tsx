@@ -44,24 +44,24 @@ export function ServicesSection() {
       icon: Globe,
       title: 'Business Website Development',
       description: 'Professional, mobile-responsive websites that establish your online presence and build credibility.',
-      features: ['5-10 Pages', 'Mobile Responsive', 'Contact Forms', 'Google Maps Integration'],
-      priceFrom: '₹13,999',
+      features: ['8-12 Pages', 'Mobile Responsive', 'Contact Forms', 'Google Maps Integration', 'SEO Included'],
+      priceFrom: '₹9,999',
       color: 'from-blue-500 to-cyan-500'
     },
     {
       icon: Zap,
       title: 'Dynamic SEO Website',
       description: 'Advanced websites with SEO optimization, analytics, and CRM integration for growing businesses.',
-      features: ['SEO Optimized', 'Google Analytics', 'CRM Integration', 'Blog System', 'Social Media Integration'],
-      priceFrom: '₹45,999',
+      features: ['15-25 Pages', 'SEO Optimized', 'Google Analytics', 'CRM Integration', 'Blog System', 'Social Media Integration'],
+      priceFrom: '₹29,999',
       color: 'from-purple-500 to-pink-500'
     },
     {
       icon: ShoppingCart,
       title: 'E-Commerce Solutions',
       description: 'Complete online stores on Shopify, WooCommerce, or custom platforms with payment gateway integration.',
-      features: ['Product Management', 'Payment Gateway', 'Inventory System', 'Order Tracking'],
-      priceFrom: '₹90,000',
+      features: ['Unlimited Pages', 'Product Management', 'Payment Gateway', 'Inventory System', 'Order Tracking'],
+      priceFrom: '₹59,999',
       color: 'from-green-500 to-emerald-500'
     },
     {
@@ -136,7 +136,7 @@ export function ServicesSection() {
           </h2>
           
           <p className="text-sm sm:text-base md:text-lg text-gray-700 dark:text-gray-300 max-w-4xl mx-auto leading-snug sm:leading-relaxed px-2">
-            From business website to e-commerce with digital marketing - all at affordable prices.
+            From business website to e-commerce with digital marketing - <span className="font-bold text-green-600 dark:text-green-400">premium quality at affordable prices!</span>
           </p>
         </motion.div>
 
@@ -213,11 +213,11 @@ export function ServicesSection() {
             <span className="font-bold text-indigo-600 dark:text-indigo-400">
               Don't worry about digital marketing!
             </span>
-            {' '}We manage everything. Just call! 📞
+            {' '}We manage everything. <span className="font-bold text-green-600 dark:text-green-400">40% OFF on all packages!</span> Just call! 📞
           </p>
           <div className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 md:px-6 py-2 sm:py-2.5 md:py-3 bg-gradient-to-r from-green-100 to-emerald-100 dark:from-green-900/30 dark:to-emerald-900/30 rounded-full border border-green-200 dark:border-green-800 text-xs sm:text-sm">
             <span className="font-semibold text-gray-800 dark:text-gray-200 text-center">
-              💡 Complete digital transformation packages available
+              💡 Complete digital transformation packages with premium deliverables - Limited Time Offer!
             </span>
           </div>
         </motion.div>

@@ -8,7 +8,7 @@
  * 
  * MARKETING FOCUS:
  * - Indian city targeting (Mumbai, Delhi, Bangalore, etc.)
- * - INR-first pricing (₹13,999, ₹45,999, ₹90,000+)
+ * - INR-first pricing (₹9,999, ₹29,999, ₹59,999+)
  * - Problem-solving approach with complete digital solutions
  * - Fast lead capture with multiple touchpoints
  * - Mobile-first design for Indian market
