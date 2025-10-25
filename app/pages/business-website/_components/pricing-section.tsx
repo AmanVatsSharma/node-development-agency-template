@@ -35,67 +35,105 @@ export function PricingSection() {
   const plans: PricingPlan[] = [
     {
       name: 'Starter Package',
-      price: '13,999',
+      price: '9,999',
       period: 'One-time payment',
-      description: 'Perfect for small businesses and startups looking to establish online presence',
+      description: 'Perfect for small businesses and startups looking to establish premium online presence',
       features: [
-        '5-7 Page Website',
-        'Mobile Responsive Design',
-        'Contact Form Integration',
-        'Google Maps Integration',
-        'Basic SEO Setup',
-        'Social Media Links',
-        'WhatsApp Integration',
-        '1 Month Free Support',
-        'Free SSL Certificate',
-        'Fast Loading Speed'
+        '8-12 Page Premium Website',
+        'Mobile-First Responsive Design',
+        'Advanced Contact Form Integration',
+        'Google Maps & Business Integration',
+        'Complete SEO Setup & Optimization',
+        'Social Media Integration & Links',
+        'WhatsApp Business Integration',
+        'Google Analytics & Search Console',
+        'Professional Logo Design (3 Concepts)',
+        'Brand Color Scheme & Typography',
+        'Free SSL Certificate & Security',
+        'Fast Loading Speed (90+ Score)',
+        '2 Months Free Support & Maintenance',
+        'Basic Content Writing (5 Pages)',
+        'Image Optimization & Compression',
+        'Social Media Graphics (5 Designs)',
+        'Google My Business Setup',
+        'Basic Email Marketing Setup'
       ],
       cta: 'Get Started Now'
     },
     {
       name: 'Professional Package',
-      price: '45,999',
+      price: '29,999',
       period: 'One-time payment',
-      description: 'Complete solution for growing businesses with SEO, analytics, and CRM integration',
+      description: 'Complete digital solution for growing businesses with advanced features and premium deliverables',
       features: [
-        '10-15 Page Dynamic Website',
-        'Advanced SEO Optimization',
-        'Google Analytics Integration',
-        'CRM Integration (Zoho/HubSpot)',
-        'Blog System (CMS)',
-        'Email Marketing Setup',
-        'Social Media Integration',
-        'Live Chat Support',
-        'Payment Gateway (if needed)',
-        'Admin Dashboard',
-        '3 Months Free Support',
-        'Performance Optimization',
-        'Security & Backup Setup'
+        '15-25 Page Dynamic Website',
+        'Advanced SEO Optimization & Strategy',
+        'Google Analytics 4 & Tag Manager',
+        'CRM Integration (Zoho/HubSpot/Salesforce)',
+        'Complete Blog System with CMS',
+        'Email Marketing Automation Setup',
+        'Social Media Integration & Management',
+        'Live Chat & Support System',
+        'Payment Gateway Integration',
+        'Advanced Admin Dashboard',
+        'Professional Content Writing (10 Pages)',
+        'Custom Graphics & Illustrations (15 Designs)',
+        'Video Integration & Optimization',
+        'Advanced Security & Backup Setup',
+        'Performance Optimization (95+ Score)',
+        'A/B Testing Setup',
+        'Conversion Rate Optimization',
+        'Lead Generation Forms & Landing Pages',
+        'Social Media Graphics Package (20 Designs)',
+        'Email Template Design (5 Templates)',
+        '4 Months Free Support & Maintenance',
+        'Monthly Performance Reports',
+        'Competitor Analysis Report',
+        'Local SEO Optimization',
+        'Schema Markup Implementation'
       ],
       popular: true,
       cta: 'Most Popular - Get Quote'
     },
     {
       name: 'Enterprise Package',
-      price: '90,000',
+      price: '59,999',
       period: 'Starting from',
-      description: 'Complete e-commerce or custom web application with all advanced features',
+      description: 'Complete digital transformation with unlimited pages, e-commerce, and premium enterprise features',
       features: [
-        'Unlimited Pages',
-        'E-Commerce Platform (Shopify/WooCommerce/Custom)',
-        'Custom Web Application',
-        'Advanced CRM Integration',
-        'Multi-language Support',
-        'Advanced Analytics & Reporting',
-        'Custom API Development',
-        'Third-party Integrations',
-        'Inventory Management',
-        'Order Management System',
-        'Payment Gateway Integration',
-        'SMS & Email Notifications',
-        '6 Months Free Support',
+        'Unlimited Pages & Sections',
+        'Complete E-Commerce Platform (Shopify/WooCommerce/Custom)',
+        'Custom Web Application Development',
+        'Advanced CRM & ERP Integration',
+        'Multi-language Support (3 Languages)',
+        'Advanced Analytics & Custom Reporting',
+        'Custom API Development & Integration',
+        'Third-party Integrations (50+ Apps)',
+        'Advanced Inventory Management System',
+        'Complete Order Management System',
+        'Multiple Payment Gateway Integration',
+        'SMS & Email Notification System',
+        'Advanced Security & Compliance',
+        'Custom Mobile App (Basic Version)',
+        'Professional Content Writing (25 Pages)',
+        'Complete Brand Identity Package',
+        'Custom Graphics & Illustrations (50+ Designs)',
+        'Video Production & Integration (5 Videos)',
+        'Advanced SEO & Digital Marketing Setup',
+        'Social Media Management (3 Months)',
+        'Email Marketing Campaigns (3 Months)',
+        'Google Ads Setup & Management (1 Month)',
+        'Advanced Analytics Dashboard',
+        'A/B Testing & Conversion Optimization',
+        'Lead Generation & Nurturing System',
+        'Customer Support System Integration',
+        'Advanced Backup & Recovery System',
+        '6 Months Free Support & Maintenance',
         'Dedicated Account Manager',
-        'Priority 24/7 Support'
+        'Priority 24/7 Support',
+        'Monthly Strategy Sessions',
+        'Competitive Analysis & Market Research',
+        'Custom Training & Documentation'
       ],
       cta: 'Contact for Custom Quote'
     }
@@ -124,7 +162,7 @@ export function PricingSection() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-500"></span>
               </span>
-              🔥 Limited Time Offer - 3 Slots Left!
+              🔥 Premium Packages - 40% OFF - Only 5 Slots Left!
             </span>
           </div>
 
@@ -132,11 +170,11 @@ export function PricingSection() {
             id="pricing-heading"
             className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4 sm:mb-5 md:mb-7 text-gray-900 dark:text-white px-2 leading-tight"
           >
-            Transparent, Affordable Pricing
+            Premium Quality at Affordable Prices
           </h2>
 
           <p className="text-base sm:text-lg md:text-xl text-gray-700 dark:text-gray-300 max-w-4xl mx-auto leading-snug sm:leading-relaxed mb-5 sm:mb-7 px-2 font-medium">
-            One-time payment. <span className="text-green-600 dark:text-green-400 font-bold">No recurring fees.</span> GST included. Own forever.
+            One-time payment. <span className="text-green-600 dark:text-green-400 font-bold">No recurring fees.</span> GST included. Own forever. <span className="text-red-600 dark:text-red-400 font-bold">Limited Time: 40% OFF!</span>
           </p>
 
           <div className="flex flex-wrap justify-center gap-2 sm:gap-3 text-xs sm:text-sm px-2">
@@ -144,7 +182,11 @@ export function PricingSection() {
               { icon: '⚡', text: '14-21 Days Delivery' },
               { icon: '💯', text: 'Money-Back Guarantee' },
               { icon: '🎁', text: 'Free Setup & SSL' },
-              { icon: '♾️', text: 'Lifetime Ownership' }
+              { icon: '♾️', text: 'Lifetime Ownership' },
+              { icon: '🎨', text: 'Premium Design' },
+              { icon: '📈', text: 'SEO Included' },
+              { icon: '📱', text: 'Mobile Optimized' },
+              { icon: '🔒', text: 'Secure & Fast' }
             ].map((item, i) => (
               <span key={i} className="px-3 sm:px-4 py-2 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 text-blue-700 dark:text-blue-300 rounded-full font-semibold whitespace-nowrap border border-blue-200 dark:border-blue-800 shadow-sm">
                 {item.icon} {item.text}
@@ -200,7 +242,17 @@ export function PricingSection() {
 
                 {plan.popular && (
                   <div className="mt-2 sm:mt-3 md:mt-4 text-xs sm:text-sm text-green-600 dark:text-green-400 font-semibold">
-                    💰 Save ₹20,000+
+                    💰 Save ₹16,000+ (40% OFF!)
+                  </div>
+                )}
+                {plan.name === 'Starter Package' && (
+                  <div className="mt-2 sm:mt-3 md:mt-4 text-xs sm:text-sm text-green-600 dark:text-green-400 font-semibold">
+                    💰 Save ₹4,000+ (29% OFF!)
+                  </div>
+                )}
+                {plan.name === 'Enterprise Package' && (
+                  <div className="mt-2 sm:mt-3 md:mt-4 text-xs sm:text-sm text-green-600 dark:text-green-400 font-semibold">
+                    💰 Save ₹30,000+ (33% OFF!)
                   </div>
                 )}
               </div>
@@ -245,12 +297,14 @@ export function PricingSection() {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="mt-8 sm:mt-12 md:mt-16 text-center px-2"
         >
-          <div className="inline-block px-4 sm:px-6 py-3 sm:py-4 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-xl sm:rounded-2xl border border-purple-200 dark:border-purple-800 max-w-3xl">
+          <div className="inline-block px-4 sm:px-6 py-3 sm:py-4 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-xl sm:rounded-2xl border border-purple-200 dark:border-purple-800 max-w-4xl">
             <p className="text-gray-800 dark:text-gray-200 text-sm sm:text-base md:text-lg mb-1 sm:mb-2">
-              <span className="font-bold">Need Something Custom?</span>
+              <span className="font-bold">🎉 Premium Packages with Maximum Value!</span>
             </p>
             <p className="text-gray-600 dark:text-gray-400 text-xs sm:text-sm leading-snug sm:leading-relaxed">
-              We build Shopify, WordPress, Next.js apps & custom solutions. Contact for personalized quote!
+              Each package includes design, development, SEO, content writing, graphics, and ongoing support. 
+              <span className="font-semibold text-purple-600 dark:text-purple-400"> No hidden costs!</span> 
+              Need something custom? We build Shopify, WordPress, Next.js apps & enterprise solutions.
             </p>
           </div>
         </motion.div>
