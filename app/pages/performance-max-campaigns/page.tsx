@@ -6,9 +6,6 @@ import { SectionErrorBoundary } from './_components/section-error-boundary';
 import { HeroSection } from './_components/hero-section';
 import { ProblemSolutionSection } from './_components/problem-solution-section';
 import { ServiceFeaturesSection } from './_components/service-features-section';
-import { PerformanceMaxStrategySection } from './_components/performance-max-strategy-section';
-import { AICampaignsSection } from './_components/ai-campaigns-section';
-import { MultiNetworkSection } from './_components/multi-network-section';
 import { PricingSection } from './_components/pricing-section';
 import { CaseStudiesSection } from './_components/case-studies-section';
 import { TestimonialsSection } from './_components/testimonials-section';
@@ -49,20 +46,6 @@ export default function PerformanceMaxCampaignsPage() {
         <ServiceFeaturesSection />
       </SectionErrorBoundary>
 
-      {/* Performance Max Strategy Section */}
-      <SectionErrorBoundary name="PerformanceMaxStrategySection">
-        <PerformanceMaxStrategySection />
-      </SectionErrorBoundary>
-
-      {/* AI Campaigns Section */}
-      <SectionErrorBoundary name="AICampaignsSection">
-        <AICampaignsSection />
-      </SectionErrorBoundary>
-
-      {/* Multi-Network Section */}
-      <SectionErrorBoundary name="MultiNetworkSection">
-        <MultiNetworkSection />
-      </SectionErrorBoundary>
 
       {/* Pricing Section */}
       <SectionErrorBoundary name="PricingSection">

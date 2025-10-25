@@ -6,9 +6,6 @@ import { SectionErrorBoundary } from './_components/section-error-boundary';
 import { HeroSection } from './_components/hero-section';
 import { ProblemSolutionSection } from './_components/problem-solution-section';
 import { ServiceFeaturesSection } from './_components/service-features-section';
-import { OptimizationProcessSection } from './_components/optimization-process-section';
-import { ABTestingSection } from './_components/ab-testing-section';
-import { ConversionOptimizationSection } from './_components/conversion-optimization-section';
 import { PricingSection } from './_components/pricing-section';
 import { CaseStudiesSection } from './_components/case-studies-section';
 import { TestimonialsSection } from './_components/testimonials-section';
@@ -49,20 +46,6 @@ export default function LandingPageOptimizationPage() {
         <ServiceFeaturesSection />
       </SectionErrorBoundary>
 
-      {/* Optimization Process Section */}
-      <SectionErrorBoundary name="OptimizationProcessSection">
-        <OptimizationProcessSection />
-      </SectionErrorBoundary>
-
-      {/* A/B Testing Section */}
-      <SectionErrorBoundary name="ABTestingSection">
-        <ABTestingSection />
-      </SectionErrorBoundary>
-
-      {/* Conversion Optimization Section */}
-      <SectionErrorBoundary name="ConversionOptimizationSection">
-        <ConversionOptimizationSection />
-      </SectionErrorBoundary>
 
       {/* Pricing Section */}
       <SectionErrorBoundary name="PricingSection">

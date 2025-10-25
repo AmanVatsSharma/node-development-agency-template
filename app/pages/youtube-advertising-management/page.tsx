@@ -6,9 +6,6 @@ import { SectionErrorBoundary } from './_components/section-error-boundary';
 import { HeroSection } from './_components/hero-section';
 import { ProblemSolutionSection } from './_components/problem-solution-section';
 import { ServiceFeaturesSection } from './_components/service-features-section';
-import { YouTubeStrategySection } from './_components/youtube-strategy-section';
-import { VideoCampaignsSection } from './_components/video-campaigns-section';
-import { TargetingSection } from './_components/targeting-section';
 import { PricingSection } from './_components/pricing-section';
 import { CaseStudiesSection } from './_components/case-studies-section';
 import { TestimonialsSection } from './_components/testimonials-section';
@@ -49,20 +46,6 @@ export default function YouTubeAdvertisingManagementPage() {
         <ServiceFeaturesSection />
       </SectionErrorBoundary>
 
-      {/* YouTube Strategy Section */}
-      <SectionErrorBoundary name="YouTubeStrategySection">
-        <YouTubeStrategySection />
-      </SectionErrorBoundary>
-
-      {/* Video Campaigns Section */}
-      <SectionErrorBoundary name="VideoCampaignsSection">
-        <VideoCampaignsSection />
-      </SectionErrorBoundary>
-
-      {/* Targeting Section */}
-      <SectionErrorBoundary name="TargetingSection">
-        <TargetingSection />
-      </SectionErrorBoundary>
 
       {/* Pricing Section */}
       <SectionErrorBoundary name="PricingSection">

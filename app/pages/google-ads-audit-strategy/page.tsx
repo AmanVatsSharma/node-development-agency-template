@@ -6,9 +6,6 @@ import { SectionErrorBoundary } from './_components/section-error-boundary';
 import { HeroSection } from './_components/hero-section';
 import { ProblemSolutionSection } from './_components/problem-solution-section';
 import { ServiceFeaturesSection } from './_components/service-features-section';
-import { AuditProcessSection } from './_components/audit-process-section';
-import { StrategySection } from './_components/strategy-section';
-import { ImplementationSection } from './_components/implementation-section';
 import { PricingSection } from './_components/pricing-section';
 import { CaseStudiesSection } from './_components/case-studies-section';
 import { TestimonialsSection } from './_components/testimonials-section';
@@ -49,20 +46,6 @@ export default function GoogleAdsAuditStrategyPage() {
         <ServiceFeaturesSection />
       </SectionErrorBoundary>
 
-      {/* Audit Process Section */}
-      <SectionErrorBoundary name="AuditProcessSection">
-        <AuditProcessSection />
-      </SectionErrorBoundary>
-
-      {/* Strategy Section */}
-      <SectionErrorBoundary name="StrategySection">
-        <StrategySection />
-      </SectionErrorBoundary>
-
-      {/* Implementation Section */}
-      <SectionErrorBoundary name="ImplementationSection">
-        <ImplementationSection />
-      </SectionErrorBoundary>
 
       {/* Pricing Section */}
       <SectionErrorBoundary name="PricingSection">
