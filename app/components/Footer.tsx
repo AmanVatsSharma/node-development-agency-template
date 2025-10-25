@@ -197,6 +197,26 @@ export default function Footer() {
             </CollapsibleSection>
           </div>
 
+          {/* Google Ads Ecosystem */}
+          <div className="sm:col-span-1 lg:col-span-2">
+            <CollapsibleSection title="Google Ads Ecosystem">
+              <ul className="space-y-3">
+                {footerNavigation.googleAdsEcosystem.map((service) => (
+                  <li key={service.href}>
+                    <Link
+                      href={service.href}
+                      className="text-gray-400 hover:text-blue-400 transition-colors duration-200 text-sm inline-flex items-center group"
+                      onClick={() => console.log(`[Footer] Google Ads service clicked: ${service.label}`)}
+                    >
+                      <span className="w-0 group-hover:w-2 h-0.5 bg-blue-400 transition-all duration-200 mr-0 group-hover:mr-2"></span>
+                      {service.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </CollapsibleSection>
+          </div>
+
           {/* Business Solutions */}
           <div className="sm:col-span-1 lg:col-span-2">
             <CollapsibleSection title="Business Solutions">
