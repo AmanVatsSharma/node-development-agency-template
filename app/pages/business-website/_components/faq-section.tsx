@@ -32,7 +32,7 @@ export function FAQSection() {
     {
       id: 1,
       question: 'What is included in the ₹9,999 starter package?',
-      answer: 'The starter package includes a complete 5-7 page mobile-responsive website with contact forms, Google Maps integration, basic SEO, WhatsApp integration, and 1 month of free support. Perfect for small businesses looking to establish an online presence quickly and affordably.'
+      answer: 'The starter package includes a complete 8-12 page mobile-responsive website with contact forms, Google Maps integration, basic SEO, WhatsApp integration, 12 months free hosting, and 12 months free support. Perfect for small businesses looking to establish an online presence quickly and affordably.'
     },
     {
       id: 2,
@@ -42,7 +42,7 @@ export function FAQSection() {
     {
       id: 3,
       question: 'Do you provide hosting and domain services?',
-      answer: 'We help you set up hosting and domain (typically ₹3,000-5,000/year) but you own these directly. This ensures you have complete control. We can recommend reliable Indian hosting providers and help with the entire setup process at no extra cost.'
+      answer: 'All our packages include 12 months free hosting! We set up premium hosting for you and you own the domain directly. This ensures you have complete control. We can recommend reliable Indian hosting providers and help with the entire setup process at no extra cost.'
     },
     {
       id: 4,
@@ -52,7 +52,7 @@ export function FAQSection() {
     {
       id: 5,
       question: 'Do you offer digital marketing services?',
-      answer: 'Absolutely! We offer complete digital marketing services including SEO, Google Ads, social media marketing, and content creation starting from ₹15,000/month. We can help you get customers through your new website with proven marketing strategies tailored for Indian markets.'
+      answer: 'Absolutely! We offer complete digital marketing services including SEO, Google Ads, social media marketing, and content creation starting from ₹4,999/month. We can help you get customers through your new website with proven marketing strategies tailored for Indian markets.'
     },
     {
       id: 6,
