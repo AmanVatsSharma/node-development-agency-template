@@ -5,13 +5,6 @@
  * @description Component highlighting unique value propositions and competitive advantages
  * @author Rajapragya Bharat Pvt. Ltd.
  * @version 1.0.0
- * 
- * FEATURES:
- * - Key differentiators showcase
- * - Expertise and credentials display
- * - Trust signals and certifications
- * - Interactive elements and animations
- * - Mobile-optimized responsive design
  */
 
 import React, { useState } from 'react';
@@ -35,7 +28,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 
-export function WhyChooseUs() {
+export function WhyChooseUsSection() {
   const [activeFeature, setActiveFeature] = useState(0);
 
   const differentiators = [
@@ -57,114 +50,89 @@ export function WhyChooseUs() {
       icon: Target,
       title: 'ROI-Obsessed Approach',
       description: 'We focus on profitable campaigns that deliver measurable returns, not vanity metrics',
-      metrics: '8.5× Average ROAS',
+      metrics: '6.5× Average ROAS',
       color: 'from-green-600 to-green-800',
       details: [
         'Revenue-focused optimization',
-        'Cost per acquisition tracking',
-        'Lifetime value analysis',
-        'Profit margin optimization',
-        'ROI reporting and analysis'
+        'Cost-per-acquisition reduction',
+        'Lifetime value maximization',
+        'Profit margin improvement',
+        'ROI tracking and reporting'
       ]
     },
     {
-      icon: Zap,
-      title: 'Lightning-Fast Optimization',
-      description: 'We review and optimize your campaigns every 48 hours for maximum performance',
-      metrics: '48-Hour Turnaround',
-      color: 'from-yellow-600 to-orange-600',
-      details: [
-        'Daily performance monitoring',
-        'Bi-weekly optimization cycles',
-        'Real-time bid adjustments',
-        'A/B testing implementation',
-        'Rapid response to market changes'
-      ]
-    },
-    {
-      icon: BarChart3,
-      title: 'AI + Automation Built In',
-      description: 'Advanced automation and AI tools ensure your campaigns run at peak efficiency',
-      metrics: '95% Automation',
+      icon: Users,
+      title: 'Dedicated Account Teams',
+      description: 'Each client gets a dedicated team of specialists with deep expertise in their industry',
+      metrics: '24/7 Support',
       color: 'from-purple-600 to-purple-800',
       details: [
-        'Smart bidding strategies',
-        'Automated bid adjustments',
-        'AI-powered ad copy testing',
-        'Predictive analytics',
-        'Machine learning optimization'
+        'Dedicated account manager',
+        'Specialized campaign managers',
+        'Creative team support',
+        'Analytics specialists',
+        'Strategic consultants'
       ]
     },
     {
       icon: Shield,
-      title: 'Complete Transparency',
-      description: 'You own your data, accounts, and have full visibility into every aspect of your campaigns',
-      metrics: '100% Transparent',
+      title: 'Enterprise-Grade Security',
+      description: 'Bank-level security and compliance with enterprise data protection standards',
+      metrics: '100% Secure',
       color: 'from-indigo-600 to-indigo-800',
       details: [
-        'Full account access',
-        'Real-time reporting dashboard',
-        'Data ownership guarantee',
-        'Transparent pricing',
-        'No hidden fees or contracts'
+        'SOC 2 Type II compliant',
+        'GDPR compliant',
+        'Data encryption at rest',
+        'Secure API integrations',
+        'Regular security audits'
       ]
-    }
-  ];
-
-  const credentials = [
-    {
-      title: 'Google Partner',
-      description: 'Official Google Partner with advanced certifications',
-      icon: Award,
-      verified: true
     },
     {
-      title: '10+ Years Experience',
-      description: 'Over a decade of Google Ads expertise',
-      icon: Clock,
-      verified: true
+      icon: Zap,
+      title: 'AI-Powered Optimization',
+      description: 'Advanced machine learning algorithms that continuously optimize campaigns for maximum performance',
+      metrics: '95% Automated',
+      color: 'from-yellow-600 to-yellow-800',
+      details: [
+        'Machine learning bidding',
+        'Automated A/B testing',
+        'Predictive analytics',
+        'Smart audience targeting',
+        'Dynamic ad optimization'
+      ]
     },
     {
-      title: '500+ Campaigns',
-      description: 'Successfully managed campaigns across industries',
-      icon: Target,
-      verified: true
-    },
-    {
-      title: '98% Client Retention',
-      description: 'Long-term partnerships with satisfied clients',
-      icon: Users,
-      verified: true
-    },
-    {
-      title: '24/7 Support',
-      description: 'Round-the-clock campaign monitoring and support',
-      icon: Headphones,
-      verified: true
-    },
-    {
-      title: 'Global Reach',
-      description: 'Serving clients across India and internationally',
-      icon: Globe,
-      verified: true
+      icon: BarChart3,
+      title: 'Transparent Reporting',
+      description: 'Real-time dashboards and detailed reports that show exactly how your campaigns are performing',
+      metrics: 'Real-time Data',
+      color: 'from-red-600 to-red-800',
+      details: [
+        'Real-time performance dashboards',
+        'Custom reporting suite',
+        'Automated alerts',
+        'Executive summaries',
+        'ROI attribution tracking'
+      ]
     }
   ];
 
   const processSteps = [
     {
       step: '01',
-      title: 'Deep Analysis',
-      description: 'Comprehensive audit of your current campaigns, competitors, and market opportunities'
+      title: 'Strategy & Planning',
+      description: 'Comprehensive analysis of your business, competitors, and market opportunities'
     },
     {
       step: '02',
-      title: 'Strategic Planning',
-      description: 'Custom strategy development based on your business goals and industry best practices'
+      title: 'Campaign Setup',
+      description: 'Professional campaign creation with advanced targeting and optimization'
     },
     {
       step: '03',
-      title: 'Campaign Launch',
-      description: 'Expert implementation with advanced tracking, optimization, and monitoring setup'
+      title: 'Launch & Monitor',
+      description: 'Campaign launch with 24/7 monitoring and immediate optimization'
     },
     {
       step: '04',
@@ -205,222 +173,107 @@ export function WhyChooseUs() {
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            Why Choose Our
-            <span className="block bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              Google Ads Ecosystem?
-            </span>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+            Why Choose Rajapragya Bharat?
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             We're not just another Google Ads agency. We're your strategic partner in digital growth, 
-            with the expertise, tools, and commitment to deliver exceptional results.
+            combining cutting-edge technology with deep industry expertise.
           </p>
         </motion.div>
 
-        {/* Key Differentiators */}
-        <div className="grid lg:grid-cols-2 gap-12 mb-20">
-          {/* Left Column - Features List */}
-          <div className="space-y-6">
-            {differentiators.map((feature, index) => (
-              <motion.div
-                key={feature.title}
-                className={`p-6 rounded-2xl cursor-pointer transition-all duration-300 ${
-                  activeFeature === index
-                    ? 'bg-gradient-to-r from-blue-50 to-purple-50 border-2 border-blue-200 shadow-lg'
-                    : 'bg-gray-50 hover:bg-gray-100 border-2 border-transparent'
-                }`}
-                onClick={() => handleFeatureClick(index)}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ delay: index * 0.1, duration: 0.5 }}
-                viewport={{ once: true }}
-                whileHover={{ scale: 1.02 }}
-              >
-                <div className="flex items-start gap-4">
-                  <div className={`w-12 h-12 bg-gradient-to-r ${feature.color} rounded-xl flex items-center justify-center flex-shrink-0`}>
-                    <feature.icon className="w-6 h-6 text-white" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">{feature.title}</h3>
-                    <p className="text-gray-600 mb-3">{feature.description}</p>
-                    <div className="text-sm font-semibold text-blue-600">{feature.metrics}</div>
-                  </div>
-                  <ArrowRight className={`w-5 h-5 text-gray-400 transition-transform ${
-                    activeFeature === index ? 'rotate-90' : ''
-                  }`} />
+        {/* Differentiators Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+          {differentiators.map((item, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              viewport={{ once: true }}
+              className={`p-6 rounded-2xl bg-gradient-to-br ${item.color} text-white cursor-pointer transform transition-all duration-300 hover:scale-105 hover:shadow-xl ${
+                activeFeature === index ? 'ring-4 ring-white/50' : ''
+              }`}
+              onClick={() => handleFeatureClick(index)}
+            >
+              <div className="flex items-center gap-4 mb-4">
+                <div className="p-3 bg-white/20 rounded-xl">
+                  <item.icon className="w-6 h-6" />
                 </div>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Right Column - Active Feature Details */}
-          <motion.div
-            key={activeFeature}
-            className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl p-8"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <div className="text-center mb-8">
-              <div className={`w-20 h-20 bg-gradient-to-r ${differentiators[activeFeature].color} rounded-2xl flex items-center justify-center mx-auto mb-4`}>
-                <differentiators[activeFeature].icon className="w-10 h-10 text-white" />
+                <div>
+                  <h3 className="text-lg font-semibold">{item.title}</h3>
+                  <p className="text-sm text-white/80">{item.metrics}</p>
+                </div>
               </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">
-                {differentiators[activeFeature].title}
-              </h3>
-              <p className="text-gray-600 mb-4">
-                {differentiators[activeFeature].description}
-              </p>
-              <div className="text-3xl font-bold text-blue-600">
-                {differentiators[activeFeature].metrics}
-              </div>
-            </div>
-
-            <div className="space-y-3">
-              <h4 className="font-semibold text-gray-900 mb-4">What This Means for You:</h4>
-              {differentiators[activeFeature].details.map((detail, index) => (
-                <motion.div
-                  key={index}
-                  className="flex items-center gap-3"
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.1, duration: 0.3 }}
-                >
-                  <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
-                  <span className="text-gray-700">{detail}</span>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
+              <p className="text-white/90 mb-4">{item.description}</p>
+              <ul className="space-y-2">
+                {item.details.map((detail, detailIndex) => (
+                  <li key={detailIndex} className="flex items-center gap-2 text-sm">
+                    <CheckCircle className="w-4 h-4 text-green-300" />
+                    <span>{detail}</span>
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          ))}
         </div>
 
-        {/* Credentials & Certifications */}
+        {/* Process Section */}
         <motion.div
-          className="mb-20"
-          initial={{ opacity: 0, y: 20 }}
+          className="bg-gradient-to-br from-gray-50 to-blue-50 rounded-2xl p-8 mb-16"
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
         >
-          <h3 className="text-3xl font-bold text-gray-900 text-center mb-12">
-            Our Credentials & Certifications
-          </h3>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {credentials.map((credential, index) => (
-              <motion.div
-                key={credential.title}
-                className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1, duration: 0.5 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -5 }}
-              >
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
-                    <credential.icon className="w-6 h-6 text-blue-600" />
-                  </div>
-                  <div className="flex-1">
-                    <h4 className="font-semibold text-gray-900">{credential.title}</h4>
-                    {credential.verified && (
-                      <div className="flex items-center gap-1 text-green-600 text-sm">
-                        <CheckCircle className="w-4 h-4" />
-                        Verified
-                      </div>
-                    )}
-                  </div>
-                </div>
-                <p className="text-gray-600 text-sm">{credential.description}</p>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* Our Process */}
-        <motion.div
-          className="mb-20"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-        >
-          <h3 className="text-3xl font-bold text-gray-900 text-center mb-12">
+          <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">
             Our Proven 5-Step Process
           </h3>
-          
-          <div className="relative">
-            {/* Connection Line */}
-            <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-200 via-purple-200 to-green-200 transform -translate-y-1/2" />
-            
-            <div className="grid lg:grid-cols-5 gap-8">
-              {processSteps.map((step, index) => (
-                <motion.div
-                  key={step.step}
-                  className="relative text-center"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.2, duration: 0.5 }}
-                  viewport={{ once: true }}
-                >
-                  {/* Step Number */}
-                  <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4 relative z-10">
-                    <span className="text-white font-bold text-lg">{step.step}</span>
-                  </div>
-                  
-                  {/* Step Content */}
-                  <div className="bg-white rounded-xl p-6 shadow-lg">
-                    <h4 className="font-bold text-gray-900 mb-3">{step.title}</h4>
-                    <p className="text-gray-600 text-sm">{step.description}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
+            {processSteps.map((step, index) => (
+              <div key={index} className="text-center">
+                <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-lg mx-auto mb-4">
+                  {step.step}
+                </div>
+                <h4 className="font-semibold text-gray-900 mb-2">{step.title}</h4>
+                <p className="text-sm text-gray-600">{step.description}</p>
+              </div>
+            ))}
           </div>
         </motion.div>
 
         {/* CTA Section */}
         <motion.div
-          className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-3xl p-8 md:p-12 text-white text-center"
-          initial={{ opacity: 0, y: 20 }}
+          className="text-center"
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
         >
-          <h3 className="text-3xl font-bold mb-6">
+          <h3 className="text-2xl font-bold text-gray-900 mb-6">
             Ready to Experience the Difference?
           </h3>
-          <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-            Join hundreds of successful businesses who trust us with their Google Ads campaigns. 
+          <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
+            Join 500+ businesses who trust us with their Google Ads success. 
             Let's discuss how we can help you achieve your growth goals.
           </p>
-          
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="#roi-calculator"
-              onClick={() => handleCTAClick('roi_calculator')}
-              className="bg-white text-blue-600 px-8 py-4 rounded-xl font-semibold text-lg hover:bg-gray-100 transition-all duration-300 flex items-center justify-center gap-2"
-            >
-              <BarChart3 className="w-5 h-5" />
-              Calculate My ROI
-            </Link>
-            
             <Link
               href="tel:+919876543210"
               onClick={() => handleCTAClick('phone_call')}
-              className="bg-white/20 backdrop-blur-sm text-white px-8 py-4 rounded-xl font-semibold text-lg hover:bg-white/30 transition-all duration-300 flex items-center justify-center gap-2 border border-white/30"
+              className="group inline-flex items-center gap-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/25"
+            >
+              <Phone className="w-5 h-5" />
+              Call Our Experts
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </Link>
+            <Link
+              href="#contact"
+              onClick={() => handleCTAClick('schedule_consultation')}
+              className="group inline-flex items-center gap-3 bg-white border-2 border-blue-600 text-blue-600 hover:bg-blue-50 px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 transform hover:scale-105"
             >
               <Play className="w-5 h-5" />
-              Schedule Call
-            </Link>
-            
-            <Link
-              href="#final-cta"
-              onClick={() => handleCTAClick('get_started')}
-              className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:from-yellow-500 hover:to-orange-600 transition-all duration-300 flex items-center justify-center gap-2"
-            >
-              <Download className="w-5 h-5" />
-              Get Started Now
+              Schedule Consultation
             </Link>
           </div>
         </motion.div>
@@ -428,5 +281,3 @@ export function WhyChooseUs() {
     </section>
   );
 }
-
-export default WhyChooseUs;

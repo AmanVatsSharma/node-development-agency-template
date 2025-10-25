@@ -20,13 +20,10 @@ import { motion } from 'framer-motion';
 // Section Components
 import { HeroSection } from './_components/hero-section';
 import { ProblemSolutionSection } from './_components/problem-solution-section';
-import { ServicesSection } from './_components/services-section';
-import { ProcessSection } from './_components/process-section';
+import { ServiceFeaturesSection } from './_components/service-features-section';
 import { CaseStudiesSection } from './_components/case-studies-section';
-import { WhyChooseUsSection } from './_components/why-choose-us-section';
 import { TestimonialsSection } from './_components/testimonials-section';
 import { PricingSection } from './_components/pricing-section';
-import { TeamSection } from './_components/team-section';
 import { FAQSection } from './_components/faq-section';
 import { FinalCTASection } from './_components/final-cta-section';
 import { MobileFloatingCTA } from './_components/mobile-floating-cta';
@@ -74,14 +71,9 @@ export default function EnterpriseGoogleAdsManagementPage() {
         <ProblemSolutionSection />
       </SectionErrorBoundary>
 
-      {/* Services - Enterprise Service Portfolio */}
-      <SectionErrorBoundary name="ServicesSection">
-        <ServicesSection />
-      </SectionErrorBoundary>
-
-      {/* Process - Enterprise Process */}
-      <SectionErrorBoundary name="ProcessSection">
-        <ProcessSection />
+      {/* Service Features - Enterprise Service Portfolio */}
+      <SectionErrorBoundary name="ServiceFeaturesSection">
+        <ServiceFeaturesSection />
       </SectionErrorBoundary>
 
       {/* Case Studies - Enterprise Results */}
@@ -89,10 +81,6 @@ export default function EnterpriseGoogleAdsManagementPage() {
         <CaseStudiesSection />
       </SectionErrorBoundary>
 
-      {/* Why Choose Us - Enterprise Differentiators */}
-      <SectionErrorBoundary name="WhyChooseUsSection">
-        <WhyChooseUsSection />
-      </SectionErrorBoundary>
 
       {/* Testimonials - Enterprise Clients */}
       <SectionErrorBoundary name="TestimonialsSection">
@@ -104,10 +92,6 @@ export default function EnterpriseGoogleAdsManagementPage() {
         <PricingSection />
       </SectionErrorBoundary>
 
-      {/* Team - Dedicated Enterprise Team */}
-      <SectionErrorBoundary name="TeamSection">
-        <TeamSection />
-      </SectionErrorBoundary>
 
       {/* ROI Calculator - Enterprise ROI */}
       <SectionErrorBoundary name="ROICalculator">

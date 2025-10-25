@@ -34,7 +34,7 @@ import { HeroSection } from './_components/hero-section';
 import { EcosystemOverview } from './_components/ecosystem-overview';
 import { ServiceTiers } from './_components/service-tiers';
 import { IndustryFocus } from './_components/industry-focus';
-import { WhyChooseUs } from './_components/why-choose-us';
+import { WhyChooseUsSection } from './_components/why-choose-us';
 import { CaseStudiesShowcase } from './_components/case-studies-showcase';
 import { ExpertTeam } from './_components/expert-team';
 import { PricingOverview } from './_components/pricing-overview';
@@ -387,7 +387,7 @@ export default function GoogleAdsEcosystemPage() {
 
       {/* Why Choose Us - Key Differentiators */}
       <SectionErrorBoundary name="WhyChooseUs">
-        <WhyChooseUs />
+        <WhyChooseUsSection />
       </SectionErrorBoundary>
 
       {/* Case Studies Showcase - Real Results */}
