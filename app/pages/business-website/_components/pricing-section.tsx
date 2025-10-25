@@ -3,7 +3,7 @@
 /**
  * Pricing Section Component
  * Clear, transparent pricing with Indian Rupee focus
- * Three main packages: Starter (₹13,999), Professional (₹45,999), Enterprise (₹90,000+)
+ * Three main packages: Starter (₹9,999), Professional (₹29,999), Enterprise (₹59,999+)
  */
 
 import React, { useEffect, useRef } from 'react';

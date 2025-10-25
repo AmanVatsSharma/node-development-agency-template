@@ -31,7 +31,7 @@ export function FAQSection() {
   const faqs: FAQ[] = [
     {
       id: 1,
-      question: 'What is included in the ₹13,999 starter package?',
+      question: 'What is included in the ₹9,999 starter package?',
       answer: 'The starter package includes a complete 5-7 page mobile-responsive website with contact forms, Google Maps integration, basic SEO, WhatsApp integration, and 1 month of free support. Perfect for small businesses looking to establish an online presence quickly and affordably.'
     },
     {

@@ -36,7 +36,7 @@ export function TestimonialsSection() {
       business: 'Kumar Electronics',
       city: 'Mumbai',
       rating: 5,
-      text: 'Amazing service! They built our website in just 15 days and our online inquiries increased by 300%. The ₹13,999 package was perfect for our small business. Highly recommended!'
+      text: 'Amazing service! They built our website in just 15 days and our online inquiries increased by 300%. The ₹9,999 package was perfect for our small business. Highly recommended!'
     },
     {
       name: 'Priya Sharma',
@@ -50,7 +50,7 @@ export function TestimonialsSection() {
       business: 'Patel Furniture Mart',
       city: 'Ahmedabad',
       rating: 5,
-      text: 'We went with the ₹45,999 package with CRM integration. Best decision ever! We can track all customer inquiries and the SEO is bringing us regular leads. Thank you!'
+      text: 'We went with the ₹29,999 package with CRM integration. Best decision ever! We can track all customer inquiries and the SEO is bringing us regular leads. Thank you!'
     },
     {
       name: 'Sneha Reddy',

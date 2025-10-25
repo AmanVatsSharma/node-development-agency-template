@@ -73,7 +73,7 @@ export function FinalCTASection() {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/95 mb-4 font-semibold max-w-3xl mx-auto leading-snug sm:leading-relaxed px-2"
           >
-            🚀 Join 500+ Growing Businesses | 💰 From ₹13,999 | ⚡ Ready in 14-21 Days
+            🚀 Join 500+ Growing Businesses | 💰 From ₹9,999 (40% OFF!) | ⚡ Ready in 14-21 Days
           </motion.p>
 
           {/* URGENCY INDICATOR */}
