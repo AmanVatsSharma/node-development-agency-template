@@ -85,7 +85,7 @@ export function ServicesSection() {
       title: 'Digital Marketing',
       description: 'Complete digital marketing services - SEO, social media, Google Ads, and content marketing.',
       features: ['SEO Strategy', 'Social Media Management', 'Google Ads', 'Content Creation'],
-      priceFrom: '₹15,000/mo',
+      priceFrom: '₹4,999/mo',
       color: 'from-pink-500 to-rose-500'
     },
     {
@@ -101,7 +101,7 @@ export function ServicesSection() {
       title: 'Support & Maintenance',
       description: 'Ongoing website maintenance, updates, security patches, and 24/7 support.',
       features: ['24/7 Support', 'Regular Updates', 'Security Monitoring', 'Backup & Recovery'],
-      priceFrom: '₹5,000/mo',
+      priceFrom: '₹1,999/mo',
       color: 'from-cyan-500 to-blue-500'
     },
   ];
