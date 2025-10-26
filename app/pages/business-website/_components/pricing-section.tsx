@@ -51,14 +51,23 @@ export function PricingSection() {
       description: 'Perfect for local businesses ready to go digital',
       features: [
         '5-7 Page Professional Website',
-        'Mobile Responsive Design',
-        'Contact Forms & Google Maps',
-        'Basic SEO Setup',
-        'Social Media Integration',
-        'WhatsApp Integration',
-        '1 Month Free Support',
-        'Free SSL Certificate',
-        'Fast Loading Speed'
+        'Mobile-First Responsive Design',
+        'Advanced Contact Form Integration',
+        'Google Maps & Business Integration',
+        'Complete SEO Setup & Optimization',
+        'Social Media Integration & Links',
+        'WhatsApp Business Integration',
+        'Google Analytics & Search Console',
+        'Professional Logo Design (3 Concepts)',
+        'Brand Color Scheme & Typography',
+        'Free SSL Certificate & Security',
+        'Fast Loading Speed (90+ Score)',
+        '12 Months Free Hosting & Support',
+        'Basic Content Writing (5 Pages)',
+        'Image Optimization & Compression',
+        'Social Media Graphics (5 Designs)',
+        'Google My Business Setup',
+        'Basic Email Marketing Setup'
       ],
       cta: 'Start Growing Your Business'
     },
@@ -76,19 +85,31 @@ export function PricingSection() {
       period: 'Growth Investment',
       description: 'Complete growth system for scaling businesses',
       features: [
-        '10-15 Page Dynamic Website',
-        'Advanced SEO Optimization',
-        'Google Analytics Integration',
-        'CRM Integration (Zoho/HubSpot)',
-        'Blog System (CMS)',
-        'Email Marketing Setup',
-        'Social Media Integration',
-        'Live Chat Support',
-        'Payment Gateway (if needed)',
-        'Admin Dashboard',
-        '3 Months Free Support',
-        'Performance Optimization',
-        'Security & Backup Setup'
+        '15-25 Page Dynamic Website',
+        'Advanced SEO Optimization & Strategy',
+        'Google Analytics 4 & Tag Manager',
+        'CRM Integration (Zoho/HubSpot/Salesforce)',
+        'Complete Blog System with CMS',
+        'Email Marketing Automation Setup',
+        'Social Media Integration & Management',
+        'Live Chat & Support System',
+        'Payment Gateway Integration',
+        'Advanced Admin Dashboard',
+        'Professional Content Writing (10 Pages)',
+        'Custom Graphics & Illustrations (15 Designs)',
+        'Video Integration & Optimization',
+        'Advanced Security & Backup Setup',
+        'Performance Optimization (95+ Score)',
+        'A/B Testing Setup',
+        'Conversion Rate Optimization',
+        'Lead Generation Forms & Landing Pages',
+        'Social Media Graphics Package (20 Designs)',
+        'Email Template Design (5 Templates)',
+        '12 Months Free Hosting & Support',
+        'Monthly Performance Reports',
+        'Competitor Analysis Report',
+        'Local SEO Optimization',
+        'Schema Markup Implementation'
       ],
       popular: true,
       cta: 'Scale My Business Now'
@@ -107,21 +128,39 @@ export function PricingSection() {
       period: 'Transformation Investment',
       description: 'Enterprise solution for complete digital transformation',
       features: [
-        'Unlimited Pages',
-        'E-Commerce Platform (Shopify/WooCommerce/Custom)',
-        'Custom Web Application',
-        'Advanced CRM Integration',
-        'Multi-language Support',
-        'Advanced Analytics & Reporting',
-        'Custom API Development',
-        'Third-party Integrations',
-        'Inventory Management',
-        'Order Management System',
-        'Payment Gateway Integration',
-        'SMS & Email Notifications',
-        '6 Months Free Support',
+        'Unlimited Pages & Sections',
+        'Complete E-Commerce Platform (Shopify/WooCommerce/Custom)',
+        'Custom Web Application Development',
+        'Advanced CRM & ERP Integration',
+        'Multi-language Support (3 Languages)',
+        'Advanced Analytics & Custom Reporting',
+        'Custom API Development & Integration',
+        'Third-party Integrations (50+ Apps)',
+        'Advanced Inventory Management System',
+        'Complete Order Management System',
+        'Multiple Payment Gateway Integration',
+        'SMS & Email Notification System',
+        'Advanced Security & Compliance',
+        'Custom Mobile App (Basic Version)',
+        'Professional Content Writing (25 Pages)',
+        'Complete Brand Identity Package',
+        'Custom Graphics & Illustrations (50+ Designs)',
+        'Video Production & Integration (5 Videos)',
+        'Advanced SEO & Digital Marketing Setup',
+        'Social Media Management (3 Months)',
+        'Email Marketing Campaigns (3 Months)',
+        'Google Ads Setup & Management (1 Month)',
+        'Advanced Analytics Dashboard',
+        'A/B Testing & Conversion Optimization',
+        'Lead Generation & Nurturing System',
+        'Customer Support System Integration',
+        'Advanced Backup & Recovery System',
+        '12 Months Free Hosting & Support',
         'Dedicated Account Manager',
-        'Priority 24/7 Support'
+        'Priority 24/7 Support',
+        'Monthly Strategy Sessions',
+        'Competitive Analysis & Market Research',
+        'Custom Training & Documentation'
       ],
       cta: 'Transform My Business'
     }
@@ -222,13 +261,13 @@ export function PricingSection() {
                 </div>
               </div>
 
-              {/* Features List - Compact */}
+              {/* Features List - Show ALL features to demonstrate value */}
               <div className="mb-3 sm:mb-4">
                 <div className="text-xs sm:text-sm font-semibold text-gray-600 dark:text-gray-400 mb-2">
-                  Features Included:
+                  Complete Package Includes:
                 </div>
-                <ul className="space-y-1.5 sm:space-y-2">
-                  {plan.features.slice(0, 5).map((feature, idx) => (
+                <ul className="space-y-1.5 sm:space-y-2 max-h-64 sm:max-h-80 overflow-y-auto pr-2">
+                  {plan.features.map((feature, idx) => (
                     <li key={idx} className="flex items-start gap-2">
                       <CheckCircle2 className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-green-500 flex-shrink-0 mt-0.5" />
                       <span className="text-gray-700 dark:text-gray-300 text-xs sm:text-sm leading-tight">
@@ -236,11 +275,6 @@ export function PricingSection() {
                       </span>
                     </li>
                   ))}
-                  {plan.features.length > 5 && (
-                    <li className="text-xs text-gray-500 dark:text-gray-400 font-medium">
-                      +{plan.features.length - 5} more features
-                    </li>
-                  )}
                 </ul>
               </div>
 
