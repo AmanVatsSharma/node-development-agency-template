@@ -89,24 +89,21 @@ export function HeroSection() {
             className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold mb-3 sm:mb-4 md:mb-6 tracking-tight leading-tight"
           >
             <span className="text-gray-900 dark:text-white block mb-2">
-              Premium Websites That{' '}
+              Get More Customers{' '}
               <Highlight className="text-gray-900 dark:text-white">
-                Convert Visitors to Customers
+                Online
               </Highlight>
             </span>
             <span className="block mb-2">
               <Highlight className="text-gray-900 dark:text-white bg-gradient-to-r from-indigo-300 to-purple-300 dark:from-indigo-500 dark:to-purple-500">
-                Professional Design + SEO + Content + Graphics
+                Professional Websites That Grow Your Business
               </Highlight>
             </span>
-            <span className="text-2xl sm:text-3xl md:text-4xl text-green-600 dark:text-green-400 block mt-2 sm:mt-3">
-              Starting{' '}
-              <Highlight className="text-green-600 dark:text-green-400 bg-gradient-to-r from-green-200 to-emerald-200 dark:from-green-700 dark:to-emerald-700">
-                ₹9,999
+            <span className="text-xl sm:text-2xl md:text-3xl text-gray-600 dark:text-gray-400 block mt-2 sm:mt-3">
+              Investment from{' '}
+              <Highlight className="text-indigo-600 dark:text-indigo-400 bg-gradient-to-r from-indigo-200 to-purple-200 dark:from-indigo-700 dark:to-purple-700">
+                ₹14,599
               </Highlight>
-              <span className="text-lg sm:text-xl text-red-600 dark:text-red-400 ml-2">
-                (40% OFF!)
-              </span>
             </span>
           </motion.h1>
 
@@ -115,7 +112,7 @@ export function HeroSection() {
             variants={fadeInUp}
             className="text-sm sm:text-base md:text-lg text-gray-700 dark:text-gray-300 max-w-4xl mx-auto mb-4 sm:mb-6 leading-snug sm:leading-relaxed px-2"
           >
-            Complete digital solution with design, development, SEO, content writing & graphics for{' '}
+            Websites That Actually Convert Visitors Into Customers for{' '}
             <span className="font-semibold text-indigo-600 dark:text-indigo-400">
               Mumbai, Delhi, Bangalore
             </span>
@@ -128,14 +125,10 @@ export function HeroSection() {
             className="grid grid-cols-2 sm:flex sm:flex-wrap justify-center gap-2 sm:gap-3 mb-5 sm:mb-8 text-xs sm:text-sm max-w-lg sm:max-w-none mx-auto"
           >
             {[
-              '✅ 14-21 Days',
-              '✅ Mobile-First',
-              '✅ SEO + Content',
-              '✅ Design + Graphics',
-              '✅ 40% OFF',
-              '✅ 100% Money-Back',
-              '✅ Free Consultation',
-              '✅ No Hidden Cost'
+              '✅ More Customer Inquiries',
+              '✅ Rank Higher on Google',
+              '✅ Complete Marketing Support',
+              '✅ 14-21 Days Delivery'
             ].map((benefit, index) => (
               <div 
                 key={index}
@@ -158,7 +151,7 @@ export function HeroSection() {
               onClick={() => console.log('[Business-Website] Hero CTA - Get My Website Quote clicked')}
             >
               <a href="#lead-form" className="flex items-center justify-center font-bold">
-                💰 Get Free Quote in 2 Minutes (Save ₹4,000+)
+                🚀 Start My Growth Journey (Free)
                 <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
               </a>
             </Button>
@@ -168,27 +161,27 @@ export function HeroSection() {
               variant="outline"
               size="lg"
               className="text-sm sm:text-base px-5 sm:px-8 py-4 sm:py-6 h-auto bg-white dark:bg-gray-800 backdrop-blur-sm w-full sm:w-auto border-2 hover:bg-gray-50 dark:hover:bg-gray-700"
-              onClick={() => console.log('[Business-Website] Hero CTA - Talk to Expert clicked')}
+              onClick={() => console.log('[Business-Website] Hero CTA - Talk to Growth Expert clicked')}
             >
               <a href="tel:+919963730111" className="flex items-center justify-center gap-2 font-semibold">
                 <Phone className="h-4 w-4 sm:h-5 sm:w-5" />
-                <span>📞 Speak to Expert (No Sales Pressure)</span>
+                <span>📞 Speak with Growth Expert</span>
               </a>
             </Button>
           </motion.div>
 
-          {/* URGENCY INDICATOR */}
+          {/* Value Indicator */}
           <motion.div
             variants={fadeInUp}
             className="mb-5 sm:mb-8 flex justify-center"
           >
-            <div className="inline-flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 bg-red-50 dark:bg-red-900/20 border-2 border-red-200 dark:border-red-800 rounded-full">
+            <div className="inline-flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 bg-green-50 dark:bg-green-900/20 border-2 border-green-200 dark:border-green-800 rounded-full">
               <span className="relative flex h-3 w-3">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
               </span>
-              <span className="text-xs sm:text-sm font-bold text-red-700 dark:text-red-300">
-                ⚡ Premium Packages 40% OFF - Only 5 Slots Left! (Others charge ₹15,000+)
+              <span className="text-xs sm:text-sm font-bold text-green-700 dark:text-green-300">
+                ✅ Join 500+ Growing Indian Businesses
               </span>
             </div>
           </motion.div>
