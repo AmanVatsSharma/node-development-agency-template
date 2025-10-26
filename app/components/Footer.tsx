@@ -97,8 +97,10 @@ export default function Footer() {
       </div>
 
       <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 pt-12 sm:pt-16 pb-6">
-        {/* Main Footer Content */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-6">
+        {/* Main Footer Content - REORGANIZED TWO-ROW LAYOUT */}
+        
+        {/* ROW 1 - Primary Navigation Sections */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-6 mb-8">
           
           {/* Company Info - Spans full width on mobile, 3 cols on large screens */}
           <div className="sm:col-span-2 lg:col-span-3">
@@ -277,8 +279,72 @@ export default function Footer() {
             </CollapsibleSection>
           </div>
 
-          {/* Global Offices */}
-          <div className="sm:col-span-2 lg:col-span-2">
+          {/* Google Ads Ecosystem - Spans 3 cols on large screens */}
+          <div className="sm:col-span-2 lg:col-span-3">
+            <CollapsibleSection title="Google Ads Ecosystem">
+              <ul className="space-y-3">
+                {footerNavigation.googleAdsEcosystem.map((service) => (
+                  <li key={service.href}>
+                    <Link
+                      href={service.href}
+                      className="text-gray-400 hover:text-blue-400 transition-colors duration-200 text-sm inline-flex items-center group"
+                      onClick={() => console.log(`[Footer] Google Ads service clicked: ${service.label}`)}
+                    >
+                      <span className="w-0 group-hover:w-2 h-0.5 bg-blue-400 transition-all duration-200 mr-0 group-hover:mr-2"></span>
+                      {service.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </CollapsibleSection>
+          </div>
+        </div>
+
+        {/* ROW 2 - Secondary Navigation Sections */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-6">
+          
+          {/* E-Commerce Solutions - 3 cols */}
+          <div className="sm:col-span-1 lg:col-span-3">
+            <CollapsibleSection title="E-Commerce Solutions">
+              <ul className="space-y-3">
+                {footerNavigation.ecommerceSolutions.map((solution) => (
+                  <li key={solution.href}>
+                    <Link
+                      href={solution.href}
+                      className="text-gray-400 hover:text-blue-400 transition-colors duration-200 text-sm inline-flex items-center group"
+                      onClick={() => console.log(`[Footer] E-Commerce clicked: ${solution.label}`)}
+                    >
+                      <span className="w-0 group-hover:w-2 h-0.5 bg-blue-400 transition-all duration-200 mr-0 group-hover:mr-2"></span>
+                      {solution.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </CollapsibleSection>
+          </div>
+
+          {/* Trading & Finance - 3 cols */}
+          <div className="sm:col-span-1 lg:col-span-3">
+            <CollapsibleSection title="Trading & Finance">
+              <ul className="space-y-3">
+                {footerNavigation.tradingFinance.map((solution) => (
+                  <li key={solution.href}>
+                    <Link
+                      href={solution.href}
+                      className="text-gray-400 hover:text-blue-400 transition-colors duration-200 text-sm inline-flex items-center group"
+                      onClick={() => console.log(`[Footer] Trading/Finance clicked: ${solution.label}`)}
+                    >
+                      <span className="w-0 group-hover:w-2 h-0.5 bg-blue-400 transition-all duration-200 mr-0 group-hover:mr-2"></span>
+                      {solution.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </CollapsibleSection>
+          </div>
+
+          {/* Global Offices - 3 cols */}
+          <div className="sm:col-span-1 lg:col-span-3">
             <CollapsibleSection title="Global Offices" defaultOpen={true}>
               <div className="space-y-3">
                 {[
@@ -337,6 +403,26 @@ export default function Footer() {
                   </svg>
                 </button>
               </div>
+            </CollapsibleSection>
+          </div>
+
+          {/* Legal & Compliance - 3 cols */}
+          <div className="sm:col-span-2 lg:col-span-3">
+            <CollapsibleSection title="Legal & Compliance">
+              <ul className="space-y-3">
+                {footerNavigation.legal.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className="text-gray-400 hover:text-blue-400 transition-colors duration-200 text-sm inline-flex items-center group"
+                      onClick={() => console.log(`[Footer] Legal link clicked: ${link.label}`)}
+                    >
+                      <span className="w-0 group-hover:w-2 h-0.5 bg-blue-400 transition-all duration-200 mr-0 group-hover:mr-2"></span>
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </CollapsibleSection>
           </div>
         </div>

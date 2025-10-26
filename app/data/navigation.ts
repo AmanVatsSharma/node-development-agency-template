@@ -360,6 +360,8 @@ export const footerNavigation = {
   legal: [
     { href: "/pages/legal/privacy-policy", label: "Privacy Policy" },
     { href: "/pages/legal/terms-of-service", label: "Terms of Service" },
+    { href: "/pages/legal/cancellations-refunds", label: "Cancellations & Refunds" },
+    { href: "/pages/legal/shipping-policy", label: "Shipping Policy" },
     { href: "/pages/legal/company-info", label: "Company Info" },
     { href: "/sitemap", label: "Sitemap" },
   ],
