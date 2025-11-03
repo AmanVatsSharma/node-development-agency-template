@@ -49,6 +49,7 @@ interface Project {
   description: string;
   imageUrl: string;
   deliveryTime: string;
+  websiteUrl?: string;
   metrics: ProjectMetric[];
   featured: boolean;
 }
@@ -72,10 +73,35 @@ export function RecentProjectsSection() {
     return () => console.log('[Business-Website] RecentProjectsSection unmounted');
   }, []);
 
-  // Real project showcases with specific metrics - 8 total projects
+  // Real project showcases with specific metrics - IPD Education first, then 7 others
   const recentProjects: Project[] = [
     {
       id: 1,
+      title: 'IPD Education',
+      industry: 'Education',
+      location: 'Bangalore',
+      description: 'Comprehensive educational platform with course management & student portal',
+      imageUrl: '/testimonials/ipdeducation.png',
+      deliveryTime: '21 days',
+      websiteUrl: 'https://ipdeducation.in',
+      metrics: [
+        { 
+          icon: Users, 
+          value: '+250%', 
+          label: 'Students',
+          color: 'text-blue-600 dark:text-blue-400'
+        },
+        { 
+          icon: TrendingUp, 
+          value: '15K+', 
+          label: 'Enrollments',
+          color: 'text-green-600 dark:text-green-400'
+        }
+      ],
+      featured: false
+    },
+    {
+      id: 2,
       title: 'Kumar Electronics',
       industry: 'E-commerce',
       location: 'Mumbai',
@@ -99,7 +125,7 @@ export function RecentProjectsSection() {
       featured: false
     },
     {
-      id: 2,
+      id: 3,
       title: 'Sharma Beauty Salon',
       industry: 'Booking',
       location: 'Delhi',
@@ -123,7 +149,7 @@ export function RecentProjectsSection() {
       featured: false
     },
     {
-      id: 3,
+      id: 4,
       title: 'Patel Builders',
       industry: 'Real Estate',
       location: 'Ahmedabad',
@@ -147,7 +173,7 @@ export function RecentProjectsSection() {
       featured: false
     },
     {
-      id: 4,
+      id: 5,
       title: 'Gupta Restaurant',
       industry: 'Food & Dining',
       location: 'Pune',
@@ -171,7 +197,7 @@ export function RecentProjectsSection() {
       featured: false
     },
     {
-      id: 5,
+      id: 6,
       title: 'Singh Coaching',
       industry: 'Education',
       location: 'Jaipur',
@@ -195,7 +221,7 @@ export function RecentProjectsSection() {
       featured: false
     },
     {
-      id: 6,
+      id: 7,
       title: 'Mehta Jewellers',
       industry: 'Jewelry',
       location: 'Surat',
@@ -219,7 +245,7 @@ export function RecentProjectsSection() {
       featured: false
     },
     {
-      id: 7,
+      id: 8,
       title: 'Verma Healthcare',
       industry: 'Medical',
       location: 'Bangalore',
@@ -243,7 +269,7 @@ export function RecentProjectsSection() {
       featured: false
     },
     {
-      id: 8,
+      id: 9,
       title: 'Khan Textiles',
       industry: 'Manufacturing',
       location: 'Hyderabad',
@@ -390,16 +416,32 @@ export function RecentProjectsSection() {
                 </div>
 
                 {/* CTA Button - Compact */}
-                <button
-                  className="w-full py-1.5 sm:py-2 px-2 sm:px-3 text-[10px] sm:text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:text-white hover:bg-indigo-600 dark:hover:bg-indigo-500 border border-indigo-200 dark:border-indigo-800 rounded-lg transition-all duration-200 flex items-center justify-center gap-1"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    console.log(`[Business-Website] Project CTA clicked: ${project.title}`);
-                  }}
-                >
-                  View Details
-                  <ArrowUpRight className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
-                </button>
+                {project.websiteUrl ? (
+                  <a
+                    href={project.websiteUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full py-1.5 sm:py-2 px-2 sm:px-3 text-[10px] sm:text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:text-white hover:bg-indigo-600 dark:hover:bg-indigo-500 border border-indigo-200 dark:border-indigo-800 rounded-lg transition-all duration-200 flex items-center justify-center gap-1"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      console.log(`[Business-Website] Project link clicked: ${project.title} -> ${project.websiteUrl}`);
+                    }}
+                  >
+                    Visit Website
+                    <ExternalLink className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
+                  </a>
+                ) : (
+                  <button
+                    className="w-full py-1.5 sm:py-2 px-2 sm:px-3 text-[10px] sm:text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:text-white hover:bg-indigo-600 dark:hover:bg-indigo-500 border border-indigo-200 dark:border-indigo-800 rounded-lg transition-all duration-200 flex items-center justify-center gap-1"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      console.log(`[Business-Website] Project CTA clicked: ${project.title}`);
+                    }}
+                  >
+                    View Details
+                    <ArrowUpRight className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
+                  </button>
+                )}
               </div>
             </motion.div>
           ))}

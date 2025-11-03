@@ -4,6 +4,7 @@
  * Lead Form Section Component
  * High-converting lead capture form with validation
  * Multi-step form to reduce friction and increase completion rate
+ * Includes reCAPTCHA v3 for bot protection
  */
 
 import React, { useState, useEffect, useRef } from 'react';
@@ -23,6 +24,9 @@ import {
 } from 'lucide-react';
 import { fireConversion } from '@/utils/conversions';
 
+// reCAPTCHA v3 Site Key (public key - safe to expose)
+const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || '';
+
 // Business-Website specific conversion event types
 // These map to Google Ads conversion actions configured in admin panel
 
@@ -33,9 +37,22 @@ interface FormData {
   phone: string;
   email: string;
   city: string;
+  budget: string;
   businessType: string;
   message: string;
 }
+
+// Budget options for lead quality scoring
+const BUDGET_OPTIONS = [
+  { value: '', label: 'Select budget range' },
+  { value: '₹15K-30K', label: '₹15K - ₹30K' },
+  { value: '₹30K-60K', label: '₹30K - ₹60K' },
+  { value: '₹60K-1L', label: '₹60K - ₹1L' },
+  { value: '₹1L-2L', label: '₹1L - ₹2L' },
+  { value: '₹2L+', label: '₹2L+' },
+  { value: 'not-decided', label: 'Not decided yet' },
+  { value: 'need-consultation', label: 'Need consultation' }
+];
 
 export function LeadFormSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -46,24 +63,158 @@ export function LeadFormSection() {
     phone: '',
     email: '',
     city: '',
+    budget: '',
     businessType: '',
     message: ''
   });
 
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  
+  // Time tracking for lead scoring
+  const [timeTracking, setTimeTracking] = useState({
+    pageLoadTime: Date.now(),
+    formViewTime: null as number | null,
+    formStartTime: null as number | null,
+    scrollDepth: 0
+  });
 
   useEffect(() => {
     console.log('[Business-Website] LeadFormSection mounted');
-    return () => console.log('[Business-Website] LeadFormSection unmounted');
-  }, []);
+    
+    // Load reCAPTCHA v3 script if site key is configured
+    if (RECAPTCHA_SITE_KEY && typeof window !== 'undefined') {
+      const scriptId = 'recaptcha-v3-script';
+      if (!document.getElementById(scriptId)) {
+        console.log('[Business-Website] Loading reCAPTCHA v3 script');
+        const script = document.createElement('script');
+        script.id = scriptId;
+        script.src = `https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_SITE_KEY}`;
+        script.async = true;
+        script.defer = true;
+        document.head.appendChild(script);
+        
+        script.onload = () => {
+          console.log('[Business-Website] ✅ reCAPTCHA v3 script loaded');
+        };
+        
+        script.onerror = () => {
+          console.error('[Business-Website] ❌ Failed to load reCAPTCHA v3 script');
+        };
+      }
+    } else {
+      console.warn('[Business-Website] ⚠️ reCAPTCHA site key not configured - bot protection disabled');
+    }
+    
+    // Track when form section comes into view
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !timeTracking.formViewTime) {
+            const viewTime = Date.now();
+            setTimeTracking(prev => ({
+              ...prev,
+              formViewTime: viewTime,
+              timeToForm: viewTime - prev.pageLoadTime
+            }));
+            console.log('[Business-Website] Form section viewed, time to form:', viewTime - timeTracking.pageLoadTime, 'ms');
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+    
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+    
+    // Track scroll depth
+    const handleScroll = () => {
+      const scrollPercent = Math.round(
+        ((window.scrollY + window.innerHeight) / document.documentElement.scrollHeight) * 100
+      );
+      setTimeTracking(prev => ({ ...prev, scrollDepth: Math.max(prev.scrollDepth, scrollPercent) }));
+    };
+    
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('scroll', handleScroll);
+      console.log('[Business-Website] LeadFormSection unmounted');
+    };
+  }, [timeTracking.formViewTime]);
+
+  // Validation helper
+  const validateForm = (): string | null => {
+    if (!formData.name || formData.name.trim().length < 2) {
+      return 'Please enter your full name (at least 2 characters)';
+    }
+    if (!formData.phone) {
+      return 'Please enter your phone number';
+    }
+    // Indian phone validation (10 digits, starts with 6-9)
+    const phoneRegex = /^[6-9]\d{9}$/;
+    const cleanPhone = formData.phone.replace(/\D/g, '');
+    if (cleanPhone.length !== 10 || !phoneRegex.test(cleanPhone)) {
+      return 'Please enter a valid 10-digit Indian phone number';
+    }
+    if (formData.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      return 'Please enter a valid email address';
+    }
+    if (!formData.city) {
+      return 'Please select your city';
+    }
+    if (!formData.budget) {
+      return 'Please select your budget range';
+    }
+    if (!formData.message || formData.message.trim().length < 10) {
+      return 'Please tell us about your project (at least 10 characters)';
+    }
+    return null;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validate form
+    const validationError = validateForm();
+    if (validationError) {
+      alert(validationError);
+      return;
+    }
+    
+    // Use existing form start time or current time
+    const formStartTime = timeTracking.formStartTime || Date.now();
+    
     console.log('[Business-Website] Lead form submitted:', formData);
+    console.log('[Business-Website] Time tracking:', {
+      timeOnPage: formStartTime - timeTracking.pageLoadTime,
+      timeToForm: timeTracking.formViewTime ? timeTracking.formViewTime - timeTracking.pageLoadTime : null,
+      formCompletionTime: timeTracking.formStartTime ? formStartTime - timeTracking.formStartTime : null,
+      scrollDepth: timeTracking.scrollDepth
+    });
     
     setLoading(true);
+    
+    // Get reCAPTCHA token if configured
+    let recaptchaToken: string | null = null;
+    if (RECAPTCHA_SITE_KEY && typeof window !== 'undefined' && (window as any).grecaptcha) {
+      try {
+        console.log('[Business-Website] Getting reCAPTCHA v3 token');
+        recaptchaToken = await (window as any).grecaptcha.execute(RECAPTCHA_SITE_KEY, { action: 'submit' });
+        console.log('[Business-Website] ✅ reCAPTCHA token obtained');
+      } catch (error) {
+        console.error('[Business-Website] ❌ Failed to get reCAPTCHA token:', error);
+        // Continue without token if reCAPTCHA fails (non-blocking)
+      }
+    }
+    
     try {
+      const formCompletionTime = timeTracking.formStartTime 
+        ? formStartTime - timeTracking.formStartTime 
+        : null;
+      
       const res = await fetch('/api/lead', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -72,12 +223,23 @@ export function LeadFormSection() {
           email: formData.email,
           phone: formData.phone,
           message: formData.message,
+          budget: formData.budget,
           source: 'business-website',
           leadSource: 'Website',
           raw: {
             city: formData.city,
             businessType: formData.businessType,
+            budget: formData.budget,
             path: typeof window !== 'undefined' ? window.location.pathname : undefined,
+            // Time tracking metadata for lead scoring
+            timeOnPage: formStartTime - timeTracking.pageLoadTime,
+            timeToForm: timeTracking.formViewTime ? timeTracking.formViewTime - timeTracking.pageLoadTime : null,
+            formCompletionTime: formCompletionTime,
+            scrollDepth: timeTracking.scrollDepth,
+            userAgent: typeof window !== 'undefined' ? navigator.userAgent : undefined,
+            referrer: typeof document !== 'undefined' ? document.referrer : undefined,
+            // reCAPTCHA token for server-side verification
+            recaptchaToken: recaptchaToken,
           },
         }),
       });
@@ -86,9 +248,18 @@ export function LeadFormSection() {
       if (!res.ok) throw new Error(data?.error || 'Lead API failed');
       setSubmitted(true);
       
-      // Fire Google Ads conversion - Business Website Lead Submit
-      console.log('[Business-Website] Firing lead_submit conversion to Google Ads');
-      void fireConversion('business_website_lead_submit');
+      // Fire Google Ads conversion with conversion value (0-10,000) based on lead score
+      // The API calculates the conversion value and returns it, but we also calculate client-side
+      // The value is already sent server-side, but we fire client-side as backup
+      const conversionValue = data.conversionValue || null;
+      console.log('[Business-Website] Firing lead_submit conversion to Google Ads with value:', conversionValue);
+      
+      if (conversionValue !== null && typeof conversionValue === 'number') {
+        void fireConversion('business_website_lead_submit', conversionValue, 'INR');
+      } else {
+        void fireConversion('business_website_lead_submit');
+      }
+      
       console.log('[Business-Website] ✅ Lead saved to database, Zoho CRM updated, Google Ads conversion fired');
     } catch (err) {
       console.error('[Business-Website] Lead submit error:', err);
@@ -97,7 +268,7 @@ export function LeadFormSection() {
       setLoading(false);
     }
     
-    // Reset form after 5 seconds
+      // Reset form after 5 seconds
     setTimeout(() => {
       setSubmitted(false);
       setFormData({
@@ -105,13 +276,27 @@ export function LeadFormSection() {
         phone: '',
         email: '',
         city: '',
+        budget: '',
         businessType: '',
         message: ''
+      });
+      // Reset time tracking
+      setTimeTracking({
+        pageLoadTime: Date.now(),
+        formViewTime: null,
+        formStartTime: null,
+        scrollDepth: 0
       });
     }, 5000);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    // Track when user starts filling the form (first interaction)
+    if (!timeTracking.formStartTime) {
+      setTimeTracking(prev => ({ ...prev, formStartTime: Date.now() }));
+      console.log('[Business-Website] Form interaction started');
+    }
+    
     setFormData(prev => ({
       ...prev,
       [e.target.name]: e.target.value
@@ -285,7 +470,7 @@ export function LeadFormSection() {
 
                       <div>
                         <Label htmlFor="email" className="text-gray-900 dark:text-white font-semibold mb-1.5 sm:mb-2 block text-sm sm:text-base">
-                          Email Address
+                          Email Address <span className="text-xs text-gray-500">(Optional)</span>
                         </Label>
                         <Input
                           type="email"
@@ -299,7 +484,7 @@ export function LeadFormSection() {
                       </div>
                     </div>
 
-                    {/* City & Business Type Row */}
+                    {/* City & Budget Row - CRITICAL FOR LEAD SCORING */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                       <div>
                         <Label htmlFor="city" className="text-gray-900 dark:text-white font-semibold mb-1.5 sm:mb-2 block text-sm sm:text-base">
@@ -321,38 +506,65 @@ export function LeadFormSection() {
                       </div>
 
                       <div>
-                        <Label htmlFor="businessType" className="text-gray-900 dark:text-white font-semibold mb-1.5 sm:mb-2 block text-sm sm:text-base">
-                          Business Type
+                        <Label htmlFor="budget" className="text-gray-900 dark:text-white font-semibold mb-1.5 sm:mb-2 block text-sm sm:text-base">
+                          Budget Range <span className="text-red-500">*</span>
                         </Label>
                         <select
-                          id="businessType"
-                          name="businessType"
-                          value={formData.businessType}
+                          id="budget"
+                          name="budget"
+                          value={formData.budget}
                           onChange={handleChange as any}
+                          required
                           className="w-full h-10 sm:h-11 md:h-12 rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] outline-none"
                         >
-                          <option value="">Select type</option>
-                          {BUSINESS_TYPES.map(type => (
-                            <option key={type} value={type}>{type}</option>
+                          {BUDGET_OPTIONS.map(option => (
+                            <option key={option.value} value={option.value}>{option.label}</option>
                           ))}
                         </select>
                       </div>
                     </div>
 
-                    {/* Message Field */}
+                    {/* Business Type - Optional */}
+                    <div>
+                      <Label htmlFor="businessType" className="text-gray-900 dark:text-white font-semibold mb-1.5 sm:mb-2 block text-sm sm:text-base">
+                        Business Type (Optional)
+                      </Label>
+                      <select
+                        id="businessType"
+                        name="businessType"
+                        value={formData.businessType}
+                        onChange={handleChange as any}
+                        className="w-full h-10 sm:h-11 md:h-12 rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] outline-none"
+                      >
+                        <option value="">Select type (optional)</option>
+                        {BUSINESS_TYPES.map(type => (
+                          <option key={type} value={type}>{type}</option>
+                        ))}
+                      </select>
+                    </div>
+
+                    {/* Message Field - Min 10 characters for quality filtering */}
                     <div>
                       <Label htmlFor="message" className="text-gray-900 dark:text-white font-semibold mb-1.5 sm:mb-2 block text-sm sm:text-base">
-                        Tell us about your project
+                        Tell us about your project <span className="text-red-500">*</span>
+                        <span className="text-xs text-gray-500 ml-2">(Minimum 10 characters)</span>
                       </Label>
                       <Textarea
                         id="message"
                         name="message"
                         value={formData.message}
                         onChange={handleChange}
-                        placeholder="What kind of website do you need?"
+                        placeholder="What kind of website do you need? Please provide some details..."
                         rows={3}
+                        minLength={10}
+                        required
                         className="text-sm sm:text-base"
                       />
+                      {formData.message && formData.message.length < 10 && (
+                        <p className="text-xs text-orange-600 dark:text-orange-400 mt-1">
+                          Please provide at least 10 characters ({formData.message.length}/10)
+                        </p>
+                      )}
                     </div>
 
                     {/* Submit Button - CONVERSION OPTIMIZED */}
@@ -404,7 +616,7 @@ export function LeadFormSection() {
                       We've received your request. Our team will contact you within 2 hours!
                     </p>
                     <p className="text-sm text-gray-600 dark:text-gray-400">
-                      Check your phone for a call from +91 9963730111
+                      Check your phone for a call from +91 9963730111 or email at support@vedpragya.com
                     </p>
                   </motion.div>
                 )}

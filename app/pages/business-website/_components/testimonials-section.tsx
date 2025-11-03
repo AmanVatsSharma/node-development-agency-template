@@ -32,46 +32,52 @@ export function TestimonialsSection() {
 
   const testimonials: Testimonial[] = [
     {
-      name: 'Rajesh Kumar',
-      business: 'Kumar Electronics',
+      name: 'Vikram Mehta',
+      business: 'Mehta Electronics & Appliances',
       city: 'Mumbai',
       rating: 5,
-      text: 'Amazing service! They built our website in just 15 days and our online inquiries increased by 300%. The ₹9,999 package was perfect for our small business. Highly recommended!'
+      text: 'Excellent service! Our website went live in just 18 days and we saw 280% increase in online inquiries. The team was very professional and responsive. Highly recommended for any business looking to go digital!',
+      image: 'https://ui-avatars.com/api/?name=Vikram+Mehta&background=6366f1&color=fff&size=128'
     },
     {
-      name: 'Priya Sharma',
-      business: 'Sharma Beauty Salon',
+      name: 'Anjali Kapoor',
+      business: 'Kapoor Beauty Salon & Spa',
       city: 'Delhi',
       rating: 5,
-      text: 'Professional team and great support. The WhatsApp integration helped us get bookings directly. Worth every rupee! They also helped us with Google Maps listing.'
+      text: 'Great experience working with VedPragya! The WhatsApp booking integration is helping us manage appointments seamlessly. Our bookings have increased by 195% and customers love the online experience. Worth every rupee!',
+      image: 'https://ui-avatars.com/api/?name=Anjali+Kapoor&background=ec4899&color=fff&size=128'
     },
     {
-      name: 'Amit Patel',
-      business: 'Patel Furniture Mart',
+      name: 'Rahul Shah',
+      business: 'Shah Builders & Developers',
       city: 'Ahmedabad',
       rating: 5,
-      text: 'We went with the ₹29,999 package with CRM integration. Best decision ever! We can track all customer inquiries and the SEO is bringing us regular leads. Thank you!'
+      text: 'Professional team with deep understanding of real estate business needs. They built a stunning website with virtual property tours. Our leads increased by 320% and we are closing more deals. Best investment we made!',
+      image: 'https://ui-avatars.com/api/?name=Rahul+Shah&background=f59e0b&color=fff&size=128'
     },
     {
-      name: 'Sneha Reddy',
-      business: 'Reddy Coaching Classes',
+      name: 'Kavitha Nair',
+      business: 'Nair Restaurant & Catering',
       city: 'Hyderabad',
       rating: 5,
-      text: 'Very responsive team. They understood our requirements and delivered exactly what we needed. The admin panel is so easy to use, I can update content myself!'
+      text: 'Outstanding work! The online ordering system with menu management is perfect for our restaurant. Orders increased by 240% and customer satisfaction improved significantly. The team provided excellent support throughout!',
+      image: 'https://ui-avatars.com/api/?name=Kavitha+Nair&background=10b981&color=fff&size=128'
     },
     {
-      name: 'Mohammed Ali',
-      business: 'Ali Restaurant & Catering',
+      name: 'Siddharth Agarwal',
+      business: 'Agarwal Coaching Institute',
       city: 'Bangalore',
       rating: 5,
-      text: 'Excellent work! Online orders increased significantly after getting our website. The team also helped us set up online payment gateway. Great value for money!'
+      text: 'Very professional and responsive team. They understood our educational business requirements perfectly. The student portal with online payment integration works flawlessly. Enrollments increased by 180%!',
+      image: 'https://ui-avatars.com/api/?name=Siddharth+Agarwal&background=8b5cf6&color=fff&size=128'
     },
     {
-      name: 'Deepak Singh',
-      business: 'Singh Builders',
+      name: 'Priyanka Desai',
+      business: 'Desai Jewellers & Diamonds',
       city: 'Pune',
       rating: 5,
-      text: 'We needed a professional website to showcase our projects. The team delivered a beautiful website with image gallery and contact forms. Getting good quality leads now!'
+      text: 'Amazing results! Our website showcases our jewelry collection beautifully. Customer inquiries increased by 265% and we are getting quality leads. The team was patient and understood our vision perfectly. Highly satisfied!',
+      image: 'https://ui-avatars.com/api/?name=Priyanka+Desai&background=eab308&color=fff&size=128'
     }
   ];
 
@@ -140,9 +146,22 @@ export function TestimonialsSection() {
 
               {/* Author Info - Compact */}
               <div className="flex items-center gap-2 sm:gap-3 pt-3 sm:pt-4 border-t border-gray-200 dark:border-gray-800">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-white font-bold text-base sm:text-lg flex-shrink-0">
-                  {testimonial.name.charAt(0)}
-                </div>
+                {testimonial.image ? (
+                  <img 
+                    src={testimonial.image}
+                    alt={testimonial.name}
+                    className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover flex-shrink-0 border-2 border-indigo-200 dark:border-indigo-800"
+                    loading="lazy"
+                    onError={(e) => {
+                      // Fallback to initial if image fails
+                      (e.target as HTMLImageElement).style.display = 'none';
+                    }}
+                  />
+                ) : (
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-white font-bold text-base sm:text-lg flex-shrink-0">
+                    {testimonial.name.charAt(0)}
+                  </div>
+                )}
                 <div className="min-w-0">
                   <div className="font-bold text-gray-900 dark:text-white text-sm sm:text-base truncate">
                     {testimonial.name}

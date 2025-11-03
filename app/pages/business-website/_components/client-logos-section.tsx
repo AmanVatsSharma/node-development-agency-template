@@ -63,6 +63,34 @@ export function ClientLogosSection() {
     }
   ];
 
+  // Partnership logos - Official brand logos from web/CDN
+  const partnershipLogos = [
+    { 
+      name: 'Google', 
+      src: 'https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg', 
+      alt: 'Google Partner',
+      link: 'https://partners.google.com'
+    },
+    { 
+      name: 'Meta', 
+      src: 'https://upload.wikimedia.org/wikipedia/commons/5/51/Meta_Platforms_Inc._logo.svg', 
+      alt: 'Meta Business Partner',
+      link: 'https://www.facebook.com/business'
+    },
+    { 
+      name: 'IBM', 
+      src: 'https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg', 
+      alt: 'IBM Technology Partner',
+      link: 'https://www.ibm.com/partners'
+    },
+    { 
+      name: 'TCS', 
+      src: 'https://upload.wikimedia.org/wikipedia/commons/5/5e/Tata_Consultancy_Services_Logo.svg', 
+      alt: 'TCS Technology Partner',
+      link: 'https://www.tcs.com'
+    }
+  ];
+
   // Technology logos with alt text for accessibility
   const techLogos = [
     { name: 'Node.js', src: '/logos/nodejs.png', alt: 'Node.js technology partner' },
@@ -110,6 +138,41 @@ export function ClientLogosSection() {
             ))}
           </div>
 
+          {/* Enterprise Partnership Logos */}
+          <div className="mb-6 sm:mb-8">
+            <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 font-medium text-center mb-3 sm:mb-4">
+              Trusted Enterprise Partners:
+            </p>
+            <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-6 md:gap-8">
+              {partnershipLogos.map((logo, index) => (
+                <motion.a
+                  key={index}
+                  href={logo.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: 0.2 + index * 0.1 }}
+                  whileHover={{ scale: 1.1 }}
+                  className="grayscale hover:grayscale-0 opacity-70 hover:opacity-100 transition-all duration-300"
+                  onClick={() => console.log(`[Business-Website] Partnership logo clicked: ${logo.name}`)}
+                >
+                  <img 
+                    src={logo.src} 
+                    alt={logo.alt}
+                    className="h-8 sm:h-10 md:h-12 w-auto object-contain max-w-[120px] sm:max-w-[150px]"
+                    loading="lazy"
+                    onError={(e) => {
+                      console.error(`[Business-Website] Partnership logo failed to load: ${logo.name}`);
+                      (e.target as HTMLImageElement).style.display = 'none';
+                    }}
+                  />
+                </motion.a>
+              ))}
+            </div>
+          </div>
+
           {/* Technology Partners Logos */}
           <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-6 md:gap-8">
             <span className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 font-medium w-full sm:w-auto">
@@ -122,7 +185,7 @@ export function ClientLogosSection() {
                 initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: 0.2 + index * 0.1 }}
+                transition={{ duration: 0.4, delay: 0.4 + index * 0.1 }}
                 className="grayscale hover:grayscale-0 opacity-60 hover:opacity-100 transition-all duration-300"
                 onClick={() => console.log(`[Business-Website] Tech logo viewed: ${logo.name}`)}
               >

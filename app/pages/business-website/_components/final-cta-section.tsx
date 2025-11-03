@@ -169,7 +169,7 @@ export function FinalCTASection() {
               WhatsApp
             </a>
             <a
-              href="mailto:info@youragency.com"
+              href="mailto:support@vedpragya.com"
               className="flex items-center gap-1.5 sm:gap-2 hover:text-white transition-colors"
               onClick={() => console.log('[Business-Website] Final CTA - Email clicked')}
             >

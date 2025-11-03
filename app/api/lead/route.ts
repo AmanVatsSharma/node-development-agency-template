@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/app/lib/prisma';
 import { createZohoLead } from '@/app/lib/zohoService';
 import { getClientConversionMapping, logServerConversion } from '@/app/lib/googleAds';
+import { verifyRecaptcha } from '@/app/lib/recaptcha';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -11,16 +12,21 @@ type LeadPayload = {
   email?: string;
   phone?: string;
   message?: string;
+  budget?: string;
   source?: string;
   campaign?: string;
   leadSource?: string;
-  raw?: Record<string, any>;
+  raw?: Record<string, any> & {
+    timeOnPage?: number;
+    timeToForm?: number;
+    formCompletionTime?: number;
+    scrollDepth?: number;
+  };
   // Healthcare-specific fields
   organization?: string;
   position?: string;
   healthcareType?: string;
   currentSystem?: string;
-  budget?: string;
   timeline?: string;
   requirements?: string;
   complianceNeeds?: string[];
@@ -41,8 +47,87 @@ type LeadPayload = {
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+// Helper function to calculate lead score for business-website leads
+function calculateBusinessWebsiteLeadScore(body: LeadPayload): number {
+  let score = 0;
+  
+  // Form Completion Quality (40 points)
+  if (body.name && body.name.trim().length >= 2) score += 5;
+  if (body.phone) {
+    const cleanPhone = body.phone.replace(/\D/g, '');
+    if (cleanPhone.length === 10 && /^[6-9]/.test(cleanPhone)) {
+      score += 10;
+    } else {
+      score += 5; // Partial credit
+    }
+  }
+  if (body.email && EMAIL_REGEX.test(body.email)) score += 5;
+  if (body.message && body.message.trim().length >= 10) score += 5;
+  
+  // Budget Quality (25 points) - CRITICAL for lead scoring
+  if (body.budget) {
+    if (body.budget === '₹2L+') score += 25;
+    else if (body.budget === '₹1L-2L') score += 20;
+    else if (body.budget === '₹60K-1L') score += 15;
+    else if (body.budget === '₹30K-60K') score += 10;
+    else if (body.budget === '₹15K-30K') score += 5;
+    else if (body.budget === 'not-decided' || body.budget === 'need-consultation') score += 2;
+  }
+  
+  // Engagement Score (35 points) - Time tracking and scroll depth
+  const timeOnPage = body.raw?.timeOnPage || 0;
+  const timeToForm = body.raw?.timeToForm || null;
+  const formCompletionTime = body.raw?.formCompletionTime || null;
+  const scrollDepth = body.raw?.scrollDepth || 0;
+  
+  // Time on page before form (optimal: 30-180 seconds = 15 points)
+  if (timeToForm !== null) {
+    const timeToFormSeconds = timeToForm / 1000;
+    if (timeToFormSeconds >= 30 && timeToFormSeconds <= 180) {
+      score += 15; // Optimal engagement
+    } else if (timeToFormSeconds >= 10 && timeToFormSeconds < 30) {
+      score += 10; // Quick but engaged
+    } else if (timeToFormSeconds > 180 && timeToFormSeconds <= 600) {
+      score += 12; // Longer engagement
+    } else if (timeToFormSeconds > 600) {
+      score += 8; // Very long, might be distracted
+    } else {
+      score += 3; // Too quick, might be spam
+    }
+  }
+  
+  // Form completion time (optimal: 60-300 seconds = 10 points)
+  if (formCompletionTime !== null) {
+    const completionSeconds = formCompletionTime / 1000;
+    if (completionSeconds >= 60 && completionSeconds <= 300) {
+      score += 10; // Human-like completion time
+    } else if (completionSeconds >= 30 && completionSeconds < 60) {
+      score += 7; // Quick but valid
+    } else if (completionSeconds > 300 && completionSeconds <= 600) {
+      score += 8; // Thoughtful completion
+    } else if (completionSeconds < 10) {
+      score += 2; // Too fast, likely bot
+    } else {
+      score += 5; // Partial credit
+    }
+  }
+  
+  // Scroll depth (reached form section = 10 points)
+  if (scrollDepth >= 70) score += 10;
+  else if (scrollDepth >= 50) score += 7;
+  else if (scrollDepth >= 30) score += 4;
+  
+  return Math.min(score, 100);
+}
+
 // Helper function to calculate lead score for healthcare leads
 function calculateLeadScore(body: LeadPayload): number {
+  // Use business-website scoring for business-website source
+  if (body.source === 'business-website') {
+    return calculateBusinessWebsiteLeadScore(body);
+  }
+  
+  // Healthcare-specific scoring
   let score = 0;
   
   // Basic contact info (20 points)
@@ -80,7 +165,23 @@ function determineQualificationLevel(body: LeadPayload): string {
 function determinePriority(body: LeadPayload): string {
   if (body.timelineUrgent && body.budgetApproved) return 'High';
   if (body.budget && body.timeline) return 'Medium';
+  
+  // Business-website priority based on budget
+  if (body.source === 'business-website') {
+    if (body.budget && (body.budget === '₹2L+' || body.budget === '₹1L-2L')) return 'High';
+    if (body.budget && (body.budget === '₹60K-1L' || body.budget === '₹30K-60K')) return 'Medium';
+    return 'Low';
+  }
+  
   return 'Low';
+}
+
+// Helper function to map lead score to conversion value (0-10,000)
+function calculateConversionValue(score: number): number {
+  if (score >= 81) return 7000 + Math.round((score - 81) * (3000 / 19)); // 81-100 → 7000-10,000
+  if (score >= 61) return 3000 + Math.round((score - 61) * (4000 / 20)); // 61-80 → 3000-7000
+  if (score >= 31) return 500 + Math.round((score - 31) * (2500 / 30)); // 31-60 → 500-3000
+  return Math.round((score / 30) * 500); // 0-30 → 0-500
 }
 
 export async function POST(req: NextRequest) {
@@ -96,6 +197,37 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Invalid email format' }, { status: 400 });
     }
 
+    // Verify reCAPTCHA if token is provided
+    const recaptchaToken = body.raw?.recaptchaToken;
+    let recaptchaScore: number | undefined;
+    if (recaptchaToken) {
+      console.log('[API/Lead] Verifying reCAPTCHA token');
+      const ipAddress = req.headers.get('x-forwarded-for')?.split(',')[0] || 
+                       req.headers.get('x-real-ip') || 
+                       undefined;
+      const recaptchaResult = await verifyRecaptcha(recaptchaToken, ipAddress);
+      
+      if (!recaptchaResult.success) {
+        console.error('[API/Lead] ❌ reCAPTCHA verification failed:', recaptchaResult['error-codes']);
+        return NextResponse.json({ 
+          error: 'reCAPTCHA verification failed. Please try again.',
+          correlationId 
+        }, { status: 400 });
+      }
+      
+      recaptchaScore = recaptchaResult.score;
+      
+      // Check score threshold (0.3 = suspicious but allow, 0.5+ = human-like)
+      if (recaptchaScore !== undefined && recaptchaScore < 0.3) {
+        console.warn('[API/Lead] ⚠️ Very low reCAPTCHA score:', recaptchaScore, '- Likely bot, but allowing with low lead score');
+        // Still allow submission but flag as suspicious
+      } else if (recaptchaScore !== undefined) {
+        console.log('[API/Lead] ✅ reCAPTCHA verified - Score:', recaptchaScore);
+      }
+    } else {
+      console.warn('[API/Lead] ⚠️ No reCAPTCHA token provided - continuing without verification');
+    }
+
     // Save to database FIRST - this is the most critical step
     // We ALWAYS save the lead locally before attempting CRM sync
     const lead = await prisma.lead.create({
@@ -107,7 +239,17 @@ export async function POST(req: NextRequest) {
         source: body.source || 'business-website',
         campaign: body.campaign || null,
         leadSource: body.leadSource || 'Website',
-        raw: body.raw || (body as any),
+        raw: {
+          ...(body.raw || {}),
+          // Ensure all metadata is stored in raw JSON field
+          recaptchaScore: recaptchaScore, // Store the verified score
+          timestamp: new Date().toISOString(),
+          // Store all time tracking data
+          ...(body.raw?.timeOnPage && { timeOnPage: body.raw.timeOnPage }),
+          ...(body.raw?.timeToForm && { timeToForm: body.raw.timeToForm }),
+          ...(body.raw?.formCompletionTime && { formCompletionTime: body.raw.formCompletionTime }),
+          ...(body.raw?.scrollDepth && { scrollDepth: body.raw.scrollDepth }),
+        } as any,
         status: 'pending',
         // Create healthcare metadata if this is a healthcare lead
         ...(body.source === 'healthcare-software-development' && {
@@ -201,6 +343,22 @@ export async function POST(req: NextRequest) {
       // NOTE: We don't throw here - lead is safe in database
     }
 
+    // Calculate lead score and conversion value
+    const leadScore = calculateLeadScore(body);
+    const conversionValue = calculateConversionValue(leadScore);
+    const qualificationLevel = determineQualificationLevel(body);
+    const priority = determinePriority(body);
+    
+    console.log('[API/Lead] Lead score calculated:', {
+      score: leadScore,
+      conversionValue,
+      qualificationLevel,
+      priority,
+      budget: body.budget,
+      timeOnPage: body.raw?.timeOnPage,
+      scrollDepth: body.raw?.scrollDepth
+    });
+    
     // Log and optionally trigger server-side record for Google
     // Note: This logs to business_website by default. For other pages, pass source-specific event type
     const source = body.source || 'business-website';
@@ -217,12 +375,13 @@ export async function POST(req: NextRequest) {
       conversionEventType = 'healthcare_software_development_lead_submit';
     }
     
-    console.log('[API/Lead] Logging conversion event:', conversionEventType);
+    console.log('[API/Lead] Logging conversion event with value:', conversionEventType, conversionValue);
     await logServerConversion(conversionEventType, { 
       correlationId, 
       zohoLeadId, 
       leadId: lead.id,
       source,
+      value: conversionValue, // Add conversion value to Google Ads conversion
     });
 
     // Provide client with conversion mapping
@@ -234,6 +393,10 @@ export async function POST(req: NextRequest) {
         leadId: lead.id,
         zohoLeadId: zohoLeadId || null,
         correlationId,
+        conversionValue, // Send conversion value to client for client-side tracking
+        leadScore,
+        qualificationLevel,
+        priority,
         google: mapping,
       },
       { status: 200 },
