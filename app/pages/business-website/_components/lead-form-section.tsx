@@ -81,12 +81,13 @@ export function LeadFormSection() {
 
   useEffect(() => {
     console.log('[Business-Website] LeadFormSection mounted');
+    console.log('[Business-Website] reCAPTCHA Site Key configured:', RECAPTCHA_SITE_KEY ? 'YES' : 'NO');
     
     // Load reCAPTCHA v3 script if site key is configured
     if (RECAPTCHA_SITE_KEY && typeof window !== 'undefined') {
       const scriptId = 'recaptcha-v3-script';
       if (!document.getElementById(scriptId)) {
-        console.log('[Business-Website] Loading reCAPTCHA v3 script');
+        console.log('[Business-Website] Loading reCAPTCHA v3 script with site key:', RECAPTCHA_SITE_KEY.substring(0, 10) + '...');
         const script = document.createElement('script');
         script.id = scriptId;
         script.src = `https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_SITE_KEY}`;
@@ -95,15 +96,27 @@ export function LeadFormSection() {
         document.head.appendChild(script);
         
         script.onload = () => {
-          console.log('[Business-Website] ✅ reCAPTCHA v3 script loaded');
+          console.log('[Business-Website] ✅ reCAPTCHA v3 script loaded successfully');
+          // Check if grecaptcha is available
+          setTimeout(() => {
+            if ((window as any).grecaptcha) {
+              console.log('[Business-Website] ✅ grecaptcha object is available');
+            } else {
+              console.warn('[Business-Website] ⚠️ Script loaded but grecaptcha object not found');
+            }
+          }, 1000);
         };
         
         script.onerror = () => {
           console.error('[Business-Website] ❌ Failed to load reCAPTCHA v3 script');
+          console.error('[Business-Website] Check: 1) Site key is valid 2) Domain is registered in Google console');
         };
+      } else {
+        console.log('[Business-Website] reCAPTCHA script already loaded');
       }
     } else {
-      console.warn('[Business-Website] ⚠️ reCAPTCHA site key not configured - bot protection disabled');
+      console.warn('[Business-Website] ⚠️ reCAPTCHA site key not configured');
+      console.warn('[Business-Website] Add NEXT_PUBLIC_RECAPTCHA_SITE_KEY to .env.local file');
     }
     
     // Track when form section comes into view
@@ -598,6 +611,40 @@ export function LeadFormSection() {
                       <span className="flex items-center gap-1">
                         ⚡ 2-Hour Response
                       </span>
+                    </div>
+
+                    {/* reCAPTCHA Status Indicator */}
+                    <div className="flex flex-col items-center gap-1 mt-2">
+                      {RECAPTCHA_SITE_KEY ? (
+                        <>
+                          <div className="flex items-center justify-center gap-1 text-[10px] text-gray-500 dark:text-gray-400">
+                            <span className="inline-flex items-center gap-1">
+                              <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
+                              🛡️ Protected by
+                            </span>
+                            <a 
+                              href="https://www.google.com/recaptcha/" 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className="text-blue-600 dark:text-blue-400 hover:underline"
+                              title="reCAPTCHA v3 provides invisible bot protection"
+                            >
+                              reCAPTCHA
+                            </a>
+                            <span>v3</span>
+                          </div>
+                          <div className="text-[9px] text-gray-400 dark:text-gray-500 mt-0.5">
+                            (Invisible protection - no checkbox required)
+                          </div>
+                        </>
+                      ) : (
+                        <div className="text-[10px] text-amber-600 dark:text-amber-400 text-center px-2">
+                          ⚠️ reCAPTCHA not configured
+                          <br />
+                          <span className="text-[9px]">Add NEXT_PUBLIC_RECAPTCHA_SITE_KEY to .env.local and restart server</span>
+                        </div>
+                      )}
+                      {/* Google's reCAPTCHA badge appears automatically in bottom-right when script loads */}
                     </div>
                   </form>
                 ) : (

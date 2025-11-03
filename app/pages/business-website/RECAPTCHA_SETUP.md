@@ -26,9 +26,19 @@ After registration, Google will provide:
 
 ### 3. Configure Environment Variables
 
-Add these to your `.env.local` file:
+**Choose one option:**
 
-```env
+**Option A: `.env.local` (Recommended for Next.js)**
+```bash
+# Create or edit .env.local in project root
+# reCAPTCHA v3 Configuration
+NEXT_PUBLIC_RECAPTCHA_SITE_KEY=your_site_key_here
+RECAPTCHA_SECRET_KEY=your_secret_key_here
+```
+
+**Option B: Add to existing `.env` file**
+```bash
+# Add to your existing .env file
 # reCAPTCHA v3 Configuration
 NEXT_PUBLIC_RECAPTCHA_SITE_KEY=your_site_key_here
 RECAPTCHA_SECRET_KEY=your_secret_key_here
@@ -37,6 +47,20 @@ RECAPTCHA_SECRET_KEY=your_secret_key_here
 **Important:**
 - `NEXT_PUBLIC_RECAPTCHA_SITE_KEY` - Used in frontend (safe to expose)
 - `RECAPTCHA_SECRET_KEY` - Used in backend only (keep secret)
+- **You MUST restart your dev server after adding these variables!**
+  ```bash
+  # Stop server (Ctrl+C), then:
+  npm run dev
+  ```
+
+**Verify Setup:**
+```bash
+# Run verification script
+./check-recaptcha-setup.sh
+
+# Or manually check:
+grep RECAPTCHA .env.local 2>/dev/null || grep RECAPTCHA .env 2>/dev/null
+```
 
 ### 4. How It Works
 
