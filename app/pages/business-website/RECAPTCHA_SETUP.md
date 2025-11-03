@@ -21,8 +21,8 @@ This landing page uses Google reCAPTCHA v3 for bot protection. reCAPTCHA v3 is i
 ### 2. Get Your Keys
 
 After registration, Google will provide:
-- **Site Key** (Public key - safe to expose in frontend)
-- **Secret Key** (Private key - keep secure, server-side only)
+- **Site Key** (Public key - safe to expose in frontend)- 
+- **Secret Key** (Private key - keep secure, server-side only) -
 
 ### 3. Configure Environment Variables
 

@@ -240,16 +240,18 @@ export async function POST(req: NextRequest) {
         campaign: body.campaign || null,
         leadSource: body.leadSource || 'Website',
         raw: {
+          // Preserve all existing raw data
           ...(body.raw || {}),
-          // Ensure all metadata is stored in raw JSON field
-          recaptchaScore: recaptchaScore, // Store the verified score
-          timestamp: new Date().toISOString(),
-          // Store all time tracking data
-          ...(body.raw?.timeOnPage && { timeOnPage: body.raw.timeOnPage }),
-          ...(body.raw?.timeToForm && { timeToForm: body.raw.timeToForm }),
-          ...(body.raw?.formCompletionTime && { formCompletionTime: body.raw.formCompletionTime }),
-          ...(body.raw?.scrollDepth && { scrollDepth: body.raw.scrollDepth }),
-        } as any,
+          // Ensure all metadata is stored in raw JSON field (JSON-compatible values only)
+          ...(recaptchaScore !== undefined && { recaptchaScore: recaptchaScore }), // Store the verified score
+          timestamp: new Date().toISOString(), // ISO string is JSON-compatible
+          // Store all time tracking data (using !== undefined to handle 0 values correctly)
+          ...(body.raw?.timeOnPage !== undefined && { timeOnPage: body.raw.timeOnPage }),
+          ...(body.raw?.timeToForm !== undefined && body.raw.timeToForm !== null && { timeToForm: body.raw.timeToForm }),
+          ...(body.raw?.formCompletionTime !== undefined && body.raw.formCompletionTime !== null && { formCompletionTime: body.raw.formCompletionTime }),
+          ...(body.raw?.scrollDepth !== undefined && { scrollDepth: body.raw.scrollDepth }),
+          // Ensure all strings, numbers, booleans, nulls are properly stored (Prisma Json supports these)
+        } as any, // Type assertion needed for Prisma Json type flexibility
         status: 'pending',
         // Create healthcare metadata if this is a healthcare lead
         ...(body.source === 'healthcare-software-development' && {

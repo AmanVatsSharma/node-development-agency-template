@@ -21,35 +21,35 @@ model BlogPost {
   excerpt     String
   content     String   @db.Text
   publishedAt DateTime
-  readTime    Int      // Reading time in minutes
+  readTime    Int // Reading time in minutes
   category    String
   tags        String[] // Array of tags
   imageUrl    String
   featured    Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  
+
   // Relations
-  author      Author   @relation(fields: [authorId], references: [id])
-  authorId    String
-  comments    Comment[]
+  author   Author    @relation(fields: [authorId], references: [id])
+  authorId String
+  comments Comment[]
 }
 
 // Author model (for blog posts)
 model Author {
-  id        String     @id @default(cuid())
+  id        String   @id @default(cuid())
   name      String
-  title     String     // Job title
-  bio       String?    @db.Text
-  avatar    String     // Avatar image URL
-  email     String?    @unique
+  title     String // Job title
+  bio       String?  @db.Text
+  avatar    String // Avatar image URL
+  email     String?  @unique
   website   String?
   linkedIn  String?
   twitter   String?
   github    String?
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   // Relations
   blogPosts BlogPost[]
 }
@@ -58,16 +58,16 @@ model Author {
 model Comment {
   id        String   @id @default(cuid())
   content   String   @db.Text
-  name      String   // Commenter's name
-  email     String   // Commenter's email
-  website   String?  // Commenter's website (optional)
+  name      String // Commenter's name
+  email     String // Commenter's email
+  website   String? // Commenter's website (optional)
   approved  Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  
+
   // Relations
-  post      BlogPost @relation(fields: [postId], references: [id], onDelete: Cascade)
-  postId    String
+  post   BlogPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId String
 }
 
 // Resources (e-books, whitepapers, templates, etc.)
@@ -75,7 +75,7 @@ model Resource {
   id          String   @id @default(cuid())
   title       String
   description String
-  type        String   // ebook, whitepaper, template, video, webinar
+  type        String // ebook, whitepaper, template, video, webinar
   downloadUrl String
   imageUrl    String
   publishedAt DateTime
@@ -86,8 +86,8 @@ model Resource {
 
 // Portfolio projects
 model Project {
-  id          String   @id @default(cuid())
-  slug        String   @unique
+  id          String    @id @default(cuid())
+  slug        String    @unique
   title       String
   clientName  String
   summary     String
@@ -104,7 +104,7 @@ model Project {
   tags        String[]
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
-  
+
   // Relations
   technologies Technology[] // Many-to-many relation
   testimonial  Testimonial?
@@ -112,17 +112,17 @@ model Project {
 
 // Technologies used in projects
 model Technology {
-  id          String    @id @default(cuid())
-  name        String    @unique
+  id          String   @id @default(cuid())
+  name        String   @unique
   description String?
   icon        String?
   category    String?
   website     String?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
   // Relations
-  projects    Project[]
+  projects Project[]
 }
 
 // Testimonials
@@ -137,27 +137,27 @@ model Testimonial {
   featured   Boolean  @default(false)
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
-  
+
   // Relations - one testimonial per project
-  project    Project  @relation(fields: [projectId], references: [id])
-  projectId  String   @unique
+  project   Project @relation(fields: [projectId], references: [id])
+  projectId String  @unique
 }
 
 // Team members
 model TeamMember {
-  id         String   @id @default(cuid())
-  name       String
-  position   String
-  bio        String   @db.Text
-  avatar     String
-  order      Int      @default(0) // For ordering in the team display
-  linkedIn   String?
-  twitter    String?
-  github     String?
-  website    String?
-  active     Boolean  @default(true)
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id        String   @id @default(cuid())
+  name      String
+  position  String
+  bio       String   @db.Text
+  avatar    String
+  order     Int      @default(0) // For ordering in the team display
+  linkedIn  String?
+  twitter   String?
+  github    String?
+  website   String?
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 // Services offered
@@ -177,81 +177,81 @@ model Service {
 
 // Contact form submissions
 model ContactSubmission {
-  id        String    @id @default(cuid())
+  id        String   @id @default(cuid())
   name      String
   email     String
   company   String?
   phone     String?
-  message   String    @db.Text
+  message   String   @db.Text
   service   String?
   budget    String?
   timeline  String?
-  source    String?   // How did they find us
-  status    String    @default("pending") // pending, contacted, closed
-  notes     String?   @db.Text
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  source    String? // How did they find us
+  status    String   @default("pending") // pending, contacted, closed
+  notes     String?  @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 // Newsletter subscriptions
 model NewsletterSubscription {
-  id        String    @id @default(cuid())
-  email     String    @unique
+  id        String   @id @default(cuid())
+  email     String   @unique
   name      String?
-  active    Boolean   @default(true)
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 // User model (for CMS and admin access)
 model User {
-  id            String    @id @default(cuid())
-  name          String
-  email         String    @unique
-  passwordHash  String
-  role          String    @default("user") // user, editor, admin
-  active        Boolean   @default(true)
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  role         String   @default("user") // user, editor, admin
+  active       Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
 
 // Centralized integration settings for Zoho and Google Ads
 model IntegrationSettings {
-  id                      String    @id @default(cuid())
+  id                     String    @id @default(cuid())
   // Zoho CRM credentials and token state
-  zohoClientId            String?
-  zohoClientSecret        String?
-  zohoRefreshToken        String?
-  zohoAccessToken         String?
-  zohoTokenExpiresAt      DateTime?
-  lastZohoTokenRefreshAt  DateTime?
+  zohoClientId           String?
+  zohoClientSecret       String?
+  zohoRefreshToken       String?
+  zohoAccessToken        String?
+  zohoTokenExpiresAt     DateTime?
+  lastZohoTokenRefreshAt DateTime?
 
   // Google Ads basic configuration (client-side conversions)
-  googleConversionId      String?   // e.g. AW-XXXXXXXXXX
-  googleApiKey            String?
+  googleConversionId String? // e.g. AW-XXXXXXXXXX
+  googleApiKey       String?
   // Mapping of event types to Google Ads conversion labels
   // Example: { "lead_submit": "abcdEFGHijk", "call_click": "LmnoPQRStuv" }
-  googleEventLabels       Json?
+  googleEventLabels  Json?
 
-  createdAt               DateTime  @default(now())
-  updatedAt               DateTime  @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 // Local backup of leads and processing status
 model Lead {
-  id           String    @id @default(cuid())
-  name         String?
-  email        String?
-  phone        String?
-  message      String?
-  source       String?
-  campaign     String?
-  leadSource   String?
-  raw          Json?
-  status       String    @default("pending") // pending, pushed, failed
-  zohoLeadId   String?
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
+  id         String   @id @default(cuid())
+  name       String?
+  email      String?
+  phone      String?
+  message    String?
+  source     String?
+  campaign   String?
+  leadSource String?
+  raw        Json?
+  status     String   @default("pending") // pending, pushed, failed
+  zohoLeadId String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 
   // Relations
   healthcareMetadata HealthcareLeadMetadata?
@@ -262,17 +262,17 @@ model Lead {
 
 // Logs for all integration interactions (Zoho + Google)
 model IntegrationLog {
-  id            String    @id @default(cuid())
-  type          String               // e.g. "lead_submit", "call_click", "whatsapp_click", "newsletter_signup"
-  provider      String               // e.g. "zoho", "google_ads"
-  level         String    @default("info") // info, warn, error
+  id            String   @id @default(cuid())
+  type          String // e.g. "lead_submit", "call_click", "whatsapp_click", "newsletter_signup"
+  provider      String // e.g. "zoho", "google_ads"
+  level         String   @default("info") // info, warn, error
   message       String
   statusCode    Int?
   request       Json?
   response      Json?
   error         String?
   correlationId String?
-  createdAt     DateTime  @default(now())
+  createdAt     DateTime @default(now())
 
   @@index([provider, createdAt])
   @@index([level, createdAt])
@@ -280,16 +280,16 @@ model IntegrationLog {
 
 // Simple retry queue for failed submissions
 model IntegrationRetry {
-  id           String    @id @default(cuid())
-  type         String               // "zoho_lead", "google_conversion"
-  payload      Json
-  attempts     Int       @default(0)
-  maxAttempts  Int       @default(5)
-  nextRunAt    DateTime  @default(now())
-  lastError    String?
-  status       String    @default("queued") // queued, succeeded, failed
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
+  id          String   @id @default(cuid())
+  type        String // "zoho_lead", "google_conversion"
+  payload     Json
+  attempts    Int      @default(0)
+  maxAttempts Int      @default(5)
+  nextRunAt   DateTime @default(now())
+  lastError   String?
+  status      String   @default("queued") // queued, succeeded, failed
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   @@index([status, nextRunAt])
   @@index([createdAt])
@@ -297,50 +297,50 @@ model IntegrationRetry {
 
 // AI Agent Configuration (OpenAI, Claude, Gemini)
 model AIAgentConfig {
-  id              String   @id @default(cuid())
-  provider        String   @default("openai") // "openai", "claude", "gemini"
-  apiKey          String?  // Encrypted API key
-  model           String   @default("gpt-4o") // Model name (gpt-4o, claude-sonnet-4-5, gemini-2.0-flash-exp)
-  agentName       String   @default("Nova") // Brand name for the AI agent
-  agentRole       String   @default("AI Sales Assistant") // Agent's role
-  companyName     String   @default("Vedpragya Bharat") // Your company name
-  welcomeMessage  String   @default("Hi! I'm Nova, your AI assistant. How can I help you today?")
-  systemPrompt    String   @db.Text // Base system prompt for the AI
-  temperature     Float    @default(0.7) // AI creativity (0.0-1.0)
-  maxTokens       Int      @default(2000) // Max response length
-  enabled         Boolean  @default(true) // Enable/disable globally
-  leadQualification Boolean @default(true) // Auto-qualify leads
-  autoGreeting    Boolean  @default(true) // Show greeting on load
-  greetingDelay   Int      @default(3000) // Delay in ms before showing greeting
-  widgetPosition  String   @default("bottom-right") // Widget position
-  primaryColor    String   @default("#3b82f6") // Widget theme color
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  id                String   @id @default(cuid())
+  provider          String   @default("openai") // "openai", "claude", "gemini"
+  apiKey            String? // Encrypted API key
+  model             String   @default("gpt-4o") // Model name (gpt-4o, claude-sonnet-4-5, gemini-2.0-flash-exp)
+  agentName         String   @default("Nova") // Brand name for the AI agent
+  agentRole         String   @default("AI Sales Assistant") // Agent's role
+  companyName       String   @default("Vedpragya Bharat") // Your company name
+  welcomeMessage    String   @default("Hi! I'm Nova, your AI assistant. How can I help you today?")
+  systemPrompt      String   @db.Text // Base system prompt for the AI
+  temperature       Float    @default(0.7) // AI creativity (0.0-1.0)
+  maxTokens         Int      @default(2000) // Max response length
+  enabled           Boolean  @default(true) // Enable/disable globally
+  leadQualification Boolean  @default(true) // Auto-qualify leads
+  autoGreeting      Boolean  @default(true) // Show greeting on load
+  greetingDelay     Int      @default(3000) // Delay in ms before showing greeting
+  widgetPosition    String   @default("bottom-right") // Widget position
+  primaryColor      String   @default("#3b82f6") // Widget theme color
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
 
   @@index([enabled])
 }
 
 // AI Conversation History
 model AIConversation {
-  id              String   @id @default(cuid())
-  sessionId       String   @unique // Unique session identifier
-  visitorId       String?  // Anonymous visitor ID (from cookies)
-  leadId          String?  // Links to Lead model if converted
-  pageUrl         String   // Current page URL
-  pagePath        String   // URL path (e.g., /pages/shopify-product-page-customization)
-  pageTitle       String?  // Page title for context
-  pageContext     Json?    // Page-specific context (services, pricing, etc.)
-  messages        Json     // Array of {role: 'user'|'assistant', content: string, timestamp: string}
-  metadata        Json?    // Additional metadata (user agent, location, etc.)
-  status          String   @default("active") // active, converted, abandoned, closed
-  leadCaptured    Boolean  @default(false) // Has lead information been captured?
-  conversionData  Json?    // Captured lead data {name, email, phone, company, requirements}
-  sentimentScore  Float?   // Overall conversation sentiment (-1 to 1)
-  leadScore       Int?     // Lead quality score (0-100)
-  messageCount    Int      @default(0) // Total messages in conversation
-  lastMessageAt   DateTime @default(now()) // Last message timestamp
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  id             String   @id @default(cuid())
+  sessionId      String   @unique // Unique session identifier
+  visitorId      String? // Anonymous visitor ID (from cookies)
+  leadId         String? // Links to Lead model if converted
+  pageUrl        String // Current page URL
+  pagePath       String // URL path (e.g., /pages/shopify-product-page-customization)
+  pageTitle      String? // Page title for context
+  pageContext    Json? // Page-specific context (services, pricing, etc.)
+  messages       Json // Array of {role: 'user'|'assistant', content: string, timestamp: string}
+  metadata       Json? // Additional metadata (user agent, location, etc.)
+  status         String   @default("active") // active, converted, abandoned, closed
+  leadCaptured   Boolean  @default(false) // Has lead information been captured?
+  conversionData Json? // Captured lead data {name, email, phone, company, requirements}
+  sentimentScore Float? // Overall conversation sentiment (-1 to 1)
+  leadScore      Int? // Lead quality score (0-100)
+  messageCount   Int      @default(0) // Total messages in conversation
+  lastMessageAt  DateTime @default(now()) // Last message timestamp
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 
   @@index([sessionId])
   @@index([leadCaptured])
@@ -351,14 +351,14 @@ model AIConversation {
 
 // AI Analytics and Performance Metrics
 model AIAnalytics {
-  id              String   @id @default(cuid())
-  date            DateTime @db.Date // Daily metrics
-  conversationId  String?  // Optional link to specific conversation
-  pageUrl         String   // Page where interaction happened
-  metric          String   // Metric type (engagement, conversion, cost, etc.)
-  value           Float    // Metric value
-  metadata        Json?    // Additional metric data
-  createdAt       DateTime @default(now())
+  id             String   @id @default(cuid())
+  date           DateTime @db.Date // Daily metrics
+  conversationId String? // Optional link to specific conversation
+  pageUrl        String // Page where interaction happened
+  metric         String // Metric type (engagement, conversion, cost, etc.)
+  value          Float // Metric value
+  metadata       Json? // Additional metric data
+  createdAt      DateTime @default(now())
 
   @@index([date, metric])
   @@index([pageUrl])
@@ -366,62 +366,62 @@ model AIAnalytics {
 
 // Healthcare Lead Metadata - Extended lead information for healthcare software inquiries
 model HealthcareLeadMetadata {
-  id                String    @id @default(cuid())
-  leadId            String    @unique // Links to main Lead model
-  lead              Lead      @relation(fields: [leadId], references: [id], onDelete: Cascade)
-  
+  id     String @id @default(cuid())
+  leadId String @unique // Links to main Lead model
+  lead   Lead   @relation(fields: [leadId], references: [id], onDelete: Cascade)
+
   // Healthcare-specific fields
-  organization      String?   // Healthcare organization name
-  position          String?   // Job position/title
-  healthcareType    String?   // Type of healthcare facility (Hospital, Clinic, etc.)
-  currentSystem     String?   // Current system they're using
-  budget            String?   // Budget range
-  timeline          String?   // Project timeline
-  requirements      String?   @db.Text // Detailed requirements
-  complianceNeeds   String[]  // Array of compliance requirements (HIPAA, GDPR, etc.)
-  integrationNeeds  String[]  // Required integrations (HL7, FHIR, DICOM, etc.)
-  userCount         Int?      // Expected number of users
-  patientVolume     String?   // Expected patient volume
-  
+  organization     String? // Healthcare organization name
+  position         String? // Job position/title
+  healthcareType   String? // Type of healthcare facility (Hospital, Clinic, etc.)
+  currentSystem    String? // Current system they're using
+  budget           String? // Budget range
+  timeline         String? // Project timeline
+  requirements     String?  @db.Text // Detailed requirements
+  complianceNeeds  String[] // Array of compliance requirements (HIPAA, GDPR, etc.)
+  integrationNeeds String[] // Required integrations (HL7, FHIR, DICOM, etc.)
+  userCount        Int? // Expected number of users
+  patientVolume    String? // Expected patient volume
+
   // Technical requirements
-  platformPreference String?  // Web, Mobile, Desktop, Cloud
-  deploymentType     String?   // On-premise, Cloud, Hybrid
-  dataMigration      Boolean?  // Needs data migration
-  trainingRequired   Boolean?  // Needs training services
-  supportLevel       String?   // Support level required
-  
+  platformPreference String? // Web, Mobile, Desktop, Cloud
+  deploymentType     String? // On-premise, Cloud, Hybrid
+  dataMigration      Boolean? // Needs data migration
+  trainingRequired   Boolean? // Needs training services
+  supportLevel       String? // Support level required
+
   // Project context
-  projectStage       String?   // Planning, RFP, Implementation, etc.
-  decisionMakers     String[]  // Array of decision maker roles
-  budgetApproved     Boolean?  // Is budget approved
-  timelineUrgent     Boolean?  // Is timeline urgent
-  previousVendor     String?   // Previous software vendor
-  
+  projectStage   String? // Planning, RFP, Implementation, etc.
+  decisionMakers String[] // Array of decision maker roles
+  budgetApproved Boolean? // Is budget approved
+  timelineUrgent Boolean? // Is timeline urgent
+  previousVendor String? // Previous software vendor
+
   // Lead scoring and qualification
   leadScore          Int?      @default(0) // 0-100 lead quality score
-  qualificationLevel String?   // Hot, Warm, Cold
-  priority           String?   // High, Medium, Low
+  qualificationLevel String? // Hot, Warm, Cold
+  priority           String? // High, Medium, Low
   followUpDate       DateTime? // When to follow up
   notes              String?   @db.Text // Internal notes
-  
+
   // Tracking and analytics
-  sourcePage         String?   // Source landing page
-  utmSource          String?   // UTM source
-  utmMedium          String?   // UTM medium
-  utmCampaign        String?   // UTM campaign
-  utmTerm            String?   // UTM term
-  utmContent         String?   // UTM content
-  referrer          String?   // HTTP referrer
-  userAgent         String?   // User agent string
-  ipAddress         String?   // IP address
-  country           String?   // Country
-  city              String?   // City
-  deviceType        String?   // Desktop, Mobile, Tablet
-  browserType       String?   // Chrome, Firefox, Safari, etc.
-  
+  sourcePage  String? // Source landing page
+  utmSource   String? // UTM source
+  utmMedium   String? // UTM medium
+  utmCampaign String? // UTM campaign
+  utmTerm     String? // UTM term
+  utmContent  String? // UTM content
+  referrer    String? // HTTP referrer
+  userAgent   String? // User agent string
+  ipAddress   String? // IP address
+  country     String? // Country
+  city        String? // City
+  deviceType  String? // Desktop, Mobile, Tablet
+  browserType String? // Chrome, Firefox, Safari, etc.
+
   // Timestamps
-  createdAt         DateTime  @default(now())
-  updatedAt         DateTime  @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([leadId])
   @@index([healthcareType])
