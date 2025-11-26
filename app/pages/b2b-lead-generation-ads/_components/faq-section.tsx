@@ -55,7 +55,7 @@ export function FAQSection() {
           className="text-center mb-16"
         >
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-            B2B Lead Generation FAQ
+            Frequently Asked Questions About Hire B2B Lead Generation Expert
           </h2>
           <p className="text-xl text-gray-600">
             Get answers to common questions about our B2B lead generation services.

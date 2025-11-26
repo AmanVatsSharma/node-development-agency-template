@@ -86,7 +86,7 @@ export function PricingSection() {
           className="text-center mb-16"
         >
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-            E-commerce Google Ads Pricing
+            Hire Ecommerce Google Ads Expert Pricing & Packages
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Choose the perfect e-commerce plan for your online store. All plans include our 6.8× ROAS guarantee.

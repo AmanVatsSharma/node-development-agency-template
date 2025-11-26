@@ -65,7 +65,7 @@ export function TestimonialsSection() {
           className="text-center mb-16"
         >
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-            What Our B2B Clients Say
+            Client Success Stories with Hire B2B Lead Generation Expert
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Don't just take our word for it. Here's what B2B business leaders say about our lead generation strategies.

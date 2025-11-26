@@ -85,7 +85,7 @@ export function FAQSection() {
             id="faq-heading"
             className="text-[32px] leading-tight sm:text-4xl md:text-5xl lg:text-6xl font-black mb-4 sm:mb-5 text-gray-900 dark:text-white"
           >
-            Frequently Asked Questions
+            Frequently Asked Questions About Hire AI Chatbot Developer
           </h2>
 
           <p className="text-sm sm:text-base md:text-lg text-gray-700 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">

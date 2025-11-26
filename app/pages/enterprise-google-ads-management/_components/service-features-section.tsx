@@ -65,7 +65,7 @@ export function ServiceFeaturesSection() {
           className="text-center mb-16"
         >
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-            Enterprise-Grade Features
+            Hire Enterprise Google Ads Expert Services We Offer
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Our enterprise Google Ads management includes advanced features designed for large-scale operations and maximum ROI.
