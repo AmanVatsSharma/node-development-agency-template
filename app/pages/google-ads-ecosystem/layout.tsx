@@ -1,63 +1,95 @@
-import type { Metadata } from 'next';
+import { metadata } from './metadata';
+import { StructuredDataScript } from '@/app/lib/seo/structured-data';
+import {
+  generateServiceSchema,
+  generateFAQSchema,
+  generateBreadcrumbSchema,
+} from '@/app/lib/seo/structured-data';
 
-export const metadata: Metadata = {
-  title: 'Google Ads Ecosystem | Complete PPC Services | Rajapragya Bharat',
-  description: 'Master-level Google Ads ecosystem with 8+ specialized services. Enterprise management, e-commerce optimization, B2B lead generation, and more. 98% client retention, 7.2× average ROAS.',
-  keywords: [
-    'google ads ecosystem',
-    'ppc services india',
-    'google ads agency',
-    'enterprise google ads',
-    'ecommerce google ads',
-    'b2b lead generation',
-    'youtube advertising',
-    'performance max campaigns',
-    'google ads audit',
-    'landing page optimization',
-    'ppc management',
-    'digital marketing agency'
-  ],
-  openGraph: {
-    title: 'Google Ads Ecosystem | Complete PPC Services | Rajapragya Bharat',
-    description: 'Master-level Google Ads ecosystem with 8+ specialized services. Enterprise management, e-commerce optimization, B2B lead generation, and more.',
-    type: 'website',
-    locale: 'en_IN',
-    siteName: 'Rajapragya Bharat',
-    images: [
+export { metadata };
+
+/**
+ * Structured Data (JSON-LD) for Google Ads Ecosystem Page
+ */
+function StructuredData() {
+  const serviceSchema = generateServiceSchema({
+    serviceName: 'Google Ads Ecosystem Services',
+    serviceDescription: 'Complete Google Ads ecosystem services: Search, Display, Shopping, Video, Performance Max, and more. End-to-end PPC solutions for all campaign types and business goals.',
+    serviceType: 'Complete PPC Solutions',
+    areaServed: ['India', 'United States', 'United Kingdom', 'Canada', 'Australia'],
+    offers: [
       {
-        url: '/og-google-ads-ecosystem.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'Google Ads Ecosystem - Complete PPC Services'
-      }
-    ]
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Google Ads Ecosystem | Complete PPC Services',
-    description: 'Master-level Google Ads ecosystem with 8+ specialized services. 98% client retention, 7.2× average ROAS.',
-    images: ['/og-google-ads-ecosystem.jpg']
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
+        name: 'Ecosystem Starter',
+        description: 'Multi-channel setup, basic optimization across platforms',
+        price: '40000',
+        priceCurrency: 'INR',
+      },
+      {
+        name: 'Ecosystem Professional',
+        description: 'Advanced multi-channel management, cross-platform optimization',
+        price: '70000',
+        priceCurrency: 'INR',
+      },
+      {
+        name: 'Ecosystem Enterprise',
+        description: 'Full ecosystem management, custom solutions',
+        price: '120000',
+        priceCurrency: 'INR',
+      },
+    ],
+    aggregateRating: {
+      ratingValue: '4.8',
+      reviewCount: '390',
     },
-  },
-  alternates: {
-    canonical: '/pages/google-ads-ecosystem'
-  }
-};
+  });
+
+  const faqSchema = generateFAQSchema({
+    questions: [
+      {
+        question: 'What campaign types do you manage?',
+        answer: 'We manage all Google Ads campaign types including Search, Display, Shopping, Video (YouTube), Performance Max, Discovery, App, and Smart campaigns. We create integrated strategies across all channels.',
+      },
+      {
+        question: 'How do you coordinate multiple campaign types?',
+        answer: 'We use unified strategies, cross-channel attribution, and integrated reporting to ensure all campaign types work together effectively. This includes budget allocation, audience overlap management, and performance optimization.',
+      },
+      {
+        question: 'What is Performance Max and how do you optimize it?',
+        answer: 'Performance Max is Google\'s automated campaign type that uses AI to optimize across all Google properties. We optimize Performance Max through asset creation, audience signals, conversion tracking, and budget management.',
+      },
+      {
+        question: 'Do you handle YouTube advertising?',
+        answer: 'Yes, we manage YouTube advertising including TrueView, Bumper ads, and YouTube Shorts. We create video ad strategies, optimize targeting, and track video-specific conversions.',
+      },
+    ],
+  });
+
+  const breadcrumbSchema = generateBreadcrumbSchema({
+    items: [
+      { name: 'Home', url: '/' },
+      { name: 'Services', url: '/pages/services' },
+      { name: 'Google Ads Ecosystem', url: '/pages/google-ads-ecosystem' },
+    ],
+  });
+
+  return (
+    <>
+      <StructuredDataScript data={serviceSchema} />
+      <StructuredDataScript data={faqSchema} />
+      <StructuredDataScript data={breadcrumbSchema} />
+    </>
+  );
+}
 
 export default function GoogleAdsEcosystemLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return children;
+  return (
+    <>
+      <StructuredData />
+      {children}
+    </>
+  );
 }

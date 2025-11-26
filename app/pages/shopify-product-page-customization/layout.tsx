@@ -5,10 +5,89 @@
  */
 
 import { metadata as pageMetadata } from './metadata';
+import { StructuredDataScript } from '@/app/lib/seo/structured-data';
+import {
+  generateServiceSchema,
+  generateFAQSchema,
+  generateBreadcrumbSchema,
+} from '@/app/lib/seo/structured-data';
 
 console.log('[Shopify-Product-Page] Layout component loaded');
 
 export const metadata = pageMetadata;
+
+/**
+ * Structured Data (JSON-LD) for Shopify Product Page Customization Page
+ */
+function StructuredData() {
+  const serviceSchema = generateServiceSchema({
+    serviceName: 'Shopify Product Page Customization',
+    serviceDescription: 'Transform boring Shopify product pages into interactive, high-converting experiences. Custom Liquid + JS + Dynamic Features to boost conversions.',
+    serviceType: 'Shopify Development',
+    areaServed: ['India', 'United States', 'United Kingdom', 'Canada', 'Australia'],
+    offers: [
+      {
+        name: 'Basic Customization',
+        description: 'Basic product page customization with essential features',
+        price: '15000',
+        priceCurrency: 'INR',
+      },
+      {
+        name: 'Professional Customization',
+        description: 'Advanced customization with custom features and integrations',
+        price: '40000',
+        priceCurrency: 'INR',
+      },
+      {
+        name: 'Enterprise Customization',
+        description: 'Full customization with advanced features and ongoing support',
+        price: '75000',
+        priceCurrency: 'INR',
+      },
+    ],
+    aggregateRating: {
+      ratingValue: '4.8',
+      reviewCount: '320',
+    },
+  });
+
+  const faqSchema = generateFAQSchema({
+    questions: [
+      {
+        question: 'What can you customize on Shopify product pages?',
+        answer: 'We can customize product pages with custom layouts, variant selectors, bundle offers, upsell widgets, product configurators, dynamic pricing, and any custom features you need.',
+      },
+      {
+        question: 'How long does product page customization take?',
+        answer: 'Basic customizations take 1-2 weeks, while complex customizations with multiple features can take 3-6 weeks. We provide detailed timelines during project planning.',
+      },
+      {
+        question: 'Will customization affect my store performance?',
+        answer: 'No, we optimize all customizations for performance. We ensure fast page loads, mobile responsiveness, and compatibility with your existing theme.',
+      },
+      {
+        question: 'Do you provide ongoing support?',
+        answer: 'Yes, we offer ongoing support packages including updates, bug fixes, and feature additions. Support plans start from ₹10,000/month.',
+      },
+    ],
+  });
+
+  const breadcrumbSchema = generateBreadcrumbSchema({
+    items: [
+      { name: 'Home', url: '/' },
+      { name: 'Services', url: '/pages/services' },
+      { name: 'Shopify Product Page Customization', url: '/pages/shopify-product-page-customization' },
+    ],
+  });
+
+  return (
+    <>
+      <StructuredDataScript data={serviceSchema} />
+      <StructuredDataScript data={faqSchema} />
+      <StructuredDataScript data={breadcrumbSchema} />
+    </>
+  );
+}
 
 /**
  * Layout wrapper for Shopify Product Page Customization landing page
@@ -23,73 +102,7 @@ export default function ShopifyProductPageLayout({
 
   return (
     <>
-      {/* JSON-LD Structured Data for SEO */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'Service',
-            name: 'Shopify Product Page Customization',
-            description:
-              'Professional Shopify product page customization services with custom Liquid, JavaScript, and dynamic features to boost conversions.',
-            provider: {
-              '@type': 'Organization',
-              name: 'Vedpragya Bharat Pvt. Ltd.',
-              url: 'https://vedpragyabharat.com',
-              logo: 'https://vedpragyabharat.com/logo.png',
-              contactPoint: {
-                '@type': 'ContactPoint',
-                telephone: '+91-YOUR-NUMBER',
-                contactType: 'Sales',
-                areaServed: 'IN',
-                availableLanguage: ['en', 'hi'],
-              },
-            },
-            areaServed: 'IN',
-            serviceType: 'Shopify Development',
-            offers: {
-              '@type': 'AggregateOffer',
-              priceCurrency: 'INR',
-              lowPrice: '15000',
-              highPrice: '75000',
-              offerCount: '3',
-            },
-          }),
-        }}
-      />
-
-      {/* Breadcrumb Structured Data */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'BreadcrumbList',
-            itemListElement: [
-              {
-                '@type': 'ListItem',
-                position: 1,
-                name: 'Home',
-                item: 'https://vedpragyabharat.com',
-              },
-              {
-                '@type': 'ListItem',
-                position: 2,
-                name: 'Services',
-                item: 'https://vedpragyabharat.com/services',
-              },
-              {
-                '@type': 'ListItem',
-                position: 3,
-                name: 'Shopify Product Page Customization',
-                item: 'https://vedpragyabharat.com/pages/shopify-product-page-customization',
-              },
-            ],
-          }),
-        }}
-      />
-
+      <StructuredData />
       {children}
     </>
   );

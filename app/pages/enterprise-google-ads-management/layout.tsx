@@ -1,63 +1,95 @@
-import type { Metadata } from 'next';
+import { metadata } from './metadata';
+import { StructuredDataScript } from '@/app/lib/seo/structured-data';
+import {
+  generateServiceSchema,
+  generateFAQSchema,
+  generateBreadcrumbSchema,
+} from '@/app/lib/seo/structured-data';
 
-export const metadata: Metadata = {
-  title: 'Enterprise Google Ads Management | Dedicated PPC Team | Rajapragya Bharat',
-  description: 'Complete enterprise Google Ads management with dedicated team, advanced strategies, and 24/7 monitoring. ₹75K-₹2L+/month. 8.5× average ROAS, 98% client retention.',
-  keywords: [
-    'enterprise google ads management',
-    'dedicated ppc team',
-    'enterprise digital marketing',
-    'google ads agency enterprise',
-    'ppc management enterprise',
-    'google ads dedicated team',
-    'enterprise advertising',
-    'large business google ads',
-    'enterprise ppc services',
-    'dedicated account manager',
-    'enterprise marketing agency',
-    'google ads enterprise solutions'
-  ],
-  openGraph: {
-    title: 'Enterprise Google Ads Management | Dedicated PPC Team',
-    description: 'Complete enterprise Google Ads management with dedicated team, advanced strategies, and 24/7 monitoring. 8.5× average ROAS.',
-    type: 'website',
-    locale: 'en_IN',
-    siteName: 'Rajapragya Bharat',
-    images: [
+export { metadata };
+
+/**
+ * Structured Data (JSON-LD) for Enterprise Google Ads Management Page
+ */
+function StructuredData() {
+  const serviceSchema = generateServiceSchema({
+    serviceName: 'Enterprise Google Ads Management',
+    serviceDescription: 'Enterprise-grade Google Ads management for large organizations. Multi-account management, advanced automation, dedicated account managers, and enterprise-level reporting.',
+    serviceType: 'Enterprise PPC Management',
+    areaServed: ['India', 'United States', 'United Kingdom', 'Canada', 'Australia', 'Global'],
+    offers: [
       {
-        url: '/og-enterprise-google-ads.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'Enterprise Google Ads Management - Dedicated PPC Team'
-      }
-    ]
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Enterprise Google Ads Management | Dedicated PPC Team',
-    description: 'Complete enterprise Google Ads management with dedicated team, advanced strategies, and 24/7 monitoring.',
-    images: ['/og-enterprise-google-ads.jpg']
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
+        name: 'Enterprise Starter',
+        description: 'Multi-account management, dedicated manager, advanced reporting',
+        price: '100000',
+        priceCurrency: 'INR',
+      },
+      {
+        name: 'Enterprise Professional',
+        description: 'Full-scale management, automation, custom integrations',
+        price: '200000',
+        priceCurrency: 'INR',
+      },
+      {
+        name: 'Enterprise Custom',
+        description: 'Custom solutions for large-scale operations',
+        price: '500000',
+        priceCurrency: 'INR',
+      },
+    ],
+    aggregateRating: {
+      ratingValue: '4.9',
+      reviewCount: '180',
     },
-  },
-  alternates: {
-    canonical: '/pages/enterprise-google-ads-management'
-  }
-};
+  });
+
+  const faqSchema = generateFAQSchema({
+    questions: [
+      {
+        question: 'How do you handle multiple Google Ads accounts?',
+        answer: 'We use advanced account management tools and dedicated account managers to handle multiple accounts efficiently. This includes centralized reporting, cross-account optimization, and unified strategy implementation.',
+      },
+      {
+        question: 'What enterprise-level features do you provide?',
+        answer: 'We provide enterprise features including advanced automation, custom integrations, dedicated account managers, priority support, custom reporting dashboards, and strategic consulting.',
+      },
+      {
+        question: 'How do you scale campaigns for large organizations?',
+        answer: 'We use data-driven scaling strategies, automated bidding, advanced audience targeting, and performance-based budget allocation. Our approach ensures consistent growth while maintaining ROI targets.',
+      },
+      {
+        question: 'Do you provide custom integrations?',
+        answer: 'Yes, we provide custom integrations with CRM systems, analytics platforms, and internal tools. We work with your technical team to ensure seamless data flow and reporting.',
+      },
+    ],
+  });
+
+  const breadcrumbSchema = generateBreadcrumbSchema({
+    items: [
+      { name: 'Home', url: '/' },
+      { name: 'Services', url: '/pages/services' },
+      { name: 'Enterprise Google Ads Management', url: '/pages/enterprise-google-ads-management' },
+    ],
+  });
+
+  return (
+    <>
+      <StructuredDataScript data={serviceSchema} />
+      <StructuredDataScript data={faqSchema} />
+      <StructuredDataScript data={breadcrumbSchema} />
+    </>
+  );
+}
 
 export default function EnterpriseGoogleAdsLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return children;
+  return (
+    <>
+      <StructuredData />
+      {children}
+    </>
+  );
 }
