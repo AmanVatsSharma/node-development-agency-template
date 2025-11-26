@@ -1,20 +1,25 @@
 import { Metadata } from 'next';
-import { generateServiceMetadata, KEYWORD_SETS } from '@/app/lib/seo/metadata-generator';
+import { generateAdvancedServiceMetadata } from '@/app/lib/seo/advanced-metadata';
+import { WEB_DEVELOPMENT_KEYWORDS } from '@/app/lib/seo/keyword-research';
 
 /**
  * SEO Metadata for Website Development Landing Page
+ * Optimized for high-intent, lead-generating keywords
+ * 
+ * KEYWORD STRATEGY:
+ * - Primary: "hire web developer" (high buyer intent)
+ * - Secondary: Service-specific web development keywords
+ * - Long-tail: Technology-specific development keywords
+ * - Semantic: Related web development and design terms
  */
-export const metadata: Metadata = generateServiceMetadata(
-  'Website Development Services | Custom Web Solutions',
-  'Professional website development services. Custom websites, responsive design, CMS integration, ecommerce solutions, and modern web applications. Build your online presence.',
-  [
-    ...KEYWORD_SETS.webDevelopment,
-    'website development',
-    'custom websites',
-    'web design',
-    'responsive web design',
-    'website builder',
-  ],
+
+export const metadata: Metadata = generateAdvancedServiceMetadata(
+  'Hire Web Developer | Website Development Services',
+  'Professional website development services. Custom websites, responsive design, CMS integration, ecommerce solutions, and modern web applications.',
+  WEB_DEVELOPMENT_KEYWORDS,
   '/pages/website-development',
-  '/images/website-development-og.jpg'
+  {
+    ogImage: '/images/website-development-og.jpg',
+    cta: 'Get free consultation today!',
+  }
 );

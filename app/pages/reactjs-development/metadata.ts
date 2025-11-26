@@ -1,21 +1,25 @@
 import { Metadata } from 'next';
-import { generateServiceMetadata, KEYWORD_SETS } from '@/app/lib/seo/metadata-generator';
+import { generateAdvancedServiceMetadata } from '@/app/lib/seo/advanced-metadata';
+import { REACTJS_KEYWORDS } from '@/app/lib/seo/keyword-research';
 
 /**
  * SEO Metadata for React.js Development Landing Page
+ * Optimized for high-intent, lead-generating keywords
+ * 
+ * KEYWORD STRATEGY:
+ * - Primary: "hire react developer" (high buyer intent)
+ * - Secondary: Service-specific React development keywords
+ * - Long-tail: Technology-specific React keywords
+ * - Semantic: Related React and frontend development terms
  */
-export const metadata: Metadata = generateServiceMetadata(
-  'React.js Development Services | Custom React Applications',
+
+export const metadata: Metadata = generateAdvancedServiceMetadata(
+  'Hire React Developer | React.js Development Services',
   'Expert React.js development services. Custom React applications, React Native mobile apps, component libraries, and modern web solutions. Enterprise-grade React development.',
-  [
-    ...KEYWORD_SETS.webDevelopment,
-    'react.js development',
-    'react development services',
-    'react.js developers',
-    'react applications',
-    'react native',
-    'frontend development',
-  ],
+  REACTJS_KEYWORDS,
   '/pages/reactjs-development',
-  '/images/reactjs-development-og.jpg'
+  {
+    ogImage: '/images/reactjs-development-og.jpg',
+    cta: 'Get free consultation today!',
+  }
 );
