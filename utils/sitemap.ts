@@ -7,12 +7,15 @@ const SITE_URL = 'https://enterprisehero.com';
 // Define your static pages here
 // NOTE: Admin pages and login are intentionally excluded from sitemap for SEO
 const staticPages = [
+  // Homepage - Highest Priority
   {
     url: '/',
     lastMod: new Date().toISOString(),
     changeFreq: 'weekly',
     priority: 1.0
   },
+  
+  // Main Navigation Pages
   {
     url: '/pages/about',
     lastMod: new Date().toISOString(),
@@ -23,7 +26,7 @@ const staticPages = [
     url: '/pages/services',
     lastMod: new Date().toISOString(),
     changeFreq: 'monthly',
-    priority: 0.8
+    priority: 0.9
   },
   {
     url: '/pages/portfolio',
@@ -49,6 +52,217 @@ const staticPages = [
     changeFreq: 'monthly',
     priority: 0.7
   },
+
+  // Google Ads Services (High Priority - Main Services)
+  {
+    url: '/pages/google-ads-management',
+    lastMod: new Date().toISOString(),
+    changeFreq: 'weekly',
+    priority: 0.9
+  },
+  {
+    url: '/pages/google-ads-ecosystem',
+    lastMod: new Date().toISOString(),
+    changeFreq: 'weekly',
+    priority: 0.9
+  },
+  {
+    url: '/pages/b2b-lead-generation-ads',
+    lastMod: new Date().toISOString(),
+    changeFreq: 'weekly',
+    priority: 0.9
+  },
+  {
+    url: '/pages/ecommerce-google-ads-optimization',
+    lastMod: new Date().toISOString(),
+    changeFreq: 'weekly',
+    priority: 0.9
+  },
+  {
+    url: '/pages/enterprise-google-ads-management',
+    lastMod: new Date().toISOString(),
+    changeFreq: 'weekly',
+    priority: 0.9
+  },
+  {
+    url: '/pages/google-ads-audit-strategy',
+    lastMod: new Date().toISOString(),
+    changeFreq: 'weekly',
+    priority: 0.9
+  },
+  {
+    url: '/pages/local-business-google-ads',
+    lastMod: new Date().toISOString(),
+    changeFreq: 'weekly',
+    priority: 0.9
+  },
+  {
+    url: '/pages/performance-max-campaigns',
+    lastMod: new Date().toISOString(),
+    changeFreq: 'weekly',
+    priority: 0.9
+  },
+  {
+    url: '/pages/youtube-advertising-management',
+    lastMod: new Date().toISOString(),
+    changeFreq: 'weekly',
+    priority: 0.9
+  },
+
+  // SEO Services
+  {
+    url: '/pages/seo-audit',
+    lastMod: new Date().toISOString(),
+    changeFreq: 'weekly',
+    priority: 0.9
+  },
+  {
+    url: '/pages/landing-page-optimization',
+    lastMod: new Date().toISOString(),
+    changeFreq: 'weekly',
+    priority: 0.9
+  },
+
+  // Web Development Services (High Priority)
+  {
+    url: '/pages/web-development',
+    lastMod: new Date().toISOString(),
+    changeFreq: 'weekly',
+    priority: 0.9
+  },
+  {
+    url: '/pages/web-development-mumbai',
+    lastMod: new Date().toISOString(),
+    changeFreq: 'weekly',
+    priority: 0.9
+  },
+  {
+    url: '/pages/website-development',
+    lastMod: new Date().toISOString(),
+    changeFreq: 'weekly',
+    priority: 0.9
+  },
+  {
+    url: '/pages/website-services',
+    lastMod: new Date().toISOString(),
+    changeFreq: 'weekly',
+    priority: 0.9
+  },
+  {
+    url: '/pages/business-website',
+    lastMod: new Date().toISOString(),
+    changeFreq: 'weekly',
+    priority: 0.9
+  },
+  {
+    url: '/pages/next-js-development',
+    lastMod: new Date().toISOString(),
+    changeFreq: 'weekly',
+    priority: 0.9
+  },
+  {
+    url: '/pages/reactjs-development',
+    lastMod: new Date().toISOString(),
+    changeFreq: 'weekly',
+    priority: 0.9
+  },
+
+  // Shopify Services
+  {
+    url: '/pages/shopify-headless-migration',
+    lastMod: new Date().toISOString(),
+    changeFreq: 'weekly',
+    priority: 0.9
+  },
+  {
+    url: '/pages/shopify-product-page-customization',
+    lastMod: new Date().toISOString(),
+    changeFreq: 'weekly',
+    priority: 0.9
+  },
+  {
+    url: '/pages/shopify-store-setup',
+    lastMod: new Date().toISOString(),
+    changeFreq: 'weekly',
+    priority: 0.9
+  },
+
+  // Specialized Services
+  {
+    url: '/pages/ai-chatbot-development',
+    lastMod: new Date().toISOString(),
+    changeFreq: 'weekly',
+    priority: 0.9
+  },
+  {
+    url: '/pages/ai-voice-agents',
+    lastMod: new Date().toISOString(),
+    changeFreq: 'weekly',
+    priority: 0.9
+  },
+  {
+    url: '/pages/crm',
+    lastMod: new Date().toISOString(),
+    changeFreq: 'weekly',
+    priority: 0.9
+  },
+  {
+    url: '/pages/healthcare-software-development',
+    lastMod: new Date().toISOString(),
+    changeFreq: 'weekly',
+    priority: 0.9
+  },
+  {
+    url: '/pages/nse-mcx-live-market-data',
+    lastMod: new Date().toISOString(),
+    changeFreq: 'weekly',
+    priority: 0.9
+  },
+  {
+    url: '/pages/trading-software',
+    lastMod: new Date().toISOString(),
+    changeFreq: 'weekly',
+    priority: 0.9
+  },
+  {
+    url: '/pages/whatsapp-business-api',
+    lastMod: new Date().toISOString(),
+    changeFreq: 'weekly',
+    priority: 0.9
+  },
+
+  // Legal Pages (Lower Priority)
+  {
+    url: '/pages/legal/terms-of-service',
+    lastMod: new Date().toISOString(),
+    changeFreq: 'yearly',
+    priority: 0.5
+  },
+  {
+    url: '/pages/legal/privacy-policy',
+    lastMod: new Date().toISOString(),
+    changeFreq: 'yearly',
+    priority: 0.5
+  },
+  {
+    url: '/pages/legal/cancellations-refunds',
+    lastMod: new Date().toISOString(),
+    changeFreq: 'yearly',
+    priority: 0.5
+  },
+  {
+    url: '/pages/legal/shipping-policy',
+    lastMod: new Date().toISOString(),
+    changeFreq: 'yearly',
+    priority: 0.5
+  },
+  {
+    url: '/pages/legal/company-info',
+    lastMod: new Date().toISOString(),
+    changeFreq: 'yearly',
+    priority: 0.5
+  },
+  
   // Admin pages are NOT included for SEO purposes
   // /pages/admin/* - excluded
   // /login - excluded
