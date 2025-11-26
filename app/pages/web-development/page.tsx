@@ -14,6 +14,9 @@ import { PricingSection } from "@/app/pages/web-development/_components/pricing-
 import { FAQSection as WDFAQ } from "@/app/pages/website-development/_components/faq-section";
 import { AnimatedBannerCta as WDBannerCta } from "@/app/pages/website-development/_components/animated-banner-cta";
 import { ContactSection as WDContact } from "@/app/pages/website-development/_components/contact-section";
+import { Breadcrumbs } from '@/app/components/SEO/Breadcrumbs';
+import { RelatedServices } from '@/app/components/SEO/RelatedServices';
+import { getBreadcrumbItems, getRelatedServicesTitle } from '@/app/lib/seo/page-helpers';
 
 function WebDevelopmentPage() {
   useEffect(() => {
@@ -23,6 +26,11 @@ function WebDevelopmentPage() {
 
   return (
     <>
+      {/* Breadcrumb Navigation - SEO Optimized */}
+      <div className="container mx-auto px-4 pt-8">
+        <Breadcrumbs items={getBreadcrumbItems('web-development')} />
+      </div>
+
       {/* Hero */}
       <SectionErrorBoundary name="Hero">
         <WDHero />
@@ -61,6 +69,14 @@ function WebDevelopmentPage() {
       {/* CTA Banner */}
       <SectionErrorBoundary name="BannerCTA">
         <WDBannerCta />
+      </SectionErrorBoundary>
+
+      {/* Related Services - Internal Linking for SEO */}
+      <SectionErrorBoundary name="RelatedServices">
+        <RelatedServices 
+          currentPage="web-development"
+          title={getRelatedServicesTitle('web-development')}
+        />
       </SectionErrorBoundary>
 
       {/* Contact */}

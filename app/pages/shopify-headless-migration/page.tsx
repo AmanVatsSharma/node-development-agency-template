@@ -63,6 +63,9 @@ import { FinalCTASection } from './_components/final-cta-section';
 import { MobileFloatingCTA } from './_components/mobile-floating-cta';
 import { ScrollToTop } from './_components/scroll-to-top';
 import { SectionErrorBoundary } from '@/app/components/common/SectionErrorBoundary';
+import { Breadcrumbs } from '@/app/components/SEO/Breadcrumbs';
+import { RelatedServices } from '@/app/components/SEO/RelatedServices';
+import { getBreadcrumbItems, getRelatedServicesTitle } from '@/app/lib/seo/page-helpers';
 
 console.log('[Shopify-Headless] Main page component loaded');
 console.log('[Shopify-Headless] Brand Colors - Primary: #0F172A, Accent: #00E0B8');
@@ -152,6 +155,11 @@ export default function ShopifyHeadlessMigrationPage() {
 
   return (
     <main className="min-h-screen bg-[#F9FAFB] dark:bg-[#0F172A]">
+      {/* Breadcrumb Navigation - SEO Optimized */}
+      <div className="container mx-auto px-4 pt-8">
+        <Breadcrumbs items={getBreadcrumbItems('shopify-headless-migration')} />
+      </div>
+
       {/* Hero Section - Strong Value Proposition with Neural Animation */}
       <SectionErrorBoundary name="HeroSection">
         <HeroSection />
@@ -195,6 +203,14 @@ export default function ShopifyHeadlessMigrationPage() {
       {/* Case Studies - Real Results */}
       <SectionErrorBoundary name="CaseStudiesSection">
         <CaseStudiesSection />
+      </SectionErrorBoundary>
+
+      {/* Related Services - Internal Linking for SEO */}
+      <SectionErrorBoundary name="RelatedServices">
+        <RelatedServices 
+          currentPage="shopify-headless-migration"
+          title={getRelatedServicesTitle('shopify-headless-migration')}
+        />
       </SectionErrorBoundary>
 
       {/* Final CTA - Strong Closing with WhatsApp */}

@@ -85,18 +85,18 @@ export function HeroSection() {
                 ))}
               </motion.div>
 
-              {/* Main Headline - MOBILE OPTIMIZED */}
+              {/* Main Headline - SEO Optimized */}
               <motion.h1 
                 id="hero-heading"
                 variants={fadeInUp}
                 className="text-[28px] leading-[1.15] sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black mb-4 sm:mb-5 tracking-tight"
               >
                 <span className="text-gray-900 dark:text-white block mb-2">
-                  Build the Future
+                  Hire Next.js Developer
                 </span>
                 <span className="block">
                   <Highlight className="text-gray-900 dark:text-white bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 dark:from-blue-500 dark:via-indigo-500 dark:to-purple-500">
-                    with Next.js
+                    Professional Next.js Development Services
                   </Highlight>
                 </span>
               </motion.h1>
