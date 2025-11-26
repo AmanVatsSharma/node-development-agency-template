@@ -102,22 +102,19 @@ export function HeroSection() {
                 ))}
               </motion.div>
 
-              {/* Main Headline */}
+              {/* Main Headline - SEO Optimized */}
               <motion.h1 
                 id="hero-heading"
                 variants={fadeInUp}
                 className="text-[28px] leading-[1.15] sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black mb-4 sm:mb-5 tracking-tight text-white"
               >
                 <span className="block mb-2">
-                  Enterprise-Grade
+                  Hire Trading Software Developer
                 </span>
                 <span className="block">
                   <Highlight className="text-white bg-gradient-to-r from-[#00FF88] via-[#00dd77] to-[#00FF88]">
-                    Trading Platform
+                    Professional Trading Software Development Services
                   </Highlight>
-                </span>
-                <span className="block mt-2 text-3xl sm:text-4xl md:text-5xl">
-                  Built for Modern Brokers
                 </span>
               </motion.h1>
 

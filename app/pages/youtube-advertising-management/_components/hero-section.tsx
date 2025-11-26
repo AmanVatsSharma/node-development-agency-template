@@ -96,7 +96,7 @@ export function HeroSection() {
               </span>
             </motion.div>
 
-            {/* Main Headline */}
+            {/* Main Headline - SEO Optimized */}
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -104,11 +104,11 @@ export function HeroSection() {
               className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight"
             >
               <span className="bg-gradient-to-r from-red-400 via-rose-400 to-pink-400 bg-clip-text text-transparent">
-                Video Ads That
+                Hire YouTube Advertising Expert
               </span>
               <br />
               <span className="text-white">
-                Drive Results
+                Professional YouTube Advertising Management Services
               </span>
             </motion.h1>
 

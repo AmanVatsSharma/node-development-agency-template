@@ -157,22 +157,19 @@ export function HeroSection() {
                 </div>
               </motion.div>
 
-              {/* Main Headline */}
+              {/* Main Headline - SEO Optimized */}
               <motion.h1 
                 id="hero-heading"
                 variants={fadeInUp}
                 className="text-[32px] leading-[1.1] sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black mb-5 tracking-tight text-white"
               >
                 <span className="block mb-3">
-                  Real-Time NSE & MCX
+                  Hire NSE MCX Market Data API Developer
                 </span>
                 <span className="block mb-3">
                   <Highlight className="text-white bg-gradient-to-r from-[#00FF88] via-[#00CC70] to-[#FFD700]">
-                    Market Data at Your
+                    Professional NSE MCX Live Market Data API Services
                   </Highlight>
-                </span>
-                <span className="block text-white/90 text-[28px] sm:text-4xl md:text-5xl font-black">
-                  Fingertips ⚡
                 </span>
               </motion.h1>
 

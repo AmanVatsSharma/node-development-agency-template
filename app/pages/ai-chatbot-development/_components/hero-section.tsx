@@ -87,18 +87,18 @@ export function HeroSection() {
                 ))}
               </motion.div>
 
-              {/* Main Headline - MOBILE OPTIMIZED */}
+              {/* Main Headline - SEO Optimized */}
               <motion.h1 
                 id="hero-heading"
                 variants={fadeInUp}
                 className="text-[28px] leading-[1.15] sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black mb-4 sm:mb-5 tracking-tight"
               >
                 <span className="text-gray-900 dark:text-white block mb-2">
-                  Turn Conversations into
+                  Hire AI Chatbot Developer
                 </span>
                 <span className="block">
                   <Highlight className="text-gray-900 dark:text-white bg-gradient-to-r from-[#0A2540] via-[#FFB100] to-[#0A2540] dark:from-[#FFB100] dark:via-[#0A2540] dark:to-[#FFB100]">
-                    Conversions
+                    Professional AI Chatbot Development Services
                   </Highlight>
                 </span>
               </motion.h1>

@@ -82,22 +82,19 @@ export function HeroSection() {
                 ))}
               </motion.div>
 
-              {/* Main Headline - MOBILE OPTIMIZED */}
+              {/* Main Headline - SEO Optimized */}
               <motion.h1 
                 id="hero-heading"
                 variants={fadeInUp}
                 className="text-[28px] leading-[1.15] sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black mb-4 sm:mb-5 tracking-tight"
               >
                 <span className="text-gray-900 dark:text-white block mb-2">
-                  🚀 Build Lightning-Fast,
+                  Hire ReactJS Developer
                 </span>
                 <span className="block">
                   <Highlight className="text-gray-900 dark:text-white bg-gradient-to-r from-[#61DAFB] via-[#00C897] to-[#61DAFB] dark:from-[#61DAFB] dark:via-[#00C897] dark:to-[#61DAFB]">
-                    Scalable Web Apps
+                    Professional ReactJS Development Services
                   </Highlight>
-                </span>
-                <span className="text-gray-900 dark:text-white block mt-2">
-                  with ReactJS
                 </span>
               </motion.h1>
 

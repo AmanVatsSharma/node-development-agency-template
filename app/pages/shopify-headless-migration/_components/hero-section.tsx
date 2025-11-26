@@ -140,17 +140,17 @@ export function HeroSection() {
                 ))}
               </motion.div>
 
-              {/* Main Headline */}
+              {/* Main Headline - SEO Optimized */}
               <motion.h1 
                 id="hero-heading"
                 variants={fadeInUp}
                 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-6 tracking-tight"
               >
                 <span className="text-white block mb-2">
-                  Go Headless.
+                  Hire Shopify Headless Developer
                 </span>
                 <span className="block bg-gradient-to-r from-[#00E0B8] via-cyan-400 to-blue-400 bg-clip-text text-transparent">
-                  Go Limitless.
+                  Professional Shopify Headless Migration Services
                 </span>
               </motion.h1>
 

@@ -160,14 +160,14 @@ export function HeroSection() {
               <span className="text-green-400 text-sm font-medium">HIPAA Compliant • 100+ Healthcare Providers</span>
             </motion.div>
 
-            {/* Main Headline */}
+            {/* Main Headline - SEO Optimized */}
             <motion.h1 
               className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight"
               variants={fadeInUp}
             >
-              Transform Healthcare with{' '}
+              Hire Healthcare Software Developer |{' '}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-400 to-green-400">
-                Cutting-Edge Software
+                Professional Healthcare Software Development Services
               </span>
             </motion.h1>
 

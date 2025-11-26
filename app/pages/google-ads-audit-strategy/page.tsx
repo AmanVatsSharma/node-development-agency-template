@@ -15,6 +15,9 @@ import { FAQSection } from './_components/faq-section';
 import { FinalCTASection } from './_components/final-cta-section';
 import { MobileFloatingCTA } from './_components/mobile-floating-cta';
 import { ScrollToTop } from './_components/scroll-to-top';
+import { Breadcrumbs } from '@/app/components/SEO/Breadcrumbs';
+import { RelatedServices } from '@/app/components/SEO/RelatedServices';
+import { getBreadcrumbItems, getRelatedServicesTitle } from '@/app/lib/seo/page-helpers';
 
 export default function GoogleAdsAuditStrategyPage() {
   useEffect(() => {
@@ -33,6 +36,11 @@ export default function GoogleAdsAuditStrategyPage() {
 
   return (
     <main className="min-h-screen">
+      {/* Breadcrumb Navigation - SEO Optimized */}
+      <div className="container mx-auto px-4 pt-8">
+        <Breadcrumbs items={getBreadcrumbItems('google-ads-audit-strategy')} />
+      </div>
+
       {/* Hero Section */}
       <SectionErrorBoundary name="HeroSection">
         <HeroSection />
@@ -76,6 +84,14 @@ export default function GoogleAdsAuditStrategyPage() {
       {/* FAQ Section */}
       <SectionErrorBoundary name="FAQSection">
         <FAQSection />
+      </SectionErrorBoundary>
+
+      {/* Related Services - Internal Linking for SEO */}
+      <SectionErrorBoundary name="RelatedServices">
+        <RelatedServices 
+          currentPage="google-ads-audit-strategy"
+          title={getRelatedServicesTitle('google-ads-audit-strategy')}
+        />
       </SectionErrorBoundary>
 
       {/* Service Navigation */}

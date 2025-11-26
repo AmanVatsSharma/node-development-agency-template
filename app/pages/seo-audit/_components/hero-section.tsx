@@ -54,20 +54,17 @@ export function HeroSection() {
               </span>
             </motion.div>
 
-            {/* Main Headline */}
+            {/* Main Headline - SEO Optimized */}
             <motion.h1 
               id="hero-heading"
               variants={fadeInUp}
               className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 leading-tight"
             >
               <span className="text-gray-900 dark:text-white">
-                Free SEO Audit — Get a{' '}
+                Hire SEO Expert
               </span>
-              <span className="bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent">
-                60-Second Health Check
-              </span>
-              <span className="text-gray-900 dark:text-white">
-                {' '}for Your Website
+              <span className="bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent block">
+                Professional SEO Audit Services
               </span>
             </motion.h1>
 

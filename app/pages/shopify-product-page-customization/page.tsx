@@ -52,6 +52,9 @@ import { FinalCTASection } from './_components/final-cta-section';
 import { MobileFloatingCTA } from './_components/mobile-floating-cta';
 import { ScrollToTop } from './_components/scroll-to-top';
 import { SectionErrorBoundary } from './_components/section-error-boundary';
+import { Breadcrumbs } from '@/app/components/SEO/Breadcrumbs';
+import { RelatedServices } from '@/app/components/SEO/RelatedServices';
+import { getBreadcrumbItems, getRelatedServicesTitle } from '@/app/lib/seo/page-helpers';
 
 console.log('[Shopify-Product-Page] Main page component loaded');
 
@@ -104,6 +107,11 @@ export default function ShopifyProductPageCustomizationPage() {
 
   return (
     <main className="min-h-screen">
+      {/* Breadcrumb Navigation - SEO Optimized */}
+      <div className="container mx-auto px-4 pt-8">
+        <Breadcrumbs items={getBreadcrumbItems('shopify-product-page-customization')} />
+      </div>
+
       {/* Hero Section - "Turn Your Product Page into a Sales Engine" */}
       <SectionErrorBoundary name="HeroSection">
         <HeroSection />
@@ -157,6 +165,14 @@ export default function ShopifyProductPageCustomizationPage() {
       {/* Lead Form - Primary Conversion Point */}
       <SectionErrorBoundary name="LeadFormSection">
         <LeadFormSection />
+      </SectionErrorBoundary>
+
+      {/* Related Services - Internal Linking for SEO */}
+      <SectionErrorBoundary name="RelatedServices">
+        <RelatedServices 
+          currentPage="shopify-product-page-customization"
+          title={getRelatedServicesTitle('shopify-product-page-customization')}
+        />
       </SectionErrorBoundary>
 
       {/* Final CTA - Strong Closing */}

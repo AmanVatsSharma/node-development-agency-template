@@ -96,7 +96,7 @@ export function HeroSection() {
               </span>
             </motion.div>
 
-            {/* Main Headline */}
+            {/* Main Headline - SEO Optimized */}
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -104,11 +104,11 @@ export function HeroSection() {
               className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight"
             >
               <span className="bg-gradient-to-r from-purple-400 via-indigo-400 to-blue-400 bg-clip-text text-transparent">
-                AI-Powered Campaigns
+                Hire Performance Max Expert
               </span>
               <br />
               <span className="text-white">
-                That Scale
+                Professional Performance Max Campaign Management Services
               </span>
             </motion.h1>
 

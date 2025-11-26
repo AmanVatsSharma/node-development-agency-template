@@ -77,18 +77,18 @@ export function HeroSection() {
                 ))}
               </motion.div>
 
-              {/* Main Headline */}
+              {/* Main Headline - SEO Optimized */}
               <motion.h1 
                 id="hero-heading"
                 variants={fadeInUp}
                 className="text-[28px] leading-[1.15] sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black mb-4 sm:mb-5 tracking-tight text-white"
               >
                 <span className="block mb-2">
-                  Your AI Receptionist
+                  Hire AI Voice Agent Developer
                 </span>
                 <span className="block">
                   <Highlight className="text-white bg-gradient-to-r from-[#FF7A00] via-[#ff9933] to-[#FF7A00]">
-                    That Never Misses a Call
+                    Professional AI Voice Agent Development Services
                   </Highlight>
                 </span>
               </motion.h1>

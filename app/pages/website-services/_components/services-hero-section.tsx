@@ -81,7 +81,7 @@ export function ServicesHero() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6"
           >
-            Expert Solutions for Your <span className="text-gradient">Digital Needs</span>
+            Hire Web Development Expert | <span className="text-gradient">Professional Website Services</span>
           </motion.h1>
           
           <motion.p

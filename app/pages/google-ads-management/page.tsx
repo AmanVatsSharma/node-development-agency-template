@@ -40,6 +40,7 @@ import { ScrollToTop } from './_components/scroll-to-top';
 import { SectionErrorBoundary } from './_components/section-error-boundary';
 import { RelatedServices } from '@/app/components/SEO/RelatedServices';
 import { Breadcrumbs } from '@/app/components/SEO/Breadcrumbs';
+import { getBreadcrumbItems, getRelatedServicesTitle } from '@/app/lib/seo/page-helpers';
 
 console.log('[Google-Ads] Main page component loaded');
 
@@ -96,13 +97,7 @@ export default function GoogleAdsManagementPage() {
     <main className="min-h-screen">
       {/* Breadcrumb Navigation - SEO Optimized */}
       <div className="container mx-auto px-4 pt-8">
-        <Breadcrumbs 
-          items={[
-            { name: 'Home', url: '/' },
-            { name: 'Services', url: '/pages/services' },
-            { name: 'Google Ads Management', url: '/pages/google-ads-management' },
-          ]}
-        />
+        <Breadcrumbs items={getBreadcrumbItems('google-ads-management')} />
       </div>
 
       {/* Hero Section - Drive Clicks into Customers */}
@@ -164,7 +159,7 @@ export default function GoogleAdsManagementPage() {
       <SectionErrorBoundary name="RelatedServices">
         <RelatedServices 
           currentPage="google-ads-management"
-          title="Related Google Ads & Marketing Services"
+          title={getRelatedServicesTitle('google-ads-management')}
         />
       </SectionErrorBoundary>
 

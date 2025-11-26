@@ -62,6 +62,9 @@ import { FinalCTASection } from './_components/final-cta-section';
 import { MobileFloatingCTA } from './_components/mobile-floating-cta';
 import { ScrollToTop } from './_components/scroll-to-top';
 import { SectionErrorBoundary } from './_components/section-error-boundary';
+import { Breadcrumbs } from '@/app/components/SEO/Breadcrumbs';
+import { RelatedServices } from '@/app/components/SEO/RelatedServices';
+import { getBreadcrumbItems, getRelatedServicesTitle } from '@/app/lib/seo/page-helpers';
 
 console.log('[Market-Data-API] Main page component loaded');
 
@@ -122,6 +125,11 @@ export default function NSEMCXLiveMarketDataPage() {
 
   return (
     <main className="min-h-screen bg-white dark:bg-gray-900">
+      {/* Breadcrumb Navigation - SEO Optimized */}
+      <div className="container mx-auto px-4 pt-8">
+        <Breadcrumbs items={getBreadcrumbItems('nse-mcx-live-market-data')} />
+      </div>
+
       {/* 1. Hero Section - Animated Stock Ticker + Live Data Viz */}
       <SectionErrorBoundary name="HeroSection">
         <HeroSection />
@@ -195,6 +203,14 @@ export default function NSEMCXLiveMarketDataPage() {
       {/* 15. Lead Form - Primary Conversion Point */}
       <SectionErrorBoundary name="LeadFormSection">
         <LeadFormSection />
+      </SectionErrorBoundary>
+
+      {/* Related Services - Internal Linking for SEO */}
+      <SectionErrorBoundary name="RelatedServices">
+        <RelatedServices 
+          currentPage="nse-mcx-live-market-data"
+          title={getRelatedServicesTitle('nse-mcx-live-market-data')}
+        />
       </SectionErrorBoundary>
 
       {/* 16. Final CTA - Strong Closing */}

@@ -112,7 +112,7 @@ export function HeroSection() {
               Mumbai's #1 Web Development Company
             </motion.div>
 
-            {/* Main Headline */}
+            {/* Main Headline - SEO Optimized */}
             <motion.h1
               initial="hidden"
               animate={inView ? "show" : "hidden"}
@@ -121,7 +121,7 @@ export function HeroSection() {
               className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-[1.1]"
             >
               <HeroHighlight className="text-white">
-                Mumbai's #1 Web Development Company
+                Hire Web Developer in Mumbai | Professional Mumbai Web Development Services
               </HeroHighlight>
             </motion.h1>
 

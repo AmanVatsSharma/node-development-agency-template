@@ -33,6 +33,9 @@ import { FinalCTASection } from './_components/final-cta-section';
 import { MobileFloatingCTA } from './_components/mobile-floating-cta';
 import { ScrollToTop } from './_components/scroll-to-top';
 import { SectionErrorBoundary } from './_components/section-error-boundary';
+import { Breadcrumbs } from '@/app/components/SEO/Breadcrumbs';
+import { RelatedServices } from '@/app/components/SEO/RelatedServices';
+import { getBreadcrumbItems, getRelatedServicesTitle } from '@/app/lib/seo/page-helpers';
 
 /**
  * AI Voice Agents Landing Page Component
@@ -86,6 +89,11 @@ export default function AIVoiceAgentsPage() {
 
   return (
     <main className="min-h-screen bg-white dark:bg-gray-900">
+      {/* Breadcrumb Navigation - SEO Optimized */}
+      <div className="container mx-auto px-4 pt-8">
+        <Breadcrumbs items={getBreadcrumbItems('ai-voice-agents')} />
+      </div>
+
       {/* 1. Hero - "Your AI Receptionist That Never Misses a Call" */}
       <SectionErrorBoundary name="HeroSection">
         <HeroSection />
@@ -144,6 +152,14 @@ export default function AIVoiceAgentsPage() {
       {/* 12. Lead Form - Primary Conversion Point */}
       <SectionErrorBoundary name="LeadFormSection">
         <LeadFormSection />
+      </SectionErrorBoundary>
+
+      {/* Related Services - Internal Linking for SEO */}
+      <SectionErrorBoundary name="RelatedServices">
+        <RelatedServices 
+          currentPage="ai-voice-agents"
+          title={getRelatedServicesTitle('ai-voice-agents')}
+        />
       </SectionErrorBoundary>
 
       {/* 13. Final CTA - Strong Closing */}
