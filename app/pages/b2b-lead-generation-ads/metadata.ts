@@ -1,23 +1,29 @@
 import { Metadata } from 'next';
-import { generateServiceMetadata, KEYWORD_SETS } from '@/app/lib/seo/metadata-generator';
+import { generateAdvancedServiceMetadata } from '@/app/lib/seo/advanced-metadata';
+import { B2B_LEAD_GENERATION_KEYWORDS } from '@/app/lib/seo/keyword-research';
 
 /**
  * SEO Metadata for B2B Lead Generation Ads Landing Page
- * Optimized for search engines and social media sharing
+ * Optimized for high-intent, lead-generating keywords
+ * 
+ * KEYWORD STRATEGY:
+ * - Primary: "hire b2b lead generation expert" (high buyer intent)
+ * - Secondary: Service-specific B2B marketing keywords
+ * - Long-tail: Industry-specific lead generation keywords
+ * - Semantic: Related B2B marketing and sales terms
  */
-export const metadata: Metadata = generateServiceMetadata(
-  'B2B Lead Generation Ads | High-Quality B2B Leads',
-  'Generate high-quality B2B leads with targeted Google Ads campaigns. Advanced lead qualification, CRM integration, and ROI-focused strategies. Starting from ₹60,000/month. 7.2×+ average ROAS.',
-  [
-    ...KEYWORD_SETS.googleAds,
-    'B2B lead generation',
-    'B2B marketing',
-    'B2B advertising',
-    'lead generation ads',
-    'B2B lead gen',
-    'qualified B2B leads',
-    'B2B sales leads',
-  ],
+
+export const metadata: Metadata = generateAdvancedServiceMetadata(
+  'Hire B2B Lead Generation Expert | High-Quality B2B Leads',
+  'Generate high-quality B2B leads with targeted Google Ads campaigns. Advanced lead qualification, CRM integration, and ROI-focused strategies.',
+  B2B_LEAD_GENERATION_KEYWORDS,
   '/pages/b2b-lead-generation-ads',
-  '/images/b2b-lead-generation-og.jpg'
+  {
+    pricing: {
+      startingPrice: '60,000',
+      currency: '₹',
+    },
+    ogImage: '/images/b2b-lead-generation-og.jpg',
+    cta: 'Get free consultation today!',
+  }
 );

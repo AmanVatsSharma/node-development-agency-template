@@ -1,54 +1,29 @@
 import { Metadata } from 'next';
+import { generateAdvancedServiceMetadata } from '@/app/lib/seo/advanced-metadata';
+import { SEO_KEYWORDS } from '@/app/lib/seo/keyword-research';
 
-export const metadata: Metadata = {
-  title: 'Free SEO Audit Tool — Instant Website SEO Check & Detailed Reports',
-  description: 'Run a free SEO scan in 60s. Get prioritized fixes, Core Web Vitals report, backlink snapshot & a strategic SEO audit report. Professional packages starting at ₹6,999. Book your audit today!',
-  keywords: [
-    'SEO audit',
-    'free SEO check',
-    'website SEO analysis',
-    'technical SEO audit',
-    'SEO report',
-    'Core Web Vitals',
-    'backlink audit',
-    'SEO consultant India',
-    'website optimization',
-    'search engine optimization'
-  ],
-  authors: [{ name: 'Your Agency Name' }],
-  openGraph: {
-    title: 'Free SEO Audit — Get Your Website Health Score in 60 Seconds',
-    description: 'Instant SEO scan with actionable insights. Professional audits from ₹6,999 with detailed reports, strategy calls, and implementation roadmaps.',
-    type: 'website',
-    locale: 'en_IN',
-    siteName: 'Your Agency Name',
-    images: [
-      {
-        url: '/seo-audit-og-image.png',
-        width: 1200,
-        height: 630,
-        alt: 'Free SEO Audit Tool'
-      }
-    ]
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Free SEO Audit — Boost Your Rankings',
-    description: 'Get instant SEO insights + detailed audit reports starting at ₹6,999',
-    images: ['/seo-audit-og-image.png']
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1
-    }
-  },
-  alternates: {
-    canonical: '/pages/seo-audit'
+/**
+ * SEO Metadata for SEO Audit Landing Page
+ * Optimized for high-intent, lead-generating keywords
+ * 
+ * KEYWORD STRATEGY:
+ * - Primary: "hire seo expert", "seo audit service" (high buyer intent)
+ * - Secondary: Service-specific SEO audit keywords
+ * - Long-tail: Problem-solving SEO keywords
+ * - Semantic: Related SEO and optimization terms
+ */
+
+export const metadata: Metadata = generateAdvancedServiceMetadata(
+  'Hire SEO Expert | Free SEO Audit Tool & Professional SEO Services',
+  'Run a free SEO scan in 60s. Get prioritized fixes, Core Web Vitals report, backlink snapshot & a strategic SEO audit report.',
+  SEO_KEYWORDS,
+  '/pages/seo-audit',
+  {
+    pricing: {
+      startingPrice: '6,999',
+      currency: '₹',
+    },
+    ogImage: '/seo-audit-og-image.png',
+    cta: 'Book your audit today!',
   }
-};
+);

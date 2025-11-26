@@ -14,86 +14,35 @@
  * }
  */
 
-import type { Metadata } from 'next';
+import { Metadata } from 'next';
+import { generateAdvancedServiceMetadata } from '@/app/lib/seo/advanced-metadata';
+import { SHOPIFY_KEYWORDS } from '@/app/lib/seo/keyword-research';
 
-export const shopifyHeadlessMetadata: Metadata = {
-  title: 'Shopify Headless Migration Services | Next.js & Hydrogen Experts | Vedpragya Bharat',
-  description: 'Transform your Shopify store with headless commerce. 2-4× faster page loads, 95+ Lighthouse scores. Next.js/Hydrogen migration from ₹1L. Get free consultation today.',
-  keywords: [
-    'headless shopify',
-    'nextjs shopify',
-    'shopify hydrogen migration',
-    'shopify plus developer',
-    'shopify api integration',
-    'nextjs ecommerce',
-    'headless commerce agency',
-    'shopify headless cms',
-    'react shopify storefront',
-    'shopify graphql',
-    'shopify storefront api',
-    'headless ecommerce',
-    'shopify performance optimization',
-  ].join(', '),
-  
-  openGraph: {
-    title: 'Shopify Headless Migration Services | Next.js & Hydrogen Experts',
-    description: 'Transform your Shopify store with headless commerce. 2-4× faster page loads, 95+ Lighthouse scores. Next.js/Hydrogen migration from ₹1L.',
-    type: 'website',
-    locale: 'en_US',
-    siteName: 'Vedpragya Bharat',
-    url: 'https://vedpragyabharat.com/pages/shopify-headless-migration',
-    images: [
-      {
-        url: '/og-image-shopify-headless.jpg', // Add this image to /public/
-        width: 1200,
-        height: 630,
-        alt: 'Shopify Headless Migration Services',
-      },
-    ],
-  },
-  
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Shopify Headless Migration Services | Next.js & Hydrogen',
-    description: '2-4× faster page loads, 95+ Lighthouse scores. Transform your Shopify store with headless commerce.',
-    images: ['/og-image-shopify-headless.jpg'], // Add this image to /public/
-    creator: '@vedpragyabharat', // Update with your Twitter handle
-    site: '@vedpragyabharat',
-  },
-  
-  robots: {
-    index: true,
-    follow: true,
-    nocache: false,
-    googleBot: {
-      index: true,
-      follow: true,
-      noimageindex: false,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
+/**
+ * SEO Metadata for Shopify Headless Migration Landing Page
+ * Optimized for high-intent, lead-generating keywords
+ * 
+ * KEYWORD STRATEGY:
+ * - Primary: "hire shopify developer" (high buyer intent)
+ * - Secondary: Service-specific Shopify development keywords
+ * - Long-tail: Migration-specific Shopify keywords
+ * - Semantic: Related ecommerce and Shopify terms
+ */
+
+export const shopifyHeadlessMetadata: Metadata = generateAdvancedServiceMetadata(
+  'Hire Shopify Developer | Shopify Headless Migration Services',
+  'Transform your Shopify store with headless commerce. 2-4× faster page loads, 95+ Lighthouse scores. Next.js/Hydrogen migration.',
+  SHOPIFY_KEYWORDS,
+  '/pages/shopify-headless-migration',
+  {
+    pricing: {
+      startingPrice: '100,000',
+      currency: '₹',
     },
-  },
-  
-  alternates: {
-    canonical: 'https://vedpragyabharat.com/pages/shopify-headless-migration',
-  },
-  
-  authors: [
-    {
-      name: 'Vedpragya Bharat',
-      url: 'https://vedpragyabharat.com',
-    },
-  ],
-  
-  category: 'Technology',
-  
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 5,
-  },
-};
+    ogImage: '/og-image-shopify-headless.jpg',
+    cta: 'Get free consultation today!',
+  }
+);
 
 /**
  * Structured Data (JSON-LD) for Rich Snippets
