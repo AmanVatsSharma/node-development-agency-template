@@ -56,7 +56,7 @@ export function CaseStudiesSection() {
           </div>
 
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-5 text-gray-900 dark:text-white">
-            Proven Success Stories
+            Hire AI Voice Agent Developer Case Studies & Portfolio
           </h2>
         </motion.div>
 

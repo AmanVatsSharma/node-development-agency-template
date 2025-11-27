@@ -84,7 +84,7 @@ export function PricingSection() {
           </div>
 
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-5 text-white">
-            Choose Your Plan
+            Hire AI Voice Agent Developer Pricing & Packages
           </h2>
 
           <p className="text-lg md:text-xl text-white/80 max-w-3xl mx-auto">

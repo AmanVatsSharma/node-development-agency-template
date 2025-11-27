@@ -200,7 +200,7 @@ export function LeadFormSection() {
               <CheckCircle className="w-12 h-12 text-white" />
             </div>
             <h2 className="text-4xl font-bold mb-6">
-              Thank You for Your Interest!
+              Why Choose Our Hire Healthcare Software Developer
             </h2>
             <p className="text-xl text-green-100 mb-8">
               We've received your healthcare software development inquiry. 

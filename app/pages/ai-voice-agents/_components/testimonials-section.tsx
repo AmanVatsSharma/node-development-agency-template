@@ -50,7 +50,7 @@ export function TestimonialsSection() {
           </div>
 
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-5 text-gray-900 dark:text-white">
-            What Our Clients Say
+            Client Success Stories with Hire AI Voice Agent Developer
           </h2>
         </motion.div>
 

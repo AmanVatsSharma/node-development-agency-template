@@ -111,7 +111,7 @@ export function WhatIncludedSection() {
             id="whats-included-heading"
             className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-4 text-gray-900 dark:text-white"
           >
-            🧠 What's <span className="text-[#FFB400]">Included</span>
+            Hire Shopify Customization Expert <span className="text-[#FFB400]">Services We Offer</span>
           </h2>
           <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
             Everything you need to transform your product pages into conversion machines

@@ -59,7 +59,7 @@ export function ProcessSection() {
           </div>
 
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-5 text-gray-900 dark:text-white">
-            5 Steps to Your AI Voice Agent
+            How Our Hire AI Voice Agent Developer Works
           </h2>
         </motion.div>
 

@@ -97,7 +97,7 @@ export function CaseStudiesSection() {
             id="case-studies-heading"
             className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-4 text-gray-900 dark:text-white"
           >
-            📊 Case <span className="text-[#FFB400]">Studies</span>
+            Hire Shopify Customization Expert <span className="text-[#FFB400]">Case Studies & Portfolio</span>
           </h2>
           <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
             Real results from real businesses. Here's what we achieved for our clients:

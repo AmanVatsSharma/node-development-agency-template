@@ -78,7 +78,7 @@ export function ProcessSection() {
             id="process-heading"
             className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-4 text-gray-900 dark:text-white"
           >
-            🧭 Our <span className="text-[#FFB400]">Process</span>
+            How Our <span className="text-[#FFB400]">Hire Shopify Customization Expert Works</span>
           </h2>
           <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
             From discovery to deployment — a proven 5-step workflow
