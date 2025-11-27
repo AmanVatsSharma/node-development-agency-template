@@ -74,7 +74,7 @@ export function FAQSection() {
             </span>
           </div>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-900 dark:text-white mb-4">
-            Frequently Asked Questions
+            Frequently Asked Questions About Hire SEO Audit Expert
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
             Everything you need to know about our SEO audit services

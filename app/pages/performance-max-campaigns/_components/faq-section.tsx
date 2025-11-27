@@ -55,7 +55,7 @@ export function FAQSection() {
           className="text-center mb-16"
         >
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-            Performance Max FAQ
+            Frequently Asked Questions About Hire Performance Max Expert
           </h2>
           <p className="text-xl text-gray-600">
             Get answers to common questions about our Performance Max campaign services.

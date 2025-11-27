@@ -194,7 +194,7 @@ export function PricingSection() {
             id="pricing-heading"
             className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4 sm:mb-5 md:mb-7 text-gray-900 dark:text-white px-2 leading-tight"
           >
-            Investment in Your Business Growth
+            Hire Business Website Developer Pricing & Packages
           </h2>
 
           <p className="text-base sm:text-lg md:text-xl text-gray-700 dark:text-gray-300 max-w-4xl mx-auto leading-snug sm:leading-relaxed mb-5 sm:mb-7 px-2 font-medium">

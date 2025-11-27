@@ -167,7 +167,7 @@ export function PricingSection() {
             id="pricing-heading"
             className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4"
           >
-            Transparent Pricing for Mumbai Businesses
+            Hire Web Developer Mumbai Pricing & Packages
           </h2>
           <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">
             No hidden costs, no recurring fees. Choose the perfect plan for your Mumbai business and get started today.

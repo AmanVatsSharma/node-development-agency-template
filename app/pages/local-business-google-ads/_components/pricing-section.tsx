@@ -86,7 +86,7 @@ export function PricingSection() {
           className="text-center mb-16"
         >
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-            Local Business Google Ads Pricing
+            Hire Local Google Ads Expert Pricing & Packages
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Choose the perfect local business plan for your needs. All plans include our 5.8× ROAS guarantee.

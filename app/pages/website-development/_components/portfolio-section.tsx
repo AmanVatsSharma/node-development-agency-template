@@ -222,7 +222,7 @@ export function PortfolioSection() {
             className="text-3xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600"
             id="wd-portfolio-heading"
           >
-            Showcasing Our Best Work
+            Hire Website Developer Case Studies & Portfolio
           </motion.h2>
           
           <motion.p

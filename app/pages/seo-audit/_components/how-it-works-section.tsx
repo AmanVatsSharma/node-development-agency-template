@@ -56,7 +56,7 @@ export function HowItWorksSection() {
             </span>
           </div>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-900 dark:text-white mb-4">
-            How It Works — 3 Simple Steps
+            How Our Hire SEO Audit Expert Works
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
             From free scan to complete SEO transformation in three easy steps

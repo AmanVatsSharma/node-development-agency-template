@@ -127,7 +127,7 @@ export function GrowthDashboardSection() {
             id="success-heading"
             className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold mb-3 sm:mb-4 md:mb-6 text-gray-900 dark:text-white"
           >
-            Proven Results Across India
+            Professional Business Website Development Reporting
           </h2>
           
           <p className="text-sm sm:text-base md:text-lg text-gray-700 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">

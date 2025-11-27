@@ -65,7 +65,7 @@ export function TestimonialsSection() {
           className="text-center mb-16"
         >
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-            What Our Performance Max Clients Say
+            Client Success Stories with Hire Performance Max Expert
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Don't just take our word for it. Here's what Performance Max marketers say about our automation strategies.

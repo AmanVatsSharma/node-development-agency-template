@@ -210,7 +210,7 @@ export function ServicesSection() {
             className="text-3xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600"
             id="wd-services-heading"
           >
-            Elevate Your Digital Presence
+            Hire Website Developer Services We Offer
           </motion.h2>
           
           <motion.p

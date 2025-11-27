@@ -132,7 +132,7 @@ export function ServicesSection() {
             id="services-heading"
             className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold mb-3 sm:mb-4 md:mb-6 text-gray-900 dark:text-white px-2"
           >
-            Everything Your Business Needs
+            Hire Business Website Developer Services We Offer
           </h2>
           
           <p className="text-sm sm:text-base md:text-lg text-gray-700 dark:text-gray-300 max-w-4xl mx-auto leading-snug sm:leading-relaxed px-2">

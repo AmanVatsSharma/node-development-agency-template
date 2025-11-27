@@ -173,7 +173,7 @@ export function TestimonialsSection() {
             id="testimonials-heading"
             className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4"
           >
-            What Mumbai Businesses Say
+            Client Success Stories with Hire Web Developer Mumbai
           </h2>
           <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">
             Real testimonials from real Mumbai business owners who have transformed their online presence with our web development services.
