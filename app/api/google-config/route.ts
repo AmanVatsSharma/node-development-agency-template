@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getGoogleAdsConfig } from '@/config/conversion-labels';
+import { getGoogleConfig } from '@/app/lib/googleAds';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -7,11 +7,11 @@ export const dynamic = 'force-dynamic';
 /**
  * GET /api/google-config
  * Returns Google Ads conversion configuration (conversion ID + labels)
- * Now uses hardcoded config from config/conversion-labels.ts
+ * Uses unified config from app/lib/googleAds (DB > Hardcoded)
  */
 export async function GET() {
   try {
-    const config = getGoogleAdsConfig();
+    const config = await getGoogleConfig();
     return NextResponse.json({ 
       conversionId: config.conversionId, 
       labels: config.labels 
@@ -24,4 +24,3 @@ export async function GET() {
     );
   }
 }
-
