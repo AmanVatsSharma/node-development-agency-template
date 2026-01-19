@@ -14,17 +14,17 @@ export function TestimonialsSection() {
 
   const testimonials = [
     {
-      name: 'R. Sharma',
-      role: 'Director',
-      company: 'Prime Care Clinic',
-      quote: 'It sounds like a real person! Our customers didn\'t even realize it was AI.',
+      name: 'Dr. Rajesh Sharma',
+      role: 'Medical Director',
+      company: 'Prime Care Multi-Specialty Clinic',
+      quote: 'It sounds like a real person! Our patients didn\'t even realize it was AI. It handles appointment scheduling perfectly, freeing up my reception staff.',
       rating: 5
     },
     {
-      name: 'V. Kapoor',
-      role: 'COO',
-      company: 'BPO Solutions',
-      quote: 'Vedpragya Bharat delivered what we thought was science fiction.',
+      name: 'Vikram Kapoor',
+      role: 'Chief Operating Officer',
+      company: 'Global BPO Solutions',
+      quote: 'Vedpragya Bharat delivered what we thought was science fiction. The AI handles Tier-1 support calls with 95% accuracy, reducing our operational costs significantly.',
       rating: 5
     }
   ];
