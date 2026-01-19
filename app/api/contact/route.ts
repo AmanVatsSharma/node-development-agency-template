@@ -1,4 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
+import prisma from '@/app/lib/prisma';
+import { createZohoLead } from '@/app/lib/zohoService';
+import { logServerConversion } from '@/app/lib/googleAds';
+
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
 
 // Email validation regex
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -13,14 +19,13 @@ type ContactFormRequest = {
   message: string;
 };
 
-// In a real project, this would be handled by an environment variable
-const API_KEY = 'your-email-service-api-key';
-
 /**
  * Handler for POST requests to /api/contact
- * Validates contact form data and sends an email notification
+ * Validates contact form data and saves it as a Lead
  */
 export async function POST(request: NextRequest) {
+  const correlationId = `contact_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+  
   try {
     // Parse the request body
     const body = await request.json() as ContactFormRequest;
@@ -41,62 +46,109 @@ export async function POST(request: NextRequest) {
       );
     }
     
-    // Log the form submission for demo purposes
-    console.log('Contact form submission:', body);
-    
-    // In a real implementation, you would send an email using a service like SendGrid, AWS SES, or similar
-    // Example of sending an email with a hypothetical email service:
-    /*
-    const emailResponse = await fetch('https://api.email-service.com/send', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${API_KEY}`
-      },
-      body: JSON.stringify({
-        to: 'info@enterprisehero.com',
-        from: 'noreply@enterprisehero.com',
-        subject: `New Contact Form Submission: ${body.service}`,
-        text: `
-          Name: ${body.name}
-          Email: ${body.email}
-          Company: ${body.company || 'N/A'}
-          Phone: ${body.phone || 'N/A'}
-          Service: ${body.service}
-          Message: ${body.message}
-        `,
-        html: `
-          <h2>New Contact Form Submission</h2>
-          <p><strong>Service:</strong> ${body.service}</p>
-          <p><strong>Name:</strong> ${body.name}</p>
-          <p><strong>Email:</strong> ${body.email}</p>
-          <p><strong>Company:</strong> ${body.company || 'N/A'}</p>
-          <p><strong>Phone:</strong> ${body.phone || 'N/A'}</p>
-          <h3>Message:</h3>
-          <p>${body.message}</p>
-        `
-      })
+    console.log(`[API/Contact] Processing submission for ${body.email}`, { correlationId });
+
+    // 1. Create Lead in Database
+    // We use the Lead model to unify all inbound leads (Lead Forms, Contact Page, etc.)
+    const lead = await prisma.lead.create({
+      data: {
+        name: body.name,
+        email: body.email,
+        phone: body.phone || null,
+        message: body.message, // We keep the raw message
+        source: 'contact-page',
+        leadSource: 'Website Contact Form',
+        // Store extra fields in raw JSON
+        raw: {
+          company: body.company || null,
+          service: body.service,
+          submittedAt: new Date().toISOString(),
+          formType: 'contact_page',
+          userAgent: request.headers.get('user-agent') || 'unknown',
+          ip: request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown',
+        },
+        status: 'pending',
+      }
     });
-    
-    if (!emailResponse.ok) {
-      throw new Error('Failed to send email notification');
+
+    console.log(`[API/Contact] Lead created: ${lead.id}`);
+
+    // 2. Sync to Zoho CRM
+    let zohoLeadId: string | undefined;
+    try {
+      const zohoResult = await createZohoLead({
+        name: body.name,
+        email: body.email,
+        phone: body.phone,
+        message: body.message,
+        company: body.company, // Zoho service handles company mapping
+        source: 'contact-page',
+        leadSource: 'Website Contact Form',
+        raw: {
+          service: body.service,
+          ...body
+        }
+      });
+      
+      zohoLeadId = zohoResult.zohoLeadId;
+      
+      // Update Lead with Zoho ID
+      await prisma.lead.update({
+        where: { id: lead.id },
+        data: { 
+          status: 'pushed', 
+          zohoLeadId 
+        }
+      });
+      
+      console.log(`[API/Contact] Synced to Zoho: ${zohoLeadId}`);
+    } catch (zohoError: any) {
+      console.error('[API/Contact] Zoho sync failed:', zohoError.message);
+      // We don't fail the request, just log it. The lead is safe in our DB.
+      // Optionally queue for retry (simplified here compared to /api/lead)
+      await prisma.lead.update({
+        where: { id: lead.id },
+        data: { status: 'failed' }
+      });
+      
+      await prisma.integrationLog.create({
+        data: {
+          type: 'lead_submit',
+          provider: 'zoho',
+          level: 'error',
+          message: `Zoho submission failed for contact form lead ${lead.id}`,
+          error: String(zohoError?.message || zohoError),
+          correlationId,
+        },
+      });
     }
-    */
-    
-    // Simulate a slight delay for demonstration purposes
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    // Return success response
+
+    // 3. Log Server-Side Conversion (Google Ads)
+    // We treat general contact form submissions as "business_website_lead_submit" or similar
+    try {
+      await logServerConversion('business_website_lead_submit', {
+        correlationId,
+        zohoLeadId,
+        leadId: lead.id,
+        source: 'contact-page',
+        value: 100, // Fixed value for contact form
+      });
+    } catch (conversionError) {
+      console.error('[API/Contact] Conversion logging failed:', conversionError);
+    }
+
+    // Return success
     return NextResponse.json(
       { 
         success: true,
-        message: 'Contact form submitted successfully'
+        message: 'Contact form submitted successfully',
+        leadId: lead.id
       },
       { status: 200 }
     );
     
   } catch (error) {
-    console.error('Error processing contact form:', error);
+    console.error('[API/Contact] Error processing form:', error);
     
     return NextResponse.json(
       { 
@@ -106,4 +158,4 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-} 
+}

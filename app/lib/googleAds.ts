@@ -1,17 +1,17 @@
 /**
  * @fileoverview Google Ads Integration Library - Scalable Multi-Page Support
- * @description Server-side Google Ads conversion tracking with hardcoded configuration
- * @version 3.0.0 - Hardcoded Configuration
+ * @description Server-side Google Ads conversion tracking with dynamic DB configuration and hardcoded fallback
+ * @version 3.1.0 - Hybrid Configuration
  * 
  * FEATURES:
  * - Multi-landing-page conversion tracking
- * - Hardcoded configuration in config/conversion-labels.ts
+ * - Database configuration (Admin Panel) with Hardcoded fallback (config/conversion-labels.ts)
  * - Comprehensive logging to IntegrationLog table
  * - Support for future Google Ads API integration
  * 
  * FLOW:
- * 1. Configuration stored in config/conversion-labels.ts
- * 2. getGoogleConfig() reads from hardcoded config file
+ * 1. Try to fetch configuration from Database (IntegrationSettings)
+ * 2. If DB config missing/empty, fallback to config/conversion-labels.ts
  * 3. Client-side code fetches config via /api/google-config
  * 4. Conversions fire via gtag with proper labels
  * 5. Server-side logs provide backup tracking
@@ -86,27 +86,62 @@ export type ConversionEventType =
 // ============================================
 
 /**
- * Get Google Ads configuration from hardcoded config file
+ * Get Google Ads configuration (DB > Hardcoded)
  * @returns {Promise<{conversionId: string, labels: Record<string, string>}>}
  */
 export async function getGoogleConfig() {
   console.log('[GoogleAds] getGoogleConfig called');
   
   try {
-    const config = getGoogleAdsConfig();
+    // 1. Get Hardcoded Config (Default)
+    const defaults = getGoogleAdsConfig();
     
-    console.log('[GoogleAds] Configuration retrieved from hardcoded config:');
-    console.log('[GoogleAds] - Conversion ID:', config.conversionId || 'NOT CONFIGURED');
-    console.log('[GoogleAds] - Labels configured:', Object.keys(config.labels).length);
-    console.log('[GoogleAds] - Label details:', JSON.stringify(config.labels, null, 2));
+    // 2. Try to get DB Config
+    let dbConfig = null;
+    try {
+      dbConfig = await prisma.integrationSettings.findFirst();
+    } catch (dbError) {
+      console.warn('[GoogleAds] Failed to fetch DB config, using defaults:', dbError);
+    }
+
+    // 3. Merge: DB overrides defaults if present
+    const conversionId = dbConfig?.googleConversionId || defaults.conversionId;
+    
+    // Parse JSON labels from DB if present
+    let dbLabels: Record<string, string> = {};
+    if (dbConfig?.googleEventLabels) {
+      if (typeof dbConfig.googleEventLabels === 'string') {
+        try {
+          dbLabels = JSON.parse(dbConfig.googleEventLabels);
+        } catch (e) {}
+      } else {
+        dbLabels = dbConfig.googleEventLabels as Record<string, string>;
+      }
+    }
+
+    // Merge labels (DB overrides specific keys)
+    const labels = {
+      ...defaults.labels,
+      ...dbLabels
+    };
+    
+    console.log('[GoogleAds] Configuration resolved:');
+    console.log('[GoogleAds] - Source:', dbConfig?.googleConversionId ? 'Database' : 'Hardcoded');
+    console.log('[GoogleAds] - Conversion ID:', conversionId || 'NOT CONFIGURED');
+    console.log('[GoogleAds] - Labels count:', Object.keys(labels).length);
     
     return {
-      conversionId: config.conversionId,
-      labels: config.labels,
+      conversionId,
+      labels,
     };
   } catch (error) {
     console.error('[GoogleAds] Error retrieving config:', error);
-    throw error;
+    // Fallback to purely hardcoded in worst case
+    const safeDefaults = getGoogleAdsConfig();
+    return {
+      conversionId: safeDefaults.conversionId,
+      labels: safeDefaults.labels
+    };
   }
 }
 
@@ -136,12 +171,15 @@ export async function getClientConversionMapping() {
 export async function logServerConversion(
   eventType: ConversionEventType, 
   context?: Record<string, any>
-): Promise<void> {
+) {
   console.log('[GoogleAds] logServerConversion called');
   console.log('[GoogleAds] Event Type:', eventType);
   console.log('[GoogleAds] Context:', context);
   
   try {
+    // We fetch config just to verify we have a conversion ID (optional logic)
+    // const { conversionId } = await getGoogleConfig();
+    
     await prisma.integrationLog.create({
       data: {
         type: eventType,
@@ -159,7 +197,7 @@ export async function logServerConversion(
   }
 }
 
-export type { ConversionEventType };
+export type { ConversionEventType as ConversionEventTypeAlias }; // Export for other files
 
 export async function testGoogleConfig() {
   try {
@@ -169,5 +207,3 @@ export async function testGoogleConfig() {
     return { ok: false, error: String(error?.message || error) };
   }
 }
-
-

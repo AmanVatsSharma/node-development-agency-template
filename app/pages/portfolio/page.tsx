@@ -197,14 +197,22 @@ export default function PortfolioPage() {
                 className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg transition-transform duration-300 hover:shadow-xl hover:-translate-y-2"
                 onClick={() => setSelectedProject(project.id)}
               >
-                {/* Project Image */}
-                <div className="h-48 bg-gray-200 dark:bg-gray-700 relative">
-                  {/* Placeholder for actual project images */}
-                  <div className={`absolute inset-0 bg-gradient-to-br from-${project.color}-500 to-${project.color}-700 opacity-80`}></div>
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className={`text-3xl font-bold text-white`}>
-                      {project.title.substring(0, 2)}
+                {/* Project Image / Visual */}
+                <div className="h-48 bg-gray-200 dark:bg-gray-700 relative overflow-hidden group-hover:scale-105 transition-transform duration-500">
+                  <div className={`absolute inset-0 bg-gradient-to-br from-${project.color}-500 to-${project.color}-700 opacity-90`}></div>
+                  
+                  {/* Pattern Overlay */}
+                  <div className="absolute inset-0 opacity-10" 
+                       style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '24px 24px' }}>
+                  </div>
+
+                  <div className="absolute inset-0 flex flex-col items-center justify-center text-white p-4 text-center">
+                    <div className="w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center mb-3 shadow-inner">
+                      <span className="text-2xl font-bold">{project.title.substring(0, 2)}</span>
                     </div>
+                    <span className="text-sm font-medium tracking-wider uppercase opacity-80 bg-black/20 px-3 py-1 rounded-full">
+                      {project.category === '3d' ? 'Interactive 3D' : project.category === 'api' ? 'Backend System' : 'Enterprise App'}
+                    </span>
                   </div>
                 </div>
                 
@@ -394,11 +402,11 @@ export default function PortfolioPage() {
             <div className="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-lg">
               <div className="flex items-center mb-4">
                 <div className="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center mr-4">
-                  <span className="text-blue-600 dark:text-blue-300 font-bold">JD</span>
+                  <span className="text-blue-600 dark:text-blue-300 font-bold">RM</span>
                 </div>
                 <div>
-                  <h4 className="font-bold text-gray-800 dark:text-white">John Doe</h4>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">CTO, Enterprise Solutions Inc.</p>
+                  <h4 className="font-bold text-gray-800 dark:text-white">Rajiv Menon</h4>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">CTO, FinFlow Enterprise</p>
                 </div>
               </div>
               <p className="text-gray-600 dark:text-gray-300 italic">
@@ -410,11 +418,11 @@ export default function PortfolioPage() {
             <div className="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-lg">
               <div className="flex items-center mb-4">
                 <div className="w-12 h-12 rounded-full bg-purple-100 dark:bg-purple-900 flex items-center justify-center mr-4">
-                  <span className="text-purple-600 dark:text-purple-300 font-bold">AS</span>
+                  <span className="text-purple-600 dark:text-purple-300 font-bold">SJ</span>
                 </div>
                 <div>
-                  <h4 className="font-bold text-gray-800 dark:text-white">Alice Smith</h4>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">Marketing Director, Retail Innovation</p>
+                  <h4 className="font-bold text-gray-800 dark:text-white">Sarah Jenkins</h4>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">Product Lead, StyleHub Global</p>
                 </div>
               </div>
               <p className="text-gray-600 dark:text-gray-300 italic">
@@ -426,11 +434,11 @@ export default function PortfolioPage() {
             <div className="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-lg">
               <div className="flex items-center mb-4">
                 <div className="w-12 h-12 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center mr-4">
-                  <span className="text-green-600 dark:text-green-300 font-bold">RJ</span>
+                  <span className="text-green-600 dark:text-green-300 font-bold">DK</span>
                 </div>
                 <div>
-                  <h4 className="font-bold text-gray-800 dark:text-white">Robert Johnson</h4>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">CEO, Financial Analytics Ltd.</p>
+                  <h4 className="font-bold text-gray-800 dark:text-white">David Kim</h4>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">CEO, Nexus Analytics</p>
                 </div>
               </div>
               <p className="text-gray-600 dark:text-gray-300 italic">

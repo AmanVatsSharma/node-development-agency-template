@@ -144,8 +144,8 @@ export function ContactSection() {
                   </div>
                   <div>
                     <h4 className="font-medium">Email Us</h4>
-                    <p className="text-muted-foreground">hello@devagency.com</p>
-                    <p className="text-muted-foreground">support@devagency.com</p>
+                    <p className="text-muted-foreground">contact@vedpragya.com</p>
+                    <p className="text-muted-foreground">support@vedpragya.com</p>
                   </div>
                 </div>
                 
@@ -155,8 +155,8 @@ export function ContactSection() {
                   </div>
                   <div>
                     <h4 className="font-medium">Call Us</h4>
-                    <p className="text-muted-foreground">+1 (555) 123-4567</p>
-                    <p className="text-muted-foreground">Mon-Fri, 9am-6pm EST</p>
+                    <p className="text-muted-foreground">+91 9963730111</p>
+                    <p className="text-muted-foreground">Mon-Sat, 9am-8pm IST</p>
                   </div>
                 </div>
                 
@@ -165,11 +165,11 @@ export function ContactSection() {
                     <MapPin size={24} />
                   </div>
                   <div>
-                    <h4 className="font-medium">Visit Us</h4>
+                    <h4 className="font-medium">Global Headquarters</h4>
                     <p className="text-muted-foreground">
-                      123 Innovation Drive<br />
-                      Tech City, CA 94103<br />
-                      United States
+                      Vedpragya Bharat Pvt Ltd<br />
+                      DLF Cyber City, Gurugram<br />
+                      Haryana, India 122002
                     </p>
                   </div>
                 </div>
@@ -178,8 +178,22 @@ export function ContactSection() {
             
             {/* Map or Additional Content */}
             <div className="mt-auto">
-              <div className="rounded-lg overflow-hidden border border-border/50 h-[200px] bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center">
-                <p className="text-muted-foreground">Interactive map will be displayed here</p>
+              <div className="rounded-lg overflow-hidden border border-border/50 h-[200px] bg-zinc-100 dark:bg-zinc-800 relative">
+                {/* Simple stylized map representation */}
+                <div className="absolute inset-0 bg-[url('https://upload.wikimedia.org/wikipedia/commons/e/ec/World_map_blank_without_borders.svg')] bg-cover bg-center opacity-30 dark:opacity-10"></div>
+                <div className="absolute inset-0 flex items-center justify-center">
+                   <div className="text-center">
+                      <p className="font-semibold text-foreground">Global Presence</p>
+                      <div className="flex gap-2 justify-center mt-2">
+                         <span className="w-2 h-2 rounded-full bg-blue-500"></span>
+                         <span className="w-2 h-2 rounded-full bg-purple-500"></span>
+                         <span className="w-2 h-2 rounded-full bg-green-500"></span>
+                         <span className="w-2 h-2 rounded-full bg-orange-500"></span>
+                         <span className="w-2 h-2 rounded-full bg-red-500"></span>
+                      </div>
+                      <p className="text-xs text-muted-foreground mt-2">India • Dubai • USA • Canada • China</p>
+                   </div>
+                </div>
               </div>
             </div>
           </motion.div>

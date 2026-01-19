@@ -234,8 +234,9 @@ async function performQuickAudit(url: string): Promise<AuditResult> {
     }
 
     // Simulate page speed check (in production, use PageSpeed Insights API)
-    const mockLCP = '2.8s';
-    const mockFCP = '1.6s';
+    // We return estimates or 'N/A' if not measurable in this environment
+    const mockLCP = 'N/A';
+    const mockFCP = 'N/A';
 
     // Add generic issues if score is still high (to make it realistic)
     if (issues.length < 3) {
