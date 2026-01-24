@@ -51,3 +51,6 @@ logs
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# rust
+rust/hero-sim-wasm/target/
