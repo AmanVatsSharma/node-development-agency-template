@@ -1,6 +1,7 @@
 {
   "name": "enterprise-hero-website",
   "version": "0.1.0",
+  "packageManager": "npm@10.9.0",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
@@ -82,6 +83,7 @@
     "tailwindcss": "^4",
     "ts-node": "^10.9.2",
     "tsx": "^4.20.6",
-    "typescript": "^5"
+    "typescript": "^5",
+    "wasm-pack": "^0.14.0"
   }
 }
