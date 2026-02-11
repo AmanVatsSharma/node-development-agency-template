@@ -12,7 +12,7 @@ This directory contains enterprise-grade, reusable components specifically desig
 **Purpose:** Animated statistics display with smooth counter animations  
 **Features:**
 - Smooth number animations using Framer Motion
-- IntersectionObserver triggers on scroll
+- IntersectionObserver triggers on scroll (in-view detection is attached to each stat card)
 - Customizable stats with icons and colors
 - Glassmorphism card design
 - Responsive grid layout (1/2/4 columns)
