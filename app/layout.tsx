@@ -11,6 +11,8 @@ import { ThemeProvider } from "./components/ThemeProvider";
 import { Providers } from "./providers";
 import AIAgentWidget from './components/AIAgent/AIAgentWidget';
 import { headers } from 'next/headers';
+import { OrganizationStructuredData, WebsiteStructuredData } from "./components/SEO/StructuredData";
+import { companyProfile } from "./data/companyProfile";
 
 // Font configuration
 const inter = Inter({
@@ -64,9 +66,25 @@ export default async function RootLayout({
         {/* Add Web App Manifest for PWA support */}
         <link rel="manifest" href="/manifest.json" />
         
-        {/* Add meta description and theme color for better SEO and PWA */}
-        <meta name="description" content="Premium Node.js development and 3D animation services for enterprise applications." />
+        {/* Theme color for better SEO and PWA */}
         <meta name="theme-color" content="#3b82f6" />
+
+        {/* Structured Data (JSON-LD) - Authentic company identity */}
+        <OrganizationStructuredData
+          name={companyProfile.brandName}
+          legalName={companyProfile.legalName}
+          url={companyProfile.websiteUrl}
+          contactPoint={{ contactType: "customer service", email: companyProfile.contactEmail }}
+          taxId={companyProfile.legal.gst}
+          founderName={companyProfile.founder?.name}
+          sameAs={Object.values(companyProfile.social || {}).filter(Boolean) as string[]}
+        />
+        <WebsiteStructuredData
+          url={companyProfile.websiteUrl}
+          name={companyProfile.brandName}
+          description={metadata.description as string}
+          publisher={companyProfile.legalName}
+        />
         
         {/* Google Analytics script - replace with your measurement ID */}
         <GoogleAnalytics measurementId="G-XXXXXXXXXX" />

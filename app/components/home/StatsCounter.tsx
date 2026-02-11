@@ -39,11 +39,18 @@ interface Stat {
  */
 function useAnimatedCounter(
   targetValue: number,
+  isInView: boolean,
   duration: number = 2000
 ): number {
+  // Duration isn't currently used because this implementation relies on spring physics.
+  // Keeping the param for future tuning / backwards compatibility.
+  void duration;
   const [displayValue, setDisplayValue] = useState(0);
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  // NOTE:
+  // We intentionally DO NOT create our own ref here.
+  // The previous implementation created a ref that was never attached to the DOM,
+  // causing `isInView` to stay false and counters to remain at 0.
+  // We now receive the real `isInView` boolean from the StatCard that owns the DOM ref.
   
   // Motion value for smooth animation
   const motionValue = useMotionValue(0);
@@ -81,7 +88,7 @@ interface StatCardProps {
 function StatCard({ stat, index }: StatCardProps) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const animatedValue = useAnimatedCounter(stat.value);
+  const animatedValue = useAnimatedCounter(stat.value, isInView);
   
   console.log(`[StatCard] Rendering stat: ${stat.label}`);
   

@@ -10,6 +10,7 @@ import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import AnimatedIllustration from '../../components/AnimatedIllustration';
+import { companyProfile } from '@/app/data/companyProfile';
 
 console.log('[About] v3.0 - Techy Modern Premium loaded');
 
@@ -20,7 +21,9 @@ export default function AboutPage() {
     console.log('[About] Initializing...');
     
     // Fast counter animation
-    const targets = { clients: 500, projects: 1200, countries: 6, team: 50 };
+    // NOTE (Authenticity): keep these numbers consistent across the site.
+    // If you update them, update the Home page trust indicators too.
+    const targets = { clients: 200, projects: 500, countries: 6, team: 50 };
     const duration = 1000;
     const steps = 30;
     let step = 0;
@@ -92,16 +95,18 @@ export default function AboutPage() {
           >
             {/* Badge */}
             <div className="inline-block mb-4 px-4 py-2 bg-cyan-500/10 border border-cyan-500/30 rounded-full backdrop-blur-sm">
-              <span className="text-cyan-400 text-xs md:text-sm font-bold uppercase tracking-wider">Since 2015 • CIN: U47912HR2025PTC131357</span>
+              <span className="text-cyan-400 text-xs md:text-sm font-bold uppercase tracking-wider">
+                Incorporated {companyProfile.legal.incorporationDateISO?.slice(0, 4) ?? "—"} • CIN: {companyProfile.legal.cin ?? "—"}
+              </span>
             </div>
 
             {/* Heading */}
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4 bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
-              Enterprise Hero
+              {companyProfile.brandName}
             </h1>
             
             <p className="text-lg md:text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-              Global Node.js Development Agency Trusted by <span className="text-cyan-400 font-bold">500+ Fortune 500</span> Companies
+              Global development team building modern web and automation systems for startups, SMEs, and enterprise teams.
             </p>
 
             {/* Quick stats - Compact */}
@@ -223,7 +228,7 @@ export default function AboutPage() {
               </div>
               <h2 className="text-2xl md:text-3xl font-bold mb-3">Our Mission</h2>
               <p className="text-gray-300 mb-4 leading-relaxed">
-                Deliver enterprise-grade Node.js solutions that power Fortune 500 companies worldwide.
+                Deliver reliable, scalable solutions with strong engineering fundamentals and clear communication.
               </p>
               <ul className="space-y-2 text-sm">
                 {['Enterprise Solutions', '24/7 Support', 'Scalable Architecture'].map((item, i) => (
@@ -250,7 +255,7 @@ export default function AboutPage() {
               </div>
               <h2 className="text-2xl md:text-3xl font-bold mb-3">Our Vision</h2>
               <p className="text-gray-300 mb-4 leading-relaxed">
-                Be the world's leading Node.js agency recognized for technical excellence and global impact.
+                Become a globally trusted engineering partner known for quality, security, and long-term outcomes.
               </p>
               <ul className="space-y-2 text-sm">
                 {['Market Leadership', 'Innovation Focus', 'Client Success'].map((item, i) => (
@@ -324,11 +329,14 @@ export default function AboutPage() {
                     Visionary Tech Entrepreneur
                   </h4>
                   <p className="text-gray-700 dark:text-gray-300 mb-4 text-sm md:text-base leading-relaxed">
-                    Founded Enterprise Hero in 2015, expanding to 6 countries and serving 500+ Fortune 500 companies. 
-                    Expert in enterprise architecture and digital transformation.
+                    Founder of {companyProfile.legalName} (brand: {companyProfile.brandName}). Focused on building dependable systems and high-performing teams across timezones.
                   </p>
                   <div className="space-y-2 text-sm">
-                    {['Built global team across 6 countries', 'Delivered 1200+ enterprise projects', '99.8% client satisfaction'].map((item, i) => (
+                    {[
+                      'Global delivery across multiple timezones',
+                      'Architecture-first delivery and clear documentation',
+                      'Security and reliability as default'
+                    ].map((item, i) => (
                       <div key={i} className="flex items-start gap-2">
                         <svg className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
@@ -373,9 +381,9 @@ export default function AboutPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 max-w-5xl mx-auto">
             {[
-              { name: 'Sarah J.', role: 'CTO, Tech Corp', quote: 'Exceptional Node.js expertise. Transformed our infrastructure.' },
-              { name: 'Michael C.', role: 'VP Eng, FinTech', quote: 'Professional team. Delivered on time and exceeded expectations.' },
-              { name: 'Emma R.', role: 'CEO, HealthTech', quote: 'Game-changer for our business. 24/7 global support is amazing.' }
+              { name: 'Enterprise Client', role: 'Technology Team', quote: 'Strong engineering discipline and clear communication throughout delivery.' },
+              { name: 'FinTech Client', role: 'Engineering Lead', quote: 'Reliable execution with a focus on performance and maintainability.' },
+              { name: 'Healthcare Client', role: 'Product Team', quote: 'Professional collaboration and thoughtful architecture choices.' }
             ].map((t, i) => (
               <motion.div
                 key={i}
@@ -418,17 +426,17 @@ export default function AboutPage() {
             className="text-center mb-8"
           >
             <div className="inline-block mb-3 px-4 py-1.5 bg-green-500/10 border border-green-500/20 rounded-full">
-              <span className="text-green-600 dark:text-green-400 text-xs font-bold uppercase">Certified</span>
+              <span className="text-green-600 dark:text-green-400 text-xs font-bold uppercase">Quality Focus</span>
             </div>
-            <h2 className="text-3xl md:text-5xl font-bold">Industry Validated</h2>
+            <h2 className="text-3xl md:text-5xl font-bold">Security & Reliability First</h2>
           </motion.div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
             {[
-              { name: 'ISO 27001', icon: '🔒' },
-              { name: 'AWS Partner', icon: '☁️' },
-              { name: 'Microsoft', icon: '⭐' },
-              { name: 'SOC 2', icon: '✅' }
+              { name: 'Security Practices', icon: '🔒' },
+              { name: 'Cloud Delivery', icon: '☁️' },
+              { name: 'Monitoring', icon: '📈' },
+              { name: 'Documentation', icon: '🧾' }
             ].map((cert, i) => (
               <motion.div
                 key={i}
@@ -480,7 +488,7 @@ export default function AboutPage() {
               Ready to Build<br className="md:hidden" /> Something Great?
             </h2>
             <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto opacity-90">
-              Join 500+ Fortune 500 companies who trust us for enterprise Node.js development
+              Tell us what you’re building and we’ll respond with next steps.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">

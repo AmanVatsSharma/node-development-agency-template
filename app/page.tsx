@@ -20,6 +20,7 @@ import Image from "next/image";
 import dynamic from "next/dynamic";
 import HeroAnimationWrapper from "./components/HeroAnimationWrapper";
 import AnimatedIllustration from "./components/AnimatedIllustration";
+import { companyProfile } from "./data/companyProfile";
 
 // PERFORMANCE OPTIMIZATION: Dynamic imports for below-fold components
 // This reduces initial bundle size and speeds up First Contentful Paint
@@ -119,10 +120,15 @@ export default function Home() {
                 <span className="text-[#00ffff] mx-2">•</span> 
                 <span className="inline-block">High-Performance</span>
               </p>
+
+              {/* Authenticity: show real legal entity + CIN */}
+              <p className="text-xs md:text-sm mb-8 text-white/70">
+                {companyProfile.legalName} • CIN: {companyProfile.legal.cin}
+              </p>
               
               {/* Premium CTA Button with Enhanced Effects */}
               <a 
-                href="/pages/contact"
+                href="/pages/services"
                 className="group/btn relative inline-block px-10 py-4 bg-gradient-to-r from-[#00ff41] to-[#00ffff] text-black font-bold text-lg rounded-full overflow-hidden transition-all duration-500 hover:scale-110 hover:shadow-[0_0_60px_rgba(0,255,65,1)] shadow-[0_0_30px_rgba(0,255,255,0.5)]"
               >
                 {/* Button Shimmer Effect */}
@@ -250,7 +256,7 @@ export default function Home() {
                 Enterprise Node.js Development
               </h3>
               <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-                Mission-critical Node.js solutions for Fortune 500 companies. Microservices architecture, API-first design, and 99.9% uptime guarantees.
+                Mission-critical Node.js solutions for modern product teams. Microservices architecture, API-first design, observability, and secure-by-default engineering.
               </p>
               <a href="/pages/services" className="inline-flex items-center gap-2 text-cyan-600 dark:text-cyan-400 font-bold group-hover:gap-4 transition-all">
                 Learn More
@@ -362,7 +368,7 @@ export default function Home() {
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Great Product Software by <span className="text-blue-600">Company</span>
+              Great Product Software by <span className="text-blue-600">{companyProfile.brandName}</span>
             </h2>
             <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
               Discover our comprehensive suite of enterprise-grade software solutions designed to transform businesses across industries.
@@ -381,7 +387,7 @@ export default function Home() {
               <p className="text-gray-600 dark:text-gray-300 mb-4">
                 Best ecommerce platform with advanced features for modern online businesses. Complete solution for digital commerce.
               </p>
-              <a href="#" className="inline-flex items-center text-blue-600 dark:text-blue-400 font-medium hover:text-blue-700 dark:hover:text-blue-300">
+              <a href="/pages/portfolio" className="inline-flex items-center text-blue-600 dark:text-blue-400 font-medium hover:text-blue-700 dark:hover:text-blue-300">
                 Explore Platform
                 <svg className="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
@@ -400,7 +406,7 @@ export default function Home() {
               <p className="text-gray-600 dark:text-gray-300 mb-4">
                 World-class charting software platform for professional traders and financial analysts with advanced analytics.
               </p>
-              <a href="#" className="inline-flex items-center text-green-600 dark:text-green-400 font-medium hover:text-green-700 dark:hover:text-green-300">
+              <a href="/pages/portfolio" className="inline-flex items-center text-green-600 dark:text-green-400 font-medium hover:text-green-700 dark:hover:text-green-300">
                 View Platform
                 <svg className="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
@@ -419,7 +425,7 @@ export default function Home() {
               <p className="text-gray-600 dark:text-gray-300 mb-4">
                 AI Powered Enterprise Mail Management system for efficient communication and workflow automation.
               </p>
-              <a href="#" className="inline-flex items-center text-purple-600 dark:text-purple-400 font-medium hover:text-purple-700 dark:hover:text-purple-300">
+              <a href="/pages/portfolio" className="inline-flex items-center text-purple-600 dark:text-purple-400 font-medium hover:text-purple-700 dark:hover:text-purple-300">
                 Learn More
                 <svg className="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
@@ -438,7 +444,7 @@ export default function Home() {
               <p className="text-gray-600 dark:text-gray-300 mb-4">
                 WhatsApp Marketing Software for ecommerce owners with automated campaigns and customer engagement tools.
               </p>
-              <a href="#" className="inline-flex items-center text-emerald-600 dark:text-emerald-400 font-medium hover:text-emerald-700 dark:hover:text-emerald-300">
+              <a href="/pages/portfolio" className="inline-flex items-center text-emerald-600 dark:text-emerald-400 font-medium hover:text-emerald-700 dark:hover:text-emerald-300">
                 Discover Features
                 <svg className="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
@@ -457,7 +463,7 @@ export default function Home() {
               <p className="text-gray-600 dark:text-gray-300 mb-4">
                 AI Powered Couriers and Logistics Management System for optimized delivery and supply chain operations.
               </p>
-              <a href="#" className="inline-flex items-center text-orange-600 dark:text-orange-400 font-medium hover:text-orange-700 dark:hover:text-orange-300">
+              <a href="/pages/portfolio" className="inline-flex items-center text-orange-600 dark:text-orange-400 font-medium hover:text-orange-700 dark:hover:text-orange-300">
                 Explore System
                 <svg className="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
@@ -476,7 +482,7 @@ export default function Home() {
               <p className="text-gray-600 dark:text-gray-300 mb-4">
                 Open source coding learning platform for developers to enhance their skills and collaborate on projects.
               </p>
-              <a href="#" className="inline-flex items-center text-indigo-600 dark:text-indigo-400 font-medium hover:text-indigo-700 dark:hover:text-indigo-300">
+              <a href="/pages/portfolio" className="inline-flex items-center text-indigo-600 dark:text-indigo-400 font-medium hover:text-indigo-700 dark:hover:text-indigo-300">
                 Start Learning
                 <svg className="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
@@ -506,7 +512,7 @@ export default function Home() {
                   <span className="px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-600 dark:text-purple-400 rounded-full text-sm">Custom Modules</span>
                   <span className="px-3 py-1 bg-orange-100 dark:bg-orange-900 text-orange-600 dark:text-orange-400 rounded-full text-sm">Enterprise Ready</span>
                 </div>
-                <a href="#" className="inline-flex items-center text-blue-600 dark:text-blue-400 font-medium hover:text-blue-700 dark:hover:text-blue-300">
+                <a href="/pages/portfolio" className="inline-flex items-center text-blue-600 dark:text-blue-400 font-medium hover:text-blue-700 dark:hover:text-blue-300">
                   Explore BharatERP
                   <svg className="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />

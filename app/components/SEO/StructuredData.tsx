@@ -1,22 +1,30 @@
 import React from 'react';
+import { companyProfile } from '@/app/data/companyProfile';
 
 interface OrganizationStructuredDataProps {
   name?: string;
   logo?: string;
   url?: string;
-  address?: {
+  /**
+   * Keep address optional and partial to avoid publishing incorrect data.
+   * If you don't have a verified address, omit it.
+   */
+  address?: Partial<{
     streetAddress: string;
-    addressLocality: string; 
+    addressLocality: string;
     addressRegion: string;
     postalCode: string;
     addressCountry: string;
-  };
+  }>;
   contactPoint?: {
-    telephone: string;
+    telephone?: string;
     contactType: string;
     email?: string;
   };
   sameAs?: string[]; // Social media profiles
+  legalName?: string;
+  taxId?: string;
+  founderName?: string;
 }
 
 interface WebsiteStructuredDataProps {
@@ -52,26 +60,18 @@ interface FAQStructuredDataProps {
 
 // Default data
 const defaultOrganization = {
-  name: 'Enterprise Hero',
-  logo: 'https://enterprisehero.com/logo.png',
-  url: 'https://enterprisehero.com',
-  address: {
-    streetAddress: '123 Tech Street',
-    addressLocality: 'San Francisco',
-    addressRegion: 'CA',
-    postalCode: '94107',
-    addressCountry: 'US'
-  },
+  name: companyProfile.brandName,
+  // NOTE: Keep logo optional/real. If you add a real logo asset, set it explicitly.
+  logo: undefined as string | undefined,
+  url: companyProfile.websiteUrl,
   contactPoint: {
-    telephone: '+1-415-555-1234',
     contactType: 'customer service',
-    email: 'contact@enterprisehero.com'
+    email: companyProfile.contactEmail
   },
-  sameAs: [
-    'https://twitter.com/enterprisehero',
-    'https://linkedin.com/company/enterprisehero',
-    'https://github.com/enterprisehero'
-  ]
+  sameAs: Object.values(companyProfile.social || {}).filter(Boolean) as string[],
+  legalName: companyProfile.legalName,
+  taxId: companyProfile.legal.gst,
+  founderName: companyProfile.founder?.name
 };
 
 // Organization structured data
@@ -79,25 +79,35 @@ export function OrganizationStructuredData({
   name = defaultOrganization.name,
   logo = defaultOrganization.logo,
   url = defaultOrganization.url,
-  address = defaultOrganization.address,
   contactPoint = defaultOrganization.contactPoint,
-  sameAs = defaultOrganization.sameAs
+  sameAs = defaultOrganization.sameAs,
+  legalName = defaultOrganization.legalName,
+  taxId = defaultOrganization.taxId,
+  founderName = defaultOrganization.founderName,
+  address
 }: OrganizationStructuredDataProps) {
   const structuredData = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name,
-    logo,
+    legalName,
     url,
-    address: {
-      '@type': 'PostalAddress',
-      ...address
-    },
+    ...(logo ? { logo } : {}),
+    ...(address && Object.keys(address).length
+      ? {
+          address: {
+            '@type': 'PostalAddress',
+            ...address,
+          },
+        }
+      : {}),
     contactPoint: {
       '@type': 'ContactPoint',
       ...contactPoint
     },
-    sameAs
+    ...(taxId ? { taxID: taxId } : {}),
+    ...(founderName ? { founder: { '@type': 'Person', name: founderName } } : {}),
+    ...(sameAs?.length ? { sameAs } : {})
   };
 
   return (
