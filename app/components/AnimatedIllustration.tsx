@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 interface AnimatedIllustrationProps {
   src: string;
@@ -59,11 +59,15 @@ export default function AnimatedIllustration({
   delay = 0,
   duration = 3
 }: AnimatedIllustrationProps) {
+  const shouldReduceMotion = useReducedMotion();
+
+  console.log("[AnimatedIllustration] Rendering", { src, animationType, shouldReduceMotion });
+
   return (
     <motion.div
       className={className}
-      variants={animationVariants}
-      animate={animationType}
+      variants={shouldReduceMotion ? undefined : animationVariants}
+      animate={shouldReduceMotion ? { opacity: 1 } : animationType}
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{ delay, duration: 0.5 }}

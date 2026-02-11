@@ -14,7 +14,7 @@
  * <GlobalPresence />
  */
 
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { useState } from 'react';
 
 // Console log for debugging
@@ -39,8 +39,9 @@ interface Office {
  */
 export default function GlobalPresence() {
   const [hoveredOffice, setHoveredOffice] = useState<string | null>(null);
+  const shouldReduceMotion = useReducedMotion();
   
-  console.log('[GlobalPresence] Component rendering');
+  console.log('[GlobalPresence] Component rendering', { hoveredOffice, shouldReduceMotion });
   
   // Office locations data
   const offices: Office[] = [
@@ -97,20 +98,21 @@ export default function GlobalPresence() {
   ];
   
   return (
-    <section className="py-20 bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 text-white relative overflow-hidden">
+    <section className="py-20 bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 text-white relative overflow-hidden content-visibility-auto">
       {/* Animated Background */}
       <div className="absolute inset-0 opacity-20">
-        <div className="absolute top-20 left-20 w-96 h-96 bg-cyan-500 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-20 right-20 w-80 h-80 bg-blue-500 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
+        {/* Hidden on mobile to reduce GPU cost (blur + animation is expensive). */}
+        <div className="absolute top-20 left-20 w-96 h-96 bg-cyan-500 rounded-full blur-3xl animate-pulse hidden md:block"></div>
+        <div className="absolute bottom-20 right-20 w-80 h-80 bg-blue-500 rounded-full blur-3xl animate-pulse hidden md:block" style={{ animationDelay: '2s' }}></div>
       </div>
       
       <div className="container mx-auto px-4 relative z-10">
         {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 30 }}
+          whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: shouldReduceMotion ? 0.01 : 0.6 }}
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
@@ -123,10 +125,10 @@ export default function GlobalPresence() {
         
         {/* World Map Container */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
+          initial={shouldReduceMotion ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+          whileInView={shouldReduceMotion ? { opacity: 1, scale: 1 } : { opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: shouldReduceMotion ? 0.01 : 0.8 }}
           className="relative max-w-6xl mx-auto mb-16"
         >
           {/* Simplified World Map Background */}
@@ -152,10 +154,10 @@ export default function GlobalPresence() {
             {offices.map((office, index) => (
               <motion.div
                 key={office.id}
-                initial={{ scale: 0, opacity: 0 }}
+                initial={shouldReduceMotion ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
                 whileInView={{ scale: 1, opacity: 1 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                transition={{ duration: shouldReduceMotion ? 0.01 : 0.5, delay: shouldReduceMotion ? 0 : index * 0.1 }}
                 className="absolute"
                 style={{
                   left: office.coordinates.x,
@@ -164,22 +166,27 @@ export default function GlobalPresence() {
                 }}
                 onMouseEnter={() => setHoveredOffice(office.id)}
                 onMouseLeave={() => setHoveredOffice(null)}
+                onClick={() => {
+                  // Mobile-friendly: tap to toggle.
+                  setHoveredOffice((prev) => (prev === office.id ? null : office.id));
+                  console.log('[GlobalPresence] Office marker clicked:', office.id);
+                }}
               >
                 {/* Marker Pin */}
                 <div className="relative">
                   {/* Pulsing Circle */}
-                  <div className="absolute inset-0 animate-ping">
+                  <div className="absolute inset-0 hidden sm:block motion-safe:animate-ping">
                     <div className="w-6 h-6 bg-cyan-400 rounded-full opacity-75"></div>
                   </div>
                   
                   {/* Marker */}
-                  <div className="relative w-6 h-6 bg-cyan-500 rounded-full border-2 border-white shadow-lg cursor-pointer hover:scale-125 transition-transform"></div>
+                  <div className="relative w-6 h-6 bg-cyan-500 rounded-full border-2 border-white shadow-lg cursor-pointer hover:scale-125 active:scale-125 transition-transform"></div>
                   
                   {/* Info Card on Hover */}
                   {hoveredOffice === office.id && (
                     <motion.div
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
+                      initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 10 }}
+                      animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
                       className="absolute top-8 left-1/2 transform -translate-x-1/2 w-64 bg-white dark:bg-gray-800 rounded-xl shadow-2xl p-4 border border-cyan-500/30 z-50"
                     >
                       <h4 className="text-lg font-bold text-gray-800 dark:text-white mb-1">
@@ -245,10 +252,10 @@ export default function GlobalPresence() {
           {offices.map((office, index) => (
             <motion.div
               key={office.id}
-              initial={{ opacity: 0, y: 30 }}
+              initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+              transition={{ duration: shouldReduceMotion ? 0.01 : 0.5, delay: shouldReduceMotion ? 0 : index * 0.1 }}
               className="bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/20 hover:border-cyan-400 transition-all duration-300 hover:shadow-xl hover:shadow-cyan-500/20"
             >
               <div className="text-center">
@@ -265,10 +272,10 @@ export default function GlobalPresence() {
         
         {/* 24/7 Badge */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
+          initial={shouldReduceMotion ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: shouldReduceMotion ? 0.01 : 0.6 }}
           className="text-center mt-12"
         >
           <div className="inline-flex items-center gap-3 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 backdrop-blur-sm px-8 py-4 rounded-full border border-cyan-400/30">

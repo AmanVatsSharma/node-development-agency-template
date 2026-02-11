@@ -44,15 +44,17 @@ const AnimationFallback = () => (
 // Static fallback for constrained devices and robust error fallback.
 const StaticHeroBackground = ({ reason }: { reason?: string }) => (
   <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-[#07132b] to-slate-950 overflow-hidden">
-    <div className="absolute inset-0 opacity-35" style={{
+    {/* Keep static (no animation) for max smoothness on mobile/low-end devices. */}
+    <div className="absolute inset-0 opacity-30" style={{
       backgroundImage: "radial-gradient(circle at 1px 1px, rgba(0,255,255,0.18) 1px, transparent 0)",
       backgroundSize: "34px 34px",
-      animation: "grid-flow 30s linear infinite",
     }} />
-    <div className="absolute -top-24 -left-20 w-96 h-96 bg-cyan-500/15 rounded-full blur-3xl" />
-    <div className="absolute -bottom-24 -right-20 w-96 h-96 bg-emerald-400/10 rounded-full blur-3xl" />
+    {/* Blur orbs can be expensive on mobile; keep them subtle and only show on >= sm. */}
+    <div className="absolute -top-24 -left-20 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl hidden sm:block" />
+    <div className="absolute -bottom-24 -right-20 w-80 h-80 bg-emerald-400/10 rounded-full blur-3xl hidden sm:block" />
     <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/10 to-black/30" />
-    {reason ? (
+    {/* Debug label only in dev to avoid visual noise in prod. */}
+    {reason && process.env.NODE_ENV !== "production" ? (
       <div className="absolute bottom-4 left-4 text-[11px] text-cyan-300/70 font-mono bg-black/35 border border-cyan-400/25 rounded-md px-2 py-1">
         Hero mode: static ({reason})
       </div>
@@ -115,15 +117,19 @@ function detectDeviceCapability(): DeviceCapabilityDecision {
     reasons.push("mobile-device");
   }
 
-  let score = 0;
-  score += isMobile ? -2 : 1;
-  score += hardwareConcurrency >= 8 ? 2 : hardwareConcurrency >= 4 ? 1 : -1;
-  score += deviceMemory >= 8 ? 2 : deviceMemory >= 4 ? 1 : -1;
-
-  if (!hasWebGL || prefersReducedMotion || saveDataEnabled) {
+  /**
+   * Mobile-first performance choice.
+   *
+   * Even high-end phones can struggle with WebGL + long pages due to thermal throttling
+   * and memory pressure. Requirement: make homepage smooth on mobiles.
+   *
+   * If we want to allow an opt-in 3D mode later, we can add a "Tap to enable 3D" toggle
+   * and persist that preference.
+   */
+  if (isMobile) {
     return {
       quality: "static",
-      reasons: reasons.length > 0 ? reasons : ["safety-fallback"],
+      reasons: [...reasons, "mobile-default-static"],
       metrics: {
         isMobile,
         hasWebGL,
@@ -135,10 +141,15 @@ function detectDeviceCapability(): DeviceCapabilityDecision {
     };
   }
 
-  if (isMobile && (deviceMemory < 8 || hardwareConcurrency < 8)) {
+  let score = 0;
+  score += 1; // non-mobile base score
+  score += hardwareConcurrency >= 8 ? 2 : hardwareConcurrency >= 4 ? 1 : -1;
+  score += deviceMemory >= 8 ? 2 : deviceMemory >= 4 ? 1 : -1;
+
+  if (!hasWebGL || prefersReducedMotion || saveDataEnabled) {
     return {
       quality: "static",
-      reasons: [...reasons, "mobile-conservative-profile"],
+      reasons: reasons.length > 0 ? reasons : ["safety-fallback"],
       metrics: {
         isMobile,
         hasWebGL,

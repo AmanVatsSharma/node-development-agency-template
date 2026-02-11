@@ -9,12 +9,13 @@
 └─────────────────────────────────────────────────────────────────┘
 
 ┌─────────────────────────────────────────────────────────────────┐
-│  SECTION 1: 3D HERO (Adaptive Static/Lite/Full)                │
+│  SECTION 1: HERO (Mobile-Smooth Static + Desktop Lite/Full)    │
 │  ┌───────────────────────────────────────────────────────────┐ │
 │  │  ┌─────────────────────────────────────────────────┐      │ │
 │  │  │     HeroAnimationWrapper (Adaptive Runtime)     │      │ │
+│  │  │     - Mobile: Static default (smooth scrolling)│      │ │
 │  │  │     - Static fallback (no WebGL / reduced mode)│      │ │
-│  │  │     - Lite 3D for balanced devices             │      │ │
+│  │  │     - Lite 3D for balanced desktops/laptops    │      │ │
 │  │  │     - Full 3D for high-end devices only        │      │ │
 │  │  └─────────────────────────────────────────────────┘      │ │
 │  │                                                            │ │
@@ -25,7 +26,7 @@
 │  │  │  └─ CTA Button: "Explore Services →"            │      │ │
 │  │  └─────────────────────────────────────────────────┘      │ │
 │  │                                                            │ │
-│  │  Interactive Hints (Top Left)   Scroll Indicator (Bottom) │ │
+│  │  Interactive Hints (Desktop)     Scroll Indicator (Mobile-safe)│ │
 │  └───────────────────────────────────────────────────────────┘ │
 └─────────────────────────────────────────────────────────────────┘
                             ↓
@@ -343,7 +344,7 @@ Page Load
 Hero Profile Decision
     ↓
 ┌──────────────────────────────────────────────┐
-│ STATIC: no WebGL / reduced motion / saveData│
+│ STATIC: mobile default / no WebGL / reduced motion / saveData │
 │ LITE: balanced profile                       │
 │ FULL: high-end profile (idle-time upgrade)   │
 └──────────────────────────────────────────────┘

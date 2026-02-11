@@ -34,6 +34,13 @@
   }
 }
 
+/* Home hero grid background (kept in CSS so we can disable on mobile). */
+.hero-grid-bg {
+  background-image: radial-gradient(circle at 2px 2px, rgba(0, 255, 255, 0.15) 1px, transparent 0);
+  background-size: 40px 40px;
+  animation: grid-flow 20s linear infinite;
+}
+
 /* Scroll Pulse Animation */
 @keyframes scroll-pulse {
   0%, 100% {
@@ -177,6 +184,28 @@
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+/**
+ * Mobile performance defaults (smooth > flashy).
+ *
+ * We intentionally disable continuous animations on small screens to reduce
+ * jank from constant repaints (blur + gradients + animation is expensive on mobile GPUs).
+ */
+@media (max-width: 640px) {
+  .hero-grid-bg {
+    animation: none !important;
+  }
+
+  /* Disable common "always running" animations on mobile. */
+  .animate-float,
+  .animate-bounce,
+  .animate-pulse,
+  .animate-ping,
+  .animate-scroll-pulse,
+  .animate-pulse-glow {
+    animation: none !important;
   }
 }
 
