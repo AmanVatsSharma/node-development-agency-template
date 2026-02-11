@@ -141,6 +141,7 @@ User-agent: *
 Allow: /
 
 # Block admin pages and login from search engines
+Disallow: /admin
 Disallow: /pages/admin/
 Disallow: /api/admin/
 Disallow: /login
