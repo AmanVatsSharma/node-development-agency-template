@@ -15,7 +15,7 @@
  */
 
 import { useEffect, useRef, useState } from 'react';
-import { motion, useInView, useMotionValue, useSpring } from 'framer-motion';
+import { motion, useInView, useMotionValue, useSpring, useReducedMotion } from 'framer-motion';
 
 // Console log for debugging
 console.log('[StatsCounter] Component loaded');
@@ -137,6 +137,7 @@ function StatCard({ stat, index }: StatCardProps) {
  */
 export default function StatsCounter() {
   console.log('[StatsCounter] Component rendering');
+  const shouldReduceMotion = useReducedMotion();
   
   // Company statistics data
   const stats: Stat[] = [
@@ -190,7 +191,7 @@ export default function StatsCounter() {
   ];
   
   return (
-    <section className="py-20 bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-900 dark:to-gray-800 relative overflow-hidden">
+    <section className="py-20 bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-900 dark:to-gray-800 relative overflow-hidden content-visibility-auto">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute inset-0" style={{
@@ -201,10 +202,10 @@ export default function StatsCounter() {
       <div className="container mx-auto px-4 relative z-10">
         {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: shouldReduceMotion ? 0.01 : 0.6 }}
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-4 text-gray-800 dark:text-white">

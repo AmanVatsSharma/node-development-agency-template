@@ -25,8 +25,12 @@ The wrapper (`app/components/HeroAnimationWrapper.tsx`) detects:
 Then routes to one of these profiles:
 
 1. **static**
-   - Used for no WebGL, reduced-motion, save-data, and conservative mobile profile.
-   - Renders a CSS-based animated background (no Three.js).
+   - Used for:
+     - Mobile devices (default: always static for smoothness)
+     - no WebGL
+     - reduced-motion
+     - save-data
+   - Renders a CSS-based **static** background (no Three.js, no continuous animation).
 2. **lite**
    - Used for balanced devices.
    - Loads `HeroAnimationLite` with minimal mesh/particle counts.
@@ -42,9 +46,9 @@ HeroAnimationWrapper mounts
         v
 Detect capability (WebGL + memory + cores + motion + save-data)
         |
-        +--> no WebGL / reduced motion / save-data --> STATIC
+        +--> mobile device (default) --> STATIC
         |
-        +--> mobile + constrained --> STATIC
+        +--> no WebGL / reduced motion / save-data --> STATIC
         |
         +--> high score --> LITE (boot) -> IDLE UPGRADE -> FULL
         |

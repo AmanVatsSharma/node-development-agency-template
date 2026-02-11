@@ -287,6 +287,7 @@ All components include:
 - Simplified layouts on small screens
 - Hidden decorative elements
 - Optimized images and animations
+- Continuous animations disabled on small screens (site-level CSS for smoother scrolling)
 
 ---
 
@@ -297,7 +298,8 @@ All components include:
 2. **Animation Performance:** GPU-accelerated transforms
 3. **Code Splitting:** Dynamic imports where applicable
 4. **Image Optimization:** Next.js Image component
-5. **Console Logging:** Easy debugging without impacting performance
+5. **Offscreen Rendering:** `content-visibility: auto` on heavy sections
+6. **Console Logging:** Easy debugging without impacting performance
 
 ### Bundle Size
 Each component is < 5KB gzipped, ensuring fast page loads.
@@ -402,6 +404,6 @@ Planned improvements:
 
 ---
 
-**Last Updated:** 2025-10-07  
-**Version:** 1.0.0  
+**Last Updated:** 2026-02-11  
+**Version:** 1.1.0  
 **Built by:** Vedpragya Bharat Private Limited

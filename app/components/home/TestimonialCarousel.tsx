@@ -14,8 +14,8 @@
  * <TestimonialCarousel />
  */
 
-import { motion, AnimatePresence } from 'framer-motion';
-import { useState, useEffect } from 'react';
+import { motion, AnimatePresence, useInView, useReducedMotion } from 'framer-motion';
+import { useState, useEffect, useRef } from 'react';
 
 // Console log for debugging
 console.log('[TestimonialCarousel] Component loaded');
@@ -62,8 +62,15 @@ function StarRating({ rating }: { rating: number }) {
 export default function TestimonialCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const isSectionInView = useInView(sectionRef, { margin: "-200px" });
+  const shouldReduceMotion = useReducedMotion();
   
-  console.log('[TestimonialCarousel] Component rendering, currentIndex:', currentIndex);
+  console.log('[TestimonialCarousel] Component rendering, currentIndex:', currentIndex, {
+    isAutoPlaying,
+    isSectionInView,
+    shouldReduceMotion,
+  });
   
   // Testimonials data
   const testimonials: Testimonial[] = [
@@ -74,7 +81,7 @@ export default function TestimonialCarousel() {
       company: 'TechVision India',
       image: '👨‍💼',
       rating: 5,
-      text: 'Vedpragya Bharat transformed our legacy system into a modern, scalable platform. Their Node.js expertise and attention to detail exceeded our expectations. The 3D visualizations they built are simply stunning!',
+      text: 'This team transformed our legacy system into a modern, scalable platform. Their Node.js expertise and attention to detail exceeded our expectations. The 3D visualizations they built are simply stunning!',
       project: 'Enterprise ERP Modernization'
     },
     {
@@ -121,7 +128,24 @@ export default function TestimonialCarousel() {
   
   // Auto-play functionality
   useEffect(() => {
-    if (!isAutoPlaying) return;
+    // Robust guards to keep mobiles smooth:
+    // - Disable autoplay if user interacted (isAutoPlaying=false)
+    // - Disable autoplay if section is offscreen
+    // - Disable autoplay if user prefers reduced motion
+    if (!isAutoPlaying) {
+      console.log('[TestimonialCarousel] Autoplay disabled (user interaction)');
+      return;
+    }
+
+    if (!isSectionInView) {
+      console.log('[TestimonialCarousel] Autoplay paused (section not in view)');
+      return;
+    }
+
+    if (shouldReduceMotion) {
+      console.log('[TestimonialCarousel] Autoplay disabled (prefers-reduced-motion)');
+      return;
+    }
     
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % testimonials.length);
@@ -133,7 +157,7 @@ export default function TestimonialCarousel() {
       clearInterval(interval);
       console.log('[TestimonialCarousel] Auto-play interval cleared');
     };
-  }, [isAutoPlaying, testimonials.length]);
+  }, [isAutoPlaying, isSectionInView, shouldReduceMotion, testimonials.length]);
   
   // Navigation handlers
   const goToNext = () => {
@@ -155,13 +179,31 @@ export default function TestimonialCarousel() {
   };
   
   const currentTestimonial = testimonials[currentIndex];
+
+  // Animation settings (reduced-motion safe).
+  const slideMotion = shouldReduceMotion
+    ? {
+        initial: { opacity: 0 },
+        animate: { opacity: 1 },
+        exit: { opacity: 0 },
+        transition: { duration: 0.2 },
+      }
+    : {
+        initial: { opacity: 0, x: 100 },
+        animate: { opacity: 1, x: 0 },
+        exit: { opacity: 0, x: -100 },
+        transition: { duration: 0.5 },
+      };
   
   return (
-    <section className="py-20 bg-gradient-to-br from-gray-900 to-blue-900 text-white relative overflow-hidden">
+    <section
+      ref={sectionRef}
+      className="py-20 bg-gradient-to-br from-gray-900 to-blue-900 text-white relative overflow-hidden content-visibility-auto"
+    >
       {/* Background Effects */}
       <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-20 left-20 w-96 h-96 bg-cyan-500 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-20 right-20 w-80 h-80 bg-blue-500 rounded-full blur-3xl"></div>
+        <div className="absolute top-20 left-20 w-96 h-96 bg-cyan-500 rounded-full blur-3xl hidden md:block"></div>
+        <div className="absolute bottom-20 right-20 w-80 h-80 bg-blue-500 rounded-full blur-3xl hidden md:block"></div>
       </div>
       
       <div className="container mx-auto px-4 relative z-10">
@@ -187,10 +229,10 @@ export default function TestimonialCarousel() {
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentIndex}
-                initial={{ opacity: 0, x: 100 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -100 }}
-                transition={{ duration: 0.5 }}
+                initial={slideMotion.initial}
+                animate={slideMotion.animate}
+                exit={slideMotion.exit}
+                transition={slideMotion.transition}
               >
                 {/* Quote Icon */}
                 <div className="absolute top-8 left-8 text-cyan-400 opacity-20">

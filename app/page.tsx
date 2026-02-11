@@ -85,14 +85,8 @@ export default function Home() {
         {/* Premium Gradient Overlay for Depth */}
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-black/40 pointer-events-none"></div>
         
-        {/* Animated Particles/Grid Background */}
-        <div className="absolute inset-0 opacity-10 pointer-events-none">
-          <div className="absolute inset-0" style={{
-            backgroundImage: `radial-gradient(circle at 2px 2px, rgba(0, 255, 255, 0.15) 1px, transparent 0)`,
-            backgroundSize: '40px 40px',
-            animation: 'grid-flow 20s linear infinite'
-          }}></div>
-        </div>
+        {/* Animated Particles/Grid Background (mobile-safe via CSS) */}
+        <div className="absolute inset-0 opacity-10 pointer-events-none hero-grid-bg" />
         
         {/* Glassmorphism Text Overlay - PREMIUM ENHANCED */}
         <div className="relative z-10 text-center px-4 w-full flex items-end justify-center pb-24 pointer-events-none">
@@ -121,10 +115,7 @@ export default function Home() {
                 <span className="inline-block">High-Performance</span>
               </p>
 
-              {/* Authenticity: show real legal entity + CIN */}
-              <p className="text-xs md:text-sm mb-8 text-white/70">
-                {companyProfile.legalName} • CIN: {companyProfile.legal.cin}
-              </p>
+              {/* Legal details are intentionally shown in footer only (homepage). */}
               
               {/* Premium CTA Button with Enhanced Effects */}
               <a 
@@ -191,7 +182,7 @@ export default function Home() {
       {/* ========================================
           SECTION 3: SERVICES HIGHLIGHTS (PREMIUM)
           ======================================== */}
-      <section className="py-20 lg:py-28 bg-gradient-to-br from-gray-50 via-white to-gray-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 relative overflow-hidden">
+      <section className="py-20 lg:py-28 bg-gradient-to-br from-gray-50 via-white to-gray-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 relative overflow-hidden content-visibility-auto">
         {/* Premium Background Pattern */}
         <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05]">
           <div className="absolute inset-0" style={{
@@ -201,8 +192,8 @@ export default function Home() {
         </div>
         
         {/* Gradient Orbs */}
-        <div className="absolute top-20 -left-20 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl animate-float"></div>
-        <div className="absolute bottom-20 -right-20 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute top-20 -left-20 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl animate-float hidden md:block"></div>
+        <div className="absolute bottom-20 -right-20 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-float hidden md:block" style={{ animationDelay: '2s' }}></div>
         
         {/* Background Illustrations - Desktop Only */}
         <div className="absolute top-10 left-10 w-48 h-48 opacity-5 hidden xl:block pointer-events-none">
@@ -344,9 +335,9 @@ export default function Home() {
       {/* ========================================
           SECTION 8: GREAT PRODUCT SOFTWARE
           ======================================== */}
-      <section className="py-20 bg-white dark:bg-gray-800 relative overflow-hidden">
+      <section className="py-20 bg-white dark:bg-gray-800 relative overflow-hidden content-visibility-auto">
         {/* Background Illustrations */}
-        <div className="absolute top-20 left-20 w-56 h-56 opacity-5">
+        <div className="absolute top-20 left-20 w-56 h-56 opacity-5 hidden md:block">
           <Image
             src="/illustrations/undraw_cloud_hosting.svg"
             alt="Cloud hosting illustration"
@@ -355,7 +346,7 @@ export default function Home() {
             className="w-full h-full object-contain"
           />
         </div>
-        <div className="absolute bottom-20 right-20 w-56 h-56 opacity-5">
+        <div className="absolute bottom-20 right-20 w-56 h-56 opacity-5 hidden md:block">
           <Image
             src="/illustrations/undraw_mobile_app.svg"
             alt="Mobile app illustration"
@@ -368,7 +359,7 @@ export default function Home() {
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Great Product Software by <span className="text-blue-600">{companyProfile.brandName}</span>
+              Great Product Software <span className="text-blue-600">Built for Scale</span>
             </h2>
             <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
               Discover our comprehensive suite of enterprise-grade software solutions designed to transform businesses across industries.
@@ -542,11 +533,11 @@ export default function Home() {
       {/* ========================================
           SECTION 12: FINAL CTA (ENHANCED)
           ======================================== */}
-      <section className="py-20 bg-gradient-to-br from-blue-600 via-cyan-600 to-blue-700 text-white relative overflow-hidden">
+      <section className="py-20 bg-gradient-to-br from-blue-600 via-cyan-600 to-blue-700 text-white relative overflow-hidden content-visibility-auto">
         {/* Animated Background */}
         <div className="absolute inset-0 opacity-20">
-          <div className="absolute top-20 left-20 w-96 h-96 bg-white rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-20 right-20 w-80 h-80 bg-cyan-300 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
+          <div className="absolute top-20 left-20 w-96 h-96 bg-white rounded-full blur-3xl animate-pulse hidden md:block"></div>
+          <div className="absolute bottom-20 right-20 w-80 h-80 bg-cyan-300 rounded-full blur-3xl animate-pulse hidden md:block" style={{ animationDelay: '2s' }}></div>
         </div>
         
         {/* Background Illustrations */}
@@ -576,7 +567,7 @@ export default function Home() {
             Ready to Build Something <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 to-yellow-400">Amazing</span>?
           </h2>
           <p className="text-xl md:text-2xl mb-4 max-w-4xl mx-auto font-light">
-            Partner with Vedpragya Bharat Private Limited for enterprise-grade solutions
+            Partner with a global team for enterprise-grade solutions
           </p>
           <p className="text-lg mb-10 max-w-3xl mx-auto text-white/90">
             Our global team delivers world-class scalable architecture, microservices, and real-time systems 

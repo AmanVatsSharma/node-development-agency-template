@@ -14,7 +14,7 @@
  * <TechStackShowcase />
  */
 
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 
 // Console log for debugging
@@ -103,6 +103,7 @@ function TechCategory({ category, technologies, index }: TechCategoryProps) {
  * Main TechStackShowcase Component
  */
 export default function TechStackShowcase() {
+  const shouldReduceMotion = useReducedMotion();
   console.log('[TechStackShowcase] Component rendering');
   
   // Technology stack data organized by category
@@ -142,18 +143,18 @@ export default function TechStackShowcase() {
   };
   
   return (
-    <section className="py-20 bg-white dark:bg-gray-900 relative overflow-hidden">
+    <section className="py-20 bg-white dark:bg-gray-900 relative overflow-hidden content-visibility-auto">
       {/* Background Gradient Orbs */}
-      <div className="absolute top-20 left-10 w-72 h-72 bg-cyan-500/10 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-20 right-10 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"></div>
+      <div className="absolute top-20 left-10 w-72 h-72 bg-cyan-500/10 rounded-full blur-3xl hidden md:block"></div>
+      <div className="absolute bottom-20 right-10 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl hidden md:block"></div>
       
       <div className="container mx-auto px-4 relative z-10">
         {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: shouldReduceMotion ? 0.01 : 0.6 }}
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-4 text-gray-800 dark:text-white">
@@ -178,10 +179,10 @@ export default function TechStackShowcase() {
         
         {/* Bottom CTA */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: shouldReduceMotion ? 0.01 : 0.6 }}
           className="text-center mt-16"
         >
           <p className="text-lg text-gray-600 dark:text-gray-400 mb-6">

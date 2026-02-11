@@ -20,6 +20,18 @@
 5. ✅ Add comprehensive console logging and error handling
 6. ✅ Create full documentation and flowcharts
 
+---
+
+## 📱 Mobile Smoothness Update (2026-02-11)
+
+To reduce homepage jank/lag on phones and keep the experience smooth:
+
+- **Mobile hero**: `HeroAnimationWrapper` now defaults mobile devices to **static** (no WebGL).
+- **Continuous animations**: common always-running animations are disabled on small screens via `app/globals.css`.
+- **Offscreen rendering**: heavy homepage sections use `content-visibility: auto` to reduce work until scrolled into view.
+- **Carousel autoplay**: `TestimonialCarousel` autoplay pauses when offscreen and respects reduced motion.
+- **Legal text repetition**: CIN/company legal name are removed from homepage sections and kept **only in the footer**.
+
 ### Secondary Goals
 1. ✅ Mobile-first responsive design
 2. ✅ Smooth Framer Motion animations
