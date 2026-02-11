@@ -9,13 +9,13 @@
 └─────────────────────────────────────────────────────────────────┘
 
 ┌─────────────────────────────────────────────────────────────────┐
-│  SECTION 1: 3D HERO (World-Class)                              │
+│  SECTION 1: 3D HERO (Adaptive Static/Lite/Full)                │
 │  ┌───────────────────────────────────────────────────────────┐ │
 │  │  ┌─────────────────────────────────────────────────┐      │ │
-│  │  │     HeroAnimationWrapper (Three.js)             │      │ │
-│  │  │     - Interactive 3D Animation                  │      │ │
-│  │  │     - Camera Controls (Drag/Rotate)             │      │ │
-│  │  │     - Pulsing Elements                          │      │ │
+│  │  │     HeroAnimationWrapper (Adaptive Runtime)     │      │ │
+│  │  │     - Static fallback (no WebGL / reduced mode)│      │ │
+│  │  │     - Lite 3D for balanced devices             │      │ │
+│  │  │     - Full 3D for high-end devices only        │      │ │
 │  │  └─────────────────────────────────────────────────┘      │ │
 │  │                                                            │ │
 │  │  ┌─────────────────────────────────────────────────┐      │ │
@@ -333,20 +333,20 @@ User Hovers on Elements
 ```
 Page Load
     ↓
-┌───────────────────────────┐
-│ Critical CSS Inline       │
-│ Hero Animation Lazy Load  │
-│ Below-fold Lazy Load      │
-│ Images Optimized (Next)   │
-└───────────────────────────┘
+┌──────────────────────────────────────────────┐
+│ Critical CSS Inline                          │
+│ Hero wrapper loads lightweight fallback      │
+│ Device capability check (WebGL/CPU/RAM)      │
+│ Below-fold sections lazy-loaded              │
+└──────────────────────────────────────────────┘
     ↓
-First Contentful Paint (FCP)
+Hero Profile Decision
     ↓
-┌───────────────────────────┐
-│ IntersectionObserver Init │
-│ Animations GPU Accelerated│
-│ Code Split by Section     │
-└───────────────────────────┘
+┌──────────────────────────────────────────────┐
+│ STATIC: no WebGL / reduced motion / saveData│
+│ LITE: balanced profile                       │
+│ FULL: high-end profile (idle-time upgrade)   │
+└──────────────────────────────────────────────┘
     ↓
 Time to Interactive (TTI)
     ↓
