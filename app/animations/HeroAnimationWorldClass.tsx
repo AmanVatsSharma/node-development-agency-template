@@ -23,15 +23,12 @@ import {
   Stars,
   Float,
   OrbitControls,
-  Line,
   Sparkles,
-  Html,
   Text,
   RoundedBox
 } from "@react-three/drei";
 import { Suspense } from "react";
-import { EffectComposer, Bloom, ChromaticAberration } from "@react-three/postprocessing";
-import { BlendFunction } from "postprocessing";
+import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import WasmParticles from "./components/WasmParticles";
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -43,7 +40,6 @@ const ELECTRIC_CYAN = "#00ffff";
 const LASER_BLUE = "#4da6ff";
 const HOT_PINK = "#ff00ff";
 const VIBRANT_ORANGE = "#ff6600";
-const BRIGHT_YELLOW = "#ffff00";
 const PURE_WHITE = "#ffffff";
 const DARK_BG = "#0a0a0f"; // Slight tint, not pure black
 
@@ -188,7 +184,7 @@ const TechLogo3D: React.FC<TechLogoProps> = ({ position, name, color, onFocus })
         },
         undefined,
         (error) => {
-          console.warn(`⚠️ Failed to load logo: ${name} at ${logoPath}`);
+          console.warn(`⚠️ Failed to load logo: ${name} at ${logoPath}`, error);
         }
       );
     }
@@ -856,14 +852,14 @@ const SceneContent = ({
       <pointLight position={[0, 10, -10]} intensity={2} color={LASER_BLUE} />
       
       {/* Background stars */}
-      <Stars radius={100} depth={50} count={3000} factor={4} saturation={0} fade speed={0.5} />
+      <Stars radius={100} depth={50} count={1800} factor={4} saturation={0} fade speed={0.5} />
       
       {/* Central neural sphere */}
       <BrightNeuralSphere />
 
       {/* WASM-accelerated particle field (JS fallback with console logs) */}
       <WasmParticles
-        count={700}
+        count={380}
         radiusMin={3}
         radiusMax={6}
         speed={0.5}
@@ -985,8 +981,8 @@ const SceneContent = ({
       </Float>
       
       {/* Sparkles for atmosphere */}
-      <Sparkles count={100} scale={20} size={4} speed={0.4} color={ELECTRIC_CYAN} />
-      <Sparkles count={80} scale={25} size={3} speed={0.3} color={HOT_PINK} />
+      <Sparkles count={70} scale={20} size={4} speed={0.4} color={ELECTRIC_CYAN} />
+      <Sparkles count={50} scale={25} size={3} speed={0.3} color={HOT_PINK} />
       
       {/* Camera controls - always enabled but tour overrides */}
       <OrbitControls
@@ -1381,13 +1377,13 @@ export default function HeroAnimationWorldClass() {
         <Canvas
           camera={{ position: [0, 2, 15], fov: 60 }}
           gl={{
-            antialias: true,
+            antialias: false,
             alpha: false,
             powerPreference: "high-performance",
             toneMapping: THREE.ACESFilmicToneMapping,
             toneMappingExposure: 1.2
           }}
-          dpr={[1, 2]}
+          dpr={[1, 1.5]}
           onPointerDown={handleUserInteraction}
           onWheel={handleUserInteraction}
           onTouchStart={handleUserInteraction}

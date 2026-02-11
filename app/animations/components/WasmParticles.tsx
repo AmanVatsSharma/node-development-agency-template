@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
 import { useFrame } from "@react-three/fiber";
 
@@ -59,105 +59,178 @@ const WasmParticles: React.FC<WasmParticlesProps> = ({
   opacity = 0.9,
 }) => {
   const pointsRef = useRef<THREE.Points | null>(null);
-  const [positions, setPositions] = useState<Float32Array | null>(null);
   const workerRef = useRef<Worker | null>(null);
   const useJsFallbackRef = useRef<boolean>(false);
+  const positionsRef = useRef<Float32Array | null>(null);
+  const workerStepInFlightRef = useRef<boolean>(false);
+  const stepAccumulatorRef = useRef<number>(0);
+  const cancelledRef = useRef<boolean>(false);
 
   // Geometry setup
   const geometry = useMemo(() => new THREE.BufferGeometry(), []);
-  const material = useMemo(() => new THREE.PointsMaterial({
-    size,
-    vertexColors: false,
-    transparent: true,
-    opacity,
-    sizeAttenuation: true,
-    blending: THREE.AdditiveBlending,
-    toneMapped: false,
-    color: new THREE.Color(color),
-  }), [color, opacity, size]);
+  const material = useMemo(
+    () =>
+      new THREE.PointsMaterial({
+        size,
+        vertexColors: false,
+        transparent: true,
+        opacity,
+        sizeAttenuation: true,
+        blending: THREE.AdditiveBlending,
+        toneMapped: false,
+        color: new THREE.Color(color),
+      }),
+    [color, opacity, size],
+  );
+
+  const applyPositionsToGeometry = useCallback(
+    (nextPositions: Float32Array) => {
+      const attr = geometry.getAttribute("position") as THREE.BufferAttribute | null;
+
+      if (!attr || (attr.array as Float32Array).length !== nextPositions.length) {
+        // Copy into a new buffer attribute to avoid accidental shared mutation.
+        geometry.setAttribute("position", new THREE.BufferAttribute(new Float32Array(nextPositions), 3));
+        return;
+      }
+
+      (attr.array as Float32Array).set(nextPositions);
+      attr.needsUpdate = true;
+    },
+    [geometry],
+  );
 
   useEffect(() => {
-    let cancelled = false;
+    cancelledRef.current = false;
+    useJsFallbackRef.current = false;
+    workerStepInFlightRef.current = false;
+    stepAccumulatorRef.current = 0;
+
+    const initializeFallback = (reason: string, error?: unknown) => {
+      if (cancelledRef.current) {
+        return;
+      }
+
+      console.warn("⚠️ [WasmParticles] Switching to JS fallback", { reason, error });
+      useJsFallbackRef.current = true;
+
+      const fallbackPositions = generateFallbackPositions(count, radiusMin, radiusMax);
+      positionsRef.current = fallbackPositions;
+      applyPositionsToGeometry(fallbackPositions);
+
+      if (workerRef.current) {
+        workerRef.current.terminate();
+        workerRef.current = null;
+      }
+    };
+
     const init = async () => {
       try {
-        const worker = new Worker('/workers/heroSim.js', { type: 'module' });
+        const worker = new Worker("/workers/heroSim.js", { type: "module" });
         workerRef.current = worker;
         console.log("🧵 [WasmParticles] Worker created");
 
         worker.onmessage = (e: MessageEvent) => {
           const { type, positions: pos } = e.data || {};
-          if (type === 'init_done' && pos && !cancelled) {
+          if (cancelledRef.current) {
+            return;
+          }
+
+          if (type === "init_done" && pos) {
             const arr = new Float32Array(pos);
-            setPositions(arr);
+            positionsRef.current = arr;
+            applyPositionsToGeometry(arr);
+            workerStepInFlightRef.current = false;
             console.log("✅ [WasmParticles] Init positions received", { count: arr.length / 3 });
-          } else if (type === 'step_done' && pos && !cancelled) {
+          } else if (type === "step_done" && pos) {
             const arr = new Float32Array(pos);
-            setPositions(arr);
-          } else if (type === 'error') {
-            console.error("❌ [WasmParticles] Worker error:", e.data?.message);
+            positionsRef.current = arr;
+            applyPositionsToGeometry(arr);
+            workerStepInFlightRef.current = false;
+          } else if (type === "error") {
+            console.error("❌ [WasmParticles] Worker error message:", e.data?.message);
+            workerStepInFlightRef.current = false;
+            initializeFallback("worker-message-error", e.data?.message);
           }
         };
 
         worker.onerror = (err) => {
           console.error("❌ [WasmParticles] Worker error", err);
-          if (!useJsFallbackRef.current) {
-            useJsFallbackRef.current = true;
-            setPositions(generateFallbackPositions(count, radiusMin, radiusMax));
-          }
+          workerStepInFlightRef.current = false;
+          initializeFallback("worker-onerror", err);
         };
 
-        worker.postMessage({ type: 'init', payload: { count, radiusMin, radiusMax, seed: 12345 } });
+        worker.postMessage({
+          type: "init",
+          payload: { count, radiusMin, radiusMax, seed: 12345 },
+        });
       } catch (err) {
-        console.warn("⚠️ [WasmParticles] Worker unavailable, using JS fallback", err);
-        useJsFallbackRef.current = true;
-        setPositions(generateFallbackPositions(count, radiusMin, radiusMax));
+        initializeFallback("worker-unavailable", err);
       }
     };
 
     init();
+
     return () => {
-      cancelled = true;
+      cancelledRef.current = true;
+      workerStepInFlightRef.current = false;
+
       if (workerRef.current) {
         workerRef.current.terminate();
         workerRef.current = null;
         console.log("🧵 [WasmParticles] Worker terminated");
       }
     };
-  }, [count, radiusMin, radiusMax]);
+  }, [applyPositionsToGeometry, count, radiusMax, radiusMin]);
+
+  useEffect(() => {
+    return () => {
+      geometry.dispose();
+      material.dispose();
+      console.log("🧹 [WasmParticles] Disposed geometry and material");
+    };
+  }, [geometry, material]);
 
   // Hook into R3F render loop
-  const angleRef = useRef(0);
   useFrame((_, delta) => {
-    if (!positions) return;
+    const positions = positionsRef.current;
+    if (!positions) {
+      return;
+    }
 
-    // Update positions via worker or JS fallback
+    // Worker mode with backpressure: max 30 simulation updates per second.
     if (workerRef.current && !useJsFallbackRef.current) {
-      angleRef.current += speed * delta;
-      // Keep angle small to reduce numeric drift on WASM side
-      const stepAngle = speed * delta;
+      stepAccumulatorRef.current += delta;
+      const fixedStep = 1 / 30;
+
+      if (workerStepInFlightRef.current || stepAccumulatorRef.current < fixedStep) {
+        return;
+      }
+
+      const stepDelta = stepAccumulatorRef.current;
+      stepAccumulatorRef.current = 0;
+
       try {
-        workerRef.current.postMessage({ type: 'step', payload: { angle: stepAngle } });
+        workerStepInFlightRef.current = true;
+        workerRef.current.postMessage({
+          type: "step",
+          payload: { angle: speed * stepDelta },
+        });
       } catch (err) {
         console.warn("⚠️ [WasmParticles] Worker postMessage failed, switching to JS fallback", err);
         useJsFallbackRef.current = true;
+        workerStepInFlightRef.current = false;
+        if (workerRef.current) {
+          workerRef.current.terminate();
+          workerRef.current = null;
+        }
       }
-    } else {
-      angleRef.current += speed * delta;
-      const newArr = new Float32Array(positions);
-      rotateYInPlace(newArr, speed * delta);
-      setPositions(newArr);
+
+      return;
     }
 
-    // Push latest positions into geometry
-    if (positions && pointsRef.current) {
-      const attr = geometry.getAttribute('position') as THREE.BufferAttribute | null;
-      if (!attr || (attr.array as any).length !== positions.length) {
-        geometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array(positions), 3));
-      } else {
-        (attr.array as Float32Array).set(positions);
-        attr.needsUpdate = true;
-      }
-    }
+    // JS fallback mode: mutate in place without triggering React re-renders.
+    rotateYInPlace(positions, speed * delta);
+    applyPositionsToGeometry(positions);
   });
 
   return (
