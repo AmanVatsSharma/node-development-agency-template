@@ -9,7 +9,7 @@ import GoogleAnalytics from './components/Analytics/GoogleAnalytics';
 import GoogleAdsTracking from './components/Analytics/GoogleAdsTracking';
 import { ThemeProvider } from "./components/ThemeProvider";
 import { Providers } from "./providers";
-import AIAgentWidget from './components/AIAgent/AIAgentWidget';
+import DeferredAIAgentWidget from './components/AIAgent/DeferredAIAgentWidget';
 import { headers } from 'next/headers';
 import { OrganizationStructuredData, WebsiteStructuredData } from "./components/SEO/StructuredData";
 import { companyProfile } from "./data/companyProfile";
@@ -120,7 +120,7 @@ export default async function RootLayout({
             {/* Service Worker Manager for updates notification */}
             <ServiceWorkerManager />
             {/* AI Sales Agent - Available on every page except admin */}
-            {!isAdminRoute && <AIAgentWidget />}
+            {!isAdminRoute && <DeferredAIAgentWidget />}
           </ThemeProvider>
         </Providers>
       </body>
