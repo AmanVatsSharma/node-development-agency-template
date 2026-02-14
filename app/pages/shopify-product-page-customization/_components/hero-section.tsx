@@ -88,18 +88,18 @@ export function HeroSection() {
                 ))}
               </motion.div>
 
-              {/* Main Headline - MOBILE OPTIMIZED */}
+              {/* Main Headline - SEO Optimized */}
               <motion.h1 
                 id="hero-heading"
                 variants={fadeInUp}
                 className="text-[32px] leading-[1.1] sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black mb-5 tracking-tight"
               >
                 <span className="text-gray-900 dark:text-white block mb-2">
-                  Turn Your Product Page
+                  Hire Shopify Product Page Developer
                 </span>
                 <span className="block">
                   <Highlight className="text-gray-900 dark:text-white bg-gradient-to-r from-[#0A2540] via-[#FFB400] to-[#0A2540] dark:from-[#FFB400] dark:via-[#0A2540] dark:to-[#FFB400]">
-                    into a Sales Engine
+                    Professional Shopify Product Page Customization Services
                   </Highlight>
                 </span>
               </motion.h1>

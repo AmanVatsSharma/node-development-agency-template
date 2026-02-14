@@ -135,15 +135,15 @@ const HeroSection = () => {
             <TrendingUp className="w-4 h-4 text-[#00B894]" />
           </motion.div>
 
-          {/* Main heading */}
+          {/* Main heading - SEO Optimized */}
           <motion.h1
             variants={itemVariants}
             className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight"
           >
-            Launch a Shopify Store
+            Hire Shopify Store Setup Expert
             <br />
             <span className="bg-gradient-to-r from-[#00B894] to-cyan-400 bg-clip-text text-transparent">
-              That Actually Sells
+              Professional Shopify Store Setup Services
             </span>
           </motion.h1>
 

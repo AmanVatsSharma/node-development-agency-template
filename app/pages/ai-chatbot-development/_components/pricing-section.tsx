@@ -122,7 +122,7 @@ export function PricingSection() {
             id="pricing-heading"
             className="text-[32px] leading-tight sm:text-4xl md:text-5xl lg:text-6xl font-black mb-4 sm:mb-5 text-gray-900 dark:text-white"
           >
-            Investment Packages
+            Hire AI Chatbot Developer Pricing & Packages
           </h2>
 
           <p className="text-sm sm:text-base md:text-lg text-gray-700 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed mb-5">

@@ -69,9 +69,9 @@ export function HeroSection() {
                 transition={{ duration: 0.6, delay: 0.4 }}
                 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight"
               >
-                Enterprise
+                Hire Enterprise Google Ads Expert
                 <span className="block bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                  Google Ads Management
+                  Professional Enterprise Google Ads Management Services
                 </span>
               </motion.h1>
 

@@ -249,7 +249,7 @@ export function TestimonialsSection() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="text-3xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white via-gray-200 to-white/80"
           >
-            What Our Clients Say
+            Client Success Stories with Hire Website Developer
           </motion.h2>
           
           <motion.p

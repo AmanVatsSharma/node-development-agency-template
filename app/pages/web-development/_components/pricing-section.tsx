@@ -87,7 +87,7 @@ export function PricingSection() {
             className="text-3xl md:text-5xl font-bold mb-4"
             id="wd-pricing-heading"
           >
-            Packages for Every Growth Stage
+            Hire Website Developer Pricing & Packages
           </motion.h2>
 
           <motion.p

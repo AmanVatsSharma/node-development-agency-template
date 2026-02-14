@@ -1,81 +1,32 @@
+import { Metadata } from 'next';
+import { generateAdvancedServiceMetadata } from '@/app/lib/seo/advanced-metadata';
+import { WEB_DEVELOPMENT_MUMBAI_KEYWORDS } from '@/app/lib/seo/keyword-research';
+
 /**
  * Mumbai Web Development Landing Page - SEO Metadata
- * Optimized for Mumbai market and web development keywords
+ * Optimized for high-intent, lead-generating keywords with Mumbai location focus
  * 
- * @version 1.0.0 - Mumbai-Focused SEO
+ * KEYWORD STRATEGY:
+ * - Primary: "hire web developer mumbai" (high buyer intent + location)
+ * - Secondary: Service-specific web development keywords with Mumbai
+ * - Long-tail: Industry-specific Mumbai web development keywords
+ * - Semantic: Related web development and Mumbai business terms
+ * 
+ * @version 2.0.0 - Advanced Keyword Optimization
  */
 
-export const metadata = {
-  title: "Mumbai's #1 Web Development Company | Professional Websites Starting ₹15,999",
-  description: "Mumbai's leading web development company. We build professional, mobile-responsive websites for Mumbai businesses. Starting ₹15,999. 14-21 days delivery. Free consultation.",
-  keywords: [
-    "web development mumbai",
-    "website development mumbai",
-    "mumbai web developer",
-    "web design mumbai",
-    "mumbai website company",
-    "professional website mumbai",
-    "responsive website mumbai",
-    "ecommerce website mumbai",
-    "custom website mumbai",
-    "mumbai web development services",
-    "website development company mumbai",
-    "mumbai web agency",
-    "web development services mumbai",
-    "mumbai website design",
-    "web development company mumbai",
-    "mumbai web solutions",
-    "website development mumbai price",
-    "mumbai web development cost",
-    "web development mumbai rates",
-    "mumbai web development company"
-  ],
-  authors: [{ name: "Mumbai Web Development Company" }],
-  creator: "Mumbai Web Development Company",
-  publisher: "Mumbai Web Development Company",
-  formatDetection: {
-    email: false,
-    address: false,
-    telephone: false,
-  },
-  metadataBase: new URL('https://mumbaiwebdev.com'),
-  alternates: {
-    canonical: '/pages/web-development-mumbai',
-  },
-  openGraph: {
-    title: "Mumbai's #1 Web Development Company | Professional Websites Starting ₹15,999",
-    description: "Mumbai's leading web development company. We build professional, mobile-responsive websites for Mumbai businesses. Starting ₹15,999. 14-21 days delivery. Free consultation.",
-    url: 'https://mumbaiwebdev.com/pages/web-development-mumbai',
-    siteName: 'Mumbai Web Development Company',
-    locale: 'en_IN',
-    type: 'website',
-    images: [
-      {
-        url: '/og-image-mumbai-web-development.jpg',
-        width: 1200,
-        height: 630,
-        alt: "Mumbai's #1 Web Development Company - Professional Websites",
-      },
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: "Mumbai's #1 Web Development Company | Professional Websites Starting ₹15,999",
-    description: "Mumbai's leading web development company. We build professional, mobile-responsive websites for Mumbai businesses. Starting ₹15,999. 14-21 days delivery. Free consultation.",
-    images: ['/og-image-mumbai-web-development.jpg'],
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
+export const metadata: Metadata = generateAdvancedServiceMetadata(
+  "Hire Web Developer Mumbai | Mumbai's #1 Web Development Company",
+  "Mumbai's leading web development company. We build professional, mobile-responsive websites for Mumbai businesses. 14-21 days delivery.",
+  WEB_DEVELOPMENT_MUMBAI_KEYWORDS,
+  '/pages/web-development-mumbai',
+  {
+    location: 'Mumbai',
+    pricing: {
+      startingPrice: '15,999',
+      currency: '₹',
     },
-  },
-  verification: {
-    google: 'your-google-verification-code',
-  },
-};
+    ogImage: '/og-image-mumbai-web-development.jpg',
+    cta: 'Get free consultation today!',
+  }
+);

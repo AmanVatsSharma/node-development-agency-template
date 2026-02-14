@@ -1,73 +1,32 @@
 import { Metadata } from 'next';
+import { generateAdvancedServiceMetadata } from '@/app/lib/seo/advanced-metadata';
+import { NEXTJS_KEYWORDS } from '@/app/lib/seo/keyword-research';
 
 /**
  * SEO Metadata for Next.js Web Development Landing Page
- * Optimized for search engines and social media sharing
+ * Optimized for high-intent, lead-generating keywords
+ * 
+ * KEYWORD STRATEGY:
+ * - Primary: "hire next.js developer" (high buyer intent)
+ * - Secondary: Service-specific Next.js development keywords
+ * - Long-tail: Technology-specific development keywords
+ * - Semantic: Related React and Next.js terms
  */
 
-export const metadata: Metadata = {
-  title: 'Next.js Web Development — Build Lightning-Fast, Future-Proof Websites',
-  description: 'We build super-fast websites using Next.js + Tailwind CSS + NestJS. SEO-ready, secure & scalable. Starting ₹14,999.',
-  keywords: [
-    'Next.js development agency',
-    'React developer India',
-    'custom Next.js website',
-    'Next.js migration services',
-    'Next.js eCommerce development',
-    'Next.js SaaS development',
-    'Next.js consulting',
-    'Next.js developers',
-    'Next.js web app',
-    'Next.js TypeScript',
-    'Next.js Tailwind CSS',
-    'Next.js performance optimization',
-    'Next.js SEO services'
-  ],
-  authors: [{ name: 'Next.js Development Agency' }],
-  creator: 'Next.js Development Agency',
-  publisher: 'Next.js Development Agency',
-  openGraph: {
-    title: 'Next.js Web Development — Build Lightning-Fast, Future-Proof Websites',
-    description: 'Build blazing-fast, SEO-ready websites with Next.js. 40+ projects delivered, avg speed 95+, clients across 5 countries. Get free quote.',
-    url: 'https://yourdomain.com/pages/next-js-development',
-    siteName: 'Next.js Web Development Agency',
-    locale: 'en_IN',
-    type: 'website',
-    images: [
-      {
-        url: '/og-nextjs-development.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'Next.js Web Development Services',
-      },
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Next.js Web Development Services | Custom Next.js Agency',
-    description: 'Build blazing-fast, SEO-optimized Next.js websites. Enterprise-grade development starting ₹14,999.',
-    images: ['/og-nextjs-development.jpg'],
-    creator: '@youragency',
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
+export const metadata: Metadata = generateAdvancedServiceMetadata(
+  'Hire Next.js Developer | Professional Next.js Development Services',
+  'We build super-fast websites using Next.js + Tailwind CSS + NestJS. SEO-ready, secure & scalable.',
+  NEXTJS_KEYWORDS,
+  '/pages/next-js-development',
+  {
+    pricing: {
+      startingPrice: '14,999',
+      currency: '₹',
     },
-  },
-  alternates: {
-    canonical: 'https://yourdomain.com/pages/next-js-development',
-  },
-  other: {
-    'price:currency': 'INR',
-    'price:amount': '14999',
-  },
-};
+    ogImage: '/og-nextjs-development.jpg',
+    cta: 'Get free consultation today!',
+  }
+);
 
 /**
  * Structured Data (JSON-LD) for SEO

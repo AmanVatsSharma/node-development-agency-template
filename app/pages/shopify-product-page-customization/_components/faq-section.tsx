@@ -83,7 +83,7 @@ export function FAQSection() {
             id="faq-heading"
             className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-4 text-gray-900 dark:text-white"
           >
-            ❓ Frequently Asked <span className="text-[#FFB400]">Questions</span>
+            Frequently Asked Questions About <span className="text-[#FFB400]">Hire Shopify Customization Expert</span>
           </h2>
           <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
             Got questions? We've got answers. Everything you need to know before getting started.

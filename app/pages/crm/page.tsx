@@ -51,6 +51,9 @@ import { FinalCTASection } from './_components/final-cta-section';
 import { SectionErrorBoundary } from './_components/section-error-boundary';
 import { ScrollToTop } from './_components/scroll-to-top';
 import { MobileFloatingCTA } from './_components/mobile-floating-cta';
+import { Breadcrumbs } from '@/app/components/SEO/Breadcrumbs';
+import { RelatedServices } from '@/app/components/SEO/RelatedServices';
+import { getBreadcrumbItems, getRelatedServicesTitle } from '@/app/lib/seo/page-helpers';
 
 console.log('[CRM] Main page component loaded');
 
@@ -91,6 +94,11 @@ export default function CRMPage() {
 
   return (
     <main className="min-h-screen bg-white dark:bg-gray-950">
+      {/* Breadcrumb Navigation - SEO Optimized */}
+      <div className="container mx-auto px-4 pt-8">
+        <Breadcrumbs items={getBreadcrumbItems('crm')} />
+      </div>
+
       {/* Hero Section - "Your Business. Your Data. Your CRM." */}
       <SectionErrorBoundary name="HeroSection">
         <HeroSection />
@@ -134,6 +142,14 @@ export default function CRMPage() {
       {/* Pricing Snapshot - Two Clear Packages */}
       <SectionErrorBoundary name="PricingSection">
         <PricingSection />
+      </SectionErrorBoundary>
+
+      {/* Related Services - Internal Linking for SEO */}
+      <SectionErrorBoundary name="RelatedServices">
+        <RelatedServices 
+          currentPage="crm"
+          title={getRelatedServicesTitle('crm')}
+        />
       </SectionErrorBoundary>
 
       {/* Final CTA - Strong Closing with Tricolor Wave */}

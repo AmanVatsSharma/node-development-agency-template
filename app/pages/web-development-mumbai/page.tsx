@@ -39,6 +39,9 @@ import { FinalCTASection } from './_components/final-cta-section';
 import { MobileFloatingCTA } from './_components/mobile-floating-cta';
 import { ScrollToTop } from './_components/scroll-to-top';
 import { SectionErrorBoundary } from './_components/section-error-boundary';
+import { Breadcrumbs } from '@/app/components/SEO/Breadcrumbs';
+import { RelatedServices } from '@/app/components/SEO/RelatedServices';
+import { getBreadcrumbItems, getRelatedServicesTitle } from '@/app/lib/seo/page-helpers';
 
 console.log('[Mumbai-Web-Development] Main page component loaded');
 
@@ -85,6 +88,11 @@ export default function MumbaiWebDevelopmentPage() {
 
   return (
     <main className="min-h-screen">
+      {/* Breadcrumb Navigation - SEO Optimized */}
+      <div className="container mx-auto px-4 pt-8">
+        <Breadcrumbs items={getBreadcrumbItems('web-development-mumbai')} />
+      </div>
+
       {/* Hero Section - Mumbai skyline + 3D website showcase */}
       <SectionErrorBoundary name="HeroSection">
         <HeroSection />
@@ -133,6 +141,14 @@ export default function MumbaiWebDevelopmentPage() {
       {/* FAQ - Address common concerns */}
       <SectionErrorBoundary name="FAQSection">
         <FAQSection />
+      </SectionErrorBoundary>
+
+      {/* Related Services - Internal Linking for SEO */}
+      <SectionErrorBoundary name="RelatedServices">
+        <RelatedServices 
+          currentPage="web-development-mumbai"
+          title={getRelatedServicesTitle('web-development-mumbai')}
+        />
       </SectionErrorBoundary>
 
       {/* Final CTA - Strong urgency + FOMO */}

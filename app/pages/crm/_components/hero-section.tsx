@@ -111,21 +111,18 @@ export function HeroSection() {
                 ))}
               </motion.div>
 
-              {/* Main Headline - MOBILE OPTIMIZED */}
+              {/* Main Headline - SEO Optimized */}
               <motion.h1 
                 id="hero-heading"
                 variants={fadeInUp}
                 className="text-[32px] leading-[1.1] sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black mb-5 tracking-tight"
               >
                 <span className="text-gray-900 dark:text-white block mb-3">
-                  🔥 Your Business.
-                </span>
-                <span className="text-gray-900 dark:text-white block mb-3">
-                  Your Data.
+                  Hire CRM Developer
                 </span>
                 <span className="block">
                   <Highlight className="text-gray-900 dark:text-white bg-gradient-to-r from-[#002F9E] via-[#FFD700] to-[#00C897]">
-                    Your CRM.
+                    Professional Custom CRM Development Services
                   </Highlight>
                 </span>
               </motion.h1>

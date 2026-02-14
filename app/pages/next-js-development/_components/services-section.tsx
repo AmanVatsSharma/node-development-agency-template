@@ -98,7 +98,7 @@ export function ServicesSection() {
             id="services-heading"
             className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4 sm:mb-6 text-gray-900 dark:text-white px-2"
           >
-            Complete Next.js Solutions
+            Hire Next.js Developer Services We Offer
           </h2>
 
           <p className="text-base sm:text-lg md:text-xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed px-2">

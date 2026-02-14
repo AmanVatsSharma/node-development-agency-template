@@ -82,21 +82,18 @@ export function HeroSection() {
             <Star className="h-3 w-3 sm:h-4 sm:w-4 text-yellow-500 fill-yellow-500" />
           </motion.div>
 
-          {/* Main Headline */}
+          {/* Main Headline - SEO Optimized */}
           <motion.h1 
             id="hero-heading"
             variants={fadeInUp}
             className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold mb-3 sm:mb-4 md:mb-6 tracking-tight leading-tight"
           >
             <span className="text-gray-900 dark:text-white block mb-2">
-              Get More Customers{' '}
-              <Highlight className="text-gray-900 dark:text-white">
-                Online
-              </Highlight>
+              Hire Business Website Developer
             </span>
             <span className="block mb-2">
               <Highlight className="text-gray-900 dark:text-white bg-gradient-to-r from-indigo-300 to-purple-300 dark:from-indigo-500 dark:to-purple-500">
-                Professional Websites That Grow Your Business
+                Professional Business Website Development Services
               </Highlight>
             </span>
             <span className="text-xl sm:text-2xl md:text-3xl text-gray-600 dark:text-gray-400 block mt-2 sm:mt-3">

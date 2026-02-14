@@ -119,11 +119,11 @@ export function FAQSection() {
             className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black mb-4 sm:mb-6"
           >
             <span className="bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
-              Frequently Asked
+              Frequently Asked Questions About
             </span>
             <br />
             <span className="bg-gradient-to-r from-[#61DAFB] via-[#00C897] to-[#61DAFB] bg-clip-text text-transparent">
-              Questions
+              Hire React.js Developer
             </span>
           </motion.h2>
 

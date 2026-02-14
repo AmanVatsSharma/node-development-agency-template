@@ -65,7 +65,7 @@ export function ServiceFeaturesSection() {
           className="text-center mb-16"
         >
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-            Landing Page Optimization Features
+            Hire Landing Page Optimization Expert Services We Offer
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Our landing page optimization includes specialized features designed for maximum conversion and user experience.

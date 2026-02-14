@@ -1,87 +1,32 @@
-import type { Metadata } from 'next';
+import { Metadata } from 'next';
+import { generateAdvancedServiceMetadata } from '@/app/lib/seo/advanced-metadata';
+import { HEALTHCARE_SOFTWARE_KEYWORDS } from '@/app/lib/seo/keyword-research';
 
 /**
  * SEO Metadata for Healthcare Software Development Landing Page
- * Optimized for Google Ads and organic search in India
+ * Optimized for high-intent, lead-generating keywords
+ * 
+ * KEYWORD STRATEGY:
+ * - Primary: "hire healthcare software developer" (high buyer intent)
+ * - Secondary: Service-specific healthcare software keywords
+ * - Long-tail: System-specific healthcare keywords
+ * - Semantic: Related healthcare IT and medical software terms
  */
-export const metadata: Metadata = {
-  title: 'Healthcare Software Development India | Hospital Management System | EHR Software – Vedpragya Bharat',
-  description: 'Build HIPAA-compliant healthcare software including Hospital Management System, EHR, Telemedicine platforms. Trusted by 100+ healthcare providers across India. ₹2.5L onwards.',
-  keywords: [
-    'healthcare software development india',
-    'hospital management system',
-    'EHR software development',
-    'telemedicine platform development',
-    'HIPAA compliant software',
-    'medical software company india',
-    'healthcare app development',
-    'pharmacy management software',
-    'clinic management system',
-    'medical lab management',
-    'healthcare CRM software',
-    'patient portal development',
-    'healthcare analytics dashboard',
-    'medical device integration',
-    'healthcare mobile apps'
-  ],
-  authors: [{ name: 'Vedpragya Bharat Pvt. Ltd.' }],
-  creator: 'Vedpragya Bharat Pvt. Ltd.',
-  publisher: 'Vedpragya Bharat Pvt. Ltd.',
-  
-  // Open Graph
-  openGraph: {
-    type: 'website',
-    locale: 'en_IN',
-    url: 'https://vedpragyabharat.com/pages/healthcare-software-development',
-    title: 'Healthcare Software Development India | Vedpragya Bharat',
-    description: 'Build HIPAA-compliant healthcare software including Hospital Management System, EHR, Telemedicine platforms. Starting from ₹2.5L.',
-    siteName: 'Vedpragya Bharat',
-    images: [
-      {
-        url: '/healthcare-software-og-image.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'Healthcare Software Development Services'
-      }
-    ]
-  },
-  
-  // Twitter Card
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Healthcare Software Development India | Vedpragya Bharat',
-    description: 'Build HIPAA-compliant healthcare software including Hospital Management System, EHR, Telemedicine platforms.',
-    images: ['/healthcare-software-og-image.jpg'],
-    creator: '@vedpragyabharat'
-  },
-  
-  // Additional metadata
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
-  },
-  
-  // Verification
-  verification: {
-    google: 'your-google-verification-code',
-  },
-  
-  // Alternates
-  alternates: {
-    canonical: 'https://vedpragyabharat.com/pages/healthcare-software-development',
-  },
-  
-  // Category
-  category: 'Healthcare Technology',
-};
 
+export const metadata: Metadata = generateAdvancedServiceMetadata(
+  'Hire Healthcare Software Developer | Healthcare Software Development',
+  'Build HIPAA-compliant healthcare software including Hospital Management System, EHR, Telemedicine platforms. Trusted by 100+ healthcare providers across India.',
+  HEALTHCARE_SOFTWARE_KEYWORDS,
+  '/pages/healthcare-software-development',
+  {
+    pricing: {
+      startingPrice: '250,000',
+      currency: '₹',
+    },
+    ogImage: '/healthcare-software-og-image.jpg',
+    cta: 'Get free consultation today!',
+  }
+);
 /**
  * Structured Data for SEO
  * Helps search engines understand the page content

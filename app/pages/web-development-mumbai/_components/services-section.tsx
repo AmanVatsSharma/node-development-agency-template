@@ -155,7 +155,7 @@ export function ServicesSection() {
             id="services-heading"
             className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4"
           >
-            Comprehensive Web Development Services
+            Hire Web Developer Mumbai Services We Offer
           </h2>
           <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">
             From custom web applications to e-commerce solutions, we provide everything Mumbai businesses need to succeed online.

@@ -80,7 +80,7 @@ export function ProcessSection() {
             className="text-center mb-12 md:mb-16"
           >
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-black mb-4 text-gray-900 dark:text-white">
-              🧭 Our <span className="bg-gradient-to-r from-[#00E0B8] to-cyan-400 bg-clip-text text-transparent">Process</span>
+              How Our <span className="bg-gradient-to-r from-[#00E0B8] to-cyan-400 bg-clip-text text-transparent">Hire Shopify Headless Expert Works</span>
             </h2>
             <p className="text-lg text-gray-600 dark:text-gray-400">
               Systematic, transparent workflow from consultation to launch

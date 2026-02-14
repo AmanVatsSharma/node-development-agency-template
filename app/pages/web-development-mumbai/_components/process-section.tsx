@@ -115,7 +115,7 @@ export function ProcessSection() {
             id="process-heading"
             className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4"
           >
-            Our 5-Step Development Process
+            How Our Hire Web Developer Mumbai Works
           </h2>
           <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">
             A systematic approach that ensures your Mumbai business gets a world-class website delivered on time and within budget.

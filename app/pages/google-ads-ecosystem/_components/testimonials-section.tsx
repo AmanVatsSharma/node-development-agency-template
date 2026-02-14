@@ -205,9 +205,9 @@ export function TestimonialsSection() {
           viewport={{ once: true }}
         >
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            What Our Clients
+            Client Success Stories with
             <span className="block bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              Say About Us
+              Hire Google Ads Ecosystem Expert
             </span>
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">

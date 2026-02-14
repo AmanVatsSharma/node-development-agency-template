@@ -49,6 +49,9 @@ import { FinalCTASection } from './_components/final-cta-section';
 import { MobileFloatingCTA } from './_components/mobile-floating-cta';
 import { ScrollToTop } from './_components/scroll-to-top';
 import { SectionErrorBoundary } from './_components/section-error-boundary';
+import { Breadcrumbs } from '@/app/components/SEO/Breadcrumbs';
+import { RelatedServices } from '@/app/components/SEO/RelatedServices';
+import { getBreadcrumbItems, getRelatedServicesTitle } from '@/app/lib/seo/page-helpers';
 
 console.log('[AI-Chatbot-Dev] Main page component loaded');
 
@@ -88,6 +91,11 @@ export default function AIChatbotDevelopmentPage() {
 
   return (
     <main className="min-h-screen">
+      {/* Breadcrumb Navigation - SEO Optimized */}
+      <div className="container mx-auto px-4 pt-8">
+        <Breadcrumbs items={getBreadcrumbItems('ai-chatbot-development')} />
+      </div>
+
       {/* Hero Section - "Turn Conversations into Conversions" */}
       <SectionErrorBoundary name="HeroSection">
         <HeroSection />
@@ -136,6 +144,14 @@ export default function AIChatbotDevelopmentPage() {
       {/* Lead Form - Primary Conversion Point */}
       <SectionErrorBoundary name="LeadFormSection">
         <LeadFormSection />
+      </SectionErrorBoundary>
+
+      {/* Related Services - Internal Linking for SEO */}
+      <SectionErrorBoundary name="RelatedServices">
+        <RelatedServices 
+          currentPage="ai-chatbot-development"
+          title={getRelatedServicesTitle('ai-chatbot-development')}
+        />
       </SectionErrorBoundary>
 
       {/* Final CTA - Strong Closing */}

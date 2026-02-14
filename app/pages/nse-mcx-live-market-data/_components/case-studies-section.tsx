@@ -77,7 +77,7 @@ export function CaseStudiesSection() {
             <span className="text-[#00FF88] font-bold text-sm">SUCCESS STORIES</span>
           </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-black mb-4 text-gray-900 dark:text-white">
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00FF88] to-[#FFD700]">Real Results</span> from Real Clients
+            Hire Trading Data Developer <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00FF88] to-[#FFD700]">Case Studies & Portfolio</span>
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
             See how leading trading platforms use our API to power their applications

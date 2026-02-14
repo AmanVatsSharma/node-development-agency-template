@@ -79,7 +79,7 @@ export function FAQSection() {
             id="faq-heading"
             className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4 sm:mb-6 text-gray-900 dark:text-white px-2"
           >
-            Frequently Asked Questions
+            Frequently Asked Questions About Hire Next.js Developer
           </h2>
 
           <p className="text-base sm:text-lg md:text-xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed px-2">

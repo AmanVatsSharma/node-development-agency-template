@@ -207,9 +207,9 @@ export function PricingSection() {
           animate={inView ? "show" : "hidden"}
         >
           <h2 className="text-4xl sm:text-5xl font-bold mb-6">
-            Transparent{' '}
+            Hire Healthcare Software Developer{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-green-500">
-              Pricing
+              Pricing & Packages
             </span>
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8">

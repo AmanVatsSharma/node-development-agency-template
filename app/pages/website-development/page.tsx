@@ -10,6 +10,9 @@ import { ContactSection } from "./_components/contact-section";
 import { HeroParallax } from "@/app/components/ui/hero-parallax";
 import { StickyScroll } from "@/app/components/ui/sticky-scroll-reveal";
 import { Spotlight } from "@/app/components/ui/spotlight";
+import { Breadcrumbs } from '@/app/components/SEO/Breadcrumbs';
+import { RelatedServices } from '@/app/components/SEO/RelatedServices';
+import { getBreadcrumbItems, getRelatedServicesTitle } from '@/app/lib/seo/page-helpers';
 
 const products = [
   {
@@ -159,6 +162,11 @@ const content = [
 export default function Home() {
   return (
     <>
+      {/* Breadcrumb Navigation - SEO Optimized */}
+      <div className="container mx-auto px-4 pt-8">
+        <Breadcrumbs items={getBreadcrumbItems('website-development')} />
+      </div>
+
       <Spotlight
         className="-top-40 left-0 w-full"
         fill="white"
@@ -174,6 +182,14 @@ export default function Home() {
         <SectionErrorBoundary name="AnimatedBannerCta"><AnimatedBannerCta /></SectionErrorBoundary>
         <SectionErrorBoundary name="ContactSection"><ContactSection /></SectionErrorBoundary>
       </Spotlight>
+
+      {/* Related Services - Internal Linking for SEO */}
+      <SectionErrorBoundary name="RelatedServices">
+        <RelatedServices 
+          currentPage="website-development"
+          title={getRelatedServicesTitle('website-development')}
+        />
+      </SectionErrorBoundary>
 
     </>
   );

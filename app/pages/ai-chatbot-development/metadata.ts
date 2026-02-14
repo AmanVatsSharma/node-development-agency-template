@@ -1,83 +1,32 @@
-import type { Metadata } from 'next';
+import { Metadata } from 'next';
+import { generateAdvancedServiceMetadata } from '@/app/lib/seo/advanced-metadata';
+import { AI_CHATBOT_KEYWORDS } from '@/app/lib/seo/keyword-research';
 
 /**
  * SEO Metadata for AI Chatbot Development Landing Page
- * Optimized for Google Ads and organic search in India
+ * Optimized for high-intent, lead-generating keywords
+ * 
+ * KEYWORD STRATEGY:
+ * - Primary: "hire chatbot developer" (high buyer intent)
+ * - Secondary: Service-specific AI chatbot keywords
+ * - Long-tail: Platform-specific chatbot keywords
+ * - Semantic: Related AI and automation terms
  */
-export const metadata: Metadata = {
-  title: 'AI Chatbot Development for Businesses | Custom Chatbot Integration – Vedpragya Bharat',
-  description: 'Build custom AI chatbots for your website, WhatsApp & CRM. Boost sales and automate support using OpenAI GPT chatbots. Trusted by 50+ businesses across India. ₹49,000 onwards.',
-  keywords: [
-    'ai chatbot for business',
-    'chatbot development india',
-    'custom chatbot',
-    'ai automation india',
-    'business chatbot developer',
-    'whatsapp chatbot',
-    'openai chatbot',
-    'gpt chatbot development',
-    'crm chatbot integration',
-    'ai customer support',
-    'chatbot development company india',
-    'conversational ai india'
-  ],
-  authors: [{ name: 'Vedpragya Bharat Pvt. Ltd.' }],
-  creator: 'Vedpragya Bharat Pvt. Ltd.',
-  publisher: 'Vedpragya Bharat Pvt. Ltd.',
-  
-  // Open Graph
-  openGraph: {
-    type: 'website',
-    locale: 'en_IN',
-    url: 'https://vedpragyabharat.com/pages/ai-chatbot-development',
-    title: 'AI Chatbot Development for Businesses | Vedpragya Bharat',
-    description: 'Build custom AI chatbots for your website, WhatsApp & CRM. Boost sales and automate support using OpenAI GPT chatbots. Starting from ₹49,000.',
-    siteName: 'Vedpragya Bharat',
-    images: [
-      {
-        url: '/ai-chatbot-og-image.jpg', // You'll need to create this
-        width: 1200,
-        height: 630,
-        alt: 'AI Chatbot Development Services'
-      }
-    ]
-  },
-  
-  // Twitter Card
-  twitter: {
-    card: 'summary_large_image',
-    title: 'AI Chatbot Development for Businesses | Vedpragya Bharat',
-    description: 'Build custom AI chatbots for your website, WhatsApp & CRM. Boost sales and automate support.',
-    images: ['/ai-chatbot-og-image.jpg'],
-    creator: '@vedpragyabharat'
-  },
-  
-  // Additional metadata
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
+
+export const metadata: Metadata = generateAdvancedServiceMetadata(
+  'Hire Chatbot Developer | AI Chatbot Development Services',
+  'Build custom AI chatbots for your website, WhatsApp & CRM. Boost sales and automate support using OpenAI GPT chatbots. Trusted by 50+ businesses across India.',
+  AI_CHATBOT_KEYWORDS,
+  '/pages/ai-chatbot-development',
+  {
+    pricing: {
+      startingPrice: '49,000',
+      currency: '₹',
     },
-  },
-  
-  // Verification
-  verification: {
-    google: 'your-google-verification-code',
-  },
-  
-  // Alternates
-  alternates: {
-    canonical: 'https://vedpragyabharat.com/pages/ai-chatbot-development',
-  },
-  
-  // Category
-  category: 'Technology',
-};
+    ogImage: '/ai-chatbot-og-image.jpg',
+    cta: 'Get free consultation today!',
+  }
+);
 
 /**
  * Structured Data for SEO

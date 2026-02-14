@@ -125,7 +125,7 @@ export function FeaturesSection() {
               id="features-heading"
               className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-gray-900 dark:text-white mb-4 md:mb-6"
             >
-              What You'll Get
+              Key Features of Our WhatsApp Business API Integration
             </h2>
             <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
               A complete, turnkey WhatsApp automation solution —{' '}

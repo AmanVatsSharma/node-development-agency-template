@@ -193,7 +193,7 @@ export function PortfolioSection() {
             id="portfolio-heading"
             className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4"
           >
-            Mumbai Success Stories
+            Hire Web Developer Mumbai Case Studies & Portfolio
           </h2>
           <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">
             Real projects, real results. See how we've helped Mumbai businesses transform their online presence and grow their revenue.

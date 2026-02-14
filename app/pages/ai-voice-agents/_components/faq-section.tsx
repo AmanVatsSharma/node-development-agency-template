@@ -52,7 +52,7 @@ export function FAQSection() {
           </div>
 
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-5 text-gray-900 dark:text-white">
-            Frequently Asked Questions
+            Frequently Asked Questions About Hire AI Voice Agent Developer
           </h2>
         </motion.div>
 

@@ -38,6 +38,9 @@ import { FinalCTASection } from './_components/final-cta-section';
 import { MobileFloatingCTA } from './_components/mobile-floating-cta';
 import { ScrollToTop } from './_components/scroll-to-top';
 import { SectionErrorBoundary } from './_components/section-error-boundary';
+import { RelatedServices } from '@/app/components/SEO/RelatedServices';
+import { Breadcrumbs } from '@/app/components/SEO/Breadcrumbs';
+import { getBreadcrumbItems, getRelatedServicesTitle } from '@/app/lib/seo/page-helpers';
 
 console.log('[Google-Ads] Main page component loaded');
 
@@ -92,6 +95,11 @@ export default function GoogleAdsManagementPage() {
 
   return (
     <main className="min-h-screen">
+      {/* Breadcrumb Navigation - SEO Optimized */}
+      <div className="container mx-auto px-4 pt-8">
+        <Breadcrumbs items={getBreadcrumbItems('google-ads-management')} />
+      </div>
+
       {/* Hero Section - Drive Clicks into Customers */}
       <SectionErrorBoundary name="HeroSection">
         <HeroSection />
@@ -145,6 +153,14 @@ export default function GoogleAdsManagementPage() {
       {/* FAQ - Objection Handling */}
       <SectionErrorBoundary name="FAQSection">
         <FAQSection />
+      </SectionErrorBoundary>
+
+      {/* Related Services - Internal Linking for SEO */}
+      <SectionErrorBoundary name="RelatedServices">
+        <RelatedServices 
+          currentPage="google-ads-management"
+          title={getRelatedServicesTitle('google-ads-management')}
+        />
       </SectionErrorBoundary>
 
       {/* Final CTA - Lead Form */}

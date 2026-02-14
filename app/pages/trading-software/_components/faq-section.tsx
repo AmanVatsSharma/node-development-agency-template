@@ -86,9 +86,9 @@ export function FAQSection() {
           </div>
 
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-black mb-5 text-white">
-            Frequently Asked{' '}
+            Frequently Asked Questions About{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400">
-              Questions
+              Hire Trading Software Developer
             </span>
           </h2>
 

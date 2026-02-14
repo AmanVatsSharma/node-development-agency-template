@@ -203,7 +203,7 @@ export function HeroSection() {
                 className="text-4xl md:text-6xl lg:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-br from-foreground via-foreground/90 to-foreground/70 leading-tight px-4"
                 id="wd-hero-heading"
               >
-                We Build <span className="inline-block bg-clip-text text-transparent bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600">Stunning</span> Websites That Convert
+                Hire Website Developer | <span className="inline-block bg-clip-text text-transparent bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600">Professional Website Development Services</span>
               </motion.h1>
 
               <motion.p

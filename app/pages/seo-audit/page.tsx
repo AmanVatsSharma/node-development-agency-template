@@ -30,6 +30,9 @@ import { TestimonialsSection } from './_components/testimonials-section';
 import { FAQSection } from './_components/faq-section';
 import { FinalCTASection } from './_components/final-cta-section';
 import { SectionErrorBoundary } from '../business-website/_components/section-error-boundary';
+import { Breadcrumbs } from '@/app/components/SEO/Breadcrumbs';
+import { RelatedServices } from '@/app/components/SEO/RelatedServices';
+import { getBreadcrumbItems, getRelatedServicesTitle } from '@/app/lib/seo/page-helpers';
 
 console.log('[SEO-Audit] Main page component loaded');
 
@@ -62,6 +65,11 @@ export default function SEOAuditPage() {
 
   return (
     <main className="min-h-screen bg-white dark:bg-gray-950">
+      {/* Breadcrumb Navigation - SEO Optimized */}
+      <div className="container mx-auto px-4 pt-8">
+        <Breadcrumbs items={getBreadcrumbItems('seo-audit')} />
+      </div>
+
       {/* Hero Section with Instant Audit Widget */}
       <SectionErrorBoundary name="HeroSection">
         <HeroSection />
@@ -95,6 +103,14 @@ export default function SEOAuditPage() {
       {/* FAQ */}
       <SectionErrorBoundary name="FAQSection">
         <FAQSection />
+      </SectionErrorBoundary>
+
+      {/* Related Services - Internal Linking for SEO */}
+      <SectionErrorBoundary name="RelatedServices">
+        <RelatedServices 
+          currentPage="seo-audit"
+          title={getRelatedServicesTitle('seo-audit')}
+        />
       </SectionErrorBoundary>
 
       {/* Final CTA */}

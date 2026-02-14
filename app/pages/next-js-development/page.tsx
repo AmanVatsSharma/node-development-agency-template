@@ -38,6 +38,9 @@ import { FinalCTASection } from './_components/final-cta-section';
 import { MobileFloatingCTA } from './_components/mobile-floating-cta';
 import { ScrollToTop } from './_components/scroll-to-top';
 import { SectionErrorBoundary } from './_components/section-error-boundary';
+import { Breadcrumbs } from '@/app/components/SEO/Breadcrumbs';
+import { RelatedServices } from '@/app/components/SEO/RelatedServices';
+import { getBreadcrumbItems, getRelatedServicesTitle } from '@/app/lib/seo/page-helpers';
 
 console.log('[Next-JS-Dev] Main page component loaded');
 
@@ -93,6 +96,11 @@ export default function NextJsDevelopmentPage() {
 
   return (
     <main className="min-h-screen">
+      {/* Breadcrumb Navigation - SEO Optimized */}
+      <div className="container mx-auto px-4 pt-8">
+        <Breadcrumbs items={getBreadcrumbItems('next-js-development')} />
+      </div>
+
       {/* Hero Section - Strong Value Proposition */}
       <SectionErrorBoundary name="HeroSection">
         <HeroSection />
@@ -146,6 +154,14 @@ export default function NextJsDevelopmentPage() {
       {/* FAQ - Objection Handling */}
       <SectionErrorBoundary name="FAQSection">
         <FAQSection />
+      </SectionErrorBoundary>
+
+      {/* Related Services - Internal Linking for SEO */}
+      <SectionErrorBoundary name="RelatedServices">
+        <RelatedServices 
+          currentPage="next-js-development"
+          title={getRelatedServicesTitle('next-js-development')}
+        />
       </SectionErrorBoundary>
 
       {/* Final CTA - Strong Closing */}

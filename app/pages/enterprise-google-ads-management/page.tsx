@@ -29,6 +29,9 @@ import { FinalCTASection } from './_components/final-cta-section';
 import { MobileFloatingCTA } from './_components/mobile-floating-cta';
 import { ScrollToTop } from './_components/scroll-to-top';
 import { SectionErrorBoundary } from './_components/section-error-boundary';
+import { Breadcrumbs } from '@/app/components/SEO/Breadcrumbs';
+import { RelatedServices } from '@/app/components/SEO/RelatedServices';
+import { getBreadcrumbItems, getRelatedServicesTitle } from '@/app/lib/seo/page-helpers';
 
 // Shared Components
 import { ServiceNavigation } from '@/app/components/GoogleAdsEcosystem/ServiceNavigation';
@@ -61,6 +64,11 @@ export default function EnterpriseGoogleAdsManagementPage() {
 
   return (
     <main className="min-h-screen">
+      {/* Breadcrumb Navigation - SEO Optimized */}
+      <div className="container mx-auto px-4 pt-8">
+        <Breadcrumbs items={getBreadcrumbItems('enterprise-google-ads-management')} />
+      </div>
+
       {/* Hero Section - Enterprise Positioning */}
       <SectionErrorBoundary name="HeroSection">
         <HeroSection />
@@ -105,6 +113,14 @@ export default function EnterpriseGoogleAdsManagementPage() {
       {/* FAQ - Enterprise Questions */}
       <SectionErrorBoundary name="FAQSection">
         <FAQSection />
+      </SectionErrorBoundary>
+
+      {/* Related Services - Internal Linking for SEO */}
+      <SectionErrorBoundary name="RelatedServices">
+        <RelatedServices 
+          currentPage="enterprise-google-ads-management"
+          title={getRelatedServicesTitle('enterprise-google-ads-management')}
+        />
       </SectionErrorBoundary>
 
       {/* Service Navigation - Cross-Service Discovery */}

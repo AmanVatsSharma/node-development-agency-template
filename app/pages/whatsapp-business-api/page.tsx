@@ -56,6 +56,9 @@ import { FinalCTASection } from './_components/final-cta-section';
 import { MobileFloatingCTA } from './_components/mobile-floating-cta';
 import { ScrollToTop } from './_components/scroll-to-top';
 import { SectionErrorBoundary } from './_components/section-error-boundary';
+import { Breadcrumbs } from '@/app/components/SEO/Breadcrumbs';
+import { RelatedServices } from '@/app/components/SEO/RelatedServices';
+import { getBreadcrumbItems, getRelatedServicesTitle } from '@/app/lib/seo/page-helpers';
 
 console.log('[WhatsApp-API] Main page component loaded');
 
@@ -116,6 +119,11 @@ export default function WhatsAppBusinessAPIPage() {
 
   return (
     <main className="min-h-screen bg-white dark:bg-gray-900">
+      {/* Breadcrumb Navigation - SEO Optimized */}
+      <div className="container mx-auto px-4 pt-8">
+        <Breadcrumbs items={getBreadcrumbItems('whatsapp-business-api')} />
+      </div>
+
       {/* 1. Hero Section - Strong Value Proposition */}
       <SectionErrorBoundary name="HeroSection">
         <HeroSection />
@@ -179,6 +187,14 @@ export default function WhatsAppBusinessAPIPage() {
       {/* 13. Lead Form - Primary Conversion Point */}
       <SectionErrorBoundary name="LeadFormSection">
         <LeadFormSection />
+      </SectionErrorBoundary>
+
+      {/* Related Services - Internal Linking for SEO */}
+      <SectionErrorBoundary name="RelatedServices">
+        <RelatedServices 
+          currentPage="whatsapp-business-api"
+          title={getRelatedServicesTitle('whatsapp-business-api')}
+        />
       </SectionErrorBoundary>
 
       {/* 14. Final CTA - Strong Closing */}

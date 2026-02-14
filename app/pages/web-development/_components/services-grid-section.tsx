@@ -101,7 +101,7 @@ export function ServicesGridSection() {
             className="text-3xl md:text-5xl font-bold mb-4"
             id="wd-services-grid-heading"
           >
-            Services Engineered for Conversion
+            Hire Website Developer Services We Offer
           </motion.h2>
 
           <motion.p

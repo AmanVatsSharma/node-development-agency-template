@@ -87,7 +87,7 @@ export function PricingSection() {
           className="text-center mb-16"
         >
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-            Enterprise Pricing Plans
+            Hire Enterprise Google Ads Expert Pricing & Packages
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Choose the perfect enterprise plan for your business needs. All plans include our 8.5× ROAS guarantee.

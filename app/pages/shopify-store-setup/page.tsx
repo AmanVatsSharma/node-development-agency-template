@@ -42,6 +42,9 @@ import WhyUsSection from '@/app/components/shopify/WhyUsSection';
 import ResultsSection from '@/app/components/shopify/ResultsSection';
 import FinalCTASection from '@/app/components/shopify/FinalCTASection';
 import ContactFormSection from '@/app/components/shopify/ContactFormSection';
+import { Breadcrumbs } from '@/app/components/SEO/Breadcrumbs';
+import { RelatedServices } from '@/app/components/SEO/RelatedServices';
+import { getBreadcrumbItems, getRelatedServicesTitle } from '@/app/lib/seo/page-helpers';
 
 console.log('[ShopifyStorePage] Page component loaded');
 
@@ -98,6 +101,11 @@ export default function ShopifyStoreSetupPage() {
 
   return (
     <main className="min-h-screen bg-white overflow-x-hidden">
+      {/* Breadcrumb Navigation - SEO Optimized */}
+      <div className="container mx-auto px-4 pt-8">
+        <Breadcrumbs items={getBreadcrumbItems('shopify-store-setup')} />
+      </div>
+
       {/* Hero Section - Above the fold */}
       <HeroSection />
 
@@ -124,6 +132,12 @@ export default function ShopifyStoreSetupPage() {
 
       {/* Results Section - Case studies and testimonials */}
       <ResultsSection />
+
+      {/* Related Services - Internal Linking for SEO */}
+      <RelatedServices 
+        currentPage="shopify-store-setup"
+        title={getRelatedServicesTitle('shopify-store-setup')}
+      />
 
       {/* Final CTA Section - Main conversion point */}
       <FinalCTASection />

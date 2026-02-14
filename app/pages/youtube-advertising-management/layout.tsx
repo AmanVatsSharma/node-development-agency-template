@@ -1,63 +1,95 @@
-import type { Metadata } from 'next';
+import { metadata } from './metadata';
+import { StructuredDataScript } from '@/app/lib/seo/structured-data';
+import {
+  generateServiceSchema,
+  generateFAQSchema,
+  generateBreadcrumbSchema,
+} from '@/app/lib/seo/structured-data';
 
-export const metadata: Metadata = {
-  title: 'YouTube Advertising Management | Video Ads | Rajapragya Bharat',
-  description: 'Expert YouTube advertising management with video campaigns, targeting, and optimization. ₹35K-₹85K/month. 3.8× average ROAS, 2.5M+ video views generated.',
-  keywords: [
-    'youtube advertising management',
-    'youtube ads',
-    'video advertising',
-    'youtube marketing',
-    'video campaigns',
-    'youtube targeting',
-    'video ad optimization',
-    'youtube ppc',
-    'video marketing',
-    'youtube brand awareness',
-    'video lead generation',
-    'youtube conversion optimization'
-  ],
-  openGraph: {
-    title: 'YouTube Advertising Management | Video Ads',
-    description: 'Expert YouTube advertising management with video campaigns, targeting, and optimization. 3.8× average ROAS, 2.5M+ video views generated.',
-    type: 'website',
-    locale: 'en_IN',
-    siteName: 'Rajapragya Bharat',
-    images: [
+export { metadata };
+
+/**
+ * Structured Data (JSON-LD) for YouTube Advertising Management Page
+ */
+function StructuredData() {
+  const serviceSchema = generateServiceSchema({
+    serviceName: 'YouTube Advertising Management',
+    serviceDescription: 'Professional YouTube advertising management. Video ad creation, targeting optimization, YouTube Analytics, and conversion-focused video campaigns.',
+    serviceType: 'Video Advertising Management',
+    areaServed: ['India', 'United States', 'United Kingdom', 'Canada', 'Australia'],
+    offers: [
       {
-        url: '/og-youtube-advertising.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'YouTube Advertising Management - Video Ads'
-      }
-    ]
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'YouTube Advertising Management | Video Ads',
-    description: 'Expert YouTube advertising management with video campaigns, targeting, and optimization. 3.8× average ROAS.',
-    images: ['/og-youtube-advertising.jpg']
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
+        name: 'YouTube Starter',
+        description: 'Video ad setup, basic targeting, performance tracking',
+        price: '30000',
+        priceCurrency: 'INR',
+      },
+      {
+        name: 'YouTube Professional',
+        description: 'Advanced video strategies, creative optimization, full management',
+        price: '55000',
+        priceCurrency: 'INR',
+      },
+      {
+        name: 'YouTube Enterprise',
+        description: 'Multi-channel video campaigns, custom creative, dedicated manager',
+        price: '90000',
+        priceCurrency: 'INR',
+      },
+    ],
+    aggregateRating: {
+      ratingValue: '4.7',
+      reviewCount: '190',
     },
-  },
-  alternates: {
-    canonical: '/pages/youtube-advertising-management'
-  }
-};
+  });
+
+  const faqSchema = generateFAQSchema({
+    questions: [
+      {
+        question: 'What types of YouTube ads do you manage?',
+        answer: 'We manage all YouTube ad formats including TrueView in-stream ads, TrueView discovery ads, Bumper ads, and YouTube Shorts ads. We create strategies based on your goals and budget.',
+      },
+      {
+        question: 'Do you create video ads?',
+        answer: 'Yes, we offer video ad creation services or can work with your existing videos. We optimize videos for YouTube advertising including length, messaging, and call-to-action.',
+      },
+      {
+        question: 'How do you target YouTube audiences?',
+        answer: 'We use demographic targeting, interest targeting, custom audiences, remarketing lists, and video remarketing. We also use YouTube Analytics to identify high-performing audience segments.',
+      },
+      {
+        question: 'What results can I expect from YouTube ads?',
+        answer: 'Results vary by industry and goals. Most clients see 2-4× improvement in video engagement, 30-50% reduction in cost-per-view, and improved brand awareness. Conversion rates depend on your offer and landing page.',
+      },
+    ],
+  });
+
+  const breadcrumbSchema = generateBreadcrumbSchema({
+    items: [
+      { name: 'Home', url: '/' },
+      { name: 'Services', url: '/pages/services' },
+      { name: 'YouTube Advertising Management', url: '/pages/youtube-advertising-management' },
+    ],
+  });
+
+  return (
+    <>
+      <StructuredDataScript data={serviceSchema} />
+      <StructuredDataScript data={faqSchema} />
+      <StructuredDataScript data={breadcrumbSchema} />
+    </>
+  );
+}
 
 export default function YouTubeAdvertisingLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return children;
+  return (
+    <>
+      <StructuredData />
+      {children}
+    </>
+  );
 }

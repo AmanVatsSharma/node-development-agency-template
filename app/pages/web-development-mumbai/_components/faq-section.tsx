@@ -117,7 +117,7 @@ export function FAQSection() {
             id="faq-heading"
             className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4"
           >
-            Frequently Asked Questions
+            Frequently Asked Questions About Hire Web Developer Mumbai
           </h2>
           <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">
             Got questions? We've got answers. Here are the most common questions about our web development services.

@@ -1,104 +1,28 @@
+import { Metadata } from 'next';
+import { generateAdvancedServiceMetadata } from '@/app/lib/seo/advanced-metadata';
+import { TRADING_SOFTWARE_KEYWORDS } from '@/app/lib/seo/keyword-research';
+
 /**
- * @fileoverview Trading Software Landing Page - SEO Metadata
- * @description Metadata configuration for broker trading platform landing page
- * @company Vedpragya Bharat Pvt. Ltd.
+ * SEO Metadata for Trading Software Landing Page
+ * Optimized for high-intent, lead-generating keywords
  * 
- * SEO OPTIMIZED for:
- * - Keywords: Trading software for brokers, broker trading platform, white-label trading software
- * - Target: Brokers, sub-brokers, brokerage firms in India
- * - Focus: Enterprise trading platform, NSE/BSE/MCX integration
+ * KEYWORD STRATEGY:
+ * - Primary: "hire trading software developer" (high buyer intent)
+ * - Secondary: Service-specific trading platform keywords
+ * - Long-tail: Platform-type-specific trading keywords
+ * - Semantic: Related trading and financial software terms
  */
 
-import { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: 'Trading Software for Brokers | Enterprise Trading Platform - Vedpragya Bharat',
-  description: 'Enterprise-grade trading software for brokers with real-time market data, advanced charting, algo trading, and white-label solutions. NSE, BSE, MCX, Forex integration. 99.99% uptime, <50ms latency.',
-  
-  keywords: [
-    // Primary Keywords
-    'trading software for brokers',
-    'broker trading platform',
-    'white label trading software',
-    'stock trading platform for brokers',
-    
-    // Secondary Keywords
-    'NSE trading software',
-    'BSE trading software',
-    'MCX trading platform',
-    'brokerage trading system',
-    'sub broker trading software',
-    
-    // Feature-based
-    'algo trading platform',
-    'real-time trading software',
-    'multi-asset trading platform',
-    'trading terminal software',
-    'broker back office software',
-    
-    // Location-based
-    'trading software India',
-    'SEBI approved trading platform',
-    'Indian stock market software',
-  ],
-  
-  authors: [{ name: 'Vedpragya Bharat Pvt. Ltd.' }],
-  creator: 'Vedpragya Bharat',
-  publisher: 'Vedpragya Bharat',
-  
-  // Open Graph (for social sharing)
-  openGraph: {
-    type: 'website',
-    locale: 'en_IN',
-    url: 'https://vedpragyabharat.com/pages/trading-software',
-    title: 'Enterprise Trading Software for Brokers | Vedpragya Bharat',
-    description: 'Transform your brokerage with our enterprise-grade trading platform. Real-time data, advanced charting, algo trading, white-label solutions. NSE, BSE, MCX integration.',
-    siteName: 'Vedpragya Bharat',
-    images: [
-      {
-        url: '/images/trading-software-og.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'Trading Software Platform Preview',
-      },
-    ],
-  },
-  
-  // Twitter Card
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Enterprise Trading Software for Brokers | Vedpragya Bharat',
-    description: 'Transform your brokerage with our enterprise-grade trading platform. Real-time data, algo trading, white-label solutions.',
-    images: ['/images/trading-software-twitter.jpg'],
-    creator: '@VedpragyaBharat',
-  },
-  
-  // Additional Meta Tags
-  alternates: {
-    canonical: 'https://vedpragyabharat.com/pages/trading-software',
-  },
-  
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
-  },
-  
-  // Verification
-  verification: {
-    google: 'your-google-site-verification-code',
-  },
-  
-  // Additional metadata
-  category: 'Technology',
-  classification: 'Trading Software, Financial Technology',
-};
+export const metadata: Metadata = generateAdvancedServiceMetadata(
+  'Hire Trading Software Developer | Trading Software Development',
+  'Enterprise-grade trading software for brokers with real-time market data, advanced charting, algo trading, and white-label solutions. NSE, BSE, MCX, Forex integration.',
+  TRADING_SOFTWARE_KEYWORDS,
+  '/pages/trading-software',
+  {
+    ogImage: '/images/trading-software-og.jpg',
+    cta: 'Get free consultation today!',
+  }
+);
 
 // Structured Data (JSON-LD)
 export const structuredData = {

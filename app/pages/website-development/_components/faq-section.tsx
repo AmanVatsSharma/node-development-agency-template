@@ -57,7 +57,7 @@ export function FAQSection() {
             className="text-3xl md:text-4xl font-bold mb-4"
             id="wd-faq-heading"
           >
-            Frequently Asked Questions
+            Frequently Asked Questions About Hire Website Developer
           </motion.h2>
           
           <motion.p

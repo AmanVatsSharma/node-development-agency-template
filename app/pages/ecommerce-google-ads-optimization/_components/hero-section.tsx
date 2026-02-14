@@ -96,7 +96,7 @@ export function HeroSection() {
               </span>
             </motion.div>
 
-            {/* Main Headline */}
+            {/* Main Headline - SEO Optimized */}
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -104,11 +104,11 @@ export function HeroSection() {
               className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight"
             >
               <span className="bg-gradient-to-r from-blue-400 via-cyan-400 to-purple-400 bg-clip-text text-transparent">
-                Shopping Campaigns
+                Hire E-commerce Google Ads Expert
               </span>
               <br />
               <span className="text-white">
-                That Drive Sales
+                Professional E-commerce Google Ads Optimization Services
               </span>
             </motion.h1>
 

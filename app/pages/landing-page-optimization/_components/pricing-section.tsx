@@ -86,7 +86,7 @@ export function PricingSection() {
           className="text-center mb-16"
         >
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-            Landing Page Optimization Pricing
+            Hire Landing Page Optimization Expert Pricing & Packages
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Choose the perfect landing page optimization plan for your business. All plans include our 3.5× conversion rate guarantee.

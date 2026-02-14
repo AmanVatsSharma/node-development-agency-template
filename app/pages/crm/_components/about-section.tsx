@@ -112,9 +112,9 @@ export function AboutSection() {
               id="about-heading"
               className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-gray-900 dark:text-white mb-6 leading-tight"
             >
-              Battle-Tested CRM,<br />
+              Why Choose Our<br />
               <span className="bg-gradient-to-r from-[#002F9E] via-[#FFD700] to-[#00C897] bg-clip-text text-transparent">
-                Tailored to You
+                Hire CRM Developer
               </span>
             </h2>
             

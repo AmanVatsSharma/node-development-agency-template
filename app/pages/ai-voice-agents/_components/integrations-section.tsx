@@ -43,7 +43,7 @@ export function IntegrationsSection() {
           </div>
 
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-5 text-gray-900 dark:text-white">
-            Seamless Integrations
+            Advanced AI Voice Agents Development Tools & Integrations
           </h2>
 
           <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto">
