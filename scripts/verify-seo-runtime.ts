@@ -39,6 +39,7 @@ function isValidDateInput(value: unknown): boolean {
 async function verifySitemapOutput(): Promise<void> {
   const entries = await sitemap();
   const entryUrls = new Set(entries.map((entry) => entry.url));
+  const entriesByUrl = new Map(entries.map((entry) => [entry.url, entry]));
   const staticRoutes = getStaticSeoRoutes();
   const now = Date.now();
   const allowedFrequencies = new Set([
@@ -131,6 +132,66 @@ async function verifySitemapOutput(): Promise<void> {
   const homeUrl = toAbsoluteSeoUrl('/');
   if (!entryUrls.has(homeUrl)) {
     logError('Homepage URL missing from sitemap', { homeUrl });
+  }
+
+  const homeEntry = entriesByUrl.get(homeUrl);
+  if (!homeEntry) {
+    logError('Homepage entry missing from sitemap map', { homeUrl });
+  }
+
+  if (homeEntry.priority !== 1) {
+    logError('Homepage sitemap priority must remain 1.0', {
+      url: homeUrl,
+      actualPriority: homeEntry.priority,
+    });
+  }
+
+  if (homeEntry.changeFrequency !== 'weekly') {
+    logError('Homepage changeFrequency should remain weekly', {
+      url: homeUrl,
+      actualChangeFrequency: homeEntry.changeFrequency,
+    });
+  }
+
+  const servicesUrl = toAbsoluteSeoUrl('/pages/services');
+  const servicesEntry = entriesByUrl.get(servicesUrl);
+  if (!servicesEntry) {
+    logError('Services entry missing from sitemap', { servicesUrl });
+  }
+
+  if ((servicesEntry.priority ?? 0) < 0.9) {
+    logError('Services sitemap priority is lower than expected baseline', {
+      url: servicesUrl,
+      actualPriority: servicesEntry.priority,
+    });
+  }
+
+  const blogListingUrl = toAbsoluteSeoUrl('/pages/blog');
+  const blogListingEntry = entriesByUrl.get(blogListingUrl);
+  if (!blogListingEntry) {
+    logError('Blog listing entry missing from sitemap', { blogListingUrl });
+  }
+
+  if (blogListingEntry.changeFrequency !== 'daily') {
+    logError('Blog listing changeFrequency should remain daily', {
+      url: blogListingUrl,
+      actualChangeFrequency: blogListingEntry.changeFrequency,
+    });
+  }
+
+  const blogDetailEntries = entries.filter((entry) =>
+    entry.url.startsWith(`${toAbsoluteSeoUrl('/pages/blog/')}`),
+  );
+  const invalidBlogDetailEntries = blogDetailEntries.filter(
+    (entry) => entry.changeFrequency !== 'weekly',
+  );
+  if (invalidBlogDetailEntries.length > 0) {
+    logError('Blog detail pages should use weekly changeFrequency', {
+      sample: invalidBlogDetailEntries.slice(0, 10).map((entry) => ({
+        url: entry.url,
+        changeFrequency: entry.changeFrequency,
+      })),
+    });
   }
 
   const requiredRoutes = ['/pages/contact', '/pages/services', '/pages/blog'];
