@@ -181,6 +181,18 @@ function verifyMetadataHelperRuntimeBehavior(): void {
     });
   }
 
+  const crossOriginPathMetadata = buildPageMetadata({
+    title: 'Runtime Cross Origin Path Probe',
+    path: 'https://example.com/pages/evil-canonical',
+  });
+  const crossOriginCanonicalPath = crossOriginPathMetadata.alternates?.canonical;
+  if (crossOriginCanonicalPath !== '/') {
+    logError('buildPageMetadata should reject cross-origin canonical paths and fallback to root', {
+      expectedCanonicalPath: '/',
+      actualCanonicalPath: crossOriginCanonicalPath,
+    });
+  }
+
   const expectedOgImageUrl = toAbsoluteSeoUrl(SEO_DEFAULT_OG_IMAGE_PATH);
   const ogImageEntry = Array.isArray(metadata.openGraph?.images)
     ? metadata.openGraph?.images[0]
@@ -220,6 +232,7 @@ function verifyMetadataHelperRuntimeBehavior(): void {
 
   logInfo('Metadata helper runtime validation passed', {
     canonicalPath,
+    crossOriginCanonicalPath,
     keywordCount: keywordList.length,
     ogImageUrl,
   });

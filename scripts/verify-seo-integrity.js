@@ -906,6 +906,10 @@ function verifySeoMetadataHelperInvariants() {
       reason: 'normalizeMetadataPath should reject fragment/non-indexable schemes',
     },
     {
+      pattern: /parsedUrl\.origin !== SEO_SITE_URL/,
+      reason: 'normalizeMetadataPath should reject cross-origin absolute paths for canonical safety',
+    },
+    {
       pattern: /const withoutQueryOrHash = withLeadingSlash\.split\(\/\[\?#\]\/\)\[0\] \|\| '\/';/,
       reason: 'normalizeMetadataPath should strip query/hash fragments',
     },
@@ -1232,6 +1236,7 @@ function verifySeoModuleDocsConsistency() {
     'normalizeMetadataDescription',
     'normalizeMetadataImagePath',
     'normalizeMetadataKeywords',
+    'cross-origin',
     'normalizeSameAsUrls',
     'sitemap alias',
     'protocol-relative',
@@ -1767,6 +1772,10 @@ function verifySeoRuntimeScriptInvariants() {
     {
       pattern: /buildPageMetadata\(\{[\s\S]*Runtime SEO Metadata Helper Probe[\s\S]*\}\);/,
       reason: 'Runtime SEO verifier should execute buildPageMetadata probe coverage for normalization contracts',
+    },
+    {
+      pattern: /const crossOriginPathMetadata = buildPageMetadata\([\s\S]*https:\/\/example\.com\/pages\/evil-canonical[\s\S]*\);/,
+      reason: 'Runtime SEO verifier should probe cross-origin canonical-path rejection behavior',
     },
     {
       pattern: /function verifyStructuredDataRuntimeBehavior\(\): void/,

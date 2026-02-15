@@ -42,6 +42,14 @@ function normalizeMetadataPath(rawPath: string): string {
     ? (() => {
         try {
           const parsedUrl = new URL(trimmedPath);
+          if (parsedUrl.origin !== SEO_SITE_URL) {
+            console.warn('[SEO] Cross-origin metadata path rejected. Falling back to root canonical path.', {
+              path: rawPath,
+              origin: parsedUrl.origin,
+              expectedOrigin: SEO_SITE_URL,
+            });
+            return '/';
+          }
           return parsedUrl.pathname || '/';
         } catch {
           return trimmedPath;

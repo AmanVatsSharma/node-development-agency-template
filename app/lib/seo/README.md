@@ -111,7 +111,7 @@ It validates:
 - shared policy constant usage (`SEO_BLOCKED_ROUTE_PREFIXES`, `SEO_ROBOTS_DISALLOW_PATHS`)
 - routes module invariants for `normalizeRoute` (exclude absolute/protocol-relative URLs, strip query/hash fragments, collapse duplicate slashes, lowercase canonicalization, sitemap alias canonicalization to `/sitemap.xml`, dynamic placeholder filtering, `/sitemap.xml` and `/robots.txt` exclusion, blocked prefixes via exact/nested matching helper `isBlockedRoutePath`)
 - constants module invariants (`getCanonicalSiteUrl`, `toAbsoluteSeoUrl` input sanitization for whitespace/query/hash + duplicate slash collapse + non-http/protocol-relative rejection, and shared robots disallow alias)
-- metadata helper invariants in `app/lib/seo/metadata.ts` (`normalizeMetadataPath` for canonical path hygiene, `normalizeMetadataDescription` empty-string fallback, `normalizeMetadataImagePath` scheme safety fallback, and `normalizeMetadataKeywords` for trimmed case-insensitive deduplication with first-form preservation before `buildPageMetadata` output)
+- metadata helper invariants in `app/lib/seo/metadata.ts` (`normalizeMetadataPath` for canonical path hygiene + cross-origin path rejection, `normalizeMetadataDescription` empty-string fallback, `normalizeMetadataImagePath` scheme safety fallback, and `normalizeMetadataKeywords` for trimmed case-insensitive deduplication with first-form preservation before `buildPageMetadata` output)
 - company profile SEO identity validity (`brandName`, `legalName`, `websiteUrl`, `contactEmail`, optional social URLs)
 - root layout metadata canonical configuration (`metadataBase`, canonical `/`, OG image constant)
 - core SEO file placeholder audit (`app/layout.tsx`, structured data component, SEO constants)
