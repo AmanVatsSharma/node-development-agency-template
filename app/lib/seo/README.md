@@ -20,7 +20,7 @@ This module centralizes technical SEO behavior for the website.
 - `metadata.ts`
   - Reusable `buildPageMetadata()` helper for all pages/layouts
 - `routes.ts`
-  - Static route discovery from navigation + core routes for sitemap generation
+  - Static route discovery from app/pages filesystem + navigation + core routes for sitemap generation
 
 ---
 
@@ -59,7 +59,7 @@ flowchart TD
 ## How auto-indexing works now
 
 ### Sitemap
-- Source 1: static routes from `routes.ts` (`core + navigation + footer`).
+- Source 1: static routes from `routes.ts` (`filesystem + core + navigation + footer`).
 - Source 2: dynamic blog slugs from DB (`BlogPost`) with fallback to static blog data.
 - Routes are normalized, deduplicated, and admin/api/login paths are excluded.
 
@@ -95,6 +95,7 @@ npm run verify:seo:runtime
 
 It validates:
 - metadata coverage for public routes
+- metadata helper usage (`buildPageMetadata` or approved metadata re-export pattern)
 - absence of placeholder domain tokens in active metadata-bearing files
 - dynamic sitemap/robots route existence
 - removal of legacy static SEO generators

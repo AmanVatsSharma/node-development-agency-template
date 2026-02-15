@@ -4,9 +4,10 @@
  *
  * Checks performed:
  * 1. Every public route under app/pages has metadata coverage.
- * 2. Placeholder SEO tokens are not present in active metadata-bearing files.
- * 3. Dynamic SEO routes exist (app/sitemap.ts and app/robots.ts).
- * 4. Legacy static SEO generator files are not present.
+ * 2. Metadata definitions use the shared SEO metadata builder.
+ * 3. Placeholder SEO tokens are not present in active metadata-bearing files.
+ * 4. Dynamic SEO routes exist (app/sitemap.ts and app/robots.ts).
+ * 5. Legacy static SEO generator files are not present.
  *
  * Usage:
  *   node scripts/verify-seo-integrity.js
@@ -120,6 +121,55 @@ function verifyMetadataCoverage() {
   return { passed: true, missingRoutes: [] };
 }
 
+function verifyMetadataUsesSharedBuilder() {
+  const metadataBearingFiles = walkFiles(PAGES_DIR).filter((filePath) =>
+    /(metadata\.ts|layout\.tsx|page\.tsx)$/.test(filePath),
+  );
+
+  const violations = [];
+
+  metadataBearingFiles.forEach((filePath) => {
+    const fileContent = fs.readFileSync(filePath, 'utf8');
+
+    if (!/export const metadata/.test(fileContent)) {
+      return;
+    }
+
+    const usesSharedBuilder = /buildPageMetadata\(/.test(fileContent);
+    if (usesSharedBuilder) {
+      return;
+    }
+
+    const metadataAliasImportMatch = fileContent.match(
+      /import\s*\{\s*metadata\s+as\s+([A-Za-z0-9_$]+)\s*[^}]*\}\s*from\s*['"]\.\/metadata['"]/,
+    );
+    const metadataAlias = metadataAliasImportMatch ? metadataAliasImportMatch[1] : null;
+
+    const reExportsMetadataFromSiblingFile =
+      Boolean(metadataAlias) &&
+      new RegExp(`export\\s+const\\s+metadata(?:\\s*:\\s*Metadata)?\\s*=\\s*${metadataAlias}\\s*;?`).test(
+        fileContent,
+      );
+
+    if (reExportsMetadataFromSiblingFile) {
+      return;
+    }
+
+    violations.push({
+      file: path.relative(ROOT_DIR, filePath),
+      reason: 'metadata export should use buildPageMetadata() or re-export from ./metadata',
+    });
+  });
+
+  if (violations.length > 0) {
+    logError('Metadata helper usage check failed', { violations });
+    return { passed: false, violations };
+  }
+
+  logInfo('Metadata helper usage check passed');
+  return { passed: true, violations: [] };
+}
+
 function verifyNoPlaceholderTokens() {
   const relevantFiles = walkFiles(PAGES_DIR).filter((filePath) =>
     /(metadata\.ts|layout\.tsx|page\.tsx)$/.test(filePath),
@@ -186,6 +236,7 @@ function main() {
 
   const checks = [
     verifyMetadataCoverage(),
+    verifyMetadataUsesSharedBuilder(),
     verifyNoPlaceholderTokens(),
     verifyDynamicSeoFiles(),
     verifyLegacyFilesRemoved(),
