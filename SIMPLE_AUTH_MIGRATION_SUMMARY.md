@@ -48,12 +48,12 @@ We've replaced the complex NextAuth v5 authentication system with a **simple pas
 
 Admin pages are now fully protected from search engines:
 
-1. **robots.txt** - Blocks crawlers from:
-   - `/pages/admin/*`
+1. **robots.txt** (dynamic route) - Blocks crawlers from:
+   - `/admin/*`
    - `/api/admin/*`
    - `/login`
 
-2. **sitemap.xml** - Excludes:
+2. **sitemap.xml** (dynamic route) - Excludes:
    - All admin routes
    - Login page
 
@@ -93,7 +93,7 @@ Admin pages are now fully protected from search engines:
 2. **Access Admin Panel**
    - URL: `http://localhost:3000/login`
    - Enter your ADMIN_PASSWORD
-   - Access granted to `/pages/admin/integrations`
+   - Access granted to `/admin/integrations`
 
 3. **No Database Setup Needed**
    - No user seeding required
@@ -125,10 +125,9 @@ While this is much simpler than NextAuth, it's still reasonably secure:
 **Modified:**
 - `middleware.ts` - Simplified auth check
 - `app/login/page.tsx` - Simple password-only login
-- `app/pages/admin/integrations/page.tsx` - Removed NextAuth, added noindex
-- `public/robots.txt` - Block admin pages
-- `scripts/generate-seo-files.js` - Block admin pages
-- `utils/sitemap.ts` - Document admin exclusion
+- `app/admin/integrations/page.tsx` - Removed NextAuth, added noindex
+- `app/robots.ts` - Dynamic robots route with admin disallow rules
+- `app/sitemap.ts` - Dynamic sitemap route excluding admin routes
 - `ENV_VARIABLES.md` - Updated with ADMIN_PASSWORD
 
 **Added:**

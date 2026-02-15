@@ -16,7 +16,7 @@ npm run dev
 ### 3. Login
 - Visit: http://localhost:3000/login
 - Enter your password
-- Access admin panel at: http://localhost:3000/pages/admin/integrations
+- Access admin panel at: http://localhost:3000/admin/integrations
 
 That's it! No database setup, no user creation, no complex configuration.
 
@@ -37,8 +37,8 @@ That's it! No database setup, no user creation, no complex configuration.
 
 Admin pages are hidden from search engines via:
 
-✅ **robots.txt** - Blocks `/pages/admin/*`, `/api/admin/*`, `/login`  
-✅ **sitemap.xml** - Excludes all admin routes  
+✅ **robots.txt** (dynamic route) - Blocks `/admin`, `/api/admin/*`, `/login`  
+✅ **sitemap.xml** (dynamic route) - Excludes all admin routes  
 ✅ **Meta tags** - `noindex, nofollow` on all admin pages
 
 ---
@@ -99,8 +99,8 @@ curl -X POST http://localhost:3000/api/auth/logout
 - Try logging out and in again
 
 **Admin pages showing in Google?**
-- Run `npm run generate-seo` to update robots.txt
-- Check `public/robots.txt` has Disallow rules
+- Verify `app/robots.ts` includes disallow rules for admin/login
+- Verify `app/sitemap.ts` excludes admin routes
 - May take time for Google to recrawl
 
 ---
@@ -114,8 +114,8 @@ curl -X POST http://localhost:3000/api/auth/logout
 - `app/api/auth/logout/route.ts` - Logout endpoint
 
 **SEO Protection:**
-- `public/robots.txt` - Block admin from crawlers
-- `scripts/generate-seo-files.js` - Generate SEO files
+- `app/robots.ts` - Dynamic robots route with admin disallow rules
+- `app/sitemap.ts` - Dynamic sitemap route excluding admin paths
 - All admin pages have noindex meta tags
 
 **Docs:**
