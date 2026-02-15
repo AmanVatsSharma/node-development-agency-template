@@ -1268,6 +1268,26 @@ function verifySitemapImplementationInvariants() {
       reason: 'sitemap should keep blog fallback source for DB outage scenarios',
     },
     {
+      pattern: /prisma\.blogPost\.findMany\(/,
+      reason: 'sitemap should load dynamic blog entries via prisma.blogPost.findMany()',
+    },
+    {
+      pattern: /select:\s*\{[\s\S]*slug:\s*true[\s\S]*updatedAt:\s*true[\s\S]*\}/,
+      reason: 'sitemap blog query should select slug + updatedAt fields for stable URL/date output',
+    },
+    {
+      pattern: /orderBy:\s*\{[\s\S]*updatedAt:\s*['"`]desc['"`][\s\S]*\}/,
+      reason: 'sitemap blog query should keep updatedAt descending order for deterministic selection',
+    },
+    {
+      pattern: /fallbackBlogPosts\.map\(\(post\)\s*=>\s*\(\{[\s\S]*slug:\s*post\.slug[\s\S]*updatedAt:\s*new Date\(post\.publishedAt\)[\s\S]*\}\)\)/,
+      reason: 'sitemap fallback entries should derive slug and updatedAt from fallback blog post data',
+    },
+    {
+      pattern: /toAbsoluteSeoUrl\(`\/pages\/blog\/\$\{entry\.slug\}`\)/,
+      reason: 'sitemap dynamic blog URLs should be canonicalized as /pages/blog/${entry.slug}',
+    },
+    {
       pattern: /if \(path === '\/'\) return 1\.0;/,
       reason: 'sitemap priority helper should keep homepage priority baseline at 1.0',
     },
