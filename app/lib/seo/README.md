@@ -113,6 +113,7 @@ It validates:
 - core SEO file placeholder audit (`app/layout.tsx`, structured data component, SEO constants)
 - sitemap/robots implementation invariants (helper usage, dedupe/sort, fallback behavior)
 - sitemap implementation policy baselines in source (`getPriorityForRoute`, `getChangeFrequencyForRoute`, blog detail priority)
+- robots source invariants include wildcard `userAgent: "*"` with explicit root `allow: "/"` + shared disallow constants
 - SEO module documentation consistency (flowchart + key command/policy references)
 - private route no-index policy checks (`app/admin/layout.tsx`, `app/login/page.tsx`)
 - root layout structured data wiring (`OrganizationStructuredData` / `WebsiteStructuredData`) tied to `companyProfile`

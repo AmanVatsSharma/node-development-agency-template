@@ -1039,6 +1039,14 @@ function verifyRobotsImplementationInvariants() {
   const robotsContent = fs.readFileSync(ROBOTS_FILE, 'utf8');
   const requiredPatterns = [
     {
+      pattern: /userAgent:\s*['"`]\*['"`]/,
+      reason: 'robots should keep wildcard userAgent rule for global crawler policy',
+    },
+    {
+      pattern: /allow:\s*['"`]\/['"`]/,
+      reason: 'robots should explicitly allow root path for wildcard crawler rule',
+    },
+    {
       pattern: /disallow:\s*\[\.\.\.SEO_ROBOTS_DISALLOW_PATHS\]/,
       reason: 'robots should derive disallow list from SEO_ROBOTS_DISALLOW_PATHS',
     },
