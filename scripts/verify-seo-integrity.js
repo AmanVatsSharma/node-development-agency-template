@@ -19,7 +19,8 @@
  * 14. Core SEO files are free of placeholder/legacy tokens.
  * 15. Sitemap/robots implementation invariants are preserved.
  * 16. SEO module docs stay aligned with implementation checkpoints.
- * 17. Legacy static SEO generator files are not present.
+ * 17. Private route no-index policy remains enforced (admin/login).
+ * 18. Legacy static SEO generator files are not present.
  *
  * Usage:
  *   node scripts/verify-seo-integrity.js
@@ -32,6 +33,8 @@ const ROOT_DIR = process.cwd();
 const APP_DIR = path.join(ROOT_DIR, 'app');
 const PAGES_DIR = path.join(APP_DIR, 'pages');
 const APP_LAYOUT_FILE = path.join(APP_DIR, 'layout.tsx');
+const ADMIN_LAYOUT_FILE = path.join(APP_DIR, 'admin', 'layout.tsx');
+const LOGIN_PAGE_FILE = path.join(APP_DIR, 'login', 'page.tsx');
 const SEO_STRUCTURED_DATA_FILE = path.join(APP_DIR, 'components', 'SEO', 'StructuredData.tsx');
 const SEO_CONSTANTS_FILE = path.join(APP_DIR, 'lib', 'seo', 'constants.ts');
 const SEO_README_FILE = path.join(APP_DIR, 'lib', 'seo', 'README.md');
@@ -685,6 +688,48 @@ function verifySeoModuleDocsConsistency() {
   return { passed: true, missingDocTokens: [] };
 }
 
+function verifyPrivateRouteNoIndexPolicy() {
+  const violations = [];
+
+  if (!fs.existsSync(ADMIN_LAYOUT_FILE)) {
+    violations.push({
+      file: path.relative(ROOT_DIR, ADMIN_LAYOUT_FILE),
+      reason: 'Admin layout file missing',
+    });
+  } else {
+    const adminLayoutContent = fs.readFileSync(ADMIN_LAYOUT_FILE, 'utf8');
+    if (!/name=["']robots["']\s+content=["']noindex,\s*nofollow["']/.test(adminLayoutContent)) {
+      violations.push({
+        file: path.relative(ROOT_DIR, ADMIN_LAYOUT_FILE),
+        reason: 'Admin layout should include <meta name="robots" content="noindex, nofollow" />',
+      });
+    }
+  }
+
+  if (!fs.existsSync(LOGIN_PAGE_FILE)) {
+    violations.push({
+      file: path.relative(ROOT_DIR, LOGIN_PAGE_FILE),
+      reason: 'Login page file missing',
+    });
+  } else {
+    const loginPageContent = fs.readFileSync(LOGIN_PAGE_FILE, 'utf8');
+    if (!/robots:\s*\{[\s\S]*index:\s*false[\s\S]*follow:\s*false[\s\S]*\}/.test(loginPageContent)) {
+      violations.push({
+        file: path.relative(ROOT_DIR, LOGIN_PAGE_FILE),
+        reason: 'Login page metadata should enforce robots index:false and follow:false',
+      });
+    }
+  }
+
+  if (violations.length > 0) {
+    logError('Private route no-index policy check failed', { violations });
+    return { passed: false, violations };
+  }
+
+  logInfo('Private route no-index policy check passed');
+  return { passed: true, violations: [] };
+}
+
 function verifySitemapImplementationInvariants() {
   if (!fs.existsSync(SITEMAP_FILE)) {
     logError('Sitemap implementation file missing', {
@@ -808,6 +853,7 @@ function main() {
     verifySitemapImplementationInvariants(),
     verifyRobotsImplementationInvariants(),
     verifySeoModuleDocsConsistency(),
+    verifyPrivateRouteNoIndexPolicy(),
     verifyLegacyFilesRemoved(),
   ];
 

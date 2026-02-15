@@ -112,6 +112,7 @@ It validates:
 - core SEO file placeholder audit (`app/layout.tsx`, structured data component, SEO constants)
 - sitemap/robots implementation invariants (helper usage, dedupe/sort, fallback behavior)
 - SEO module documentation consistency (flowchart + key command/policy references)
+- private route no-index policy checks (`app/admin/layout.tsx`, `app/login/page.tsx`)
 - removal of legacy static SEO generators
 - runtime sitemap and robots output behavior
   - canonical SEO constant validation (`SEO_SITE_URL`, `toAbsoluteSeoUrl`)
