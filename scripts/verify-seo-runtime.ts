@@ -8,9 +8,12 @@
 import sitemap from '@/app/sitemap';
 import robots from '@/app/robots';
 import { getStaticSeoRoutes } from '@/app/lib/seo/routes';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
 import { footerNavigation, mainNavigation, servicesMegaMenu } from '@/app/data/navigation';
 import { companyProfile } from '@/app/data/companyProfile';
 import {
+  SEO_DEFAULT_DESCRIPTION,
+  SEO_DEFAULT_OG_IMAGE_PATH,
   SEO_BLOCKED_ROUTE_PREFIXES,
   SEO_ROBOTS_DISALLOW_PATHS,
   SEO_SITE_URL,
@@ -149,6 +152,74 @@ function verifyCanonicalSeoConstants(): void {
     resolvedSitemapUrl,
     resolvedQueryPathUrl,
     resolvedDuplicateSlashUrl,
+  });
+}
+
+function verifyMetadataHelperRuntimeBehavior(): void {
+  const metadata = buildPageMetadata({
+    title: 'Runtime SEO Metadata Helper Probe',
+    description: '   ',
+    path: '///Pages/Services?source=runtime#hero',
+    imagePath: 'mailto:image@example.com',
+    keywords: [' Growth ', 'growth', 'SEO', ''],
+  });
+
+  if (metadata.description !== SEO_DEFAULT_DESCRIPTION) {
+    logError('buildPageMetadata should fallback empty descriptions to SEO_DEFAULT_DESCRIPTION', {
+      actualDescription: metadata.description,
+      expectedDescription: SEO_DEFAULT_DESCRIPTION,
+    });
+  }
+
+  const canonicalPath = metadata.alternates?.canonical;
+  if (canonicalPath !== '/pages/services') {
+    logError('buildPageMetadata should canonicalize metadata path to lowercase normalized route', {
+      expectedCanonicalPath: '/pages/services',
+      actualCanonicalPath: canonicalPath,
+    });
+  }
+
+  const expectedOgImageUrl = toAbsoluteSeoUrl(SEO_DEFAULT_OG_IMAGE_PATH);
+  const ogImageEntry = Array.isArray(metadata.openGraph?.images)
+    ? metadata.openGraph?.images[0]
+    : undefined;
+  const ogImageUrl =
+    typeof ogImageEntry === 'string'
+      ? ogImageEntry
+      : ogImageEntry && typeof ogImageEntry === 'object' && 'url' in ogImageEntry
+        ? String(ogImageEntry.url)
+        : undefined;
+  if (ogImageUrl !== expectedOgImageUrl) {
+    logError('buildPageMetadata should fallback invalid imagePath to default OG image URL', {
+      expectedOgImageUrl,
+      actualOgImageUrl: ogImageUrl,
+    });
+  }
+
+  const twitterImages = Array.isArray(metadata.twitter?.images) ? metadata.twitter.images : [];
+  if (twitterImages[0] !== expectedOgImageUrl) {
+    logError('buildPageMetadata should keep twitter image aligned with canonical OG image URL', {
+      expectedOgImageUrl,
+      actualTwitterImageUrl: twitterImages[0],
+    });
+  }
+
+  const keywordList = Array.isArray(metadata.keywords) ? metadata.keywords : [];
+  if (
+    keywordList.length !== 2 ||
+    keywordList[0] !== 'Growth' ||
+    keywordList[1] !== 'SEO'
+  ) {
+    logError('buildPageMetadata should trim and dedupe keywords case-insensitively', {
+      keywordList,
+      expectedKeywords: ['Growth', 'SEO'],
+    });
+  }
+
+  logInfo('Metadata helper runtime validation passed', {
+    canonicalPath,
+    keywordCount: keywordList.length,
+    ogImageUrl,
   });
 }
 
@@ -791,6 +862,7 @@ function verifyRobotsOutput(): void {
 async function main(): Promise<void> {
   logInfo('Starting runtime SEO verification');
   verifyCanonicalSeoConstants();
+  verifyMetadataHelperRuntimeBehavior();
   await verifySitemapOutput();
   verifyRobotsOutput();
   logInfo('Runtime SEO verification completed successfully');

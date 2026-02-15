@@ -914,20 +914,52 @@ function verifySeoMetadataHelperInvariants() {
       reason: 'normalizeMetadataPath should canonicalize path casing to lowercase',
     },
     {
+      pattern: /function normalizeMetadataDescription\(description\?: string\): string/,
+      reason: 'metadata helper should expose description normalization utility',
+    },
+    {
+      pattern: /trimmedDescription = description\.trim\(\);[\s\S]*SEO_DEFAULT_DESCRIPTION/,
+      reason: 'normalizeMetadataDescription should trim and fallback to SEO_DEFAULT_DESCRIPTION when empty',
+    },
+    {
+      pattern: /function normalizeMetadataImagePath\(imagePath\?: string\): string/,
+      reason: 'metadata helper should expose imagePath normalization utility',
+    },
+    {
+      pattern: /Protocol-relative metadata imagePath rejected[\s\S]*SEO_DEFAULT_OG_IMAGE_PATH/,
+      reason: 'normalizeMetadataImagePath should reject protocol-relative values and fallback to default image',
+    },
+    {
+      pattern: /Non-http metadata imagePath rejected[\s\S]*SEO_DEFAULT_OG_IMAGE_PATH/,
+      reason: 'normalizeMetadataImagePath should reject non-http schemes and fallback to default image',
+    },
+    {
       pattern: /function normalizeMetadataKeywords\(keywords\?: string\[\]\): string\[\] \| undefined/,
       reason: 'metadata helper should expose keyword normalization utility',
     },
     {
-      pattern: /new Map\(normalizedKeywords\.map\(\(keyword\) => \[keyword\.toLowerCase\(\), keyword\]\)\)\.values\(\)/,
-      reason: 'normalizeMetadataKeywords should dedupe keywords case-insensitively',
+      pattern: /const seenKeywordKeys = new Set<string>\(\);[\s\S]*if \(seenKeywordKeys\.has\(normalizedKeywordKey\)\)/,
+      reason: 'normalizeMetadataKeywords should dedupe keywords case-insensitively while preserving first canonical form',
     },
     {
       pattern: /const canonicalPath = normalizeMetadataPath\(path\);/,
       reason: 'buildPageMetadata should canonicalize path through normalizeMetadataPath',
     },
     {
+      pattern: /const normalizedDescription = normalizeMetadataDescription\(description\);/,
+      reason: 'buildPageMetadata should canonicalize description through normalizeMetadataDescription',
+    },
+    {
+      pattern: /const normalizedImagePath = normalizeMetadataImagePath\(imagePath\);/,
+      reason: 'buildPageMetadata should canonicalize imagePath through normalizeMetadataImagePath',
+    },
+    {
       pattern: /const normalizedKeywords = normalizeMetadataKeywords\(keywords\);/,
       reason: 'buildPageMetadata should canonicalize keywords through normalizeMetadataKeywords',
+    },
+    {
+      pattern: /description:\s*normalizedDescription/,
+      reason: 'buildPageMetadata should emit normalized description payload',
     },
     {
       pattern: /keywords:\s*normalizedKeywords/,
@@ -1191,8 +1223,11 @@ function verifySeoModuleDocsConsistency() {
     'getCanonicalSiteUrl',
     'toAbsoluteSeoUrl',
     'normalizeMetadataPath',
+    'normalizeMetadataDescription',
+    'normalizeMetadataImagePath',
     'normalizeMetadataKeywords',
     'protocol-relative',
+    'verifyMetadataHelperRuntimeBehavior',
     'normalizeAndFilterBlogEntries',
     'mergeDuplicateSitemapEntry',
     'prisma generate',
@@ -1650,17 +1685,29 @@ function verifySeoRuntimeScriptInvariants() {
       reason: 'Runtime SEO verifier should import dynamic robots route',
     },
     {
+      pattern: /import \{ buildPageMetadata \} from ['"]@\/app\/lib\/seo\/metadata['"]/,
+      reason: 'Runtime SEO verifier should import buildPageMetadata for runtime metadata-helper behavior checks',
+    },
+    {
       pattern: /import \{ companyProfile \} from ['"]@\/app\/data\/companyProfile['"]/,
       reason: 'Runtime SEO verifier should import companyProfile for canonical-origin parity checks',
     },
     {
       pattern:
-        /SEO_BLOCKED_ROUTE_PREFIXES[\s\S]*SEO_ROBOTS_DISALLOW_PATHS[\s\S]*SEO_SITE_URL[\s\S]*toAbsoluteSeoUrl/,
+        /SEO_DEFAULT_DESCRIPTION[\s\S]*SEO_DEFAULT_OG_IMAGE_PATH[\s\S]*SEO_BLOCKED_ROUTE_PREFIXES[\s\S]*SEO_ROBOTS_DISALLOW_PATHS[\s\S]*SEO_SITE_URL[\s\S]*toAbsoluteSeoUrl/,
       reason: 'Runtime SEO verifier should consume shared SEO constants for policy validation',
     },
     {
       pattern: /function verifyCanonicalSeoConstants\(\): void/,
       reason: 'Runtime SEO verifier should retain canonical constants validation entrypoint',
+    },
+    {
+      pattern: /function verifyMetadataHelperRuntimeBehavior\(\): void/,
+      reason: 'Runtime SEO verifier should retain runtime metadata-helper behavior validation entrypoint',
+    },
+    {
+      pattern: /buildPageMetadata\(\{[\s\S]*Runtime SEO Metadata Helper Probe[\s\S]*\}\);/,
+      reason: 'Runtime SEO verifier should execute buildPageMetadata probe coverage for normalization contracts',
     },
     {
       pattern: /async function verifySitemapOutput\(\): Promise<void>/,
@@ -1787,8 +1834,8 @@ function verifySeoRuntimeScriptInvariants() {
     },
     {
       pattern:
-        /verifyCanonicalSeoConstants\(\);\s*await verifySitemapOutput\(\);\s*verifyRobotsOutput\(\);/,
-      reason: 'Runtime SEO verifier main flow should execute canonical, sitemap, then robots checks',
+        /verifyCanonicalSeoConstants\(\);\s*verifyMetadataHelperRuntimeBehavior\(\);\s*await verifySitemapOutput\(\);\s*verifyRobotsOutput\(\);/,
+      reason: 'Runtime SEO verifier main flow should execute canonical, metadata helper, sitemap, then robots checks',
     },
     {
       pattern: /process\.exit\(1\);/,

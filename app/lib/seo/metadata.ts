@@ -59,6 +59,45 @@ function normalizeMetadataPath(rawPath: string): string {
   return withoutTrailingSlash;
 }
 
+function normalizeMetadataDescription(description?: string): string {
+  if (description === undefined) {
+    return SEO_DEFAULT_DESCRIPTION;
+  }
+
+  const trimmedDescription = description.trim();
+  if (trimmedDescription) {
+    return trimmedDescription;
+  }
+
+  console.warn('[SEO] Empty metadata description received. Falling back to SEO_DEFAULT_DESCRIPTION.');
+  return SEO_DEFAULT_DESCRIPTION;
+}
+
+function normalizeMetadataImagePath(imagePath?: string): string {
+  const candidateImagePath = (imagePath ?? SEO_DEFAULT_OG_IMAGE_PATH).trim();
+  if (!candidateImagePath) {
+    console.warn('[SEO] Empty metadata imagePath received. Falling back to SEO_DEFAULT_OG_IMAGE_PATH.');
+    return SEO_DEFAULT_OG_IMAGE_PATH;
+  }
+
+  if (/^\/\/[^/]/.test(candidateImagePath)) {
+    console.warn('[SEO] Protocol-relative metadata imagePath rejected. Falling back to SEO_DEFAULT_OG_IMAGE_PATH.', {
+      imagePath,
+    });
+    return SEO_DEFAULT_OG_IMAGE_PATH;
+  }
+
+  const hasExplicitScheme = /^[a-z][a-z0-9+.-]*:/i.test(candidateImagePath);
+  if (hasExplicitScheme && !/^https?:/i.test(candidateImagePath)) {
+    console.warn('[SEO] Non-http metadata imagePath rejected. Falling back to SEO_DEFAULT_OG_IMAGE_PATH.', {
+      imagePath,
+    });
+    return SEO_DEFAULT_OG_IMAGE_PATH;
+  }
+
+  return candidateImagePath;
+}
+
 function normalizeMetadataKeywords(keywords?: string[]): string[] | undefined {
   if (!keywords || keywords.length === 0) {
     return undefined;
@@ -71,9 +110,17 @@ function normalizeMetadataKeywords(keywords?: string[]): string[] | undefined {
     return undefined;
   }
 
-  const dedupedKeywords = Array.from(
-    new Map(normalizedKeywords.map((keyword) => [keyword.toLowerCase(), keyword])).values(),
-  );
+  const dedupedKeywords: string[] = [];
+  const seenKeywordKeys = new Set<string>();
+
+  normalizedKeywords.forEach((keyword) => {
+    const normalizedKeywordKey = keyword.toLowerCase();
+    if (seenKeywordKeys.has(normalizedKeywordKey)) {
+      return;
+    }
+    seenKeywordKeys.add(normalizedKeywordKey);
+    dedupedKeywords.push(keyword);
+  });
 
   return dedupedKeywords.length > 0 ? dedupedKeywords : undefined;
 }
@@ -90,17 +137,19 @@ function normalizeMetadataKeywords(keywords?: string[]): string[] | undefined {
 export function buildPageMetadata(options: BuildPageMetadataOptions): Metadata {
   const {
     title,
-    description = SEO_DEFAULT_DESCRIPTION,
+    description,
     path,
     keywords,
-    imagePath = SEO_DEFAULT_OG_IMAGE_PATH,
+    imagePath,
     noIndex = false,
     locale = 'en_IN',
   } = options;
 
   const canonicalPath = normalizeMetadataPath(path);
+  const normalizedDescription = normalizeMetadataDescription(description);
+  const normalizedImagePath = normalizeMetadataImagePath(imagePath);
   const canonicalUrl = toAbsoluteSeoUrl(canonicalPath);
-  const openGraphImageUrl = toAbsoluteSeoUrl(imagePath);
+  const openGraphImageUrl = toAbsoluteSeoUrl(normalizedImagePath);
   const normalizedKeywords = normalizeMetadataKeywords(keywords);
 
   // Diagnostic log for easier SEO troubleshooting in server logs.
@@ -116,7 +165,7 @@ export function buildPageMetadata(options: BuildPageMetadataOptions): Metadata {
   return {
     metadataBase: new URL(SEO_SITE_URL),
     title,
-    description,
+    description: normalizedDescription,
     keywords: normalizedKeywords,
     authors: [{ name: SEO_LEGAL_NAME }],
     creator: SEO_LEGAL_NAME,
@@ -126,7 +175,7 @@ export function buildPageMetadata(options: BuildPageMetadataOptions): Metadata {
     },
     openGraph: {
       title,
-      description,
+      description: normalizedDescription,
       url: canonicalUrl,
       siteName: SEO_BRAND_NAME,
       locale,
@@ -143,7 +192,7 @@ export function buildPageMetadata(options: BuildPageMetadataOptions): Metadata {
     twitter: {
       card: 'summary_large_image',
       title,
-      description,
+      description: normalizedDescription,
       images: [openGraphImageUrl],
     },
     robots: noIndex
