@@ -17,7 +17,7 @@
  * 12. Company profile SEO identity (website/email) is valid and non-placeholder.
  * 13. Root layout metadata uses canonical SEO constants.
  * 14. Core SEO files are free of placeholder/legacy tokens.
- * 15. Sitemap/robots implementation invariants are preserved.
+ * 15. Sitemap/robots implementation invariants and policy baselines are preserved.
  * 16. SEO module docs stay aligned with implementation checkpoints.
  * 17. Private route no-index policy remains enforced (admin/login).
  * 18. OG image asset references are valid for metadata generation.
@@ -981,6 +981,34 @@ function verifySitemapImplementationInvariants() {
     {
       pattern: /fallbackBlogPosts/,
       reason: 'sitemap should keep blog fallback source for DB outage scenarios',
+    },
+    {
+      pattern: /if \(path === '\/'\) return 1\.0;/,
+      reason: 'sitemap priority helper should keep homepage priority baseline at 1.0',
+    },
+    {
+      pattern: /if \(path === '\/pages\/services'\) return 0\.95;/,
+      reason: 'sitemap priority helper should keep services priority baseline at 0.95',
+    },
+    {
+      pattern: /if \(path === '\/pages\/contact'\) return 0\.92;/,
+      reason: 'sitemap priority helper should keep contact priority baseline at 0.92',
+    },
+    {
+      pattern: /priority:\s*0\.78/,
+      reason: 'sitemap blog detail entries should keep priority baseline at 0.78',
+    },
+    {
+      pattern: /if \(path === '\/pages\/blog'\) return 'daily';/,
+      reason: 'sitemap changeFrequency helper should keep blog listing baseline at daily',
+    },
+    {
+      pattern: /if \(path\.startsWith\('\/pages\/blog\/'\)\) return 'weekly';/,
+      reason: 'sitemap changeFrequency helper should keep blog detail baseline at weekly',
+    },
+    {
+      pattern: /return 'monthly';/,
+      reason: 'sitemap changeFrequency helper should keep default baseline at monthly',
     },
   ];
 
