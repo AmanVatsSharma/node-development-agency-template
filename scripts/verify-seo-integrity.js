@@ -26,7 +26,8 @@
  * 21. OG image asset references are valid for metadata generation.
  * 22. Root structured data wiring stays aligned with company profile constants.
  * 23. Structured data component defaults align with shared SEO constants.
- * 24. Legacy static SEO generator files are not present.
+ * 24. Blog slug dynamic metadata invariants are preserved.
+ * 25. Legacy static SEO generator files are not present.
  *
  * Usage:
  *   node scripts/verify-seo-integrity.js
@@ -46,6 +47,7 @@ const SEO_STRUCTURED_DATA_FILE = path.join(APP_DIR, 'components', 'SEO', 'Struct
 const SEO_CONSTANTS_FILE = path.join(APP_DIR, 'lib', 'seo', 'constants.ts');
 const SEO_README_FILE = path.join(APP_DIR, 'lib', 'seo', 'README.md');
 const SITEMAP_FILE = path.join(APP_DIR, 'sitemap.ts');
+const BLOG_SLUG_LAYOUT_FILE = path.join(APP_DIR, 'pages', 'blog', '[slug]', 'layout.tsx');
 const NAVIGATION_FILE = path.join(APP_DIR, 'data', 'navigation.ts');
 const ROBOTS_FILE = path.join(APP_DIR, 'robots.ts');
 const SEO_ROUTES_FILE = path.join(APP_DIR, 'lib', 'seo', 'routes.ts');
@@ -1044,6 +1046,8 @@ function verifySeoModuleDocsConsistency() {
     'normalizeRoute',
     'getCanonicalSiteUrl',
     'toAbsoluteSeoUrl',
+    'generateMetadata',
+    '/pages/blog/${slug}',
   ];
 
   const missingDocTokens = requiredDocTokens.filter((token) => !readmeContent.includes(token));
@@ -1340,6 +1344,62 @@ function verifyLegacyFilesRemoved() {
   return { passed: true, foundLegacyFiles: [] };
 }
 
+function verifyBlogSlugMetadataImplementationInvariants() {
+  if (!fs.existsSync(BLOG_SLUG_LAYOUT_FILE)) {
+    logError('Blog slug metadata layout file missing', {
+      file: path.relative(ROOT_DIR, BLOG_SLUG_LAYOUT_FILE),
+    });
+    return { passed: false };
+  }
+
+  const blogSlugLayoutContent = fs.readFileSync(BLOG_SLUG_LAYOUT_FILE, 'utf8');
+  const requiredPatterns = [
+    {
+      pattern: /export async function generateMetadata/,
+      reason: 'Blog slug layout should expose generateMetadata for dynamic per-post SEO',
+    },
+    {
+      pattern: /buildPageMetadata\(/,
+      reason: 'Blog slug metadata should use shared buildPageMetadata helper',
+    },
+    {
+      pattern: /path:\s*`\/pages\/blog\/\$\{slug\}`/,
+      reason: 'Blog slug metadata should canonicalize dynamic path as /pages/blog/${slug}',
+    },
+    {
+      pattern: /prisma\.blogPost\.findUnique/,
+      reason: 'Blog slug metadata should attempt database-backed metadata lookup',
+    },
+    {
+      pattern: /post\.excerpt/,
+      reason: 'Blog slug metadata should use post excerpt for description when available',
+    },
+    {
+      pattern: /console\.error\('\[SEO\] Failed to load blog post for metadata\. Using fallback metadata\.'/,
+      reason: 'Blog slug metadata should keep explicit error logging for fallback path visibility',
+    },
+    {
+      pattern: /humanizeSlug\(/,
+      reason: 'Blog slug metadata should provide readable-title fallback when DB post is unavailable',
+    },
+  ];
+
+  const violations = requiredPatterns
+    .filter(({ pattern }) => !pattern.test(blogSlugLayoutContent))
+    .map(({ reason }) => ({
+      file: path.relative(ROOT_DIR, BLOG_SLUG_LAYOUT_FILE),
+      reason,
+    }));
+
+  if (violations.length > 0) {
+    logError('Blog slug metadata implementation invariant check failed', { violations });
+    return { passed: false, violations };
+  }
+
+  logInfo('Blog slug metadata implementation invariant check passed');
+  return { passed: true, violations: [] };
+}
+
 function main() {
   logInfo('Starting SEO integrity verification');
 
@@ -1368,6 +1428,7 @@ function main() {
     verifyPrivateRouteNoIndexPolicy(),
     verifyRootStructuredDataWiring(),
     verifyStructuredDataComponentInvariants(),
+    verifyBlogSlugMetadataImplementationInvariants(),
     verifyLegacyFilesRemoved(),
   ];
 
