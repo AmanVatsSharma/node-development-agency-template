@@ -20,14 +20,40 @@ export function getCanonicalSiteUrl(): string {
 
   try {
     const parsedUrl = new URL(envCandidate);
-    return parsedUrl.toString().replace(/\/$/, '');
+    if (parsedUrl.protocol !== 'http:' && parsedUrl.protocol !== 'https:') {
+      throw new Error(`Unsupported URL protocol: ${parsedUrl.protocol}`);
+    }
+
+    if (parsedUrl.pathname !== '/' || parsedUrl.search || parsedUrl.hash) {
+      console.warn('[SEO] Site URL candidate includes path/query/hash. Canonical URL will use origin only.', {
+        candidate: envCandidate,
+        pathname: parsedUrl.pathname,
+        search: parsedUrl.search,
+        hash: parsedUrl.hash,
+      });
+    }
+
+    return `${parsedUrl.protocol}//${parsedUrl.host}`;
   } catch (error) {
     console.error('[SEO] Invalid site URL candidate detected. Falling back to company profile URL.', {
       candidate: envCandidate,
       error: error instanceof Error ? error.message : String(error),
     });
 
-    return companyProfile.websiteUrl.replace(/\/$/, '');
+    try {
+      const fallbackUrl = new URL(companyProfile.websiteUrl);
+      if (fallbackUrl.protocol !== 'http:' && fallbackUrl.protocol !== 'https:') {
+        throw new Error(`Unsupported fallback URL protocol: ${fallbackUrl.protocol}`);
+      }
+
+      return `${fallbackUrl.protocol}//${fallbackUrl.host}`;
+    } catch (fallbackError) {
+      console.error('[SEO] Company profile website URL is also invalid. Falling back to hardcoded canonical URL.', {
+        fallbackCandidate: companyProfile.websiteUrl,
+        error: fallbackError instanceof Error ? fallbackError.message : String(fallbackError),
+      });
+      return 'https://enterprisehero.com';
+    }
   }
 }
 

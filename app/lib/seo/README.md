@@ -15,6 +15,7 @@ This module centralizes technical SEO behavior for the website.
 
 - `constants.ts`
   - Canonical site URL resolver
+  - Canonical URL normalization to origin-only form (drops path/query/hash)
   - Brand/company SEO constants
   - Absolute URL resolver utility
 - `metadata.ts`
