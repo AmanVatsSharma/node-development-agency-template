@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Enterprise Google Ads Management | Dedicated PPC Team | Rajapragya Bharat',
+  title: 'Enterprise Google Ads Management | Dedicated PPC Team | Enterprise Hero',
   description: 'Complete enterprise Google Ads management with dedicated team, advanced strategies, and 24/7 monitoring. ₹75K-₹2L+/month. 8.5× average ROAS, 98% client retention.',
   keywords: [
     'enterprise google ads management',
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     description: 'Complete enterprise Google Ads management with dedicated team, advanced strategies, and 24/7 monitoring. 8.5× average ROAS.',
     type: 'website',
     locale: 'en_IN',
-    siteName: 'Rajapragya Bharat',
+    siteName: 'Enterprise Hero',
     images: [
       {
         url: '/og-enterprise-google-ads.jpg',

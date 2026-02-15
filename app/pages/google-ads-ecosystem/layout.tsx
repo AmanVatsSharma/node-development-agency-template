@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Google Ads Ecosystem | Complete PPC Services | Rajapragya Bharat',
+  title: 'Google Ads Ecosystem | Complete PPC Services | Enterprise Hero',
   description: 'Master-level Google Ads ecosystem with 8+ specialized services. Enterprise management, e-commerce optimization, B2B lead generation, and more. 98% client retention, 7.2× average ROAS.',
   keywords: [
     'google ads ecosystem',
@@ -18,11 +18,11 @@ export const metadata: Metadata = {
     'digital marketing agency'
   ],
   openGraph: {
-    title: 'Google Ads Ecosystem | Complete PPC Services | Rajapragya Bharat',
+    title: 'Google Ads Ecosystem | Complete PPC Services | Enterprise Hero',
     description: 'Master-level Google Ads ecosystem with 8+ specialized services. Enterprise management, e-commerce optimization, B2B lead generation, and more.',
     type: 'website',
     locale: 'en_IN',
-    siteName: 'Rajapragya Bharat',
+    siteName: 'Enterprise Hero',
     images: [
       {
         url: '/og-google-ads-ecosystem.jpg',

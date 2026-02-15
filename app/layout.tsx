@@ -13,6 +13,7 @@ import DeferredAIAgentWidget from './components/AIAgent/DeferredAIAgentWidget';
 import { headers } from 'next/headers';
 import { OrganizationStructuredData, WebsiteStructuredData } from "./components/SEO/StructuredData";
 import { companyProfile } from "./data/companyProfile";
+import { SEO_DEFAULT_OG_IMAGE_PATH, SEO_SITE_URL, toAbsoluteSeoUrl } from '@/app/lib/seo/constants';
 
 // Font configuration
 const inter = Inter({
@@ -30,18 +31,48 @@ const poppins = Poppins({
 
 // Metadata for SEO
 export const metadata: Metadata = {
+  metadataBase: new URL(SEO_SITE_URL),
   title: "Enterprise Hero | Vedpragya Bharat Private Limited - Global Node.js Development Agency",
   description: "Leading enterprise-grade Node.js development and 3D solutions by Vedpragya Bharat Private Limited. Global presence across India, Dubai, California, Toronto, and Shenzhen. Founded by Aman Kumar Sharma.",
   keywords: "Node.js development, enterprise solutions, Vedpragya Bharat, Aman Kumar Sharma, global tech agency, 3D animations, microservices, API development, enterprise architecture, India, Dubai, California, Toronto, Shenzhen",
   authors: [{ name: "Aman Kumar Sharma - Founder, Vedpragya Bharat Private Limited" }],
+  alternates: {
+    canonical: '/',
+  },
   // Add Open Graph data for social sharing
   openGraph: {
     title: "Enterprise Hero | Vedpragya Bharat Private Limited - Global Node.js Development Agency",
     description: "Leading enterprise-grade Node.js development and 3D solutions by Vedpragya Bharat Private Limited. Global presence across India, Dubai, California, Toronto, and Shenzhen.",
-    url: "https://enterprisehero.com",
+    url: SEO_SITE_URL,
     siteName: "Enterprise Hero",
     locale: "en_US",
     type: "website",
+    images: [
+      {
+        url: toAbsoluteSeoUrl(SEO_DEFAULT_OG_IMAGE_PATH),
+        width: 1200,
+        height: 630,
+        alt: 'Enterprise Hero',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Enterprise Hero | Global Node.js Development Agency',
+    description:
+      'Leading enterprise-grade Node.js development and 3D solutions by Vedpragya Bharat Private Limited.',
+    images: [toAbsoluteSeoUrl(SEO_DEFAULT_OG_IMAGE_PATH)],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
 };
 

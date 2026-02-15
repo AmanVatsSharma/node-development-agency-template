@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'E-commerce Google Ads Optimization | Shopping Campaigns | Rajapragya Bharat',
+  title: 'E-commerce Google Ads Optimization | Shopping Campaigns | Enterprise Hero',
   description: 'Expert e-commerce Google Ads optimization with shopping campaigns, product feeds, and conversion tracking. ₹50K-₹1.5L/month. 6.8× average ROAS, 45% increase in sales.',
   keywords: [
     'ecommerce google ads optimization',
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     description: 'Expert e-commerce Google Ads optimization with shopping campaigns, product feeds, and conversion tracking. 6.8× average ROAS, 45% increase in sales.',
     type: 'website',
     locale: 'en_IN',
-    siteName: 'Rajapragya Bharat',
+    siteName: 'Enterprise Hero',
     images: [
       {
         url: '/og-ecommerce-google-ads.jpg',

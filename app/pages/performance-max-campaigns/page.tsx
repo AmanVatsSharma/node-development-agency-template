@@ -21,7 +21,7 @@ export default function PerformanceMaxCampaignsPage() {
     console.log('[Performance-Max] Page mounted');
     if (typeof window !== 'undefined' && (window as any).gtag) {
       (window as any).gtag('event', 'page_view', {
-        page_title: 'Performance Max Campaigns | AI-Powered Ads | Rajapragya Bharat',
+        page_title: 'Performance Max Campaigns | AI-Powered Ads | Enterprise Hero',
         page_location: window.location.href,
         page_path: '/pages/performance-max-campaigns'
       });

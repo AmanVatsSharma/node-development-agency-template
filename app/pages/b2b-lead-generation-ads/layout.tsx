@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'B2B Lead Generation Ads | High-Quality Leads | Rajapragya Bharat',
+  title: 'B2B Lead Generation Ads | High-Quality Leads | Enterprise Hero',
   description: 'Expert B2B lead generation with Google Ads targeting decision-makers. ₹60K-₹1.25L/month. 5.2× average ROAS, 65% qualified leads, 40% conversion rate.',
   keywords: [
     'b2b lead generation ads',
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     description: 'Expert B2B lead generation with Google Ads targeting decision-makers. 5.2× average ROAS, 65% qualified leads, 40% conversion rate.',
     type: 'website',
     locale: 'en_IN',
-    siteName: 'Rajapragya Bharat',
+    siteName: 'Enterprise Hero',
     images: [
       {
         url: '/og-b2b-lead-generation.jpg',

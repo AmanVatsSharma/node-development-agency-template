@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Google Ads Audit & Strategy | Campaign Analysis | Rajapragya Bharat',
+  title: 'Google Ads Audit & Strategy | Campaign Analysis | Enterprise Hero',
   description: 'Comprehensive Google Ads audit with detailed analysis, strategy recommendations, and implementation plan. ₹25K-₹75K one-time. 2.5× average improvement, 40% cost reduction.',
   keywords: [
     'google ads audit',
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     description: 'Comprehensive Google Ads audit with detailed analysis, strategy recommendations, and implementation plan. 2.5× average improvement, 40% cost reduction.',
     type: 'website',
     locale: 'en_IN',
-    siteName: 'Rajapragya Bharat',
+    siteName: 'Enterprise Hero',
     images: [
       {
         url: '/og-google-ads-audit.jpg',

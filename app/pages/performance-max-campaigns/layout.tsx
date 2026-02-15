@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Performance Max Campaigns | AI-Powered Ads | Rajapragya Bharat',
+  title: 'Performance Max Campaigns | AI-Powered Ads | Enterprise Hero',
   description: 'Expert Performance Max campaigns with AI optimization, multi-network reach, and automated bidding. ₹40K-₹90K/month. 4.5× average ROAS, 35% more conversions.',
   keywords: [
     'performance max campaigns',
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     description: 'Expert Performance Max campaigns with AI optimization, multi-network reach, and automated bidding. 4.5× average ROAS, 35% more conversions.',
     type: 'website',
     locale: 'en_IN',
-    siteName: 'Rajapragya Bharat',
+    siteName: 'Enterprise Hero',
     images: [
       {
         url: '/og-performance-max-campaigns.jpg',

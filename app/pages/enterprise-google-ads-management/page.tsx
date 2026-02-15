@@ -48,7 +48,7 @@ export default function EnterpriseGoogleAdsManagementPage() {
     // Track page view for Google Analytics
     if (typeof window !== 'undefined' && (window as any).gtag) {
       (window as any).gtag('event', 'page_view', {
-        page_title: 'Enterprise Google Ads Management | Dedicated PPC Team | Rajapragya Bharat',
+        page_title: 'Enterprise Google Ads Management | Dedicated PPC Team | Enterprise Hero',
         page_location: window.location.href,
         page_path: '/pages/enterprise-google-ads-management'
       });

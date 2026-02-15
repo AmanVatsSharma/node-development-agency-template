@@ -1,15 +1,17 @@
 import type { Metadata } from "next";
+import { buildPageMetadata } from "@/app/lib/seo/metadata";
 
-export const metadata: Metadata = {
-  title: "Web Development Services | Enterprise-grade Next.js, SEO, Analytics",
+export const metadata: Metadata = buildPageMetadata({
+  title: "Web Development Services | Enterprise-Grade Build & Optimization",
   description:
-    "Enterprise-grade web development: Next.js apps, SEO optimization, analytics & tracking, branding, integrations, and growth consulting.",
-  openGraph: {
-    title: "Web Development Services | Enterprise-grade Next.js, SEO, Analytics",
-    description:
-      "Enterprise-grade web development: Next.js apps, SEO optimization, analytics & tracking, branding, integrations, and growth consulting.",
-    type: "website",
-  },
-};
+    "Enterprise-grade web development covering Next.js applications, SEO optimization, analytics integration, and growth-focused consulting.",
+  path: "/pages/web-development",
+  keywords: [
+    "web development services",
+    "nextjs development",
+    "enterprise web development",
+    "seo optimized websites",
+  ],
+});
 
 

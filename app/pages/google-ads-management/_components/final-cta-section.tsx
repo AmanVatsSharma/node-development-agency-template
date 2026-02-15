@@ -187,7 +187,7 @@ export function FinalCTASection() {
                       value={formData.website}
                       onChange={(e) => handleChange('website', e.target.value)}
                       className="mt-2 h-12 text-base border-2 border-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-400"
-                      placeholder="https://yourwebsite.com"
+                      placeholder="https://example.com"
                     />
                   </div>
 

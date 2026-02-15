@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Landing Page Optimization | Conversion Optimization | Rajapragya Bharat',
+  title: 'Landing Page Optimization | Conversion Optimization | Enterprise Hero',
   description: 'Expert landing page optimization with A/B testing, conversion tracking, and user experience improvements. ₹30K-₹1L one-time. 3.2× average improvement, 55% conversion increase.',
   keywords: [
     'landing page optimization',
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     description: 'Expert landing page optimization with A/B testing, conversion tracking, and user experience improvements. 3.2× average improvement, 55% conversion increase.',
     type: 'website',
     locale: 'en_IN',
-    siteName: 'Rajapragya Bharat',
+    siteName: 'Enterprise Hero',
     images: [
       {
         url: '/og-landing-page-optimization.jpg',

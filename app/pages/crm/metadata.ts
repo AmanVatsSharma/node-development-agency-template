@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'EnterpriseHero CRM | Custom Self-Hosted CRM on BharatERP Stack',
     description: 'Experience India\'s premium self-hosted CRM — customizable, secure, and ERP-ready. Built by EnterpriseHero (Vedpragya Bharat).',
-    url: 'https://enterprisehero.com/crm',
+    url: 'https://enterprisehero.com/pages/crm',
     siteName: 'Enterprise Hero',
     locale: 'en_IN',
     type: 'website',
@@ -62,6 +62,6 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: 'https://enterprisehero.com/crm'
+    canonical: 'https://enterprisehero.com/pages/crm'
   }
 };

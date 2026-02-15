@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'YouTube Advertising Management | Video Ads | Rajapragya Bharat',
+  title: 'YouTube Advertising Management | Video Ads | Enterprise Hero',
   description: 'Expert YouTube advertising management with video campaigns, targeting, and optimization. ₹35K-₹85K/month. 3.8× average ROAS, 2.5M+ video views generated.',
   keywords: [
     'youtube advertising management',
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     description: 'Expert YouTube advertising management with video campaigns, targeting, and optimization. 3.8× average ROAS, 2.5M+ video views generated.',
     type: 'website',
     locale: 'en_IN',
-    siteName: 'Rajapragya Bharat',
+    siteName: 'Enterprise Hero',
     images: [
       {
         url: '/og-youtube-advertising.jpg',

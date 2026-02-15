@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Request CRM Demo | EnterpriseHero CRM',
     description: 'Experience EnterpriseHero CRM personalized for your business. Get your custom demo within 24 hours.',
-    url: 'https://enterprisehero.com/crm/demo',
+    url: 'https://enterprisehero.com/pages/crm/demo',
     siteName: 'Enterprise Hero',
     locale: 'en_IN',
     type: 'website'
@@ -35,6 +35,6 @@ export const metadata: Metadata = {
     follow: true
   },
   alternates: {
-    canonical: 'https://enterprisehero.com/crm/demo'
+    canonical: 'https://enterprisehero.com/pages/crm/demo'
   }
 };

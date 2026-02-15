@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "prisma generate && npm run generate-seo && npm run build:wasm || echo '⚠️ WASM build skipped' && next build",
+    "build": "prisma generate && npm run build:wasm || echo '⚠️ WASM build skipped' && next build",
     "build:wasm": "wasm-pack build rust/hero-sim-wasm --target web --out-dir ../../public/wasm/hero_sim --release",
     "postinstall": "prisma generate",
     "start": "next start",

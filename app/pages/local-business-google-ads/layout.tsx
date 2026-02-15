@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Local Business Google Ads | Local SEO & Ads | Rajapragya Bharat',
+  title: 'Local Business Google Ads | Local SEO & Ads | Enterprise Hero',
   description: 'Expert local business Google Ads with location targeting, Google My Business optimization, and local SEO. ₹25K-₹75K/month. 4.2× average ROAS, 60% local traffic increase.',
   keywords: [
     'local business google ads',
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     description: 'Expert local business Google Ads with location targeting, Google My Business optimization, and local SEO. 4.2× average ROAS, 60% local traffic increase.',
     type: 'website',
     locale: 'en_IN',
-    siteName: 'Rajapragya Bharat',
+    siteName: 'Enterprise Hero',
     images: [
       {
         url: '/og-local-business-google-ads.jpg',
