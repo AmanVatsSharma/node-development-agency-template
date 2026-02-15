@@ -1852,8 +1852,28 @@ function verifySeoRuntimeScriptInvariants() {
       reason: 'Runtime SEO verifier should retain navigation source-hygiene validation entrypoint',
     },
     {
+      pattern: /let canonicalSitemapLinkCount = 0;/,
+      reason: 'Runtime SEO verifier should track canonical /sitemap.xml link count in navigation sources',
+    },
+    {
       pattern: /trimmedRoute === '\/sitemap'/,
       reason: 'Runtime SEO verifier should reject non-canonical /sitemap navigation alias at source',
+    },
+    {
+      pattern: /if \(trimmedRoute === '\/sitemap\.xml'\)\s*\{\s*canonicalSitemapLinkCount \+= 1;/,
+      reason: 'Runtime SEO verifier should count canonical sitemap links from navigation sources',
+    },
+    {
+      pattern: /trimmedRoute\.includes\('\['\) \|\| trimmedRoute\.includes\('\]'\)/,
+      reason: 'Runtime SEO verifier should reject dynamic placeholder routes in navigation source links',
+    },
+    {
+      pattern: /const routePathForPolicy = \(\(\) => \{[\s\S]*isBlockedRoutePath\(routePathForPolicy\)/,
+      reason: 'Runtime SEO verifier should reject blocked-prefix routes from navigation source links',
+    },
+    {
+      pattern: /if \(canonicalSitemapLinkCount !== 1\)/,
+      reason: 'Runtime SEO verifier should enforce exactly one canonical /sitemap.xml navigation link',
     },
     {
       pattern:

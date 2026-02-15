@@ -476,6 +476,7 @@ function getRawNavigationRoutes(): string[] {
 function verifyNavigationSourceRouteHygiene(): void {
   const rawRoutes = getRawNavigationRoutes();
   const violations: Array<{ route: string; reason: string }> = [];
+  let canonicalSitemapLinkCount = 0;
 
   rawRoutes.forEach((rawRoute) => {
     const trimmedRoute = rawRoute.trim();
@@ -509,6 +510,10 @@ function verifyNavigationSourceRouteHygiene(): void {
         reason: 'Navigation route should reference canonical /sitemap.xml endpoint, not /sitemap alias',
       });
       return;
+    }
+
+    if (trimmedRoute === '/sitemap.xml') {
+      canonicalSitemapLinkCount += 1;
     }
 
     if (trimmedRoute.includes(' ')) {
@@ -559,6 +564,29 @@ function verifyNavigationSourceRouteHygiene(): void {
       return;
     }
 
+    if (trimmedRoute.includes('[') || trimmedRoute.includes(']')) {
+      violations.push({
+        route: rawRoute,
+        reason: 'Navigation route should not include unresolved dynamic segment placeholders',
+      });
+      return;
+    }
+
+    const routePathForPolicy = (() => {
+      const withoutQueryOrHash = trimmedRoute.split(/[?#]/)[0] || '/';
+      const collapsedPath = withoutQueryOrHash.replace(/\/{2,}/g, '/');
+      const lowerCasedPath = collapsedPath.toLowerCase();
+      return lowerCasedPath.length > 1 ? lowerCasedPath.replace(/\/$/, '') : lowerCasedPath;
+    })();
+
+    if (isBlockedRoutePath(routePathForPolicy)) {
+      violations.push({
+        route: rawRoute,
+        reason: 'Navigation route should not include blocked/private prefixes from SEO policy',
+      });
+      return;
+    }
+
     if (trimmedRoute === '/robots.txt') {
       violations.push({
         route: rawRoute,
@@ -576,6 +604,12 @@ function verifyNavigationSourceRouteHygiene(): void {
     }
   });
 
+  if (canonicalSitemapLinkCount !== 1) {
+    logError('Navigation source should expose exactly one canonical /sitemap.xml link', {
+      canonicalSitemapLinkCount,
+    });
+  }
+
   if (violations.length > 0) {
     logError('Navigation source routes contain non-canonical or unsafe entries', {
       violationCount: violations.length,
@@ -585,6 +619,7 @@ function verifyNavigationSourceRouteHygiene(): void {
 
   logInfo('Navigation source route hygiene validation passed', {
     routeCount: rawRoutes.length,
+    canonicalSitemapLinkCount,
   });
 }
 
