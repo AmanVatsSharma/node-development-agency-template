@@ -27,13 +27,110 @@ function logError(message: string, data?: unknown): never {
   throw new Error(message);
 }
 
+function isValidDateInput(value: unknown): boolean {
+  if (!value) {
+    return false;
+  }
+
+  const parsedDate = value instanceof Date ? value : new Date(String(value));
+  return !Number.isNaN(parsedDate.getTime());
+}
+
 async function verifySitemapOutput(): Promise<void> {
   const entries = await sitemap();
   const entryUrls = new Set(entries.map((entry) => entry.url));
   const staticRoutes = getStaticSeoRoutes();
+  const now = Date.now();
+  const allowedFrequencies = new Set([
+    'always',
+    'hourly',
+    'daily',
+    'weekly',
+    'monthly',
+    'yearly',
+    'never',
+  ]);
 
   if (entries.length === 0) {
     logError('Sitemap entries are empty');
+  }
+
+  const duplicateUrls = entries
+    .map((entry) => entry.url)
+    .filter((url, index, allUrls) => allUrls.indexOf(url) !== index);
+  if (duplicateUrls.length > 0) {
+    logError('Duplicate sitemap URLs detected', {
+      duplicateCount: duplicateUrls.length,
+      sample: duplicateUrls.slice(0, 10),
+    });
+  }
+
+  const nonCanonicalUrls = entries.filter((entry) => !entry.url.startsWith(`${SEO_SITE_URL}/`));
+  if (nonCanonicalUrls.length > 0) {
+    logError('Sitemap contains non-canonical URLs', {
+      sample: nonCanonicalUrls.slice(0, 10).map((entry) => entry.url),
+    });
+  }
+
+  const invalidModifierUrls = entries.filter((entry) => /[?#]/.test(entry.url));
+  if (invalidModifierUrls.length > 0) {
+    logError('Sitemap URLs should not contain query/hash fragments', {
+      sample: invalidModifierUrls.slice(0, 10).map((entry) => entry.url),
+    });
+  }
+
+  const entriesMissingValidLastModified = entries.filter(
+    (entry) => !isValidDateInput(entry.lastModified),
+  );
+  if (entriesMissingValidLastModified.length > 0) {
+    logError('Sitemap entries with invalid lastModified detected', {
+      sample: entriesMissingValidLastModified.slice(0, 10).map((entry) => entry.url),
+    });
+  }
+
+  const futureDatedEntries = entries.filter((entry) => {
+    const parsedDate = new Date(String(entry.lastModified)).getTime();
+    return parsedDate > now + 1000 * 60 * 60 * 24;
+  });
+  if (futureDatedEntries.length > 0) {
+    logError('Sitemap entries should not be significantly future-dated', {
+      sample: futureDatedEntries.slice(0, 10).map((entry) => ({
+        url: entry.url,
+        lastModified: entry.lastModified,
+      })),
+    });
+  }
+
+  const invalidPriorityEntries = entries.filter(
+    (entry) =>
+      entry.priority !== undefined &&
+      (typeof entry.priority !== 'number' || Number.isNaN(entry.priority) || entry.priority < 0 || entry.priority > 1),
+  );
+  if (invalidPriorityEntries.length > 0) {
+    logError('Sitemap entries contain invalid priority values', {
+      sample: invalidPriorityEntries.slice(0, 10).map((entry) => ({
+        url: entry.url,
+        priority: entry.priority,
+      })),
+    });
+  }
+
+  const invalidChangeFrequencyEntries = entries.filter(
+    (entry) =>
+      entry.changeFrequency !== undefined && !allowedFrequencies.has(entry.changeFrequency),
+  );
+  if (invalidChangeFrequencyEntries.length > 0) {
+    logError('Sitemap entries contain invalid changeFrequency values', {
+      sample: invalidChangeFrequencyEntries.slice(0, 10).map((entry) => ({
+        url: entry.url,
+        changeFrequency: entry.changeFrequency,
+      })),
+    });
+  }
+
+  const homeUrl = toAbsoluteSeoUrl('/');
+  if (!entryUrls.has(homeUrl)) {
+    logError('Homepage URL missing from sitemap', { homeUrl });
   }
 
   const requiredRoutes = ['/pages/contact', '/pages/services', '/pages/blog'];
@@ -64,6 +161,7 @@ async function verifySitemapOutput(): Promise<void> {
 
   logInfo('Sitemap runtime validation passed', {
     entryCount: entries.length,
+    checkedStaticRouteCount: staticRoutes.length,
   });
 }
 

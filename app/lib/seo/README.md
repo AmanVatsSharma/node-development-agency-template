@@ -102,6 +102,9 @@ It validates:
 - dynamic sitemap/robots route existence
 - removal of legacy static SEO generators
 - runtime sitemap and robots output behavior
+  - absolute canonical sitemap URLs only
+  - no duplicate/query/hash sitemap URLs
+  - valid `lastModified` / `priority` / `changeFrequency` fields
 
 CI also runs the same check via:
 - `.github/workflows/seo-integrity.yml`
