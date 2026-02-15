@@ -6,8 +6,9 @@
  * 1. Every public route under app/pages has metadata coverage.
  * 2. Metadata definitions use the shared SEO metadata builder.
  * 3. Placeholder SEO tokens are not present in active metadata-bearing files.
- * 4. Dynamic SEO routes exist (app/sitemap.ts and app/robots.ts).
- * 5. Legacy static SEO generator files are not present.
+ * 4. Legacy/placeholder domain tokens are not present in public route source code.
+ * 5. Dynamic SEO routes exist (app/sitemap.ts and app/robots.ts).
+ * 6. Legacy static SEO generator files are not present.
  *
  * Usage:
  *   node scripts/verify-seo-integrity.js
@@ -203,6 +204,47 @@ function verifyNoPlaceholderTokens() {
   return { passed: true, violations: [] };
 }
 
+function findLineNumber(content, token) {
+  const firstMatchIndex = content.indexOf(token);
+  if (firstMatchIndex < 0) {
+    return -1;
+  }
+
+  return content.slice(0, firstMatchIndex).split('\n').length;
+}
+
+function verifyNoLegacyTokensInPublicCode() {
+  const publicCodeFiles = walkFiles(PAGES_DIR).filter((filePath) =>
+    /\.(ts|tsx|js|jsx)$/.test(filePath),
+  );
+
+  const violations = [];
+
+  publicCodeFiles.forEach((filePath) => {
+    const fileContent = fs.readFileSync(filePath, 'utf8');
+
+    PLACEHOLDER_PATTERNS.forEach((token) => {
+      if (!fileContent.includes(token)) {
+        return;
+      }
+
+      violations.push({
+        file: path.relative(ROOT_DIR, filePath),
+        token,
+        line: findLineNumber(fileContent, token),
+      });
+    });
+  });
+
+  if (violations.length > 0) {
+    logError('Legacy or placeholder tokens found in public route source', { violations });
+    return { passed: false, violations };
+  }
+
+  logInfo('Public route source token check passed');
+  return { passed: true, violations: [] };
+}
+
 function verifyDynamicSeoFiles() {
   const missingFiles = DYNAMIC_SEO_FILES.filter((filePath) => !fs.existsSync(filePath));
 
@@ -238,6 +280,7 @@ function main() {
     verifyMetadataCoverage(),
     verifyMetadataUsesSharedBuilder(),
     verifyNoPlaceholderTokens(),
+    verifyNoLegacyTokensInPublicCode(),
     verifyDynamicSeoFiles(),
     verifyLegacyFilesRemoved(),
   ];
