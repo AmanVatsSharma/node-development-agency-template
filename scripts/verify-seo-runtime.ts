@@ -576,6 +576,12 @@ async function verifySitemapOutput(): Promise<void> {
 function verifyRobotsOutput(): void {
   const robotsOutput = robots();
 
+  if (!Array.isArray(robotsOutput.rules) || robotsOutput.rules.length === 0) {
+    logError('Robots rules must be a non-empty array', {
+      rules: robotsOutput.rules,
+    });
+  }
+
   if (robotsOutput.host !== SEO_SITE_URL) {
     logError('Robots host mismatch', { expected: SEO_SITE_URL, actual: robotsOutput.host });
   }
@@ -588,10 +594,20 @@ function verifyRobotsOutput(): void {
     });
   }
 
-  const rootRule = robotsOutput.rules.find((rule) => rule.userAgent === '*');
-  if (!rootRule) {
-    logError('Robots wildcard user-agent rule missing');
+  const wildcardRules = robotsOutput.rules.filter((rule) => rule.userAgent === '*');
+  if (wildcardRules.length !== 1) {
+    logError('Robots should expose exactly one wildcard user-agent rule', {
+      wildcardRuleCount: wildcardRules.length,
+      userAgents: robotsOutput.rules.map((rule) => rule.userAgent),
+    });
   }
+
+  if (robotsOutput.rules[0]?.userAgent !== '*') {
+    logError('Robots wildcard user-agent rule should be first for deterministic policy rendering', {
+      firstRuleUserAgent: robotsOutput.rules[0]?.userAgent,
+    });
+  }
+  const rootRule = wildcardRules[0];
 
   const allowList = Array.isArray(rootRule.allow)
     ? rootRule.allow
@@ -645,6 +661,20 @@ function verifyRobotsOutput(): void {
   if (unexpectedDisallowEntries.length > 0) {
     logError('Robots disallow list has unexpected entries', {
       unexpectedDisallowEntries,
+    });
+  }
+
+  const malformedDisallowEntries = disallowList.filter(
+    (entry) =>
+      typeof entry !== 'string' ||
+      !entry.startsWith('/') ||
+      entry !== entry.trim() ||
+      entry !== entry.toLowerCase() ||
+      /\s/.test(entry),
+  );
+  if (malformedDisallowEntries.length > 0) {
+    logError('Robots disallow entries should be lowercase, root-relative, and whitespace-free', {
+      malformedDisallowEntries,
     });
   }
 

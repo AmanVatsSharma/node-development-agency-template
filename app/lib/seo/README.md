@@ -138,7 +138,7 @@ It validates:
   - navigation-driven route coverage in generated sitemap
   - deterministic URL sorting + full legal route presence
   - legal route changeFrequency baseline stays `monthly`
-  - robots wildcard allow list strictness (`allow: "/"` only) + strict disallow policy consistency (including deterministic disallow ordering)
+  - robots wildcard rule shape is deterministic (single `*` rule, first in list) with strict allow-list (`allow: "/"` only) + strict disallow policy consistency (including deterministic disallow ordering + normalized disallow path format)
 
 CI also runs the same check via:
 - `.github/workflows/seo-integrity.yml`
