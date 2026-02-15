@@ -1232,9 +1232,11 @@ function verifySeoModuleDocsConsistency() {
     'normalizeMetadataDescription',
     'normalizeMetadataImagePath',
     'normalizeMetadataKeywords',
+    'normalizeSameAsUrls',
     'sitemap alias',
     'protocol-relative',
     'verifyMetadataHelperRuntimeBehavior',
+    'verifyStructuredDataRuntimeBehavior',
     'verifyBlogSlugMetadataRuntimeBehavior',
     'normalizeAndFilterBlogEntries',
     'mergeDuplicateSitemapEntry',
@@ -1370,6 +1372,18 @@ function verifyStructuredDataComponentInvariants() {
   const structuredDataContent = fs.readFileSync(SEO_STRUCTURED_DATA_FILE, 'utf8');
   const requiredPatterns = [
     {
+      pattern: /function normalizeSameAsUrls\(sameAs\?: string\[\]\): string\[\] \| undefined/,
+      reason: 'StructuredData component should expose normalizeSameAsUrls helper for sameAs URL hygiene',
+    },
+    {
+      pattern: /parsedUrl\.protocol !== 'https:'/,
+      reason: 'StructuredData sameAs normalization should enforce HTTPS social URLs only',
+    },
+    {
+      pattern: /if \(parsedUrl\.hash\)/,
+      reason: 'StructuredData sameAs normalization should reject fragmented URLs',
+    },
+    {
       pattern: /import\s*\{\s*SEO_DEFAULT_DESCRIPTION\s*\}\s*from\s*['"]@\/app\/lib\/seo\/constants['"]/,
       reason: 'StructuredData component should import SEO_DEFAULT_DESCRIPTION from SEO constants',
     },
@@ -1388,6 +1402,14 @@ function verifyStructuredDataComponentInvariants() {
     {
       pattern: /email:\s*companyProfile\.contactEmail/,
       reason: 'StructuredData default contact email should use companyProfile.contactEmail',
+    },
+    {
+      pattern: /normalizeSameAsUrls\(Object\.values\(companyProfile\.social \|\| \{\}\)\.filter\(Boolean\) as string\[\]\)/,
+      reason: 'StructuredData default sameAs should be sanitized from company profile social links',
+    },
+    {
+      pattern: /const normalizedSameAs = normalizeSameAsUrls\(sameAs\);/,
+      reason: 'OrganizationStructuredData should sanitize incoming sameAs values before serialization',
     },
   ];
 
@@ -1718,6 +1740,10 @@ function verifySeoRuntimeScriptInvariants() {
       reason: 'Runtime SEO verifier should import buildPageMetadata for runtime metadata-helper behavior checks',
     },
     {
+      pattern: /import \{ OrganizationStructuredData \} from ['"]@\/app\/components\/SEO\/StructuredData['"]/,
+      reason: 'Runtime SEO verifier should import OrganizationStructuredData for runtime sameAs sanitization checks',
+    },
+    {
       pattern: /import \{ generateMetadata as generateBlogSlugMetadata \} from ['"]@\/app\/pages\/blog\/\[slug\]\/layout['"]/,
       reason: 'Runtime SEO verifier should import blog slug metadata generator for runtime slug-canonicalization checks',
     },
@@ -1741,6 +1767,14 @@ function verifySeoRuntimeScriptInvariants() {
     {
       pattern: /buildPageMetadata\(\{[\s\S]*Runtime SEO Metadata Helper Probe[\s\S]*\}\);/,
       reason: 'Runtime SEO verifier should execute buildPageMetadata probe coverage for normalization contracts',
+    },
+    {
+      pattern: /function verifyStructuredDataRuntimeBehavior\(\): void/,
+      reason: 'Runtime SEO verifier should retain runtime structured-data behavior validation entrypoint',
+    },
+    {
+      pattern: /OrganizationStructuredData\(\{[\s\S]*linkedin\.com\/company\/enterprisehero[\s\S]*\}\)/,
+      reason: 'Runtime SEO verifier should probe structured-data sameAs sanitization behavior with mixed URL inputs',
     },
     {
       pattern: /async function verifyBlogSlugMetadataRuntimeBehavior\(\): Promise<void>/,
@@ -1883,8 +1917,8 @@ function verifySeoRuntimeScriptInvariants() {
     },
     {
       pattern:
-        /verifyCanonicalSeoConstants\(\);\s*verifyMetadataHelperRuntimeBehavior\(\);\s*await verifyBlogSlugMetadataRuntimeBehavior\(\);\s*await verifySitemapOutput\(\);\s*verifyRobotsOutput\(\);/,
-      reason: 'Runtime SEO verifier main flow should execute canonical, metadata helper, blog slug, sitemap, then robots checks',
+        /verifyCanonicalSeoConstants\(\);\s*verifyMetadataHelperRuntimeBehavior\(\);\s*verifyStructuredDataRuntimeBehavior\(\);\s*await verifyBlogSlugMetadataRuntimeBehavior\(\);\s*await verifySitemapOutput\(\);\s*verifyRobotsOutput\(\);/,
+      reason: 'Runtime SEO verifier main flow should execute canonical, metadata helper, structured-data, blog slug, sitemap, then robots checks',
     },
     {
       pattern: /process\.exit\(1\);/,

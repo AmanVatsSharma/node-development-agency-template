@@ -59,6 +59,64 @@ interface FAQStructuredDataProps {
   }[];
 }
 
+function normalizeSameAsUrls(sameAs?: string[]): string[] | undefined {
+  if (!sameAs || sameAs.length === 0) {
+    return undefined;
+  }
+
+  const normalizedUrls: string[] = [];
+  const seenUrls = new Set<string>();
+
+  sameAs.forEach((rawUrl) => {
+    const trimmedUrl = rawUrl.trim();
+    if (!trimmedUrl) {
+      return;
+    }
+
+    if (/^\/\/[^/]/.test(trimmedUrl)) {
+      console.warn('[SEO] Protocol-relative sameAs URL rejected in structured data.', {
+        url: rawUrl,
+      });
+      return;
+    }
+
+    try {
+      const parsedUrl = new URL(trimmedUrl);
+      if (parsedUrl.protocol !== 'https:') {
+        console.warn('[SEO] Non-HTTPS sameAs URL rejected in structured data.', {
+          url: rawUrl,
+          protocol: parsedUrl.protocol,
+        });
+        return;
+      }
+
+      if (parsedUrl.hash) {
+        console.warn('[SEO] Fragmented sameAs URL rejected in structured data.', {
+          url: rawUrl,
+          hash: parsedUrl.hash,
+        });
+        return;
+      }
+
+      const normalizedUrl = parsedUrl.toString();
+      const dedupeKey = normalizedUrl.toLowerCase();
+      if (seenUrls.has(dedupeKey)) {
+        return;
+      }
+
+      seenUrls.add(dedupeKey);
+      normalizedUrls.push(normalizedUrl);
+    } catch (error) {
+      console.warn('[SEO] Invalid sameAs URL rejected in structured data.', {
+        url: rawUrl,
+        error: error instanceof Error ? error.message : String(error),
+      });
+    }
+  });
+
+  return normalizedUrls.length > 0 ? normalizedUrls : undefined;
+}
+
 // Default data
 const defaultOrganization = {
   name: companyProfile.brandName,
@@ -69,7 +127,8 @@ const defaultOrganization = {
     contactType: 'customer service',
     email: companyProfile.contactEmail
   },
-  sameAs: Object.values(companyProfile.social || {}).filter(Boolean) as string[],
+  sameAs:
+    normalizeSameAsUrls(Object.values(companyProfile.social || {}).filter(Boolean) as string[]) || [],
   legalName: companyProfile.legalName,
   taxId: companyProfile.legal.gst,
   founderName: companyProfile.founder?.name
@@ -87,6 +146,8 @@ export function OrganizationStructuredData({
   founderName = defaultOrganization.founderName,
   address
 }: OrganizationStructuredDataProps) {
+  const normalizedSameAs = normalizeSameAsUrls(sameAs);
+
   const structuredData = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
@@ -108,7 +169,7 @@ export function OrganizationStructuredData({
     },
     ...(taxId ? { taxID: taxId } : {}),
     ...(founderName ? { founder: { '@type': 'Person', name: founderName } } : {}),
-    ...(sameAs?.length ? { sameAs } : {})
+    ...(normalizedSameAs?.length ? { sameAs: normalizedSameAs } : {})
   };
 
   return (

@@ -9,6 +9,7 @@ import sitemap from '@/app/sitemap';
 import robots from '@/app/robots';
 import { getStaticSeoRoutes } from '@/app/lib/seo/routes';
 import { buildPageMetadata } from '@/app/lib/seo/metadata';
+import { OrganizationStructuredData } from '@/app/components/SEO/StructuredData';
 import { generateMetadata as generateBlogSlugMetadata } from '@/app/pages/blog/[slug]/layout';
 import { footerNavigation, mainNavigation, servicesMegaMenu } from '@/app/data/navigation';
 import { companyProfile } from '@/app/data/companyProfile';
@@ -221,6 +222,83 @@ function verifyMetadataHelperRuntimeBehavior(): void {
     canonicalPath,
     keywordCount: keywordList.length,
     ogImageUrl,
+  });
+}
+
+function verifyStructuredDataRuntimeBehavior(): void {
+  const organizationScriptElement = OrganizationStructuredData({
+    sameAs: [
+      ' https://linkedin.com/company/enterprisehero ',
+      'HTTPS://LINKEDIN.COM/company/enterprisehero',
+      'https://twitter.com/enterprisehero',
+      'https://twitter.com/enterprisehero#team',
+      'mailto:contact@enterprisehero.com',
+      '//facebook.com/enterprisehero',
+    ],
+  }) as unknown as {
+    props?: {
+      dangerouslySetInnerHTML?: { __html?: string };
+    };
+  };
+
+  const serializedStructuredData =
+    organizationScriptElement.props?.dangerouslySetInnerHTML?.__html;
+  if (!serializedStructuredData) {
+    logError('OrganizationStructuredData should render serializable JSON-LD payload');
+  }
+
+  let structuredDataPayload: Record<string, unknown>;
+  try {
+    structuredDataPayload = JSON.parse(serializedStructuredData);
+  } catch (error) {
+    logError('OrganizationStructuredData produced invalid JSON-LD payload', {
+      error: error instanceof Error ? error.message : String(error),
+    });
+  }
+
+  if (structuredDataPayload['@type'] !== 'Organization') {
+    logError('OrganizationStructuredData should preserve Organization schema type', {
+      schemaType: structuredDataPayload['@type'],
+    });
+  }
+
+  const sameAsList = Array.isArray(structuredDataPayload.sameAs)
+    ? (structuredDataPayload.sameAs as string[])
+    : [];
+  if (sameAsList.length !== 2) {
+    logError('OrganizationStructuredData sameAs normalization should keep only valid unique HTTPS URLs', {
+      sameAsList,
+    });
+  }
+
+  const duplicateSameAsEntries = sameAsList.filter(
+    (entry, index) => sameAsList.findIndex((candidate) => candidate.toLowerCase() === entry.toLowerCase()) !== index,
+  );
+  if (duplicateSameAsEntries.length > 0) {
+    logError('OrganizationStructuredData sameAs URLs should be deduplicated case-insensitively', {
+      sameAsList,
+      duplicateSameAsEntries,
+    });
+  }
+
+  const invalidSameAsEntries = sameAsList.filter((entry) => {
+    try {
+      const parsedUrl = new URL(entry);
+      return parsedUrl.protocol !== 'https:' || Boolean(parsedUrl.hash);
+    } catch {
+      return true;
+    }
+  });
+  if (invalidSameAsEntries.length > 0) {
+    logError('OrganizationStructuredData sameAs should only contain HTTPS URLs without fragments', {
+      sameAsList,
+      invalidSameAsEntries,
+    });
+  }
+
+  logInfo('Structured data runtime validation passed', {
+    sameAsCount: sameAsList.length,
+    sameAsList,
   });
 }
 
@@ -908,6 +986,7 @@ async function main(): Promise<void> {
   logInfo('Starting runtime SEO verification');
   verifyCanonicalSeoConstants();
   verifyMetadataHelperRuntimeBehavior();
+  verifyStructuredDataRuntimeBehavior();
   await verifyBlogSlugMetadataRuntimeBehavior();
   await verifySitemapOutput();
   verifyRobotsOutput();
