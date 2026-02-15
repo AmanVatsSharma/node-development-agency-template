@@ -5,10 +5,11 @@
  * Checks performed:
  * 1. Every public route under app/pages has metadata coverage.
  * 2. Metadata definitions use the shared SEO metadata builder.
- * 3. Placeholder SEO tokens are not present in active metadata-bearing files.
- * 4. Legacy/placeholder domain tokens are not present in public route source code.
- * 5. Dynamic SEO routes exist (app/sitemap.ts and app/robots.ts).
- * 6. Legacy static SEO generator files are not present.
+ * 3. Metadata canonical path aligns with the actual file route.
+ * 4. Placeholder SEO tokens are not present in active metadata-bearing files.
+ * 5. Legacy/placeholder domain tokens are not present in public route source code.
+ * 6. Dynamic SEO routes exist (app/sitemap.ts and app/robots.ts).
+ * 7. Legacy static SEO generator files are not present.
  *
  * Usage:
  *   node scripts/verify-seo-integrity.js
@@ -171,6 +172,85 @@ function verifyMetadataUsesSharedBuilder() {
   return { passed: true, violations: [] };
 }
 
+function expectedRouteFromMetadataFile(filePath) {
+  const relativeDirectory = path.relative(PAGES_DIR, path.dirname(filePath));
+  if (!relativeDirectory) {
+    return '/pages';
+  }
+
+  return `/pages/${relativeDirectory.split(path.sep).join('/')}`;
+}
+
+function normalizeComparableRoute(routePath) {
+  if (!routePath || typeof routePath !== 'string') {
+    return routePath;
+  }
+
+  const withoutTrailingSlash =
+    routePath.length > 1 ? routePath.replace(/\/$/, '') : routePath;
+
+  return withoutTrailingSlash
+    .replace(/\$\{[^}]+\}/g, '[dynamic]')
+    .replace(/\[[^\]]+\]/g, '[dynamic]');
+}
+
+function verifyMetadataPathAlignment() {
+  const metadataBuilderFiles = walkFiles(PAGES_DIR).filter((filePath) =>
+    /(metadata\.ts|layout\.tsx|page\.tsx)$/.test(filePath),
+  );
+
+  const violations = [];
+  let checkedCallCount = 0;
+
+  metadataBuilderFiles.forEach((filePath) => {
+    const fileContent = fs.readFileSync(filePath, 'utf8');
+    if (!/buildPageMetadata\(/.test(fileContent)) {
+      return;
+    }
+
+    const expectedRoute = expectedRouteFromMetadataFile(filePath);
+    const expectedComparableRoute = normalizeComparableRoute(expectedRoute);
+    const metadataCallPattern = /buildPageMetadata\(\s*\{([\s\S]*?)\}\s*\)/g;
+    const metadataCalls = [...fileContent.matchAll(metadataCallPattern)];
+
+    metadataCalls.forEach((callMatch) => {
+      checkedCallCount += 1;
+      const metadataObjectBody = callMatch[1];
+      const pathMatch = metadataObjectBody.match(/path\s*:\s*([`'"])(.*?)\1/);
+
+      if (!pathMatch) {
+        violations.push({
+          file: path.relative(ROOT_DIR, filePath),
+          expectedRoute,
+          reason: 'Missing `path` field in buildPageMetadata options.',
+        });
+        return;
+      }
+
+      const pathValue = pathMatch[2];
+      const actualComparableRoute = normalizeComparableRoute(pathValue);
+
+      if (actualComparableRoute !== expectedComparableRoute) {
+        violations.push({
+          file: path.relative(ROOT_DIR, filePath),
+          expectedRoute,
+          actualPath: pathValue,
+          reason: 'Metadata path does not align with file route.',
+          line: findLineNumber(fileContent, pathMatch[0]),
+        });
+      }
+    });
+  });
+
+  if (violations.length > 0) {
+    logError('Metadata path alignment check failed', { violations });
+    return { passed: false, violations };
+  }
+
+  logInfo('Metadata path alignment check passed', { checkedCallCount });
+  return { passed: true, violations: [] };
+}
+
 function verifyNoPlaceholderTokens() {
   const relevantFiles = walkFiles(PAGES_DIR).filter((filePath) =>
     /(metadata\.ts|layout\.tsx|page\.tsx)$/.test(filePath),
@@ -279,6 +359,7 @@ function main() {
   const checks = [
     verifyMetadataCoverage(),
     verifyMetadataUsesSharedBuilder(),
+    verifyMetadataPathAlignment(),
     verifyNoPlaceholderTokens(),
     verifyNoLegacyTokensInPublicCode(),
     verifyDynamicSeoFiles(),
