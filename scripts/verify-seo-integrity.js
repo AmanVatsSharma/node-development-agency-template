@@ -14,7 +14,8 @@
  * 9. Build pipeline runs SEO integrity + runtime checks.
  * 10. CI workflow executes SEO integrity + runtime checks.
  * 11. Shared SEO policy constants are used across routes/robots modules.
- * 12. Legacy static SEO generator files are not present.
+ * 12. Company profile SEO identity (website/email) is valid and non-placeholder.
+ * 13. Legacy static SEO generator files are not present.
  *
  * Usage:
  *   node scripts/verify-seo-integrity.js
@@ -29,6 +30,7 @@ const PAGES_DIR = path.join(APP_DIR, 'pages');
 const NAVIGATION_FILE = path.join(APP_DIR, 'data', 'navigation.ts');
 const ROBOTS_FILE = path.join(APP_DIR, 'robots.ts');
 const SEO_ROUTES_FILE = path.join(APP_DIR, 'lib', 'seo', 'routes.ts');
+const COMPANY_PROFILE_FILE = path.join(APP_DIR, 'data', 'companyProfile.ts');
 const PACKAGE_JSON_PATH = path.join(ROOT_DIR, 'package.json');
 const SEO_CI_WORKFLOW_PATH = path.join(ROOT_DIR, '.github', 'workflows', 'seo-integrity.yml');
 
@@ -505,6 +507,59 @@ function verifySharedSeoPolicyConstantsUsage() {
   return { passed: true, violations: [] };
 }
 
+function verifyCompanyProfileSeoIdentity() {
+  if (!fs.existsSync(COMPANY_PROFILE_FILE)) {
+    logError('Company profile file missing', {
+      file: path.relative(ROOT_DIR, COMPANY_PROFILE_FILE),
+    });
+    return { passed: false };
+  }
+
+  const companyProfileContent = fs.readFileSync(COMPANY_PROFILE_FILE, 'utf8');
+
+  const websiteMatch = companyProfileContent.match(/websiteUrl:\s*["']([^"']+)["']/);
+  const contactEmailMatch = companyProfileContent.match(/contactEmail:\s*["']([^"']+)["']/);
+
+  if (!websiteMatch) {
+    logError('companyProfile.websiteUrl is missing or malformed');
+    return { passed: false };
+  }
+
+  if (!contactEmailMatch) {
+    logError('companyProfile.contactEmail is missing or malformed');
+    return { passed: false };
+  }
+
+  const websiteUrl = websiteMatch[1].trim();
+  const contactEmail = contactEmailMatch[1].trim();
+
+  const websiteHasPlaceholderToken = PLACEHOLDER_PATTERNS.some((token) => websiteUrl.includes(token));
+  if (websiteHasPlaceholderToken) {
+    logError('companyProfile.websiteUrl contains placeholder/legacy token', { websiteUrl });
+    return { passed: false, websiteUrl };
+  }
+
+  if (!websiteUrl.startsWith('https://')) {
+    logError('companyProfile.websiteUrl must use HTTPS', { websiteUrl });
+    return { passed: false, websiteUrl };
+  }
+
+  const hasValidEmailShape = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contactEmail);
+  if (!hasValidEmailShape) {
+    logError('companyProfile.contactEmail appears invalid', { contactEmail });
+    return { passed: false, contactEmail };
+  }
+
+  const emailHasPlaceholderToken = PLACEHOLDER_PATTERNS.some((token) => contactEmail.includes(token));
+  if (emailHasPlaceholderToken) {
+    logError('companyProfile.contactEmail contains placeholder/legacy token', { contactEmail });
+    return { passed: false, contactEmail };
+  }
+
+  logInfo('Company profile SEO identity check passed', { websiteUrl, contactEmail });
+  return { passed: true, websiteUrl, contactEmail };
+}
+
 function verifyLegacyFilesRemoved() {
   const foundLegacyFiles = LEGACY_SEO_FILES.filter((filePath) => fs.existsSync(filePath));
 
@@ -534,6 +589,7 @@ function main() {
     verifyBuildPipelineSeoChecks(),
     verifySeoCiWorkflow(),
     verifySharedSeoPolicyConstantsUsage(),
+    verifyCompanyProfileSeoIdentity(),
     verifyLegacyFilesRemoved(),
   ];
 
