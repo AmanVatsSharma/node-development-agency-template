@@ -434,6 +434,143 @@ function normalizeNavigationRoute(route: string): string | null {
   return normalizedRoute;
 }
 
+function getRawNavigationRoutes(): string[] {
+  const routeCandidates: string[] = [];
+
+  mainNavigation.forEach((item) => {
+    routeCandidates.push(item.link);
+  });
+
+  servicesMegaMenu.sections.forEach((section) => {
+    section.items.forEach((item) => {
+      routeCandidates.push(item.link);
+    });
+  });
+
+  Object.values(footerNavigation).forEach((linkGroup) => {
+    linkGroup.forEach((item) => {
+      routeCandidates.push(item.href);
+    });
+  });
+
+  return routeCandidates;
+}
+
+function verifyNavigationSourceRouteHygiene(): void {
+  const rawRoutes = getRawNavigationRoutes();
+  const violations: Array<{ route: string; reason: string }> = [];
+
+  rawRoutes.forEach((rawRoute) => {
+    const trimmedRoute = rawRoute.trim();
+    if (!trimmedRoute) {
+      violations.push({
+        route: rawRoute,
+        reason: 'Navigation route should not be empty/whitespace',
+      });
+      return;
+    }
+
+    if (trimmedRoute.startsWith('//')) {
+      violations.push({
+        route: rawRoute,
+        reason: 'Navigation route should not use protocol-relative URLs',
+      });
+      return;
+    }
+
+    if (trimmedRoute.startsWith('http://') || trimmedRoute.startsWith('https://')) {
+      violations.push({
+        route: rawRoute,
+        reason: 'Navigation route should remain internal and not use absolute URLs',
+      });
+      return;
+    }
+
+    if (trimmedRoute === '/sitemap') {
+      violations.push({
+        route: rawRoute,
+        reason: 'Navigation route should reference canonical /sitemap.xml endpoint, not /sitemap alias',
+      });
+      return;
+    }
+
+    if (trimmedRoute.includes(' ')) {
+      violations.push({
+        route: rawRoute,
+        reason: 'Navigation route should not contain whitespace',
+      });
+      return;
+    }
+
+    if (/[?#]/.test(trimmedRoute)) {
+      violations.push({
+        route: rawRoute,
+        reason: 'Navigation route should not include query/hash fragments',
+      });
+      return;
+    }
+
+    if (trimmedRoute !== trimmedRoute.toLowerCase()) {
+      violations.push({
+        route: rawRoute,
+        reason: 'Navigation route should be lowercase',
+      });
+      return;
+    }
+
+    if (/\/{2,}/.test(trimmedRoute)) {
+      violations.push({
+        route: rawRoute,
+        reason: 'Navigation route should not contain duplicate slash segments',
+      });
+      return;
+    }
+
+    if (trimmedRoute.length > 1 && trimmedRoute.endsWith('/')) {
+      violations.push({
+        route: rawRoute,
+        reason: 'Navigation route should not include trailing slash except root',
+      });
+      return;
+    }
+
+    if (!trimmedRoute.startsWith('/')) {
+      violations.push({
+        route: rawRoute,
+        reason: 'Navigation route should be root-relative',
+      });
+      return;
+    }
+
+    if (trimmedRoute === '/robots.txt') {
+      violations.push({
+        route: rawRoute,
+        reason: 'Navigation route should not expose /robots.txt as user-facing sitemap candidate',
+      });
+      return;
+    }
+
+    const normalizedRoute = normalizeNavigationRoute(trimmedRoute);
+    if (trimmedRoute !== '/sitemap.xml' && !normalizedRoute) {
+      violations.push({
+        route: rawRoute,
+        reason: 'Navigation route should normalize into a sitemap-eligible internal route',
+      });
+    }
+  });
+
+  if (violations.length > 0) {
+    logError('Navigation source routes contain non-canonical or unsafe entries', {
+      violationCount: violations.length,
+      sample: violations.slice(0, 15),
+    });
+  }
+
+  logInfo('Navigation source route hygiene validation passed', {
+    routeCount: rawRoutes.length,
+  });
+}
+
 function getExpectedNavigationRoutesForSitemap(): string[] {
   const routeSet = new Set<string>();
 
@@ -1001,6 +1138,7 @@ async function main(): Promise<void> {
   verifyMetadataHelperRuntimeBehavior();
   verifyStructuredDataRuntimeBehavior();
   await verifyBlogSlugMetadataRuntimeBehavior();
+  verifyNavigationSourceRouteHygiene();
   await verifySitemapOutput();
   verifyRobotsOutput();
   logInfo('Runtime SEO verification completed successfully');

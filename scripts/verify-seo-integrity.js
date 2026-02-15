@@ -1243,6 +1243,7 @@ function verifySeoModuleDocsConsistency() {
     'verifyMetadataHelperRuntimeBehavior',
     'verifyStructuredDataRuntimeBehavior',
     'verifyBlogSlugMetadataRuntimeBehavior',
+    'verifyNavigationSourceRouteHygiene',
     'normalizeAndFilterBlogEntries',
     'mergeDuplicateSitemapEntry',
     'prisma generate',
@@ -1822,6 +1823,18 @@ function verifySeoRuntimeScriptInvariants() {
       reason: 'Runtime SEO verifier should normalize navigation routes before sitemap coverage checks',
     },
     {
+      pattern: /function getRawNavigationRoutes\(\): string\[\]/,
+      reason: 'Runtime SEO verifier should retain raw navigation route collector for source-hygiene checks',
+    },
+    {
+      pattern: /function verifyNavigationSourceRouteHygiene\(\): void/,
+      reason: 'Runtime SEO verifier should retain navigation source-hygiene validation entrypoint',
+    },
+    {
+      pattern: /trimmedRoute === '\/sitemap'/,
+      reason: 'Runtime SEO verifier should reject non-canonical /sitemap navigation alias at source',
+    },
+    {
       pattern:
         /trimmedRoute\.startsWith\('#'\)[\s\S]*trimmedRoute\.startsWith\('mailto:'\)[\s\S]*trimmedRoute\.startsWith\('tel:'\)[\s\S]*trimmedRoute\.startsWith\('javascript:'\)/,
       reason: 'Runtime SEO verifier should skip non-indexable navigation schemes and fragment-only links',
@@ -1854,6 +1867,10 @@ function verifySeoRuntimeScriptInvariants() {
     {
       pattern: /const robotsNormalization = normalizeNavigationRoute\('\/robots\.txt'\)/,
       reason: 'Runtime SEO verifier should probe robots endpoint exclusion from navigation sitemap candidates',
+    },
+    {
+      pattern: /verifyNavigationSourceRouteHygiene\(\);/,
+      reason: 'Runtime SEO verifier should execute navigation source-hygiene checks before sitemap validation',
     },
     {
       pattern: /normalizedCompanyProfileOrigin/,
@@ -1926,8 +1943,8 @@ function verifySeoRuntimeScriptInvariants() {
     },
     {
       pattern:
-        /verifyCanonicalSeoConstants\(\);\s*verifyMetadataHelperRuntimeBehavior\(\);\s*verifyStructuredDataRuntimeBehavior\(\);\s*await verifyBlogSlugMetadataRuntimeBehavior\(\);\s*await verifySitemapOutput\(\);\s*verifyRobotsOutput\(\);/,
-      reason: 'Runtime SEO verifier main flow should execute canonical, metadata helper, structured-data, blog slug, sitemap, then robots checks',
+        /verifyCanonicalSeoConstants\(\);\s*verifyMetadataHelperRuntimeBehavior\(\);\s*verifyStructuredDataRuntimeBehavior\(\);\s*await verifyBlogSlugMetadataRuntimeBehavior\(\);\s*verifyNavigationSourceRouteHygiene\(\);\s*await verifySitemapOutput\(\);\s*verifyRobotsOutput\(\);/,
+      reason: 'Runtime SEO verifier main flow should execute canonical, metadata helper, structured-data, blog slug, navigation, sitemap, then robots checks',
     },
     {
       pattern: /process\.exit\(1\);/,
