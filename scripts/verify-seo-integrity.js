@@ -1074,6 +1074,7 @@ function verifySeoModuleDocsConsistency() {
     'normalizeRoute',
     'getCanonicalSiteUrl',
     'toAbsoluteSeoUrl',
+    'normalizeAndFilterBlogEntries',
     'prisma generate',
     'verifyCanonicalSeoConstants',
     'verifySitemapOutput',
@@ -1272,6 +1273,14 @@ function verifySitemapImplementationInvariants() {
       reason: 'sitemap should keep blog fallback source for DB outage scenarios',
     },
     {
+      pattern: /const BLOG_SLUG_PATTERN = \/\^\[a-z0-9\]\+\(\?:-\[a-z0-9\]\+\)\*\$\/;/,
+      reason: 'sitemap should enforce lowercase kebab-case slug hygiene for dynamic blog URLs',
+    },
+    {
+      pattern: /function normalizeAndFilterBlogEntries\(/,
+      reason: 'sitemap should normalize and filter dynamic blog entries before URL generation',
+    },
+    {
       pattern: /prisma\.blogPost\.findMany\(/,
       reason: 'sitemap should load dynamic blog entries via prisma.blogPost.findMany()',
     },
@@ -1290,6 +1299,15 @@ function verifySitemapImplementationInvariants() {
     {
       pattern: /toAbsoluteSeoUrl\(`\/pages\/blog\/\$\{entry\.slug\}`\)/,
       reason: 'sitemap dynamic blog URLs should be canonicalized as /pages/blog/${entry.slug}',
+    },
+    {
+      pattern: /console\.warn\('\[SEO\] Filtered invalid blog sitemap entries'/,
+      reason: 'sitemap should retain filtered-entry diagnostics for malformed slug/date data',
+    },
+    {
+      pattern:
+        /console\.warn\([\s\S]*'\[SEO\] Database blog entries were invalid for sitemap\. Falling back to static data\.'/,
+      reason: 'sitemap should retain fallback warning when database entries are unusable for sitemap output',
     },
     {
       pattern:

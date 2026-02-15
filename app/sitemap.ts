@@ -9,6 +9,59 @@ type DynamicBlogEntry = {
   updatedAt: Date;
 };
 
+const BLOG_SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+
+function normalizeAndFilterBlogEntries(
+  entries: DynamicBlogEntry[],
+  source: 'database' | 'fallback',
+): DynamicBlogEntry[] {
+  const sanitizedEntries: DynamicBlogEntry[] = [];
+  let skippedInvalidSlugCount = 0;
+  let skippedInvalidDateCount = 0;
+
+  entries.forEach((entry) => {
+    const normalizedSlug = entry.slug.trim().toLowerCase();
+    const normalizedUpdatedAt = new Date(entry.updatedAt);
+
+    if (!BLOG_SLUG_PATTERN.test(normalizedSlug)) {
+      skippedInvalidSlugCount += 1;
+      console.warn('[SEO] Skipping blog sitemap entry due to invalid slug format', {
+        source,
+        originalSlug: entry.slug,
+        normalizedSlug,
+      });
+      return;
+    }
+
+    if (Number.isNaN(normalizedUpdatedAt.getTime())) {
+      skippedInvalidDateCount += 1;
+      console.warn('[SEO] Skipping blog sitemap entry due to invalid updatedAt date', {
+        source,
+        slug: normalizedSlug,
+        updatedAt: String(entry.updatedAt),
+      });
+      return;
+    }
+
+    sanitizedEntries.push({
+      slug: normalizedSlug,
+      updatedAt: normalizedUpdatedAt,
+    });
+  });
+
+  if (skippedInvalidSlugCount > 0 || skippedInvalidDateCount > 0) {
+    console.warn('[SEO] Filtered invalid blog sitemap entries', {
+      source,
+      inputCount: entries.length,
+      outputCount: sanitizedEntries.length,
+      skippedInvalidSlugCount,
+      skippedInvalidDateCount,
+    });
+  }
+
+  return sanitizedEntries;
+}
+
 function getPriorityForRoute(path: string): number {
   if (path === '/') return 1.0;
   if (path === '/pages/services') return 0.95;
@@ -39,8 +92,22 @@ async function getBlogEntries(): Promise<DynamicBlogEntry[]> {
     });
 
     if (posts.length > 0) {
-      console.log('[SEO] Sitemap blog entries loaded from database', { count: posts.length });
-      return posts;
+      const normalizedDatabaseEntries = normalizeAndFilterBlogEntries(posts, 'database');
+
+      if (normalizedDatabaseEntries.length > 0) {
+        console.log('[SEO] Sitemap blog entries loaded from database', {
+          count: normalizedDatabaseEntries.length,
+          originalCount: posts.length,
+        });
+        return normalizedDatabaseEntries;
+      }
+
+      console.warn(
+        '[SEO] Database blog entries were invalid for sitemap. Falling back to static data.',
+        {
+          count: posts.length,
+        },
+      );
     }
   } catch (error) {
     console.error('[SEO] Failed to load blog posts from database for sitemap. Falling back to static data.', {
@@ -52,12 +119,14 @@ async function getBlogEntries(): Promise<DynamicBlogEntry[]> {
     slug: post.slug,
     updatedAt: new Date(post.publishedAt),
   }));
+  const normalizedFallbackEntries = normalizeAndFilterBlogEntries(fallbackEntries, 'fallback');
 
   console.log('[SEO] Sitemap blog entries loaded from static fallback', {
-    count: fallbackEntries.length,
+    count: normalizedFallbackEntries.length,
+    originalCount: fallbackEntries.length,
   });
 
-  return fallbackEntries;
+  return normalizedFallbackEntries;
 }
 
 /**

@@ -115,7 +115,7 @@ It validates:
 - root layout metadata canonical configuration (`metadataBase`, canonical `/`, OG image constant)
 - core SEO file placeholder audit (`app/layout.tsx`, structured data component, SEO constants)
 - sitemap/robots implementation invariants (helper usage, dedupe/sort, fallback behavior)
-- sitemap dynamic blog source invariants (`prisma.blogPost.findMany` with `slug` + `updatedAt`, desc ordering, fallback mapping, canonical `/pages/blog/${slug}` URLs)
+- sitemap dynamic blog source invariants (`prisma.blogPost.findMany` with `slug` + `updatedAt`, desc ordering, fallback mapping, canonical `/pages/blog/${slug}` URLs, `normalizeAndFilterBlogEntries` slug/date sanitization)
 - sitemap operational logging invariants (DB-source count, fallback-source count, fallback error log, final generation summary)
 - sitemap implementation policy baselines in source (`getPriorityForRoute`, `getChangeFrequencyForRoute`, blog detail priority)
 - robots source invariants include wildcard `userAgent: "*"` with explicit root `allow: "/"` + shared disallow constants
