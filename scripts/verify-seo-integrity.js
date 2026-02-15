@@ -893,6 +893,14 @@ function verifySeoMetadataHelperInvariants() {
   const metadataHelperContent = fs.readFileSync(SEO_METADATA_HELPER_FILE, 'utf8');
   const requiredPatterns = [
     {
+      pattern: /function normalizeMetadataTitle\(title: string\): string/,
+      reason: 'metadata helper should expose title normalization utility',
+    },
+    {
+      pattern: /Empty metadata title received\. Falling back to SEO_BRAND_NAME\./,
+      reason: 'normalizeMetadataTitle should fallback blank titles to SEO_BRAND_NAME',
+    },
+    {
       pattern: /function normalizeMetadataPath\(rawPath: string\): string/,
       reason: 'metadata helper should expose normalizeMetadataPath() for canonical path hygiene',
     },
@@ -950,6 +958,10 @@ function verifySeoMetadataHelperInvariants() {
       reason: 'normalizeMetadataKeywords should dedupe keywords case-insensitively while preserving first canonical form',
     },
     {
+      pattern: /const normalizedTitle = normalizeMetadataTitle\(title\);/,
+      reason: 'buildPageMetadata should canonicalize title through normalizeMetadataTitle',
+    },
+    {
       pattern: /const canonicalPath = normalizeMetadataPath\(path\);/,
       reason: 'buildPageMetadata should canonicalize path through normalizeMetadataPath',
     },
@@ -964,6 +976,10 @@ function verifySeoMetadataHelperInvariants() {
     {
       pattern: /const normalizedKeywords = normalizeMetadataKeywords\(keywords\);/,
       reason: 'buildPageMetadata should canonicalize keywords through normalizeMetadataKeywords',
+    },
+    {
+      pattern: /title:\s*normalizedTitle/,
+      reason: 'buildPageMetadata should emit normalized title payload',
     },
     {
       pattern: /description:\s*normalizedDescription/,
@@ -1233,6 +1249,7 @@ function verifySeoModuleDocsConsistency() {
     'normalizeDisallowPath',
     'getRobotsDisallowPaths',
     'normalizeMetadataPath',
+    'normalizeMetadataTitle',
     'normalizeMetadataDescription',
     'normalizeMetadataImagePath',
     'normalizeMetadataKeywords',
@@ -1759,7 +1776,7 @@ function verifySeoRuntimeScriptInvariants() {
     },
     {
       pattern:
-        /SEO_DEFAULT_DESCRIPTION[\s\S]*SEO_DEFAULT_OG_IMAGE_PATH[\s\S]*SEO_BLOCKED_ROUTE_PREFIXES[\s\S]*SEO_ROBOTS_DISALLOW_PATHS[\s\S]*SEO_SITE_URL[\s\S]*toAbsoluteSeoUrl/,
+        /SEO_BRAND_NAME[\s\S]*SEO_DEFAULT_DESCRIPTION[\s\S]*SEO_DEFAULT_OG_IMAGE_PATH[\s\S]*SEO_BLOCKED_ROUTE_PREFIXES[\s\S]*SEO_ROBOTS_DISALLOW_PATHS[\s\S]*SEO_SITE_URL[\s\S]*toAbsoluteSeoUrl/,
       reason: 'Runtime SEO verifier should consume shared SEO constants for policy validation',
     },
     {
@@ -1777,6 +1794,10 @@ function verifySeoRuntimeScriptInvariants() {
     {
       pattern: /const crossOriginPathMetadata = buildPageMetadata\([\s\S]*https:\/\/example\.com\/pages\/evil-canonical[\s\S]*\);/,
       reason: 'Runtime SEO verifier should probe cross-origin canonical-path rejection behavior',
+    },
+    {
+      pattern: /const blankTitleMetadata = buildPageMetadata\(/,
+      reason: 'Runtime SEO verifier should probe blank-title fallback behavior in buildPageMetadata',
     },
     {
       pattern: /function verifyStructuredDataRuntimeBehavior\(\): void/,

@@ -14,6 +14,7 @@ import { generateMetadata as generateBlogSlugMetadata } from '@/app/pages/blog/[
 import { footerNavigation, mainNavigation, servicesMegaMenu } from '@/app/data/navigation';
 import { companyProfile } from '@/app/data/companyProfile';
 import {
+  SEO_BRAND_NAME,
   SEO_DEFAULT_DESCRIPTION,
   SEO_DEFAULT_OG_IMAGE_PATH,
   SEO_BLOCKED_ROUTE_PREFIXES,
@@ -193,6 +194,21 @@ function verifyMetadataHelperRuntimeBehavior(): void {
     });
   }
 
+  const blankTitleMetadata = buildPageMetadata({
+    title: '   ',
+    path: '/pages/contact',
+  });
+  const blankTitleResolved =
+    typeof blankTitleMetadata.title === 'string'
+      ? blankTitleMetadata.title
+      : blankTitleMetadata.title?.toString();
+  if (blankTitleResolved !== SEO_BRAND_NAME) {
+    logError('buildPageMetadata should fallback blank titles to SEO_BRAND_NAME', {
+      expectedTitle: SEO_BRAND_NAME,
+      actualTitle: blankTitleResolved,
+    });
+  }
+
   const expectedOgImageUrl = toAbsoluteSeoUrl(SEO_DEFAULT_OG_IMAGE_PATH);
   const ogImageEntry = Array.isArray(metadata.openGraph?.images)
     ? metadata.openGraph?.images[0]
@@ -233,6 +249,7 @@ function verifyMetadataHelperRuntimeBehavior(): void {
   logInfo('Metadata helper runtime validation passed', {
     canonicalPath,
     crossOriginCanonicalPath,
+    blankTitleResolved,
     keywordCount: keywordList.length,
     ogImageUrl,
   });

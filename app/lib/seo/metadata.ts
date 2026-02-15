@@ -18,6 +18,16 @@ export interface BuildPageMetadataOptions {
   locale?: string;
 }
 
+function normalizeMetadataTitle(title: string): string {
+  const trimmedTitle = title.trim();
+  if (trimmedTitle) {
+    return trimmedTitle.replace(/\s+/g, ' ');
+  }
+
+  console.warn('[SEO] Empty metadata title received. Falling back to SEO_BRAND_NAME.');
+  return SEO_BRAND_NAME;
+}
+
 function normalizeMetadataPath(rawPath: string): string {
   const trimmedPath = rawPath.trim();
   if (!trimmedPath) {
@@ -153,6 +163,7 @@ export function buildPageMetadata(options: BuildPageMetadataOptions): Metadata {
     locale = 'en_IN',
   } = options;
 
+  const normalizedTitle = normalizeMetadataTitle(title);
   const canonicalPath = normalizeMetadataPath(path);
   const normalizedDescription = normalizeMetadataDescription(description);
   const normalizedImagePath = normalizeMetadataImagePath(imagePath);
@@ -162,7 +173,7 @@ export function buildPageMetadata(options: BuildPageMetadataOptions): Metadata {
 
   // Diagnostic log for easier SEO troubleshooting in server logs.
   console.log('[SEO] buildPageMetadata', {
-    title,
+    title: normalizedTitle,
     canonicalPath,
     canonicalUrl,
     openGraphImageUrl,
@@ -172,7 +183,7 @@ export function buildPageMetadata(options: BuildPageMetadataOptions): Metadata {
 
   return {
     metadataBase: new URL(SEO_SITE_URL),
-    title,
+    title: normalizedTitle,
     description: normalizedDescription,
     keywords: normalizedKeywords,
     authors: [{ name: SEO_LEGAL_NAME }],
@@ -182,7 +193,7 @@ export function buildPageMetadata(options: BuildPageMetadataOptions): Metadata {
       canonical: canonicalPath,
     },
     openGraph: {
-      title,
+      title: normalizedTitle,
       description: normalizedDescription,
       url: canonicalUrl,
       siteName: SEO_BRAND_NAME,
@@ -193,13 +204,13 @@ export function buildPageMetadata(options: BuildPageMetadataOptions): Metadata {
           url: openGraphImageUrl,
           width: 1200,
           height: 630,
-          alt: `${SEO_BRAND_NAME} - ${title}`,
+          alt: `${SEO_BRAND_NAME} - ${normalizedTitle}`,
         },
       ],
     },
     twitter: {
       card: 'summary_large_image',
-      title,
+      title: normalizedTitle,
       description: normalizedDescription,
       images: [openGraphImageUrl],
     },
