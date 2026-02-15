@@ -17,7 +17,8 @@
  * 12. Company profile SEO identity (website/email) is valid and non-placeholder.
  * 13. Root layout metadata uses canonical SEO constants.
  * 14. Core SEO files are free of placeholder/legacy tokens.
- * 15. Legacy static SEO generator files are not present.
+ * 15. Sitemap/robots implementation invariants are preserved.
+ * 16. Legacy static SEO generator files are not present.
  *
  * Usage:
  *   node scripts/verify-seo-integrity.js
@@ -32,6 +33,7 @@ const PAGES_DIR = path.join(APP_DIR, 'pages');
 const APP_LAYOUT_FILE = path.join(APP_DIR, 'layout.tsx');
 const SEO_STRUCTURED_DATA_FILE = path.join(APP_DIR, 'components', 'SEO', 'StructuredData.tsx');
 const SEO_CONSTANTS_FILE = path.join(APP_DIR, 'lib', 'seo', 'constants.ts');
+const SITEMAP_FILE = path.join(APP_DIR, 'sitemap.ts');
 const NAVIGATION_FILE = path.join(APP_DIR, 'data', 'navigation.ts');
 const ROBOTS_FILE = path.join(APP_DIR, 'robots.ts');
 const SEO_ROUTES_FILE = path.join(APP_DIR, 'lib', 'seo', 'routes.ts');
@@ -647,6 +649,94 @@ function verifyCoreSeoFilesNoPlaceholderTokens() {
   return { passed: true, violations: [] };
 }
 
+function verifySitemapImplementationInvariants() {
+  if (!fs.existsSync(SITEMAP_FILE)) {
+    logError('Sitemap implementation file missing', {
+      file: path.relative(ROOT_DIR, SITEMAP_FILE),
+    });
+    return { passed: false };
+  }
+
+  const sitemapContent = fs.readFileSync(SITEMAP_FILE, 'utf8');
+  const requiredPatterns = [
+    {
+      pattern: /getStaticSeoRoutes\(/,
+      reason: 'sitemap should source static routes from getStaticSeoRoutes()',
+    },
+    {
+      pattern: /toAbsoluteSeoUrl\(/,
+      reason: 'sitemap should canonicalize URLs via toAbsoluteSeoUrl()',
+    },
+    {
+      pattern: /new Map<string,\s*MetadataRoute\.Sitemap\[number\]>/,
+      reason: 'sitemap should deduplicate URLs using a Map',
+    },
+    {
+      pattern: /Array\.from\(dedupedByUrl\.values\(\)\)\.sort\(/,
+      reason: 'sitemap output should be sorted deterministically',
+    },
+    {
+      pattern: /fallbackBlogPosts/,
+      reason: 'sitemap should keep blog fallback source for DB outage scenarios',
+    },
+  ];
+
+  const violations = requiredPatterns
+    .filter(({ pattern }) => !pattern.test(sitemapContent))
+    .map(({ reason }) => ({
+      file: path.relative(ROOT_DIR, SITEMAP_FILE),
+      reason,
+    }));
+
+  if (violations.length > 0) {
+    logError('Sitemap implementation invariant check failed', { violations });
+    return { passed: false, violations };
+  }
+
+  logInfo('Sitemap implementation invariant check passed');
+  return { passed: true, violations: [] };
+}
+
+function verifyRobotsImplementationInvariants() {
+  if (!fs.existsSync(ROBOTS_FILE)) {
+    logError('Robots implementation file missing', {
+      file: path.relative(ROOT_DIR, ROBOTS_FILE),
+    });
+    return { passed: false };
+  }
+
+  const robotsContent = fs.readFileSync(ROBOTS_FILE, 'utf8');
+  const requiredPatterns = [
+    {
+      pattern: /disallow:\s*\[\.\.\.SEO_ROBOTS_DISALLOW_PATHS\]/,
+      reason: 'robots should derive disallow list from SEO_ROBOTS_DISALLOW_PATHS',
+    },
+    {
+      pattern: /sitemap:\s*toAbsoluteSeoUrl\(['"`]\/sitemap\.xml['"`]\)/,
+      reason: 'robots should publish canonical sitemap URL via toAbsoluteSeoUrl',
+    },
+    {
+      pattern: /host:\s*SEO_SITE_URL/,
+      reason: 'robots host should be derived from SEO_SITE_URL',
+    },
+  ];
+
+  const violations = requiredPatterns
+    .filter(({ pattern }) => !pattern.test(robotsContent))
+    .map(({ reason }) => ({
+      file: path.relative(ROOT_DIR, ROBOTS_FILE),
+      reason,
+    }));
+
+  if (violations.length > 0) {
+    logError('Robots implementation invariant check failed', { violations });
+    return { passed: false, violations };
+  }
+
+  logInfo('Robots implementation invariant check passed');
+  return { passed: true, violations: [] };
+}
+
 function verifyLegacyFilesRemoved() {
   const foundLegacyFiles = LEGACY_SEO_FILES.filter((filePath) => fs.existsSync(filePath));
 
@@ -679,6 +769,8 @@ function main() {
     verifyCompanyProfileSeoIdentity(),
     verifyRootLayoutMetadataConfiguration(),
     verifyCoreSeoFilesNoPlaceholderTokens(),
+    verifySitemapImplementationInvariants(),
+    verifyRobotsImplementationInvariants(),
     verifyLegacyFilesRemoved(),
   ];
 
