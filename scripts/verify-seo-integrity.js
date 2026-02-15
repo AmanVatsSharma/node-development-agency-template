@@ -15,7 +15,8 @@
  * 10. CI workflow executes SEO integrity + runtime checks.
  * 11. Shared SEO policy constants are used across routes/robots modules.
  * 12. Company profile SEO identity (website/email) is valid and non-placeholder.
- * 13. Legacy static SEO generator files are not present.
+ * 13. Root layout metadata uses canonical SEO constants.
+ * 14. Legacy static SEO generator files are not present.
  *
  * Usage:
  *   node scripts/verify-seo-integrity.js
@@ -27,6 +28,7 @@ const path = require('path');
 const ROOT_DIR = process.cwd();
 const APP_DIR = path.join(ROOT_DIR, 'app');
 const PAGES_DIR = path.join(APP_DIR, 'pages');
+const APP_LAYOUT_FILE = path.join(APP_DIR, 'layout.tsx');
 const NAVIGATION_FILE = path.join(APP_DIR, 'data', 'navigation.ts');
 const ROBOTS_FILE = path.join(APP_DIR, 'robots.ts');
 const SEO_ROUTES_FILE = path.join(APP_DIR, 'lib', 'seo', 'routes.ts');
@@ -560,6 +562,45 @@ function verifyCompanyProfileSeoIdentity() {
   return { passed: true, websiteUrl, contactEmail };
 }
 
+function verifyRootLayoutMetadataConfiguration() {
+  if (!fs.existsSync(APP_LAYOUT_FILE)) {
+    logError('Root layout file missing for metadata verification', {
+      file: path.relative(ROOT_DIR, APP_LAYOUT_FILE),
+    });
+    return { passed: false };
+  }
+
+  const layoutContent = fs.readFileSync(APP_LAYOUT_FILE, 'utf8');
+  const violations = [];
+
+  if (!/export const metadata\s*:\s*Metadata\s*=/.test(layoutContent)) {
+    violations.push('Root layout must export typed metadata');
+  }
+
+  if (!/metadataBase:\s*new URL\(SEO_SITE_URL\)/.test(layoutContent)) {
+    violations.push('Root metadata should set metadataBase using SEO_SITE_URL');
+  }
+
+  if (!/alternates:\s*\{[\s\S]*canonical:\s*['"`]\/['"`]/.test(layoutContent)) {
+    violations.push('Root metadata should define canonical "/" in alternates');
+  }
+
+  if (!/toAbsoluteSeoUrl\(SEO_DEFAULT_OG_IMAGE_PATH\)/.test(layoutContent)) {
+    violations.push('Root metadata should use SEO_DEFAULT_OG_IMAGE_PATH via toAbsoluteSeoUrl');
+  }
+
+  if (violations.length > 0) {
+    logError('Root layout metadata configuration check failed', {
+      file: path.relative(ROOT_DIR, APP_LAYOUT_FILE),
+      violations,
+    });
+    return { passed: false, violations };
+  }
+
+  logInfo('Root layout metadata configuration check passed');
+  return { passed: true, violations: [] };
+}
+
 function verifyLegacyFilesRemoved() {
   const foundLegacyFiles = LEGACY_SEO_FILES.filter((filePath) => fs.existsSync(filePath));
 
@@ -590,6 +631,7 @@ function main() {
     verifySeoCiWorkflow(),
     verifySharedSeoPolicyConstantsUsage(),
     verifyCompanyProfileSeoIdentity(),
+    verifyRootLayoutMetadataConfiguration(),
     verifyLegacyFilesRemoved(),
   ];
 
