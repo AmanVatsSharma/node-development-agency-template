@@ -1289,6 +1289,23 @@ function verifySitemapImplementationInvariants() {
       reason: 'sitemap dynamic blog URLs should be canonicalized as /pages/blog/${entry.slug}',
     },
     {
+      pattern:
+        /console\.error\('\[SEO\] Failed to load blog posts from database for sitemap\. Falling back to static data\.'/,
+      reason: 'sitemap should retain explicit database-failure fallback error logging for operational debugging',
+    },
+    {
+      pattern: /console\.log\('\[SEO\] Sitemap blog entries loaded from database'/,
+      reason: 'sitemap should retain database-source entry count logging',
+    },
+    {
+      pattern: /console\.log\('\[SEO\] Sitemap blog entries loaded from static fallback'/,
+      reason: 'sitemap should retain static-fallback entry count logging',
+    },
+    {
+      pattern: /console\.log\('\[SEO\] Sitemap generated'/,
+      reason: 'sitemap should retain final generation summary logging',
+    },
+    {
       pattern: /if \(path === '\/'\) return 1\.0;/,
       reason: 'sitemap priority helper should keep homepage priority baseline at 1.0',
     },
