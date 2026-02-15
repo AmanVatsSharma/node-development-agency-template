@@ -127,6 +127,7 @@ It validates:
 - removal of legacy static SEO generators
 - runtime sitemap and robots output behavior
   - canonical SEO constant validation (`SEO_SITE_URL`, `toAbsoluteSeoUrl`)
+  - canonical origin consistency between `SEO_SITE_URL` and `companyProfile.websiteUrl`
   - absolute canonical sitemap URLs only
   - lowercase sitemap pathname policy with no duplicate slash segments
   - no trailing slash URLs except canonical homepage

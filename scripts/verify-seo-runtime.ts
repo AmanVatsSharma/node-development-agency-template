@@ -9,6 +9,7 @@ import sitemap from '@/app/sitemap';
 import robots from '@/app/robots';
 import { getStaticSeoRoutes } from '@/app/lib/seo/routes';
 import { footerNavigation, mainNavigation, servicesMegaMenu } from '@/app/data/navigation';
+import { companyProfile } from '@/app/data/companyProfile';
 import {
   SEO_BLOCKED_ROUTE_PREFIXES,
   SEO_ROBOTS_DISALLOW_PATHS,
@@ -68,6 +69,25 @@ function verifyCanonicalSeoConstants(): void {
       pathname: parsedSiteUrl.pathname,
       search: parsedSiteUrl.search,
       hash: parsedSiteUrl.hash,
+    });
+  }
+
+  let parsedCompanyProfileUrl: URL;
+  try {
+    parsedCompanyProfileUrl = new URL(companyProfile.websiteUrl);
+  } catch (error) {
+    logError('companyProfile.websiteUrl is not a valid absolute URL', {
+      websiteUrl: companyProfile.websiteUrl,
+      error: error instanceof Error ? error.message : String(error),
+    });
+  }
+
+  const normalizedCompanyProfileOrigin = `${parsedCompanyProfileUrl.protocol}//${parsedCompanyProfileUrl.host}`;
+  if (SEO_SITE_URL !== normalizedCompanyProfileOrigin) {
+    logError('SEO_SITE_URL should match normalized companyProfile.websiteUrl origin', {
+      SEO_SITE_URL,
+      companyProfileWebsiteUrl: companyProfile.websiteUrl,
+      normalizedCompanyProfileOrigin,
     });
   }
 
