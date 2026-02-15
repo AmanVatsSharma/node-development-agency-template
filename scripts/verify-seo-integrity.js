@@ -17,18 +17,19 @@
  * 12. Shared SEO policy constants are used across routes/robots modules.
  * 13. SEO routes module normalization invariants are preserved.
  * 14. SEO constants module invariants are preserved.
- * 15. Company profile SEO identity (brand/legal/website/email/social) is valid and non-placeholder.
- * 16. Root layout metadata uses canonical SEO constants.
- * 17. Core SEO files are free of placeholder/legacy tokens.
- * 18. Sitemap/robots implementation invariants and policy baselines are preserved.
- * 19. SEO module docs stay aligned with implementation checkpoints.
- * 20. Private route no-index policy remains enforced (admin/login).
- * 21. OG image asset references are valid for metadata generation.
- * 22. Root structured data wiring stays aligned with company profile constants.
- * 23. Structured data component defaults align with shared SEO constants.
- * 24. Blog slug dynamic metadata invariants are preserved.
- * 25. Runtime SEO verification script invariants are preserved.
- * 26. Legacy static SEO generator files are not present.
+ * 15. SEO metadata helper invariants are preserved.
+ * 16. Company profile SEO identity (brand/legal/website/email/social) is valid and non-placeholder.
+ * 17. Root layout metadata uses canonical SEO constants.
+ * 18. Core SEO files are free of placeholder/legacy tokens.
+ * 19. Sitemap/robots implementation invariants and policy baselines are preserved.
+ * 20. SEO module docs stay aligned with implementation checkpoints.
+ * 21. Private route no-index policy remains enforced (admin/login).
+ * 22. OG image asset references are valid for metadata generation.
+ * 23. Root structured data wiring stays aligned with company profile constants.
+ * 24. Structured data component defaults align with shared SEO constants.
+ * 25. Blog slug dynamic metadata invariants are preserved.
+ * 26. Runtime SEO verification script invariants are preserved.
+ * 27. Legacy static SEO generator files are not present.
  *
  * Usage:
  *   node scripts/verify-seo-integrity.js
@@ -46,6 +47,7 @@ const ADMIN_LAYOUT_FILE = path.join(APP_DIR, 'admin', 'layout.tsx');
 const LOGIN_PAGE_FILE = path.join(APP_DIR, 'login', 'page.tsx');
 const SEO_STRUCTURED_DATA_FILE = path.join(APP_DIR, 'components', 'SEO', 'StructuredData.tsx');
 const SEO_CONSTANTS_FILE = path.join(APP_DIR, 'lib', 'seo', 'constants.ts');
+const SEO_METADATA_HELPER_FILE = path.join(APP_DIR, 'lib', 'seo', 'metadata.ts');
 const SEO_README_FILE = path.join(APP_DIR, 'lib', 'seo', 'README.md');
 const SITEMAP_FILE = path.join(APP_DIR, 'sitemap.ts');
 const BLOG_SLUG_LAYOUT_FILE = path.join(APP_DIR, 'pages', 'blog', '[slug]', 'layout.tsx');
@@ -876,6 +878,79 @@ function verifySeoConstantsImplementationInvariants() {
   return { passed: true, violations: [] };
 }
 
+function verifySeoMetadataHelperInvariants() {
+  if (!fs.existsSync(SEO_METADATA_HELPER_FILE)) {
+    logError('SEO metadata helper file missing', {
+      file: path.relative(ROOT_DIR, SEO_METADATA_HELPER_FILE),
+    });
+    return { passed: false };
+  }
+
+  const metadataHelperContent = fs.readFileSync(SEO_METADATA_HELPER_FILE, 'utf8');
+  const requiredPatterns = [
+    {
+      pattern: /function normalizeMetadataPath\(rawPath: string\): string/,
+      reason: 'metadata helper should expose normalizeMetadataPath() for canonical path hygiene',
+    },
+    {
+      pattern: /const trimmedPath = rawPath\.trim\(\);/,
+      reason: 'normalizeMetadataPath should trim incoming path values',
+    },
+    {
+      pattern:
+        /trimmedPath\.startsWith\('#'\)[\s\S]*trimmedPath\.startsWith\('mailto:'\)[\s\S]*trimmedPath\.startsWith\('tel:'\)[\s\S]*trimmedPath\.startsWith\('javascript:'\)/,
+      reason: 'normalizeMetadataPath should reject fragment/non-indexable schemes',
+    },
+    {
+      pattern: /const withoutQueryOrHash = withLeadingSlash\.split\(\/\[\?#\]\/\)\[0\] \|\| '\/';/,
+      reason: 'normalizeMetadataPath should strip query/hash fragments',
+    },
+    {
+      pattern: /const collapsedPath = withoutQueryOrHash\.replace\(\/\\\/\{2,\}\/g,\s*'\/'\);/,
+      reason: 'normalizeMetadataPath should collapse duplicate slashes',
+    },
+    {
+      pattern: /const lowerCasedPath = collapsedPath\.toLowerCase\(\);/,
+      reason: 'normalizeMetadataPath should canonicalize path casing to lowercase',
+    },
+    {
+      pattern: /function normalizeMetadataKeywords\(keywords\?: string\[\]\): string\[\] \| undefined/,
+      reason: 'metadata helper should expose keyword normalization utility',
+    },
+    {
+      pattern: /new Map\(normalizedKeywords\.map\(\(keyword\) => \[keyword\.toLowerCase\(\), keyword\]\)\)\.values\(\)/,
+      reason: 'normalizeMetadataKeywords should dedupe keywords case-insensitively',
+    },
+    {
+      pattern: /const canonicalPath = normalizeMetadataPath\(path\);/,
+      reason: 'buildPageMetadata should canonicalize path through normalizeMetadataPath',
+    },
+    {
+      pattern: /const normalizedKeywords = normalizeMetadataKeywords\(keywords\);/,
+      reason: 'buildPageMetadata should canonicalize keywords through normalizeMetadataKeywords',
+    },
+    {
+      pattern: /keywords:\s*normalizedKeywords/,
+      reason: 'buildPageMetadata should emit normalized keywords payload',
+    },
+  ];
+
+  const violations = requiredPatterns
+    .filter(({ pattern }) => !pattern.test(metadataHelperContent))
+    .map(({ reason }) => ({
+      file: path.relative(ROOT_DIR, SEO_METADATA_HELPER_FILE),
+      reason,
+    }));
+
+  if (violations.length > 0) {
+    logError('SEO metadata helper invariant check failed', { violations });
+    return { passed: false, violations };
+  }
+
+  logInfo('SEO metadata helper invariant check passed');
+  return { passed: true, violations: [] };
+}
+
 function verifyCompanyProfileSeoIdentity() {
   if (!fs.existsSync(COMPANY_PROFILE_FILE)) {
     logError('Company profile file missing', {
@@ -1115,6 +1190,8 @@ function verifySeoModuleDocsConsistency() {
     'isBlockedRoutePath',
     'getCanonicalSiteUrl',
     'toAbsoluteSeoUrl',
+    'normalizeMetadataPath',
+    'normalizeMetadataKeywords',
     'protocol-relative',
     'normalizeAndFilterBlogEntries',
     'mergeDuplicateSitemapEntry',
@@ -1754,6 +1831,7 @@ function main() {
     verifySharedSeoPolicyConstantsUsage(),
     verifySeoRoutesImplementationInvariants(),
     verifySeoConstantsImplementationInvariants(),
+    verifySeoMetadataHelperInvariants(),
     verifyCompanyProfileSeoIdentity(),
     verifyRootLayoutMetadataConfiguration(),
     verifyCoreSeoFilesNoPlaceholderTokens(),

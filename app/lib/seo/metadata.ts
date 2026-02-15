@@ -18,6 +18,66 @@ export interface BuildPageMetadataOptions {
   locale?: string;
 }
 
+function normalizeMetadataPath(rawPath: string): string {
+  const trimmedPath = rawPath.trim();
+  if (!trimmedPath) {
+    console.warn('[SEO] Empty metadata path received. Falling back to root canonical path.');
+    return '/';
+  }
+
+  if (
+    trimmedPath.startsWith('#') ||
+    trimmedPath.startsWith('mailto:') ||
+    trimmedPath.startsWith('tel:') ||
+    trimmedPath.startsWith('javascript:')
+  ) {
+    console.warn('[SEO] Non-indexable metadata path received. Falling back to root canonical path.', {
+      path: rawPath,
+    });
+    return '/';
+  }
+
+  const hasHttpPrefix = trimmedPath.startsWith('http://') || trimmedPath.startsWith('https://');
+  const candidatePath = hasHttpPrefix
+    ? (() => {
+        try {
+          const parsedUrl = new URL(trimmedPath);
+          return parsedUrl.pathname || '/';
+        } catch {
+          return trimmedPath;
+        }
+      })()
+    : trimmedPath;
+
+  const withLeadingSlash = candidatePath.startsWith('/') ? candidatePath : `/${candidatePath}`;
+  const withoutQueryOrHash = withLeadingSlash.split(/[?#]/)[0] || '/';
+  const collapsedPath = withoutQueryOrHash.replace(/\/{2,}/g, '/');
+  const lowerCasedPath = collapsedPath.toLowerCase();
+  const withoutTrailingSlash =
+    lowerCasedPath.length > 1 ? lowerCasedPath.replace(/\/$/, '') : lowerCasedPath;
+
+  return withoutTrailingSlash;
+}
+
+function normalizeMetadataKeywords(keywords?: string[]): string[] | undefined {
+  if (!keywords || keywords.length === 0) {
+    return undefined;
+  }
+
+  const normalizedKeywords = keywords
+    .map((keyword) => keyword.trim())
+    .filter(Boolean);
+  if (normalizedKeywords.length === 0) {
+    return undefined;
+  }
+
+  const dedupedKeywords = Array.from(
+    new Map(normalizedKeywords.map((keyword) => [keyword.toLowerCase(), keyword])).values(),
+  );
+
+  return dedupedKeywords.length > 0 ? dedupedKeywords : undefined;
+}
+
 /**
  * Build consistent page metadata for all public routes.
  * This helper ensures every page has:
@@ -38,9 +98,10 @@ export function buildPageMetadata(options: BuildPageMetadataOptions): Metadata {
     locale = 'en_IN',
   } = options;
 
-  const canonicalPath = path.startsWith('/') ? path : `/${path}`;
+  const canonicalPath = normalizeMetadataPath(path);
   const canonicalUrl = toAbsoluteSeoUrl(canonicalPath);
   const openGraphImageUrl = toAbsoluteSeoUrl(imagePath);
+  const normalizedKeywords = normalizeMetadataKeywords(keywords);
 
   // Diagnostic log for easier SEO troubleshooting in server logs.
   console.log('[SEO] buildPageMetadata', {
@@ -49,13 +110,14 @@ export function buildPageMetadata(options: BuildPageMetadataOptions): Metadata {
     canonicalUrl,
     openGraphImageUrl,
     noIndex,
+    keywordsCount: normalizedKeywords?.length || 0,
   });
 
   return {
     metadataBase: new URL(SEO_SITE_URL),
     title,
     description,
-    keywords,
+    keywords: normalizedKeywords,
     authors: [{ name: SEO_LEGAL_NAME }],
     creator: SEO_LEGAL_NAME,
     publisher: SEO_LEGAL_NAME,
