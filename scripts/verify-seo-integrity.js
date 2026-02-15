@@ -11,7 +11,7 @@
  * 6. Dynamic SEO routes exist (app/sitemap.ts and app/robots.ts).
  * 7. Navigation points to /sitemap.xml (not legacy /sitemap).
  * 8. Package scripts expose verify:seo and verify:seo:runtime.
- * 9. Build pipeline runs SEO integrity + runtime checks.
+ * 9. Build pipeline runs SEO integrity + runtime checks with safe failure semantics.
  * 10. CI workflow executes SEO integrity + runtime checks.
  * 11. Shared SEO policy constants are used across routes/robots modules.
  * 12. Company profile SEO identity (website/email) is valid and non-placeholder.
@@ -529,6 +529,16 @@ function verifyBuildPipelineSeoChecks() {
   const verifySeoRuntimeIndex = buildScript.indexOf('npm run verify:seo:runtime');
   if (verifySeoIndex > verifySeoRuntimeIndex) {
     logError('Build script should run verify:seo before verify:seo:runtime', { buildScript });
+    return { passed: false };
+  }
+
+  const hasScopedWasmFallback =
+    /\(npm run build:wasm\s*\|\|\s*echo\s+['"]⚠️ WASM build skipped['"]\)/.test(buildScript);
+  if (!hasScopedWasmFallback) {
+    logError('Build script should scope wasm fallback so SEO verification failures cannot be masked', {
+      buildScript,
+      expectedPattern: "(npm run build:wasm || echo '⚠️ WASM build skipped')",
+    });
     return { passed: false };
   }
 
