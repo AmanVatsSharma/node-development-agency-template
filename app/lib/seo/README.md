@@ -117,9 +117,10 @@ It validates:
 - runtime sitemap and robots output behavior
   - canonical SEO constant validation (`SEO_SITE_URL`, `toAbsoluteSeoUrl`)
   - absolute canonical sitemap URLs only
+  - no trailing slash URLs except canonical homepage
   - no duplicate/query/hash sitemap URLs
   - valid `lastModified` / `priority` / `changeFrequency` fields
-  - critical route policy baselines (home/services/blog priorities/frequencies)
+  - critical route policy baselines (home/services/contact/blog priorities/frequencies)
   - navigation-driven route coverage in generated sitemap
   - deterministic URL sorting + required legal route presence
   - robots wildcard allow root + strict disallow policy consistency

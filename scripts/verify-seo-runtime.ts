@@ -230,6 +230,15 @@ async function verifySitemapOutput(): Promise<void> {
     });
   }
 
+  const trailingSlashUrls = entries.filter(
+    (entry) => entry.url !== `${SEO_SITE_URL}/` && entry.url.endsWith('/'),
+  );
+  if (trailingSlashUrls.length > 0) {
+    logError('Sitemap URLs should not include trailing slash (except homepage)', {
+      sample: trailingSlashUrls.slice(0, 10).map((entry) => entry.url),
+    });
+  }
+
   const invalidModifierUrls = entries.filter((entry) => /[?#]/.test(entry.url));
   if (invalidModifierUrls.length > 0) {
     logError('Sitemap URLs should not contain query/hash fragments', {
@@ -376,6 +385,19 @@ async function verifySitemapOutput(): Promise<void> {
       logError('Required legal sitemap route missing', { route, routeUrl });
     }
   });
+
+  const contactUrl = toAbsoluteSeoUrl('/pages/contact');
+  const contactEntry = entriesByUrl.get(contactUrl);
+  if (!contactEntry) {
+    logError('Contact entry missing from sitemap', { contactUrl });
+  }
+
+  if ((contactEntry.priority ?? 0) < 0.9) {
+    logError('Contact sitemap priority is lower than expected baseline', {
+      contactUrl,
+      actualPriority: contactEntry.priority,
+    });
+  }
 
   const blockedUrlFound = entries.find((entry) =>
     SEO_BLOCKED_ROUTE_PREFIXES.some((prefix) => entry.url.includes(prefix)),
