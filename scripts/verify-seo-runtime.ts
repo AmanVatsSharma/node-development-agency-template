@@ -109,10 +109,46 @@ function verifyCanonicalSeoConstants(): void {
     });
   }
 
+  const resolvedQueryPathUrl = toAbsoluteSeoUrl('/pages/services?source=ad#section');
+  const expectedQueryPathUrl = `${SEO_SITE_URL}/pages/services`;
+  if (resolvedQueryPathUrl !== expectedQueryPathUrl) {
+    logError('toAbsoluteSeoUrl should strip query/hash fragments from relative canonical paths', {
+      expectedQueryPathUrl,
+      resolvedQueryPathUrl,
+    });
+  }
+
+  const resolvedDuplicateSlashUrl = toAbsoluteSeoUrl('///pages//contact');
+  const expectedDuplicateSlashUrl = `${SEO_SITE_URL}/pages/contact`;
+  if (resolvedDuplicateSlashUrl !== expectedDuplicateSlashUrl) {
+    logError('toAbsoluteSeoUrl should collapse duplicate slashes in relative canonical paths', {
+      expectedDuplicateSlashUrl,
+      resolvedDuplicateSlashUrl,
+    });
+  }
+
+  const resolvedProtocolRelativeUrl = toAbsoluteSeoUrl('//example.com/path');
+  if (resolvedProtocolRelativeUrl !== SEO_SITE_URL) {
+    logError('toAbsoluteSeoUrl should reject protocol-relative URLs', {
+      expected: SEO_SITE_URL,
+      actual: resolvedProtocolRelativeUrl,
+    });
+  }
+
+  const resolvedNonHttpSchemeUrl = toAbsoluteSeoUrl('mailto:seo@example.com');
+  if (resolvedNonHttpSchemeUrl !== SEO_SITE_URL) {
+    logError('toAbsoluteSeoUrl should reject non-http URL schemes', {
+      expected: SEO_SITE_URL,
+      actual: resolvedNonHttpSchemeUrl,
+    });
+  }
+
   logInfo('Canonical SEO constant validation passed', {
     SEO_SITE_URL,
     resolvedRootUrl,
     resolvedSitemapUrl,
+    resolvedQueryPathUrl,
+    resolvedDuplicateSlashUrl,
   });
 }
 

@@ -81,9 +81,29 @@ export function toAbsoluteSeoUrl(pathOrUrl: string): string {
     return SEO_SITE_URL;
   }
 
+  const trimmedValue = pathOrUrl.trim();
+  if (!trimmedValue) {
+    return SEO_SITE_URL;
+  }
+
+  if (/^\/\/[^/]/.test(trimmedValue)) {
+    console.warn('[SEO] Protocol-relative URLs are not allowed for canonical SEO URLs.', {
+      value: pathOrUrl,
+    });
+    return SEO_SITE_URL;
+  }
+
+  const hasExplicitScheme = /^[a-z][a-z0-9+.-]*:/i.test(trimmedValue);
+  if (hasExplicitScheme && !/^https?:/i.test(trimmedValue)) {
+    console.warn('[SEO] Non-HTTP URL scheme rejected for canonical SEO URL conversion.', {
+      value: pathOrUrl,
+    });
+    return SEO_SITE_URL;
+  }
+
   try {
     // Accept full URLs (http/https) directly
-    const absoluteCandidate = new URL(pathOrUrl);
+    const absoluteCandidate = new URL(trimmedValue);
     if (absoluteCandidate.protocol === 'http:' || absoluteCandidate.protocol === 'https:') {
       return absoluteCandidate.toString();
     }
@@ -92,7 +112,17 @@ export function toAbsoluteSeoUrl(pathOrUrl: string): string {
   }
 
   try {
-    const normalizedPath = pathOrUrl.startsWith('/') ? pathOrUrl : `/${pathOrUrl}`;
+    const withoutQueryOrHash = trimmedValue.split(/[?#]/)[0] || '/';
+    const collapsedPath = withoutQueryOrHash.replace(/\/{2,}/g, '/');
+    const normalizedPath = collapsedPath.startsWith('/') ? collapsedPath : `/${collapsedPath}`;
+
+    if (trimmedValue.includes('?') || trimmedValue.includes('#')) {
+      console.warn('[SEO] Query/hash fragments stripped from canonical SEO path.', {
+        value: pathOrUrl,
+        normalizedPath,
+      });
+    }
+
     return new URL(normalizedPath, SEO_SITE_URL).toString();
   } catch (error) {
     console.error('[SEO] Failed to convert value to absolute URL. Falling back to site root.', {

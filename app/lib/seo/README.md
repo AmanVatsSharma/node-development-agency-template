@@ -110,7 +110,7 @@ It validates:
 - CI workflow enforcement (runs SEO checks on push + pull_request)
 - shared policy constant usage (`SEO_BLOCKED_ROUTE_PREFIXES`, `SEO_ROBOTS_DISALLOW_PATHS`)
 - routes module invariants for `normalizeRoute` (exclude absolute/protocol-relative URLs, strip query/hash fragments, collapse duplicate slashes, lowercase canonicalization, dynamic placeholder filtering, `/sitemap.xml` and `/robots.txt` exclusion, blocked prefixes via exact/nested matching helper `isBlockedRoutePath`)
-- constants module invariants (`getCanonicalSiteUrl`, `toAbsoluteSeoUrl`, and shared robots disallow alias)
+- constants module invariants (`getCanonicalSiteUrl`, `toAbsoluteSeoUrl` input sanitization for whitespace/query/hash + duplicate slash collapse + non-http/protocol-relative rejection, and shared robots disallow alias)
 - company profile SEO identity validity (`brandName`, `legalName`, `websiteUrl`, `contactEmail`, optional social URLs)
 - root layout metadata canonical configuration (`metadataBase`, canonical `/`, OG image constant)
 - core SEO file placeholder audit (`app/layout.tsx`, structured data component, SEO constants)

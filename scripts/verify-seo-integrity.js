@@ -827,12 +827,32 @@ function verifySeoConstantsImplementationInvariants() {
       reason: 'toAbsoluteSeoUrl should return SEO_SITE_URL for empty input values',
     },
     {
+      pattern: /const trimmedValue = pathOrUrl\.trim\(\);[\s\S]*if \(!trimmedValue\)\s*\{\s*return SEO_SITE_URL;\s*\}/,
+      reason: 'toAbsoluteSeoUrl should trim whitespace and treat blank values as site-root fallback',
+    },
+    {
+      pattern: /Protocol-relative URLs are not allowed for canonical SEO URLs\./,
+      reason: 'toAbsoluteSeoUrl should reject true protocol-relative URLs for canonical safety',
+    },
+    {
+      pattern: /hasExplicitScheme[\s\S]*!\/\^https\?:\/i\.test\(trimmedValue\)/,
+      reason: 'toAbsoluteSeoUrl should reject non-http URL schemes',
+    },
+    {
       pattern: /absoluteCandidate\.protocol === ['"]http:['"] \|\| absoluteCandidate\.protocol === ['"]https:['"]/,
       reason: 'toAbsoluteSeoUrl should only allow absolute http/https URLs',
     },
     {
-      pattern: /const normalizedPath = pathOrUrl\.startsWith\(['"]\/['"]\) \? pathOrUrl : `\/\$\{pathOrUrl\}`;/,
-      reason: 'toAbsoluteSeoUrl should normalize relative paths with a leading slash',
+      pattern: /const withoutQueryOrHash = trimmedValue\.split\(\/\[\?#\]\/\)\[0\] \|\| '\/';/,
+      reason: 'toAbsoluteSeoUrl should strip query/hash fragments from relative canonical paths',
+    },
+    {
+      pattern: /const collapsedPath = withoutQueryOrHash\.replace\(\/\\\/\{2,\}\/g,\s*'\/'\);/,
+      reason: 'toAbsoluteSeoUrl should collapse duplicate slashes in relative canonical paths',
+    },
+    {
+      pattern: /const normalizedPath = collapsedPath\.startsWith\('\/'\) \? collapsedPath : `\/\$\{collapsedPath\}`;/,
+      reason: 'toAbsoluteSeoUrl should normalize relative paths with a single leading slash',
     },
     {
       pattern: /return new URL\(normalizedPath, SEO_SITE_URL\)\.toString\(\);/,
@@ -1095,6 +1115,7 @@ function verifySeoModuleDocsConsistency() {
     'isBlockedRoutePath',
     'getCanonicalSiteUrl',
     'toAbsoluteSeoUrl',
+    'protocol-relative',
     'normalizeAndFilterBlogEntries',
     'mergeDuplicateSitemapEntry',
     'prisma generate',
@@ -1621,6 +1642,22 @@ function verifySeoRuntimeScriptInvariants() {
     {
       pattern: /normalizedCompanyProfileOrigin/,
       reason: 'Runtime SEO verifier should validate canonical origin parity with companyProfile.websiteUrl',
+    },
+    {
+      pattern: /resolvedQueryPathUrl[\s\S]*expectedQueryPathUrl/,
+      reason: 'Runtime SEO verifier should assert query/hash stripping behavior for toAbsoluteSeoUrl()',
+    },
+    {
+      pattern: /resolvedDuplicateSlashUrl[\s\S]*expectedDuplicateSlashUrl/,
+      reason: 'Runtime SEO verifier should assert duplicate-slash collapsing behavior for toAbsoluteSeoUrl()',
+    },
+    {
+      pattern: /resolvedProtocolRelativeUrl[\s\S]*toAbsoluteSeoUrl\('\/\/example\.com\/path'\)/,
+      reason: 'Runtime SEO verifier should assert protocol-relative URL rejection for toAbsoluteSeoUrl()',
+    },
+    {
+      pattern: /resolvedNonHttpSchemeUrl[\s\S]*toAbsoluteSeoUrl\('mailto:seo@example\.com'\)/,
+      reason: 'Runtime SEO verifier should assert non-http scheme rejection for toAbsoluteSeoUrl()',
     },
     {
       pattern: /entriesMissingPriority/,
