@@ -68,7 +68,7 @@ export const SEO_DEFAULT_DESCRIPTION =
   'Enterprise-grade web development, AI automation, and growth-focused digital services by Enterprise Hero.';
 export const SEO_DEFAULT_OG_IMAGE_PATH = '/logo.png';
 export const SEO_BLOCKED_ROUTE_PREFIXES = ['/admin', '/api', '/login'] as const;
-export const SEO_ROBOTS_DISALLOW_PATHS = ['/admin', '/api', '/login'] as const;
+export const SEO_ROBOTS_DISALLOW_PATHS = SEO_BLOCKED_ROUTE_PREFIXES;
 
 /**
  * Convert any path/URL into an absolute URL on canonical site domain.

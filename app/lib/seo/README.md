@@ -17,6 +17,7 @@ This module centralizes technical SEO behavior for the website.
   - Canonical site URL resolver
   - Canonical URL normalization to origin-only form (drops path/query/hash)
   - Brand/company SEO constants
+  - Shared blocked-route policy constants reused by sitemap + robots checks
   - Absolute URL resolver utility
 - `metadata.ts`
   - Reusable `buildPageMetadata()` helper for all pages/layouts
