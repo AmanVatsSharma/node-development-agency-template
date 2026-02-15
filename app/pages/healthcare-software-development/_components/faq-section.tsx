@@ -8,6 +8,7 @@
 
 import React, { useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
+import { companyProfile } from '@/app/data/companyProfile';
 import { 
   Plus, 
   Minus, 
@@ -24,6 +25,7 @@ import {
 } from 'lucide-react';
 
 console.log('[Healthcare-Software-Dev] FAQSection component loaded');
+const CONTACT_EMAIL = companyProfile.contactEmail;
 
 export function FAQSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -289,7 +291,7 @@ export function FAQSection() {
                 <Mail className="w-6 h-6" />
                 <div>
                   <div className="font-semibold">Email Us</div>
-                  <div className="text-sm text-blue-100">healthcare@vedpragyabharat.com</div>
+                  <div className="text-sm text-blue-100">{CONTACT_EMAIL}</div>
                 </div>
               </div>
               <div className="flex items-center justify-center gap-3">

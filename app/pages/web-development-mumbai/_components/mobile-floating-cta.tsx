@@ -9,9 +9,11 @@
 
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { companyProfile } from '@/app/data/companyProfile';
 import { Phone, MessageCircle, ArrowUp, Mail } from 'lucide-react';
 
 console.log('[Mumbai-Web-Development] MobileFloatingCTA component loaded');
+const CONTACT_EMAIL = companyProfile.contactEmail;
 
 export function MobileFloatingCTA() {
   const [isVisible, setIsVisible] = useState(false);
@@ -49,7 +51,7 @@ export function MobileFloatingCTA() {
 
   const handleEmail = () => {
     console.log('[Mumbai-Web-Development] Mobile CTA - Email clicked');
-    window.open('mailto:hello@mumbaiwebdev.com', '_self');
+    window.open(`mailto:${CONTACT_EMAIL}`, '_self');
   };
 
   return (

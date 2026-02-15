@@ -8,6 +8,7 @@
 
 import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
+import { companyProfile } from '@/app/data/companyProfile';
 import { 
   ArrowRight, 
   Phone, 
@@ -24,6 +25,7 @@ import {
 } from 'lucide-react';
 
 console.log('[Healthcare-Software-Dev] FinalCTASection component loaded');
+const CONTACT_EMAIL = companyProfile.contactEmail;
 
 export function FinalCTASection() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -224,7 +226,7 @@ export function FinalCTASection() {
             </button>
             <button className="border-2 border-white text-white hover:bg-white/10 px-10 py-4 rounded-full font-bold text-lg transition-all duration-300 flex items-center justify-center gap-2">
               <Mail className="w-5 h-5" />
-              Email: healthcare@vedpragyabharat.com
+              Email: {CONTACT_EMAIL}
             </button>
           </div>
           <div className="mt-6 text-red-200 text-sm">

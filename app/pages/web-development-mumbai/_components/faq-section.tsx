@@ -9,9 +9,11 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
+import { companyProfile } from '@/app/data/companyProfile';
 import { Plus, Minus, HelpCircle, Clock, Shield, Users, Award } from 'lucide-react';
 
 console.log('[Mumbai-Web-Development] FAQSection component loaded');
+const CONTACT_EMAIL = companyProfile.contactEmail;
 
 export function FAQSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -208,7 +210,7 @@ export function FAQSection() {
               Call Mumbai Expert
             </a>
             <a
-              href="mailto:hello@mumbaiwebdev.com"
+              href={`mailto:${CONTACT_EMAIL}`}
               className="inline-flex items-center justify-center px-8 py-4 border-2 border-white text-white font-semibold rounded-xl hover:bg-white hover:text-blue-600 transition-colors duration-300"
             >
               <Mail className="mr-2 h-5 w-5" />
