@@ -1078,6 +1078,9 @@ function verifySeoModuleDocsConsistency() {
     'verifyCanonicalSeoConstants',
     'verifySitemapOutput',
     'expectedPriorityForPath',
+    'expectedChangeFrequencyForPath',
+    'companyProfile.websiteUrl',
+    'wildcard rule shape',
     'generateMetadata',
     '/pages/blog/${slug}',
   ];
@@ -1488,6 +1491,10 @@ function verifySeoRuntimeScriptInvariants() {
       reason: 'Runtime SEO verifier should import dynamic robots route',
     },
     {
+      pattern: /import \{ companyProfile \} from ['"]@\/app\/data\/companyProfile['"]/,
+      reason: 'Runtime SEO verifier should import companyProfile for canonical-origin parity checks',
+    },
+    {
       pattern:
         /SEO_BLOCKED_ROUTE_PREFIXES[\s\S]*SEO_ROBOTS_DISALLOW_PATHS[\s\S]*SEO_SITE_URL[\s\S]*toAbsoluteSeoUrl/,
       reason: 'Runtime SEO verifier should consume shared SEO constants for policy validation',
@@ -1511,6 +1518,10 @@ function verifySeoRuntimeScriptInvariants() {
     {
       pattern: /function expectedChangeFrequencyForPath\(/,
       reason: 'Runtime SEO verifier should retain expectedChangeFrequencyForPath mapping helper',
+    },
+    {
+      pattern: /normalizedCompanyProfileOrigin/,
+      reason: 'Runtime SEO verifier should validate canonical origin parity with companyProfile.websiteUrl',
     },
     {
       pattern: /entriesMissingPriority/,
@@ -1546,8 +1557,16 @@ function verifySeoRuntimeScriptInvariants() {
       reason: 'Runtime SEO verifier should enforce strict wildcard allow-list policy checks',
     },
     {
+      pattern: /wildcardRules\.length !== 1[\s\S]*robotsOutput\.rules\[0\]\?\.userAgent !== '\*'/,
+      reason: 'Runtime SEO verifier should enforce deterministic wildcard rule count and first-rule position',
+    },
+    {
       pattern: /disallowOrderMismatch/,
       reason: 'Runtime SEO verifier should enforce deterministic robots disallow ordering checks',
+    },
+    {
+      pattern: /malformedDisallowEntries/,
+      reason: 'Runtime SEO verifier should enforce robots disallow path normalization checks',
     },
     {
       pattern:
