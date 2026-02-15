@@ -16,16 +16,17 @@
  * 11. CI workflow executes SEO integrity + runtime checks.
  * 12. Shared SEO policy constants are used across routes/robots modules.
  * 13. SEO routes module normalization invariants are preserved.
- * 14. Company profile SEO identity (brand/legal/website/email/social) is valid and non-placeholder.
- * 15. Root layout metadata uses canonical SEO constants.
- * 16. Core SEO files are free of placeholder/legacy tokens.
- * 17. Sitemap/robots implementation invariants and policy baselines are preserved.
- * 18. SEO module docs stay aligned with implementation checkpoints.
- * 19. Private route no-index policy remains enforced (admin/login).
- * 20. OG image asset references are valid for metadata generation.
- * 21. Root structured data wiring stays aligned with company profile constants.
- * 22. Structured data component defaults align with shared SEO constants.
- * 23. Legacy static SEO generator files are not present.
+ * 14. SEO constants module invariants are preserved.
+ * 15. Company profile SEO identity (brand/legal/website/email/social) is valid and non-placeholder.
+ * 16. Root layout metadata uses canonical SEO constants.
+ * 17. Core SEO files are free of placeholder/legacy tokens.
+ * 18. Sitemap/robots implementation invariants and policy baselines are preserved.
+ * 19. SEO module docs stay aligned with implementation checkpoints.
+ * 20. Private route no-index policy remains enforced (admin/login).
+ * 21. OG image asset references are valid for metadata generation.
+ * 22. Root structured data wiring stays aligned with company profile constants.
+ * 23. Structured data component defaults align with shared SEO constants.
+ * 24. Legacy static SEO generator files are not present.
  *
  * Usage:
  *   node scripts/verify-seo-integrity.js
@@ -740,6 +741,71 @@ function verifySeoRoutesImplementationInvariants() {
   return { passed: true, violations: [] };
 }
 
+function verifySeoConstantsImplementationInvariants() {
+  if (!fs.existsSync(SEO_CONSTANTS_FILE)) {
+    logError('SEO constants implementation file missing', {
+      file: path.relative(ROOT_DIR, SEO_CONSTANTS_FILE),
+    });
+    return { passed: false };
+  }
+
+  const constantsContent = fs.readFileSync(SEO_CONSTANTS_FILE, 'utf8');
+  const requiredPatterns = [
+    {
+      pattern: /process\.env\.NEXT_PUBLIC_SITE_URL\s*\|\|\s*process\.env\.NEXT_PUBLIC_APP_URL\s*\|\|\s*companyProfile\.websiteUrl/,
+      reason:
+        'getCanonicalSiteUrl should preserve env fallback order: NEXT_PUBLIC_SITE_URL -> NEXT_PUBLIC_APP_URL -> companyProfile.websiteUrl',
+    },
+    {
+      pattern: /return `\$\{parsedUrl\.protocol\}\/\/\$\{parsedUrl\.host\}`;/,
+      reason: 'getCanonicalSiteUrl should normalize primary candidate to URL origin',
+    },
+    {
+      pattern: /return `\$\{fallbackUrl\.protocol\}\/\/\$\{fallbackUrl\.host\}`;/,
+      reason: 'getCanonicalSiteUrl should normalize company profile fallback to URL origin',
+    },
+    {
+      pattern: /return ['"]https:\/\/enterprisehero\.com['"];/,
+      reason: 'getCanonicalSiteUrl should preserve final hardcoded canonical fallback',
+    },
+    {
+      pattern: /export const SEO_ROBOTS_DISALLOW_PATHS = SEO_BLOCKED_ROUTE_PREFIXES;/,
+      reason: 'SEO_ROBOTS_DISALLOW_PATHS should remain sourced from SEO_BLOCKED_ROUTE_PREFIXES',
+    },
+    {
+      pattern: /if \(!pathOrUrl\)\s*\{\s*return SEO_SITE_URL;\s*\}/,
+      reason: 'toAbsoluteSeoUrl should return SEO_SITE_URL for empty input values',
+    },
+    {
+      pattern: /absoluteCandidate\.protocol === ['"]http:['"] \|\| absoluteCandidate\.protocol === ['"]https:['"]/,
+      reason: 'toAbsoluteSeoUrl should only allow absolute http/https URLs',
+    },
+    {
+      pattern: /const normalizedPath = pathOrUrl\.startsWith\(['"]\/['"]\) \? pathOrUrl : `\/\$\{pathOrUrl\}`;/,
+      reason: 'toAbsoluteSeoUrl should normalize relative paths with a leading slash',
+    },
+    {
+      pattern: /return new URL\(normalizedPath, SEO_SITE_URL\)\.toString\(\);/,
+      reason: 'toAbsoluteSeoUrl should resolve relative paths against SEO_SITE_URL',
+    },
+  ];
+
+  const violations = requiredPatterns
+    .filter(({ pattern }) => !pattern.test(constantsContent))
+    .map(({ reason }) => ({
+      file: path.relative(ROOT_DIR, SEO_CONSTANTS_FILE),
+      reason,
+    }));
+
+  if (violations.length > 0) {
+    logError('SEO constants implementation invariant check failed', { violations });
+    return { passed: false, violations };
+  }
+
+  logInfo('SEO constants implementation invariant check passed');
+  return { passed: true, violations: [] };
+}
+
 function verifyCompanyProfileSeoIdentity() {
   if (!fs.existsSync(COMPANY_PROFILE_FILE)) {
     logError('Company profile file missing', {
@@ -976,6 +1042,8 @@ function verifySeoModuleDocsConsistency() {
     'SEO_ROBOTS_DISALLOW_PATHS',
     'SEO_DEFAULT_DESCRIPTION',
     'normalizeRoute',
+    'getCanonicalSiteUrl',
+    'toAbsoluteSeoUrl',
   ];
 
   const missingDocTokens = requiredDocTokens.filter((token) => !readmeContent.includes(token));
@@ -1290,6 +1358,7 @@ function main() {
     verifySeoCiWorkflow(),
     verifySharedSeoPolicyConstantsUsage(),
     verifySeoRoutesImplementationInvariants(),
+    verifySeoConstantsImplementationInvariants(),
     verifyCompanyProfileSeoIdentity(),
     verifyRootLayoutMetadataConfiguration(),
     verifyCoreSeoFilesNoPlaceholderTokens(),

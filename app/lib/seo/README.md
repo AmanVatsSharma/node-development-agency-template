@@ -14,11 +14,11 @@ This module centralizes technical SEO behavior for the website.
 ## Module structure
 
 - `constants.ts`
-  - Canonical site URL resolver
+  - Canonical site URL resolver (`getCanonicalSiteUrl()`)
   - Canonical URL normalization to origin-only form (drops path/query/hash)
   - Brand/company SEO constants
   - Shared blocked-route policy constants reused by sitemap + robots checks
-  - Absolute URL resolver utility
+  - Absolute URL resolver utility (`toAbsoluteSeoUrl()`)
 - `metadata.ts`
   - Reusable `buildPageMetadata()` helper for all pages/layouts
 - `routes.ts`
@@ -110,6 +110,7 @@ It validates:
 - CI workflow enforcement (runs SEO checks on push + pull_request)
 - shared policy constant usage (`SEO_BLOCKED_ROUTE_PREFIXES`, `SEO_ROBOTS_DISALLOW_PATHS`)
 - routes module invariants for `normalizeRoute` (exclude absolute URLs, dynamic placeholders, `/sitemap.xml`, `/robots.txt`, blocked prefixes)
+- constants module invariants (`getCanonicalSiteUrl`, `toAbsoluteSeoUrl`, and shared robots disallow alias)
 - company profile SEO identity validity (`brandName`, `legalName`, `websiteUrl`, `contactEmail`, optional social URLs)
 - root layout metadata canonical configuration (`metadataBase`, canonical `/`, OG image constant)
 - core SEO file placeholder audit (`app/layout.tsx`, structured data component, SEO constants)
