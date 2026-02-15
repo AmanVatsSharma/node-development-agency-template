@@ -16,7 +16,8 @@
  * 11. Shared SEO policy constants are used across routes/robots modules.
  * 12. Company profile SEO identity (website/email) is valid and non-placeholder.
  * 13. Root layout metadata uses canonical SEO constants.
- * 14. Legacy static SEO generator files are not present.
+ * 14. Core SEO files are free of placeholder/legacy tokens.
+ * 15. Legacy static SEO generator files are not present.
  *
  * Usage:
  *   node scripts/verify-seo-integrity.js
@@ -29,6 +30,8 @@ const ROOT_DIR = process.cwd();
 const APP_DIR = path.join(ROOT_DIR, 'app');
 const PAGES_DIR = path.join(APP_DIR, 'pages');
 const APP_LAYOUT_FILE = path.join(APP_DIR, 'layout.tsx');
+const SEO_STRUCTURED_DATA_FILE = path.join(APP_DIR, 'components', 'SEO', 'StructuredData.tsx');
+const SEO_CONSTANTS_FILE = path.join(APP_DIR, 'lib', 'seo', 'constants.ts');
 const NAVIGATION_FILE = path.join(APP_DIR, 'data', 'navigation.ts');
 const ROBOTS_FILE = path.join(APP_DIR, 'robots.ts');
 const SEO_ROUTES_FILE = path.join(APP_DIR, 'lib', 'seo', 'routes.ts');
@@ -404,6 +407,13 @@ function verifyBuildPipelineSeoChecks() {
     return { passed: false, missingTokens };
   }
 
+  const verifySeoIndex = buildScript.indexOf('npm run verify:seo');
+  const verifySeoRuntimeIndex = buildScript.indexOf('npm run verify:seo:runtime');
+  if (verifySeoIndex > verifySeoRuntimeIndex) {
+    logError('Build script should run verify:seo before verify:seo:runtime', { buildScript });
+    return { passed: false };
+  }
+
   logInfo('Build pipeline SEO check presence passed');
   return { passed: true, missingTokens: [] };
 }
@@ -601,6 +611,42 @@ function verifyRootLayoutMetadataConfiguration() {
   return { passed: true, violations: [] };
 }
 
+function verifyCoreSeoFilesNoPlaceholderTokens() {
+  const coreSeoFiles = [APP_LAYOUT_FILE, SEO_STRUCTURED_DATA_FILE, SEO_CONSTANTS_FILE];
+  const violations = [];
+
+  coreSeoFiles.forEach((filePath) => {
+    if (!fs.existsSync(filePath)) {
+      violations.push({
+        file: path.relative(ROOT_DIR, filePath),
+        reason: 'Required SEO core file missing',
+      });
+      return;
+    }
+
+    const fileContent = fs.readFileSync(filePath, 'utf8');
+    PLACEHOLDER_PATTERNS.forEach((token) => {
+      if (!fileContent.includes(token)) {
+        return;
+      }
+
+      violations.push({
+        file: path.relative(ROOT_DIR, filePath),
+        token,
+        line: findLineNumber(fileContent, token),
+      });
+    });
+  });
+
+  if (violations.length > 0) {
+    logError('Core SEO files contain placeholder/legacy tokens', { violations });
+    return { passed: false, violations };
+  }
+
+  logInfo('Core SEO file placeholder check passed');
+  return { passed: true, violations: [] };
+}
+
 function verifyLegacyFilesRemoved() {
   const foundLegacyFiles = LEGACY_SEO_FILES.filter((filePath) => fs.existsSync(filePath));
 
@@ -632,6 +678,7 @@ function main() {
     verifySharedSeoPolicyConstantsUsage(),
     verifyCompanyProfileSeoIdentity(),
     verifyRootLayoutMetadataConfiguration(),
+    verifyCoreSeoFilesNoPlaceholderTokens(),
     verifyLegacyFilesRemoved(),
   ];
 
