@@ -310,6 +310,13 @@ async function verifySitemapOutput(): Promise<void> {
     });
   }
 
+  const entriesMissingPriority = entries.filter((entry) => entry.priority === undefined);
+  if (entriesMissingPriority.length > 0) {
+    logError('All sitemap entries should define priority for deterministic SEO policy control', {
+      sample: entriesMissingPriority.slice(0, 10).map((entry) => entry.url),
+    });
+  }
+
   const invalidChangeFrequencyEntries = entries.filter(
     (entry) =>
       entry.changeFrequency !== undefined && !allowedFrequencies.has(entry.changeFrequency),
@@ -320,6 +327,13 @@ async function verifySitemapOutput(): Promise<void> {
         url: entry.url,
         changeFrequency: entry.changeFrequency,
       })),
+    });
+  }
+
+  const entriesMissingChangeFrequency = entries.filter((entry) => entry.changeFrequency === undefined);
+  if (entriesMissingChangeFrequency.length > 0) {
+    logError('All sitemap entries should define changeFrequency for crawl-budget policy control', {
+      sample: entriesMissingChangeFrequency.slice(0, 10).map((entry) => entry.url),
     });
   }
 

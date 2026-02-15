@@ -129,7 +129,7 @@ It validates:
   - lowercase sitemap pathname policy with no duplicate slash segments
   - no trailing slash URLs except canonical homepage
   - no duplicate/query/hash sitemap URLs
-  - valid `lastModified` / `priority` / `changeFrequency` fields
+  - valid `lastModified` / `priority` / `changeFrequency` fields (and all entries must explicitly define `priority` + `changeFrequency`)
   - critical route policy baselines (home/services/contact/blog priorities/frequencies)
   - blog detail coverage baseline (at least one blog detail URL) with lowercase kebab-case slug URLs
   - navigation-driven route coverage in generated sitemap
