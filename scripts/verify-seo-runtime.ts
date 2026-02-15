@@ -105,6 +105,26 @@ function isValidDateInput(value: unknown): boolean {
   return !Number.isNaN(parsedDate.getTime());
 }
 
+function expectedPriorityForPath(pathname: string): number {
+  if (pathname === '/') return 1.0;
+  if (pathname === '/pages/services') return 0.95;
+  if (pathname === '/pages/contact') return 0.92;
+  if (pathname.startsWith('/pages/google-ads')) return 0.88;
+  if (pathname.startsWith('/pages/shopify')) return 0.86;
+  if (pathname.startsWith('/pages/blog/')) return 0.78;
+  if (pathname.startsWith('/pages/')) return 0.8;
+  return 0.7;
+}
+
+function expectedChangeFrequencyForPath(
+  pathname: string,
+): NonNullable<Awaited<ReturnType<typeof sitemap>>[number]['changeFrequency']> {
+  if (pathname === '/') return 'weekly';
+  if (pathname === '/pages/blog') return 'daily';
+  if (pathname.startsWith('/pages/blog/')) return 'weekly';
+  return 'monthly';
+}
+
 function normalizeNavigationRoute(route: string): string | null {
   if (!route || typeof route !== 'string') {
     return null;
@@ -317,6 +337,23 @@ async function verifySitemapOutput(): Promise<void> {
     });
   }
 
+  const entriesWithUnexpectedPriorityPolicy = entries
+    .map((entry) => {
+      const pathname = new URL(entry.url).pathname;
+      return {
+        url: entry.url,
+        pathname,
+        expectedPriority: expectedPriorityForPath(pathname),
+        actualPriority: entry.priority,
+      };
+    })
+    .filter(({ expectedPriority, actualPriority }) => actualPriority !== expectedPriority);
+  if (entriesWithUnexpectedPriorityPolicy.length > 0) {
+    logError('Sitemap priority policy drift detected', {
+      sample: entriesWithUnexpectedPriorityPolicy.slice(0, 10),
+    });
+  }
+
   const invalidChangeFrequencyEntries = entries.filter(
     (entry) =>
       entry.changeFrequency !== undefined && !allowedFrequencies.has(entry.changeFrequency),
@@ -334,6 +371,26 @@ async function verifySitemapOutput(): Promise<void> {
   if (entriesMissingChangeFrequency.length > 0) {
     logError('All sitemap entries should define changeFrequency for crawl-budget policy control', {
       sample: entriesMissingChangeFrequency.slice(0, 10).map((entry) => entry.url),
+    });
+  }
+
+  const entriesWithUnexpectedFrequencyPolicy = entries
+    .map((entry) => {
+      const pathname = new URL(entry.url).pathname;
+      return {
+        url: entry.url,
+        pathname,
+        expectedChangeFrequency: expectedChangeFrequencyForPath(pathname),
+        actualChangeFrequency: entry.changeFrequency,
+      };
+    })
+    .filter(
+      ({ expectedChangeFrequency, actualChangeFrequency }) =>
+        actualChangeFrequency !== expectedChangeFrequency,
+    );
+  if (entriesWithUnexpectedFrequencyPolicy.length > 0) {
+    logError('Sitemap changeFrequency policy drift detected', {
+      sample: entriesWithUnexpectedFrequencyPolicy.slice(0, 10),
     });
   }
 

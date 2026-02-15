@@ -130,6 +130,7 @@ It validates:
   - no trailing slash URLs except canonical homepage
   - no duplicate/query/hash sitemap URLs
   - valid `lastModified` / `priority` / `changeFrequency` fields (and all entries must explicitly define `priority` + `changeFrequency`)
+  - full priority + changeFrequency policy mapping validation for every sitemap URL pathname (not just spot checks)
   - critical route policy baselines (home/services/contact/blog priorities/frequencies)
   - blog detail coverage baseline (at least one blog detail URL) with lowercase kebab-case slug URLs
   - navigation-driven route coverage in generated sitemap
