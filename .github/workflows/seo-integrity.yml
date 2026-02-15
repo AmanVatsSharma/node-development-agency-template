@@ -27,3 +27,6 @@ jobs:
 
       - name: Run SEO integrity checks
         run: npm run verify:seo
+
+      - name: Run runtime SEO route checks
+        run: npm run verify:seo:runtime

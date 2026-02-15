@@ -90,6 +90,7 @@ Run the SEO integrity checker before merging major page/SEO changes:
 
 ```bash
 npm run verify:seo
+npm run verify:seo:runtime
 ```
 
 It validates:
@@ -97,6 +98,7 @@ It validates:
 - absence of placeholder domain tokens in active metadata-bearing files
 - dynamic sitemap/robots route existence
 - removal of legacy static SEO generators
+- runtime sitemap and robots output behavior
 
 CI also runs the same check via:
 - `.github/workflows/seo-integrity.yml`
