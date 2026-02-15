@@ -246,6 +246,34 @@ async function verifySitemapOutput(): Promise<void> {
     });
   }
 
+  const nonLowercasePathUrls = entries.filter((entry) => {
+    try {
+      const parsedUrl = new URL(entry.url);
+      return parsedUrl.pathname !== parsedUrl.pathname.toLowerCase();
+    } catch {
+      return true;
+    }
+  });
+  if (nonLowercasePathUrls.length > 0) {
+    logError('Sitemap URLs should use lowercase pathnames only', {
+      sample: nonLowercasePathUrls.slice(0, 10).map((entry) => entry.url),
+    });
+  }
+
+  const duplicateSlashPathUrls = entries.filter((entry) => {
+    try {
+      const parsedUrl = new URL(entry.url);
+      return /\/{2,}/.test(parsedUrl.pathname);
+    } catch {
+      return true;
+    }
+  });
+  if (duplicateSlashPathUrls.length > 0) {
+    logError('Sitemap URLs should not contain duplicate slashes in pathnames', {
+      sample: duplicateSlashPathUrls.slice(0, 10).map((entry) => entry.url),
+    });
+  }
+
   const entriesMissingValidLastModified = entries.filter(
     (entry) => !isValidDateInput(entry.lastModified),
   );

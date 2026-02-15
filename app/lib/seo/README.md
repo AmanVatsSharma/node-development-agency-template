@@ -126,6 +126,7 @@ It validates:
 - runtime sitemap and robots output behavior
   - canonical SEO constant validation (`SEO_SITE_URL`, `toAbsoluteSeoUrl`)
   - absolute canonical sitemap URLs only
+  - lowercase sitemap pathname policy with no duplicate slash segments
   - no trailing slash URLs except canonical homepage
   - no duplicate/query/hash sitemap URLs
   - valid `lastModified` / `priority` / `changeFrequency` fields
