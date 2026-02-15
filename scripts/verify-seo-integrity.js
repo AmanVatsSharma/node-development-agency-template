@@ -18,7 +18,8 @@
  * 13. Root layout metadata uses canonical SEO constants.
  * 14. Core SEO files are free of placeholder/legacy tokens.
  * 15. Sitemap/robots implementation invariants are preserved.
- * 16. Legacy static SEO generator files are not present.
+ * 16. SEO module docs stay aligned with implementation checkpoints.
+ * 17. Legacy static SEO generator files are not present.
  *
  * Usage:
  *   node scripts/verify-seo-integrity.js
@@ -33,6 +34,7 @@ const PAGES_DIR = path.join(APP_DIR, 'pages');
 const APP_LAYOUT_FILE = path.join(APP_DIR, 'layout.tsx');
 const SEO_STRUCTURED_DATA_FILE = path.join(APP_DIR, 'components', 'SEO', 'StructuredData.tsx');
 const SEO_CONSTANTS_FILE = path.join(APP_DIR, 'lib', 'seo', 'constants.ts');
+const SEO_README_FILE = path.join(APP_DIR, 'lib', 'seo', 'README.md');
 const SITEMAP_FILE = path.join(APP_DIR, 'sitemap.ts');
 const NAVIGATION_FILE = path.join(APP_DIR, 'data', 'navigation.ts');
 const ROBOTS_FILE = path.join(APP_DIR, 'robots.ts');
@@ -649,6 +651,40 @@ function verifyCoreSeoFilesNoPlaceholderTokens() {
   return { passed: true, violations: [] };
 }
 
+function verifySeoModuleDocsConsistency() {
+  if (!fs.existsSync(SEO_README_FILE)) {
+    logError('SEO module README is missing', {
+      file: path.relative(ROOT_DIR, SEO_README_FILE),
+    });
+    return { passed: false };
+  }
+
+  const readmeContent = fs.readFileSync(SEO_README_FILE, 'utf8');
+  const requiredDocTokens = [
+    'flowchart TD',
+    'buildPageMetadata',
+    '/sitemap.xml',
+    '/robots.txt',
+    'npm run verify:seo',
+    'npm run verify:seo:runtime',
+    'SEO_BLOCKED_ROUTE_PREFIXES',
+    'SEO_ROBOTS_DISALLOW_PATHS',
+  ];
+
+  const missingDocTokens = requiredDocTokens.filter((token) => !readmeContent.includes(token));
+
+  if (missingDocTokens.length > 0) {
+    logError('SEO module README is missing required implementation references', {
+      file: path.relative(ROOT_DIR, SEO_README_FILE),
+      missingDocTokens,
+    });
+    return { passed: false, missingDocTokens };
+  }
+
+  logInfo('SEO module docs consistency check passed');
+  return { passed: true, missingDocTokens: [] };
+}
+
 function verifySitemapImplementationInvariants() {
   if (!fs.existsSync(SITEMAP_FILE)) {
     logError('Sitemap implementation file missing', {
@@ -771,6 +807,7 @@ function main() {
     verifyCoreSeoFilesNoPlaceholderTokens(),
     verifySitemapImplementationInvariants(),
     verifyRobotsImplementationInvariants(),
+    verifySeoModuleDocsConsistency(),
     verifyLegacyFilesRemoved(),
   ];
 

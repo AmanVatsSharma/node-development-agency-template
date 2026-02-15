@@ -110,6 +110,7 @@ It validates:
 - root layout metadata canonical configuration (`metadataBase`, canonical `/`, OG image constant)
 - core SEO file placeholder audit (`app/layout.tsx`, structured data component, SEO constants)
 - sitemap/robots implementation invariants (helper usage, dedupe/sort, fallback behavior)
+- SEO module documentation consistency (flowchart + key command/policy references)
 - removal of legacy static SEO generators
 - runtime sitemap and robots output behavior
   - absolute canonical sitemap URLs only
