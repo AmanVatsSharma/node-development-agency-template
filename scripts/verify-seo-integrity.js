@@ -13,7 +13,8 @@
  * 8. Package scripts expose verify:seo and verify:seo:runtime.
  * 9. Build pipeline runs SEO integrity + runtime checks.
  * 10. CI workflow executes SEO integrity + runtime checks.
- * 11. Legacy static SEO generator files are not present.
+ * 11. Shared SEO policy constants are used across routes/robots modules.
+ * 12. Legacy static SEO generator files are not present.
  *
  * Usage:
  *   node scripts/verify-seo-integrity.js
@@ -26,6 +27,8 @@ const ROOT_DIR = process.cwd();
 const APP_DIR = path.join(ROOT_DIR, 'app');
 const PAGES_DIR = path.join(APP_DIR, 'pages');
 const NAVIGATION_FILE = path.join(APP_DIR, 'data', 'navigation.ts');
+const ROBOTS_FILE = path.join(APP_DIR, 'robots.ts');
+const SEO_ROUTES_FILE = path.join(APP_DIR, 'lib', 'seo', 'routes.ts');
 const PACKAGE_JSON_PATH = path.join(ROOT_DIR, 'package.json');
 const SEO_CI_WORKFLOW_PATH = path.join(ROOT_DIR, '.github', 'workflows', 'seo-integrity.yml');
 
@@ -460,6 +463,48 @@ function verifySeoCiWorkflow() {
   return { passed: true, missingWorkflowTokens: [] };
 }
 
+function verifySharedSeoPolicyConstantsUsage() {
+  const violations = [];
+
+  if (!fs.existsSync(ROBOTS_FILE)) {
+    violations.push({
+      file: path.relative(ROOT_DIR, ROBOTS_FILE),
+      reason: 'robots.ts file missing',
+    });
+  } else {
+    const robotsContent = fs.readFileSync(ROBOTS_FILE, 'utf8');
+    if (!/SEO_ROBOTS_DISALLOW_PATHS/.test(robotsContent)) {
+      violations.push({
+        file: path.relative(ROOT_DIR, ROBOTS_FILE),
+        reason: 'robots.ts should use SEO_ROBOTS_DISALLOW_PATHS from shared constants',
+      });
+    }
+  }
+
+  if (!fs.existsSync(SEO_ROUTES_FILE)) {
+    violations.push({
+      file: path.relative(ROOT_DIR, SEO_ROUTES_FILE),
+      reason: 'routes.ts file missing',
+    });
+  } else {
+    const routesContent = fs.readFileSync(SEO_ROUTES_FILE, 'utf8');
+    if (!/SEO_BLOCKED_ROUTE_PREFIXES/.test(routesContent)) {
+      violations.push({
+        file: path.relative(ROOT_DIR, SEO_ROUTES_FILE),
+        reason: 'routes.ts should use SEO_BLOCKED_ROUTE_PREFIXES from shared constants',
+      });
+    }
+  }
+
+  if (violations.length > 0) {
+    logError('Shared SEO policy constant usage check failed', { violations });
+    return { passed: false, violations };
+  }
+
+  logInfo('Shared SEO policy constant usage check passed');
+  return { passed: true, violations: [] };
+}
+
 function verifyLegacyFilesRemoved() {
   const foundLegacyFiles = LEGACY_SEO_FILES.filter((filePath) => fs.existsSync(filePath));
 
@@ -488,6 +533,7 @@ function main() {
     verifySeoScriptsRegistered(),
     verifyBuildPipelineSeoChecks(),
     verifySeoCiWorkflow(),
+    verifySharedSeoPolicyConstantsUsage(),
     verifyLegacyFilesRemoved(),
   ];
 
