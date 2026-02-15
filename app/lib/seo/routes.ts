@@ -1,4 +1,5 @@
 import { footerNavigation, mainNavigation, servicesMegaMenu } from '@/app/data/navigation';
+import { SEO_BLOCKED_ROUTE_PREFIXES } from '@/app/lib/seo/constants';
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -22,7 +23,6 @@ const CORE_STATIC_ROUTES = [
 /**
  * Paths that should never be included in sitemap.
  */
-const BLOCKED_ROUTE_PREFIXES = ['/admin', '/api', '/login'];
 const APP_PAGES_DIR = path.join(process.cwd(), 'app', 'pages');
 
 function normalizeRoute(route: string): string | null {
@@ -58,7 +58,7 @@ function normalizeRoute(route: string): string | null {
     return null;
   }
 
-  const isBlocked = BLOCKED_ROUTE_PREFIXES.some((prefix) =>
+  const isBlocked = SEO_BLOCKED_ROUTE_PREFIXES.some((prefix) =>
     withoutTrailingSlash.startsWith(prefix),
   );
 

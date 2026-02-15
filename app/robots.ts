@@ -1,5 +1,5 @@
 import type { MetadataRoute } from 'next';
-import { SEO_SITE_URL, toAbsoluteSeoUrl } from '@/app/lib/seo/constants';
+import { SEO_ROBOTS_DISALLOW_PATHS, SEO_SITE_URL, toAbsoluteSeoUrl } from '@/app/lib/seo/constants';
 
 /**
  * Dynamic robots.txt route.
@@ -13,7 +13,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/admin', '/api/admin', '/login'],
+        disallow: [...SEO_ROBOTS_DISALLOW_PATHS],
       },
     ],
     sitemap: toAbsoluteSeoUrl('/sitemap.xml'),

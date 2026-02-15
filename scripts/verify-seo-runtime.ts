@@ -8,7 +8,12 @@
 import sitemap from '@/app/sitemap';
 import robots from '@/app/robots';
 import { getStaticSeoRoutes } from '@/app/lib/seo/routes';
-import { SEO_SITE_URL, toAbsoluteSeoUrl } from '@/app/lib/seo/constants';
+import {
+  SEO_BLOCKED_ROUTE_PREFIXES,
+  SEO_ROBOTS_DISALLOW_PATHS,
+  SEO_SITE_URL,
+  toAbsoluteSeoUrl,
+} from '@/app/lib/seo/constants';
 
 function logInfo(message: string, data?: unknown): void {
   if (data !== undefined) {
@@ -202,9 +207,8 @@ async function verifySitemapOutput(): Promise<void> {
     }
   });
 
-  const blockedPrefixes = ['/admin', '/api', '/login'];
   const blockedUrlFound = entries.find((entry) =>
-    blockedPrefixes.some((prefix) => entry.url.includes(prefix)),
+    SEO_BLOCKED_ROUTE_PREFIXES.some((prefix) => entry.url.includes(prefix)),
   );
   if (blockedUrlFound) {
     logError('Blocked route unexpectedly present in sitemap', { url: blockedUrlFound.url });
@@ -249,7 +253,7 @@ function verifyRobotsOutput(): void {
   const disallowList = Array.isArray(rootRule.disallow)
     ? rootRule.disallow
     : [rootRule.disallow].filter(Boolean);
-  const requiredDisallowEntries = ['/admin', '/api/admin', '/login'];
+  const requiredDisallowEntries = [...SEO_ROBOTS_DISALLOW_PATHS];
   const missingDisallowEntries = requiredDisallowEntries.filter(
     (entry) => !disallowList.includes(entry),
   );

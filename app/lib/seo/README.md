@@ -67,7 +67,7 @@ flowchart TD
 - Allows public crawling.
 - Disallows:
   - `/admin`
-  - `/api/admin`
+  - `/api`
   - `/login`
 - Publishes canonical sitemap endpoint.
 
