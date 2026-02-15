@@ -33,6 +33,69 @@ function logError(message: string, data?: unknown): never {
   throw new Error(message);
 }
 
+function verifyCanonicalSeoConstants(): void {
+  let parsedSiteUrl: URL;
+
+  try {
+    parsedSiteUrl = new URL(SEO_SITE_URL);
+  } catch (error) {
+    logError('SEO_SITE_URL is not a valid absolute URL', {
+      SEO_SITE_URL,
+      error: error instanceof Error ? error.message : String(error),
+    });
+  }
+
+  const hostname = parsedSiteUrl.hostname.toLowerCase();
+  const isLocalHostname =
+    hostname === 'localhost' ||
+    hostname === '127.0.0.1' ||
+    hostname === '::1' ||
+    hostname.endsWith('.localhost');
+  const isHttps = parsedSiteUrl.protocol === 'https:';
+  const isAllowedHttpLocal = parsedSiteUrl.protocol === 'http:' && isLocalHostname;
+
+  if (!isHttps && !isAllowedHttpLocal) {
+    logError('SEO_SITE_URL must use HTTPS (HTTP allowed only for localhost)', {
+      SEO_SITE_URL,
+      protocol: parsedSiteUrl.protocol,
+      hostname: parsedSiteUrl.hostname,
+    });
+  }
+
+  if (parsedSiteUrl.pathname !== '/' || parsedSiteUrl.search || parsedSiteUrl.hash) {
+    logError('SEO_SITE_URL should contain only origin (no path/query/hash)', {
+      SEO_SITE_URL,
+      pathname: parsedSiteUrl.pathname,
+      search: parsedSiteUrl.search,
+      hash: parsedSiteUrl.hash,
+    });
+  }
+
+  const resolvedRootUrl = toAbsoluteSeoUrl('/');
+  const expectedRootUrl = `${SEO_SITE_URL}/`;
+  if (resolvedRootUrl !== expectedRootUrl) {
+    logError('toAbsoluteSeoUrl("/") must resolve to canonical root URL', {
+      expectedRootUrl,
+      resolvedRootUrl,
+    });
+  }
+
+  const resolvedSitemapUrl = toAbsoluteSeoUrl('/sitemap.xml');
+  const expectedSitemapUrl = `${SEO_SITE_URL}/sitemap.xml`;
+  if (resolvedSitemapUrl !== expectedSitemapUrl) {
+    logError('toAbsoluteSeoUrl("/sitemap.xml") must resolve to canonical sitemap URL', {
+      expectedSitemapUrl,
+      resolvedSitemapUrl,
+    });
+  }
+
+  logInfo('Canonical SEO constant validation passed', {
+    SEO_SITE_URL,
+    resolvedRootUrl,
+    resolvedSitemapUrl,
+  });
+}
+
 function isValidDateInput(value: unknown): boolean {
   if (!value) {
     return false;
@@ -425,6 +488,7 @@ function verifyRobotsOutput(): void {
 
 async function main(): Promise<void> {
   logInfo('Starting runtime SEO verification');
+  verifyCanonicalSeoConstants();
   await verifySitemapOutput();
   verifyRobotsOutput();
   logInfo('Runtime SEO verification completed successfully');
