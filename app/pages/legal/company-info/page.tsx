@@ -1,10 +1,21 @@
 import type { Metadata } from "next";
+import { buildPageMetadata } from "@/app/lib/seo/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: "Company Information | Enterprise Hero - Vedpragya Bharat Private Limited",
-  description: "Complete company information for Vedpragya Bharat Private Limited (Enterprise Hero). Legal details, registration information, and global operations.",
-  keywords: "company information, Vedpragya Bharat, Enterprise Hero, legal details, registration, Aman Kumar Sharma, global offices",
-};
+  description:
+    "Complete company information for Vedpragya Bharat Private Limited (Enterprise Hero). Legal details, registration information, and global operations.",
+  path: "/pages/legal/company-info",
+  keywords: [
+    "company information",
+    "Vedpragya Bharat",
+    "Enterprise Hero",
+    "legal details",
+    "registration",
+    "Aman Kumar Sharma",
+    "global offices",
+  ],
+});
 
 export default function CompanyInfoPage() {
   return (

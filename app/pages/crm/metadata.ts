@@ -6,12 +6,16 @@
  */
 
 import { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
 
 console.log('[CRM] Metadata configuration loaded');
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: 'EnterpriseHero CRM | Custom Self-Hosted CRM on BharatERP Stack | Vedpragya Bharat',
-  description: 'Experience India\'s premium self-hosted CRM — customizable, secure, and ERP-ready. Built by EnterpriseHero (Vedpragya Bharat). Own your business data with enterprise-grade features.',
+  description:
+    "Experience India's premium self-hosted CRM — customizable, secure, and ERP-ready. Built by EnterpriseHero (Vedpragya Bharat). Own your business data with enterprise-grade features.",
+  path: '/pages/crm',
+  imagePath: '/logo.png',
   keywords: [
     'enterprise crm india',
     'self hosted crm',
@@ -25,43 +29,6 @@ export const metadata: Metadata = {
     'indian crm software',
     'erp integrated crm',
     'private cloud crm',
-    'self hosted business software'
-  ].join(', '),
-  authors: [{ name: 'Vedpragya Bharat Private Limited' }],
-  openGraph: {
-    title: 'EnterpriseHero CRM | Custom Self-Hosted CRM on BharatERP Stack',
-    description: 'Experience India\'s premium self-hosted CRM — customizable, secure, and ERP-ready. Built by EnterpriseHero (Vedpragya Bharat).',
-    url: 'https://enterprisehero.com/pages/crm',
-    siteName: 'Enterprise Hero',
-    locale: 'en_IN',
-    type: 'website',
-    images: [
-      {
-        url: '/logo.png',
-        width: 1200,
-        height: 630,
-        alt: 'Enterprise Hero CRM'
-      }
-    ]
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'EnterpriseHero CRM | Custom Self-Hosted CRM',
-    description: 'Premium self-hosted CRM — customizable, secure, and ERP-ready.',
-    images: ['/logo.png']
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
-  },
-  alternates: {
-    canonical: 'https://enterprisehero.com/pages/crm'
-  }
-};
+    'self hosted business software',
+  ],
+});

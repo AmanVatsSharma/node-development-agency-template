@@ -6,12 +6,16 @@
  */
 
 import { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
 
 console.log('[CRM-Demo] Metadata configuration loaded');
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: 'Request CRM Demo | EnterpriseHero CRM | Vedpragya Bharat',
-  description: 'Experience EnterpriseHero CRM personalized for your business. Request a custom demo of our self-hosted enterprise CRM built on BharatERP stack.',
+  description:
+    'Experience EnterpriseHero CRM personalized for your business. Request a custom demo of our self-hosted enterprise CRM built on BharatERP stack.',
+  path: '/pages/crm/demo',
+  imagePath: '/logo.png',
   keywords: [
     'crm demo',
     'enterprise crm demo',
@@ -19,22 +23,6 @@ export const metadata: Metadata = {
     'custom crm demo',
     'self hosted crm demo',
     'vedpragya bharat crm',
-    'request crm demo india'
-  ].join(', '),
-  authors: [{ name: 'Vedpragya Bharat Private Limited' }],
-  openGraph: {
-    title: 'Request CRM Demo | EnterpriseHero CRM',
-    description: 'Experience EnterpriseHero CRM personalized for your business. Get your custom demo within 24 hours.',
-    url: 'https://enterprisehero.com/pages/crm/demo',
-    siteName: 'Enterprise Hero',
-    locale: 'en_IN',
-    type: 'website'
-  },
-  robots: {
-    index: true,
-    follow: true
-  },
-  alternates: {
-    canonical: 'https://enterprisehero.com/pages/crm/demo'
-  }
-};
+    'request crm demo india',
+  ],
+});
