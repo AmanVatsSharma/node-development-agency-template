@@ -145,6 +145,12 @@ function expectedChangeFrequencyForPath(
   return 'monthly';
 }
 
+function isBlockedRoutePath(pathname: string): boolean {
+  return SEO_BLOCKED_ROUTE_PREFIXES.some(
+    (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`),
+  );
+}
+
 function normalizeNavigationRoute(route: string): string | null {
   if (!route || typeof route !== 'string') {
     return null;
@@ -195,9 +201,7 @@ function normalizeNavigationRoute(route: string): string | null {
     return null;
   }
 
-  const isBlocked = SEO_BLOCKED_ROUTE_PREFIXES.some((prefix) =>
-    normalizedRoute.startsWith(prefix),
-  );
+  const isBlocked = isBlockedRoutePath(normalizedRoute);
   if (isBlocked) {
     return null;
   }
@@ -574,9 +578,14 @@ async function verifySitemapOutput(): Promise<void> {
     });
   }
 
-  const blockedUrlFound = entries.find((entry) =>
-    SEO_BLOCKED_ROUTE_PREFIXES.some((prefix) => entry.url.includes(prefix)),
-  );
+  const blockedUrlFound = entries.find((entry) => {
+    try {
+      const pathname = new URL(entry.url).pathname;
+      return isBlockedRoutePath(pathname);
+    } catch {
+      return true;
+    }
+  });
   if (blockedUrlFound) {
     logError('Blocked route unexpectedly present in sitemap', { url: blockedUrlFound.url });
   }

@@ -754,8 +754,16 @@ function verifySeoRoutesImplementationInvariants() {
       reason: 'routes normalizeRoute should canonicalize paths to lowercase',
     },
     {
-      pattern: /SEO_BLOCKED_ROUTE_PREFIXES\.some\([\s\S]*withoutTrailingSlash\.startsWith\(prefix\)/,
-      reason: 'routes normalizeRoute should enforce blocked prefixes from shared SEO constants',
+      pattern: /function isBlockedRoutePath\(pathname: string\): boolean/,
+      reason: 'routes module should centralize blocked-path matching helper for prefix exact/nested checks',
+    },
+    {
+      pattern: /pathname === prefix \|\| pathname\.startsWith\(`\$\{prefix\}\/`\)/,
+      reason: 'routes blocked-path helper should only block exact prefix routes and nested descendants',
+    },
+    {
+      pattern: /const isBlocked = isBlockedRoutePath\(withoutTrailingSlash\);/,
+      reason: 'routes normalizeRoute should enforce blocked prefixes through shared blocked-path helper',
     },
     {
       pattern: /filesystemDiscoveredRoutes\.forEach\(addRoute\)/,
@@ -1084,6 +1092,7 @@ function verifySeoModuleDocsConsistency() {
     'SEO_ROBOTS_DISALLOW_PATHS',
     'SEO_DEFAULT_DESCRIPTION',
     'normalizeRoute',
+    'isBlockedRoutePath',
     'getCanonicalSiteUrl',
     'toAbsoluteSeoUrl',
     'normalizeAndFilterBlogEntries',
@@ -1551,6 +1560,14 @@ function verifySeoRuntimeScriptInvariants() {
       reason: 'Runtime SEO verifier should retain expectedChangeFrequencyForPath mapping helper',
     },
     {
+      pattern: /function isBlockedRoutePath\(pathname: string\): boolean/,
+      reason: 'Runtime SEO verifier should centralize blocked-route matching logic for exact/nested prefix checks',
+    },
+    {
+      pattern: /pathname === prefix \|\| pathname\.startsWith\(`\$\{prefix\}\/`\)/,
+      reason: 'Runtime SEO verifier blocked-route helper should allow similarly-prefixed public paths',
+    },
+    {
       pattern: /function normalizeNavigationRoute\(/,
       reason: 'Runtime SEO verifier should normalize navigation routes before sitemap coverage checks',
     },
@@ -1575,6 +1592,10 @@ function verifySeoRuntimeScriptInvariants() {
     {
       pattern: /const lowerCasedPath = collapsedPath\.toLowerCase\(\);/,
       reason: 'Runtime SEO verifier should canonicalize normalized navigation routes to lowercase',
+    },
+    {
+      pattern: /const isBlocked = isBlockedRoutePath\(normalizedRoute\);/,
+      reason: 'Runtime SEO verifier should enforce blocked-prefix filtering through shared helper in navigation normalization',
     },
     {
       pattern: /normalizedCompanyProfileOrigin/,
@@ -1603,6 +1624,10 @@ function verifySeoRuntimeScriptInvariants() {
     {
       pattern: /duplicateSlashPathUrls/,
       reason: 'Runtime SEO verifier should enforce duplicate-slash pathname rejection',
+    },
+    {
+      pattern: /const blockedUrlFound = entries\.find\(\(entry\) => \{[\s\S]*new URL\(entry\.url\)\.pathname[\s\S]*isBlockedRoutePath\(pathname\)/,
+      reason: 'Runtime SEO verifier should validate blocked-path presence using parsed pathname checks',
     },
     {
       pattern:

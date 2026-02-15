@@ -25,6 +25,12 @@ const CORE_STATIC_ROUTES = [
  */
 const APP_PAGES_DIR = path.join(process.cwd(), 'app', 'pages');
 
+function isBlockedRoutePath(pathname: string): boolean {
+  return SEO_BLOCKED_ROUTE_PREFIXES.some(
+    (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`),
+  );
+}
+
 function normalizeRoute(route: string): string | null {
   if (!route || typeof route !== 'string') {
     return null;
@@ -71,9 +77,7 @@ function normalizeRoute(route: string): string | null {
     return null;
   }
 
-  const isBlocked = SEO_BLOCKED_ROUTE_PREFIXES.some((prefix) =>
-    withoutTrailingSlash.startsWith(prefix),
-  );
+  const isBlocked = isBlockedRoutePath(withoutTrailingSlash);
 
   if (isBlocked) {
     return null;

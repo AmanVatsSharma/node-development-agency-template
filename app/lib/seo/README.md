@@ -109,7 +109,7 @@ It validates:
 - build pipeline enforcement (`npm run verify:seo` and `npm run verify:seo:runtime`) with scoped WASM fallback semantics and strict order before `prisma generate` / `next build`
 - CI workflow enforcement (runs SEO checks on push + pull_request)
 - shared policy constant usage (`SEO_BLOCKED_ROUTE_PREFIXES`, `SEO_ROBOTS_DISALLOW_PATHS`)
-- routes module invariants for `normalizeRoute` (exclude absolute/protocol-relative URLs, strip query/hash fragments, collapse duplicate slashes, lowercase canonicalization, dynamic placeholder filtering, `/sitemap.xml` and `/robots.txt` exclusion, blocked prefixes)
+- routes module invariants for `normalizeRoute` (exclude absolute/protocol-relative URLs, strip query/hash fragments, collapse duplicate slashes, lowercase canonicalization, dynamic placeholder filtering, `/sitemap.xml` and `/robots.txt` exclusion, blocked prefixes via exact/nested matching helper `isBlockedRoutePath`)
 - constants module invariants (`getCanonicalSiteUrl`, `toAbsoluteSeoUrl`, and shared robots disallow alias)
 - company profile SEO identity validity (`brandName`, `legalName`, `websiteUrl`, `contactEmail`, optional social URLs)
 - root layout metadata canonical configuration (`metadataBase`, canonical `/`, OG image constant)
@@ -124,7 +124,7 @@ It validates:
 - root layout structured data wiring (`OrganizationStructuredData` / `WebsiteStructuredData`) tied to `companyProfile`
 - structured data component defaults in `StructuredData.tsx` (`SEO_DEFAULT_DESCRIPTION`, `companyProfile` identity fields)
 - blog slug dynamic metadata invariants in `/pages/blog/[slug]/layout.tsx` (`generateMetadata`, DB lookup fallback, canonical path `/pages/blog/${slug}`)
-- runtime verifier script invariants in `scripts/verify-seo-runtime.ts` (`verifyCanonicalSeoConstants`, `verifySitemapOutput`, `verifyRobotsOutput`, `expectedPriorityForPath`, `expectedChangeFrequencyForPath`, `normalizeNavigationRoute` canonicalization, canonical-origin parity with `companyProfile.websiteUrl`, strict robots policy checks)
+- runtime verifier script invariants in `scripts/verify-seo-runtime.ts` (`verifyCanonicalSeoConstants`, `verifySitemapOutput`, `verifyRobotsOutput`, `expectedPriorityForPath`, `expectedChangeFrequencyForPath`, `normalizeNavigationRoute` canonicalization, blocked-path helper `isBlockedRoutePath`, canonical-origin parity with `companyProfile.websiteUrl`, strict robots policy checks)
 - removal of legacy static SEO generators
 - runtime sitemap and robots output behavior
   - canonical SEO constant validation (`SEO_SITE_URL`, `toAbsoluteSeoUrl`)
