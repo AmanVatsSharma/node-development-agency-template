@@ -112,6 +112,7 @@ It validates:
   - no duplicate/query/hash sitemap URLs
   - valid `lastModified` / `priority` / `changeFrequency` fields
   - critical route policy baselines (home/services/blog priorities/frequencies)
+  - navigation-driven route coverage in generated sitemap
 
 CI also runs the same check via:
 - `.github/workflows/seo-integrity.yml`

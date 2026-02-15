@@ -8,6 +8,7 @@
 import sitemap from '@/app/sitemap';
 import robots from '@/app/robots';
 import { getStaticSeoRoutes } from '@/app/lib/seo/routes';
+import { footerNavigation, mainNavigation, servicesMegaMenu } from '@/app/data/navigation';
 import {
   SEO_BLOCKED_ROUTE_PREFIXES,
   SEO_ROBOTS_DISALLOW_PATHS,
@@ -39,6 +40,81 @@ function isValidDateInput(value: unknown): boolean {
 
   const parsedDate = value instanceof Date ? value : new Date(String(value));
   return !Number.isNaN(parsedDate.getTime());
+}
+
+function normalizeNavigationRoute(route: string): string | null {
+  if (!route || typeof route !== 'string') {
+    return null;
+  }
+
+  const trimmedRoute = route.trim();
+  if (!trimmedRoute) {
+    return null;
+  }
+
+  if (trimmedRoute.startsWith('http://') || trimmedRoute.startsWith('https://')) {
+    return null;
+  }
+
+  const normalizedWithLeadingSlash = trimmedRoute.startsWith('/')
+    ? trimmedRoute
+    : `/${trimmedRoute}`;
+  const normalizedRoute =
+    normalizedWithLeadingSlash.length > 1
+      ? normalizedWithLeadingSlash.replace(/\/$/, '')
+      : normalizedWithLeadingSlash;
+
+  if (normalizedRoute === '/sitemap') {
+    return '/sitemap.xml';
+  }
+
+  if (normalizedRoute === '/sitemap.xml' || normalizedRoute === '/robots.txt') {
+    return null;
+  }
+
+  if (normalizedRoute.includes('[') || normalizedRoute.includes(']')) {
+    return null;
+  }
+
+  const isBlocked = SEO_BLOCKED_ROUTE_PREFIXES.some((prefix) =>
+    normalizedRoute.startsWith(prefix),
+  );
+  if (isBlocked) {
+    return null;
+  }
+
+  return normalizedRoute;
+}
+
+function getExpectedNavigationRoutesForSitemap(): string[] {
+  const routeSet = new Set<string>();
+
+  mainNavigation.forEach((item) => {
+    const normalized = normalizeNavigationRoute(item.link);
+    if (normalized) {
+      routeSet.add(normalized);
+    }
+  });
+
+  servicesMegaMenu.sections.forEach((section) => {
+    section.items.forEach((item) => {
+      const normalized = normalizeNavigationRoute(item.link);
+      if (normalized) {
+        routeSet.add(normalized);
+      }
+    });
+  });
+
+  Object.values(footerNavigation).forEach((linkGroup) => {
+    linkGroup.forEach((item) => {
+      const normalized = normalizeNavigationRoute(item.href);
+      if (normalized) {
+        routeSet.add(normalized);
+      }
+    });
+  });
+
+  return Array.from(routeSet).sort();
 }
 
 async function verifySitemapOutput(): Promise<void> {
@@ -224,9 +300,21 @@ async function verifySitemapOutput(): Promise<void> {
     });
   }
 
+  const expectedNavigationRoutes = getExpectedNavigationRoutesForSitemap();
+  const missingNavigationRoutes = expectedNavigationRoutes.filter(
+    (route) => !entryUrls.has(toAbsoluteSeoUrl(route)),
+  );
+  if (missingNavigationRoutes.length > 0) {
+    logError('Navigation routes missing in sitemap output', {
+      missingCount: missingNavigationRoutes.length,
+      sample: missingNavigationRoutes.slice(0, 10),
+    });
+  }
+
   logInfo('Sitemap runtime validation passed', {
     entryCount: entries.length,
     checkedStaticRouteCount: staticRoutes.length,
+    checkedNavigationRouteCount: expectedNavigationRoutes.length,
   });
 }
 
