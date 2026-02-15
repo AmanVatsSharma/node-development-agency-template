@@ -121,6 +121,7 @@ async function verifySitemapOutput(): Promise<void> {
   const entries = await sitemap();
   const entryUrls = new Set(entries.map((entry) => entry.url));
   const entriesByUrl = new Map(entries.map((entry) => [entry.url, entry]));
+  const entryUrlsInOrder = entries.map((entry) => entry.url);
   const staticRoutes = getStaticSeoRoutes();
   const now = Date.now();
   const allowedFrequencies = new Set([
@@ -144,6 +145,18 @@ async function verifySitemapOutput(): Promise<void> {
     logError('Duplicate sitemap URLs detected', {
       duplicateCount: duplicateUrls.length,
       sample: duplicateUrls.slice(0, 10),
+    });
+  }
+
+  const sortedEntryUrls = [...entryUrlsInOrder].sort((a, b) => a.localeCompare(b));
+  const firstUnsortedIndex = entryUrlsInOrder.findIndex(
+    (url, index) => url !== sortedEntryUrls[index],
+  );
+  if (firstUnsortedIndex >= 0) {
+    logError('Sitemap output should remain lexicographically sorted by URL', {
+      index: firstUnsortedIndex,
+      actual: entryUrlsInOrder[firstUnsortedIndex],
+      expected: sortedEntryUrls[firstUnsortedIndex],
     });
   }
 
@@ -275,11 +288,29 @@ async function verifySitemapOutput(): Promise<void> {
     });
   }
 
+  const invalidBlogPriorityEntries = blogDetailEntries.filter((entry) => entry.priority !== 0.78);
+  if (invalidBlogPriorityEntries.length > 0) {
+    logError('Blog detail pages should keep priority at 0.78', {
+      sample: invalidBlogPriorityEntries.slice(0, 10).map((entry) => ({
+        url: entry.url,
+        priority: entry.priority,
+      })),
+    });
+  }
+
   const requiredRoutes = ['/pages/contact', '/pages/services', '/pages/blog'];
   requiredRoutes.forEach((route) => {
     const routeUrl = toAbsoluteSeoUrl(route);
     if (!entryUrls.has(routeUrl)) {
       logError('Required sitemap route missing', { route, routeUrl });
+    }
+  });
+
+  const requiredLegalRoutes = ['/pages/legal/privacy-policy', '/pages/legal/terms-of-service'];
+  requiredLegalRoutes.forEach((route) => {
+    const routeUrl = toAbsoluteSeoUrl(route);
+    if (!entryUrls.has(routeUrl)) {
+      logError('Required legal sitemap route missing', { route, routeUrl });
     }
   });
 

@@ -113,6 +113,7 @@ It validates:
   - valid `lastModified` / `priority` / `changeFrequency` fields
   - critical route policy baselines (home/services/blog priorities/frequencies)
   - navigation-driven route coverage in generated sitemap
+  - deterministic URL sorting + required legal route presence
 
 CI also runs the same check via:
 - `.github/workflows/seo-integrity.yml`
