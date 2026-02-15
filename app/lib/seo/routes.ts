@@ -35,19 +35,32 @@ function normalizeRoute(route: string): string | null {
     return null;
   }
 
+  // Ignore fragment-only anchors and non-HTTP URL schemes.
+  if (
+    trimmed.startsWith('#') ||
+    trimmed.startsWith('mailto:') ||
+    trimmed.startsWith('tel:') ||
+    trimmed.startsWith('javascript:')
+  ) {
+    return null;
+  }
+
   // Normalize sitemap link to actual sitemap.xml endpoint
   if (trimmed === '/sitemap') {
     return '/sitemap.xml';
   }
 
   // Absolute URLs are not expected in local routing config.
-  if (trimmed.startsWith('http://') || trimmed.startsWith('https://')) {
+  if (trimmed.startsWith('http://') || trimmed.startsWith('https://') || trimmed.startsWith('//')) {
     return null;
   }
 
   const withLeadingSlash = trimmed.startsWith('/') ? trimmed : `/${trimmed}`;
+  const withoutQueryOrHash = withLeadingSlash.split(/[?#]/)[0] || '/';
+  const collapsedPath = withoutQueryOrHash.replace(/\/{2,}/g, '/');
+  const lowerCasedPath = collapsedPath.toLowerCase();
   const withoutTrailingSlash =
-    withLeadingSlash.length > 1 ? withLeadingSlash.replace(/\/$/, '') : withLeadingSlash;
+    lowerCasedPath.length > 1 ? lowerCasedPath.replace(/\/$/, '') : lowerCasedPath;
 
   if (withoutTrailingSlash === '/sitemap.xml' || withoutTrailingSlash === '/robots.txt') {
     return null;

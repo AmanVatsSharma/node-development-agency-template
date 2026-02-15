@@ -109,7 +109,7 @@ It validates:
 - build pipeline enforcement (`npm run verify:seo` and `npm run verify:seo:runtime`) with scoped WASM fallback semantics and strict order before `prisma generate` / `next build`
 - CI workflow enforcement (runs SEO checks on push + pull_request)
 - shared policy constant usage (`SEO_BLOCKED_ROUTE_PREFIXES`, `SEO_ROBOTS_DISALLOW_PATHS`)
-- routes module invariants for `normalizeRoute` (exclude absolute URLs, dynamic placeholders, `/sitemap.xml`, `/robots.txt`, blocked prefixes)
+- routes module invariants for `normalizeRoute` (exclude absolute/protocol-relative URLs, strip query/hash fragments, collapse duplicate slashes, lowercase canonicalization, dynamic placeholder filtering, `/sitemap.xml` and `/robots.txt` exclusion, blocked prefixes)
 - constants module invariants (`getCanonicalSiteUrl`, `toAbsoluteSeoUrl`, and shared robots disallow alias)
 - company profile SEO identity validity (`brandName`, `legalName`, `websiteUrl`, `contactEmail`, optional social URLs)
 - root layout metadata canonical configuration (`metadataBase`, canonical `/`, OG image constant)

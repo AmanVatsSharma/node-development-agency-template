@@ -738,8 +738,20 @@ function verifySeoRoutesImplementationInvariants() {
       reason: 'routes normalizeRoute should exclude dynamic placeholder routes',
     },
     {
-      pattern: /trimmed\.startsWith\('http:\/\/'\) \|\| trimmed\.startsWith\('https:\/\/'\)/,
-      reason: 'routes normalizeRoute should skip absolute URLs',
+      pattern: /trimmed\.startsWith\('http:\/\/'\) \|\| trimmed\.startsWith\('https:\/\/'\) \|\| trimmed\.startsWith\('\/\/'\)/,
+      reason: 'routes normalizeRoute should skip absolute and protocol-relative URLs',
+    },
+    {
+      pattern: /withLeadingSlash\.split\(\/\[\?#\]\/\)\[0\] \|\| '\/'/,
+      reason: 'routes normalizeRoute should strip query/hash fragments from sitemap paths',
+    },
+    {
+      pattern: /replace\(\/\\\/\{2,\}\/g,\s*'\/'\)/,
+      reason: 'routes normalizeRoute should collapse duplicate slash segments',
+    },
+    {
+      pattern: /const lowerCasedPath = collapsedPath\.toLowerCase\(\);/,
+      reason: 'routes normalizeRoute should canonicalize paths to lowercase',
     },
     {
       pattern: /SEO_BLOCKED_ROUTE_PREFIXES\.some\([\s\S]*withoutTrailingSlash\.startsWith\(prefix\)/,
