@@ -116,6 +116,7 @@ It validates:
   - critical route policy baselines (home/services/blog priorities/frequencies)
   - navigation-driven route coverage in generated sitemap
   - deterministic URL sorting + required legal route presence
+  - robots wildcard allow root + strict disallow policy consistency
 
 CI also runs the same check via:
 - `.github/workflows/seo-integrity.yml`

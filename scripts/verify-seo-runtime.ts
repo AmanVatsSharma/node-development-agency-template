@@ -369,15 +369,52 @@ function verifyRobotsOutput(): void {
     logError('Robots wildcard user-agent rule missing');
   }
 
+  const allowList = Array.isArray(rootRule.allow)
+    ? rootRule.allow
+    : [rootRule.allow].filter(Boolean);
+  if (!allowList.includes('/')) {
+    logError('Robots wildcard rule must explicitly allow root path "/"', {
+      allowList,
+    });
+  }
+
   const disallowList = Array.isArray(rootRule.disallow)
     ? rootRule.disallow
     : [rootRule.disallow].filter(Boolean);
+  const duplicateDisallowEntries = disallowList.filter(
+    (entry, index) => disallowList.indexOf(entry) !== index,
+  );
+  if (duplicateDisallowEntries.length > 0) {
+    logError('Robots disallow list contains duplicate entries', {
+      duplicateDisallowEntries,
+    });
+  }
+
   const requiredDisallowEntries = [...SEO_ROBOTS_DISALLOW_PATHS];
   const missingDisallowEntries = requiredDisallowEntries.filter(
     (entry) => !disallowList.includes(entry),
   );
   if (missingDisallowEntries.length > 0) {
     logError('Robots missing required disallow entries', { missingDisallowEntries });
+  }
+
+  const unexpectedDisallowEntries = disallowList.filter(
+    (entry) => !requiredDisallowEntries.includes(entry),
+  );
+  if (unexpectedDisallowEntries.length > 0) {
+    logError('Robots disallow list has unexpected entries', {
+      unexpectedDisallowEntries,
+    });
+  }
+
+  const disallowOutsideBlockedPrefixes = requiredDisallowEntries.filter(
+    (entry) => !SEO_BLOCKED_ROUTE_PREFIXES.includes(entry),
+  );
+  if (disallowOutsideBlockedPrefixes.length > 0) {
+    logError('Robots disallow policy must stay aligned with blocked route prefixes', {
+      disallowOutsideBlockedPrefixes,
+      blockedPrefixes: SEO_BLOCKED_ROUTE_PREFIXES,
+    });
   }
 
   logInfo('Robots runtime validation passed', {
