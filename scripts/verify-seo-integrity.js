@@ -10,8 +10,10 @@
  * 5. Legacy/placeholder domain tokens are not present in public route source code.
  * 6. Dynamic SEO routes exist (app/sitemap.ts and app/robots.ts).
  * 7. Navigation points to /sitemap.xml (not legacy /sitemap).
- * 8. Build pipeline runs SEO integrity + runtime checks.
- * 9. Legacy static SEO generator files are not present.
+ * 8. Package scripts expose verify:seo and verify:seo:runtime.
+ * 9. Build pipeline runs SEO integrity + runtime checks.
+ * 10. CI workflow executes SEO integrity + runtime checks.
+ * 11. Legacy static SEO generator files are not present.
  *
  * Usage:
  *   node scripts/verify-seo-integrity.js
@@ -25,6 +27,7 @@ const APP_DIR = path.join(ROOT_DIR, 'app');
 const PAGES_DIR = path.join(APP_DIR, 'pages');
 const NAVIGATION_FILE = path.join(APP_DIR, 'data', 'navigation.ts');
 const PACKAGE_JSON_PATH = path.join(ROOT_DIR, 'package.json');
+const SEO_CI_WORKFLOW_PATH = path.join(ROOT_DIR, '.github', 'workflows', 'seo-integrity.yml');
 
 const DYNAMIC_SEO_FILES = [path.join(APP_DIR, 'sitemap.ts'), path.join(APP_DIR, 'robots.ts')];
 const LEGACY_SEO_FILES = [
@@ -398,6 +401,65 @@ function verifyBuildPipelineSeoChecks() {
   return { passed: true, missingTokens: [] };
 }
 
+function verifySeoScriptsRegistered() {
+  if (!fs.existsSync(PACKAGE_JSON_PATH)) {
+    logError('package.json missing for script registration verification');
+    return { passed: false };
+  }
+
+  const packageJson = JSON.parse(fs.readFileSync(PACKAGE_JSON_PATH, 'utf8'));
+  const scripts = packageJson?.scripts;
+
+  if (!scripts || typeof scripts !== 'object') {
+    logError('Scripts section missing in package.json');
+    return { passed: false };
+  }
+
+  const requiredScriptKeys = ['verify:seo', 'verify:seo:runtime'];
+  const missingScriptKeys = requiredScriptKeys.filter((key) => !scripts[key]);
+
+  if (missingScriptKeys.length > 0) {
+    logError('Required SEO verification scripts are missing in package.json', {
+      missingScriptKeys,
+    });
+    return { passed: false, missingScriptKeys };
+  }
+
+  logInfo('SEO script registration check passed');
+  return { passed: true, missingScriptKeys: [] };
+}
+
+function verifySeoCiWorkflow() {
+  if (!fs.existsSync(SEO_CI_WORKFLOW_PATH)) {
+    logError('SEO CI workflow file missing', {
+      file: path.relative(ROOT_DIR, SEO_CI_WORKFLOW_PATH),
+    });
+    return { passed: false };
+  }
+
+  const workflowContent = fs.readFileSync(SEO_CI_WORKFLOW_PATH, 'utf8');
+  const requiredWorkflowTokens = ['npm run verify:seo', 'npm run verify:seo:runtime'];
+  const missingWorkflowTokens = requiredWorkflowTokens.filter(
+    (token) => !workflowContent.includes(token),
+  );
+
+  if (!/push:/m.test(workflowContent) || !/pull_request:/m.test(workflowContent)) {
+    logError('SEO workflow should run on both push and pull_request events');
+    return { passed: false };
+  }
+
+  if (missingWorkflowTokens.length > 0) {
+    logError('SEO CI workflow missing required verification commands', {
+      missingWorkflowTokens,
+      file: path.relative(ROOT_DIR, SEO_CI_WORKFLOW_PATH),
+    });
+    return { passed: false, missingWorkflowTokens };
+  }
+
+  logInfo('SEO CI workflow verification passed');
+  return { passed: true, missingWorkflowTokens: [] };
+}
+
 function verifyLegacyFilesRemoved() {
   const foundLegacyFiles = LEGACY_SEO_FILES.filter((filePath) => fs.existsSync(filePath));
 
@@ -423,7 +485,9 @@ function main() {
     verifyNoLegacyTokensInPublicCode(),
     verifyDynamicSeoFiles(),
     verifySitemapNavigationLink(),
+    verifySeoScriptsRegistered(),
     verifyBuildPipelineSeoChecks(),
+    verifySeoCiWorkflow(),
     verifyLegacyFilesRemoved(),
   ];
 
