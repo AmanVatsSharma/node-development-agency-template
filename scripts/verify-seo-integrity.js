@@ -1077,6 +1077,7 @@ function verifySeoModuleDocsConsistency() {
     'prisma generate',
     'verifyCanonicalSeoConstants',
     'verifySitemapOutput',
+    'expectedPriorityForPath',
     'generateMetadata',
     '/pages/blog/${slug}',
   ];
@@ -1485,6 +1486,51 @@ function verifySeoRuntimeScriptInvariants() {
     {
       pattern: /function verifyRobotsOutput\(\): void/,
       reason: 'Runtime SEO verifier should retain robots runtime validation entrypoint',
+    },
+    {
+      pattern: /function expectedPriorityForPath\(/,
+      reason: 'Runtime SEO verifier should retain expectedPriorityForPath mapping helper',
+    },
+    {
+      pattern: /function expectedChangeFrequencyForPath\(/,
+      reason: 'Runtime SEO verifier should retain expectedChangeFrequencyForPath mapping helper',
+    },
+    {
+      pattern: /entriesMissingPriority/,
+      reason: 'Runtime SEO verifier should enforce explicit priority presence for all sitemap entries',
+    },
+    {
+      pattern: /entriesMissingChangeFrequency/,
+      reason: 'Runtime SEO verifier should enforce explicit changeFrequency presence for all sitemap entries',
+    },
+    {
+      pattern: /entriesWithUnexpectedPriorityPolicy[\s\S]*expectedPriorityForPath\(pathname\)/,
+      reason: 'Runtime SEO verifier should validate full priority-policy mapping across sitemap entries',
+    },
+    {
+      pattern: /entriesWithUnexpectedFrequencyPolicy[\s\S]*expectedChangeFrequencyForPath\(pathname\)/,
+      reason: 'Runtime SEO verifier should validate full changeFrequency-policy mapping across sitemap entries',
+    },
+    {
+      pattern: /nonLowercasePathUrls/,
+      reason: 'Runtime SEO verifier should enforce lowercase sitemap pathname policy',
+    },
+    {
+      pattern: /duplicateSlashPathUrls/,
+      reason: 'Runtime SEO verifier should enforce duplicate-slash pathname rejection',
+    },
+    {
+      pattern:
+        /const requiredLegalRoutes = \[[\s\S]*\/pages\/legal\/privacy-policy[\s\S]*\/pages\/legal\/terms-of-service[\s\S]*\/pages\/legal\/shipping-policy[\s\S]*\/pages\/legal\/cancellations-refunds[\s\S]*\/pages\/legal\/company-info[\s\S]*\]/,
+      reason: 'Runtime SEO verifier should keep full legal-route coverage requirements',
+    },
+    {
+      pattern: /duplicateAllowEntries[\s\S]*unexpectedAllowEntries/,
+      reason: 'Runtime SEO verifier should enforce strict wildcard allow-list policy checks',
+    },
+    {
+      pattern: /disallowOrderMismatch/,
+      reason: 'Runtime SEO verifier should enforce deterministic robots disallow ordering checks',
     },
     {
       pattern:

@@ -123,7 +123,7 @@ It validates:
 - root layout structured data wiring (`OrganizationStructuredData` / `WebsiteStructuredData`) tied to `companyProfile`
 - structured data component defaults in `StructuredData.tsx` (`SEO_DEFAULT_DESCRIPTION`, `companyProfile` identity fields)
 - blog slug dynamic metadata invariants in `/pages/blog/[slug]/layout.tsx` (`generateMetadata`, DB lookup fallback, canonical path `/pages/blog/${slug}`)
-- runtime verifier script invariants in `scripts/verify-seo-runtime.ts` (`verifyCanonicalSeoConstants`, `verifySitemapOutput`, `verifyRobotsOutput`)
+- runtime verifier script invariants in `scripts/verify-seo-runtime.ts` (`verifyCanonicalSeoConstants`, `verifySitemapOutput`, `verifyRobotsOutput`, `expectedPriorityForPath`, strict robots policy checks)
 - removal of legacy static SEO generators
 - runtime sitemap and robots output behavior
   - canonical SEO constant validation (`SEO_SITE_URL`, `toAbsoluteSeoUrl`)
