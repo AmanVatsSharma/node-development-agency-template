@@ -1233,6 +1233,7 @@ function verifySeoModuleDocsConsistency() {
     'sitemap alias',
     'protocol-relative',
     'verifyMetadataHelperRuntimeBehavior',
+    'verifyBlogSlugMetadataRuntimeBehavior',
     'normalizeAndFilterBlogEntries',
     'mergeDuplicateSitemapEntry',
     'prisma generate',
@@ -1244,6 +1245,7 @@ function verifySeoModuleDocsConsistency() {
     'companyProfile.websiteUrl',
     'wildcard rule shape',
     'generateMetadata',
+    'normalizeBlogSlugForMetadata',
     '/pages/blog/${slug}',
   ];
 
@@ -1626,6 +1628,10 @@ function verifyBlogSlugMetadataImplementationInvariants() {
   const blogSlugLayoutContent = fs.readFileSync(BLOG_SLUG_LAYOUT_FILE, 'utf8');
   const requiredPatterns = [
     {
+      pattern: /function normalizeBlogSlugForMetadata\(rawSlug: string\): string/,
+      reason: 'Blog slug metadata should normalize raw slugs before canonical metadata generation',
+    },
+    {
       pattern: /export async function generateMetadata/,
       reason: 'Blog slug layout should expose generateMetadata for dynamic per-post SEO',
     },
@@ -1634,12 +1640,12 @@ function verifyBlogSlugMetadataImplementationInvariants() {
       reason: 'Blog slug metadata should use shared buildPageMetadata helper',
     },
     {
-      pattern: /path:\s*`\/pages\/blog\/\$\{slug\}`/,
-      reason: 'Blog slug metadata should canonicalize dynamic path as /pages/blog/${slug}',
+      pattern: /path:\s*`\/pages\/blog\/\$\{normalizedSlug\}`/,
+      reason: 'Blog slug metadata should canonicalize dynamic path using normalized slug value',
     },
     {
-      pattern: /prisma\.blogPost\.findUnique/,
-      reason: 'Blog slug metadata should attempt database-backed metadata lookup',
+      pattern: /prisma\.blogPost\.findUnique[\s\S]*where:\s*\{\s*slug:\s*normalizedSlug\s*\}/,
+      reason: 'Blog slug metadata should attempt database-backed lookup using normalized slug',
     },
     {
       pattern: /post\.excerpt/,
@@ -1694,6 +1700,10 @@ function verifySeoRuntimeScriptInvariants() {
       reason: 'Runtime SEO verifier should import buildPageMetadata for runtime metadata-helper behavior checks',
     },
     {
+      pattern: /import \{ generateMetadata as generateBlogSlugMetadata \} from ['"]@\/app\/pages\/blog\/\[slug\]\/layout['"]/,
+      reason: 'Runtime SEO verifier should import blog slug metadata generator for runtime slug-canonicalization checks',
+    },
+    {
       pattern: /import \{ companyProfile \} from ['"]@\/app\/data\/companyProfile['"]/,
       reason: 'Runtime SEO verifier should import companyProfile for canonical-origin parity checks',
     },
@@ -1713,6 +1723,14 @@ function verifySeoRuntimeScriptInvariants() {
     {
       pattern: /buildPageMetadata\(\{[\s\S]*Runtime SEO Metadata Helper Probe[\s\S]*\}\);/,
       reason: 'Runtime SEO verifier should execute buildPageMetadata probe coverage for normalization contracts',
+    },
+    {
+      pattern: /async function verifyBlogSlugMetadataRuntimeBehavior\(\): Promise<void>/,
+      reason: 'Runtime SEO verifier should retain runtime blog-slug metadata behavior validation entrypoint',
+    },
+    {
+      pattern: /generateBlogSlugMetadata\([\s\S]*Enterprise_AI--Launch\?\?[\s\S]*\)/,
+      reason: 'Runtime SEO verifier should probe malformed blog slug normalization behavior',
     },
     {
       pattern: /async function verifySitemapOutput\(\): Promise<void>/,
@@ -1847,8 +1865,8 @@ function verifySeoRuntimeScriptInvariants() {
     },
     {
       pattern:
-        /verifyCanonicalSeoConstants\(\);\s*verifyMetadataHelperRuntimeBehavior\(\);\s*await verifySitemapOutput\(\);\s*verifyRobotsOutput\(\);/,
-      reason: 'Runtime SEO verifier main flow should execute canonical, metadata helper, sitemap, then robots checks',
+        /verifyCanonicalSeoConstants\(\);\s*verifyMetadataHelperRuntimeBehavior\(\);\s*await verifyBlogSlugMetadataRuntimeBehavior\(\);\s*await verifySitemapOutput\(\);\s*verifyRobotsOutput\(\);/,
+      reason: 'Runtime SEO verifier main flow should execute canonical, metadata helper, blog slug, sitemap, then robots checks',
     },
     {
       pattern: /process\.exit\(1\);/,

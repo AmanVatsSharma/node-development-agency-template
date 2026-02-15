@@ -9,6 +9,7 @@ import sitemap from '@/app/sitemap';
 import robots from '@/app/robots';
 import { getStaticSeoRoutes } from '@/app/lib/seo/routes';
 import { buildPageMetadata } from '@/app/lib/seo/metadata';
+import { generateMetadata as generateBlogSlugMetadata } from '@/app/pages/blog/[slug]/layout';
 import { footerNavigation, mainNavigation, servicesMegaMenu } from '@/app/data/navigation';
 import { companyProfile } from '@/app/data/companyProfile';
 import {
@@ -220,6 +221,32 @@ function verifyMetadataHelperRuntimeBehavior(): void {
     canonicalPath,
     keywordCount: keywordList.length,
     ogImageUrl,
+  });
+}
+
+async function verifyBlogSlugMetadataRuntimeBehavior(): Promise<void> {
+  const metadata = await generateBlogSlugMetadata({
+    params: Promise.resolve({ slug: '  Enterprise_AI--Launch??  ' }),
+  });
+
+  const canonicalPath = metadata.alternates?.canonical;
+  if (canonicalPath !== '/pages/blog/enterprise-ai-launch') {
+    logError('Blog slug metadata should canonicalize malformed slugs into lowercase kebab-case path', {
+      expectedCanonicalPath: '/pages/blog/enterprise-ai-launch',
+      actualCanonicalPath: canonicalPath,
+    });
+  }
+
+  const resolvedTitle = typeof metadata.title === 'string' ? metadata.title : metadata.title?.toString();
+  if (!resolvedTitle || !resolvedTitle.includes('Enterprise Ai Launch')) {
+    logError('Blog slug metadata fallback title should humanize normalized slug', {
+      resolvedTitle,
+    });
+  }
+
+  logInfo('Blog slug metadata runtime validation passed', {
+    canonicalPath,
+    resolvedTitle,
   });
 }
 
@@ -881,6 +908,7 @@ async function main(): Promise<void> {
   logInfo('Starting runtime SEO verification');
   verifyCanonicalSeoConstants();
   verifyMetadataHelperRuntimeBehavior();
+  await verifyBlogSlugMetadataRuntimeBehavior();
   await verifySitemapOutput();
   verifyRobotsOutput();
   logInfo('Runtime SEO verification completed successfully');
