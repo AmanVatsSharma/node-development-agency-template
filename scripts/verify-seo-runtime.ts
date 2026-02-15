@@ -531,6 +531,23 @@ function verifyRobotsOutput(): void {
     });
   }
 
+  const duplicateAllowEntries = allowList.filter(
+    (entry, index) => allowList.indexOf(entry) !== index,
+  );
+  if (duplicateAllowEntries.length > 0) {
+    logError('Robots allow list contains duplicate entries', {
+      duplicateAllowEntries,
+    });
+  }
+
+  const unexpectedAllowEntries = allowList.filter((entry) => entry !== '/');
+  if (unexpectedAllowEntries.length > 0) {
+    logError('Robots wildcard allow list should only contain root path "/"', {
+      unexpectedAllowEntries,
+      allowList,
+    });
+  }
+
   const disallowList = Array.isArray(rootRule.disallow)
     ? rootRule.disallow
     : [rootRule.disallow].filter(Boolean);
