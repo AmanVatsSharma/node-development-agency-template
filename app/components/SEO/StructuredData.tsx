@@ -1,5 +1,6 @@
 import React from 'react';
 import { companyProfile } from '@/app/data/companyProfile';
+import { SEO_DEFAULT_DESCRIPTION } from '@/app/lib/seo/constants';
 
 interface OrganizationStructuredDataProps {
   name?: string;
@@ -122,7 +123,7 @@ export function OrganizationStructuredData({
 export function WebsiteStructuredData({
   url = defaultOrganization.url,
   name = defaultOrganization.name,
-  description = 'Premium Node.js development and 3D animation services for enterprise applications.',
+  description = SEO_DEFAULT_DESCRIPTION,
   publisher = defaultOrganization.name
 }: WebsiteStructuredDataProps) {
   const structuredData = {

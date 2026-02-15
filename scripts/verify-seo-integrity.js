@@ -22,7 +22,8 @@
  * 17. Private route no-index policy remains enforced (admin/login).
  * 18. OG image asset references are valid for metadata generation.
  * 19. Root structured data wiring stays aligned with company profile constants.
- * 20. Legacy static SEO generator files are not present.
+ * 20. Structured data component defaults align with shared SEO constants.
+ * 21. Legacy static SEO generator files are not present.
  *
  * Usage:
  *   node scripts/verify-seo-integrity.js
@@ -782,6 +783,7 @@ function verifySeoModuleDocsConsistency() {
     'npm run verify:seo:runtime',
     'SEO_BLOCKED_ROUTE_PREFIXES',
     'SEO_ROBOTS_DISALLOW_PATHS',
+    'SEO_DEFAULT_DESCRIPTION',
   ];
 
   const missingDocTokens = requiredDocTokens.filter((token) => !readmeContent.includes(token));
@@ -889,6 +891,54 @@ function verifyRootStructuredDataWiring() {
   }
 
   logInfo('Root structured data wiring check passed');
+  return { passed: true, violations: [] };
+}
+
+function verifyStructuredDataComponentInvariants() {
+  if (!fs.existsSync(SEO_STRUCTURED_DATA_FILE)) {
+    logError('Structured data component file missing for invariant checks', {
+      file: path.relative(ROOT_DIR, SEO_STRUCTURED_DATA_FILE),
+    });
+    return { passed: false };
+  }
+
+  const structuredDataContent = fs.readFileSync(SEO_STRUCTURED_DATA_FILE, 'utf8');
+  const requiredPatterns = [
+    {
+      pattern: /import\s*\{\s*SEO_DEFAULT_DESCRIPTION\s*\}\s*from\s*['"]@\/app\/lib\/seo\/constants['"]/,
+      reason: 'StructuredData component should import SEO_DEFAULT_DESCRIPTION from SEO constants',
+    },
+    {
+      pattern: /description\s*=\s*SEO_DEFAULT_DESCRIPTION/,
+      reason: 'WebsiteStructuredData default description should use SEO_DEFAULT_DESCRIPTION',
+    },
+    {
+      pattern: /name:\s*companyProfile\.brandName/,
+      reason: 'StructuredData default organization name should use companyProfile.brandName',
+    },
+    {
+      pattern: /url:\s*companyProfile\.websiteUrl/,
+      reason: 'StructuredData default organization URL should use companyProfile.websiteUrl',
+    },
+    {
+      pattern: /email:\s*companyProfile\.contactEmail/,
+      reason: 'StructuredData default contact email should use companyProfile.contactEmail',
+    },
+  ];
+
+  const violations = requiredPatterns
+    .filter(({ pattern }) => !pattern.test(structuredDataContent))
+    .map(({ reason }) => ({
+      file: path.relative(ROOT_DIR, SEO_STRUCTURED_DATA_FILE),
+      reason,
+    }));
+
+  if (violations.length > 0) {
+    logError('Structured data component invariant check failed', { violations });
+    return { passed: false, violations };
+  }
+
+  logInfo('Structured data component invariant check passed');
   return { passed: true, violations: [] };
 }
 
@@ -1018,6 +1068,7 @@ function main() {
     verifySeoModuleDocsConsistency(),
     verifyPrivateRouteNoIndexPolicy(),
     verifyRootStructuredDataWiring(),
+    verifyStructuredDataComponentInvariants(),
     verifyLegacyFilesRemoved(),
   ];
 
