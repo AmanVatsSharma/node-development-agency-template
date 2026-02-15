@@ -51,11 +51,6 @@ function normalizeRoute(route: string): string | null {
     return null;
   }
 
-  // Normalize sitemap link to actual sitemap.xml endpoint
-  if (trimmed === '/sitemap') {
-    return '/sitemap.xml';
-  }
-
   // Absolute URLs are not expected in local routing config.
   if (trimmed.startsWith('http://') || trimmed.startsWith('https://') || trimmed.startsWith('//')) {
     return null;
@@ -67,6 +62,11 @@ function normalizeRoute(route: string): string | null {
   const lowerCasedPath = collapsedPath.toLowerCase();
   const withoutTrailingSlash =
     lowerCasedPath.length > 1 ? lowerCasedPath.replace(/\/$/, '') : lowerCasedPath;
+
+  // Normalize sitemap aliases to canonical sitemap endpoint.
+  if (withoutTrailingSlash === '/sitemap') {
+    return '/sitemap.xml';
+  }
 
   if (withoutTrailingSlash === '/sitemap.xml' || withoutTrailingSlash === '/robots.txt') {
     return null;

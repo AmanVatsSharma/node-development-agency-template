@@ -732,6 +732,10 @@ function verifySeoRoutesImplementationInvariants() {
   const routesContent = fs.readFileSync(SEO_ROUTES_FILE, 'utf8');
   const requiredPatterns = [
     {
+      pattern: /if \(withoutTrailingSlash === ['"`]\/sitemap['"`]\) \{\s*return ['"`]\/sitemap\.xml['"`];\s*\}/,
+      reason: 'routes normalizeRoute should canonicalize sitemap aliases to /sitemap.xml after normalization',
+    },
+    {
       pattern: /if \(withoutTrailingSlash === ['"`]\/sitemap\.xml['"`] \|\| withoutTrailingSlash === ['"`]\/robots\.txt['"`]\) \{\s*return null;\s*\}/,
       reason: 'routes normalizeRoute should exclude sitemap.xml and robots.txt endpoints',
     },
@@ -1226,6 +1230,7 @@ function verifySeoModuleDocsConsistency() {
     'normalizeMetadataDescription',
     'normalizeMetadataImagePath',
     'normalizeMetadataKeywords',
+    'sitemap alias',
     'protocol-relative',
     'verifyMetadataHelperRuntimeBehavior',
     'normalizeAndFilterBlogEntries',
@@ -1762,6 +1767,14 @@ function verifySeoRuntimeScriptInvariants() {
     {
       pattern: /const isBlocked = isBlockedRoutePath\(normalizedRoute\);/,
       reason: 'Runtime SEO verifier should enforce blocked-prefix filtering through shared helper in navigation normalization',
+    },
+    {
+      pattern: /const sitemapAliasNormalization = normalizeNavigationRoute\('\/Sitemap\?ref=footer'\)/,
+      reason: 'Runtime SEO verifier should probe sitemap alias normalization behavior for navigation routes',
+    },
+    {
+      pattern: /const robotsNormalization = normalizeNavigationRoute\('\/robots\.txt'\)/,
+      reason: 'Runtime SEO verifier should probe robots endpoint exclusion from navigation sitemap candidates',
     },
     {
       pattern: /normalizedCompanyProfileOrigin/,

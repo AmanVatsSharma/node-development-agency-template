@@ -708,6 +708,24 @@ async function verifySitemapOutput(): Promise<void> {
   }
 
   const expectedNavigationRoutes = getExpectedNavigationRoutesForSitemap();
+
+  const sitemapAliasNormalization = normalizeNavigationRoute('/Sitemap?ref=footer');
+  if (sitemapAliasNormalization !== '/sitemap.xml') {
+    logError('normalizeNavigationRoute should canonicalize sitemap aliases to /sitemap.xml', {
+      input: '/Sitemap?ref=footer',
+      actual: sitemapAliasNormalization,
+      expected: '/sitemap.xml',
+    });
+  }
+
+  const robotsNormalization = normalizeNavigationRoute('/robots.txt');
+  if (robotsNormalization !== null) {
+    logError('normalizeNavigationRoute should exclude canonical robots endpoint from sitemap candidates', {
+      input: '/robots.txt',
+      actual: robotsNormalization,
+    });
+  }
+
   const missingNavigationRoutes = expectedNavigationRoutes.filter(
     (route) => !entryUrls.has(toAbsoluteSeoUrl(route)),
   );
