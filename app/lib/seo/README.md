@@ -1,0 +1,148 @@
+# SEO Module Documentation
+
+This module centralizes technical SEO behavior for the website.
+
+## Goals
+
+- Keep metadata consistent across all indexable pages.
+- Ensure canonical URLs always use the production domain.
+- Auto-generate indexing files (`/sitemap.xml`, `/robots.txt`) without manual edits.
+- Reduce SEO drift by using shared helpers instead of page-by-page hardcoded values.
+
+---
+
+## Module structure
+
+- `constants.ts`
+  - Canonical site URL resolver (`getCanonicalSiteUrl()`)
+  - Canonical URL normalization to origin-only form (drops path/query/hash)
+  - Brand/company SEO constants
+  - Shared blocked-route policy constants reused by sitemap + robots checks
+  - Absolute URL resolver utility (`toAbsoluteSeoUrl()`)
+- `metadata.ts`
+  - Reusable `buildPageMetadata()` helper for all pages/layouts
+- `routes.ts`
+  - Static route discovery from app/pages filesystem + navigation + core routes for sitemap generation
+
+---
+
+## Flowchart: Metadata + Indexing pipeline
+
+```mermaid
+flowchart TD
+  A[Page/Layout metadata file] --> B[buildPageMetadata]
+  B --> C[Canonical URL + OG + Twitter + Robots]
+  C --> D[Rendered HTML head tags]
+
+  E[Navigation config + core routes] --> F[getStaticSeoRoutes]
+  G[Blog DB entries + fallback posts] --> H[sitemap.ts]
+  F --> H
+  H --> I[/sitemap.xml]
+
+  J[robots.ts] --> K[/robots.txt]
+  I --> K
+
+  K --> L[Googlebot crawling + indexing]
+```
+
+---
+
+## How to add SEO for a new page
+
+1. Add page route in navigation (recommended), especially for service pages.
+2. Add metadata in that route’s `layout.tsx` or server `page.tsx`:
+   - Use `buildPageMetadata({ title, description, path, keywords })`.
+3. If the page is dynamic, implement `generateMetadata()`.
+4. If needed, add page-specific JSON-LD in the route layout.
+5. Verify route appears in `/sitemap.xml` and is allowed in `/robots.txt`.
+
+---
+
+## How auto-indexing works now
+
+### Sitemap
+- Source 1: static routes from `routes.ts` (`filesystem + core + navigation + footer`).
+- Source 2: dynamic blog slugs from DB (`BlogPost`) with fallback to static blog data.
+- Routes are normalized, deduplicated, and admin/api/login paths are excluded.
+
+### Robots
+- Allows public crawling.
+- Disallows:
+  - `/admin`
+  - `/api`
+  - `/login`
+- Publishes canonical sitemap endpoint.
+
+---
+
+## Maintenance checklist
+
+- [ ] Any new public page has metadata using `buildPageMetadata`.
+- [ ] Any new service page is linked in navigation/footer (for sitemap discovery).
+- [ ] Canonical path matches the real route.
+- [ ] JSON-LD has real organization/domain values (no placeholders).
+- [ ] `/sitemap.xml` includes expected new URLs.
+- [ ] `/robots.txt` still blocks private routes.
+
+---
+
+## Verification command
+
+Run the SEO integrity checker before merging major page/SEO changes:
+
+```bash
+npm run verify:seo
+npm run verify:seo:runtime
+```
+
+It validates:
+- metadata coverage for public routes
+- metadata helper usage (`buildPageMetadata` or approved metadata re-export pattern)
+- metadata `path` value alignment with actual route file path
+- explicit description requirement for every `buildPageMetadata` call (route-level uniqueness guardrail)
+- metadata OG image asset validity (default + explicit `imagePath` references)
+- absence of placeholder domain tokens in active metadata-bearing files
+- absence of legacy/placeholder domains in public route source (`app/pages/**/*.ts|tsx|js|jsx`)
+- dynamic sitemap/robots route existence
+- footer sitemap link policy (`/sitemap.xml` only; no `/sitemap`)
+- package script registration (`verify:seo`, `verify:seo:runtime`)
+- build pipeline enforcement (`npm run verify:seo` and `npm run verify:seo:runtime`) with scoped WASM fallback semantics and strict order before `prisma generate` / `next build`
+- CI workflow enforcement (runs SEO checks on push + pull_request)
+- shared policy constant usage (`SEO_BLOCKED_ROUTE_PREFIXES`, `SEO_ROBOTS_DISALLOW_PATHS`)
+- routes module invariants for `normalizeRoute` (exclude absolute/protocol-relative URLs, strip query/hash fragments, collapse duplicate slashes, lowercase canonicalization, sitemap alias canonicalization to `/sitemap.xml`, dynamic placeholder filtering, `/sitemap.xml` and `/robots.txt` exclusion, blocked prefixes via exact/nested matching helper `isBlockedRoutePath`)
+- constants module invariants (`getCanonicalSiteUrl`, `toAbsoluteSeoUrl` input sanitization for whitespace/query/hash + duplicate slash collapse + non-http/protocol-relative rejection, and shared robots disallow alias)
+- metadata helper invariants in `app/lib/seo/metadata.ts` (`normalizeMetadataTitle` blank-title fallback to brand identity, `normalizeMetadataPath` for canonical path hygiene + cross-origin path rejection, `normalizeMetadataDescription` empty-string fallback, `normalizeMetadataImagePath` scheme safety fallback, and `normalizeMetadataKeywords` for trimmed case-insensitive deduplication with first-form preservation before `buildPageMetadata` output)
+- company profile SEO identity validity (`brandName`, `legalName`, `websiteUrl`, `contactEmail`, optional social URLs)
+- root layout metadata canonical configuration (`metadataBase`, canonical `/`, OG image constant)
+- core SEO file placeholder audit (`app/layout.tsx`, structured data component, SEO constants)
+- sitemap/robots implementation invariants (helper usage, dedupe/sort, fallback behavior)
+- sitemap dynamic blog source invariants (`prisma.blogPost.findMany` with `slug` + `updatedAt`, desc ordering, fallback mapping, canonical `/pages/blog/${slug}` URLs, `normalizeAndFilterBlogEntries` slug/date sanitization, `mergeDuplicateSitemapEntry` deterministic conflict resolution by freshness)
+- sitemap operational logging invariants (DB-source count, fallback-source count, fallback error log, final generation summary)
+- sitemap implementation policy baselines in source (`getPriorityForRoute`, `getChangeFrequencyForRoute`, blog detail priority)
+- robots source invariants include wildcard `userAgent: "*"` with explicit root `allow: "/"`, shared disallow constants, and disallow hygiene helpers (`normalizeDisallowPath`, `getRobotsDisallowPaths`)
+- SEO module documentation consistency (flowchart + key command/policy references)
+- private route no-index policy checks (`app/admin/layout.tsx`, `app/login/page.tsx`)
+- root layout structured data wiring (`OrganizationStructuredData` / `WebsiteStructuredData`) tied to `companyProfile`
+- structured data component defaults in `StructuredData.tsx` (`SEO_DEFAULT_DESCRIPTION`, `companyProfile` identity fields, `normalizeSameAsUrls` HTTPS/fragment-safe social URL sanitization)
+- blog slug dynamic metadata invariants in `/pages/blog/[slug]/layout.tsx` (`generateMetadata`, `normalizeBlogSlugForMetadata`, DB lookup fallback, canonical path `/pages/blog/${slug}`)
+- runtime verifier script invariants in `scripts/verify-seo-runtime.ts` (`verifyCanonicalSeoConstants`, `verifyMetadataHelperRuntimeBehavior`, `verifyStructuredDataRuntimeBehavior`, `verifyBlogSlugMetadataRuntimeBehavior`, `verifyNavigationSourceRouteHygiene` with exact-one canonical `/sitemap.xml` navigation link policy, `verifySitemapOutput`, `verifyRobotsOutput`, `expectedPriorityForPath`, `expectedChangeFrequencyForPath`, `normalizeNavigationRoute` canonicalization + sitemap/robots route probes, blocked-path helper `isBlockedRoutePath`, canonical-origin parity with `companyProfile.websiteUrl`, strict robots policy checks)
+- removal of legacy static SEO generators
+- runtime sitemap and robots output behavior
+  - canonical SEO constant validation (`SEO_SITE_URL`, `toAbsoluteSeoUrl`)
+  - canonical origin consistency between `SEO_SITE_URL` and `companyProfile.websiteUrl`
+  - absolute canonical sitemap URLs only
+  - lowercase sitemap pathname policy with no duplicate slash segments
+  - no trailing slash URLs except canonical homepage
+  - no duplicate/query/hash sitemap URLs
+  - valid `lastModified` / `priority` / `changeFrequency` fields (and all entries must explicitly define `priority` + `changeFrequency`)
+  - full priority + changeFrequency policy mapping validation for every sitemap URL pathname (not just spot checks)
+  - critical route policy baselines (home/services/contact/blog priorities/frequencies)
+  - blog detail coverage baseline (at least one blog detail URL) with lowercase kebab-case slug URLs
+  - navigation-driven route coverage in generated sitemap
+  - deterministic URL sorting + full legal route presence
+  - legal route changeFrequency baseline stays `monthly`
+  - robots wildcard rule shape is deterministic (single `*` rule, first in list) with strict allow-list (`allow: "/"` only) + strict disallow policy consistency (including deterministic disallow ordering + normalized disallow path format)
+
+CI also runs the same check via:
+- `.github/workflows/seo-integrity.yml`
+

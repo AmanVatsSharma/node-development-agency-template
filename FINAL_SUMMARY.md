@@ -49,7 +49,7 @@ A modern, enterprise-grade content management system with:
 ```json
 {
   "scripts": {
-    "build": "prisma generate && npm run generate-seo && next build",
+    "build": "prisma generate && npm run build:wasm || echo \"⚠️ WASM build skipped\" && next build",
     "postinstall": "prisma generate"
   }
 }

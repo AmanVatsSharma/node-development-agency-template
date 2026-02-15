@@ -21,7 +21,7 @@ export default function LocalBusinessGoogleAdsPage() {
     console.log('[Local-Business-Google-Ads] Page mounted');
     if (typeof window !== 'undefined' && (window as any).gtag) {
       (window as any).gtag('event', 'page_view', {
-        page_title: 'Local Business Google Ads | Local SEO & Ads | Rajapragya Bharat',
+        page_title: 'Local Business Google Ads | Local SEO & Ads | Enterprise Hero',
         page_location: window.location.href,
         page_path: '/pages/local-business-google-ads'
       });

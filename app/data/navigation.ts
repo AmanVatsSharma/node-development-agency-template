@@ -363,7 +363,7 @@ export const footerNavigation = {
     { href: "/pages/legal/cancellations-refunds", label: "Cancellations & Refunds" },
     { href: "/pages/legal/shipping-policy", label: "Shipping Policy" },
     { href: "/pages/legal/company-info", label: "Company Info" },
-    { href: "/sitemap", label: "Sitemap" },
+    { href: "/sitemap.xml", label: "Sitemap" },
   ],
 };
 

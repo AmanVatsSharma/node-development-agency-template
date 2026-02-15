@@ -1,58 +1,18 @@
 import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
 
-export const metadata: Metadata = {
-  title: 'Enterprise Google Ads Management | Dedicated PPC Team | Rajapragya Bharat',
-  description: 'Complete enterprise Google Ads management with dedicated team, advanced strategies, and 24/7 monitoring. ₹75K-₹2L+/month. 8.5× average ROAS, 98% client retention.',
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Enterprise Google Ads Management Services',
+  description:
+    'Scale large ad accounts with dedicated PPC operations, advanced campaign strategy, and executive reporting.',
+  path: '/pages/enterprise-google-ads-management',
   keywords: [
     'enterprise google ads management',
     'dedicated ppc team',
-    'enterprise digital marketing',
-    'google ads agency enterprise',
-    'ppc management enterprise',
-    'google ads dedicated team',
-    'enterprise advertising',
-    'large business google ads',
-    'enterprise ppc services',
-    'dedicated account manager',
-    'enterprise marketing agency',
-    'google ads enterprise solutions'
+    'large account ppc management',
+    'enterprise paid search services',
   ],
-  openGraph: {
-    title: 'Enterprise Google Ads Management | Dedicated PPC Team',
-    description: 'Complete enterprise Google Ads management with dedicated team, advanced strategies, and 24/7 monitoring. 8.5× average ROAS.',
-    type: 'website',
-    locale: 'en_IN',
-    siteName: 'Rajapragya Bharat',
-    images: [
-      {
-        url: '/og-enterprise-google-ads.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'Enterprise Google Ads Management - Dedicated PPC Team'
-      }
-    ]
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Enterprise Google Ads Management | Dedicated PPC Team',
-    description: 'Complete enterprise Google Ads management with dedicated team, advanced strategies, and 24/7 monitoring.',
-    images: ['/og-enterprise-google-ads.jpg']
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
-  },
-  alternates: {
-    canonical: '/pages/enterprise-google-ads-management'
-  }
-};
+});
 
 export default function EnterpriseGoogleAdsLayout({
   children,

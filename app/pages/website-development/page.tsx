@@ -1,4 +1,5 @@
 import React from "react";
+import type { Metadata } from "next";
 import { SectionErrorBoundary } from "@/app/components/common/SectionErrorBoundary";
 import { HeroSection } from "./_components/hero-section";
 import { ServicesSection } from "./_components/services-section";
@@ -10,6 +11,20 @@ import { ContactSection } from "./_components/contact-section";
 import { HeroParallax } from "@/app/components/ui/hero-parallax";
 import { StickyScroll } from "@/app/components/ui/sticky-scroll-reveal";
 import { Spotlight } from "@/app/components/ui/spotlight";
+import { buildPageMetadata } from "@/app/lib/seo/metadata";
+
+export const metadata: Metadata = buildPageMetadata({
+  title: "Website Development Services | Enterprise Hero",
+  description:
+    "Build premium business websites that are fast, conversion-focused, mobile-ready, and SEO-optimized with Enterprise Hero.",
+  path: "/pages/website-development",
+  keywords: [
+    "website development services",
+    "custom website development",
+    "business website agency",
+    "seo optimized website development",
+  ],
+});
 
 const products = [
   {

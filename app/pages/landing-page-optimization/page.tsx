@@ -21,7 +21,7 @@ export default function LandingPageOptimizationPage() {
     console.log('[Landing-Page-Optimization] Page mounted');
     if (typeof window !== 'undefined' && (window as any).gtag) {
       (window as any).gtag('event', 'page_view', {
-        page_title: 'Landing Page Optimization | Conversion Optimization | Rajapragya Bharat',
+        page_title: 'Landing Page Optimization | Conversion Optimization | Enterprise Hero',
         page_location: window.location.href,
         page_path: '/pages/landing-page-optimization'
       });

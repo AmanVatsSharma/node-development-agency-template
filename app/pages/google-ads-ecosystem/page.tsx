@@ -103,7 +103,7 @@ export default function GoogleAdsEcosystemPage() {
     // Track page view for Google Analytics
     if (typeof window !== 'undefined' && (window as any).gtag) {
       (window as any).gtag('event', 'page_view', {
-        page_title: 'Google Ads Ecosystem | Complete PPC Services | Rajapragya Bharat',
+        page_title: 'Google Ads Ecosystem | Complete PPC Services | Enterprise Hero',
         page_location: window.location.href,
         page_path: '/pages/google-ads-ecosystem'
       });

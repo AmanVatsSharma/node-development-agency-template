@@ -7,12 +7,20 @@ import { TechnologiesSection } from "./_components/technologies-section";
 import { FeatureCta } from "./_components/feature-cta-section";
 import { Cta } from "./_components/cta-section";
 import { SectionErrorBoundary } from "@/app/components/common/SectionErrorBoundary";
+import { buildPageMetadata } from "@/app/lib/seo/metadata";
 
-export const metadata: Metadata = {
-  title: "Our Services | DevAgency - Premium Web Development Agency",
-  description: "Explore our comprehensive range of web development, design, and digital marketing services tailored to help your business succeed online.",
-  keywords: "web development services, UI/UX design, mobile app development, digital marketing, SEO services, custom web development",
-};
+export const metadata: Metadata = buildPageMetadata({
+  title: "Website Services | Enterprise Hero",
+  description:
+    "Comprehensive website services including UX, development, optimization, and growth support for businesses worldwide.",
+  path: "/pages/website-services",
+  keywords: [
+    "website services",
+    "web development services",
+    "ui ux services",
+    "business website optimization",
+  ],
+});
 
 export default function ServicesPage() {
   return (

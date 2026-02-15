@@ -79,7 +79,7 @@ export default function GoogleAdsManagementPage() {
     // Track page view for Google Analytics
     if (typeof window !== 'undefined' && (window as any).gtag) {
       (window as any).gtag('event', 'page_view', {
-        page_title: 'Google Ads Management Service | Rajapragya Bharat',
+        page_title: 'Google Ads Management Service | Enterprise Hero',
         page_location: window.location.href,
         page_path: '/pages/google-ads-management'
       });

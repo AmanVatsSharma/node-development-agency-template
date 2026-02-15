@@ -1,10 +1,20 @@
 import type { Metadata } from "next";
+import { buildPageMetadata } from "@/app/lib/seo/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: "Shipping Policy | Enterprise Hero - Vedpragya Bharat Private Limited",
-  description: "Shipping Policy for Vedpragya Bharat Private Limited (Enterprise Hero). This policy explains that shipping is not applicable for our service-based business.",
-  keywords: "shipping policy, service-based business, Vedpragya Bharat, Enterprise Hero, no shipping, digital services",
-};
+  description:
+    "Shipping Policy for Vedpragya Bharat Private Limited (Enterprise Hero). This policy explains that shipping is not applicable for our service-based business.",
+  path: "/pages/legal/shipping-policy",
+  keywords: [
+    "shipping policy",
+    "service-based business",
+    "Vedpragya Bharat",
+    "Enterprise Hero",
+    "no shipping",
+    "digital services",
+  ],
+});
 
 /**
  * @fileoverview Shipping Policy Page - Not Applicable for Service-Based Business

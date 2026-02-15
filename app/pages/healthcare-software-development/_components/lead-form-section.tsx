@@ -8,6 +8,7 @@
 
 import React, { useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
+import { companyProfile } from '@/app/data/companyProfile';
 import { 
   User, 
   Mail, 
@@ -27,6 +28,7 @@ import {
 } from 'lucide-react';
 
 console.log('[Healthcare-Software-Dev] LeadFormSection component loaded');
+const CONTACT_EMAIL = companyProfile.contactEmail;
 
 export function LeadFormSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -590,7 +592,7 @@ export function LeadFormSection() {
                   <Mail className="w-6 h-6" />
                   <div>
                     <div className="font-semibold">Email Us</div>
-                    <div className="text-green-100">healthcare@vedpragyabharat.com</div>
+                    <div className="text-green-100">{CONTACT_EMAIL}</div>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">

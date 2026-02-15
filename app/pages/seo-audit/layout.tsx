@@ -1,4 +1,6 @@
 import { metadata } from './metadata';
+import { companyProfile } from '@/app/data/companyProfile';
+import { toAbsoluteSeoUrl } from '@/app/lib/seo/constants';
 
 export { metadata };
 
@@ -51,8 +53,8 @@ function StructuredData() {
     "serviceType": "SEO Audit & Consulting",
     "provider": {
       "@type": "Organization",
-      "name": "Your Agency Name",
-      "url": "https://yourwebsite.com"
+      "name": companyProfile.legalName,
+      "url": companyProfile.websiteUrl
     },
     "areaServed": {
       "@type": "Country",
@@ -109,13 +111,13 @@ function StructuredData() {
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "https://yourwebsite.com"
+        "item": toAbsoluteSeoUrl('/')
       },
       {
         "@type": "ListItem",
         "position": 2,
         "name": "SEO Audit",
-        "item": "https://yourwebsite.com/pages/seo-audit"
+        "item": toAbsoluteSeoUrl('/pages/seo-audit')
       }
     ]
   };

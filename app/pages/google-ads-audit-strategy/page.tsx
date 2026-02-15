@@ -21,7 +21,7 @@ export default function GoogleAdsAuditStrategyPage() {
     console.log('[Google-Ads-Audit] Page mounted');
     if (typeof window !== 'undefined' && (window as any).gtag) {
       (window as any).gtag('event', 'page_view', {
-        page_title: 'Google Ads Audit & Strategy | Campaign Analysis | Rajapragya Bharat',
+        page_title: 'Google Ads Audit & Strategy | Campaign Analysis | Enterprise Hero',
         page_location: window.location.href,
         page_path: '/pages/google-ads-audit-strategy'
       });

@@ -29,6 +29,7 @@
 
 import { Metadata } from 'next';
 import dynamic from 'next/dynamic';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
 
 // Import components
 import HeroSection from '@/app/components/shopify/HeroSection';
@@ -46,49 +47,18 @@ import ContactFormSection from '@/app/components/shopify/ContactFormSection';
 console.log('[ShopifyStorePage] Page component loaded');
 
 // SEO Metadata
-export const metadata: Metadata = {
-  title: 'Custom Shopify Store Setup & Conversion Optimization | Vedpragya Bharat',
-  description: 'Launch a high-converting Shopify store designed for sales, speed, and scale. Premium custom UI/UX, CRO-driven layouts, and automation. From ₹35,000. Book free consultation.',
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Custom Shopify Store Setup & Conversion Optimization',
+  description:
+    'Launch a high-converting Shopify store with custom UX, conversion optimization, and growth-ready implementation.',
+  path: '/pages/shopify-store-setup',
   keywords: [
     'shopify store setup',
-    'shopify development agency',
-    'custom shopify design',
+    'custom shopify development',
     'shopify conversion optimization',
-    'shopify expert india',
-    'd2c store setup',
-    'e-commerce solutions',
-    'shopify plus development',
     'shopify theme customization',
-    'online store development',
   ],
-  authors: [{ name: 'Vedpragya Bharat' }],
-  openGraph: {
-    title: 'Custom Shopify Store Setup & Conversion Optimization',
-    description: 'We build high-converting Shopify stores designed for sales, speed, and scale — backed by data-driven UX and automation.',
-    type: 'website',
-    locale: 'en_US',
-    siteName: 'Vedpragya Bharat',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Custom Shopify Store Setup & Conversion Optimization',
-    description: 'Launch a Shopify store that actually sells. Premium custom design, CRO, and automation.',
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
-  },
-  alternates: {
-    canonical: '/pages/shopify-store-setup',
-  },
-};
+});
 
 /**
  * Main Shopify Store Setup Landing Page Component

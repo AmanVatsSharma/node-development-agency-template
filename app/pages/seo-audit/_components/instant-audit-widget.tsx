@@ -134,7 +134,7 @@ export function InstantAuditWidget() {
                 value={formData.url}
                 onChange={handleChange}
                 required
-                placeholder="https://yourwebsite.com"
+                placeholder="https://example.com"
                 className="h-11 sm:h-12 text-sm sm:text-base"
                 disabled={loading}
               />

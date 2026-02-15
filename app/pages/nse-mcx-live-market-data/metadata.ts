@@ -5,6 +5,9 @@
  */
 
 import { Metadata } from 'next';
+import { companyProfile } from '@/app/data/companyProfile';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+import { toAbsoluteSeoUrl } from '@/app/lib/seo/constants';
 
 /**
  * Primary Keywords (Target Audience: Algo Traders, Fintech Apps, Brokers):
@@ -18,101 +21,20 @@ import { Metadata } from 'next';
  * - "Market data vendor India"
  */
 
-export const metadata: Metadata = {
-  // Primary Title - 60 chars optimal
-  title: 'NSE & MCX Live Market Data API | Real-Time Trading Data | Vedpragya',
-  
-  // Meta Description - 155-160 chars optimal
-  description: 'Ultra-fast NSE, BSE & MCX live market data API. Millisecond-level tick data, options chain, F&O streaming via REST & WebSocket. 99.99% uptime. Start free trial today!',
-  
-  // Keywords for SEO
+export const metadata: Metadata = buildPageMetadata({
+  title: 'NSE & MCX Live Market Data API | Real-Time Trading Data',
+  description:
+    'Ultra-fast NSE, BSE, and MCX market data APIs with real-time streaming, low latency, and stable uptime for fintech and trading apps.',
+  path: '/pages/nse-mcx-live-market-data',
   keywords: [
-    'NSE live data API',
-    'MCX real-time market data',
-    'stock market API India',
-    'BSE live data feed',
-    'live trading data API',
-    'NSE F&O data API',
-    'options chain data API',
-    'tick by tick data India',
-    'market depth API',
+    'nse live data api',
+    'mcx market data api',
+    'bse live feed api',
+    'real-time market data',
     'algo trading data feed',
-    'real-time stock prices',
-    'WebSocket market data',
-    'low latency market data',
-    'historical stock data API',
-    'market data vendor India',
-    'TrueData alternative',
-    'trading data provider'
-  ].join(', '),
-  
-  // Open Graph (Social sharing)
-  openGraph: {
-    type: 'website',
-    locale: 'en_IN',
-    url: 'https://vedpragyabharat.com/nse-mcx-live-market-data',
-    siteName: 'Vedpragya Bharat',
-    title: 'NSE & MCX Live Market Data API - Real-Time Trading Data',
-    description: 'Ultra-fast live market data API for NSE, BSE & MCX. Millisecond-level accuracy. Perfect for algo trading, fintech apps & research platforms.',
-    images: [
-      {
-        url: '/market-data-api-og.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'NSE MCX Live Market Data API Services'
-      }
-    ]
-  },
-  
-  // Twitter Card
-  twitter: {
-    card: 'summary_large_image',
-    site: '@VedpragyaBharat',
-    creator: '@VedpragyaBharat',
-    title: 'NSE & MCX Live Market Data API',
-    description: 'Ultra-fast real-time market data for algo trading & fintech apps. 99.99% uptime.',
-    images: ['/market-data-api-og.jpg']
-  },
-  
-  // Additional Meta Tags
-  other: {
-    'geo.region': 'IN',
-    'geo.placename': 'India',
-    'language': 'English',
-    'target': 'Traders, Developers, Fintech Companies',
-    'audience': 'Professional Traders, Algorithmic Trading Firms, Fintech Startups',
-    'coverage': 'India',
-    'distribution': 'India',
-    'rating': 'General',
-    'revisit-after': '3 days',
-    'author': 'Vedpragya Bharat Pvt. Ltd.',
-    'reply-to': 'contact@vedpragyabharat.com',
-  },
-  
-  // Robots
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
-  },
-  
-  // Canonical URL
-  alternates: {
-    canonical: 'https://vedpragyabharat.com/nse-mcx-live-market-data'
-  },
-  
-  // Icons
-  icons: {
-    icon: '/favicon.ico',
-    apple: '/apple-touch-icon.png'
-  },
-};
+    'websocket market data',
+  ],
+});
 
 /**
  * Structured Data for Google Rich Results
@@ -139,9 +61,9 @@ export const structuredData = {
   },
   'provider': {
     '@type': 'Organization',
-    'name': 'Vedpragya Bharat Pvt. Ltd.',
-    'url': 'https://vedpragyabharat.com',
-    'logo': 'https://vedpragyabharat.com/logo.png'
+    'name': companyProfile.legalName,
+    'url': companyProfile.websiteUrl,
+    'logo': toAbsoluteSeoUrl('/logo.png')
   },
   'description': 'Ultra-fast NSE, BSE & MCX live market data API with millisecond-level accuracy. REST & WebSocket support for real-time trading applications.'
 };

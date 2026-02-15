@@ -8,6 +8,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { companyProfile } from '@/app/data/companyProfile';
 import { 
   Phone, 
   MessageSquare, 
@@ -21,6 +22,7 @@ import {
 } from 'lucide-react';
 
 console.log('[Healthcare-Software-Dev] MobileFloatingCTA component loaded');
+const CONTACT_EMAIL = companyProfile.contactEmail;
 
 export function MobileFloatingCTA() {
   const [isVisible, setIsVisible] = useState(false);
@@ -81,7 +83,7 @@ export function MobileFloatingCTA() {
         value: 1
       });
     }
-    window.open('mailto:healthcare@vedpragyabharat.com?subject=Healthcare Software Development Inquiry', '_self');
+    window.open(`mailto:${CONTACT_EMAIL}?subject=Healthcare Software Development Inquiry`, '_self');
   };
 
   const handleConsultation = () => {
@@ -198,7 +200,7 @@ export function MobileFloatingCTA() {
               <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
                 <div className="text-center text-sm text-gray-500 dark:text-gray-400">
                   <div>+91 98765 43210</div>
-                  <div>healthcare@vedpragyabharat.com</div>
+                  <div>{CONTACT_EMAIL}</div>
                 </div>
               </div>
             </motion.div>

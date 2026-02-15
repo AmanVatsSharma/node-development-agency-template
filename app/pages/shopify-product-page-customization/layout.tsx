@@ -5,6 +5,8 @@
  */
 
 import { metadata as pageMetadata } from './metadata';
+import { companyProfile } from '@/app/data/companyProfile';
+import { toAbsoluteSeoUrl } from '@/app/lib/seo/constants';
 
 console.log('[Shopify-Product-Page] Layout component loaded');
 
@@ -35,14 +37,14 @@ export default function ShopifyProductPageLayout({
               'Professional Shopify product page customization services with custom Liquid, JavaScript, and dynamic features to boost conversions.',
             provider: {
               '@type': 'Organization',
-              name: 'Vedpragya Bharat Pvt. Ltd.',
-              url: 'https://vedpragyabharat.com',
-              logo: 'https://vedpragyabharat.com/logo.png',
+              name: companyProfile.legalName,
+              url: companyProfile.websiteUrl,
+              logo: toAbsoluteSeoUrl('/logo.png'),
               contactPoint: {
                 '@type': 'ContactPoint',
-                telephone: '+91-YOUR-NUMBER',
                 contactType: 'Sales',
                 areaServed: 'IN',
+                email: companyProfile.contactEmail,
                 availableLanguage: ['en', 'hi'],
               },
             },
@@ -71,19 +73,19 @@ export default function ShopifyProductPageLayout({
                 '@type': 'ListItem',
                 position: 1,
                 name: 'Home',
-                item: 'https://vedpragyabharat.com',
+                item: toAbsoluteSeoUrl('/'),
               },
               {
                 '@type': 'ListItem',
                 position: 2,
                 name: 'Services',
-                item: 'https://vedpragyabharat.com/services',
+                item: toAbsoluteSeoUrl('/pages/services'),
               },
               {
                 '@type': 'ListItem',
                 position: 3,
                 name: 'Shopify Product Page Customization',
-                item: 'https://vedpragyabharat.com/pages/shopify-product-page-customization',
+                item: toAbsoluteSeoUrl('/pages/shopify-product-page-customization'),
               },
             ],
           }),

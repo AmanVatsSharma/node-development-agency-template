@@ -13,6 +13,9 @@ import { Textarea } from '@/app/components/ui/textarea';
 import { Label } from '@/app/components/ui/label';
 import { Phone, MessageCircle, ArrowRight, CheckCircle, Mail } from 'lucide-react';
 import { fireConversion } from '@/utils/conversions';
+import { companyProfile } from '@/app/data/companyProfile';
+
+const CONTACT_EMAIL = companyProfile.contactEmail;
 
 interface FormData {
   name: string;
@@ -210,7 +213,7 @@ export function LeadFormSection() {
                   </a>
 
                   <a 
-                    href="mailto:info@vedpragyabharat.com"
+                    href={`mailto:${CONTACT_EMAIL}`}
                     className="flex items-center gap-3 p-4 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-xl border-2 border-blue-500/30 hover:border-blue-500/60 active:scale-95 transition-all group"
                   >
                     <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-600 to-cyan-600 flex items-center justify-center">
@@ -218,7 +221,7 @@ export function LeadFormSection() {
                     </div>
                     <div>
                       <div className="text-xs font-bold text-gray-400">Email</div>
-                      <div className="font-black text-sm text-white">info@vedpragyabharat.com</div>
+                      <div className="font-black text-sm text-white">{CONTACT_EMAIL}</div>
                     </div>
                   </a>
                 </div>

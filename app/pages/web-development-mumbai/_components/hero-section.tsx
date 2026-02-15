@@ -18,9 +18,11 @@ import React, { useEffect, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Button } from '@/app/components/ui/button';
 import { HeroHighlight, Highlight } from '@/app/components/ui/hero-highlight';
+import { companyProfile } from '@/app/data/companyProfile';
 import { MapPin, Phone, Star, Code, Globe, Zap, Award, Users, Clock, CheckCircle, ArrowRight } from 'lucide-react';
 
 console.log('[Mumbai-Web-Development] HeroSection component loaded');
+const CONTACT_DOMAIN = companyProfile.websiteUrl.replace(/^https?:\/\//, '');
 
 export function HeroSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -286,7 +288,7 @@ function WebsiteShowcase() {
             </div>
             <div className="flex-1 mx-4">
               <div className="h-6 bg-white border border-slate-200 rounded px-3 flex items-center">
-                <span className="text-xs text-slate-600">mumbaiwebdev.com</span>
+                <span className="text-xs text-slate-600">{CONTACT_DOMAIN}</span>
               </div>
             </div>
           </div>

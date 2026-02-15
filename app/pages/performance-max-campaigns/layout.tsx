@@ -1,58 +1,18 @@
 import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
 
-export const metadata: Metadata = {
-  title: 'Performance Max Campaigns | AI-Powered Ads | Rajapragya Bharat',
-  description: 'Expert Performance Max campaigns with AI optimization, multi-network reach, and automated bidding. ₹40K-₹90K/month. 4.5× average ROAS, 35% more conversions.',
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Performance Max Campaign Management Services',
+  description:
+    'Run high-performing Google Performance Max campaigns with strategic setup, continuous optimization, and conversion-focused reporting.',
+  path: '/pages/performance-max-campaigns',
   keywords: [
     'performance max campaigns',
-    'google ads performance max',
-    'ai powered ads',
-    'multi network campaigns',
-    'automated bidding',
-    'google ads ai',
-    'performance max optimization',
-    'smart campaigns',
-    'ai advertising',
-    'google ads automation',
-    'performance max management',
-    'ai campaign optimization'
+    'google performance max management',
+    'ai powered ads optimization',
+    'google ads automation services',
   ],
-  openGraph: {
-    title: 'Performance Max Campaigns | AI-Powered Ads',
-    description: 'Expert Performance Max campaigns with AI optimization, multi-network reach, and automated bidding. 4.5× average ROAS, 35% more conversions.',
-    type: 'website',
-    locale: 'en_IN',
-    siteName: 'Rajapragya Bharat',
-    images: [
-      {
-        url: '/og-performance-max-campaigns.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'Performance Max Campaigns - AI-Powered Ads'
-      }
-    ]
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Performance Max Campaigns | AI-Powered Ads',
-    description: 'Expert Performance Max campaigns with AI optimization, multi-network reach, and automated bidding. 4.5× average ROAS.',
-    images: ['/og-performance-max-campaigns.jpg']
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
-  },
-  alternates: {
-    canonical: '/pages/performance-max-campaigns'
-  }
-};
+});
 
 export default function PerformanceMaxCampaignsLayout({
   children,

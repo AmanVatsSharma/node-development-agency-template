@@ -1,83 +1,25 @@
 import type { Metadata } from 'next';
+import { companyProfile } from '@/app/data/companyProfile';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+import { toAbsoluteSeoUrl } from '@/app/lib/seo/constants';
 
 /**
  * SEO Metadata for AI Chatbot Development Landing Page
  * Optimized for Google Ads and organic search in India
  */
-export const metadata: Metadata = {
-  title: 'AI Chatbot Development for Businesses | Custom Chatbot Integration – Vedpragya Bharat',
-  description: 'Build custom AI chatbots for your website, WhatsApp & CRM. Boost sales and automate support using OpenAI GPT chatbots. Trusted by 50+ businesses across India. ₹49,000 onwards.',
+export const metadata: Metadata = buildPageMetadata({
+  title: 'AI Chatbot Development for Businesses | Custom Chatbot Integration',
+  description:
+    'Build custom AI chatbots for your website, WhatsApp, and CRM to automate support and improve lead conversion.',
+  path: '/pages/ai-chatbot-development',
   keywords: [
-    'ai chatbot for business',
-    'chatbot development india',
-    'custom chatbot',
-    'ai automation india',
-    'business chatbot developer',
-    'whatsapp chatbot',
-    'openai chatbot',
-    'gpt chatbot development',
+    'ai chatbot development',
+    'business chatbot automation',
+    'whatsapp chatbot integration',
+    'custom gpt chatbot',
     'crm chatbot integration',
-    'ai customer support',
-    'chatbot development company india',
-    'conversational ai india'
   ],
-  authors: [{ name: 'Vedpragya Bharat Pvt. Ltd.' }],
-  creator: 'Vedpragya Bharat Pvt. Ltd.',
-  publisher: 'Vedpragya Bharat Pvt. Ltd.',
-  
-  // Open Graph
-  openGraph: {
-    type: 'website',
-    locale: 'en_IN',
-    url: 'https://vedpragyabharat.com/pages/ai-chatbot-development',
-    title: 'AI Chatbot Development for Businesses | Vedpragya Bharat',
-    description: 'Build custom AI chatbots for your website, WhatsApp & CRM. Boost sales and automate support using OpenAI GPT chatbots. Starting from ₹49,000.',
-    siteName: 'Vedpragya Bharat',
-    images: [
-      {
-        url: '/ai-chatbot-og-image.jpg', // You'll need to create this
-        width: 1200,
-        height: 630,
-        alt: 'AI Chatbot Development Services'
-      }
-    ]
-  },
-  
-  // Twitter Card
-  twitter: {
-    card: 'summary_large_image',
-    title: 'AI Chatbot Development for Businesses | Vedpragya Bharat',
-    description: 'Build custom AI chatbots for your website, WhatsApp & CRM. Boost sales and automate support.',
-    images: ['/ai-chatbot-og-image.jpg'],
-    creator: '@vedpragyabharat'
-  },
-  
-  // Additional metadata
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
-  },
-  
-  // Verification
-  verification: {
-    google: 'your-google-verification-code',
-  },
-  
-  // Alternates
-  alternates: {
-    canonical: 'https://vedpragyabharat.com/pages/ai-chatbot-development',
-  },
-  
-  // Category
-  category: 'Technology',
-};
+});
 
 /**
  * Structured Data for SEO
@@ -86,10 +28,10 @@ export const metadata: Metadata = {
 export const structuredData = {
   '@context': 'https://schema.org',
   '@type': 'ProfessionalService',
-  name: 'AI Chatbot Development Services - Vedpragya Bharat',
+  name: `AI Chatbot Development Services - ${companyProfile.brandName}`,
   description: 'Custom AI chatbot development for businesses using OpenAI GPT, Claude, and Gemini. Website, WhatsApp, and CRM integration services.',
-  url: 'https://vedpragyabharat.com/pages/ai-chatbot-development',
-  image: 'https://vedpragyabharat.com/ai-chatbot-og-image.jpg',
+  url: toAbsoluteSeoUrl('/pages/ai-chatbot-development'),
+  image: toAbsoluteSeoUrl('/logo.png'),
   
   address: {
     '@type': 'PostalAddress',
@@ -167,7 +109,7 @@ export const structuredData = {
   
   areaServed: {
     '@type': 'Country',
-    name: 'India'
+    name: 'Global'
   },
   
   hasOfferCatalog: {

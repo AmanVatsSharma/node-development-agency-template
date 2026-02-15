@@ -21,7 +21,7 @@ export default function YouTubeAdvertisingManagementPage() {
     console.log('[YouTube-Advertising] Page mounted');
     if (typeof window !== 'undefined' && (window as any).gtag) {
       (window as any).gtag('event', 'page_view', {
-        page_title: 'YouTube Advertising Management | Video Ads | Rajapragya Bharat',
+        page_title: 'YouTube Advertising Management | Video Ads | Enterprise Hero',
         page_location: window.location.href,
         page_path: '/pages/youtube-advertising-management'
       });

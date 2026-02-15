@@ -10,6 +10,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Button } from '@/app/components/ui/button';
+import { companyProfile } from '@/app/data/companyProfile';
 import { 
   Phone, 
   Mail, 
@@ -27,6 +28,7 @@ import {
 } from 'lucide-react';
 
 console.log('[Mumbai-Web-Development] LeadFormSection component loaded');
+const CONTACT_EMAIL = companyProfile.contactEmail;
 
 export function LeadFormSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -283,7 +285,7 @@ export function LeadFormSection() {
                     <Mail className="h-6 w-6 text-white" />
                   </div>
                   <div>
-                    <div className="font-semibold text-slate-900 dark:text-white">hello@mumbaiwebdev.com</div>
+                    <div className="font-semibold text-slate-900 dark:text-white">{CONTACT_EMAIL}</div>
                     <div className="text-sm text-slate-600 dark:text-slate-400">Email us your requirements</div>
                   </div>
                 </div>

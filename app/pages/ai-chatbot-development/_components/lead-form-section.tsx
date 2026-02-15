@@ -178,7 +178,7 @@ export function LeadFormSection() {
                   type="url"
                   value={formData.website}
                   onChange={handleChange}
-                  placeholder="https://yourwebsite.com"
+                  placeholder="https://example.com"
                   className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 dark:border-gray-600 focus:border-[#FFB100] dark:focus:border-[#FFB100] transition-all"
                 />
               </div>

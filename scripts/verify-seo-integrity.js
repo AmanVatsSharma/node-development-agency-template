@@ -1,0 +1,2063 @@
+/**
+ * @fileoverview SEO Integrity Verification Script
+ * @description Validates technical SEO guardrails to prevent regressions.
+ *
+ * Checks performed:
+ * 1. Every public route under app/pages has metadata coverage.
+ * 2. Metadata definitions use the shared SEO metadata builder.
+ * 3. Metadata canonical path aligns with the actual file route.
+ * 4. Metadata builder calls define explicit descriptions.
+ * 5. Placeholder SEO tokens are not present in active metadata-bearing files.
+ * 6. Legacy/placeholder domain tokens are not present in public route source code.
+ * 7. Dynamic SEO routes exist (app/sitemap.ts and app/robots.ts).
+ * 8. Navigation points to /sitemap.xml (not legacy /sitemap).
+ * 9. Package scripts expose verify:seo and verify:seo:runtime.
+ * 10. Build pipeline runs SEO integrity + runtime checks with safe failure semantics and strict ordering.
+ * 11. CI workflow executes SEO integrity + runtime checks.
+ * 12. Shared SEO policy constants are used across routes/robots modules.
+ * 13. SEO routes module normalization invariants are preserved.
+ * 14. SEO constants module invariants are preserved.
+ * 15. SEO metadata helper invariants are preserved.
+ * 16. Company profile SEO identity (brand/legal/website/email/social) is valid and non-placeholder.
+ * 17. Root layout metadata uses canonical SEO constants.
+ * 18. Core SEO files are free of placeholder/legacy tokens.
+ * 19. Sitemap/robots implementation invariants and policy baselines are preserved.
+ * 20. SEO module docs stay aligned with implementation checkpoints.
+ * 21. Private route no-index policy remains enforced (admin/login).
+ * 22. OG image asset references are valid for metadata generation.
+ * 23. Root structured data wiring stays aligned with company profile constants.
+ * 24. Structured data component defaults align with shared SEO constants.
+ * 25. Blog slug dynamic metadata invariants are preserved.
+ * 26. Runtime SEO verification script invariants are preserved.
+ * 27. Legacy static SEO generator files are not present.
+ *
+ * Usage:
+ *   node scripts/verify-seo-integrity.js
+ */
+
+const fs = require('fs');
+const path = require('path');
+
+const ROOT_DIR = process.cwd();
+const APP_DIR = path.join(ROOT_DIR, 'app');
+const PAGES_DIR = path.join(APP_DIR, 'pages');
+const PUBLIC_DIR = path.join(ROOT_DIR, 'public');
+const APP_LAYOUT_FILE = path.join(APP_DIR, 'layout.tsx');
+const ADMIN_LAYOUT_FILE = path.join(APP_DIR, 'admin', 'layout.tsx');
+const LOGIN_PAGE_FILE = path.join(APP_DIR, 'login', 'page.tsx');
+const SEO_STRUCTURED_DATA_FILE = path.join(APP_DIR, 'components', 'SEO', 'StructuredData.tsx');
+const SEO_CONSTANTS_FILE = path.join(APP_DIR, 'lib', 'seo', 'constants.ts');
+const SEO_METADATA_HELPER_FILE = path.join(APP_DIR, 'lib', 'seo', 'metadata.ts');
+const SEO_README_FILE = path.join(APP_DIR, 'lib', 'seo', 'README.md');
+const SITEMAP_FILE = path.join(APP_DIR, 'sitemap.ts');
+const BLOG_SLUG_LAYOUT_FILE = path.join(APP_DIR, 'pages', 'blog', '[slug]', 'layout.tsx');
+const NAVIGATION_FILE = path.join(APP_DIR, 'data', 'navigation.ts');
+const ROBOTS_FILE = path.join(APP_DIR, 'robots.ts');
+const SEO_ROUTES_FILE = path.join(APP_DIR, 'lib', 'seo', 'routes.ts');
+const COMPANY_PROFILE_FILE = path.join(APP_DIR, 'data', 'companyProfile.ts');
+const PACKAGE_JSON_PATH = path.join(ROOT_DIR, 'package.json');
+const SEO_RUNTIME_SCRIPT_FILE = path.join(ROOT_DIR, 'scripts', 'verify-seo-runtime.ts');
+const SEO_CI_WORKFLOW_PATH = path.join(ROOT_DIR, '.github', 'workflows', 'seo-integrity.yml');
+
+const DYNAMIC_SEO_FILES = [path.join(APP_DIR, 'sitemap.ts'), path.join(APP_DIR, 'robots.ts')];
+const LEGACY_SEO_FILES = [
+  path.join(ROOT_DIR, 'scripts', 'generate-seo-files.js'),
+  path.join(ROOT_DIR, 'utils', 'sitemap.ts'),
+];
+
+const PLACEHOLDER_PATTERNS = [
+  'yourdomain.com',
+  'yourwebsite.com',
+  'Your Agency Name',
+  'your-google-verification-code',
+  'your-google-site-verification-code',
+  'rajapragya.com',
+  'mumbaiwebdev.com',
+  'vedpragyabharat.com',
+];
+
+function logInfo(message, data = undefined) {
+  if (data) {
+    console.log(`[SEO-VERIFY] ${message}`, data);
+    return;
+  }
+  console.log(`[SEO-VERIFY] ${message}`);
+}
+
+function logError(message, data = undefined) {
+  if (data) {
+    console.error(`[SEO-VERIFY] ${message}`, data);
+    return;
+  }
+  console.error(`[SEO-VERIFY] ${message}`);
+}
+
+function walkFiles(directoryPath) {
+  const entries = fs.readdirSync(directoryPath, { withFileTypes: true });
+  const filePaths = [];
+
+  entries.forEach((entry) => {
+    const fullPath = path.join(directoryPath, entry.name);
+    if (entry.isDirectory()) {
+      filePaths.push(...walkFiles(fullPath));
+      return;
+    }
+    filePaths.push(fullPath);
+  });
+
+  return filePaths;
+}
+
+function routeFromPageFile(filePath) {
+  return filePath.replace(PAGES_DIR, '').replace(/\/page\.(tsx|ts|jsx|js|mdx)$/, '');
+}
+
+function hasMetadataForRoute(routeDirectoryPath) {
+  const candidates = [
+    path.join(routeDirectoryPath, 'metadata.ts'),
+    path.join(routeDirectoryPath, 'layout.tsx'),
+    path.join(routeDirectoryPath, 'page.tsx'),
+  ];
+
+  for (const candidate of candidates) {
+    if (!fs.existsSync(candidate)) {
+      continue;
+    }
+    const fileContent = fs.readFileSync(candidate, 'utf8');
+    if (
+      /export const metadata/.test(fileContent) ||
+      /export async function generateMetadata/.test(fileContent)
+    ) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+function verifyMetadataCoverage() {
+  const pageFiles = walkFiles(PAGES_DIR).filter((filePath) =>
+    /\/page\.(tsx|ts|jsx|js|mdx)$/.test(filePath),
+  );
+
+  const missingRoutes = [];
+
+  pageFiles.forEach((pageFilePath) => {
+    const routePath = routeFromPageFile(pageFilePath);
+    const routeDirectoryPath = path.dirname(pageFilePath);
+    const hasMetadata = hasMetadataForRoute(routeDirectoryPath);
+    if (!hasMetadata) {
+      missingRoutes.push(routePath || '/');
+    }
+  });
+
+  if (missingRoutes.length > 0) {
+    logError('Missing metadata coverage for routes', { missingRoutes });
+    return { passed: false, missingRoutes };
+  }
+
+  logInfo('Metadata coverage check passed', { routeCount: pageFiles.length });
+  return { passed: true, missingRoutes: [] };
+}
+
+function verifyMetadataUsesSharedBuilder() {
+  const metadataBearingFiles = walkFiles(PAGES_DIR).filter((filePath) =>
+    /(metadata\.ts|layout\.tsx|page\.tsx)$/.test(filePath),
+  );
+
+  const violations = [];
+
+  metadataBearingFiles.forEach((filePath) => {
+    const fileContent = fs.readFileSync(filePath, 'utf8');
+
+    if (!/export const metadata/.test(fileContent)) {
+      return;
+    }
+
+    const usesSharedBuilder = /buildPageMetadata\(/.test(fileContent);
+    if (usesSharedBuilder) {
+      return;
+    }
+
+    const metadataAliasImportMatch = fileContent.match(
+      /import\s*\{\s*metadata\s+as\s+([A-Za-z0-9_$]+)\s*[^}]*\}\s*from\s*['"]\.\/metadata['"]/,
+    );
+    const metadataAlias = metadataAliasImportMatch ? metadataAliasImportMatch[1] : null;
+
+    const reExportsMetadataFromSiblingFile =
+      Boolean(metadataAlias) &&
+      new RegExp(`export\\s+const\\s+metadata(?:\\s*:\\s*Metadata)?\\s*=\\s*${metadataAlias}\\s*;?`).test(
+        fileContent,
+      );
+
+    if (reExportsMetadataFromSiblingFile) {
+      return;
+    }
+
+    violations.push({
+      file: path.relative(ROOT_DIR, filePath),
+      reason: 'metadata export should use buildPageMetadata() or re-export from ./metadata',
+    });
+  });
+
+  if (violations.length > 0) {
+    logError('Metadata helper usage check failed', { violations });
+    return { passed: false, violations };
+  }
+
+  logInfo('Metadata helper usage check passed');
+  return { passed: true, violations: [] };
+}
+
+function expectedRouteFromMetadataFile(filePath) {
+  const relativeDirectory = path.relative(PAGES_DIR, path.dirname(filePath));
+  if (!relativeDirectory) {
+    return '/pages';
+  }
+
+  return `/pages/${relativeDirectory.split(path.sep).join('/')}`;
+}
+
+function normalizeComparableRoute(routePath) {
+  if (!routePath || typeof routePath !== 'string') {
+    return routePath;
+  }
+
+  const withoutTrailingSlash =
+    routePath.length > 1 ? routePath.replace(/\/$/, '') : routePath;
+
+  return withoutTrailingSlash
+    .replace(/\$\{[^}]+\}/g, '[dynamic]')
+    .replace(/\[[^\]]+\]/g, '[dynamic]');
+}
+
+function verifyMetadataPathAlignment() {
+  const metadataBuilderFiles = walkFiles(PAGES_DIR).filter((filePath) =>
+    /(metadata\.ts|layout\.tsx|page\.tsx)$/.test(filePath),
+  );
+
+  const violations = [];
+  let checkedCallCount = 0;
+
+  metadataBuilderFiles.forEach((filePath) => {
+    const fileContent = fs.readFileSync(filePath, 'utf8');
+    if (!/buildPageMetadata\(/.test(fileContent)) {
+      return;
+    }
+
+    const expectedRoute = expectedRouteFromMetadataFile(filePath);
+    const expectedComparableRoute = normalizeComparableRoute(expectedRoute);
+    const metadataCallPattern = /buildPageMetadata\(\s*\{([\s\S]*?)\}\s*\)/g;
+    const metadataCalls = [...fileContent.matchAll(metadataCallPattern)];
+
+    metadataCalls.forEach((callMatch) => {
+      checkedCallCount += 1;
+      const metadataObjectBody = callMatch[1];
+      const pathMatch = metadataObjectBody.match(/path\s*:\s*([`'"])(.*?)\1/);
+
+      if (!pathMatch) {
+        violations.push({
+          file: path.relative(ROOT_DIR, filePath),
+          expectedRoute,
+          reason: 'Missing `path` field in buildPageMetadata options.',
+        });
+        return;
+      }
+
+      const pathValue = pathMatch[2];
+      const actualComparableRoute = normalizeComparableRoute(pathValue);
+
+      if (actualComparableRoute !== expectedComparableRoute) {
+        violations.push({
+          file: path.relative(ROOT_DIR, filePath),
+          expectedRoute,
+          actualPath: pathValue,
+          reason: 'Metadata path does not align with file route.',
+          line: findLineNumber(fileContent, pathMatch[0]),
+        });
+      }
+    });
+  });
+
+  if (violations.length > 0) {
+    logError('Metadata path alignment check failed', { violations });
+    return { passed: false, violations };
+  }
+
+  logInfo('Metadata path alignment check passed', { checkedCallCount });
+  return { passed: true, violations: [] };
+}
+
+function verifyMetadataExplicitDescriptions() {
+  const metadataBuilderFiles = walkFiles(PAGES_DIR).filter((filePath) =>
+    /(metadata\.ts|layout\.tsx|page\.tsx)$/.test(filePath),
+  );
+
+  const metadataCallPattern = /buildPageMetadata\(\s*\{([\s\S]*?)\}\s*\)/g;
+  const violations = [];
+  let checkedCallCount = 0;
+
+  metadataBuilderFiles.forEach((filePath) => {
+    const fileContent = fs.readFileSync(filePath, 'utf8');
+    if (!/buildPageMetadata\(/.test(fileContent)) {
+      return;
+    }
+
+    const metadataCalls = [...fileContent.matchAll(metadataCallPattern)];
+    metadataCalls.forEach((callMatch) => {
+      checkedCallCount += 1;
+      const metadataObjectBody = callMatch[1];
+      const descriptionFieldMatch = metadataObjectBody.match(/description\s*:/);
+
+      if (!descriptionFieldMatch) {
+        violations.push({
+          file: path.relative(ROOT_DIR, filePath),
+          reason: 'buildPageMetadata call should include explicit description for route-level uniqueness.',
+        });
+      }
+    });
+  });
+
+  if (violations.length > 0) {
+    logError('Metadata explicit description check failed', { violations });
+    return { passed: false, violations };
+  }
+
+  logInfo('Metadata explicit description check passed', { checkedCallCount });
+  return { passed: true, violations: [] };
+}
+
+function isHttpUrl(value) {
+  return /^https?:\/\//.test(value);
+}
+
+function toPublicAssetPath(rootRelativePath) {
+  return path.join(PUBLIC_DIR, rootRelativePath.replace(/^\/+/, ''));
+}
+
+function verifyMetadataImageAssets() {
+  const violations = [];
+
+  if (!fs.existsSync(SEO_CONSTANTS_FILE)) {
+    logError('SEO constants file missing for image asset validation', {
+      file: path.relative(ROOT_DIR, SEO_CONSTANTS_FILE),
+    });
+    return { passed: false };
+  }
+
+  const seoConstantsContent = fs.readFileSync(SEO_CONSTANTS_FILE, 'utf8');
+  const defaultImageMatch = seoConstantsContent.match(
+    /SEO_DEFAULT_OG_IMAGE_PATH\s*=\s*([`'"])(.*?)\1/,
+  );
+
+  if (!defaultImageMatch) {
+    violations.push({
+      file: path.relative(ROOT_DIR, SEO_CONSTANTS_FILE),
+      reason: 'SEO_DEFAULT_OG_IMAGE_PATH constant missing or not a string literal',
+    });
+  } else {
+    const defaultImagePath = defaultImageMatch[2];
+    if (isHttpUrl(defaultImagePath)) {
+      // Absolute URLs are allowed and intentionally skipped for local file checks.
+    } else if (!defaultImagePath.startsWith('/')) {
+      violations.push({
+        file: path.relative(ROOT_DIR, SEO_CONSTANTS_FILE),
+        reason: 'SEO_DEFAULT_OG_IMAGE_PATH must be root-relative or absolute URL',
+        value: defaultImagePath,
+      });
+    } else {
+      const defaultImageAssetPath = toPublicAssetPath(defaultImagePath);
+      if (!fs.existsSync(defaultImageAssetPath)) {
+        violations.push({
+          file: path.relative(ROOT_DIR, SEO_CONSTANTS_FILE),
+          reason: 'SEO_DEFAULT_OG_IMAGE_PATH points to missing public asset',
+          value: defaultImagePath,
+          expectedAsset: path.relative(ROOT_DIR, defaultImageAssetPath),
+        });
+      }
+    }
+  }
+
+  const metadataBuilderFiles = walkFiles(PAGES_DIR).filter((filePath) =>
+    /(metadata\.ts|layout\.tsx|page\.tsx)$/.test(filePath),
+  );
+  const metadataCallPattern = /buildPageMetadata\(\s*\{([\s\S]*?)\}\s*\)/g;
+
+  metadataBuilderFiles.forEach((filePath) => {
+    const fileContent = fs.readFileSync(filePath, 'utf8');
+    if (!/buildPageMetadata\(/.test(fileContent)) {
+      return;
+    }
+
+    const metadataCalls = [...fileContent.matchAll(metadataCallPattern)];
+    metadataCalls.forEach((callMatch) => {
+      const metadataObjectBody = callMatch[1];
+      const imagePathMatch = metadataObjectBody.match(/imagePath\s*:\s*([`'"])(.*?)\1/);
+      if (!imagePathMatch) {
+        return;
+      }
+
+      const imagePathValue = imagePathMatch[2];
+      if (isHttpUrl(imagePathValue)) {
+        return;
+      }
+
+      if (!imagePathValue.startsWith('/')) {
+        violations.push({
+          file: path.relative(ROOT_DIR, filePath),
+          reason: 'imagePath must be root-relative or absolute URL',
+          value: imagePathValue,
+          line: findLineNumber(fileContent, imagePathMatch[0]),
+        });
+        return;
+      }
+
+      const imageAssetPath = toPublicAssetPath(imagePathValue);
+      if (!fs.existsSync(imageAssetPath)) {
+        violations.push({
+          file: path.relative(ROOT_DIR, filePath),
+          reason: 'imagePath points to missing public asset',
+          value: imagePathValue,
+          expectedAsset: path.relative(ROOT_DIR, imageAssetPath),
+          line: findLineNumber(fileContent, imagePathMatch[0]),
+        });
+      }
+    });
+  });
+
+  if (violations.length > 0) {
+    logError('Metadata image asset verification failed', { violations });
+    return { passed: false, violations };
+  }
+
+  logInfo('Metadata image asset verification passed');
+  return { passed: true, violations: [] };
+}
+
+function verifyNoPlaceholderTokens() {
+  const relevantFiles = walkFiles(PAGES_DIR).filter((filePath) =>
+    /(metadata\.ts|layout\.tsx|page\.tsx)$/.test(filePath),
+  );
+
+  const violations = [];
+
+  relevantFiles.forEach((filePath) => {
+    const fileContent = fs.readFileSync(filePath, 'utf8');
+
+    if (!/metadata|generateMetadata|application\/ld\+json/.test(fileContent)) {
+      return;
+    }
+
+    PLACEHOLDER_PATTERNS.forEach((placeholderToken) => {
+      if (fileContent.includes(placeholderToken)) {
+        violations.push({
+          file: path.relative(ROOT_DIR, filePath),
+          placeholderToken,
+        });
+      }
+    });
+  });
+
+  if (violations.length > 0) {
+    logError('Placeholder SEO tokens found', { violations });
+    return { passed: false, violations };
+  }
+
+  logInfo('Placeholder token check passed');
+  return { passed: true, violations: [] };
+}
+
+function findLineNumber(content, token) {
+  const firstMatchIndex = content.indexOf(token);
+  if (firstMatchIndex < 0) {
+    return -1;
+  }
+
+  return content.slice(0, firstMatchIndex).split('\n').length;
+}
+
+function verifyNoLegacyTokensInPublicCode() {
+  const publicCodeFiles = walkFiles(PAGES_DIR).filter((filePath) =>
+    /\.(ts|tsx|js|jsx)$/.test(filePath),
+  );
+
+  const violations = [];
+
+  publicCodeFiles.forEach((filePath) => {
+    const fileContent = fs.readFileSync(filePath, 'utf8');
+
+    PLACEHOLDER_PATTERNS.forEach((token) => {
+      if (!fileContent.includes(token)) {
+        return;
+      }
+
+      violations.push({
+        file: path.relative(ROOT_DIR, filePath),
+        token,
+        line: findLineNumber(fileContent, token),
+      });
+    });
+  });
+
+  if (violations.length > 0) {
+    logError('Legacy or placeholder tokens found in public route source', { violations });
+    return { passed: false, violations };
+  }
+
+  logInfo('Public route source token check passed');
+  return { passed: true, violations: [] };
+}
+
+function verifyDynamicSeoFiles() {
+  const missingFiles = DYNAMIC_SEO_FILES.filter((filePath) => !fs.existsSync(filePath));
+
+  if (missingFiles.length > 0) {
+    logError('Dynamic SEO files missing', {
+      missingFiles: missingFiles.map((filePath) => path.relative(ROOT_DIR, filePath)),
+    });
+    return { passed: false, missingFiles };
+  }
+
+  logInfo('Dynamic SEO file presence check passed');
+  return { passed: true, missingFiles: [] };
+}
+
+function verifySitemapNavigationLink() {
+  if (!fs.existsSync(NAVIGATION_FILE)) {
+    logError('Navigation configuration file missing', {
+      file: path.relative(ROOT_DIR, NAVIGATION_FILE),
+    });
+    return { passed: false };
+  }
+
+  const navigationContent = fs.readFileSync(NAVIGATION_FILE, 'utf8');
+  const hasSitemapXmlLink = /href:\s*['"]\/sitemap\.xml['"]/.test(navigationContent);
+  const hasLegacySitemapLink = /href:\s*['"]\/sitemap['"]/.test(navigationContent);
+
+  if (!hasSitemapXmlLink) {
+    logError('Footer navigation is missing /sitemap.xml link');
+    return { passed: false };
+  }
+
+  if (hasLegacySitemapLink) {
+    logError('Legacy /sitemap footer link detected. Use /sitemap.xml only');
+    return { passed: false };
+  }
+
+  logInfo('Sitemap navigation link check passed');
+  return { passed: true };
+}
+
+function verifyBuildPipelineSeoChecks() {
+  if (!fs.existsSync(PACKAGE_JSON_PATH)) {
+    logError('package.json missing for build pipeline verification');
+    return { passed: false };
+  }
+
+  const packageJson = JSON.parse(fs.readFileSync(PACKAGE_JSON_PATH, 'utf8'));
+  const buildScript = packageJson?.scripts?.build;
+
+  if (!buildScript || typeof buildScript !== 'string') {
+    logError('Build script missing in package.json');
+    return { passed: false };
+  }
+
+  const requiredScriptTokens = ['npm run verify:seo', 'npm run verify:seo:runtime'];
+  const missingTokens = requiredScriptTokens.filter((token) => !buildScript.includes(token));
+
+  if (missingTokens.length > 0) {
+    logError('Build script missing required SEO verification steps', {
+      missingTokens,
+      buildScript,
+    });
+    return { passed: false, missingTokens };
+  }
+
+  const verifySeoIndex = buildScript.indexOf('npm run verify:seo');
+  const verifySeoRuntimeIndex = buildScript.indexOf('npm run verify:seo:runtime');
+  if (verifySeoIndex > verifySeoRuntimeIndex) {
+    logError('Build script should run verify:seo before verify:seo:runtime', { buildScript });
+    return { passed: false };
+  }
+
+  const prismaGenerateIndex = buildScript.indexOf('prisma generate');
+  if (prismaGenerateIndex < 0) {
+    logError('Build script should include prisma generate after SEO verification steps', {
+      buildScript,
+    });
+    return { passed: false };
+  }
+
+  if (verifySeoIndex > prismaGenerateIndex || verifySeoRuntimeIndex > prismaGenerateIndex) {
+    logError('Build script should run SEO verification steps before prisma generate', {
+      buildScript,
+    });
+    return { passed: false };
+  }
+
+  const hasScopedWasmFallback =
+    /\(npm run build:wasm\s*\|\|\s*echo\s+['"]⚠️ WASM build skipped['"]\)/.test(buildScript);
+  if (!hasScopedWasmFallback) {
+    logError('Build script should scope wasm fallback so SEO verification failures cannot be masked', {
+      buildScript,
+      expectedPattern: "(npm run build:wasm || echo '⚠️ WASM build skipped')",
+    });
+    return { passed: false };
+  }
+
+  const nextBuildIndex = buildScript.lastIndexOf('next build');
+  if (nextBuildIndex < 0) {
+    logError('Build script should end with next build after prerequisite checks', { buildScript });
+    return { passed: false };
+  }
+
+  if (prismaGenerateIndex > nextBuildIndex) {
+    logError('Build script should run prisma generate before next build', { buildScript });
+    return { passed: false };
+  }
+
+  logInfo('Build pipeline SEO check presence passed');
+  return { passed: true, missingTokens: [] };
+}
+
+function verifySeoScriptsRegistered() {
+  if (!fs.existsSync(PACKAGE_JSON_PATH)) {
+    logError('package.json missing for script registration verification');
+    return { passed: false };
+  }
+
+  const packageJson = JSON.parse(fs.readFileSync(PACKAGE_JSON_PATH, 'utf8'));
+  const scripts = packageJson?.scripts;
+
+  if (!scripts || typeof scripts !== 'object') {
+    logError('Scripts section missing in package.json');
+    return { passed: false };
+  }
+
+  const requiredScriptKeys = ['verify:seo', 'verify:seo:runtime'];
+  const missingScriptKeys = requiredScriptKeys.filter((key) => !scripts[key]);
+
+  if (missingScriptKeys.length > 0) {
+    logError('Required SEO verification scripts are missing in package.json', {
+      missingScriptKeys,
+    });
+    return { passed: false, missingScriptKeys };
+  }
+
+  logInfo('SEO script registration check passed');
+  return { passed: true, missingScriptKeys: [] };
+}
+
+function verifySeoCiWorkflow() {
+  if (!fs.existsSync(SEO_CI_WORKFLOW_PATH)) {
+    logError('SEO CI workflow file missing', {
+      file: path.relative(ROOT_DIR, SEO_CI_WORKFLOW_PATH),
+    });
+    return { passed: false };
+  }
+
+  const workflowContent = fs.readFileSync(SEO_CI_WORKFLOW_PATH, 'utf8');
+  const requiredWorkflowTokens = ['npm run verify:seo', 'npm run verify:seo:runtime'];
+  const missingWorkflowTokens = requiredWorkflowTokens.filter(
+    (token) => !workflowContent.includes(token),
+  );
+
+  if (!/push:/m.test(workflowContent) || !/pull_request:/m.test(workflowContent)) {
+    logError('SEO workflow should run on both push and pull_request events');
+    return { passed: false };
+  }
+
+  if (missingWorkflowTokens.length > 0) {
+    logError('SEO CI workflow missing required verification commands', {
+      missingWorkflowTokens,
+      file: path.relative(ROOT_DIR, SEO_CI_WORKFLOW_PATH),
+    });
+    return { passed: false, missingWorkflowTokens };
+  }
+
+  logInfo('SEO CI workflow verification passed');
+  return { passed: true, missingWorkflowTokens: [] };
+}
+
+function verifySharedSeoPolicyConstantsUsage() {
+  const violations = [];
+
+  if (!fs.existsSync(ROBOTS_FILE)) {
+    violations.push({
+      file: path.relative(ROOT_DIR, ROBOTS_FILE),
+      reason: 'robots.ts file missing',
+    });
+  } else {
+    const robotsContent = fs.readFileSync(ROBOTS_FILE, 'utf8');
+    if (!/SEO_ROBOTS_DISALLOW_PATHS/.test(robotsContent)) {
+      violations.push({
+        file: path.relative(ROOT_DIR, ROBOTS_FILE),
+        reason: 'robots.ts should use SEO_ROBOTS_DISALLOW_PATHS from shared constants',
+      });
+    }
+  }
+
+  if (!fs.existsSync(SEO_ROUTES_FILE)) {
+    violations.push({
+      file: path.relative(ROOT_DIR, SEO_ROUTES_FILE),
+      reason: 'routes.ts file missing',
+    });
+  } else {
+    const routesContent = fs.readFileSync(SEO_ROUTES_FILE, 'utf8');
+    if (!/SEO_BLOCKED_ROUTE_PREFIXES/.test(routesContent)) {
+      violations.push({
+        file: path.relative(ROOT_DIR, SEO_ROUTES_FILE),
+        reason: 'routes.ts should use SEO_BLOCKED_ROUTE_PREFIXES from shared constants',
+      });
+    }
+  }
+
+  if (violations.length > 0) {
+    logError('Shared SEO policy constant usage check failed', { violations });
+    return { passed: false, violations };
+  }
+
+  logInfo('Shared SEO policy constant usage check passed');
+  return { passed: true, violations: [] };
+}
+
+function verifySeoRoutesImplementationInvariants() {
+  if (!fs.existsSync(SEO_ROUTES_FILE)) {
+    logError('SEO routes implementation file missing', {
+      file: path.relative(ROOT_DIR, SEO_ROUTES_FILE),
+    });
+    return { passed: false };
+  }
+
+  const routesContent = fs.readFileSync(SEO_ROUTES_FILE, 'utf8');
+  const requiredPatterns = [
+    {
+      pattern: /if \(withoutTrailingSlash === ['"`]\/sitemap['"`]\) \{\s*return ['"`]\/sitemap\.xml['"`];\s*\}/,
+      reason: 'routes normalizeRoute should canonicalize sitemap aliases to /sitemap.xml after normalization',
+    },
+    {
+      pattern: /if \(withoutTrailingSlash === ['"`]\/sitemap\.xml['"`] \|\| withoutTrailingSlash === ['"`]\/robots\.txt['"`]\) \{\s*return null;\s*\}/,
+      reason: 'routes normalizeRoute should exclude sitemap.xml and robots.txt endpoints',
+    },
+    {
+      pattern: /if \(withoutTrailingSlash\.includes\('\['\) \|\| withoutTrailingSlash\.includes\('\]'\)\) \{\s*return null;\s*\}/,
+      reason: 'routes normalizeRoute should exclude dynamic placeholder routes',
+    },
+    {
+      pattern: /trimmed\.startsWith\('http:\/\/'\) \|\| trimmed\.startsWith\('https:\/\/'\) \|\| trimmed\.startsWith\('\/\/'\)/,
+      reason: 'routes normalizeRoute should skip absolute and protocol-relative URLs',
+    },
+    {
+      pattern: /withLeadingSlash\.split\(\/\[\?#\]\/\)\[0\] \|\| '\/'/,
+      reason: 'routes normalizeRoute should strip query/hash fragments from sitemap paths',
+    },
+    {
+      pattern: /replace\(\/\\\/\{2,\}\/g,\s*'\/'\)/,
+      reason: 'routes normalizeRoute should collapse duplicate slash segments',
+    },
+    {
+      pattern: /const lowerCasedPath = collapsedPath\.toLowerCase\(\);/,
+      reason: 'routes normalizeRoute should canonicalize paths to lowercase',
+    },
+    {
+      pattern: /function isBlockedRoutePath\(pathname: string\): boolean/,
+      reason: 'routes module should centralize blocked-path matching helper for prefix exact/nested checks',
+    },
+    {
+      pattern: /pathname === prefix \|\| pathname\.startsWith\(`\$\{prefix\}\/`\)/,
+      reason: 'routes blocked-path helper should only block exact prefix routes and nested descendants',
+    },
+    {
+      pattern: /const isBlocked = isBlockedRoutePath\(withoutTrailingSlash\);/,
+      reason: 'routes normalizeRoute should enforce blocked prefixes through shared blocked-path helper',
+    },
+    {
+      pattern: /filesystemDiscoveredRoutes\.forEach\(addRoute\)/,
+      reason: 'routes module should merge filesystem discovery into static sitemap candidates',
+    },
+    {
+      pattern: /return Array\.from\(routeSet\)\.sort\(\);/,
+      reason: 'routes module should return deterministically sorted route list',
+    },
+  ];
+
+  const violations = requiredPatterns
+    .filter(({ pattern }) => !pattern.test(routesContent))
+    .map(({ reason }) => ({
+      file: path.relative(ROOT_DIR, SEO_ROUTES_FILE),
+      reason,
+    }));
+
+  if (violations.length > 0) {
+    logError('SEO routes implementation invariant check failed', { violations });
+    return { passed: false, violations };
+  }
+
+  logInfo('SEO routes implementation invariant check passed');
+  return { passed: true, violations: [] };
+}
+
+function verifySeoConstantsImplementationInvariants() {
+  if (!fs.existsSync(SEO_CONSTANTS_FILE)) {
+    logError('SEO constants implementation file missing', {
+      file: path.relative(ROOT_DIR, SEO_CONSTANTS_FILE),
+    });
+    return { passed: false };
+  }
+
+  const constantsContent = fs.readFileSync(SEO_CONSTANTS_FILE, 'utf8');
+  const requiredPatterns = [
+    {
+      pattern: /process\.env\.NEXT_PUBLIC_SITE_URL\s*\|\|\s*process\.env\.NEXT_PUBLIC_APP_URL\s*\|\|\s*companyProfile\.websiteUrl/,
+      reason:
+        'getCanonicalSiteUrl should preserve env fallback order: NEXT_PUBLIC_SITE_URL -> NEXT_PUBLIC_APP_URL -> companyProfile.websiteUrl',
+    },
+    {
+      pattern: /return `\$\{parsedUrl\.protocol\}\/\/\$\{parsedUrl\.host\}`;/,
+      reason: 'getCanonicalSiteUrl should normalize primary candidate to URL origin',
+    },
+    {
+      pattern: /return `\$\{fallbackUrl\.protocol\}\/\/\$\{fallbackUrl\.host\}`;/,
+      reason: 'getCanonicalSiteUrl should normalize company profile fallback to URL origin',
+    },
+    {
+      pattern: /return ['"]https:\/\/enterprisehero\.com['"];/,
+      reason: 'getCanonicalSiteUrl should preserve final hardcoded canonical fallback',
+    },
+    {
+      pattern: /export const SEO_ROBOTS_DISALLOW_PATHS = SEO_BLOCKED_ROUTE_PREFIXES;/,
+      reason: 'SEO_ROBOTS_DISALLOW_PATHS should remain sourced from SEO_BLOCKED_ROUTE_PREFIXES',
+    },
+    {
+      pattern: /if \(!pathOrUrl\)\s*\{\s*return SEO_SITE_URL;\s*\}/,
+      reason: 'toAbsoluteSeoUrl should return SEO_SITE_URL for empty input values',
+    },
+    {
+      pattern: /const trimmedValue = pathOrUrl\.trim\(\);[\s\S]*if \(!trimmedValue\)\s*\{\s*return SEO_SITE_URL;\s*\}/,
+      reason: 'toAbsoluteSeoUrl should trim whitespace and treat blank values as site-root fallback',
+    },
+    {
+      pattern: /Protocol-relative URLs are not allowed for canonical SEO URLs\./,
+      reason: 'toAbsoluteSeoUrl should reject true protocol-relative URLs for canonical safety',
+    },
+    {
+      pattern: /hasExplicitScheme[\s\S]*!\/\^https\?:\/i\.test\(trimmedValue\)/,
+      reason: 'toAbsoluteSeoUrl should reject non-http URL schemes',
+    },
+    {
+      pattern: /absoluteCandidate\.protocol === ['"]http:['"] \|\| absoluteCandidate\.protocol === ['"]https:['"]/,
+      reason: 'toAbsoluteSeoUrl should only allow absolute http/https URLs',
+    },
+    {
+      pattern: /const withoutQueryOrHash = trimmedValue\.split\(\/\[\?#\]\/\)\[0\] \|\| '\/';/,
+      reason: 'toAbsoluteSeoUrl should strip query/hash fragments from relative canonical paths',
+    },
+    {
+      pattern: /const collapsedPath = withoutQueryOrHash\.replace\(\/\\\/\{2,\}\/g,\s*'\/'\);/,
+      reason: 'toAbsoluteSeoUrl should collapse duplicate slashes in relative canonical paths',
+    },
+    {
+      pattern: /const normalizedPath = collapsedPath\.startsWith\('\/'\) \? collapsedPath : `\/\$\{collapsedPath\}`;/,
+      reason: 'toAbsoluteSeoUrl should normalize relative paths with a single leading slash',
+    },
+    {
+      pattern: /return new URL\(normalizedPath, SEO_SITE_URL\)\.toString\(\);/,
+      reason: 'toAbsoluteSeoUrl should resolve relative paths against SEO_SITE_URL',
+    },
+  ];
+
+  const violations = requiredPatterns
+    .filter(({ pattern }) => !pattern.test(constantsContent))
+    .map(({ reason }) => ({
+      file: path.relative(ROOT_DIR, SEO_CONSTANTS_FILE),
+      reason,
+    }));
+
+  if (violations.length > 0) {
+    logError('SEO constants implementation invariant check failed', { violations });
+    return { passed: false, violations };
+  }
+
+  logInfo('SEO constants implementation invariant check passed');
+  return { passed: true, violations: [] };
+}
+
+function verifySeoMetadataHelperInvariants() {
+  if (!fs.existsSync(SEO_METADATA_HELPER_FILE)) {
+    logError('SEO metadata helper file missing', {
+      file: path.relative(ROOT_DIR, SEO_METADATA_HELPER_FILE),
+    });
+    return { passed: false };
+  }
+
+  const metadataHelperContent = fs.readFileSync(SEO_METADATA_HELPER_FILE, 'utf8');
+  const requiredPatterns = [
+    {
+      pattern: /function normalizeMetadataTitle\(title: string\): string/,
+      reason: 'metadata helper should expose title normalization utility',
+    },
+    {
+      pattern: /Empty metadata title received\. Falling back to SEO_BRAND_NAME\./,
+      reason: 'normalizeMetadataTitle should fallback blank titles to SEO_BRAND_NAME',
+    },
+    {
+      pattern: /function normalizeMetadataPath\(rawPath: string\): string/,
+      reason: 'metadata helper should expose normalizeMetadataPath() for canonical path hygiene',
+    },
+    {
+      pattern: /const trimmedPath = rawPath\.trim\(\);/,
+      reason: 'normalizeMetadataPath should trim incoming path values',
+    },
+    {
+      pattern:
+        /trimmedPath\.startsWith\('#'\)[\s\S]*trimmedPath\.startsWith\('mailto:'\)[\s\S]*trimmedPath\.startsWith\('tel:'\)[\s\S]*trimmedPath\.startsWith\('javascript:'\)/,
+      reason: 'normalizeMetadataPath should reject fragment/non-indexable schemes',
+    },
+    {
+      pattern: /parsedUrl\.origin !== SEO_SITE_URL/,
+      reason: 'normalizeMetadataPath should reject cross-origin absolute paths for canonical safety',
+    },
+    {
+      pattern: /const withoutQueryOrHash = withLeadingSlash\.split\(\/\[\?#\]\/\)\[0\] \|\| '\/';/,
+      reason: 'normalizeMetadataPath should strip query/hash fragments',
+    },
+    {
+      pattern: /const collapsedPath = withoutQueryOrHash\.replace\(\/\\\/\{2,\}\/g,\s*'\/'\);/,
+      reason: 'normalizeMetadataPath should collapse duplicate slashes',
+    },
+    {
+      pattern: /const lowerCasedPath = collapsedPath\.toLowerCase\(\);/,
+      reason: 'normalizeMetadataPath should canonicalize path casing to lowercase',
+    },
+    {
+      pattern: /function normalizeMetadataDescription\(description\?: string\): string/,
+      reason: 'metadata helper should expose description normalization utility',
+    },
+    {
+      pattern: /trimmedDescription = description\.trim\(\);[\s\S]*SEO_DEFAULT_DESCRIPTION/,
+      reason: 'normalizeMetadataDescription should trim and fallback to SEO_DEFAULT_DESCRIPTION when empty',
+    },
+    {
+      pattern: /function normalizeMetadataImagePath\(imagePath\?: string\): string/,
+      reason: 'metadata helper should expose imagePath normalization utility',
+    },
+    {
+      pattern: /Protocol-relative metadata imagePath rejected[\s\S]*SEO_DEFAULT_OG_IMAGE_PATH/,
+      reason: 'normalizeMetadataImagePath should reject protocol-relative values and fallback to default image',
+    },
+    {
+      pattern: /Non-http metadata imagePath rejected[\s\S]*SEO_DEFAULT_OG_IMAGE_PATH/,
+      reason: 'normalizeMetadataImagePath should reject non-http schemes and fallback to default image',
+    },
+    {
+      pattern: /function normalizeMetadataKeywords\(keywords\?: string\[\]\): string\[\] \| undefined/,
+      reason: 'metadata helper should expose keyword normalization utility',
+    },
+    {
+      pattern: /const seenKeywordKeys = new Set<string>\(\);[\s\S]*if \(seenKeywordKeys\.has\(normalizedKeywordKey\)\)/,
+      reason: 'normalizeMetadataKeywords should dedupe keywords case-insensitively while preserving first canonical form',
+    },
+    {
+      pattern: /const normalizedTitle = normalizeMetadataTitle\(title\);/,
+      reason: 'buildPageMetadata should canonicalize title through normalizeMetadataTitle',
+    },
+    {
+      pattern: /const canonicalPath = normalizeMetadataPath\(path\);/,
+      reason: 'buildPageMetadata should canonicalize path through normalizeMetadataPath',
+    },
+    {
+      pattern: /const normalizedDescription = normalizeMetadataDescription\(description\);/,
+      reason: 'buildPageMetadata should canonicalize description through normalizeMetadataDescription',
+    },
+    {
+      pattern: /const normalizedImagePath = normalizeMetadataImagePath\(imagePath\);/,
+      reason: 'buildPageMetadata should canonicalize imagePath through normalizeMetadataImagePath',
+    },
+    {
+      pattern: /const normalizedKeywords = normalizeMetadataKeywords\(keywords\);/,
+      reason: 'buildPageMetadata should canonicalize keywords through normalizeMetadataKeywords',
+    },
+    {
+      pattern: /title:\s*normalizedTitle/,
+      reason: 'buildPageMetadata should emit normalized title payload',
+    },
+    {
+      pattern: /description:\s*normalizedDescription/,
+      reason: 'buildPageMetadata should emit normalized description payload',
+    },
+    {
+      pattern: /keywords:\s*normalizedKeywords/,
+      reason: 'buildPageMetadata should emit normalized keywords payload',
+    },
+  ];
+
+  const violations = requiredPatterns
+    .filter(({ pattern }) => !pattern.test(metadataHelperContent))
+    .map(({ reason }) => ({
+      file: path.relative(ROOT_DIR, SEO_METADATA_HELPER_FILE),
+      reason,
+    }));
+
+  if (violations.length > 0) {
+    logError('SEO metadata helper invariant check failed', { violations });
+    return { passed: false, violations };
+  }
+
+  logInfo('SEO metadata helper invariant check passed');
+  return { passed: true, violations: [] };
+}
+
+function verifyCompanyProfileSeoIdentity() {
+  if (!fs.existsSync(COMPANY_PROFILE_FILE)) {
+    logError('Company profile file missing', {
+      file: path.relative(ROOT_DIR, COMPANY_PROFILE_FILE),
+    });
+    return { passed: false };
+  }
+
+  const companyProfileContent = fs.readFileSync(COMPANY_PROFILE_FILE, 'utf8');
+
+  const brandNameMatch = companyProfileContent.match(/brandName:\s*["']([^"']+)["']/);
+  const legalNameMatch = companyProfileContent.match(/legalName:\s*["']([^"']+)["']/);
+  const websiteMatch = companyProfileContent.match(/websiteUrl:\s*["']([^"']+)["']/);
+  const contactEmailMatch = companyProfileContent.match(/contactEmail:\s*["']([^"']+)["']/);
+
+  if (!brandNameMatch) {
+    logError('companyProfile.brandName is missing or malformed');
+    return { passed: false };
+  }
+
+  if (!legalNameMatch) {
+    logError('companyProfile.legalName is missing or malformed');
+    return { passed: false };
+  }
+
+  if (!websiteMatch) {
+    logError('companyProfile.websiteUrl is missing or malformed');
+    return { passed: false };
+  }
+
+  if (!contactEmailMatch) {
+    logError('companyProfile.contactEmail is missing or malformed');
+    return { passed: false };
+  }
+
+  const brandName = brandNameMatch[1].trim();
+  const legalName = legalNameMatch[1].trim();
+  const websiteUrl = websiteMatch[1].trim();
+  const contactEmail = contactEmailMatch[1].trim();
+
+  const textIdentityFields = [
+    { field: 'brandName', value: brandName },
+    { field: 'legalName', value: legalName },
+  ];
+
+  const invalidIdentityField = textIdentityFields.find(
+    ({ value }) =>
+      !value ||
+      PLACEHOLDER_PATTERNS.some((token) => value.toLowerCase().includes(token.toLowerCase())),
+  );
+  if (invalidIdentityField) {
+    logError('companyProfile identity field contains placeholder/empty value', invalidIdentityField);
+    return { passed: false, invalidIdentityField };
+  }
+
+  const websiteHasPlaceholderToken = PLACEHOLDER_PATTERNS.some((token) => websiteUrl.includes(token));
+  if (websiteHasPlaceholderToken) {
+    logError('companyProfile.websiteUrl contains placeholder/legacy token', { websiteUrl });
+    return { passed: false, websiteUrl };
+  }
+
+  if (!websiteUrl.startsWith('https://')) {
+    logError('companyProfile.websiteUrl must use HTTPS', { websiteUrl });
+    return { passed: false, websiteUrl };
+  }
+
+  try {
+    const parsedWebsiteUrl = new URL(websiteUrl);
+    if (parsedWebsiteUrl.pathname !== '/' || parsedWebsiteUrl.search || parsedWebsiteUrl.hash) {
+      logError('companyProfile.websiteUrl should be origin-only (no path/query/hash)', {
+        websiteUrl,
+        pathname: parsedWebsiteUrl.pathname,
+        search: parsedWebsiteUrl.search,
+        hash: parsedWebsiteUrl.hash,
+      });
+      return { passed: false, websiteUrl };
+    }
+  } catch (error) {
+    logError('companyProfile.websiteUrl is not a valid absolute URL', {
+      websiteUrl,
+      error: error instanceof Error ? error.message : String(error),
+    });
+    return { passed: false, websiteUrl };
+  }
+
+  const hasValidEmailShape = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contactEmail);
+  if (!hasValidEmailShape) {
+    logError('companyProfile.contactEmail appears invalid', { contactEmail });
+    return { passed: false, contactEmail };
+  }
+
+  const emailHasPlaceholderToken = PLACEHOLDER_PATTERNS.some((token) => contactEmail.includes(token));
+  if (emailHasPlaceholderToken) {
+    logError('companyProfile.contactEmail contains placeholder/legacy token', { contactEmail });
+    return { passed: false, contactEmail };
+  }
+
+  const socialBlockMatch = companyProfileContent.match(/^\s*social:\s*\{([\s\S]*?)^\s*\},?/m);
+  const socialValues = socialBlockMatch
+    ? [...socialBlockMatch[1].matchAll(/:\s*["']([^"']+)["']/g)].map((match) => match[1].trim())
+    : [];
+
+  const invalidSocialUrl = socialValues.find((socialUrl) => {
+    if (!socialUrl || socialUrl === '#') {
+      return true;
+    }
+
+    if (!socialUrl.startsWith('https://')) {
+      return true;
+    }
+
+    return PLACEHOLDER_PATTERNS.some((token) =>
+      socialUrl.toLowerCase().includes(token.toLowerCase()),
+    );
+  });
+
+  if (invalidSocialUrl) {
+    logError('companyProfile.social contains invalid URL. Keep undefined or use verified HTTPS URLs only.', {
+      invalidSocialUrl,
+    });
+    return { passed: false, invalidSocialUrl };
+  }
+
+  logInfo('Company profile SEO identity check passed', {
+    brandName,
+    legalName,
+    websiteUrl,
+    contactEmail,
+    socialUrlCount: socialValues.length,
+  });
+  return {
+    passed: true,
+    brandName,
+    legalName,
+    websiteUrl,
+    contactEmail,
+    socialUrlCount: socialValues.length,
+  };
+}
+
+function verifyRootLayoutMetadataConfiguration() {
+  if (!fs.existsSync(APP_LAYOUT_FILE)) {
+    logError('Root layout file missing for metadata verification', {
+      file: path.relative(ROOT_DIR, APP_LAYOUT_FILE),
+    });
+    return { passed: false };
+  }
+
+  const layoutContent = fs.readFileSync(APP_LAYOUT_FILE, 'utf8');
+  const violations = [];
+
+  if (!/export const metadata\s*:\s*Metadata\s*=/.test(layoutContent)) {
+    violations.push('Root layout must export typed metadata');
+  }
+
+  if (!/metadataBase:\s*new URL\(SEO_SITE_URL\)/.test(layoutContent)) {
+    violations.push('Root metadata should set metadataBase using SEO_SITE_URL');
+  }
+
+  if (!/alternates:\s*\{[\s\S]*canonical:\s*['"`]\/['"`]/.test(layoutContent)) {
+    violations.push('Root metadata should define canonical "/" in alternates');
+  }
+
+  if (!/toAbsoluteSeoUrl\(SEO_DEFAULT_OG_IMAGE_PATH\)/.test(layoutContent)) {
+    violations.push('Root metadata should use SEO_DEFAULT_OG_IMAGE_PATH via toAbsoluteSeoUrl');
+  }
+
+  if (violations.length > 0) {
+    logError('Root layout metadata configuration check failed', {
+      file: path.relative(ROOT_DIR, APP_LAYOUT_FILE),
+      violations,
+    });
+    return { passed: false, violations };
+  }
+
+  logInfo('Root layout metadata configuration check passed');
+  return { passed: true, violations: [] };
+}
+
+function verifyCoreSeoFilesNoPlaceholderTokens() {
+  const coreSeoFiles = [APP_LAYOUT_FILE, SEO_STRUCTURED_DATA_FILE, SEO_CONSTANTS_FILE];
+  const violations = [];
+
+  coreSeoFiles.forEach((filePath) => {
+    if (!fs.existsSync(filePath)) {
+      violations.push({
+        file: path.relative(ROOT_DIR, filePath),
+        reason: 'Required SEO core file missing',
+      });
+      return;
+    }
+
+    const fileContent = fs.readFileSync(filePath, 'utf8');
+    PLACEHOLDER_PATTERNS.forEach((token) => {
+      if (!fileContent.includes(token)) {
+        return;
+      }
+
+      violations.push({
+        file: path.relative(ROOT_DIR, filePath),
+        token,
+        line: findLineNumber(fileContent, token),
+      });
+    });
+  });
+
+  if (violations.length > 0) {
+    logError('Core SEO files contain placeholder/legacy tokens', { violations });
+    return { passed: false, violations };
+  }
+
+  logInfo('Core SEO file placeholder check passed');
+  return { passed: true, violations: [] };
+}
+
+function verifySeoModuleDocsConsistency() {
+  if (!fs.existsSync(SEO_README_FILE)) {
+    logError('SEO module README is missing', {
+      file: path.relative(ROOT_DIR, SEO_README_FILE),
+    });
+    return { passed: false };
+  }
+
+  const readmeContent = fs.readFileSync(SEO_README_FILE, 'utf8');
+  const requiredDocTokens = [
+    'flowchart TD',
+    'buildPageMetadata',
+    'explicit description',
+    '/sitemap.xml',
+    '/robots.txt',
+    'npm run verify:seo',
+    'npm run verify:seo:runtime',
+    'SEO_BLOCKED_ROUTE_PREFIXES',
+    'SEO_ROBOTS_DISALLOW_PATHS',
+    'SEO_DEFAULT_DESCRIPTION',
+    'normalizeRoute',
+    'isBlockedRoutePath',
+    'getCanonicalSiteUrl',
+    'toAbsoluteSeoUrl',
+    'normalizeDisallowPath',
+    'getRobotsDisallowPaths',
+    'normalizeMetadataPath',
+    'normalizeMetadataTitle',
+    'normalizeMetadataDescription',
+    'normalizeMetadataImagePath',
+    'normalizeMetadataKeywords',
+    'cross-origin',
+    'normalizeSameAsUrls',
+    'sitemap alias',
+    'protocol-relative',
+    'verifyMetadataHelperRuntimeBehavior',
+    'verifyStructuredDataRuntimeBehavior',
+    'verifyBlogSlugMetadataRuntimeBehavior',
+    'verifyNavigationSourceRouteHygiene',
+    'normalizeAndFilterBlogEntries',
+    'mergeDuplicateSitemapEntry',
+    'prisma generate',
+    'verifyCanonicalSeoConstants',
+    'verifySitemapOutput',
+    'expectedPriorityForPath',
+    'expectedChangeFrequencyForPath',
+    'normalizeNavigationRoute',
+    'companyProfile.websiteUrl',
+    'wildcard rule shape',
+    'generateMetadata',
+    'normalizeBlogSlugForMetadata',
+    '/pages/blog/${slug}',
+  ];
+
+  const missingDocTokens = requiredDocTokens.filter((token) => !readmeContent.includes(token));
+
+  if (missingDocTokens.length > 0) {
+    logError('SEO module README is missing required implementation references', {
+      file: path.relative(ROOT_DIR, SEO_README_FILE),
+      missingDocTokens,
+    });
+    return { passed: false, missingDocTokens };
+  }
+
+  logInfo('SEO module docs consistency check passed');
+  return { passed: true, missingDocTokens: [] };
+}
+
+function verifyPrivateRouteNoIndexPolicy() {
+  const violations = [];
+
+  if (!fs.existsSync(ADMIN_LAYOUT_FILE)) {
+    violations.push({
+      file: path.relative(ROOT_DIR, ADMIN_LAYOUT_FILE),
+      reason: 'Admin layout file missing',
+    });
+  } else {
+    const adminLayoutContent = fs.readFileSync(ADMIN_LAYOUT_FILE, 'utf8');
+    if (!/name=["']robots["']\s+content=["']noindex,\s*nofollow["']/.test(adminLayoutContent)) {
+      violations.push({
+        file: path.relative(ROOT_DIR, ADMIN_LAYOUT_FILE),
+        reason: 'Admin layout should include <meta name="robots" content="noindex, nofollow" />',
+      });
+    }
+  }
+
+  if (!fs.existsSync(LOGIN_PAGE_FILE)) {
+    violations.push({
+      file: path.relative(ROOT_DIR, LOGIN_PAGE_FILE),
+      reason: 'Login page file missing',
+    });
+  } else {
+    const loginPageContent = fs.readFileSync(LOGIN_PAGE_FILE, 'utf8');
+    if (!/robots:\s*\{[\s\S]*index:\s*false[\s\S]*follow:\s*false[\s\S]*\}/.test(loginPageContent)) {
+      violations.push({
+        file: path.relative(ROOT_DIR, LOGIN_PAGE_FILE),
+        reason: 'Login page metadata should enforce robots index:false and follow:false',
+      });
+    }
+  }
+
+  if (violations.length > 0) {
+    logError('Private route no-index policy check failed', { violations });
+    return { passed: false, violations };
+  }
+
+  logInfo('Private route no-index policy check passed');
+  return { passed: true, violations: [] };
+}
+
+function verifyRootStructuredDataWiring() {
+  if (!fs.existsSync(APP_LAYOUT_FILE)) {
+    logError('Root layout file missing for structured data wiring check', {
+      file: path.relative(ROOT_DIR, APP_LAYOUT_FILE),
+    });
+    return { passed: false };
+  }
+
+  const layoutContent = fs.readFileSync(APP_LAYOUT_FILE, 'utf8');
+  const requiredPatterns = [
+    {
+      pattern: /OrganizationStructuredData,\s*WebsiteStructuredData/,
+      reason: 'Root layout should import OrganizationStructuredData and WebsiteStructuredData',
+    },
+    {
+      pattern: /<OrganizationStructuredData[\s\S]*name=\{companyProfile\.brandName\}/,
+      reason: 'Organization structured data should use companyProfile.brandName',
+    },
+    {
+      pattern: /<OrganizationStructuredData[\s\S]*url=\{companyProfile\.websiteUrl\}/,
+      reason: 'Organization structured data should use companyProfile.websiteUrl',
+    },
+    {
+      pattern: /contactPoint=\{\{\s*contactType:\s*["']customer service["'],\s*email:\s*companyProfile\.contactEmail\s*\}\}/,
+      reason: 'Organization structured data contact email should come from companyProfile.contactEmail',
+    },
+    {
+      pattern: /<WebsiteStructuredData[\s\S]*url=\{companyProfile\.websiteUrl\}/,
+      reason: 'Website structured data should use companyProfile.websiteUrl',
+    },
+    {
+      pattern: /publisher=\{companyProfile\.legalName\}/,
+      reason: 'Website structured data publisher should use companyProfile.legalName',
+    },
+  ];
+
+  const violations = requiredPatterns
+    .filter(({ pattern }) => !pattern.test(layoutContent))
+    .map(({ reason }) => ({
+      file: path.relative(ROOT_DIR, APP_LAYOUT_FILE),
+      reason,
+    }));
+
+  if (violations.length > 0) {
+    logError('Root structured data wiring check failed', { violations });
+    return { passed: false, violations };
+  }
+
+  logInfo('Root structured data wiring check passed');
+  return { passed: true, violations: [] };
+}
+
+function verifyStructuredDataComponentInvariants() {
+  if (!fs.existsSync(SEO_STRUCTURED_DATA_FILE)) {
+    logError('Structured data component file missing for invariant checks', {
+      file: path.relative(ROOT_DIR, SEO_STRUCTURED_DATA_FILE),
+    });
+    return { passed: false };
+  }
+
+  const structuredDataContent = fs.readFileSync(SEO_STRUCTURED_DATA_FILE, 'utf8');
+  const requiredPatterns = [
+    {
+      pattern: /function normalizeSameAsUrls\(sameAs\?: string\[\]\): string\[\] \| undefined/,
+      reason: 'StructuredData component should expose normalizeSameAsUrls helper for sameAs URL hygiene',
+    },
+    {
+      pattern: /parsedUrl\.protocol !== 'https:'/,
+      reason: 'StructuredData sameAs normalization should enforce HTTPS social URLs only',
+    },
+    {
+      pattern: /if \(parsedUrl\.hash\)/,
+      reason: 'StructuredData sameAs normalization should reject fragmented URLs',
+    },
+    {
+      pattern: /import\s*\{\s*SEO_DEFAULT_DESCRIPTION\s*\}\s*from\s*['"]@\/app\/lib\/seo\/constants['"]/,
+      reason: 'StructuredData component should import SEO_DEFAULT_DESCRIPTION from SEO constants',
+    },
+    {
+      pattern: /description\s*=\s*SEO_DEFAULT_DESCRIPTION/,
+      reason: 'WebsiteStructuredData default description should use SEO_DEFAULT_DESCRIPTION',
+    },
+    {
+      pattern: /name:\s*companyProfile\.brandName/,
+      reason: 'StructuredData default organization name should use companyProfile.brandName',
+    },
+    {
+      pattern: /url:\s*companyProfile\.websiteUrl/,
+      reason: 'StructuredData default organization URL should use companyProfile.websiteUrl',
+    },
+    {
+      pattern: /email:\s*companyProfile\.contactEmail/,
+      reason: 'StructuredData default contact email should use companyProfile.contactEmail',
+    },
+    {
+      pattern: /normalizeSameAsUrls\(Object\.values\(companyProfile\.social \|\| \{\}\)\.filter\(Boolean\) as string\[\]\)/,
+      reason: 'StructuredData default sameAs should be sanitized from company profile social links',
+    },
+    {
+      pattern: /const normalizedSameAs = normalizeSameAsUrls\(sameAs\);/,
+      reason: 'OrganizationStructuredData should sanitize incoming sameAs values before serialization',
+    },
+  ];
+
+  const violations = requiredPatterns
+    .filter(({ pattern }) => !pattern.test(structuredDataContent))
+    .map(({ reason }) => ({
+      file: path.relative(ROOT_DIR, SEO_STRUCTURED_DATA_FILE),
+      reason,
+    }));
+
+  if (violations.length > 0) {
+    logError('Structured data component invariant check failed', { violations });
+    return { passed: false, violations };
+  }
+
+  logInfo('Structured data component invariant check passed');
+  return { passed: true, violations: [] };
+}
+
+function verifySitemapImplementationInvariants() {
+  if (!fs.existsSync(SITEMAP_FILE)) {
+    logError('Sitemap implementation file missing', {
+      file: path.relative(ROOT_DIR, SITEMAP_FILE),
+    });
+    return { passed: false };
+  }
+
+  const sitemapContent = fs.readFileSync(SITEMAP_FILE, 'utf8');
+  const requiredPatterns = [
+    {
+      pattern: /getStaticSeoRoutes\(/,
+      reason: 'sitemap should source static routes from getStaticSeoRoutes()',
+    },
+    {
+      pattern: /toAbsoluteSeoUrl\(/,
+      reason: 'sitemap should canonicalize URLs via toAbsoluteSeoUrl()',
+    },
+    {
+      pattern: /new Map<string,\s*MetadataRoute\.Sitemap\[number\]>/,
+      reason: 'sitemap should deduplicate URLs using a Map',
+    },
+    {
+      pattern: /Array\.from\(dedupedByUrl\.values\(\)\)\.sort\(/,
+      reason: 'sitemap output should be sorted deterministically',
+    },
+    {
+      pattern: /fallbackBlogPosts/,
+      reason: 'sitemap should keep blog fallback source for DB outage scenarios',
+    },
+    {
+      pattern: /const BLOG_SLUG_PATTERN = \/\^\[a-z0-9\]\+\(\?:-\[a-z0-9\]\+\)\*\$\/;/,
+      reason: 'sitemap should enforce lowercase kebab-case slug hygiene for dynamic blog URLs',
+    },
+    {
+      pattern: /function normalizeAndFilterBlogEntries\(/,
+      reason: 'sitemap should normalize and filter dynamic blog entries before URL generation',
+    },
+    {
+      pattern: /function getSitemapEntryTimestamp\(entry: MetadataRoute\.Sitemap\[number\]\): number/,
+      reason: 'sitemap should retain timestamp parsing helper for deterministic duplicate URL conflict resolution',
+    },
+    {
+      pattern: /function mergeDuplicateSitemapEntry\(/,
+      reason: 'sitemap should resolve duplicate URL conflicts through explicit merge policy',
+    },
+    {
+      pattern: /prisma\.blogPost\.findMany\(/,
+      reason: 'sitemap should load dynamic blog entries via prisma.blogPost.findMany()',
+    },
+    {
+      pattern: /select:\s*\{[\s\S]*slug:\s*true[\s\S]*updatedAt:\s*true[\s\S]*\}/,
+      reason: 'sitemap blog query should select slug + updatedAt fields for stable URL/date output',
+    },
+    {
+      pattern: /orderBy:\s*\{[\s\S]*updatedAt:\s*['"`]desc['"`][\s\S]*\}/,
+      reason: 'sitemap blog query should keep updatedAt descending order for deterministic selection',
+    },
+    {
+      pattern: /fallbackBlogPosts\.map\(\(post\)\s*=>\s*\(\{[\s\S]*slug:\s*post\.slug[\s\S]*updatedAt:\s*new Date\(post\.publishedAt\)[\s\S]*\}\)\)/,
+      reason: 'sitemap fallback entries should derive slug and updatedAt from fallback blog post data',
+    },
+    {
+      pattern: /toAbsoluteSeoUrl\(`\/pages\/blog\/\$\{entry\.slug\}`\)/,
+      reason: 'sitemap dynamic blog URLs should be canonicalized as /pages/blog/${entry.slug}',
+    },
+    {
+      pattern: /const duplicateUrlConflictSet = new Set<string>\(\);/,
+      reason: 'sitemap should track duplicate URL conflicts during deduplication',
+    },
+    {
+      pattern: /mergeDuplicateSitemapEntry\(existingEntry,\s*entry\)/,
+      reason: 'sitemap deduplication should merge conflicting entries with deterministic policy',
+    },
+    {
+      pattern: /console\.warn\('\[SEO\] Sitemap duplicate URL entries detected and merged'/,
+      reason: 'sitemap should emit duplicate URL merge diagnostics for operational visibility',
+    },
+    {
+      pattern: /console\.warn\('\[SEO\] Filtered invalid blog sitemap entries'/,
+      reason: 'sitemap should retain filtered-entry diagnostics for malformed slug/date data',
+    },
+    {
+      pattern:
+        /console\.warn\([\s\S]*'\[SEO\] Database blog entries were invalid for sitemap\. Falling back to static data\.'/,
+      reason: 'sitemap should retain fallback warning when database entries are unusable for sitemap output',
+    },
+    {
+      pattern:
+        /console\.error\('\[SEO\] Failed to load blog posts from database for sitemap\. Falling back to static data\.'/,
+      reason: 'sitemap should retain explicit database-failure fallback error logging for operational debugging',
+    },
+    {
+      pattern: /console\.log\('\[SEO\] Sitemap blog entries loaded from database'/,
+      reason: 'sitemap should retain database-source entry count logging',
+    },
+    {
+      pattern: /console\.log\('\[SEO\] Sitemap blog entries loaded from static fallback'/,
+      reason: 'sitemap should retain static-fallback entry count logging',
+    },
+    {
+      pattern: /console\.log\('\[SEO\] Sitemap generated'/,
+      reason: 'sitemap should retain final generation summary logging',
+    },
+    {
+      pattern: /if \(path === '\/'\) return 1\.0;/,
+      reason: 'sitemap priority helper should keep homepage priority baseline at 1.0',
+    },
+    {
+      pattern: /if \(path === '\/pages\/services'\) return 0\.95;/,
+      reason: 'sitemap priority helper should keep services priority baseline at 0.95',
+    },
+    {
+      pattern: /if \(path === '\/pages\/contact'\) return 0\.92;/,
+      reason: 'sitemap priority helper should keep contact priority baseline at 0.92',
+    },
+    {
+      pattern: /priority:\s*0\.78/,
+      reason: 'sitemap blog detail entries should keep priority baseline at 0.78',
+    },
+    {
+      pattern: /if \(path === '\/pages\/blog'\) return 'daily';/,
+      reason: 'sitemap changeFrequency helper should keep blog listing baseline at daily',
+    },
+    {
+      pattern: /if \(path\.startsWith\('\/pages\/blog\/'\)\) return 'weekly';/,
+      reason: 'sitemap changeFrequency helper should keep blog detail baseline at weekly',
+    },
+    {
+      pattern: /return 'monthly';/,
+      reason: 'sitemap changeFrequency helper should keep default baseline at monthly',
+    },
+  ];
+
+  const violations = requiredPatterns
+    .filter(({ pattern }) => !pattern.test(sitemapContent))
+    .map(({ reason }) => ({
+      file: path.relative(ROOT_DIR, SITEMAP_FILE),
+      reason,
+    }));
+
+  if (violations.length > 0) {
+    logError('Sitemap implementation invariant check failed', { violations });
+    return { passed: false, violations };
+  }
+
+  logInfo('Sitemap implementation invariant check passed');
+  return { passed: true, violations: [] };
+}
+
+function verifyRobotsImplementationInvariants() {
+  if (!fs.existsSync(ROBOTS_FILE)) {
+    logError('Robots implementation file missing', {
+      file: path.relative(ROOT_DIR, ROBOTS_FILE),
+    });
+    return { passed: false };
+  }
+
+  const robotsContent = fs.readFileSync(ROBOTS_FILE, 'utf8');
+  const requiredPatterns = [
+    {
+      pattern: /function normalizeDisallowPath\(pathValue: string\): string \| null/,
+      reason: 'robots should expose normalizeDisallowPath helper for disallow path hygiene',
+    },
+    {
+      pattern: /function getRobotsDisallowPaths\(\): string\[\]/,
+      reason: 'robots should expose getRobotsDisallowPaths helper for deterministic disallow output',
+    },
+    {
+      pattern: /SEO_ROBOTS_DISALLOW_PATHS\.forEach\(/,
+      reason: 'robots disallow normalization should be sourced from SEO_ROBOTS_DISALLOW_PATHS',
+    },
+    {
+      pattern: /const disallowPaths = getRobotsDisallowPaths\(\);/,
+      reason: 'robots route should derive output disallow list via normalization helper',
+    },
+    {
+      pattern: /userAgent:\s*['"`]\*['"`]/,
+      reason: 'robots should keep wildcard userAgent rule for global crawler policy',
+    },
+    {
+      pattern: /allow:\s*['"`]\/['"`]/,
+      reason: 'robots should explicitly allow root path for wildcard crawler rule',
+    },
+    {
+      pattern: /disallow:\s*disallowPaths/,
+      reason: 'robots should use normalized disallow paths in output rules',
+    },
+    {
+      pattern: /sitemap:\s*toAbsoluteSeoUrl\(['"`]\/sitemap\.xml['"`]\)/,
+      reason: 'robots should publish canonical sitemap URL via toAbsoluteSeoUrl',
+    },
+    {
+      pattern: /host:\s*SEO_SITE_URL/,
+      reason: 'robots host should be derived from SEO_SITE_URL',
+    },
+  ];
+
+  const violations = requiredPatterns
+    .filter(({ pattern }) => !pattern.test(robotsContent))
+    .map(({ reason }) => ({
+      file: path.relative(ROOT_DIR, ROBOTS_FILE),
+      reason,
+    }));
+
+  if (violations.length > 0) {
+    logError('Robots implementation invariant check failed', { violations });
+    return { passed: false, violations };
+  }
+
+  logInfo('Robots implementation invariant check passed');
+  return { passed: true, violations: [] };
+}
+
+function verifyLegacyFilesRemoved() {
+  const foundLegacyFiles = LEGACY_SEO_FILES.filter((filePath) => fs.existsSync(filePath));
+
+  if (foundLegacyFiles.length > 0) {
+    logError('Legacy SEO generator files still present', {
+      foundLegacyFiles: foundLegacyFiles.map((filePath) => path.relative(ROOT_DIR, filePath)),
+    });
+    return { passed: false, foundLegacyFiles };
+  }
+
+  logInfo('Legacy SEO file removal check passed');
+  return { passed: true, foundLegacyFiles: [] };
+}
+
+function verifyBlogSlugMetadataImplementationInvariants() {
+  if (!fs.existsSync(BLOG_SLUG_LAYOUT_FILE)) {
+    logError('Blog slug metadata layout file missing', {
+      file: path.relative(ROOT_DIR, BLOG_SLUG_LAYOUT_FILE),
+    });
+    return { passed: false };
+  }
+
+  const blogSlugLayoutContent = fs.readFileSync(BLOG_SLUG_LAYOUT_FILE, 'utf8');
+  const requiredPatterns = [
+    {
+      pattern: /function normalizeBlogSlugForMetadata\(rawSlug: string\): string/,
+      reason: 'Blog slug metadata should normalize raw slugs before canonical metadata generation',
+    },
+    {
+      pattern: /export async function generateMetadata/,
+      reason: 'Blog slug layout should expose generateMetadata for dynamic per-post SEO',
+    },
+    {
+      pattern: /buildPageMetadata\(/,
+      reason: 'Blog slug metadata should use shared buildPageMetadata helper',
+    },
+    {
+      pattern: /path:\s*`\/pages\/blog\/\$\{normalizedSlug\}`/,
+      reason: 'Blog slug metadata should canonicalize dynamic path using normalized slug value',
+    },
+    {
+      pattern: /prisma\.blogPost\.findUnique[\s\S]*where:\s*\{\s*slug:\s*normalizedSlug\s*\}/,
+      reason: 'Blog slug metadata should attempt database-backed lookup using normalized slug',
+    },
+    {
+      pattern: /post\.excerpt/,
+      reason: 'Blog slug metadata should use post excerpt for description when available',
+    },
+    {
+      pattern: /console\.error\('\[SEO\] Failed to load blog post for metadata\. Using fallback metadata\.'/,
+      reason: 'Blog slug metadata should keep explicit error logging for fallback path visibility',
+    },
+    {
+      pattern: /humanizeSlug\(/,
+      reason: 'Blog slug metadata should provide readable-title fallback when DB post is unavailable',
+    },
+  ];
+
+  const violations = requiredPatterns
+    .filter(({ pattern }) => !pattern.test(blogSlugLayoutContent))
+    .map(({ reason }) => ({
+      file: path.relative(ROOT_DIR, BLOG_SLUG_LAYOUT_FILE),
+      reason,
+    }));
+
+  if (violations.length > 0) {
+    logError('Blog slug metadata implementation invariant check failed', { violations });
+    return { passed: false, violations };
+  }
+
+  logInfo('Blog slug metadata implementation invariant check passed');
+  return { passed: true, violations: [] };
+}
+
+function verifySeoRuntimeScriptInvariants() {
+  if (!fs.existsSync(SEO_RUNTIME_SCRIPT_FILE)) {
+    logError('Runtime SEO verification script file missing', {
+      file: path.relative(ROOT_DIR, SEO_RUNTIME_SCRIPT_FILE),
+    });
+    return { passed: false };
+  }
+
+  const runtimeScriptContent = fs.readFileSync(SEO_RUNTIME_SCRIPT_FILE, 'utf8');
+  const requiredPatterns = [
+    {
+      pattern: /import sitemap from ['"]@\/app\/sitemap['"]/,
+      reason: 'Runtime SEO verifier should import dynamic sitemap route',
+    },
+    {
+      pattern: /import robots from ['"]@\/app\/robots['"]/,
+      reason: 'Runtime SEO verifier should import dynamic robots route',
+    },
+    {
+      pattern: /import \{ buildPageMetadata \} from ['"]@\/app\/lib\/seo\/metadata['"]/,
+      reason: 'Runtime SEO verifier should import buildPageMetadata for runtime metadata-helper behavior checks',
+    },
+    {
+      pattern: /import \{ OrganizationStructuredData \} from ['"]@\/app\/components\/SEO\/StructuredData['"]/,
+      reason: 'Runtime SEO verifier should import OrganizationStructuredData for runtime sameAs sanitization checks',
+    },
+    {
+      pattern: /import \{ generateMetadata as generateBlogSlugMetadata \} from ['"]@\/app\/pages\/blog\/\[slug\]\/layout['"]/,
+      reason: 'Runtime SEO verifier should import blog slug metadata generator for runtime slug-canonicalization checks',
+    },
+    {
+      pattern: /import \{ companyProfile \} from ['"]@\/app\/data\/companyProfile['"]/,
+      reason: 'Runtime SEO verifier should import companyProfile for canonical-origin parity checks',
+    },
+    {
+      pattern:
+        /SEO_BRAND_NAME[\s\S]*SEO_DEFAULT_DESCRIPTION[\s\S]*SEO_DEFAULT_OG_IMAGE_PATH[\s\S]*SEO_BLOCKED_ROUTE_PREFIXES[\s\S]*SEO_ROBOTS_DISALLOW_PATHS[\s\S]*SEO_SITE_URL[\s\S]*toAbsoluteSeoUrl/,
+      reason: 'Runtime SEO verifier should consume shared SEO constants for policy validation',
+    },
+    {
+      pattern: /function verifyCanonicalSeoConstants\(\): void/,
+      reason: 'Runtime SEO verifier should retain canonical constants validation entrypoint',
+    },
+    {
+      pattern: /function verifyMetadataHelperRuntimeBehavior\(\): void/,
+      reason: 'Runtime SEO verifier should retain runtime metadata-helper behavior validation entrypoint',
+    },
+    {
+      pattern: /buildPageMetadata\(\{[\s\S]*Runtime SEO Metadata Helper Probe[\s\S]*\}\);/,
+      reason: 'Runtime SEO verifier should execute buildPageMetadata probe coverage for normalization contracts',
+    },
+    {
+      pattern: /const crossOriginPathMetadata = buildPageMetadata\([\s\S]*https:\/\/example\.com\/pages\/evil-canonical[\s\S]*\);/,
+      reason: 'Runtime SEO verifier should probe cross-origin canonical-path rejection behavior',
+    },
+    {
+      pattern: /const blankTitleMetadata = buildPageMetadata\(/,
+      reason: 'Runtime SEO verifier should probe blank-title fallback behavior in buildPageMetadata',
+    },
+    {
+      pattern: /function verifyStructuredDataRuntimeBehavior\(\): void/,
+      reason: 'Runtime SEO verifier should retain runtime structured-data behavior validation entrypoint',
+    },
+    {
+      pattern: /OrganizationStructuredData\(\{[\s\S]*linkedin\.com\/company\/enterprisehero[\s\S]*\}\)/,
+      reason: 'Runtime SEO verifier should probe structured-data sameAs sanitization behavior with mixed URL inputs',
+    },
+    {
+      pattern: /async function verifyBlogSlugMetadataRuntimeBehavior\(\): Promise<void>/,
+      reason: 'Runtime SEO verifier should retain runtime blog-slug metadata behavior validation entrypoint',
+    },
+    {
+      pattern: /generateBlogSlugMetadata\([\s\S]*Enterprise_AI--Launch\?\?[\s\S]*\)/,
+      reason: 'Runtime SEO verifier should probe malformed blog slug normalization behavior',
+    },
+    {
+      pattern: /async function verifySitemapOutput\(\): Promise<void>/,
+      reason: 'Runtime SEO verifier should retain sitemap runtime validation entrypoint',
+    },
+    {
+      pattern: /function verifyRobotsOutput\(\): void/,
+      reason: 'Runtime SEO verifier should retain robots runtime validation entrypoint',
+    },
+    {
+      pattern: /function expectedPriorityForPath\(/,
+      reason: 'Runtime SEO verifier should retain expectedPriorityForPath mapping helper',
+    },
+    {
+      pattern: /function expectedChangeFrequencyForPath\(/,
+      reason: 'Runtime SEO verifier should retain expectedChangeFrequencyForPath mapping helper',
+    },
+    {
+      pattern: /function isBlockedRoutePath\(pathname: string\): boolean/,
+      reason: 'Runtime SEO verifier should centralize blocked-route matching logic for exact/nested prefix checks',
+    },
+    {
+      pattern: /pathname === prefix \|\| pathname\.startsWith\(`\$\{prefix\}\/`\)/,
+      reason: 'Runtime SEO verifier blocked-route helper should allow similarly-prefixed public paths',
+    },
+    {
+      pattern: /function normalizeNavigationRoute\(/,
+      reason: 'Runtime SEO verifier should normalize navigation routes before sitemap coverage checks',
+    },
+    {
+      pattern: /function getRawNavigationRoutes\(\): string\[\]/,
+      reason: 'Runtime SEO verifier should retain raw navigation route collector for source-hygiene checks',
+    },
+    {
+      pattern: /function verifyNavigationSourceRouteHygiene\(\): void/,
+      reason: 'Runtime SEO verifier should retain navigation source-hygiene validation entrypoint',
+    },
+    {
+      pattern: /let canonicalSitemapLinkCount = 0;/,
+      reason: 'Runtime SEO verifier should track canonical /sitemap.xml link count in navigation sources',
+    },
+    {
+      pattern: /trimmedRoute === '\/sitemap'/,
+      reason: 'Runtime SEO verifier should reject non-canonical /sitemap navigation alias at source',
+    },
+    {
+      pattern: /if \(trimmedRoute === '\/sitemap\.xml'\)\s*\{\s*canonicalSitemapLinkCount \+= 1;/,
+      reason: 'Runtime SEO verifier should count canonical sitemap links from navigation sources',
+    },
+    {
+      pattern: /trimmedRoute\.includes\('\['\) \|\| trimmedRoute\.includes\('\]'\)/,
+      reason: 'Runtime SEO verifier should reject dynamic placeholder routes in navigation source links',
+    },
+    {
+      pattern: /const routePathForPolicy = \(\(\) => \{[\s\S]*isBlockedRoutePath\(routePathForPolicy\)/,
+      reason: 'Runtime SEO verifier should reject blocked-prefix routes from navigation source links',
+    },
+    {
+      pattern: /if \(canonicalSitemapLinkCount !== 1\)/,
+      reason: 'Runtime SEO verifier should enforce exactly one canonical /sitemap.xml navigation link',
+    },
+    {
+      pattern:
+        /trimmedRoute\.startsWith\('#'\)[\s\S]*trimmedRoute\.startsWith\('mailto:'\)[\s\S]*trimmedRoute\.startsWith\('tel:'\)[\s\S]*trimmedRoute\.startsWith\('javascript:'\)/,
+      reason: 'Runtime SEO verifier should skip non-indexable navigation schemes and fragment-only links',
+    },
+    {
+      pattern:
+        /trimmedRoute\.startsWith\('http:\/\/'\)[\s\S]*trimmedRoute\.startsWith\('https:\/\/'\)[\s\S]*trimmedRoute\.startsWith\('\/\/'\)/,
+      reason: 'Runtime SEO verifier should skip absolute and protocol-relative navigation links',
+    },
+    {
+      pattern: /normalizedWithLeadingSlash\.split\(\/\[\?#\]\/\)\[0\] \|\| '\/'/,
+      reason: 'Runtime SEO verifier should strip query/hash fragments from navigation links',
+    },
+    {
+      pattern: /replace\(\/\\\/\{2,\}\/g,\s*'\/'\)/,
+      reason: 'Runtime SEO verifier should collapse duplicate slashes in normalized navigation routes',
+    },
+    {
+      pattern: /const lowerCasedPath = collapsedPath\.toLowerCase\(\);/,
+      reason: 'Runtime SEO verifier should canonicalize normalized navigation routes to lowercase',
+    },
+    {
+      pattern: /const isBlocked = isBlockedRoutePath\(normalizedRoute\);/,
+      reason: 'Runtime SEO verifier should enforce blocked-prefix filtering through shared helper in navigation normalization',
+    },
+    {
+      pattern: /const sitemapAliasNormalization = normalizeNavigationRoute\('\/Sitemap\?ref=footer'\)/,
+      reason: 'Runtime SEO verifier should probe sitemap alias normalization behavior for navigation routes',
+    },
+    {
+      pattern: /const robotsNormalization = normalizeNavigationRoute\('\/robots\.txt'\)/,
+      reason: 'Runtime SEO verifier should probe robots endpoint exclusion from navigation sitemap candidates',
+    },
+    {
+      pattern: /verifyNavigationSourceRouteHygiene\(\);/,
+      reason: 'Runtime SEO verifier should execute navigation source-hygiene checks before sitemap validation',
+    },
+    {
+      pattern: /normalizedCompanyProfileOrigin/,
+      reason: 'Runtime SEO verifier should validate canonical origin parity with companyProfile.websiteUrl',
+    },
+    {
+      pattern: /resolvedQueryPathUrl[\s\S]*expectedQueryPathUrl/,
+      reason: 'Runtime SEO verifier should assert query/hash stripping behavior for toAbsoluteSeoUrl()',
+    },
+    {
+      pattern: /resolvedDuplicateSlashUrl[\s\S]*expectedDuplicateSlashUrl/,
+      reason: 'Runtime SEO verifier should assert duplicate-slash collapsing behavior for toAbsoluteSeoUrl()',
+    },
+    {
+      pattern: /resolvedProtocolRelativeUrl[\s\S]*toAbsoluteSeoUrl\('\/\/example\.com\/path'\)/,
+      reason: 'Runtime SEO verifier should assert protocol-relative URL rejection for toAbsoluteSeoUrl()',
+    },
+    {
+      pattern: /resolvedNonHttpSchemeUrl[\s\S]*toAbsoluteSeoUrl\('mailto:seo@example\.com'\)/,
+      reason: 'Runtime SEO verifier should assert non-http scheme rejection for toAbsoluteSeoUrl()',
+    },
+    {
+      pattern: /entriesMissingPriority/,
+      reason: 'Runtime SEO verifier should enforce explicit priority presence for all sitemap entries',
+    },
+    {
+      pattern: /entriesMissingChangeFrequency/,
+      reason: 'Runtime SEO verifier should enforce explicit changeFrequency presence for all sitemap entries',
+    },
+    {
+      pattern: /entriesWithUnexpectedPriorityPolicy[\s\S]*expectedPriorityForPath\(pathname\)/,
+      reason: 'Runtime SEO verifier should validate full priority-policy mapping across sitemap entries',
+    },
+    {
+      pattern: /entriesWithUnexpectedFrequencyPolicy[\s\S]*expectedChangeFrequencyForPath\(pathname\)/,
+      reason: 'Runtime SEO verifier should validate full changeFrequency-policy mapping across sitemap entries',
+    },
+    {
+      pattern: /nonLowercasePathUrls/,
+      reason: 'Runtime SEO verifier should enforce lowercase sitemap pathname policy',
+    },
+    {
+      pattern: /duplicateSlashPathUrls/,
+      reason: 'Runtime SEO verifier should enforce duplicate-slash pathname rejection',
+    },
+    {
+      pattern: /const blockedUrlFound = entries\.find\(\(entry\) => \{[\s\S]*new URL\(entry\.url\)\.pathname[\s\S]*isBlockedRoutePath\(pathname\)/,
+      reason: 'Runtime SEO verifier should validate blocked-path presence using parsed pathname checks',
+    },
+    {
+      pattern:
+        /const requiredLegalRoutes = \[[\s\S]*\/pages\/legal\/privacy-policy[\s\S]*\/pages\/legal\/terms-of-service[\s\S]*\/pages\/legal\/shipping-policy[\s\S]*\/pages\/legal\/cancellations-refunds[\s\S]*\/pages\/legal\/company-info[\s\S]*\]/,
+      reason: 'Runtime SEO verifier should keep full legal-route coverage requirements',
+    },
+    {
+      pattern: /duplicateAllowEntries[\s\S]*unexpectedAllowEntries/,
+      reason: 'Runtime SEO verifier should enforce strict wildcard allow-list policy checks',
+    },
+    {
+      pattern: /wildcardRules\.length !== 1[\s\S]*robotsOutput\.rules\[0\]\?\.userAgent !== '\*'/,
+      reason: 'Runtime SEO verifier should enforce deterministic wildcard rule count and first-rule position',
+    },
+    {
+      pattern: /disallowOrderMismatch/,
+      reason: 'Runtime SEO verifier should enforce deterministic robots disallow ordering checks',
+    },
+    {
+      pattern: /malformedDisallowEntries/,
+      reason: 'Runtime SEO verifier should enforce robots disallow path normalization checks',
+    },
+    {
+      pattern:
+        /verifyCanonicalSeoConstants\(\);\s*verifyMetadataHelperRuntimeBehavior\(\);\s*verifyStructuredDataRuntimeBehavior\(\);\s*await verifyBlogSlugMetadataRuntimeBehavior\(\);\s*verifyNavigationSourceRouteHygiene\(\);\s*await verifySitemapOutput\(\);\s*verifyRobotsOutput\(\);/,
+      reason: 'Runtime SEO verifier main flow should execute canonical, metadata helper, structured-data, blog slug, navigation, sitemap, then robots checks',
+    },
+    {
+      pattern: /process\.exit\(1\);/,
+      reason: 'Runtime SEO verifier should fail process on verification errors',
+    },
+  ];
+
+  const violations = requiredPatterns
+    .filter(({ pattern }) => !pattern.test(runtimeScriptContent))
+    .map(({ reason }) => ({
+      file: path.relative(ROOT_DIR, SEO_RUNTIME_SCRIPT_FILE),
+      reason,
+    }));
+
+  if (violations.length > 0) {
+    logError('Runtime SEO verification script invariant check failed', { violations });
+    return { passed: false, violations };
+  }
+
+  logInfo('Runtime SEO verification script invariant check passed');
+  return { passed: true, violations: [] };
+}
+
+function main() {
+  logInfo('Starting SEO integrity verification');
+
+  const checks = [
+    verifyMetadataCoverage(),
+    verifyMetadataUsesSharedBuilder(),
+    verifyMetadataPathAlignment(),
+    verifyMetadataExplicitDescriptions(),
+    verifyMetadataImageAssets(),
+    verifyNoPlaceholderTokens(),
+    verifyNoLegacyTokensInPublicCode(),
+    verifyDynamicSeoFiles(),
+    verifySitemapNavigationLink(),
+    verifySeoScriptsRegistered(),
+    verifyBuildPipelineSeoChecks(),
+    verifySeoCiWorkflow(),
+    verifySharedSeoPolicyConstantsUsage(),
+    verifySeoRoutesImplementationInvariants(),
+    verifySeoConstantsImplementationInvariants(),
+    verifySeoMetadataHelperInvariants(),
+    verifyCompanyProfileSeoIdentity(),
+    verifyRootLayoutMetadataConfiguration(),
+    verifyCoreSeoFilesNoPlaceholderTokens(),
+    verifySitemapImplementationInvariants(),
+    verifyRobotsImplementationInvariants(),
+    verifySeoModuleDocsConsistency(),
+    verifyPrivateRouteNoIndexPolicy(),
+    verifyRootStructuredDataWiring(),
+    verifyStructuredDataComponentInvariants(),
+    verifyBlogSlugMetadataImplementationInvariants(),
+    verifySeoRuntimeScriptInvariants(),
+    verifyLegacyFilesRemoved(),
+  ];
+
+  const failedChecks = checks.filter((check) => !check.passed);
+
+  if (failedChecks.length > 0) {
+    logError('SEO integrity verification failed', { failedChecks: failedChecks.length });
+    process.exit(1);
+  }
+
+  logInfo('SEO integrity verification passed successfully');
+}
+
+try {
+  main();
+} catch (error) {
+  logError('Unexpected error during SEO verification', {
+    error: error instanceof Error ? error.message : String(error),
+  });
+  process.exit(1);
+}

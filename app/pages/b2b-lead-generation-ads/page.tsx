@@ -21,7 +21,7 @@ export default function B2BLeadGenerationAdsPage() {
     console.log('[B2B-Lead-Generation] Page mounted');
     if (typeof window !== 'undefined' && (window as any).gtag) {
       (window as any).gtag('event', 'page_view', {
-        page_title: 'B2B Lead Generation Ads | High-Quality Leads | Rajapragya Bharat',
+        page_title: 'B2B Lead Generation Ads | High-Quality Leads | Enterprise Hero',
         page_location: window.location.href,
         page_path: '/pages/b2b-lead-generation-ads'
       });
