@@ -12,7 +12,7 @@
  * 7. Dynamic SEO routes exist (app/sitemap.ts and app/robots.ts).
  * 8. Navigation points to /sitemap.xml (not legacy /sitemap).
  * 9. Package scripts expose verify:seo and verify:seo:runtime.
- * 10. Build pipeline runs SEO integrity + runtime checks with safe failure semantics.
+ * 10. Build pipeline runs SEO integrity + runtime checks with safe failure semantics and strict ordering.
  * 11. CI workflow executes SEO integrity + runtime checks.
  * 12. Shared SEO policy constants are used across routes/robots modules.
  * 13. SEO routes module normalization invariants are preserved.
@@ -576,6 +576,21 @@ function verifyBuildPipelineSeoChecks() {
     return { passed: false };
   }
 
+  const prismaGenerateIndex = buildScript.indexOf('prisma generate');
+  if (prismaGenerateIndex < 0) {
+    logError('Build script should include prisma generate after SEO verification steps', {
+      buildScript,
+    });
+    return { passed: false };
+  }
+
+  if (verifySeoIndex > prismaGenerateIndex || verifySeoRuntimeIndex > prismaGenerateIndex) {
+    logError('Build script should run SEO verification steps before prisma generate', {
+      buildScript,
+    });
+    return { passed: false };
+  }
+
   const hasScopedWasmFallback =
     /\(npm run build:wasm\s*\|\|\s*echo\s+['"]⚠️ WASM build skipped['"]\)/.test(buildScript);
   if (!hasScopedWasmFallback) {
@@ -583,6 +598,17 @@ function verifyBuildPipelineSeoChecks() {
       buildScript,
       expectedPattern: "(npm run build:wasm || echo '⚠️ WASM build skipped')",
     });
+    return { passed: false };
+  }
+
+  const nextBuildIndex = buildScript.lastIndexOf('next build');
+  if (nextBuildIndex < 0) {
+    logError('Build script should end with next build after prerequisite checks', { buildScript });
+    return { passed: false };
+  }
+
+  if (prismaGenerateIndex > nextBuildIndex) {
+    logError('Build script should run prisma generate before next build', { buildScript });
     return { passed: false };
   }
 
@@ -1046,6 +1072,7 @@ function verifySeoModuleDocsConsistency() {
     'normalizeRoute',
     'getCanonicalSiteUrl',
     'toAbsoluteSeoUrl',
+    'prisma generate',
     'generateMetadata',
     '/pages/blog/${slug}',
   ];

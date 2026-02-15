@@ -106,7 +106,7 @@ It validates:
 - dynamic sitemap/robots route existence
 - footer sitemap link policy (`/sitemap.xml` only; no `/sitemap`)
 - package script registration (`verify:seo`, `verify:seo:runtime`)
-- build pipeline enforcement (`npm run verify:seo` and `npm run verify:seo:runtime`) with scoped WASM fallback semantics
+- build pipeline enforcement (`npm run verify:seo` and `npm run verify:seo:runtime`) with scoped WASM fallback semantics and strict order before `prisma generate` / `next build`
 - CI workflow enforcement (runs SEO checks on push + pull_request)
 - shared policy constant usage (`SEO_BLOCKED_ROUTE_PREFIXES`, `SEO_ROBOTS_DISALLOW_PATHS`)
 - routes module invariants for `normalizeRoute` (exclude absolute URLs, dynamic placeholders, `/sitemap.xml`, `/robots.txt`, blocked prefixes)
