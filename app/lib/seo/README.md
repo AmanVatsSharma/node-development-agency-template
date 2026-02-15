@@ -100,6 +100,8 @@ It validates:
 - absence of placeholder domain tokens in active metadata-bearing files
 - absence of legacy/placeholder domains in public route source (`app/pages/**/*.ts|tsx|js|jsx`)
 - dynamic sitemap/robots route existence
+- footer sitemap link policy (`/sitemap.xml` only; no `/sitemap`)
+- build pipeline enforcement (`npm run verify:seo` and `npm run verify:seo:runtime`)
 - removal of legacy static SEO generators
 - runtime sitemap and robots output behavior
   - absolute canonical sitemap URLs only

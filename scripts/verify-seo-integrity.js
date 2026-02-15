@@ -9,7 +9,9 @@
  * 4. Placeholder SEO tokens are not present in active metadata-bearing files.
  * 5. Legacy/placeholder domain tokens are not present in public route source code.
  * 6. Dynamic SEO routes exist (app/sitemap.ts and app/robots.ts).
- * 7. Legacy static SEO generator files are not present.
+ * 7. Navigation points to /sitemap.xml (not legacy /sitemap).
+ * 8. Build pipeline runs SEO integrity + runtime checks.
+ * 9. Legacy static SEO generator files are not present.
  *
  * Usage:
  *   node scripts/verify-seo-integrity.js
@@ -21,6 +23,8 @@ const path = require('path');
 const ROOT_DIR = process.cwd();
 const APP_DIR = path.join(ROOT_DIR, 'app');
 const PAGES_DIR = path.join(APP_DIR, 'pages');
+const NAVIGATION_FILE = path.join(APP_DIR, 'data', 'navigation.ts');
+const PACKAGE_JSON_PATH = path.join(ROOT_DIR, 'package.json');
 
 const DYNAMIC_SEO_FILES = [path.join(APP_DIR, 'sitemap.ts'), path.join(APP_DIR, 'robots.ts')];
 const LEGACY_SEO_FILES = [
@@ -339,6 +343,61 @@ function verifyDynamicSeoFiles() {
   return { passed: true, missingFiles: [] };
 }
 
+function verifySitemapNavigationLink() {
+  if (!fs.existsSync(NAVIGATION_FILE)) {
+    logError('Navigation configuration file missing', {
+      file: path.relative(ROOT_DIR, NAVIGATION_FILE),
+    });
+    return { passed: false };
+  }
+
+  const navigationContent = fs.readFileSync(NAVIGATION_FILE, 'utf8');
+  const hasSitemapXmlLink = /href:\s*['"]\/sitemap\.xml['"]/.test(navigationContent);
+  const hasLegacySitemapLink = /href:\s*['"]\/sitemap['"]/.test(navigationContent);
+
+  if (!hasSitemapXmlLink) {
+    logError('Footer navigation is missing /sitemap.xml link');
+    return { passed: false };
+  }
+
+  if (hasLegacySitemapLink) {
+    logError('Legacy /sitemap footer link detected. Use /sitemap.xml only');
+    return { passed: false };
+  }
+
+  logInfo('Sitemap navigation link check passed');
+  return { passed: true };
+}
+
+function verifyBuildPipelineSeoChecks() {
+  if (!fs.existsSync(PACKAGE_JSON_PATH)) {
+    logError('package.json missing for build pipeline verification');
+    return { passed: false };
+  }
+
+  const packageJson = JSON.parse(fs.readFileSync(PACKAGE_JSON_PATH, 'utf8'));
+  const buildScript = packageJson?.scripts?.build;
+
+  if (!buildScript || typeof buildScript !== 'string') {
+    logError('Build script missing in package.json');
+    return { passed: false };
+  }
+
+  const requiredScriptTokens = ['npm run verify:seo', 'npm run verify:seo:runtime'];
+  const missingTokens = requiredScriptTokens.filter((token) => !buildScript.includes(token));
+
+  if (missingTokens.length > 0) {
+    logError('Build script missing required SEO verification steps', {
+      missingTokens,
+      buildScript,
+    });
+    return { passed: false, missingTokens };
+  }
+
+  logInfo('Build pipeline SEO check presence passed');
+  return { passed: true, missingTokens: [] };
+}
+
 function verifyLegacyFilesRemoved() {
   const foundLegacyFiles = LEGACY_SEO_FILES.filter((filePath) => fs.existsSync(filePath));
 
@@ -363,6 +422,8 @@ function main() {
     verifyNoPlaceholderTokens(),
     verifyNoLegacyTokensInPublicCode(),
     verifyDynamicSeoFiles(),
+    verifySitemapNavigationLink(),
+    verifyBuildPipelineSeoChecks(),
     verifyLegacyFilesRemoved(),
   ];
 
