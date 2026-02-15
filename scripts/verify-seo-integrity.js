@@ -21,7 +21,8 @@
  * 16. SEO module docs stay aligned with implementation checkpoints.
  * 17. Private route no-index policy remains enforced (admin/login).
  * 18. OG image asset references are valid for metadata generation.
- * 19. Legacy static SEO generator files are not present.
+ * 19. Root structured data wiring stays aligned with company profile constants.
+ * 20. Legacy static SEO generator files are not present.
  *
  * Usage:
  *   node scripts/verify-seo-integrity.js
@@ -839,6 +840,58 @@ function verifyPrivateRouteNoIndexPolicy() {
   return { passed: true, violations: [] };
 }
 
+function verifyRootStructuredDataWiring() {
+  if (!fs.existsSync(APP_LAYOUT_FILE)) {
+    logError('Root layout file missing for structured data wiring check', {
+      file: path.relative(ROOT_DIR, APP_LAYOUT_FILE),
+    });
+    return { passed: false };
+  }
+
+  const layoutContent = fs.readFileSync(APP_LAYOUT_FILE, 'utf8');
+  const requiredPatterns = [
+    {
+      pattern: /OrganizationStructuredData,\s*WebsiteStructuredData/,
+      reason: 'Root layout should import OrganizationStructuredData and WebsiteStructuredData',
+    },
+    {
+      pattern: /<OrganizationStructuredData[\s\S]*name=\{companyProfile\.brandName\}/,
+      reason: 'Organization structured data should use companyProfile.brandName',
+    },
+    {
+      pattern: /<OrganizationStructuredData[\s\S]*url=\{companyProfile\.websiteUrl\}/,
+      reason: 'Organization structured data should use companyProfile.websiteUrl',
+    },
+    {
+      pattern: /contactPoint=\{\{\s*contactType:\s*["']customer service["'],\s*email:\s*companyProfile\.contactEmail\s*\}\}/,
+      reason: 'Organization structured data contact email should come from companyProfile.contactEmail',
+    },
+    {
+      pattern: /<WebsiteStructuredData[\s\S]*url=\{companyProfile\.websiteUrl\}/,
+      reason: 'Website structured data should use companyProfile.websiteUrl',
+    },
+    {
+      pattern: /publisher=\{companyProfile\.legalName\}/,
+      reason: 'Website structured data publisher should use companyProfile.legalName',
+    },
+  ];
+
+  const violations = requiredPatterns
+    .filter(({ pattern }) => !pattern.test(layoutContent))
+    .map(({ reason }) => ({
+      file: path.relative(ROOT_DIR, APP_LAYOUT_FILE),
+      reason,
+    }));
+
+  if (violations.length > 0) {
+    logError('Root structured data wiring check failed', { violations });
+    return { passed: false, violations };
+  }
+
+  logInfo('Root structured data wiring check passed');
+  return { passed: true, violations: [] };
+}
+
 function verifySitemapImplementationInvariants() {
   if (!fs.existsSync(SITEMAP_FILE)) {
     logError('Sitemap implementation file missing', {
@@ -964,6 +1017,7 @@ function main() {
     verifyRobotsImplementationInvariants(),
     verifySeoModuleDocsConsistency(),
     verifyPrivateRouteNoIndexPolicy(),
+    verifyRootStructuredDataWiring(),
     verifyLegacyFilesRemoved(),
   ];
 
