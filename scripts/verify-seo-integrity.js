@@ -20,7 +20,8 @@
  * 15. Sitemap/robots implementation invariants are preserved.
  * 16. SEO module docs stay aligned with implementation checkpoints.
  * 17. Private route no-index policy remains enforced (admin/login).
- * 18. Legacy static SEO generator files are not present.
+ * 18. OG image asset references are valid for metadata generation.
+ * 19. Legacy static SEO generator files are not present.
  *
  * Usage:
  *   node scripts/verify-seo-integrity.js
@@ -32,6 +33,7 @@ const path = require('path');
 const ROOT_DIR = process.cwd();
 const APP_DIR = path.join(ROOT_DIR, 'app');
 const PAGES_DIR = path.join(APP_DIR, 'pages');
+const PUBLIC_DIR = path.join(ROOT_DIR, 'public');
 const APP_LAYOUT_FILE = path.join(APP_DIR, 'layout.tsx');
 const ADMIN_LAYOUT_FILE = path.join(APP_DIR, 'admin', 'layout.tsx');
 const LOGIN_PAGE_FILE = path.join(APP_DIR, 'login', 'page.tsx');
@@ -272,6 +274,113 @@ function verifyMetadataPathAlignment() {
   }
 
   logInfo('Metadata path alignment check passed', { checkedCallCount });
+  return { passed: true, violations: [] };
+}
+
+function isHttpUrl(value) {
+  return /^https?:\/\//.test(value);
+}
+
+function toPublicAssetPath(rootRelativePath) {
+  return path.join(PUBLIC_DIR, rootRelativePath.replace(/^\/+/, ''));
+}
+
+function verifyMetadataImageAssets() {
+  const violations = [];
+
+  if (!fs.existsSync(SEO_CONSTANTS_FILE)) {
+    logError('SEO constants file missing for image asset validation', {
+      file: path.relative(ROOT_DIR, SEO_CONSTANTS_FILE),
+    });
+    return { passed: false };
+  }
+
+  const seoConstantsContent = fs.readFileSync(SEO_CONSTANTS_FILE, 'utf8');
+  const defaultImageMatch = seoConstantsContent.match(
+    /SEO_DEFAULT_OG_IMAGE_PATH\s*=\s*([`'"])(.*?)\1/,
+  );
+
+  if (!defaultImageMatch) {
+    violations.push({
+      file: path.relative(ROOT_DIR, SEO_CONSTANTS_FILE),
+      reason: 'SEO_DEFAULT_OG_IMAGE_PATH constant missing or not a string literal',
+    });
+  } else {
+    const defaultImagePath = defaultImageMatch[2];
+    if (isHttpUrl(defaultImagePath)) {
+      // Absolute URLs are allowed and intentionally skipped for local file checks.
+    } else if (!defaultImagePath.startsWith('/')) {
+      violations.push({
+        file: path.relative(ROOT_DIR, SEO_CONSTANTS_FILE),
+        reason: 'SEO_DEFAULT_OG_IMAGE_PATH must be root-relative or absolute URL',
+        value: defaultImagePath,
+      });
+    } else {
+      const defaultImageAssetPath = toPublicAssetPath(defaultImagePath);
+      if (!fs.existsSync(defaultImageAssetPath)) {
+        violations.push({
+          file: path.relative(ROOT_DIR, SEO_CONSTANTS_FILE),
+          reason: 'SEO_DEFAULT_OG_IMAGE_PATH points to missing public asset',
+          value: defaultImagePath,
+          expectedAsset: path.relative(ROOT_DIR, defaultImageAssetPath),
+        });
+      }
+    }
+  }
+
+  const metadataBuilderFiles = walkFiles(PAGES_DIR).filter((filePath) =>
+    /(metadata\.ts|layout\.tsx|page\.tsx)$/.test(filePath),
+  );
+  const metadataCallPattern = /buildPageMetadata\(\s*\{([\s\S]*?)\}\s*\)/g;
+
+  metadataBuilderFiles.forEach((filePath) => {
+    const fileContent = fs.readFileSync(filePath, 'utf8');
+    if (!/buildPageMetadata\(/.test(fileContent)) {
+      return;
+    }
+
+    const metadataCalls = [...fileContent.matchAll(metadataCallPattern)];
+    metadataCalls.forEach((callMatch) => {
+      const metadataObjectBody = callMatch[1];
+      const imagePathMatch = metadataObjectBody.match(/imagePath\s*:\s*([`'"])(.*?)\1/);
+      if (!imagePathMatch) {
+        return;
+      }
+
+      const imagePathValue = imagePathMatch[2];
+      if (isHttpUrl(imagePathValue)) {
+        return;
+      }
+
+      if (!imagePathValue.startsWith('/')) {
+        violations.push({
+          file: path.relative(ROOT_DIR, filePath),
+          reason: 'imagePath must be root-relative or absolute URL',
+          value: imagePathValue,
+          line: findLineNumber(fileContent, imagePathMatch[0]),
+        });
+        return;
+      }
+
+      const imageAssetPath = toPublicAssetPath(imagePathValue);
+      if (!fs.existsSync(imageAssetPath)) {
+        violations.push({
+          file: path.relative(ROOT_DIR, filePath),
+          reason: 'imagePath points to missing public asset',
+          value: imagePathValue,
+          expectedAsset: path.relative(ROOT_DIR, imageAssetPath),
+          line: findLineNumber(fileContent, imagePathMatch[0]),
+        });
+      }
+    });
+  });
+
+  if (violations.length > 0) {
+    logError('Metadata image asset verification failed', { violations });
+    return { passed: false, violations };
+  }
+
+  logInfo('Metadata image asset verification passed');
   return { passed: true, violations: [] };
 }
 
@@ -839,6 +948,7 @@ function main() {
     verifyMetadataCoverage(),
     verifyMetadataUsesSharedBuilder(),
     verifyMetadataPathAlignment(),
+    verifyMetadataImageAssets(),
     verifyNoPlaceholderTokens(),
     verifyNoLegacyTokensInPublicCode(),
     verifyDynamicSeoFiles(),
