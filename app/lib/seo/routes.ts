@@ -1,4 +1,6 @@
 import { footerNavigation, mainNavigation, servicesMegaMenu } from '@/app/data/navigation';
+import fs from 'node:fs';
+import path from 'node:path';
 
 /**
  * Routes that should always be indexable even if navigation data changes.
@@ -21,6 +23,7 @@ const CORE_STATIC_ROUTES = [
  * Paths that should never be included in sitemap.
  */
 const BLOCKED_ROUTE_PREFIXES = ['/admin', '/api', '/login'];
+const APP_PAGES_DIR = path.join(process.cwd(), 'app', 'pages');
 
 function normalizeRoute(route: string): string | null {
   if (!route || typeof route !== 'string') {
@@ -66,6 +69,63 @@ function normalizeRoute(route: string): string | null {
   return withoutTrailingSlash;
 }
 
+function shouldSkipFilesystemSegment(segment: string): boolean {
+  return (
+    !segment ||
+    segment.startsWith('_') ||
+    segment.startsWith('.') ||
+    segment.startsWith('@') ||
+    segment === 'api'
+  );
+}
+
+function isRouteGroupSegment(segment: string): boolean {
+  return segment.startsWith('(') && segment.endsWith(')');
+}
+
+function discoverFilesystemPageRoutes(): string[] {
+  const discoveredRoutes = new Set<string>();
+
+  const walkDirectory = (directoryPath: string, relativeSegments: string[]) => {
+    const entries = fs.readdirSync(directoryPath, { withFileTypes: true });
+
+    const hasPageFile = entries.some(
+      (entry) => entry.isFile() && /^page\.(tsx|ts|jsx|js|mdx)$/.test(entry.name),
+    );
+
+    if (hasPageFile) {
+      const routePath =
+        relativeSegments.length > 0 ? `/pages/${relativeSegments.join('/')}` : '/pages';
+      discoveredRoutes.add(routePath);
+    }
+
+    entries
+      .filter((entry) => entry.isDirectory())
+      .forEach((entry) => {
+        if (shouldSkipFilesystemSegment(entry.name)) {
+          return;
+        }
+
+        const nextSegments = isRouteGroupSegment(entry.name)
+          ? relativeSegments
+          : [...relativeSegments, entry.name];
+
+        walkDirectory(path.join(directoryPath, entry.name), nextSegments);
+      });
+  };
+
+  try {
+    walkDirectory(APP_PAGES_DIR, []);
+  } catch (error) {
+    console.error('[SEO] Failed to discover routes from app/pages filesystem', {
+      appPagesDir: APP_PAGES_DIR,
+      error: error instanceof Error ? error.message : String(error),
+    });
+  }
+
+  return Array.from(discoveredRoutes);
+}
+
 /**
  * Collect static public routes from:
  * - curated core list
@@ -75,6 +135,7 @@ function normalizeRoute(route: string): string | null {
  */
 export function getStaticSeoRoutes(): string[] {
   const routeSet = new Set<string>();
+  const filesystemDiscoveredRoutes = discoverFilesystemPageRoutes();
 
   const addRoute = (candidate: string) => {
     const normalized = normalizeRoute(candidate);
@@ -93,9 +154,11 @@ export function getStaticSeoRoutes(): string[] {
   Object.values(footerNavigation).forEach((linkGroup) => {
     linkGroup.forEach((item) => addRoute(item.href));
   });
+  filesystemDiscoveredRoutes.forEach(addRoute);
 
   // Debug log for visibility in build/runtime logs.
   console.log('[SEO] getStaticSeoRoutes', {
+    routeCountFromFilesystem: filesystemDiscoveredRoutes.length,
     routeCount: routeSet.size,
     sample: Array.from(routeSet).slice(0, 10),
   });
