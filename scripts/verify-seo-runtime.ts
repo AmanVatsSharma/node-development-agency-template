@@ -378,13 +378,37 @@ async function verifySitemapOutput(): Promise<void> {
     }
   });
 
-  const requiredLegalRoutes = ['/pages/legal/privacy-policy', '/pages/legal/terms-of-service'];
+  const requiredLegalRoutes = [
+    '/pages/legal/privacy-policy',
+    '/pages/legal/terms-of-service',
+    '/pages/legal/shipping-policy',
+    '/pages/legal/cancellations-refunds',
+    '/pages/legal/company-info',
+  ];
   requiredLegalRoutes.forEach((route) => {
     const routeUrl = toAbsoluteSeoUrl(route);
     if (!entryUrls.has(routeUrl)) {
       logError('Required legal sitemap route missing', { route, routeUrl });
     }
   });
+
+  const legalRoutesWithUnexpectedFrequency = requiredLegalRoutes
+    .map((route) => ({
+      route,
+      routeUrl: toAbsoluteSeoUrl(route),
+      entry: entriesByUrl.get(toAbsoluteSeoUrl(route)),
+    }))
+    .filter(({ entry }) => entry && entry.changeFrequency !== 'monthly')
+    .map(({ route, routeUrl, entry }) => ({
+      route,
+      routeUrl,
+      actualChangeFrequency: entry?.changeFrequency,
+    }));
+  if (legalRoutesWithUnexpectedFrequency.length > 0) {
+    logError('Legal sitemap routes should retain monthly changeFrequency baseline', {
+      legalRoutesWithUnexpectedFrequency,
+    });
+  }
 
   const contactUrl = toAbsoluteSeoUrl('/pages/contact');
   const contactEntry = entriesByUrl.get(contactUrl);

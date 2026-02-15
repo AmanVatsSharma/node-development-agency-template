@@ -125,7 +125,8 @@ It validates:
   - valid `lastModified` / `priority` / `changeFrequency` fields
   - critical route policy baselines (home/services/contact/blog priorities/frequencies)
   - navigation-driven route coverage in generated sitemap
-  - deterministic URL sorting + required legal route presence
+  - deterministic URL sorting + full legal route presence
+  - legal route changeFrequency baseline stays `monthly`
   - robots wildcard allow root + strict disallow policy consistency
 
 CI also runs the same check via:
