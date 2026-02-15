@@ -98,3 +98,6 @@ It validates:
 - dynamic sitemap/robots route existence
 - removal of legacy static SEO generators
 
+CI also runs the same check via:
+- `.github/workflows/seo-integrity.yml`
+
