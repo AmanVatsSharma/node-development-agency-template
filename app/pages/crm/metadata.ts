@@ -37,10 +37,10 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: '/crm-og-image.png',
+        url: '/logo.png',
         width: 1200,
         height: 630,
-        alt: 'EnterpriseHero CRM - Self-Hosted Enterprise Solution'
+        alt: 'Enterprise Hero CRM'
       }
     ]
   },
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'EnterpriseHero CRM | Custom Self-Hosted CRM',
     description: 'Premium self-hosted CRM — customizable, secure, and ERP-ready.',
-    images: ['/crm-og-image.png']
+    images: ['/logo.png']
   },
   robots: {
     index: true,
