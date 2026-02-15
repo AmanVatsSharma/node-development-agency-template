@@ -27,7 +27,8 @@
  * 22. Root structured data wiring stays aligned with company profile constants.
  * 23. Structured data component defaults align with shared SEO constants.
  * 24. Blog slug dynamic metadata invariants are preserved.
- * 25. Legacy static SEO generator files are not present.
+ * 25. Runtime SEO verification script invariants are preserved.
+ * 26. Legacy static SEO generator files are not present.
  *
  * Usage:
  *   node scripts/verify-seo-integrity.js
@@ -53,6 +54,7 @@ const ROBOTS_FILE = path.join(APP_DIR, 'robots.ts');
 const SEO_ROUTES_FILE = path.join(APP_DIR, 'lib', 'seo', 'routes.ts');
 const COMPANY_PROFILE_FILE = path.join(APP_DIR, 'data', 'companyProfile.ts');
 const PACKAGE_JSON_PATH = path.join(ROOT_DIR, 'package.json');
+const SEO_RUNTIME_SCRIPT_FILE = path.join(ROOT_DIR, 'scripts', 'verify-seo-runtime.ts');
 const SEO_CI_WORKFLOW_PATH = path.join(ROOT_DIR, '.github', 'workflows', 'seo-integrity.yml');
 
 const DYNAMIC_SEO_FILES = [path.join(APP_DIR, 'sitemap.ts'), path.join(APP_DIR, 'robots.ts')];
@@ -1073,6 +1075,8 @@ function verifySeoModuleDocsConsistency() {
     'getCanonicalSiteUrl',
     'toAbsoluteSeoUrl',
     'prisma generate',
+    'verifyCanonicalSeoConstants',
+    'verifySitemapOutput',
     'generateMetadata',
     '/pages/blog/${slug}',
   ];
@@ -1427,6 +1431,68 @@ function verifyBlogSlugMetadataImplementationInvariants() {
   return { passed: true, violations: [] };
 }
 
+function verifySeoRuntimeScriptInvariants() {
+  if (!fs.existsSync(SEO_RUNTIME_SCRIPT_FILE)) {
+    logError('Runtime SEO verification script file missing', {
+      file: path.relative(ROOT_DIR, SEO_RUNTIME_SCRIPT_FILE),
+    });
+    return { passed: false };
+  }
+
+  const runtimeScriptContent = fs.readFileSync(SEO_RUNTIME_SCRIPT_FILE, 'utf8');
+  const requiredPatterns = [
+    {
+      pattern: /import sitemap from ['"]@\/app\/sitemap['"]/,
+      reason: 'Runtime SEO verifier should import dynamic sitemap route',
+    },
+    {
+      pattern: /import robots from ['"]@\/app\/robots['"]/,
+      reason: 'Runtime SEO verifier should import dynamic robots route',
+    },
+    {
+      pattern:
+        /SEO_BLOCKED_ROUTE_PREFIXES[\s\S]*SEO_ROBOTS_DISALLOW_PATHS[\s\S]*SEO_SITE_URL[\s\S]*toAbsoluteSeoUrl/,
+      reason: 'Runtime SEO verifier should consume shared SEO constants for policy validation',
+    },
+    {
+      pattern: /function verifyCanonicalSeoConstants\(\): void/,
+      reason: 'Runtime SEO verifier should retain canonical constants validation entrypoint',
+    },
+    {
+      pattern: /async function verifySitemapOutput\(\): Promise<void>/,
+      reason: 'Runtime SEO verifier should retain sitemap runtime validation entrypoint',
+    },
+    {
+      pattern: /function verifyRobotsOutput\(\): void/,
+      reason: 'Runtime SEO verifier should retain robots runtime validation entrypoint',
+    },
+    {
+      pattern:
+        /verifyCanonicalSeoConstants\(\);\s*await verifySitemapOutput\(\);\s*verifyRobotsOutput\(\);/,
+      reason: 'Runtime SEO verifier main flow should execute canonical, sitemap, then robots checks',
+    },
+    {
+      pattern: /process\.exit\(1\);/,
+      reason: 'Runtime SEO verifier should fail process on verification errors',
+    },
+  ];
+
+  const violations = requiredPatterns
+    .filter(({ pattern }) => !pattern.test(runtimeScriptContent))
+    .map(({ reason }) => ({
+      file: path.relative(ROOT_DIR, SEO_RUNTIME_SCRIPT_FILE),
+      reason,
+    }));
+
+  if (violations.length > 0) {
+    logError('Runtime SEO verification script invariant check failed', { violations });
+    return { passed: false, violations };
+  }
+
+  logInfo('Runtime SEO verification script invariant check passed');
+  return { passed: true, violations: [] };
+}
+
 function main() {
   logInfo('Starting SEO integrity verification');
 
@@ -1456,6 +1522,7 @@ function main() {
     verifyRootStructuredDataWiring(),
     verifyStructuredDataComponentInvariants(),
     verifyBlogSlugMetadataImplementationInvariants(),
+    verifySeoRuntimeScriptInvariants(),
     verifyLegacyFilesRemoved(),
   ];
 
