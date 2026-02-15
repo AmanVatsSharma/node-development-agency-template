@@ -128,6 +128,7 @@ It validates:
   - no duplicate/query/hash sitemap URLs
   - valid `lastModified` / `priority` / `changeFrequency` fields
   - critical route policy baselines (home/services/contact/blog priorities/frequencies)
+  - blog detail coverage baseline (at least one blog detail URL) with lowercase kebab-case slug URLs
   - navigation-driven route coverage in generated sitemap
   - deterministic URL sorting + full legal route presence
   - legal route changeFrequency baseline stays `monthly`

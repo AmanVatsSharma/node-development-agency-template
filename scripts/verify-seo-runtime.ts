@@ -348,6 +348,22 @@ async function verifySitemapOutput(): Promise<void> {
   const blogDetailEntries = entries.filter((entry) =>
     entry.url.startsWith(`${toAbsoluteSeoUrl('/pages/blog/')}`),
   );
+  if (blogDetailEntries.length === 0) {
+    logError('Sitemap should contain at least one blog detail route', {
+      blogListingUrl,
+    });
+  }
+
+  const nonCanonicalBlogDetailEntries = blogDetailEntries.filter((entry) => {
+    const slugCandidate = entry.url.replace(`${toAbsoluteSeoUrl('/pages/blog/')}`, '');
+    return !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slugCandidate);
+  });
+  if (nonCanonicalBlogDetailEntries.length > 0) {
+    logError('Blog detail sitemap URLs should use lowercase kebab-case slugs', {
+      sample: nonCanonicalBlogDetailEntries.slice(0, 10).map((entry) => entry.url),
+    });
+  }
+
   const invalidBlogDetailEntries = blogDetailEntries.filter(
     (entry) => entry.changeFrequency !== 'weekly',
   );
