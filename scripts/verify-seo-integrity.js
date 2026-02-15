@@ -6,24 +6,25 @@
  * 1. Every public route under app/pages has metadata coverage.
  * 2. Metadata definitions use the shared SEO metadata builder.
  * 3. Metadata canonical path aligns with the actual file route.
- * 4. Placeholder SEO tokens are not present in active metadata-bearing files.
- * 5. Legacy/placeholder domain tokens are not present in public route source code.
- * 6. Dynamic SEO routes exist (app/sitemap.ts and app/robots.ts).
- * 7. Navigation points to /sitemap.xml (not legacy /sitemap).
- * 8. Package scripts expose verify:seo and verify:seo:runtime.
- * 9. Build pipeline runs SEO integrity + runtime checks with safe failure semantics.
- * 10. CI workflow executes SEO integrity + runtime checks.
- * 11. Shared SEO policy constants are used across routes/robots modules.
- * 12. Company profile SEO identity (website/email) is valid and non-placeholder.
- * 13. Root layout metadata uses canonical SEO constants.
- * 14. Core SEO files are free of placeholder/legacy tokens.
- * 15. Sitemap/robots implementation invariants and policy baselines are preserved.
- * 16. SEO module docs stay aligned with implementation checkpoints.
- * 17. Private route no-index policy remains enforced (admin/login).
- * 18. OG image asset references are valid for metadata generation.
- * 19. Root structured data wiring stays aligned with company profile constants.
- * 20. Structured data component defaults align with shared SEO constants.
- * 21. Legacy static SEO generator files are not present.
+ * 4. Metadata builder calls define explicit descriptions.
+ * 5. Placeholder SEO tokens are not present in active metadata-bearing files.
+ * 6. Legacy/placeholder domain tokens are not present in public route source code.
+ * 7. Dynamic SEO routes exist (app/sitemap.ts and app/robots.ts).
+ * 8. Navigation points to /sitemap.xml (not legacy /sitemap).
+ * 9. Package scripts expose verify:seo and verify:seo:runtime.
+ * 10. Build pipeline runs SEO integrity + runtime checks with safe failure semantics.
+ * 11. CI workflow executes SEO integrity + runtime checks.
+ * 12. Shared SEO policy constants are used across routes/robots modules.
+ * 13. Company profile SEO identity (website/email) is valid and non-placeholder.
+ * 14. Root layout metadata uses canonical SEO constants.
+ * 15. Core SEO files are free of placeholder/legacy tokens.
+ * 16. Sitemap/robots implementation invariants and policy baselines are preserved.
+ * 17. SEO module docs stay aligned with implementation checkpoints.
+ * 18. Private route no-index policy remains enforced (admin/login).
+ * 19. OG image asset references are valid for metadata generation.
+ * 20. Root structured data wiring stays aligned with company profile constants.
+ * 21. Structured data component defaults align with shared SEO constants.
+ * 22. Legacy static SEO generator files are not present.
  *
  * Usage:
  *   node scripts/verify-seo-integrity.js
@@ -276,6 +277,45 @@ function verifyMetadataPathAlignment() {
   }
 
   logInfo('Metadata path alignment check passed', { checkedCallCount });
+  return { passed: true, violations: [] };
+}
+
+function verifyMetadataExplicitDescriptions() {
+  const metadataBuilderFiles = walkFiles(PAGES_DIR).filter((filePath) =>
+    /(metadata\.ts|layout\.tsx|page\.tsx)$/.test(filePath),
+  );
+
+  const metadataCallPattern = /buildPageMetadata\(\s*\{([\s\S]*?)\}\s*\)/g;
+  const violations = [];
+  let checkedCallCount = 0;
+
+  metadataBuilderFiles.forEach((filePath) => {
+    const fileContent = fs.readFileSync(filePath, 'utf8');
+    if (!/buildPageMetadata\(/.test(fileContent)) {
+      return;
+    }
+
+    const metadataCalls = [...fileContent.matchAll(metadataCallPattern)];
+    metadataCalls.forEach((callMatch) => {
+      checkedCallCount += 1;
+      const metadataObjectBody = callMatch[1];
+      const descriptionFieldMatch = metadataObjectBody.match(/description\s*:/);
+
+      if (!descriptionFieldMatch) {
+        violations.push({
+          file: path.relative(ROOT_DIR, filePath),
+          reason: 'buildPageMetadata call should include explicit description for route-level uniqueness.',
+        });
+      }
+    });
+  });
+
+  if (violations.length > 0) {
+    logError('Metadata explicit description check failed', { violations });
+    return { passed: false, violations };
+  }
+
+  logInfo('Metadata explicit description check passed', { checkedCallCount });
   return { passed: true, violations: [] };
 }
 
@@ -787,6 +827,7 @@ function verifySeoModuleDocsConsistency() {
   const requiredDocTokens = [
     'flowchart TD',
     'buildPageMetadata',
+    'explicit description',
     '/sitemap.xml',
     '/robots.txt',
     'npm run verify:seo',
@@ -1097,6 +1138,7 @@ function main() {
     verifyMetadataCoverage(),
     verifyMetadataUsesSharedBuilder(),
     verifyMetadataPathAlignment(),
+    verifyMetadataExplicitDescriptions(),
     verifyMetadataImageAssets(),
     verifyNoPlaceholderTokens(),
     verifyNoLegacyTokensInPublicCode(),
