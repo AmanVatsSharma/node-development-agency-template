@@ -1096,6 +1096,7 @@ function verifySeoModuleDocsConsistency() {
     'getCanonicalSiteUrl',
     'toAbsoluteSeoUrl',
     'normalizeAndFilterBlogEntries',
+    'mergeDuplicateSitemapEntry',
     'prisma generate',
     'verifyCanonicalSeoConstants',
     'verifySitemapOutput',
@@ -1303,6 +1304,14 @@ function verifySitemapImplementationInvariants() {
       reason: 'sitemap should normalize and filter dynamic blog entries before URL generation',
     },
     {
+      pattern: /function getSitemapEntryTimestamp\(entry: MetadataRoute\.Sitemap\[number\]\): number/,
+      reason: 'sitemap should retain timestamp parsing helper for deterministic duplicate URL conflict resolution',
+    },
+    {
+      pattern: /function mergeDuplicateSitemapEntry\(/,
+      reason: 'sitemap should resolve duplicate URL conflicts through explicit merge policy',
+    },
+    {
       pattern: /prisma\.blogPost\.findMany\(/,
       reason: 'sitemap should load dynamic blog entries via prisma.blogPost.findMany()',
     },
@@ -1321,6 +1330,18 @@ function verifySitemapImplementationInvariants() {
     {
       pattern: /toAbsoluteSeoUrl\(`\/pages\/blog\/\$\{entry\.slug\}`\)/,
       reason: 'sitemap dynamic blog URLs should be canonicalized as /pages/blog/${entry.slug}',
+    },
+    {
+      pattern: /const duplicateUrlConflictSet = new Set<string>\(\);/,
+      reason: 'sitemap should track duplicate URL conflicts during deduplication',
+    },
+    {
+      pattern: /mergeDuplicateSitemapEntry\(existingEntry,\s*entry\)/,
+      reason: 'sitemap deduplication should merge conflicting entries with deterministic policy',
+    },
+    {
+      pattern: /console\.warn\('\[SEO\] Sitemap duplicate URL entries detected and merged'/,
+      reason: 'sitemap should emit duplicate URL merge diagnostics for operational visibility',
     },
     {
       pattern: /console\.warn\('\[SEO\] Filtered invalid blog sitemap entries'/,

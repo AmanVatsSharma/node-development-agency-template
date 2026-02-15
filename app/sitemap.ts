@@ -62,6 +62,43 @@ function normalizeAndFilterBlogEntries(
   return sanitizedEntries;
 }
 
+function getSitemapEntryTimestamp(entry: MetadataRoute.Sitemap[number]): number {
+  const timestampValue = entry.lastModified instanceof Date
+    ? entry.lastModified.getTime()
+    : new Date(String(entry.lastModified)).getTime();
+
+  return Number.isNaN(timestampValue) ? 0 : timestampValue;
+}
+
+function mergeDuplicateSitemapEntry(
+  existingEntry: MetadataRoute.Sitemap[number],
+  candidateEntry: MetadataRoute.Sitemap[number],
+): MetadataRoute.Sitemap[number] {
+  const existingTimestamp = getSitemapEntryTimestamp(existingEntry);
+  const candidateTimestamp = getSitemapEntryTimestamp(candidateEntry);
+
+  if (candidateTimestamp > existingTimestamp) {
+    return candidateEntry;
+  }
+
+  if (candidateTimestamp < existingTimestamp) {
+    return existingEntry;
+  }
+
+  const existingPriority = existingEntry.priority ?? 0;
+  const candidatePriority = candidateEntry.priority ?? 0;
+
+  if (candidatePriority > existingPriority) {
+    return candidateEntry;
+  }
+
+  if (candidatePriority < existingPriority) {
+    return existingEntry;
+  }
+
+  return existingEntry;
+}
+
 function getPriorityForRoute(path: string): number {
   if (path === '/') return 1.0;
   if (path === '/pages/services') return 0.95;
@@ -155,9 +192,25 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }));
 
   const dedupedByUrl = new Map<string, MetadataRoute.Sitemap[number]>();
+  const duplicateUrlConflictSet = new Set<string>();
   [...staticEntries, ...dynamicBlogEntries].forEach((entry) => {
-    dedupedByUrl.set(entry.url, entry);
+    const existingEntry = dedupedByUrl.get(entry.url);
+
+    if (!existingEntry) {
+      dedupedByUrl.set(entry.url, entry);
+      return;
+    }
+
+    duplicateUrlConflictSet.add(entry.url);
+    dedupedByUrl.set(entry.url, mergeDuplicateSitemapEntry(existingEntry, entry));
   });
+
+  if (duplicateUrlConflictSet.size > 0) {
+    console.warn('[SEO] Sitemap duplicate URL entries detected and merged', {
+      duplicateCount: duplicateUrlConflictSet.size,
+      sample: Array.from(duplicateUrlConflictSet).slice(0, 10),
+    });
+  }
 
   const finalEntries = Array.from(dedupedByUrl.values()).sort((a, b) => a.url.localeCompare(b.url));
 
