@@ -155,17 +155,33 @@ function normalizeNavigationRoute(route: string): string | null {
     return null;
   }
 
-  if (trimmedRoute.startsWith('http://') || trimmedRoute.startsWith('https://')) {
+  if (
+    trimmedRoute.startsWith('#') ||
+    trimmedRoute.startsWith('mailto:') ||
+    trimmedRoute.startsWith('tel:') ||
+    trimmedRoute.startsWith('javascript:')
+  ) {
+    return null;
+  }
+
+  if (
+    trimmedRoute.startsWith('http://') ||
+    trimmedRoute.startsWith('https://') ||
+    trimmedRoute.startsWith('//')
+  ) {
     return null;
   }
 
   const normalizedWithLeadingSlash = trimmedRoute.startsWith('/')
     ? trimmedRoute
     : `/${trimmedRoute}`;
+  const withoutQueryOrHash = normalizedWithLeadingSlash.split(/[?#]/)[0] || '/';
+  const collapsedPath = withoutQueryOrHash.replace(/\/{2,}/g, '/');
+  const lowerCasedPath = collapsedPath.toLowerCase();
   const normalizedRoute =
-    normalizedWithLeadingSlash.length > 1
-      ? normalizedWithLeadingSlash.replace(/\/$/, '')
-      : normalizedWithLeadingSlash;
+    lowerCasedPath.length > 1
+      ? lowerCasedPath.replace(/\/$/, '')
+      : lowerCasedPath;
 
   if (normalizedRoute === '/sitemap') {
     return '/sitemap.xml';

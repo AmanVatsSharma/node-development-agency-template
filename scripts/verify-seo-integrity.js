@@ -1092,6 +1092,7 @@ function verifySeoModuleDocsConsistency() {
     'verifySitemapOutput',
     'expectedPriorityForPath',
     'expectedChangeFrequencyForPath',
+    'normalizeNavigationRoute',
     'companyProfile.websiteUrl',
     'wildcard rule shape',
     'generateMetadata',
@@ -1548,6 +1549,32 @@ function verifySeoRuntimeScriptInvariants() {
     {
       pattern: /function expectedChangeFrequencyForPath\(/,
       reason: 'Runtime SEO verifier should retain expectedChangeFrequencyForPath mapping helper',
+    },
+    {
+      pattern: /function normalizeNavigationRoute\(/,
+      reason: 'Runtime SEO verifier should normalize navigation routes before sitemap coverage checks',
+    },
+    {
+      pattern:
+        /trimmedRoute\.startsWith\('#'\)[\s\S]*trimmedRoute\.startsWith\('mailto:'\)[\s\S]*trimmedRoute\.startsWith\('tel:'\)[\s\S]*trimmedRoute\.startsWith\('javascript:'\)/,
+      reason: 'Runtime SEO verifier should skip non-indexable navigation schemes and fragment-only links',
+    },
+    {
+      pattern:
+        /trimmedRoute\.startsWith\('http:\/\/'\)[\s\S]*trimmedRoute\.startsWith\('https:\/\/'\)[\s\S]*trimmedRoute\.startsWith\('\/\/'\)/,
+      reason: 'Runtime SEO verifier should skip absolute and protocol-relative navigation links',
+    },
+    {
+      pattern: /normalizedWithLeadingSlash\.split\(\/\[\?#\]\/\)\[0\] \|\| '\/'/,
+      reason: 'Runtime SEO verifier should strip query/hash fragments from navigation links',
+    },
+    {
+      pattern: /replace\(\/\\\/\{2,\}\/g,\s*'\/'\)/,
+      reason: 'Runtime SEO verifier should collapse duplicate slashes in normalized navigation routes',
+    },
+    {
+      pattern: /const lowerCasedPath = collapsedPath\.toLowerCase\(\);/,
+      reason: 'Runtime SEO verifier should canonicalize normalized navigation routes to lowercase',
     },
     {
       pattern: /normalizedCompanyProfileOrigin/,
