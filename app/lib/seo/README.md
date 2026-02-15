@@ -82,3 +82,19 @@ flowchart TD
 - [ ] `/sitemap.xml` includes expected new URLs.
 - [ ] `/robots.txt` still blocks private routes.
 
+---
+
+## Verification command
+
+Run the SEO integrity checker before merging major page/SEO changes:
+
+```bash
+npm run verify:seo
+```
+
+It validates:
+- metadata coverage for public routes
+- absence of placeholder domain tokens in active metadata-bearing files
+- dynamic sitemap/robots route existence
+- removal of legacy static SEO generators
+

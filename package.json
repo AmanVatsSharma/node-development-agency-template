@@ -10,6 +10,7 @@
     "postinstall": "prisma generate",
     "start": "next start",
     "lint": "next lint",
+    "verify:seo": "node scripts/verify-seo-integrity.js",
     "test": "jest",
     "analyze": "ANALYZE=true next build",
     "analyze:win": "set ANALYZE=true && next build",
