@@ -15,7 +15,7 @@
  * 10. Build pipeline runs SEO integrity + runtime checks with safe failure semantics.
  * 11. CI workflow executes SEO integrity + runtime checks.
  * 12. Shared SEO policy constants are used across routes/robots modules.
- * 13. Company profile SEO identity (website/email) is valid and non-placeholder.
+ * 13. Company profile SEO identity (brand/legal/website/email/social) is valid and non-placeholder.
  * 14. Root layout metadata uses canonical SEO constants.
  * 15. Core SEO files are free of placeholder/legacy tokens.
  * 16. Sitemap/robots implementation invariants and policy baselines are preserved.
@@ -697,8 +697,20 @@ function verifyCompanyProfileSeoIdentity() {
 
   const companyProfileContent = fs.readFileSync(COMPANY_PROFILE_FILE, 'utf8');
 
+  const brandNameMatch = companyProfileContent.match(/brandName:\s*["']([^"']+)["']/);
+  const legalNameMatch = companyProfileContent.match(/legalName:\s*["']([^"']+)["']/);
   const websiteMatch = companyProfileContent.match(/websiteUrl:\s*["']([^"']+)["']/);
   const contactEmailMatch = companyProfileContent.match(/contactEmail:\s*["']([^"']+)["']/);
+
+  if (!brandNameMatch) {
+    logError('companyProfile.brandName is missing or malformed');
+    return { passed: false };
+  }
+
+  if (!legalNameMatch) {
+    logError('companyProfile.legalName is missing or malformed');
+    return { passed: false };
+  }
 
   if (!websiteMatch) {
     logError('companyProfile.websiteUrl is missing or malformed');
@@ -710,8 +722,25 @@ function verifyCompanyProfileSeoIdentity() {
     return { passed: false };
   }
 
+  const brandName = brandNameMatch[1].trim();
+  const legalName = legalNameMatch[1].trim();
   const websiteUrl = websiteMatch[1].trim();
   const contactEmail = contactEmailMatch[1].trim();
+
+  const textIdentityFields = [
+    { field: 'brandName', value: brandName },
+    { field: 'legalName', value: legalName },
+  ];
+
+  const invalidIdentityField = textIdentityFields.find(
+    ({ value }) =>
+      !value ||
+      PLACEHOLDER_PATTERNS.some((token) => value.toLowerCase().includes(token.toLowerCase())),
+  );
+  if (invalidIdentityField) {
+    logError('companyProfile identity field contains placeholder/empty value', invalidIdentityField);
+    return { passed: false, invalidIdentityField };
+  }
 
   const websiteHasPlaceholderToken = PLACEHOLDER_PATTERNS.some((token) => websiteUrl.includes(token));
   if (websiteHasPlaceholderToken) {
@@ -721,6 +750,25 @@ function verifyCompanyProfileSeoIdentity() {
 
   if (!websiteUrl.startsWith('https://')) {
     logError('companyProfile.websiteUrl must use HTTPS', { websiteUrl });
+    return { passed: false, websiteUrl };
+  }
+
+  try {
+    const parsedWebsiteUrl = new URL(websiteUrl);
+    if (parsedWebsiteUrl.pathname !== '/' || parsedWebsiteUrl.search || parsedWebsiteUrl.hash) {
+      logError('companyProfile.websiteUrl should be origin-only (no path/query/hash)', {
+        websiteUrl,
+        pathname: parsedWebsiteUrl.pathname,
+        search: parsedWebsiteUrl.search,
+        hash: parsedWebsiteUrl.hash,
+      });
+      return { passed: false, websiteUrl };
+    }
+  } catch (error) {
+    logError('companyProfile.websiteUrl is not a valid absolute URL', {
+      websiteUrl,
+      error: error instanceof Error ? error.message : String(error),
+    });
     return { passed: false, websiteUrl };
   }
 
@@ -736,8 +784,47 @@ function verifyCompanyProfileSeoIdentity() {
     return { passed: false, contactEmail };
   }
 
-  logInfo('Company profile SEO identity check passed', { websiteUrl, contactEmail });
-  return { passed: true, websiteUrl, contactEmail };
+  const socialBlockMatch = companyProfileContent.match(/^\s*social:\s*\{([\s\S]*?)^\s*\},?/m);
+  const socialValues = socialBlockMatch
+    ? [...socialBlockMatch[1].matchAll(/:\s*["']([^"']+)["']/g)].map((match) => match[1].trim())
+    : [];
+
+  const invalidSocialUrl = socialValues.find((socialUrl) => {
+    if (!socialUrl || socialUrl === '#') {
+      return true;
+    }
+
+    if (!socialUrl.startsWith('https://')) {
+      return true;
+    }
+
+    return PLACEHOLDER_PATTERNS.some((token) =>
+      socialUrl.toLowerCase().includes(token.toLowerCase()),
+    );
+  });
+
+  if (invalidSocialUrl) {
+    logError('companyProfile.social contains invalid URL. Keep undefined or use verified HTTPS URLs only.', {
+      invalidSocialUrl,
+    });
+    return { passed: false, invalidSocialUrl };
+  }
+
+  logInfo('Company profile SEO identity check passed', {
+    brandName,
+    legalName,
+    websiteUrl,
+    contactEmail,
+    socialUrlCount: socialValues.length,
+  });
+  return {
+    passed: true,
+    brandName,
+    legalName,
+    websiteUrl,
+    contactEmail,
+    socialUrlCount: socialValues.length,
+  };
 }
 
 function verifyRootLayoutMetadataConfiguration() {
