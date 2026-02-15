@@ -109,6 +109,7 @@ It validates:
 - build pipeline enforcement (`npm run verify:seo` and `npm run verify:seo:runtime`) with scoped WASM fallback semantics
 - CI workflow enforcement (runs SEO checks on push + pull_request)
 - shared policy constant usage (`SEO_BLOCKED_ROUTE_PREFIXES`, `SEO_ROBOTS_DISALLOW_PATHS`)
+- routes module invariants for `normalizeRoute` (exclude absolute URLs, dynamic placeholders, `/sitemap.xml`, `/robots.txt`, blocked prefixes)
 - company profile SEO identity validity (`brandName`, `legalName`, `websiteUrl`, `contactEmail`, optional social URLs)
 - root layout metadata canonical configuration (`metadataBase`, canonical `/`, OG image constant)
 - core SEO file placeholder audit (`app/layout.tsx`, structured data component, SEO constants)

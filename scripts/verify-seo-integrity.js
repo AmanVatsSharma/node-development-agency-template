@@ -15,16 +15,17 @@
  * 10. Build pipeline runs SEO integrity + runtime checks with safe failure semantics.
  * 11. CI workflow executes SEO integrity + runtime checks.
  * 12. Shared SEO policy constants are used across routes/robots modules.
- * 13. Company profile SEO identity (brand/legal/website/email/social) is valid and non-placeholder.
- * 14. Root layout metadata uses canonical SEO constants.
- * 15. Core SEO files are free of placeholder/legacy tokens.
- * 16. Sitemap/robots implementation invariants and policy baselines are preserved.
- * 17. SEO module docs stay aligned with implementation checkpoints.
- * 18. Private route no-index policy remains enforced (admin/login).
- * 19. OG image asset references are valid for metadata generation.
- * 20. Root structured data wiring stays aligned with company profile constants.
- * 21. Structured data component defaults align with shared SEO constants.
- * 22. Legacy static SEO generator files are not present.
+ * 13. SEO routes module normalization invariants are preserved.
+ * 14. Company profile SEO identity (brand/legal/website/email/social) is valid and non-placeholder.
+ * 15. Root layout metadata uses canonical SEO constants.
+ * 16. Core SEO files are free of placeholder/legacy tokens.
+ * 17. Sitemap/robots implementation invariants and policy baselines are preserved.
+ * 18. SEO module docs stay aligned with implementation checkpoints.
+ * 19. Private route no-index policy remains enforced (admin/login).
+ * 20. OG image asset references are valid for metadata generation.
+ * 21. Root structured data wiring stays aligned with company profile constants.
+ * 22. Structured data component defaults align with shared SEO constants.
+ * 23. Legacy static SEO generator files are not present.
  *
  * Usage:
  *   node scripts/verify-seo-integrity.js
@@ -687,6 +688,58 @@ function verifySharedSeoPolicyConstantsUsage() {
   return { passed: true, violations: [] };
 }
 
+function verifySeoRoutesImplementationInvariants() {
+  if (!fs.existsSync(SEO_ROUTES_FILE)) {
+    logError('SEO routes implementation file missing', {
+      file: path.relative(ROOT_DIR, SEO_ROUTES_FILE),
+    });
+    return { passed: false };
+  }
+
+  const routesContent = fs.readFileSync(SEO_ROUTES_FILE, 'utf8');
+  const requiredPatterns = [
+    {
+      pattern: /if \(withoutTrailingSlash === ['"`]\/sitemap\.xml['"`] \|\| withoutTrailingSlash === ['"`]\/robots\.txt['"`]\) \{\s*return null;\s*\}/,
+      reason: 'routes normalizeRoute should exclude sitemap.xml and robots.txt endpoints',
+    },
+    {
+      pattern: /if \(withoutTrailingSlash\.includes\('\['\) \|\| withoutTrailingSlash\.includes\('\]'\)\) \{\s*return null;\s*\}/,
+      reason: 'routes normalizeRoute should exclude dynamic placeholder routes',
+    },
+    {
+      pattern: /trimmed\.startsWith\('http:\/\/'\) \|\| trimmed\.startsWith\('https:\/\/'\)/,
+      reason: 'routes normalizeRoute should skip absolute URLs',
+    },
+    {
+      pattern: /SEO_BLOCKED_ROUTE_PREFIXES\.some\([\s\S]*withoutTrailingSlash\.startsWith\(prefix\)/,
+      reason: 'routes normalizeRoute should enforce blocked prefixes from shared SEO constants',
+    },
+    {
+      pattern: /filesystemDiscoveredRoutes\.forEach\(addRoute\)/,
+      reason: 'routes module should merge filesystem discovery into static sitemap candidates',
+    },
+    {
+      pattern: /return Array\.from\(routeSet\)\.sort\(\);/,
+      reason: 'routes module should return deterministically sorted route list',
+    },
+  ];
+
+  const violations = requiredPatterns
+    .filter(({ pattern }) => !pattern.test(routesContent))
+    .map(({ reason }) => ({
+      file: path.relative(ROOT_DIR, SEO_ROUTES_FILE),
+      reason,
+    }));
+
+  if (violations.length > 0) {
+    logError('SEO routes implementation invariant check failed', { violations });
+    return { passed: false, violations };
+  }
+
+  logInfo('SEO routes implementation invariant check passed');
+  return { passed: true, violations: [] };
+}
+
 function verifyCompanyProfileSeoIdentity() {
   if (!fs.existsSync(COMPANY_PROFILE_FILE)) {
     logError('Company profile file missing', {
@@ -922,6 +975,7 @@ function verifySeoModuleDocsConsistency() {
     'SEO_BLOCKED_ROUTE_PREFIXES',
     'SEO_ROBOTS_DISALLOW_PATHS',
     'SEO_DEFAULT_DESCRIPTION',
+    'normalizeRoute',
   ];
 
   const missingDocTokens = requiredDocTokens.filter((token) => !readmeContent.includes(token));
@@ -1235,6 +1289,7 @@ function main() {
     verifyBuildPipelineSeoChecks(),
     verifySeoCiWorkflow(),
     verifySharedSeoPolicyConstantsUsage(),
+    verifySeoRoutesImplementationInvariants(),
     verifyCompanyProfileSeoIdentity(),
     verifyRootLayoutMetadataConfiguration(),
     verifyCoreSeoFilesNoPlaceholderTokens(),
