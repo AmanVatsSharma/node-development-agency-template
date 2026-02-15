@@ -570,6 +570,19 @@ function verifyRobotsOutput(): void {
     });
   }
 
+  const disallowOrderMismatch = disallowList.some(
+    (entry, index) => requiredDisallowEntries[index] !== entry,
+  );
+  if (
+    disallowOrderMismatch ||
+    disallowList.length !== requiredDisallowEntries.length
+  ) {
+    logError('Robots disallow list order should match SEO_ROBOTS_DISALLOW_PATHS for deterministic output', {
+      expected: requiredDisallowEntries,
+      actual: disallowList,
+    });
+  }
+
   logInfo('Robots runtime validation passed', {
     host: robotsOutput.host,
     sitemap: robotsOutput.sitemap,
