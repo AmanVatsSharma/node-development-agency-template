@@ -119,7 +119,7 @@ It validates:
 - sitemap dynamic blog source invariants (`prisma.blogPost.findMany` with `slug` + `updatedAt`, desc ordering, fallback mapping, canonical `/pages/blog/${slug}` URLs, `normalizeAndFilterBlogEntries` slug/date sanitization, `mergeDuplicateSitemapEntry` deterministic conflict resolution by freshness)
 - sitemap operational logging invariants (DB-source count, fallback-source count, fallback error log, final generation summary)
 - sitemap implementation policy baselines in source (`getPriorityForRoute`, `getChangeFrequencyForRoute`, blog detail priority)
-- robots source invariants include wildcard `userAgent: "*"` with explicit root `allow: "/"` + shared disallow constants
+- robots source invariants include wildcard `userAgent: "*"` with explicit root `allow: "/"`, shared disallow constants, and disallow hygiene helpers (`normalizeDisallowPath`, `getRobotsDisallowPaths`)
 - SEO module documentation consistency (flowchart + key command/policy references)
 - private route no-index policy checks (`app/admin/layout.tsx`, `app/login/page.tsx`)
 - root layout structured data wiring (`OrganizationStructuredData` / `WebsiteStructuredData`) tied to `companyProfile`

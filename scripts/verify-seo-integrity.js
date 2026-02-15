@@ -1226,6 +1226,8 @@ function verifySeoModuleDocsConsistency() {
     'isBlockedRoutePath',
     'getCanonicalSiteUrl',
     'toAbsoluteSeoUrl',
+    'normalizeDisallowPath',
+    'getRobotsDisallowPaths',
     'normalizeMetadataPath',
     'normalizeMetadataDescription',
     'normalizeMetadataImagePath',
@@ -1566,6 +1568,22 @@ function verifyRobotsImplementationInvariants() {
   const robotsContent = fs.readFileSync(ROBOTS_FILE, 'utf8');
   const requiredPatterns = [
     {
+      pattern: /function normalizeDisallowPath\(pathValue: string\): string \| null/,
+      reason: 'robots should expose normalizeDisallowPath helper for disallow path hygiene',
+    },
+    {
+      pattern: /function getRobotsDisallowPaths\(\): string\[\]/,
+      reason: 'robots should expose getRobotsDisallowPaths helper for deterministic disallow output',
+    },
+    {
+      pattern: /SEO_ROBOTS_DISALLOW_PATHS\.forEach\(/,
+      reason: 'robots disallow normalization should be sourced from SEO_ROBOTS_DISALLOW_PATHS',
+    },
+    {
+      pattern: /const disallowPaths = getRobotsDisallowPaths\(\);/,
+      reason: 'robots route should derive output disallow list via normalization helper',
+    },
+    {
       pattern: /userAgent:\s*['"`]\*['"`]/,
       reason: 'robots should keep wildcard userAgent rule for global crawler policy',
     },
@@ -1574,8 +1592,8 @@ function verifyRobotsImplementationInvariants() {
       reason: 'robots should explicitly allow root path for wildcard crawler rule',
     },
     {
-      pattern: /disallow:\s*\[\.\.\.SEO_ROBOTS_DISALLOW_PATHS\]/,
-      reason: 'robots should derive disallow list from SEO_ROBOTS_DISALLOW_PATHS',
+      pattern: /disallow:\s*disallowPaths/,
+      reason: 'robots should use normalized disallow paths in output rules',
     },
     {
       pattern: /sitemap:\s*toAbsoluteSeoUrl\(['"`]\/sitemap\.xml['"`]\)/,
