@@ -250,3 +250,50 @@
   content-visibility: auto;
   contain-intrinsic-size: 500px;
 }
+
+/* ============================================
+   MAIN PAGES: MOBILE-COMPACT UTILITIES
+   ============================================ */
+
+/* Shared hero rhythm for Home + main navigation pages. */
+.compact-main-hero {
+  min-height: min(88vh, 46rem);
+  padding-top: clamp(3.5rem, 8vw, 6rem);
+  padding-bottom: clamp(3rem, 7vw, 5rem);
+}
+
+@media (min-width: 768px) {
+  .compact-main-hero {
+    min-height: 100vh;
+  }
+}
+
+/* Shared section rhythm so stacks feel tighter on phones. */
+.compact-main-section {
+  padding-top: clamp(2.75rem, 7vw, 5.5rem);
+  padding-bottom: clamp(2.75rem, 7vw, 5.5rem);
+}
+
+/* Horizontal chip rows for touch-friendly filters/tabs. */
+.touch-chip-row {
+  display: flex;
+  gap: 0.625rem;
+  overflow-x: auto;
+  padding-bottom: 0.25rem;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.touch-chip-row::-webkit-scrollbar {
+  display: none;
+}
+
+/* Clamp modal body height for small devices. */
+.mobile-safe-modal {
+  max-height: min(86vh, 920px);
+}
+
+/* Balanced heading line breaks on modern browsers. */
+.text-balance {
+  text-wrap: balance;
+}

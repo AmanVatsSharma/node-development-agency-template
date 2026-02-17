@@ -52,7 +52,7 @@ export default function AboutPage() {
   return (
     <div className="w-full">
       {/* HERO - Techy Modern */}
-      <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 text-white overflow-hidden">
+      <section className="relative compact-main-hero flex items-center justify-center bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 text-white overflow-hidden">
         {/* Tech grid background */}
         <div className="absolute inset-0 opacity-20">
           <div className="absolute inset-0" style={{
@@ -101,7 +101,7 @@ export default function AboutPage() {
             </div>
 
             {/* Heading */}
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4 bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+            <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-4 bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent text-balance">
               {companyProfile.brandName}
             </h1>
             
@@ -110,7 +110,7 @@ export default function AboutPage() {
             </p>
 
             {/* Quick stats - Compact */}
-            <div className="grid grid-cols-4 gap-3 md:gap-6 mb-8 max-w-3xl mx-auto">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 md:gap-6 mb-8 max-w-3xl mx-auto">
               {[
                 { value: counters.clients, suffix: '+', label: 'Clients' },
                 { value: counters.projects, suffix: '+', label: 'Projects' },
@@ -144,7 +144,7 @@ export default function AboutPage() {
       </section>
 
       {/* GLOBAL OFFICES - Compact Grid */}
-      <section className="py-12 md:py-20 bg-white dark:bg-gray-900 relative overflow-hidden">
+      <section className="compact-main-section bg-white dark:bg-gray-900 relative overflow-hidden">
         {/* Background illustration */}
         <div className="absolute top-10 right-10 w-48 h-48 opacity-5 hidden lg:block">
           <AnimatedIllustration
@@ -167,7 +167,7 @@ export default function AboutPage() {
             <div className="inline-block mb-3 px-4 py-1.5 bg-blue-500/10 border border-blue-500/20 rounded-full">
               <span className="text-blue-600 dark:text-blue-400 text-xs font-bold uppercase">Global Presence</span>
             </div>
-            <h2 className="text-3xl md:text-5xl font-bold mb-3 md:mb-4">6 Global Offices</h2>
+            <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold mb-3 md:mb-4 text-balance">6 Global Offices</h2>
             <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">24/7 development across continents</p>
           </motion.div>
 
@@ -199,7 +199,7 @@ export default function AboutPage() {
       </section>
 
       {/* MISSION & VALUES - Split Compact */}
-      <section className="py-12 md:py-20 bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 text-white relative overflow-hidden">
+      <section className="compact-main-section bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 text-white relative overflow-hidden">
         {/* Illustrations */}
         <div className="absolute bottom-10 right-10 w-40 h-40 opacity-20 hidden lg:block">
           <AnimatedIllustration
@@ -271,7 +271,7 @@ export default function AboutPage() {
       </section>
 
       {/* FOUNDER - Compact Card */}
-      <section className="py-12 md:py-20 bg-white dark:bg-gray-900 relative overflow-hidden">
+      <section className="compact-main-section bg-white dark:bg-gray-900 relative overflow-hidden">
         {/* Illustration */}
         <div className="absolute top-10 left-10 w-48 h-48 opacity-5 hidden lg:block">
           <AnimatedIllustration
@@ -294,7 +294,7 @@ export default function AboutPage() {
             <div className="inline-block mb-3 px-4 py-1.5 bg-purple-500/10 border border-purple-500/20 rounded-full">
               <span className="text-purple-600 dark:text-purple-400 text-xs font-bold uppercase">Leadership</span>
             </div>
-            <h2 className="text-3xl md:text-5xl font-bold">Meet Our Founder</h2>
+            <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-balance">Meet Our Founder</h2>
           </motion.div>
 
           <motion.div
@@ -353,7 +353,7 @@ export default function AboutPage() {
       </section>
 
       {/* TESTIMONIALS - Compact Grid */}
-      <section className="py-12 md:py-20 bg-gray-50 dark:bg-gray-800 relative overflow-hidden">
+      <section className="compact-main-section bg-gray-50 dark:bg-gray-800 relative overflow-hidden">
         {/* Illustration */}
         <div className="absolute bottom-10 right-10 w-40 h-40 opacity-5 hidden lg:block">
           <AnimatedIllustration
@@ -376,7 +376,7 @@ export default function AboutPage() {
             <div className="inline-block mb-3 px-4 py-1.5 bg-yellow-500/10 border border-yellow-500/20 rounded-full">
               <span className="text-yellow-600 dark:text-yellow-400 text-xs font-bold uppercase">Client Success</span>
             </div>
-            <h2 className="text-3xl md:text-5xl font-bold">Trusted Worldwide</h2>
+            <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-balance">Trusted Worldwide</h2>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 max-w-5xl mx-auto">
@@ -400,7 +400,7 @@ export default function AboutPage() {
                     </svg>
                   ))}
                 </div>
-                <p className="text-gray-700 dark:text-gray-300 mb-4 text-sm italic">"{t.quote}"</p>
+                <p className="text-gray-700 dark:text-gray-300 mb-4 text-sm italic">&ldquo;{t.quote}&rdquo;</p>
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center text-white font-bold text-sm">
                     {t.name.split(' ').map(n => n[0]).join('')}
@@ -417,7 +417,7 @@ export default function AboutPage() {
       </section>
 
       {/* CERTIFICATIONS - Compact Icons */}
-      <section className="py-12 md:py-20 bg-white dark:bg-gray-900">
+      <section className="compact-main-section bg-white dark:bg-gray-900">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0 }}
@@ -428,7 +428,7 @@ export default function AboutPage() {
             <div className="inline-block mb-3 px-4 py-1.5 bg-green-500/10 border border-green-500/20 rounded-full">
               <span className="text-green-600 dark:text-green-400 text-xs font-bold uppercase">Quality Focus</span>
             </div>
-            <h2 className="text-3xl md:text-5xl font-bold">Security & Reliability First</h2>
+            <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-balance">Security & Reliability First</h2>
           </motion.div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
@@ -455,7 +455,7 @@ export default function AboutPage() {
       </section>
 
       {/* FINAL CTA - Compact & Powerful */}
-      <section className="py-16 md:py-24 bg-gradient-to-br from-cyan-600 via-blue-600 to-purple-600 text-white relative overflow-hidden">
+      <section className="compact-main-section bg-gradient-to-br from-cyan-600 via-blue-600 to-purple-600 text-white relative overflow-hidden">
         {/* Illustrations */}
         <div className="absolute top-10 right-10 w-40 h-40 opacity-20 hidden lg:block">
           <AnimatedIllustration
@@ -484,7 +484,7 @@ export default function AboutPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6">
+            <h2 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6 text-balance">
               Ready to Build<br className="md:hidden" /> Something Great?
             </h2>
             <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto opacity-90">

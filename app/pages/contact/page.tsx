@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { companyProfile } from '@/app/data/companyProfile';
 import { fireConversion } from '@/utils/conversions';
@@ -38,6 +38,10 @@ export default function ContactPage() {
     service: { value: '', error: '', touched: false },
     message: { value: '', error: '', touched: false },
   });
+
+  useEffect(() => {
+    console.log('[ContactPage] Loaded');
+  }, []);
   
   // Service options
   const serviceOptions = [
@@ -61,14 +65,14 @@ export default function ContactPage() {
       error = 'Please enter a valid email address';
     }
     
-    setForm({
-      ...form,
+    setForm((prev) => ({
+      ...prev,
       [field]: {
         value,
         error,
         touched: true
       }
-    });
+    }));
   };
   
   // Handle form submission
@@ -167,7 +171,7 @@ export default function ContactPage() {
   return (
     <div className="w-full">
       {/* Hero Section */}
-      <section className="relative py-20 bg-gradient-to-br from-gray-900 to-gray-800 text-white">
+      <section className="relative compact-main-hero bg-gradient-to-br from-gray-900 to-gray-800 text-white">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <div className="mb-4">
@@ -175,25 +179,25 @@ export default function ContactPage() {
                 {companyProfile.legalName} | CIN: {companyProfile.legal.cin}
               </span>
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">
-              Let's <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">Connect</span>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-balance">
+              Let&apos;s <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">Connect</span>
             </h1>
-            <p className="text-xl text-gray-300 mb-8">
+            <p className="text-base sm:text-xl text-gray-300 mb-8">
               Ready to discuss your enterprise project? Reach out to our global team across <strong>6 countries</strong> 
-              and let's bring your vision to life with world-class Node.js development.
+              and let&apos;s bring your vision to life with world-class Node.js development.
             </p>
           </div>
         </div>
       </section>
 
       {/* Contact Form & Info */}
-      <section className="py-16 bg-white dark:bg-gray-900">
+      <section className="compact-main-section bg-white dark:bg-gray-900">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-start">
             {/* Contact Info */}
             <div className="order-2 lg:order-1">
-              <div className="bg-gray-50 dark:bg-gray-800 p-8 rounded-xl">
-                <h2 className="text-2xl font-bold mb-8 text-gray-800 dark:text-white">Global Contact Information</h2>
+              <div className="bg-gray-50 dark:bg-gray-800 p-5 sm:p-6 md:p-8 rounded-xl">
+                <h2 className="text-2xl font-bold mb-6 md:mb-8 text-gray-800 dark:text-white text-balance">Global Contact Information</h2>
                 
                 {/* Company Details */}
                 <div className="mb-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
@@ -210,10 +214,10 @@ export default function ContactPage() {
                 </div>
                 
                 {/* Global Offices */}
-                <div className="space-y-6">
+                <div className="space-y-4 md:space-y-6">
                   {/* India HQ */}
                   <div className="flex items-start">
-                    <div className="flex-shrink-0 bg-orange-100 dark:bg-orange-900 rounded-full p-3 mr-4">
+                    <div className="flex-shrink-0 bg-orange-100 dark:bg-orange-900 rounded-full p-2.5 mr-3">
                       <span className="text-lg">🇮🇳</span>
                     </div>
                     <div>
@@ -229,7 +233,7 @@ export default function ContactPage() {
                   
                   {/* Dubai */}
                   <div className="flex items-start">
-                    <div className="flex-shrink-0 bg-green-100 dark:bg-green-900 rounded-full p-3 mr-4">
+                    <div className="flex-shrink-0 bg-green-100 dark:bg-green-900 rounded-full p-2.5 mr-3">
                       <span className="text-lg">🇦🇪</span>
                     </div>
                     <div>
@@ -244,7 +248,7 @@ export default function ContactPage() {
                   
                   {/* California */}
                   <div className="flex items-start">
-                    <div className="flex-shrink-0 bg-blue-100 dark:bg-blue-900 rounded-full p-3 mr-4">
+                    <div className="flex-shrink-0 bg-blue-100 dark:bg-blue-900 rounded-full p-2.5 mr-3">
                       <span className="text-lg">🇺🇸</span>
                     </div>
                     <div>
@@ -259,7 +263,7 @@ export default function ContactPage() {
                   
                   {/* Toronto */}
                   <div className="flex items-start">
-                    <div className="flex-shrink-0 bg-red-100 dark:bg-red-900 rounded-full p-3 mr-4">
+                    <div className="flex-shrink-0 bg-red-100 dark:bg-red-900 rounded-full p-2.5 mr-3">
                       <span className="text-lg">🇨🇦</span>
                     </div>
                     <div>
@@ -274,7 +278,7 @@ export default function ContactPage() {
                   
                   {/* Shenzhen */}
                   <div className="flex items-start">
-                    <div className="flex-shrink-0 bg-yellow-100 dark:bg-yellow-900 rounded-full p-3 mr-4">
+                    <div className="flex-shrink-0 bg-yellow-100 dark:bg-yellow-900 rounded-full p-2.5 mr-3">
                       <span className="text-lg">🇨🇳</span>
                     </div>
                     <div>
@@ -307,7 +311,7 @@ export default function ContactPage() {
                 </div>
                 
                 {/* Social Media */}
-                <div className="mt-10">
+                <div className="mt-8 md:mt-10">
                   <h3 className="text-lg font-medium mb-4 text-gray-800 dark:text-white">Connect With Us</h3>
                   <div className="flex space-x-4">
                     {[
@@ -348,7 +352,7 @@ export default function ContactPage() {
             
             {/* Contact Form */}
             <div className="order-1 lg:order-2">
-              <h2 className="text-2xl font-bold mb-8 text-gray-800 dark:text-white">Get in Touch</h2>
+              <h2 className="text-2xl font-bold mb-6 md:mb-8 text-gray-800 dark:text-white">Get in Touch</h2>
               
               {submitSuccess ? (
                 <motion.div
@@ -366,9 +370,9 @@ export default function ContactPage() {
                   </button>
                 </motion.div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-5 md:space-y-6">
                   {/* Name & Email */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                     <div>
                       <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                         Name *
@@ -411,7 +415,7 @@ export default function ContactPage() {
                   </div>
                   
                   {/* Company & Phone */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                     <div>
                       <label htmlFor="company" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                         Company
@@ -523,9 +527,9 @@ export default function ContactPage() {
       </section>
 
       {/* Map Section */}
-      <section className="bg-gray-100 dark:bg-gray-950 py-16">
+      <section className="bg-gray-100 dark:bg-gray-950 compact-main-section">
         <div className="container mx-auto px-4">
-          <div className="bg-gray-300 dark:bg-gray-800 h-96 rounded-xl relative overflow-hidden">
+          <div className="bg-gray-300 dark:bg-gray-800 h-72 sm:h-96 rounded-xl relative overflow-hidden">
             {/* Simple static map visualization or remove completely if no image available */}
             <div className="absolute inset-0 flex items-center justify-center bg-gray-200 dark:bg-gray-800">
                <div className="text-center p-8">
@@ -538,10 +542,10 @@ export default function ContactPage() {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-16 bg-white dark:bg-gray-900">
+      <section className="compact-main-section bg-white dark:bg-gray-900">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4 text-gray-800 dark:text-white">Enterprise Solutions FAQ</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold mb-4 text-gray-800 dark:text-white text-balance">Enterprise Solutions FAQ</h2>
             <p className="text-gray-600 dark:text-gray-300">
               Common questions about our global enterprise-grade Node.js development services.
             </p>
@@ -549,7 +553,7 @@ export default function ContactPage() {
           
           <div className="max-w-3xl mx-auto space-y-6">
             {/* FAQ Item 1 */}
-            <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-6">
+            <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-5 sm:p-6">
               <h3 className="text-xl font-bold mb-3 text-gray-800 dark:text-white">
                 How does your global presence benefit enterprise clients?
               </h3>
@@ -561,7 +565,7 @@ export default function ContactPage() {
             </div>
             
             {/* FAQ Item 2 */}
-            <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-6">
+            <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-5 sm:p-6">
               <h3 className="text-xl font-bold mb-3 text-gray-800 dark:text-white">
                 What enterprise-grade guarantees do you provide?
               </h3>
@@ -572,7 +576,7 @@ export default function ContactPage() {
             </div>
             
             {/* FAQ Item 3 */}
-            <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-6">
+            <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-5 sm:p-6">
               <h3 className="text-xl font-bold mb-3 text-gray-800 dark:text-white">
                 How do you handle large-scale enterprise projects?
               </h3>
@@ -584,7 +588,7 @@ export default function ContactPage() {
             </div>
             
             {/* FAQ Item 4 */}
-            <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-6">
+            <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-5 sm:p-6">
               <h3 className="text-xl font-bold mb-3 text-gray-800 dark:text-white">
                 What makes {companyProfile.legalName} legally compliant?
               </h3>
@@ -597,7 +601,7 @@ export default function ContactPage() {
             </div>
             
             {/* FAQ Item 5 */}
-            <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-6">
+            <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-5 sm:p-6">
               <h3 className="text-xl font-bold mb-3 text-gray-800 dark:text-white">
                 Do you provide dedicated support for enterprise teams?
               </h3>

@@ -1,7 +1,6 @@
 "use client";
 
-import { useState } from 'react';
-import Image from 'next/image';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import AnimatedIllustration from '../../components/AnimatedIllustration';
@@ -90,10 +89,30 @@ const categories = [
   { id: 'api', name: 'API Development' }
 ];
 
+const projectColorGradients: Record<string, string> = {
+  blue: 'from-blue-500 to-blue-700',
+  purple: 'from-purple-500 to-purple-700',
+  green: 'from-green-500 to-green-700',
+  orange: 'from-orange-500 to-orange-700',
+  teal: 'from-teal-500 to-teal-700',
+};
+
 export default function PortfolioPage() {
   // State for filtering and selected project
   const [filter, setFilter] = useState('all');
   const [selectedProject, setSelectedProject] = useState<string | null>(null);
+
+  useEffect(() => {
+    console.log('[PortfolioPage] Loaded');
+  }, []);
+
+  useEffect(() => {
+    console.log('[PortfolioPage] Active filter changed:', filter);
+  }, [filter]);
+
+  useEffect(() => {
+    console.log('[PortfolioPage] Selected project changed:', selectedProject ?? 'none');
+  }, [selectedProject]);
   
   // Filtered projects based on selected category
   const filteredProjects = filter === 'all' 
@@ -128,7 +147,7 @@ export default function PortfolioPage() {
   return (
     <div className="w-full">
       {/* Hero Section */}
-      <section className="relative py-20 bg-gradient-to-br from-gray-900 to-gray-800 text-white overflow-hidden">
+      <section className="relative compact-main-hero bg-gradient-to-br from-gray-900 to-gray-800 text-white overflow-hidden">
         {/* Background Illustrations */}
         <div className="absolute top-10 right-4 sm:right-10 w-48 h-48 sm:w-64 sm:h-64 opacity-20 hidden sm:block">
           <AnimatedIllustration
@@ -153,10 +172,10 @@ export default function PortfolioPage() {
         
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-balance">
               Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">Portfolio</span>
             </h1>
-            <p className="text-xl text-gray-300 mb-8">
+            <p className="text-base sm:text-xl text-gray-300 mb-8">
               Explore our showcase of premium Node.js development projects and immersive 3D experiences.
             </p>
           </div>
@@ -164,15 +183,18 @@ export default function PortfolioPage() {
       </section>
 
       {/* Project Filters and Grid */}
-      <section className="py-16 bg-white dark:bg-gray-900">
+      <section className="compact-main-section bg-white dark:bg-gray-900">
         <div className="container mx-auto px-4">
           {/* Category Filter */}
-          <div className="flex flex-wrap gap-2 md:gap-4 mb-12 justify-center">
+          <div className="touch-chip-row mb-10 md:mb-12 md:flex-wrap md:justify-center md:overflow-visible">
             {categories.map((category) => (
               <button
                 key={category.id}
-                onClick={() => setFilter(category.id)}
-                className={`px-4 py-3 rounded-full font-medium transition-all duration-300 ${
+                onClick={() => {
+                  console.log('[PortfolioPage] Category clicked:', category.id);
+                  setFilter(category.id);
+                }}
+                className={`px-4 py-2.5 rounded-full font-medium whitespace-nowrap transition-all duration-300 ${
                   filter === category.id
                     ? 'bg-blue-600 text-white'
                     : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
@@ -185,7 +207,7 @@ export default function PortfolioPage() {
 
           {/* Projects Grid */}
           <motion.div 
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-8"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
@@ -194,12 +216,15 @@ export default function PortfolioPage() {
               <motion.div
                 key={project.id}
                 variants={projectVariants}
-                className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg transition-transform duration-300 hover:shadow-xl hover:-translate-y-2"
-                onClick={() => setSelectedProject(project.id)}
+                className="group cursor-pointer bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg transition-transform duration-300 hover:shadow-xl md:hover:-translate-y-2"
+                onClick={() => {
+                  console.log('[PortfolioPage] Project card clicked:', project.id);
+                  setSelectedProject(project.id);
+                }}
               >
                 {/* Project Image / Visual */}
-                <div className="h-48 bg-gray-200 dark:bg-gray-700 relative overflow-hidden group-hover:scale-105 transition-transform duration-500">
-                  <div className={`absolute inset-0 bg-gradient-to-br from-${project.color}-500 to-${project.color}-700 opacity-90`}></div>
+                <div className="h-44 sm:h-48 bg-gray-200 dark:bg-gray-700 relative overflow-hidden transition-transform duration-500 md:group-hover:scale-105">
+                  <div className={`absolute inset-0 bg-gradient-to-br ${projectColorGradients[project.color] ?? 'from-blue-500 to-blue-700'} opacity-90`}></div>
                   
                   {/* Pattern Overlay */}
                   <div className="absolute inset-0 opacity-10" 
@@ -217,8 +242,8 @@ export default function PortfolioPage() {
                 </div>
                 
                 {/* Project Info */}
-                <div className="p-6">
-                  <h3 className="text-xl font-bold mb-2 text-gray-800 dark:text-white">
+                <div className="p-5 sm:p-6">
+                  <h3 className="text-lg sm:text-xl font-bold mb-2 text-gray-800 dark:text-white text-balance">
                     {project.title}
                   </h3>
                   <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-2">
@@ -243,7 +268,7 @@ export default function PortfolioPage() {
                   </div>
                   
                   <button 
-                    className="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition duration-300"
+                    className="w-full px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition duration-300"
                   >
                     View Case Study
                   </button>
@@ -271,7 +296,7 @@ export default function PortfolioPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 overflow-y-auto bg-black bg-opacity-80 flex items-center justify-center p-4"
+            className="fixed inset-0 z-50 overflow-y-auto bg-black bg-opacity-80 flex items-center justify-center p-3 sm:p-4"
             onClick={() => setSelectedProject(null)}
           >
             <motion.div
@@ -279,13 +304,13 @@ export default function PortfolioPage() {
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: 50, opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="bg-white dark:bg-gray-900 rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
+              className="bg-white dark:bg-gray-900 rounded-xl max-w-4xl w-full mobile-safe-modal overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Modal Header */}
-              <div className="h-64 bg-gray-200 dark:bg-gray-800 relative">
+              <div className="h-52 sm:h-64 bg-gray-200 dark:bg-gray-800 relative">
                 {/* Placeholder for actual project images */}
-                <div className={`absolute inset-0 bg-gradient-to-br from-${currentProject.color}-500 to-${currentProject.color}-700 opacity-80`}></div>
+                <div className={`absolute inset-0 bg-gradient-to-br ${projectColorGradients[currentProject.color] ?? 'from-blue-500 to-blue-700'} opacity-80`}></div>
                 <div className="absolute top-4 right-4">
                   <button 
                     onClick={() => setSelectedProject(null)}
@@ -297,14 +322,14 @@ export default function PortfolioPage() {
                   </button>
                 </div>
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <h2 className="text-3xl md:text-4xl font-bold text-white text-center px-4">
+                  <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white text-center px-4 text-balance">
                     {currentProject.title}
                   </h2>
                 </div>
               </div>
               
               {/* Modal Content */}
-              <div className="p-6 md:p-8">
+              <div className="p-5 sm:p-6 md:p-8">
                 {/* Tags */}
                 <div className="flex flex-wrap gap-2 mb-6">
                   {currentProject.tags.map((tag, index) => (
@@ -326,7 +351,7 @@ export default function PortfolioPage() {
                 </div>
                 
                 {/* Challenge and Solution */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-8">
                   <div>
                     <h3 className="text-xl font-bold mb-3 text-gray-800 dark:text-white">The Challenge</h3>
                     <p className="text-gray-600 dark:text-gray-300">
@@ -376,7 +401,7 @@ export default function PortfolioPage() {
       </AnimatePresence>
 
       {/* Testimonials */}
-      <section className="py-16 bg-gray-50 dark:bg-gray-800 relative overflow-hidden">
+      <section className="compact-main-section bg-gray-50 dark:bg-gray-800 relative overflow-hidden">
         {/* Background Illustration */}
         <div className="absolute top-10 left-4 sm:left-10 w-32 h-32 sm:w-48 sm:h-48 opacity-5 hidden sm:block">
           <AnimatedIllustration
@@ -391,13 +416,13 @@ export default function PortfolioPage() {
         
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-3xl mx-auto text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4 text-gray-800 dark:text-white">Client Testimonials</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold mb-4 text-gray-800 dark:text-white text-balance">Client Testimonials</h2>
             <p className="text-gray-600 dark:text-gray-300">
               Hear what our clients have to say about their experience working with us.
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8">
             {/* Testimonial 1 */}
             <div className="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-lg">
               <div className="flex items-center mb-4">
@@ -410,7 +435,7 @@ export default function PortfolioPage() {
                 </div>
               </div>
               <p className="text-gray-600 dark:text-gray-300 italic">
-                "Their expertise in Node.js development and microservices architecture helped us transform our legacy system into a modern, scalable platform. The team's technical knowledge and commitment to quality are impressive."
+                &ldquo;Their expertise in Node.js development and microservices architecture helped us transform our legacy system into a modern, scalable platform. The team&apos;s technical knowledge and commitment to quality are impressive.&rdquo;
               </p>
             </div>
             
@@ -426,7 +451,7 @@ export default function PortfolioPage() {
                 </div>
               </div>
               <p className="text-gray-600 dark:text-gray-300 italic">
-                "The 3D product configurator transformed our customer experience. Our customers love being able to customize and visualize products before purchase, and we've seen a significant decrease in returns."
+                &ldquo;The 3D product configurator transformed our customer experience. Our customers love being able to customize and visualize products before purchase, and we&apos;ve seen a significant decrease in returns.&rdquo;
               </p>
             </div>
             
@@ -442,7 +467,7 @@ export default function PortfolioPage() {
                 </div>
               </div>
               <p className="text-gray-600 dark:text-gray-300 italic">
-                "Their financial analytics platform has been a game-changer for our institution. The real-time insights and visualization capabilities have improved our decision-making process and helped us better serve our customers."
+                &ldquo;Their financial analytics platform has been a game-changer for our institution. The real-time insights and visualization capabilities have improved our decision-making process and helped us better serve our customers.&rdquo;
               </p>
             </div>
           </div>
@@ -450,15 +475,15 @@ export default function PortfolioPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-gradient-to-br from-blue-600 to-indigo-700 text-white">
+      <section className="compact-main-section bg-gradient-to-br from-blue-600 to-indigo-700 text-white">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Start Your Project?</h2>
-          <p className="text-xl mb-8 max-w-3xl mx-auto">
-            Let's discuss how our expertise in Node.js development and 3D experiences can help bring your vision to life.
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 text-balance">Ready to Start Your Project?</h2>
+          <p className="text-base sm:text-xl mb-8 max-w-3xl mx-auto">
+            Let&apos;s discuss how our expertise in Node.js development and 3D experiences can help bring your vision to life.
           </p>
           <Link 
             href="/pages/contact" 
-            className="px-8 py-4 bg-white text-blue-600 hover:bg-gray-100 rounded-full font-medium transition duration-300 inline-block"
+            className="px-8 py-3.5 bg-white text-blue-600 hover:bg-gray-100 rounded-2xl sm:rounded-full font-medium transition duration-300 inline-block"
           >
             Contact Us Today
           </Link>

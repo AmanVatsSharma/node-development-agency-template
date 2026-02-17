@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import axios from 'axios';
@@ -42,6 +41,18 @@ export default function BlogPage() {
   
   // Posts per page
   const postsPerPage = 6;
+
+  useEffect(() => {
+    console.log('[BlogPage] Loaded');
+  }, []);
+
+  useEffect(() => {
+    console.log('[BlogPage] Query state updated:', {
+      searchQuery,
+      selectedCategory,
+      currentPage,
+    });
+  }, [searchQuery, selectedCategory, currentPage]);
   
   // Format date for display
   const formatDate = (dateString: string) => {
@@ -103,11 +114,11 @@ export default function BlogPage() {
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900">
       {/* Header */}
-      <div className="bg-gradient-to-br from-gray-900 to-blue-900 text-white">
-        <div className="container mx-auto px-4 py-24">
+      <div className="bg-gradient-to-br from-gray-900 to-blue-900 text-white compact-main-hero">
+        <div className="container mx-auto px-4 py-10 sm:py-14 md:py-20">
           <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">Blog & Resources</h1>
-            <p className="text-xl text-gray-300 mb-10">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-5 md:mb-6 text-balance">Blog & Resources</h1>
+            <p className="text-base sm:text-xl text-gray-300 mb-8 md:mb-10">
               Expert insights, technical guides, and resources to help you build better digital experiences.
             </p>
             
@@ -118,7 +129,7 @@ export default function BlogPage() {
                 placeholder="Search for topics..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-6 py-4 text-gray-700 bg-white rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-5 py-3.5 text-gray-700 bg-white rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               <button className="absolute right-4 top-1/2 transform -translate-y-1/2">
                 <svg className="w-5 h-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -132,11 +143,11 @@ export default function BlogPage() {
       
       {/* Featured Articles */}
       {featuredPosts.length > 0 && !searchQuery && selectedCategory === 'all' && currentPage === 1 && (
-        <div className="py-16 bg-gray-50 dark:bg-gray-800">
+        <div className="compact-main-section bg-gray-50 dark:bg-gray-800">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold mb-12 text-gray-800 dark:text-white">Featured Articles</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold mb-8 md:mb-12 text-gray-800 dark:text-white text-balance">Featured Articles</h2>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12">
               {featuredPosts.map((post) => (
                 <motion.div
                   key={post.id}
@@ -146,7 +157,7 @@ export default function BlogPage() {
                   className="bg-white dark:bg-gray-900 rounded-xl overflow-hidden shadow-xl"
                 >
                   {/* Post image */}
-                  <div className="h-60 bg-blue-100 dark:bg-gray-800 relative">
+                  <div className="h-48 sm:h-60 bg-blue-100 dark:bg-gray-800 relative">
                     <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-600 opacity-70"></div>
                     <div className="absolute inset-0 flex items-center justify-center text-white text-5xl font-bold opacity-30">
                       {post.title.substring(0, 2)}
@@ -154,7 +165,7 @@ export default function BlogPage() {
                   </div>
                   
                   {/* Post content */}
-                  <div className="p-8">
+                  <div className="p-5 sm:p-8">
                     <div className="flex items-center mb-4">
                       <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-xs font-medium text-gray-800 dark:text-gray-300 mr-3">
                         {post.author.name.split(' ').map(name => name[0]).join('')}
@@ -207,17 +218,42 @@ export default function BlogPage() {
       )}
       
       {/* Blog Posts */}
-      <div className="py-16 container mx-auto px-4">
+      <div className="compact-main-section container mx-auto px-4">
+        {/* Mobile-first category chips to avoid a tall sidebar on small screens */}
+        <div className="md:hidden mb-6">
+          <div className="touch-chip-row">
+            {categories.map((category) => (
+              <button
+                key={`mobile-${category.id}`}
+                onClick={() => {
+                  console.log('[BlogPage] Mobile category selected:', category.id);
+                  setSelectedCategory(category.id);
+                }}
+                className={`px-4 py-2.5 rounded-full text-sm whitespace-nowrap transition-colors ${
+                  selectedCategory === category.id
+                    ? 'bg-blue-600 text-white'
+                    : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300'
+                }`}
+              >
+                {category.name}
+              </button>
+            ))}
+          </div>
+        </div>
+
         <div className="flex flex-col md:flex-row gap-8">
           {/* Sidebar */}
           <div className="md:w-1/4">
-            <div className="sticky top-24">
-              <h3 className="text-xl font-bold mb-4 text-gray-800 dark:text-white">Categories</h3>
-              <ul className="space-y-2 mb-8">
+            <div className="md:sticky md:top-24">
+              <h3 className="hidden md:block text-xl font-bold mb-4 text-gray-800 dark:text-white">Categories</h3>
+              <ul className="hidden md:block space-y-2 mb-8">
                 {categories.map((category) => (
                   <li key={category.id}>
                     <button
-                      onClick={() => setSelectedCategory(category.id)}
+                      onClick={() => {
+                        console.log('[BlogPage] Desktop category selected:', category.id);
+                        setSelectedCategory(category.id);
+                      }}
                       className={`w-full text-left px-4 py-2 rounded-lg transition-colors ${
                         selectedCategory === category.id
                           ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 font-medium'
@@ -237,7 +273,7 @@ export default function BlogPage() {
                 ))}
               </ul>
               
-              <div className="bg-blue-50 dark:bg-gray-800 rounded-xl p-6">
+              <div className="bg-blue-50 dark:bg-gray-800 rounded-xl p-5 sm:p-6">
                 <h3 className="text-lg font-bold mb-3 text-gray-800 dark:text-white">Newsletter</h3>
                 <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">
                   Subscribe to get the latest articles and resources delivered straight to your inbox.
@@ -272,7 +308,7 @@ export default function BlogPage() {
             {/* Search results title */}
             {searchQuery && !loading && (
               <h2 className="text-2xl font-bold mb-8 text-gray-800 dark:text-white">
-                Search results for "{searchQuery}"
+                Search results for &ldquo;{searchQuery}&rdquo;
               </h2>
             )}
             
@@ -291,7 +327,7 @@ export default function BlogPage() {
                 </svg>
                 <h3 className="text-xl font-bold mb-2 text-gray-800 dark:text-white">No articles found</h3>
                 <p className="text-gray-600 dark:text-gray-400">
-                  We couldn't find any articles matching your search criteria. Try different keywords or browse by category.
+                  We couldn&apos;t find any articles matching your search criteria. Try different keywords or browse by category.
                 </p>
               </div>
             ) : (
@@ -308,7 +344,7 @@ export default function BlogPage() {
                         className="bg-white dark:bg-gray-900 rounded-xl overflow-hidden shadow-lg border border-gray-100 dark:border-gray-800"
                       >
                         {/* Post image */}
-                        <div className="h-48 bg-blue-100 dark:bg-gray-800 relative">
+                        <div className="h-40 sm:h-48 bg-blue-100 dark:bg-gray-800 relative">
                           <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-600 opacity-80"></div>
                           <div className="absolute inset-0 flex items-center justify-center text-white text-3xl font-bold opacity-30">
                             {post.title.substring(0, 2)}
@@ -316,7 +352,7 @@ export default function BlogPage() {
                         </div>
                         
                         {/* Post content */}
-                        <div className="p-6">
+                        <div className="p-5 sm:p-6">
                           <div className="flex items-center justify-between mb-3">
                             <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 rounded-full text-xs">
                               {post.category.charAt(0).toUpperCase() + post.category.slice(1)}
@@ -362,7 +398,7 @@ export default function BlogPage() {
                 {/* Pagination */}
                 {!loading && blogData && blogData.pagination.totalPages > 1 && (
                   <div className="flex justify-center mt-8">
-                    <nav className="flex space-x-2">
+                    <nav className="flex space-x-2 overflow-x-auto hide-scrollbar pb-1">
                       <button 
                         onClick={prevPage} 
                         disabled={currentPage === 1}
@@ -410,15 +446,15 @@ export default function BlogPage() {
       </div>
       
       {/* CTA Section */}
-      <div className="bg-blue-600 py-16 text-white">
+      <div className="bg-blue-600 compact-main-section text-white">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-4">Ready to Transform Your Digital Experience?</h2>
-          <p className="text-xl mb-8 max-w-2xl mx-auto">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-4 text-balance">Ready to Transform Your Digital Experience?</h2>
+          <p className="text-base sm:text-xl mb-8 max-w-2xl mx-auto">
             Our team of experts is here to help you build scalable, innovative solutions that drive business growth.
           </p>
           <Link
             href="/pages/contact"
-            className="px-8 py-3 bg-white text-blue-600 hover:bg-gray-100 rounded-full font-medium inline-block transition-colors"
+            className="px-8 py-3 bg-white text-blue-600 hover:bg-gray-100 rounded-2xl sm:rounded-full font-medium inline-block transition-colors"
           >
             Get in Touch
           </Link>
