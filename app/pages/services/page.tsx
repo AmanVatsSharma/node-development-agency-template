@@ -1,7 +1,6 @@
 "use client";
 
-import { useState } from 'react';
-import Image from 'next/image';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import AnimatedIllustration from '../../components/AnimatedIllustration';
@@ -108,11 +107,19 @@ const services = [
 export default function ServicesPage() {
   // State for the currently selected service
   const [selectedService, setSelectedService] = useState(services[0]);
+
+  useEffect(() => {
+    console.log('[ServicesPage] Loaded with default service:', services[0].id);
+  }, []);
+
+  useEffect(() => {
+    console.log('[ServicesPage] Active service changed:', selectedService.id);
+  }, [selectedService.id]);
   
   return (
     <div className="w-full">
       {/* Hero Section */}
-      <section className="relative py-20 bg-gradient-to-br from-gray-900 to-gray-800 text-white overflow-hidden">
+      <section className="relative compact-main-hero bg-gradient-to-br from-gray-900 to-gray-800 text-white overflow-hidden">
         {/* Background Illustrations */}
         <div className="absolute top-10 right-4 sm:right-10 w-48 h-48 sm:w-64 sm:h-64 opacity-20 hidden sm:block">
           <AnimatedIllustration
@@ -137,10 +144,10 @@ export default function ServicesPage() {
         
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-balance">
               Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">Premium</span> Services
             </h1>
-            <p className="text-xl text-gray-300 mb-8">
+            <p className="text-base sm:text-xl text-gray-300 mb-8">
               Enterprise-grade solutions powered by cutting-edge Node.js development and immersive 3D experiences.
             </p>
           </div>
@@ -148,15 +155,18 @@ export default function ServicesPage() {
       </section>
 
       {/* Services Navigation & Details */}
-      <section className="py-16 bg-white dark:bg-gray-900">
+      <section className="compact-main-section bg-white dark:bg-gray-900">
         <div className="container mx-auto px-4">
           {/* Service Navigation Tabs */}
-          <div className="flex flex-wrap gap-2 md:gap-4 mb-12 justify-center">
+          <div className="touch-chip-row mb-10 md:mb-12 md:flex-wrap md:justify-center md:overflow-visible">
             {services.map((service) => (
               <button
                 key={service.id}
-                onClick={() => setSelectedService(service)}
-                className={`px-4 py-3 rounded-full font-medium transition-all duration-300 ${
+                onClick={() => {
+                  console.log('[ServicesPage] Service tab clicked:', service.id);
+                  setSelectedService(service);
+                }}
+                className={`px-4 py-2.5 rounded-full font-medium whitespace-nowrap transition-all duration-300 ${
                   selectedService.id === service.id
                     ? `text-white ${service.color}`
                     : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
@@ -175,13 +185,13 @@ export default function ServicesPage() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3 }}
-              className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
+              className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center"
             >
               {/* Service Visual */}
               <div className="order-2 lg:order-1">
                 <div className={`rounded-2xl overflow-hidden shadow-xl bg-gradient-to-br ${selectedService.gradient} p-1`}>
                   <div className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden">
-                    <div className="h-64 bg-gray-200 dark:bg-gray-700 relative">
+                    <div className="h-52 sm:h-64 bg-gray-200 dark:bg-gray-700 relative">
                       {/* Placeholder for actual images */}
                       <div className={`absolute inset-0 bg-gradient-to-br ${selectedService.gradient} opacity-50`}></div>
                       <div className="absolute inset-0 flex items-center justify-center">
@@ -194,7 +204,7 @@ export default function ServicesPage() {
                     </div>
                     
                     {/* Technologies Used */}
-                    <div className="p-6">
+                    <div className="p-5 sm:p-6">
                       <h3 className="text-lg font-bold mb-3">Technologies</h3>
                       <div className="flex flex-wrap gap-2">
                         {selectedService.technologies.map((tech, index) => (
@@ -213,15 +223,15 @@ export default function ServicesPage() {
               
               {/* Service Description */}
               <div className="order-1 lg:order-2">
-                <h2 className="text-3xl font-bold mb-4 text-gray-800 dark:text-white">
+                <h2 className="text-2xl sm:text-3xl font-bold mb-4 text-gray-800 dark:text-white text-balance">
                   {selectedService.title}
                 </h2>
-                <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
+                <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 mb-6">
                   {selectedService.fullDesc}
                 </p>
                 
                 <div className="mb-8">
-                  <h3 className="text-xl font-bold mb-4 text-gray-800 dark:text-white">Key Features</h3>
+                  <h3 className="text-lg sm:text-xl font-bold mb-4 text-gray-800 dark:text-white">Key Features</h3>
                   <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     {selectedService.features.map((feature, index) => (
                       <li key={index} className="flex items-start">
@@ -237,13 +247,13 @@ export default function ServicesPage() {
                 <div className="flex flex-col sm:flex-row gap-4">
                   <Link 
                     href="/pages/portfolio" 
-                    className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-full font-medium text-center transition duration-300"
+                    className="w-full sm:w-auto px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl sm:rounded-full font-medium text-center transition duration-300"
                   >
                     See Related Projects
                   </Link>
                   <Link 
                     href="/pages/contact" 
-                    className="px-6 py-3 bg-transparent border-2 border-blue-600 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-gray-800 rounded-full font-medium text-center transition duration-300"
+                    className="w-full sm:w-auto px-6 py-3 bg-transparent border-2 border-blue-600 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-gray-800 rounded-2xl sm:rounded-full font-medium text-center transition duration-300"
                   >
                     Discuss Your Project
                   </Link>
@@ -255,39 +265,39 @@ export default function ServicesPage() {
       </section>
 
       {/* Service Process */}
-      <section className="py-16 bg-gray-50 dark:bg-gray-800">
+      <section className="compact-main-section bg-gray-50 dark:bg-gray-800">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4 text-gray-800 dark:text-white">Our Service Process</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold mb-4 text-gray-800 dark:text-white text-balance">Our Service Process</h2>
             <p className="text-gray-600 dark:text-gray-300">
               We follow a proven methodology to deliver exceptional results for our clients, ensuring transparent communication and measurable outcomes at every step.
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
             {/* Step 1 */}
-            <div className="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-lg relative">
+            <div className="bg-white dark:bg-gray-900 p-5 sm:p-6 rounded-xl shadow-lg relative">
               <div className="w-12 h-12 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-lg mb-4">1</div>
               <h3 className="text-xl font-bold mb-2 text-gray-800 dark:text-white">Discovery</h3>
               <p className="text-gray-600 dark:text-gray-300">We analyze your requirements, goals, and challenges to understand your unique needs.</p>
             </div>
             
             {/* Step 2 */}
-            <div className="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-lg relative">
+            <div className="bg-white dark:bg-gray-900 p-5 sm:p-6 rounded-xl shadow-lg relative">
               <div className="w-12 h-12 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-lg mb-4">2</div>
               <h3 className="text-xl font-bold mb-2 text-gray-800 dark:text-white">Strategy</h3>
               <p className="text-gray-600 dark:text-gray-300">We design a comprehensive solution blueprint and technology roadmap.</p>
             </div>
             
             {/* Step 3 */}
-            <div className="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-lg relative">
+            <div className="bg-white dark:bg-gray-900 p-5 sm:p-6 rounded-xl shadow-lg relative">
               <div className="w-12 h-12 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-lg mb-4">3</div>
               <h3 className="text-xl font-bold mb-2 text-gray-800 dark:text-white">Development</h3>
               <p className="text-gray-600 dark:text-gray-300">Our expert teams build your solution using agile methodologies and best practices.</p>
             </div>
             
             {/* Step 4 */}
-            <div className="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-lg relative">
+            <div className="bg-white dark:bg-gray-900 p-5 sm:p-6 rounded-xl shadow-lg relative">
               <div className="w-12 h-12 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-lg mb-4">4</div>
               <h3 className="text-xl font-bold mb-2 text-gray-800 dark:text-white">Delivery & Support</h3>
               <p className="text-gray-600 dark:text-gray-300">We deploy, optimize, and provide ongoing support to ensure long-term success.</p>
@@ -297,15 +307,15 @@ export default function ServicesPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-gradient-to-br from-blue-600 to-indigo-700 text-white">
+      <section className="compact-main-section bg-gradient-to-br from-blue-600 to-indigo-700 text-white">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Transform Your Digital Experience?</h2>
-          <p className="text-xl mb-8 max-w-3xl mx-auto">
-            Let's discuss how our premium Node.js development and 3D animation expertise can solve your business challenges.
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 text-balance">Ready to Transform Your Digital Experience?</h2>
+          <p className="text-base sm:text-xl mb-8 max-w-3xl mx-auto">
+            Let&apos;s discuss how our premium Node.js development and 3D animation expertise can solve your business challenges.
           </p>
           <Link 
             href="/pages/contact" 
-            className="px-8 py-4 bg-white text-blue-600 hover:bg-gray-100 rounded-full font-medium transition duration-300 inline-block"
+            className="px-8 py-3.5 bg-white text-blue-600 hover:bg-gray-100 rounded-2xl sm:rounded-full font-medium transition duration-300 inline-block"
           >
             Schedule a Consultation
           </Link>

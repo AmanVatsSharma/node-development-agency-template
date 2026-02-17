@@ -20,7 +20,6 @@ import Image from "next/image";
 import dynamic from "next/dynamic";
 import HeroAnimationWrapper from "./components/HeroAnimationWrapper";
 import AnimatedIllustration from "./components/AnimatedIllustration";
-import { companyProfile } from "./data/companyProfile";
 
 // PERFORMANCE OPTIMIZATION: Dynamic imports for below-fold components
 // This reduces initial bundle size and speeds up First Contentful Paint
@@ -76,7 +75,7 @@ export default function Home() {
       {/* ========================================
           SECTION 1: 3D HERO - WORLD CLASS PREMIUM
           ======================================== */}
-      <section className="relative min-h-screen flex items-center justify-center bg-black text-white overflow-hidden isolate">
+      <section className="relative compact-main-hero flex items-center justify-center bg-black text-white overflow-hidden isolate">
         {/* 3D Background - Full opacity for maximum impact - Camera controls active here */}
         <div className="absolute inset-0 pointer-events-auto">
           <HeroAnimationWrapper />
@@ -89,9 +88,9 @@ export default function Home() {
         <div className="absolute inset-0 opacity-10 pointer-events-none hero-grid-bg" />
         
         {/* Glassmorphism Text Overlay - PREMIUM ENHANCED */}
-        <div className="relative z-10 text-center px-4 w-full flex items-end justify-center pb-24 pointer-events-none">
+        <div className="relative z-10 text-center px-4 sm:px-6 w-full flex items-end justify-center pb-16 sm:pb-20 md:pb-24 pointer-events-none">
           {/* Premium Glass Card with Enhanced Effects */}
-          <div className="inline-block px-10 py-8 md:px-14 md:py-10 rounded-3xl backdrop-blur-xl bg-gradient-to-br from-black/40 via-black/30 to-black/40 border border-white/30 shadow-[0_8px_32px_0_rgba(0,255,255,0.2)] max-w-3xl pointer-events-auto relative group">
+          <div className="inline-block px-5 py-5 sm:px-8 sm:py-7 md:px-14 md:py-10 rounded-2xl sm:rounded-3xl backdrop-blur-xl bg-gradient-to-br from-black/40 via-black/30 to-black/40 border border-white/30 shadow-[0_8px_32px_0_rgba(0,255,255,0.2)] max-w-3xl pointer-events-auto relative group">
             {/* Premium Glow Effect */}
             <div className="absolute -inset-0.5 bg-gradient-to-r from-[#00ff41] via-[#00ffff] to-[#0080ff] rounded-3xl opacity-20 blur-xl group-hover:opacity-30 transition-opacity duration-500"></div>
             
@@ -100,14 +99,14 @@ export default function Home() {
             
             <div className="relative z-10">
               {/* Premium Headline with Enhanced Glow */}
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4 leading-tight tracking-tight">
+              <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-4 leading-tight tracking-tight text-balance">
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00ff41] via-[#00ffff] to-[#0080ff] drop-shadow-[0_0_40px_rgba(0,255,255,1)] animate-pulse-glow">
                   Enterprise Node.js Solutions
                 </span>
               </h1>
               
               {/* Premium Subtitle with Better Spacing */}
-              <p className="text-base md:text-lg mb-8 text-white/90 font-light tracking-wide">
+              <p className="text-sm sm:text-base md:text-lg mb-6 md:mb-8 text-white/90 font-light tracking-wide">
                 <span className="inline-block">Scalable</span> 
                 <span className="text-[#00ffff] mx-2">•</span> 
                 <span className="inline-block">Secure</span> 
@@ -120,12 +119,12 @@ export default function Home() {
               {/* Premium CTA Button with Enhanced Effects */}
               <a 
                 href="/pages/services"
-                className="group/btn relative inline-block px-10 py-4 bg-gradient-to-r from-[#00ff41] to-[#00ffff] text-black font-bold text-lg rounded-full overflow-hidden transition-all duration-500 hover:scale-110 hover:shadow-[0_0_60px_rgba(0,255,65,1)] shadow-[0_0_30px_rgba(0,255,255,0.5)]"
+                className="group/btn relative inline-block w-full sm:w-auto text-center px-7 sm:px-10 py-3.5 sm:py-4 bg-gradient-to-r from-[#00ff41] to-[#00ffff] text-black font-bold text-base sm:text-lg rounded-2xl sm:rounded-full overflow-hidden transition-all duration-500 sm:hover:scale-110 hover:shadow-[0_0_60px_rgba(0,255,65,1)] shadow-[0_0_30px_rgba(0,255,255,0.5)]"
               >
                 {/* Button Shimmer Effect */}
                 <div className="absolute inset-0 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
                 
-                <span className="relative z-10 flex items-center gap-2">
+                <span className="relative z-10 flex items-center justify-center gap-2">
                   Explore Services 
                   <svg className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
@@ -164,7 +163,7 @@ export default function Home() {
         </div>
         
         {/* Premium Scroll Indicator */}
-        <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-10 animate-bounce">
+        <div className="absolute bottom-8 sm:bottom-10 left-1/2 transform -translate-x-1/2 z-10 animate-bounce hidden sm:block">
           <div className="flex flex-col items-center gap-2">
             <span className="text-white/60 text-xs font-medium tracking-wider uppercase">Scroll to Explore</span>
             <div className="w-6 h-10 border-2 border-cyan-400/60 rounded-full flex justify-center p-1 shadow-[0_0_20px_rgba(0,255,255,0.4)]">
@@ -182,7 +181,7 @@ export default function Home() {
       {/* ========================================
           SECTION 3: SERVICES HIGHLIGHTS (PREMIUM)
           ======================================== */}
-      <section className="py-20 lg:py-28 bg-gradient-to-br from-gray-50 via-white to-gray-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 relative overflow-hidden content-visibility-auto">
+      <section className="compact-main-section bg-gradient-to-br from-gray-50 via-white to-gray-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 relative overflow-hidden content-visibility-auto">
         {/* Premium Background Pattern */}
         <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05]">
           <div className="absolute inset-0" style={{
@@ -219,12 +218,12 @@ export default function Home() {
         
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           {/* Premium Header */}
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6">
+          <div className="text-center mb-10 md:mb-16">
+            <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold mb-4 md:mb-6 text-balance">
               Enterprise-Grade{' '}
               <span className="gradient-text-premium inline-block">Node.js Solutions</span>
             </h2>
-            <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-base sm:text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed">
               Building Scalable Systems for Global Enterprises with Cutting-Edge Technology
             </p>
           </div>
@@ -232,7 +231,7 @@ export default function Home() {
           {/* Premium Service Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 max-w-7xl mx-auto">
             {/* Service 1 - Premium Card */}
-            <div className="premium-card group glass-premium dark:glass-premium-dark p-8 lg:p-10 rounded-2xl hover:shadow-[0_20px_60px_rgba(0,255,255,0.3)] transition-all duration-500 hover:scale-105 gpu-accelerated">
+            <div className="premium-card group glass-premium dark:glass-premium-dark p-6 md:p-8 lg:p-10 rounded-2xl hover:shadow-[0_20px_60px_rgba(0,255,255,0.3)] transition-all duration-500 md:hover:scale-105 gpu-accelerated">
               {/* Premium Icon */}
               <div className="relative w-20 h-20 mb-6">
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl blur-lg opacity-50 group-hover:opacity-75 transition-opacity"></div>
@@ -258,7 +257,7 @@ export default function Home() {
             </div>
             
             {/* Service 2 - Premium Card */}
-            <div className="premium-card group glass-premium dark:glass-premium-dark p-8 lg:p-10 rounded-2xl hover:shadow-[0_20px_60px_rgba(168,85,247,0.3)] transition-all duration-500 hover:scale-105 gpu-accelerated">
+            <div className="premium-card group glass-premium dark:glass-premium-dark p-6 md:p-8 lg:p-10 rounded-2xl hover:shadow-[0_20px_60px_rgba(168,85,247,0.3)] transition-all duration-500 md:hover:scale-105 gpu-accelerated">
               {/* Premium Icon */}
               <div className="relative w-20 h-20 mb-6">
                 <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl blur-lg opacity-50 group-hover:opacity-75 transition-opacity"></div>
@@ -284,7 +283,7 @@ export default function Home() {
             </div>
             
             {/* Service 3 - Premium Card */}
-            <div className="premium-card group glass-premium dark:glass-premium-dark p-8 lg:p-10 rounded-2xl hover:shadow-[0_20px_60px_rgba(34,197,94,0.3)] transition-all duration-500 hover:scale-105 gpu-accelerated">
+            <div className="premium-card group glass-premium dark:glass-premium-dark p-6 md:p-8 lg:p-10 rounded-2xl hover:shadow-[0_20px_60px_rgba(34,197,94,0.3)] transition-all duration-500 md:hover:scale-105 gpu-accelerated">
               {/* Premium Icon */}
               <div className="relative w-20 h-20 mb-6">
                 <div className="absolute inset-0 bg-gradient-to-br from-green-500 to-emerald-500 rounded-2xl blur-lg opacity-50 group-hover:opacity-75 transition-opacity"></div>
@@ -335,7 +334,7 @@ export default function Home() {
       {/* ========================================
           SECTION 8: GREAT PRODUCT SOFTWARE
           ======================================== */}
-      <section className="py-20 bg-white dark:bg-gray-800 relative overflow-hidden content-visibility-auto">
+      <section className="compact-main-section bg-white dark:bg-gray-800 relative overflow-hidden content-visibility-auto">
         {/* Background Illustrations */}
         <div className="absolute top-20 left-20 w-56 h-56 opacity-5 hidden md:block">
           <Image
@@ -357,18 +356,18 @@ export default function Home() {
         </div>
         
         <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+          <div className="text-center mb-10 md:mb-16">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 md:mb-4 text-balance">
               Great Product Software <span className="text-blue-600">Built for Scale</span>
             </h2>
-            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+            <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
               Discover our comprehensive suite of enterprise-grade software solutions designed to transform businesses across industries.
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-8">
             {/* Promerchants */}
-            <div className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-gray-700 dark:to-gray-600 p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+            <div className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-gray-700 dark:to-gray-600 p-5 sm:p-6 md:p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 md:hover:scale-105">
               <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mb-6">
                 <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
@@ -387,7 +386,7 @@ export default function Home() {
             </div>
 
             {/* TradeZen */}
-            <div className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-gray-700 dark:to-gray-600 p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+            <div className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-gray-700 dark:to-gray-600 p-5 sm:p-6 md:p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 md:hover:scale-105">
               <div className="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mb-6">
                 <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
@@ -406,7 +405,7 @@ export default function Home() {
             </div>
 
             {/* MailZen */}
-            <div className="bg-gradient-to-br from-purple-50 to-violet-50 dark:from-gray-700 dark:to-gray-600 p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+            <div className="bg-gradient-to-br from-purple-50 to-violet-50 dark:from-gray-700 dark:to-gray-600 p-5 sm:p-6 md:p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 md:hover:scale-105">
               <div className="w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center mb-6">
                 <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -425,7 +424,7 @@ export default function Home() {
             </div>
 
             {/* Waterakt */}
-            <div className="bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-gray-700 dark:to-gray-600 p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+            <div className="bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-gray-700 dark:to-gray-600 p-5 sm:p-6 md:p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 md:hover:scale-105">
               <div className="w-16 h-16 bg-emerald-600 rounded-full flex items-center justify-center mb-6">
                 <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
@@ -444,7 +443,7 @@ export default function Home() {
             </div>
 
             {/* SwiftShift */}
-            <div className="bg-gradient-to-br from-orange-50 to-red-50 dark:from-gray-700 dark:to-gray-600 p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+            <div className="bg-gradient-to-br from-orange-50 to-red-50 dark:from-gray-700 dark:to-gray-600 p-5 sm:p-6 md:p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 md:hover:scale-105">
               <div className="w-16 h-16 bg-orange-600 rounded-full flex items-center justify-center mb-6">
                 <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
@@ -463,7 +462,7 @@ export default function Home() {
             </div>
 
             {/* CodeYog */}
-            <div className="bg-gradient-to-br from-indigo-50 to-blue-50 dark:from-gray-700 dark:to-gray-600 p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+            <div className="bg-gradient-to-br from-indigo-50 to-blue-50 dark:from-gray-700 dark:to-gray-600 p-5 sm:p-6 md:p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 md:hover:scale-105">
               <div className="w-16 h-16 bg-indigo-600 rounded-full flex items-center justify-center mb-6">
                 <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
@@ -483,7 +482,7 @@ export default function Home() {
           </div>
 
           {/* BharatERP - Full Width Feature */}
-          <div className="mt-12 bg-gradient-to-r from-gray-50 to-blue-50 dark:from-gray-700 dark:to-gray-600 rounded-2xl p-8 shadow-lg">
+          <div className="mt-8 md:mt-12 bg-gradient-to-r from-gray-50 to-blue-50 dark:from-gray-700 dark:to-gray-600 rounded-2xl p-5 sm:p-6 md:p-8 shadow-lg">
             <div className="flex flex-col lg:flex-row items-center gap-8">
               <div className="lg:w-1/3">
                 <div className="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center mb-6">
@@ -533,7 +532,7 @@ export default function Home() {
       {/* ========================================
           SECTION 12: FINAL CTA (ENHANCED)
           ======================================== */}
-      <section className="py-20 bg-gradient-to-br from-blue-600 via-cyan-600 to-blue-700 text-white relative overflow-hidden content-visibility-auto">
+      <section className="compact-main-section bg-gradient-to-br from-blue-600 via-cyan-600 to-blue-700 text-white relative overflow-hidden content-visibility-auto">
         {/* Animated Background */}
         <div className="absolute inset-0 opacity-20">
           <div className="absolute top-20 left-20 w-96 h-96 bg-white rounded-full blur-3xl animate-pulse hidden md:block"></div>
@@ -563,48 +562,48 @@ export default function Home() {
         </div>
         
         <div className="container mx-auto px-4 text-center relative z-10">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 md:mb-6 text-balance">
             Ready to Build Something <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 to-yellow-400">Amazing</span>?
           </h2>
-          <p className="text-xl md:text-2xl mb-4 max-w-4xl mx-auto font-light">
+          <p className="text-lg sm:text-xl md:text-2xl mb-3 md:mb-4 max-w-4xl mx-auto font-light">
             Partner with a global team for enterprise-grade solutions
           </p>
-          <p className="text-lg mb-10 max-w-3xl mx-auto text-white/90">
+          <p className="text-base sm:text-lg mb-8 md:mb-10 max-w-3xl mx-auto text-white/90">
             Our global team delivers world-class scalable architecture, microservices, and real-time systems 
             that drive business growth and digital transformation across continents.
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center mb-10 md:mb-12">
             <a 
               href="/pages/contact"
-              className="px-10 py-4 bg-white text-blue-600 hover:bg-gray-100 rounded-full font-semibold text-lg transition duration-300 transform hover:scale-105 shadow-xl hover:shadow-2xl"
+              className="w-full sm:w-auto px-8 sm:px-10 py-3.5 sm:py-4 bg-white text-blue-600 hover:bg-gray-100 rounded-2xl sm:rounded-full font-semibold text-base sm:text-lg transition duration-300 transform sm:hover:scale-105 shadow-xl hover:shadow-2xl"
             >
               Start Your Project →
             </a>
             <a 
               href="/pages/services"
-              className="px-10 py-4 bg-transparent border-2 border-white hover:bg-white/20 backdrop-blur-sm rounded-full font-semibold text-lg transition duration-300 shadow-lg"
+              className="w-full sm:w-auto px-8 sm:px-10 py-3.5 sm:py-4 bg-transparent border-2 border-white hover:bg-white/20 backdrop-blur-sm rounded-2xl sm:rounded-full font-semibold text-base sm:text-lg transition duration-300 shadow-lg"
             >
               Explore Services
             </a>
           </div>
           
           {/* Trust Indicators */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto pt-8 border-t border-white/30">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 max-w-4xl mx-auto pt-6 md:pt-8 border-t border-white/30">
             <div>
-              <p className="text-3xl font-bold mb-1">500+</p>
+              <p className="text-2xl sm:text-3xl font-bold mb-1">500+</p>
               <p className="text-sm text-white/80">Projects Delivered</p>
             </div>
             <div>
-              <p className="text-3xl font-bold mb-1">200+</p>
+              <p className="text-2xl sm:text-3xl font-bold mb-1">200+</p>
               <p className="text-sm text-white/80">Happy Clients</p>
             </div>
             <div>
-              <p className="text-3xl font-bold mb-1">5</p>
+              <p className="text-2xl sm:text-3xl font-bold mb-1">5</p>
               <p className="text-sm text-white/80">Global Offices</p>
             </div>
             <div>
-              <p className="text-3xl font-bold mb-1">24/7</p>
+              <p className="text-2xl sm:text-3xl font-bold mb-1">24/7</p>
               <p className="text-sm text-white/80">Support Available</p>
             </div>
           </div>

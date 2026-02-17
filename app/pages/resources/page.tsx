@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import axios from 'axios';
@@ -66,6 +65,18 @@ export default function ResourcesPage() {
   const [resourcesData, setResourcesData] = useState<ResourcesResponse | null>(null);
   const [page, setPage] = useState(1);
   const pageSize = 9;
+
+  useEffect(() => {
+    console.log('[ResourcesPage] Loaded');
+  }, []);
+
+  useEffect(() => {
+    console.log('[ResourcesPage] Query state updated:', {
+      selectedType,
+      searchQuery,
+      page,
+    });
+  }, [selectedType, searchQuery, page]);
   
   // Format date for display
   const formatDate = (dateString: string) => {
@@ -145,11 +156,15 @@ export default function ResourcesPage() {
       setTimeout(() => {
         setNewsletterStatus(prev => ({ ...prev, success: false }));
       }, 5000);
-    } catch (err: any) {
+    } catch (err: unknown) {
+      const apiError = axios.isAxiosError<{ error?: string }>(err)
+        ? err.response?.data?.error
+        : null;
+
       setNewsletterStatus({
         submitting: false,
         success: false,
-        error: err.response?.data?.error || 'Failed to subscribe. Please try again.',
+        error: apiError || 'Failed to subscribe. Please try again.',
       });
     }
   };
@@ -157,11 +172,11 @@ export default function ResourcesPage() {
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900">
       {/* Header */}
-      <div className="bg-gradient-to-br from-gray-900 to-blue-900 text-white">
-        <div className="container mx-auto px-4 py-24">
+      <div className="bg-gradient-to-br from-gray-900 to-blue-900 text-white compact-main-hero">
+        <div className="container mx-auto px-4 py-10 sm:py-14 md:py-20">
           <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">Resources</h1>
-            <p className="text-xl text-gray-300 mb-10">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 text-balance">Resources</h1>
+            <p className="text-base sm:text-xl text-gray-300 mb-8 md:mb-10">
               Download free resources to help you build better solutions and stay ahead of the curve.
             </p>
             
@@ -172,7 +187,7 @@ export default function ResourcesPage() {
                 placeholder="Search resources..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-6 py-4 text-gray-700 bg-white rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-5 py-3.5 text-gray-700 bg-white rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               <button className="absolute right-4 top-1/2 transform -translate-y-1/2">
                 <svg className="w-5 h-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -187,9 +202,12 @@ export default function ResourcesPage() {
       {/* Filter Tabs */}
       <div className="border-b border-gray-200 dark:border-gray-800">
         <div className="container mx-auto px-4">
-          <div className="flex overflow-x-auto no-scrollbar py-4 space-x-4">
+          <div className="touch-chip-row py-4 md:justify-center md:overflow-visible">
             <button
-              onClick={() => setSelectedType('all')}
+              onClick={() => {
+                console.log('[ResourcesPage] Type filter selected: all');
+                setSelectedType('all');
+              }}
               className={`px-4 py-2 rounded-full whitespace-nowrap ${
                 selectedType === 'all'
                   ? 'bg-blue-600 text-white'
@@ -202,7 +220,10 @@ export default function ResourcesPage() {
             {Object.keys(resourceTypeIcons).map((type) => (
               <button
                 key={type}
-                onClick={() => setSelectedType(type as Resource['type'])}
+                onClick={() => {
+                  console.log('[ResourcesPage] Type filter selected:', type);
+                  setSelectedType(type as Resource['type']);
+                }}
                 className={`px-4 py-2 rounded-full flex items-center whitespace-nowrap ${
                   selectedType === type
                     ? 'bg-blue-600 text-white'
@@ -237,11 +258,11 @@ export default function ResourcesPage() {
       
       {/* Featured Resources */}
       {!loading && shouldShowFeatured && featuredResources.length > 0 && (
-        <div className="py-16 bg-gray-50 dark:bg-gray-800">
+        <div className="compact-main-section bg-gray-50 dark:bg-gray-800">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold mb-12 text-gray-800 dark:text-white">Featured Resources</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold mb-8 md:mb-12 text-gray-800 dark:text-white text-balance">Featured Resources</h2>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
               {featuredResources.map((resource) => (
                 <motion.div
                   key={resource.id}
@@ -256,7 +277,7 @@ export default function ResourcesPage() {
                   </div>
                   
                   {/* Content */}
-                  <div className="relative z-10 p-8 flex flex-col md:flex-row items-start gap-6">
+                  <div className="relative z-10 p-5 sm:p-8 flex flex-col md:flex-row items-start gap-6">
                     {/* Resource Icon/Image */}
                     <div className="w-16 h-16 rounded-xl flex items-center justify-center bg-white/20 backdrop-blur-sm text-white">
                       {resourceTypeIcons[resource.type]}
@@ -269,7 +290,7 @@ export default function ResourcesPage() {
                       </span>
                       
                       {/* Title */}
-                      <h3 className="text-2xl font-bold text-white mb-3">
+                      <h3 className="text-xl sm:text-2xl font-bold text-white mb-3 text-balance">
                         {resource.title}
                       </h3>
                       
@@ -298,10 +319,10 @@ export default function ResourcesPage() {
       )}
       
       {/* All Resources */}
-      <div className="py-16 container mx-auto px-4">
+      <div className="compact-main-section container mx-auto px-4">
         {searchQuery && !loading && (
           <h2 className="text-2xl font-bold mb-8 text-gray-800 dark:text-white">
-            Search results for "{searchQuery}"
+            Search results for &ldquo;{searchQuery}&rdquo;
           </h2>
         )}
         
@@ -319,13 +340,13 @@ export default function ResourcesPage() {
             </svg>
             <h3 className="text-xl font-bold mb-2 text-gray-800 dark:text-white">No resources found</h3>
             <p className="text-gray-600 dark:text-gray-400">
-              We couldn't find any resources matching your criteria. Try different keywords or categories.
+              We couldn&apos;t find any resources matching your criteria. Try different keywords or categories.
             </p>
           </div>
         ) : (
           <>
             {!loading && resourcesData && (
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8">
                 {resourcesData.resources.map((resource) => (
                   <motion.div
                     key={resource.id}
@@ -335,7 +356,7 @@ export default function ResourcesPage() {
                     className="bg-white dark:bg-gray-900 rounded-xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl border border-gray-100 dark:border-gray-800"
                   >
                     {/* Resource Type Badge */}
-                    <div className="p-6 border-b border-gray-100 dark:border-gray-800 flex items-center justify-between">
+                    <div className="p-5 sm:p-6 border-b border-gray-100 dark:border-gray-800 flex items-center justify-between">
                       <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${resourceTypeColors[resource.type].bg} ${resourceTypeColors[resource.type].text}`}>
                         <span className="mr-1.5">
                           {resourceTypeIcons[resource.type]}
@@ -348,8 +369,8 @@ export default function ResourcesPage() {
                     </div>
                     
                     {/* Resource Content */}
-                    <div className="p-6">
-                      <h3 className="text-xl font-bold mb-3 text-gray-800 dark:text-white">
+                    <div className="p-5 sm:p-6">
+                      <h3 className="text-lg sm:text-xl font-bold mb-3 text-gray-800 dark:text-white text-balance">
                         {resource.title}
                       </h3>
                       
@@ -375,7 +396,7 @@ export default function ResourcesPage() {
             {/* Pagination */}
             {!loading && resourcesData && resourcesData.pagination && resourcesData.pagination.totalPages > 1 && (
               <div className="flex justify-center mt-12">
-                <nav className="flex space-x-2">
+                <nav className="flex space-x-2 overflow-x-auto hide-scrollbar pb-1">
                   <button 
                     onClick={() => setPage(prev => Math.max(prev - 1, 1))}
                     disabled={page === 1}
@@ -421,10 +442,10 @@ export default function ResourcesPage() {
       </div>
       
       {/* Newsletter Section */}
-      <div className="py-16 bg-gray-50 dark:bg-gray-800">
+      <div className="compact-main-section bg-gray-50 dark:bg-gray-800">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl font-bold mb-4 text-gray-800 dark:text-white">Stay Updated</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold mb-4 text-gray-800 dark:text-white text-balance">Stay Updated</h2>
             <p className="text-gray-600 dark:text-gray-300 mb-8">
               Subscribe to our newsletter to receive new resources, articles, and updates directly in your inbox.
             </p>
@@ -463,15 +484,15 @@ export default function ResourcesPage() {
       </div>
       
       {/* CTA Section */}
-      <div className="bg-blue-600 py-16 text-white">
+      <div className="bg-blue-600 compact-main-section text-white">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-4">Need Custom Solutions?</h2>
-          <p className="text-xl mb-8 max-w-2xl mx-auto">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-4 text-balance">Need Custom Solutions?</h2>
+          <p className="text-base sm:text-xl mb-8 max-w-2xl mx-auto">
             Our team of experts is ready to help you build scalable, innovative solutions tailored to your specific needs.
           </p>
           <Link
             href="/pages/contact"
-            className="px-8 py-3 bg-white text-blue-600 hover:bg-gray-100 rounded-full font-medium inline-block transition-colors"
+            className="px-8 py-3 bg-white text-blue-600 hover:bg-gray-100 rounded-2xl sm:rounded-full font-medium inline-block transition-colors"
           >
             Get in Touch
           </Link>
