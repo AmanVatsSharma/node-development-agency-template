@@ -31,6 +31,18 @@ GOOGLE_API_KEY="your-google-api-key"
 GA_MEASUREMENT_ID="G-XXXXXXXXXX"
 
 # ============================================
+# SEO / Canonical Site URL (Required for production)
+# ============================================
+# Canonical domain for sitemap.xml, robots.txt, and all SEO metadata.
+# Resolution order: NEXT_PUBLIC_SITE_URL → NEXT_PUBLIC_APP_URL → companyProfile.websiteUrl
+# For vedpragya.com production, set one of:
+#   NEXT_PUBLIC_SITE_URL=https://vedpragya.com
+#   NEXT_PUBLIC_SITE_URL=https://www.vedpragya.com
+# Omit for local dev; fallback uses company profile.
+# NEXT_PUBLIC_SITE_URL="https://vedpragya.com"
+# NEXT_PUBLIC_APP_URL="https://vedpragya.com"
+
+# ============================================
 # AI Sales Agent (Optional - Configure via Admin)
 # ============================================
 # Configure your AI sales agent via the admin panel at /admin/ai-agent
@@ -57,7 +69,9 @@ GA_MEASUREMENT_ID="G-XXXXXXXXXX"
 
 ## SEO Notes
 
-Admin pages are protected from search engines:
-- Blocked in `robots.txt`
-- Not included in `sitemap.xml`
-- Include `noindex, nofollow` meta tags
+- **Sitemap for Google Search Console**: Submit `https://vedpragya.com/sitemap.xml` (or `https://www.vedpragya.com/sitemap.xml` if www is canonical). One sitemap covers all public pages.
+- **Canonical domain**: Set `NEXT_PUBLIC_SITE_URL` in production so sitemap and robots.txt use the correct domain.
+- Admin pages are protected from search engines:
+  - Blocked in `robots.txt`
+  - Not included in `sitemap.xml`
+  - Include `noindex, nofollow` meta tags

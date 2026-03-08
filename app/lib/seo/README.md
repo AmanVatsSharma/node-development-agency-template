@@ -146,3 +146,9 @@ It validates:
 CI also runs the same check via:
 - `.github/workflows/seo-integrity.yml`
 
+---
+
+## Changelog
+
+- **2025-03-08**: Canonical domain set to vedpragya.com (companyProfile.websiteUrl); ENV_VARIABLES.md updated with NEXT_PUBLIC_SITE_URL / NEXT_PUBLIC_APP_URL for production sitemap and GSC submission (https://vedpragya.com/sitemap.xml).
+

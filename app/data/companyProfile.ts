@@ -47,8 +47,8 @@ export interface CompanyProfile {
 export const companyProfile: CompanyProfile = {
   brandName: "Enterprise Hero",
   legalName: "Vedpragya Bharat Private Limited",
-  websiteUrl: "https://enterprisehero.com",
-  contactEmail: "info@enterprisehero.com",
+  websiteUrl: "https://vedpragya.com",
+  contactEmail: "info@vedpragya.com",
   legal: {
     cin: "U47912HR2025PTC131357",
     gst: "06AALCV0051A1ZV",
