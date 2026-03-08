@@ -405,7 +405,7 @@ Body:
   leadData: {
     name: "John Doe",
     email: "john@example.com",
-    phone: "+919876543210",
+    phone: "+919963730111",
     company: "ABC Corp",
     requirements: "Need a Shopify store"
   }
@@ -601,7 +601,7 @@ Add custom logic on lead capture:
 2. Provide:
    - Name: "Test User"
    - Email: "test@example.com"
-   - Phone: "+919876543210"
+   - Phone: "+919963730111"
    - Company: "Test Corp"
 3. Verify lead appears in `/admin/leads`
 4. Check Zoho CRM for lead

@@ -155,7 +155,7 @@ https://yoursite.com/pages/google-ads-management
 ### Critical Updates Required
 
 - [ ] **Update Phone Number**
-  - Current: +91 98765 43210 (placeholder)
+  - Current: +91 9963730111
   - Update in: `final-cta-section.tsx` and `mobile-floating-cta.tsx`
 
 - [ ] **Connect Lead Form**
@@ -211,7 +211,7 @@ const handleSubmit = (e: React.FormEvent) => {
 
 ```typescript
 // Replace with your actual number
-window.location.href = 'tel:+919876543210';
+window.location.href = 'tel:+919963730111';
 ```
 
 ### 3. Analytics Tracking

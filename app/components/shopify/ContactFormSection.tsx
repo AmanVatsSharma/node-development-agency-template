@@ -245,7 +245,7 @@ const ContactFormSection = () => {
                         className={`w-full pl-12 pr-4 py-4 rounded-xl border-2 ${
                           errors.phone ? 'border-red-500' : 'border-gray-200'
                         } focus:border-[#00B894] focus:outline-none transition-colors text-gray-900`}
-                        placeholder="+91 98765 43210"
+                        placeholder="+91 9963730111"
                       />
                     </div>
                     {errors.phone && <p className="mt-2 text-sm text-red-500">{errors.phone}</p>}

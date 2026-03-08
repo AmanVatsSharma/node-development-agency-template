@@ -165,7 +165,7 @@ Body:      Inter Regular
 ## 📋 Pre-Launch Checklist Summary
 
 **Critical:**
-- [ ] Update phone: +91 98765 43210 → Your number
+- [ ] Update phone: +91 9963730111 (or your number)
 - [ ] Connect lead form to CRM
 - [ ] Add Google Analytics ID
 - [ ] Add real images

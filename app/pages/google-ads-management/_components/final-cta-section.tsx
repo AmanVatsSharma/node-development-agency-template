@@ -203,7 +203,7 @@ export function FinalCTASection() {
                       value={formData.phone}
                       onChange={(e) => handleChange('phone', e.target.value)}
                       className="mt-2 h-12 text-base border-2 border-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-400"
-                      placeholder="+91 98765 43210"
+                      placeholder="+91 9963730111"
                     />
                   </div>
 

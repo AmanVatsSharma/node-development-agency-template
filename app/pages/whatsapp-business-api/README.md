@@ -355,7 +355,7 @@ const plans = [
 Edit `/app/pages/whatsapp-business-api/_components/mobile-floating-cta.tsx`:
 
 ```typescript
-const phoneNumber = '919876543210'; // Update phone
+const phoneNumber = '919963730111'; // Update phone
 ```
 
 ### Update Content

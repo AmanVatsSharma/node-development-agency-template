@@ -74,14 +74,14 @@ class ConfigService {
       email: {
         provider: process.env.EMAIL_PROVIDER,
         apiKey: process.env.EMAIL_API_KEY,
-        fromEmail: process.env.EMAIL_FROM || 'noreply@enterprisehero.com',
+        fromEmail: process.env.EMAIL_FROM || 'noreply@vedpragya.com',
         toEmail: process.env.EMAIL_TO || 'support@vedpragya.com',
         enabled: !!process.env.EMAIL_API_KEY,
       },
       
       app: {
         name: 'Enterprise Hero',
-        url: process.env.NEXT_PUBLIC_APP_URL || 'https://enterprisehero.com',
+        url: process.env.NEXT_PUBLIC_APP_URL || 'https://vedpragya.com',
         supportEmail: 'support@vedpragya.com',
         supportPhone: '+91 99637 30111',
       },

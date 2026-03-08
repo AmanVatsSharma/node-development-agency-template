@@ -291,7 +291,7 @@ const techStack = [
 ### Update Contact Info
 Edit `mobile-floating-cta.tsx`:
 ```tsx
-href="tel:+919876543210" // Update phone number
+href="tel:+919963730111" // Update phone number
 ```
 
 ---

@@ -341,7 +341,7 @@ export function LeadFormSection() {
                         onChange={handleInputChange}
                         required
                         className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
-                        placeholder="+91 98765 43210"
+                        placeholder="+91 9963730111"
                       />
                     </div>
                   </div>
@@ -585,7 +585,7 @@ export function LeadFormSection() {
                   <Phone className="w-6 h-6" />
                   <div>
                     <div className="font-semibold">Call Us Now</div>
-                    <div className="text-green-100">+91 98765 43210</div>
+                    <div className="text-green-100">+91 9963730111</div>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">

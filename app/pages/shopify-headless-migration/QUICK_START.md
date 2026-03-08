@@ -31,17 +31,17 @@ https://yourdomain.com/pages/shopify-headless-migration
 
 1. **Final CTA Section** (`_components/final-cta-section.tsx:18`)
    ```typescript
-   const phoneNumber = '919876543210'; // ← Change this
+   const phoneNumber = '919963730111'; // ← Change this
    ```
 
 2. **Mobile Floating CTA** (`_components/mobile-floating-cta.tsx:28`)
    ```typescript
-   const phoneNumber = '919876543210'; // ← Change this
+   const phoneNumber = '919963730111'; // ← Change this
    ```
 
 3. **Also update Call number** (`_components/mobile-floating-cta.tsx:42`)
    ```typescript
-   window.location.href = 'tel:+919876543210'; // ← Change this
+   window.location.href = 'tel:+919963730111'; // ← Change this
    ```
 
 ### Update Company Name

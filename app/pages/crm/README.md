@@ -360,7 +360,7 @@ Every section and interaction is logged for debugging:
 
 For questions or issues:
 - **Email**: support@vedpragya.com
-- **Phone**: (+91) 99999-xxxxx
+- **Phone**: +91 9963730111
 - **Docs**: See IMPLEMENTATION_SUMMARY.md
 
 ---

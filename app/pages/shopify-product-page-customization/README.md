@@ -501,7 +501,7 @@ Update in multiple components:
 - `lead-form-section.tsx`
 - `final-cta-section.tsx`
 
-Replace: `+919999999999` with your number
+Replace: `+919963730111` with your number if different
 
 ### Update Case Studies
 Edit `case-studies-section.tsx`:

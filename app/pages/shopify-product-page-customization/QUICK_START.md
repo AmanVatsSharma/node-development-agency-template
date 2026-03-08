@@ -67,7 +67,7 @@ npm start
 ## ⚡ Before Going Live - Must Do!
 
 ### 1. Update Contact Information (5 minutes)
-Replace `+919999999999` in these files:
+Replace `+919963730111` in these files if using a different number:
 - `_components/mobile-floating-cta.tsx` (line ~32)
 - `_components/lead-form-section.tsx` (line ~73)
 - `_components/final-cta-section.tsx` (line ~26)
@@ -75,7 +75,7 @@ Replace `+919999999999` in these files:
 **Find & Replace:**
 ```bash
 # From your project root
-grep -r "+919999999999" app/pages/shopify-product-page-customization/_components/
+grep -r "+919963730111" app/pages/shopify-product-page-customization/_components/
 ```
 
 ### 2. Configure Google Ads Tracking (2 minutes)

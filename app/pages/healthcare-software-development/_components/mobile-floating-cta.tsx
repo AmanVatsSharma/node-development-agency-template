@@ -199,7 +199,7 @@ export function MobileFloatingCTA() {
               {/* Contact Info */}
               <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
                 <div className="text-center text-sm text-gray-500 dark:text-gray-400">
-                  <div>+91 98765 43210</div>
+                  <div>+91 9963730111</div>
                   <div>{CONTACT_EMAIL}</div>
                 </div>
               </div>

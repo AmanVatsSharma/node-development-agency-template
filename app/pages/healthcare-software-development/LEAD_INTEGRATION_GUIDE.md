@@ -13,7 +13,7 @@ POST /api/lead
 {
   "name": "Dr. Rajesh Kumar",
   "email": "rajesh@apollohospital.com",
-  "phone": "+91 98765 43210",
+  "phone": "+91 9963730111",
   "message": "Need HMS for 500-bed hospital",
   "source": "healthcare-software-development",
   "leadSource": "Healthcare Software Landing Page",

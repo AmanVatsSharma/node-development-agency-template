@@ -634,7 +634,7 @@ handleScheduleCall(): void
 
 ### WhatsApp Integration
 ```typescript
-const phoneNumber = '919876543210';
+const phoneNumber = '919963730111';
 const message = encodeURIComponent('Hi! I\'m interested...');
 window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
 ```

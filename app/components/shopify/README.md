@@ -165,7 +165,7 @@ import ShopifyStoreSetupPage from '@/app/pages/shopify-store-setup/page';
 ### Environment Variables (Optional)
 ```env
 # WhatsApp Business Number
-NEXT_PUBLIC_WHATSAPP_NUMBER=919876543210
+NEXT_PUBLIC_WHATSAPP_NUMBER=919963730111
 
 # Contact Form API (if using backend)
 NEXT_PUBLIC_CONTACT_API=/api/contact

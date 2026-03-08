@@ -89,7 +89,7 @@ To get started, may I have your name and email?"
 
 🤖 AI: "Perfect! And your phone number?"
 
-👤 User: "+919876543210"
+👤 User: "+919963730111"
 
 🤖 AI: "Thank you, Rahul! I've captured your information. 
 Our Shopify expert will call you within 24 hours to 

@@ -175,7 +175,7 @@ const plans = [
 ### Update Phone Number
 ```tsx
 // File: _components/mobile-floating-cta.tsx
-href="tel:+919876543210"  // ← Edit here
+href="tel:+919963730111"  // ← Edit here
 ```
 
 ### Update Testimonials

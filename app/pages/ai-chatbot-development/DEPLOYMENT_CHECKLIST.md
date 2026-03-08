@@ -34,7 +34,7 @@
 #### Update Contact Information
 1. **Phone Number**: 
    - File: `_components/mobile-floating-cta.tsx`
-   - Line: `href="tel:+919876543210"`
+   - Line: `href="tel:+919963730111"`
    - **ACTION**: Replace with actual company phone
 
 2. **Google Verification**:

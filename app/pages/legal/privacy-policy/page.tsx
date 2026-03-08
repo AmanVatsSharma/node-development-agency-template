@@ -196,7 +196,7 @@ export default function PrivacyPolicyPage() {
                   <strong>GST:</strong> 06AALCV0051A1ZV
                 </p>
                 <p className="text-gray-700 dark:text-gray-300 mb-2">
-                  <strong>Email:</strong> privacy@enterprisehero.com
+                  <strong>Email:</strong> privacy@vedpragyabharat.com
                 </p>
                 <p className="text-gray-700 dark:text-gray-300">
                   <strong>Global Offices:</strong> India (HQ), Dubai, California, Toronto, Shenzhen

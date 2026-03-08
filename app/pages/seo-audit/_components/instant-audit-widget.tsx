@@ -191,7 +191,7 @@ export function InstantAuditWidget() {
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}
-                placeholder="+91 9963730111"
+                placeholder="Your phone number"
                 className="h-11 sm:h-12 text-sm sm:text-base"
                 disabled={loading}
               />

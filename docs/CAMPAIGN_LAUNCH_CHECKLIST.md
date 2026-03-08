@@ -216,7 +216,7 @@ Complete ALL items before launching your Google Ads campaign.
 2. Press **F12** → **Console** tab
 3. Fill form:
    - Name: Test User
-   - Phone: +91 9999999999
+   - Phone: +91 9963730111
    - Email: test@test.com
    - City: Mumbai
    - Business Type: Technology

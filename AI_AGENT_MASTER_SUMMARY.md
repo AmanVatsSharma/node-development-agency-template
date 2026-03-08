@@ -300,7 +300,7 @@ Tested end-to-end:
 
 ### **Detection Patterns:**
 - Email: `user@example.com`
-- Phone (Indian): `+91 9876543210`, `9876543210`
+- Phone (Indian): `+91 9963730111`, `9963730111`
 - Phone (US): `+1 (555) 123-4567`, `555-123-4567`
 - Phone (Intl): `+44 20 7123 4567`
 - Name: "My name is John Doe", "I'm Sarah"

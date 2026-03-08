@@ -473,7 +473,7 @@ gtag('event', 'whatsapp_click', { location: 'final_cta' })
 1. **WhatsApp Number**
    ```tsx
    // In: final-cta-section.tsx, mobile-floating-cta.tsx
-   const phoneNumber = '919876543210'; // Replace with real number
+   const phoneNumber = '919963730111'; // Replace with real number
    ```
 
 2. **Pricing**
@@ -644,7 +644,7 @@ npm run build
 
 For questions or issues:
 - **Email:** support@vedpragya.com
-- **WhatsApp:** +91 98765 43210
+- **WhatsApp:** +91 9963730111
 - **Website:** vedpragyabharat.com
 
 ---

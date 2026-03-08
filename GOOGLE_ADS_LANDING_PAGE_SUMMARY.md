@@ -603,12 +603,12 @@ Every component logs:
 
 ### Lead Capture Methods
 1. **Primary Lead Form** (main conversion point)
-2. **Phone CTA** (tel:+919876543210)
+2. **Phone CTA** (tel:+919963730111)
 3. **Mobile Floating Buttons**
 4. **Multiple "Book Audit" CTAs**
 
 ### Current Placeholder
-- Phone: +91 98765 43210 (UPDATE BEFORE LAUNCH)
+- Phone: +91 9963730111
 - Form submits to console (INTEGRATE WITH CRM)
 
 ---

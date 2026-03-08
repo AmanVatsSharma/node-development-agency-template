@@ -476,7 +476,7 @@ npm run analyze
 **1. WhatsApp Integration**
 ```typescript
 // Direct link (no API required)
-const phoneNumber = '919876543210';
+const phoneNumber = '919963730111';
 const message = encodeURIComponent('Message text');
 const url = `https://wa.me/${phoneNumber}?text=${message}`;
 window.open(url, '_blank');
@@ -625,8 +625,8 @@ npm run start
 ```bash
 # Required for production
 NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
-NEXT_PUBLIC_WHATSAPP_NUMBER=919876543210
-NEXT_PUBLIC_PHONE_NUMBER=919876543210
+NEXT_PUBLIC_WHATSAPP_NUMBER=919963730111
+NEXT_PUBLIC_PHONE_NUMBER=919963730111
 ```
 
 ### Hosting

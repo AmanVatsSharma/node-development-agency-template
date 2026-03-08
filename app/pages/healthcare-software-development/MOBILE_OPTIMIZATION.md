@@ -268,7 +268,7 @@ text-xs sm:text-sm lg:text-base     /* Small text */
 For mobile-specific issues or questions:
 
 - **Email**: healthcare@vedpragyabharat.com
-- **Phone**: +91 98765 43210
+- **Phone**: +91 9963730111
 - **Mobile Testing**: Comprehensive device testing
 - **Performance Monitoring**: Real-time mobile metrics
 

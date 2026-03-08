@@ -206,7 +206,7 @@ export function LeadFormSection() {
                       required
                       value={formData.phone}
                       onChange={(e) => handleChange('phone', e.target.value)}
-                      placeholder="+91 98765 43210"
+                      placeholder="+91 9963730111"
                       className="h-12 text-base"
                     />
                   </div>

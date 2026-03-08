@@ -169,7 +169,7 @@ npm start
 ## 📞 Contact Integration
 
 ### Communication Channels
-- **Phone**: +91 98765 43210
+- **Phone**: +91 9963730111
 - **Email**: healthcare@vedpragyabharat.com
 - **WhatsApp**: Direct messaging integration
 - **Live Chat**: 24/7 support availability
@@ -257,7 +257,7 @@ npm start
 For technical support or questions about this landing page:
 
 - **Email**: healthcare@vedpragyabharat.com
-- **Phone**: +91 98765 43210
+- **Phone**: +91 9963730111
 - **Documentation**: This README file
 - **Code Comments**: Inline documentation in components
 

@@ -259,7 +259,7 @@ export function LeadFormSection() {
                           required
                           value={formData.phone}
                           onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                          placeholder="+91 98765 43210"
+                          placeholder="+91 9963730111"
                           className="mt-2 h-12 text-base"
                         />
                       </div>

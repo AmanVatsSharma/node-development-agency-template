@@ -37,7 +37,7 @@ npm run dev
 Open: `http://localhost:3000/pages/shopify-product-page-customization`
 
 ### Step 2: Update Contact Info (5 minutes)
-Replace `+919999999999` in these 3 files:
+Replace `+919963730111` in these 3 files if using a different number:
 - `_components/mobile-floating-cta.tsx`
 - `_components/lead-form-section.tsx`
 - `_components/final-cta-section.tsx`

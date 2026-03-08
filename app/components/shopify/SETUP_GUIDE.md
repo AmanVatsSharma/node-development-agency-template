@@ -83,7 +83,7 @@ Create or update `.env.local` file in the root directory:
 # .env.local
 
 # WhatsApp Business Number (replace with your number)
-NEXT_PUBLIC_WHATSAPP_NUMBER=919876543210
+NEXT_PUBLIC_WHATSAPP_NUMBER=919963730111
 
 # Contact Form API Endpoint (optional, for backend integration)
 NEXT_PUBLIC_CONTACT_API=/api/contact
@@ -104,7 +104,7 @@ Edit `app/components/shopify/FinalCTASection.tsx`:
 
 ```typescript
 // Line ~48
-const phoneNumber = '919876543210'; // Replace with your WhatsApp Business number
+const phoneNumber = '919963730111'; // Replace with your WhatsApp Business number
 ```
 
 ### 3. Update Contact Form API (Optional)
@@ -526,7 +526,7 @@ npm run dev
 
 **Solution:**
 ```typescript
-// Verify phone number format: 919876543210
+// Verify phone number format: 919963730111
 // Test on actual mobile device
 // Check browser console for errors
 ```

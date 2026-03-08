@@ -267,7 +267,7 @@ Hero → Mobile Floating CTA → WhatsApp/Phone → Conversion ✅
 ### Before Going Live
 
 1. **Update Contact Information**
-   - Replace `+919999999999` with actual phone number in:
+   - Replace `+919963730111` with actual phone number if different in:
      - `mobile-floating-cta.tsx`
      - `lead-form-section.tsx`
      - `final-cta-section.tsx`

@@ -284,7 +284,7 @@ export function FAQSection() {
                 <Phone className="w-6 h-6" />
                 <div>
                   <div className="font-semibold">Call Us</div>
-                  <div className="text-sm text-blue-100">+91 98765 43210</div>
+                  <div className="text-sm text-blue-100">+91 9963730111</div>
                 </div>
               </div>
               <div className="flex items-center justify-center gap-3">
