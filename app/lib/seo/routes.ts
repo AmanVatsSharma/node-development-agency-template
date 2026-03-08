@@ -5,7 +5,7 @@ import path from 'node:path';
 
 /**
  * Routes that should always be indexable even if navigation data changes.
- * Keep this list curated for core landing pages.
+ * Core + high-priority landing pages.
  */
 const CORE_STATIC_ROUTES = [
   '/',
@@ -18,6 +18,53 @@ const CORE_STATIC_ROUTES = [
   '/pages/website-development',
   '/pages/business-website',
   '/pages/website-services',
+];
+
+/**
+ * Full list of all static page routes under app/pages (excluding dynamic blog [slug]).
+ * Ensures sitemap includes every page even if filesystem discovery fails in some environments.
+ */
+const ALL_STATIC_PAGE_ROUTES = [
+  '/pages/about',
+  '/pages/ai-chatbot-development',
+  '/pages/ai-voice-agents',
+  '/pages/b2b-lead-generation-ads',
+  '/pages/blog',
+  '/pages/business-website',
+  '/pages/contact',
+  '/pages/crm',
+  '/pages/crm/demo',
+  '/pages/ecommerce-google-ads-optimization',
+  '/pages/enterprise-google-ads-management',
+  '/pages/google-ads-audit-strategy',
+  '/pages/google-ads-ecosystem',
+  '/pages/google-ads-management',
+  '/pages/healthcare-software-development',
+  '/pages/landing-page-optimization',
+  '/pages/legal/cancellations-refunds',
+  '/pages/legal/company-info',
+  '/pages/legal/privacy-policy',
+  '/pages/legal/shipping-policy',
+  '/pages/legal/terms-of-service',
+  '/pages/local-business-google-ads',
+  '/pages/nse-mcx-live-market-data',
+  '/pages/next-js-development',
+  '/pages/performance-max-campaigns',
+  '/pages/portfolio',
+  '/pages/reactjs-development',
+  '/pages/resources',
+  '/pages/seo-audit',
+  '/pages/services',
+  '/pages/shopify-headless-migration',
+  '/pages/shopify-product-page-customization',
+  '/pages/shopify-store-setup',
+  '/pages/trading-software',
+  '/pages/web-development',
+  '/pages/web-development-mumbai',
+  '/pages/website-development',
+  '/pages/website-services',
+  '/pages/whatsapp-business-api',
+  '/pages/youtube-advertising-management',
 ];
 
 /**
@@ -163,6 +210,7 @@ export function getStaticSeoRoutes(): string[] {
   };
 
   CORE_STATIC_ROUTES.forEach(addRoute);
+  ALL_STATIC_PAGE_ROUTES.forEach(addRoute);
   mainNavigation.forEach((item) => addRoute(item.link));
   servicesMegaMenu.sections.forEach((section) => {
     section.items.forEach((item) => addRoute(item.link));

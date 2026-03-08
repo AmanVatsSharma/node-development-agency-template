@@ -52,7 +52,7 @@ export function getCanonicalSiteUrl(): string {
         fallbackCandidate: companyProfile.websiteUrl,
         error: fallbackError instanceof Error ? fallbackError.message : String(fallbackError),
       });
-      return 'https://enterprisehero.com';
+      return 'https://vedpragya.com';
     }
   }
 }

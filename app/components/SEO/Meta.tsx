@@ -2,6 +2,8 @@
 
 import Head from 'next/head';
 import { usePathname } from 'next/navigation';
+import { companyProfile } from '@/app/data/companyProfile';
+import { SEO_SITE_URL } from '@/app/lib/seo/constants';
 
 interface MetaProps {
   title?: string;
@@ -14,8 +16,8 @@ interface MetaProps {
   noIndex?: boolean;
 }
 
-const siteName = 'Enterprise Hero';
-const siteUrl = 'https://enterprisehero.com';
+const siteName = companyProfile.brandName;
+const siteUrl = SEO_SITE_URL;
 const defaultDescription = 'Premium Node.js development and 3D animation services for enterprise applications.';
 const defaultKeywords = 'Node.js, React, Next.js, 3D Animations, Enterprise Development, Web Development';
 const defaultOgImage = '/images/og-default.jpg';
