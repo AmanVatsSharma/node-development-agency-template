@@ -150,5 +150,6 @@ CI also runs the same check via:
 
 ## Changelog
 
+- **2025-03-08**: Runtime verifier now normalizes origins before comparing SEO_SITE_URL with companyProfile.websiteUrl (getCanonicalOrigin strips default ports so https://vedpragya.com and https://vedpragya.com:443 are treated as the same). ENV_VARIABLES.md updated with origin-only and no-default-port guidance.
 - **2025-03-08**: Canonical domain set to vedpragya.com (companyProfile.websiteUrl); ENV_VARIABLES.md updated with NEXT_PUBLIC_SITE_URL / NEXT_PUBLIC_APP_URL for production sitemap and GSC submission (https://vedpragya.com/sitemap.xml).
 

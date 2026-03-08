@@ -40,6 +40,19 @@ function logError(message: string, data?: unknown): never {
   throw new Error(message);
 }
 
+/**
+ * Normalize a URL to a canonical origin for comparison (protocol + host, default ports stripped).
+ * e.g. https://vedpragya.com:443 -> https://vedpragya.com
+ */
+function getCanonicalOrigin(url: string): string {
+  const parsed = new URL(url);
+  const isDefaultPort =
+    (parsed.protocol === 'https:' && (parsed.port === '443' || parsed.port === '')) ||
+    (parsed.protocol === 'http:' && (parsed.port === '80' || parsed.port === ''));
+  const hostPart = isDefaultPort ? parsed.hostname : parsed.host;
+  return `${parsed.protocol}//${hostPart}`;
+}
+
 function verifyCanonicalSeoConstants(): void {
   let parsedSiteUrl: URL;
 
@@ -88,12 +101,14 @@ function verifyCanonicalSeoConstants(): void {
     });
   }
 
-  const normalizedCompanyProfileOrigin = `${parsedCompanyProfileUrl.protocol}//${parsedCompanyProfileUrl.host}`;
-  if (SEO_SITE_URL !== normalizedCompanyProfileOrigin) {
+  const expectedOrigin = getCanonicalOrigin(companyProfile.websiteUrl);
+  const actualOrigin = getCanonicalOrigin(SEO_SITE_URL);
+  if (actualOrigin !== expectedOrigin) {
     logError('SEO_SITE_URL should match normalized companyProfile.websiteUrl origin', {
       SEO_SITE_URL,
+      actualOrigin,
       companyProfileWebsiteUrl: companyProfile.websiteUrl,
-      normalizedCompanyProfileOrigin,
+      expectedOrigin,
     });
   }
 

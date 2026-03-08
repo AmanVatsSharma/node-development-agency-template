@@ -35,12 +35,15 @@ GA_MEASUREMENT_ID="G-XXXXXXXXXX"
 # ============================================
 # Canonical domain for sitemap.xml, robots.txt, and all SEO metadata.
 # Resolution order: NEXT_PUBLIC_SITE_URL → NEXT_PUBLIC_APP_URL → companyProfile.websiteUrl
+# Use origin only: no path, query, or hash (e.g. https://vedpragya.com).
+# Prefer no default port: use https://vedpragya.com not https://vedpragya.com:443 so it
+# matches companyProfile.websiteUrl; the verifier treats them the same.
 # For vedpragya.com production, set one of:
 #   NEXT_PUBLIC_SITE_URL=https://vedpragya.com
 #   NEXT_PUBLIC_SITE_URL=https://www.vedpragya.com
 # Omit for local dev; fallback uses company profile.
-# NEXT_PUBLIC_SITE_URL="https://vedpragya.com"
-# NEXT_PUBLIC_APP_URL="https://vedpragya.com"
+# NEXT_PUBLIC_SITE_URL=https://vedpragya.com
+# NEXT_PUBLIC_APP_URL=https://vedpragya.com
 
 # ============================================
 # AI Sales Agent (Optional - Configure via Admin)
@@ -70,7 +73,7 @@ GA_MEASUREMENT_ID="G-XXXXXXXXXX"
 ## SEO Notes
 
 - **Sitemap for Google Search Console**: Submit `https://vedpragya.com/sitemap.xml` (or `https://www.vedpragya.com/sitemap.xml` if www is canonical). One sitemap covers all public pages.
-- **Canonical domain**: Set `NEXT_PUBLIC_SITE_URL` in production so sitemap and robots.txt use the correct domain.
+- **Canonical domain**: Set `NEXT_PUBLIC_SITE_URL` in production so sitemap and robots.txt use the correct domain. Use origin only (e.g. `https://vedpragya.com`), no path/query/hash, and prefer no default port (`:443`); the runtime verifier normalizes origins so `https://vedpragya.com` and `https://vedpragya.com:443` are treated as the same.
 - Admin pages are protected from search engines:
   - Blocked in `robots.txt`
   - Not included in `sitemap.xml`
