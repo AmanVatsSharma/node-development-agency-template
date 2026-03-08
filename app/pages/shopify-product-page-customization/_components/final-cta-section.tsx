@@ -19,12 +19,12 @@ export function FinalCTASection() {
 
   const handleWhatsApp = () => {
     console.log('[Shopify-Product-Page] Final CTA - WhatsApp clicked');
-    window.open('https://wa.me/919999999999?text=Hi! I want to transform my Shopify product pages', '_blank');
+    window.open('https://wa.me/919963730111?text=Hi! I want to transform my Shopify product pages', '_blank');
   };
 
   const handleCall = () => {
     console.log('[Shopify-Product-Page] Final CTA - Call clicked');
-    window.location.href = 'tel:+919999999999';
+    window.location.href = 'tel:+919963730111';
   };
 
   return (

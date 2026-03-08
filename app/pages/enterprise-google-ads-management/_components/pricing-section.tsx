@@ -148,7 +148,7 @@ export function PricingSection() {
               </ul>
 
               <Link
-                href="tel:+919876543210"
+                href="tel:+919963730111"
                 onClick={() => handleCTAClick(plan.name)}
                 className={`w-full group inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${
                   plan.popular

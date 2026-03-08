@@ -28,15 +28,15 @@ export function ContactSupportSection() {
     {
       icon: <Phone className="h-6 w-6" />,
       label: 'Phone',
-      value: '(+91) 99999-xxxxx',
-      action: 'tel:+919999900000',
+      value: '+91 9963730111',
+      action: 'tel:+919963730111',
       color: 'from-green-500 to-emerald-500'
     },
     {
       icon: <MessageCircle className="h-6 w-6" />,
       label: 'WhatsApp Business',
       value: 'Chat with us',
-      action: 'https://wa.me/919999900000',
+      action: 'https://wa.me/919963730111',
       color: 'from-purple-500 to-pink-500'
     }
   ];

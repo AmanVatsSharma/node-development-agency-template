@@ -273,7 +273,7 @@ export function FinalCTASection() {
                     size="lg"
                     variant="outline"
                     className="h-14 text-base sm:text-lg font-black border-2 border-blue-600 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/30"
-                    onClick={() => window.location.href = 'tel:+919876543210'}
+                    onClick={() => window.location.href = 'tel:+919963730111'}
                   >
                     <Phone className="mr-2 h-5 w-5" />
                     Talk to Ads Expert Now

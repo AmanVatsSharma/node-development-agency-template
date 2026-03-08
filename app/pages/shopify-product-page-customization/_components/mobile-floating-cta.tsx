@@ -44,12 +44,12 @@ export function MobileFloatingCTA() {
 
   const handleCallClick = () => {
     console.log('[Shopify-Product-Page] Call button clicked');
-    window.location.href = 'tel:+919999999999'; // Replace with actual number
+    window.location.href = 'tel:+919963730111'; // Replace with actual number
   };
 
   const handleWhatsAppClick = () => {
     console.log('[Shopify-Product-Page] WhatsApp button clicked');
-    window.open('https://wa.me/919999999999?text=Hi! I want to customize my Shopify product pages', '_blank');
+    window.open('https://wa.me/919963730111?text=Hi! I want to customize my Shopify product pages', '_blank');
   };
 
   return (

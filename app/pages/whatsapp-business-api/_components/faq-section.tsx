@@ -157,7 +157,7 @@ export function FAQSection() {
                   Schedule Free Call
                 </a>
                 <a 
-                  href="https://wa.me/919876543210"
+                  href="https://wa.me/919963730111"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-block px-8 py-4 bg-white/10 hover:bg-white/20 text-white border-2 border-white/30 rounded-xl font-bold text-lg transition-all backdrop-blur-sm"

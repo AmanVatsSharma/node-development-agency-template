@@ -59,7 +59,7 @@ export function MobileFloatingCTA() {
     }
 
     // Open WhatsApp with pre-filled message
-    const phoneNumber = '919876543210'; // Replace with actual number
+    const phoneNumber = '919963730111'; // Replace with actual number
     const message = encodeURIComponent('Hi! I want to know more about WhatsApp Business API integration services.');
     window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
   };
@@ -76,7 +76,7 @@ export function MobileFloatingCTA() {
       });
     }
 
-    window.location.href = 'tel:+919876543210'; // Replace with actual number
+    window.location.href = 'tel:+919963730111'; // Replace with actual number
   };
 
   const handleDismiss = () => {

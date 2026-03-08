@@ -49,7 +49,7 @@ export function MobileFloatingCTA() {
               <span className="text-sm">Get Started</span>
             </a>
             <a
-              href="tel:+919876543210"
+              href="tel:+919963730111"
               className="flex items-center justify-center gap-2 bg-gradient-to-r from-[#FFB100] to-[#FFB100]/80 text-[#0A2540] font-bold py-3 px-4 rounded-xl active:scale-95 transition-all"
               onClick={() => console.log('[AI-Chatbot-Dev] Mobile CTA - Call clicked')}
             >

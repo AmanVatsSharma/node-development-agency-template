@@ -57,7 +57,7 @@ export function MobileFloatingCTA() {
         value: 1
       });
     }
-    window.open('tel:+919876543210', '_self');
+    window.open('tel:+919963730111', '_self');
   };
 
   const handleWhatsApp = () => {
@@ -70,7 +70,7 @@ export function MobileFloatingCTA() {
         value: 1
       });
     }
-    window.open('https://wa.me/919876543210?text=Hi, I am interested in healthcare software development services.', '_blank');
+    window.open('https://wa.me/919963730111?text=Hi, I am interested in healthcare software development services.', '_blank');
   };
 
   const handleEmail = () => {

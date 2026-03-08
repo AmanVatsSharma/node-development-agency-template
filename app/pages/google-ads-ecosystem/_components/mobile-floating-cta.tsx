@@ -54,7 +54,7 @@ export function MobileFloatingCTA() {
 
   const handlePhoneClick = () => {
     handleCTAClick('phone_call');
-    window.location.href = 'tel:+919876543210';
+    window.location.href = 'tel:+919963730111';
   };
 
   const handleEmailClick = () => {
@@ -64,7 +64,7 @@ export function MobileFloatingCTA() {
 
   const handleWhatsAppClick = () => {
     handleCTAClick('whatsapp');
-    window.open('https://wa.me/919876543210', '_blank');
+    window.open('https://wa.me/919963730111', '_blank');
   };
 
   const handleCalculatorClick = () => {

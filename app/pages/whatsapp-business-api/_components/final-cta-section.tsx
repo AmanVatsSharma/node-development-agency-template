@@ -39,7 +39,7 @@ export function FinalCTASection() {
       title: 'Chat on WhatsApp',
       description: 'Get instant answers',
       action: 'Start Chat',
-      href: 'https://wa.me/919876543210?text=Hi!%20I%20want%20to%20know%20more%20about%20WhatsApp%20Business%20API%20integration',
+      href: 'https://wa.me/919963730111?text=Hi!%20I%20want%20to%20know%20more%20about%20WhatsApp%20Business%20API%20integration',
       gradient: 'from-[#25D366] to-[#128C7E]',
       primary: true
     },
@@ -57,7 +57,7 @@ export function FinalCTASection() {
       title: 'Call Us Now',
       description: 'Speak to an expert',
       action: 'Call Now',
-      href: 'tel:+919876543210',
+      href: 'tel:+919963730111',
       gradient: 'from-[#075E54] to-[#128C7E]',
       primary: false
     }

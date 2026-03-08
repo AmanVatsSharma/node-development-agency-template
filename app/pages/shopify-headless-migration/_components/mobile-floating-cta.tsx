@@ -35,7 +35,7 @@ export function MobileFloatingCTA() {
   const handleWhatsAppClick = () => {
     console.log('[Shopify-Headless] Mobile floating WhatsApp clicked');
     
-    const phoneNumber = '919876543210'; // Update with real number
+    const phoneNumber = '919963730111'; // Update with real number
     const message = encodeURIComponent('Hi! I\'m interested in Shopify Headless Migration services.');
     window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
     
@@ -50,7 +50,7 @@ export function MobileFloatingCTA() {
   const handleCallClick = () => {
     console.log('[Shopify-Headless] Mobile floating call clicked');
     
-    window.location.href = 'tel:+919876543210'; // Update with real number
+    window.location.href = 'tel:+919963730111'; // Update with real number
     
     if (typeof window !== 'undefined' && (window as any).gtag) {
       (window as any).gtag('event', 'call_click', {

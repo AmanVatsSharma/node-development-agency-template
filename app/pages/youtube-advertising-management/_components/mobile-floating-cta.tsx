@@ -73,7 +73,7 @@ export function MobileFloatingCTA() {
             
             <div className="flex gap-2">
               <Link
-                href="tel:+919876543210"
+                href="tel:+919963730111"
                 onClick={() => handleCTAClick('phone_call')}
                 className="flex-1 bg-white text-red-600 px-4 py-3 rounded-xl font-semibold text-sm text-center hover:bg-red-50 transition-colors"
               >

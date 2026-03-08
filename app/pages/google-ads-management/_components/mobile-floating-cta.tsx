@@ -33,7 +33,7 @@ export function MobileFloatingCTA() {
 
   const handleCallClick = () => {
     console.log('[Google-Ads] Mobile CTA - Call clicked');
-    window.location.href = 'tel:+919876543210';
+    window.location.href = 'tel:+919963730111';
   };
 
   const handleFormClick = () => {

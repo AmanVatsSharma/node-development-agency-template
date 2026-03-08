@@ -328,7 +328,7 @@ export function FAQSection() {
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              href="tel:+919876543210"
+              href="tel:+919963730111"
               onClick={() => handleContactClick('phone')}
               className="bg-white text-blue-600 px-8 py-4 rounded-xl font-semibold text-lg hover:bg-gray-100 transition-all duration-300 flex items-center justify-center gap-2"
             >
