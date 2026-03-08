@@ -303,7 +303,7 @@ Legal & Policy Pages Structure
 **Contact Emails:**  
 - General: info@enterprisehero.com  
 - Refunds: refunds@enterprisehero.com  
-- Support: support@enterprisehero.com  
+- Support: support@vedpragya.com  
 - Privacy: privacy@enterprisehero.com  
 
 **Global Offices:**  

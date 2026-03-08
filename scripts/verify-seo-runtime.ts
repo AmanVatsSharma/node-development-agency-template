@@ -262,7 +262,7 @@ function verifyStructuredDataRuntimeBehavior(): void {
       'HTTPS://LINKEDIN.COM/company/enterprisehero',
       'https://twitter.com/enterprisehero',
       'https://twitter.com/enterprisehero#team',
-      'mailto:contact@enterprisehero.com',
+      'mailto:support@vedpragya.com',
       '//facebook.com/enterprisehero',
     ],
   }) as unknown as {

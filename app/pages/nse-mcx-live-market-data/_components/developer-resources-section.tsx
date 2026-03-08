@@ -138,7 +138,7 @@ export function DeveloperResourcesSection() {
           <p className="text-white/80 mb-6">Our developer support team is here to help you 24/7</p>
           <div className="flex flex-wrap justify-center gap-4">
             <a
-              href="mailto:support@yourservice.com"
+              href="mailto:support@vedpragya.com"
               className="px-6 py-3 bg-gradient-to-r from-[#00FF88] to-[#00CC70] text-[#0B1E39] font-bold rounded-xl hover:scale-105 transition-all"
             >
               📧 Email Support

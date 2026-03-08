@@ -440,7 +440,7 @@ Cron Job (runs every minute):
 
 ## Need Help?
 
-- 📧 Email: support@enterprisehero.com
+- 📧 Email: support@vedpragya.com
 - 📱 Phone: +91 99637 30111
 - 💬 WhatsApp: +91 99637 30111
 - 📖 Zoho Docs: https://www.zoho.com/crm/developer/docs/

@@ -31,7 +31,7 @@ All core features have been implemented. Use this checklist before launching to 
 **Hero & Contact Sections**
 - [ ] Update phone number: `+91 99637 30111` → Your actual number
 - [ ] Update WhatsApp link: `https://wa.me/919963730111` → Your number
-- [ ] Update email: `support@yourwebsite.com` → Your email
+- [ ] Update email: `support@yourwebsite.com` → support@vedpragya.com
 
 ### 2. Create Visual Assets
 

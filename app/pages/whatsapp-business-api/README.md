@@ -466,7 +466,7 @@ vercel --prod
 
 For questions or issues:
 
-- **Email**: contact@vedpragyabharat.com
+- **Email**: support@vedpragya.com
 - **Phone**: +91-XXXXXXXXXX
 - **Website**: https://vedpragyabharat.com
 

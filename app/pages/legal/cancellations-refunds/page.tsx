@@ -224,7 +224,7 @@ export default function CancellationsRefundsPage() {
                 If you have concerns about our refund decision:
               </p>
               <ol className="list-decimal pl-6 text-gray-700 dark:text-gray-300 space-y-2">
-                <li>Contact our support team at <strong>support@enterprisehero.com</strong> to discuss your concerns</li>
+                <li>Contact our support team at <strong>support@vedpragya.com</strong> to discuss your concerns</li>
                 <li>We will review your case with senior management within 7 business days</li>
                 <li>If unresolved, we are open to mediation through an independent third party</li>
                 <li>Disputes will be governed by the laws of India (Jurisdiction: Haryana courts)</li>
@@ -274,7 +274,7 @@ export default function CancellationsRefundsPage() {
                   <strong>Refund Email:</strong> refunds@enterprisehero.com
                 </p>
                 <p className="text-gray-700 dark:text-gray-300 mb-2">
-                  <strong>Support Email:</strong> support@enterprisehero.com
+                  <strong>Support Email:</strong> support@vedpragya.com
                 </p>
                 <p className="text-gray-700 dark:text-gray-300">
                   <strong>Global Offices:</strong> India (HQ), Dubai, California, Toronto, Shenzhen

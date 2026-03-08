@@ -593,7 +593,7 @@ Before launching your Google Ads campaign:
 
 ## Support
 
-- 📧 Email: support@enterprisehero.com
+- 📧 Email: support@vedpragya.com
 - 📱 Phone: +91 99637 30111
 - 💬 WhatsApp: +91 99637 30111
 - 📖 Google Ads Help: https://support.google.com/google-ads

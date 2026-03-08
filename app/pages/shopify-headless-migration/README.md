@@ -643,7 +643,7 @@ npm run build
 ## 📞 Support
 
 For questions or issues:
-- **Email:** support@vedpragyabharat.com
+- **Email:** support@vedpragya.com
 - **WhatsApp:** +91 98765 43210
 - **Website:** vedpragyabharat.com
 

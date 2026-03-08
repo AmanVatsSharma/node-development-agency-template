@@ -217,7 +217,7 @@ Each section has its own component file for easy editing
 ## 📞 Support
 
 For any issues or questions:
-- Email: contact@vedpragyabharat.com
+- Email: support@vedpragya.com
 - Documentation: Check component comments
 - Logs: Check browser console for debugging
 

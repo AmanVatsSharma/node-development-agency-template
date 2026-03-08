@@ -242,7 +242,7 @@ The landing page is **100% production-ready**:
 ## 📞 Support & Contact
 
 **Built by:** Vedpragya Bharat Pvt. Ltd.  
-**Email:** contact@vedpragyabharat.com  
+**Email:** support@vedpragya.com  
 **Version:** 1.0.0  
 **Date:** 2024
 

@@ -10,6 +10,7 @@
 import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Mail, Phone, MessageCircle, Clock } from 'lucide-react';
+import { companyProfile } from '@/app/data/companyProfile';
 
 console.log('[CRM-Demo] ContactSupportSection component loaded');
 
@@ -21,8 +22,8 @@ export function ContactSupportSection() {
     {
       icon: <Mail className="h-6 w-6" />,
       label: 'Email Support',
-      value: 'support@enterprisehero.in',
-      action: 'mailto:support@enterprisehero.in',
+      value: companyProfile.contactEmail,
+      action: `mailto:${companyProfile.contactEmail}`,
       color: 'from-blue-500 to-cyan-500'
     },
     {

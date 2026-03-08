@@ -578,4 +578,4 @@ const inView = useInView(ref, { once: true, amount: 0.2 });
 
 This project was built with attention to detail, following enterprise-grade standards and best practices. Every component is production-ready, fully documented, and optimized for conversion.
 
-**Questions?** Check the README.md or contact support@enterprisehero.in
+**Questions?** Check the README.md or contact support@vedpragya.com

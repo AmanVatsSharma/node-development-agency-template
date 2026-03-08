@@ -144,7 +144,6 @@ export function ContactSection() {
                   </div>
                   <div>
                     <h4 className="font-medium">Email Us</h4>
-                    <p className="text-muted-foreground">contact@vedpragya.com</p>
                     <p className="text-muted-foreground">support@vedpragya.com</p>
                   </div>
                 </div>

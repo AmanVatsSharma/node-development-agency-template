@@ -284,7 +284,7 @@ Everything is logged! Open browser console (F12) to see:
 2. Check FLOWCHART.md (visual diagrams)
 3. Check IMPLEMENTATION_SUMMARY.md (technical details)
 4. Review error boundaries logs
-5. Contact: support@enterprisehero.in
+5. Contact: support@vedpragya.com
 
 ---
 

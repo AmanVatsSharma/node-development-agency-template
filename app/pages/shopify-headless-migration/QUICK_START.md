@@ -548,4 +548,4 @@ Your Shopify Headless Migration landing page is now ready to convert high-ticket
 
 **Version:** 1.0.0  
 **Last Updated:** 2025-10-07  
-**Need Help?** Contact: support@vedpragyabharat.com
+**Need Help?** Contact: support@vedpragya.com

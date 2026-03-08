@@ -340,7 +340,7 @@ images: [{ url: 'https://yourwebsite.com/seo-audit-og.png' }]
 ```typescript
 Phone: +91 99637 30111
 WhatsApp: https://wa.me/919963730111
-Email: support@yourwebsite.com
+Email: support@vedpragya.com
 ```
 
 ### Agency Branding

@@ -359,7 +359,7 @@ Every section and interaction is logged for debugging:
 ## 📞 Support
 
 For questions or issues:
-- **Email**: support@enterprisehero.in
+- **Email**: support@vedpragya.com
 - **Phone**: (+91) 99999-xxxxx
 - **Docs**: See IMPLEMENTATION_SUMMARY.md
 
