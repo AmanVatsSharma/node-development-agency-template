@@ -8,7 +8,7 @@ export function TestimonialsSection() {
       name: "Rajesh Kumar",
       position: "Founder, TechTutorials Channel",
       company: "Education & Technology",
-      content: "Rajapragya Bharat transformed our YouTube presence. We went from 2.1× ROAS to 7.5× ROAS in just 6 months. Our subscriber base increased by 300%!",
+      content: "Vedpragya Bharat transformed our YouTube presence. We went from 2.1× ROAS to 7.5× ROAS in just 6 months. Our subscriber base increased by 300%!",
       rating: 5,
       image: "/testimonial-rajesh.jpg"
     },

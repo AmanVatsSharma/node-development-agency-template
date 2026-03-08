@@ -8,7 +8,7 @@ export function TestimonialsSection() {
       name: "Rajesh Kumar",
       position: "CMO, TechCorp India",
       company: "Technology",
-      content: "Rajapragya Bharat transformed our Google Ads performance. We went from 3.2× ROAS to 12.3× ROAS in just 6 months. Their enterprise team is exceptional.",
+      content: "Vedpragya Bharat transformed our Google Ads performance. We went from 3.2× ROAS to 12.3× ROAS in just 6 months. Their enterprise team is exceptional.",
       rating: 5,
       image: "/testimonial-rajesh.jpg"
     },

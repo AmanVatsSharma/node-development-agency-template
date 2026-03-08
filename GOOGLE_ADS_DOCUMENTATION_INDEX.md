@@ -275,5 +275,5 @@ All components include console logging for easy debugging.
 
 **Happy Converting! 📊💰🚀**
 
-*Built for Rajapragya Bharat Pvt. Ltd.*
+*Built for Vedpragya Bharat Pvt. Ltd.*
 *October 2025*

@@ -3,7 +3,7 @@
 /**
  * @fileoverview Enterprise Google Ads Management - Tier 1 Service Page
  * @description High-converting landing page for enterprise-level Google Ads management services
- * @author Rajapragya Bharat Pvt. Ltd.
+ * @author Vedpragya Bharat Pvt. Ltd.
  * @version 1.0.0
  * 
  * MARKETING FOCUS:

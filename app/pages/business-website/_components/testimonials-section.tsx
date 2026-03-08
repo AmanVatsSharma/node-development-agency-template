@@ -44,7 +44,7 @@ export function TestimonialsSection() {
       business: 'Kapoor Beauty Salon & Spa',
       city: 'Delhi',
       rating: 5,
-      text: 'Great experience working with VedPragya! The WhatsApp booking integration is helping us manage appointments seamlessly. Our bookings have increased by 195% and customers love the online experience. Worth every rupee!',
+      text: 'Great experience working with Vedpragya! The WhatsApp booking integration is helping us manage appointments seamlessly. Our bookings have increased by 195% and customers love the online experience. Worth every rupee!',
       image: 'https://ui-avatars.com/api/?name=Anjali+Kapoor&background=ec4899&color=fff&size=128'
     },
     {

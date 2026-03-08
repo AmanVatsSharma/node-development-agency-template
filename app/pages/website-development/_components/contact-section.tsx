@@ -78,7 +78,7 @@ export function ContactSection() {
                       type="email"
                       id="email"
                       className="w-full px-4 py-3 rounded-lg border border-border bg-background/50 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-                      placeholder="john@example.com"
+                      placeholder="you@company.com"
                       required
                     />
                   </div>

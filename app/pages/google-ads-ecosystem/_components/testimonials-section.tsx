@@ -3,7 +3,7 @@
 /**
  * @fileoverview Testimonials Section - Social proof and client success stories
  * @description Component showcasing client testimonials, ratings, and success stories
- * @author Rajapragya Bharat Pvt. Ltd.
+ * @author Vedpragya Bharat Pvt. Ltd.
  * @version 1.0.0
  * 
  * FEATURES:
@@ -57,7 +57,7 @@ const testimonials: Testimonial[] = [
     company: 'Premium Properties',
     industry: 'Real Estate',
     rating: 5,
-    quote: 'Rajapragya transformed our lead generation completely. We went from struggling to get 5-10 leads per month to consistently generating 50+ high-quality leads. The ROI is incredible - we spent ₹1.8L and generated ₹18L in revenue in just 45 days.',
+    quote: 'Vedpragya transformed our lead generation completely. We went from struggling to get 5-10 leads per month to consistently generating 50+ high-quality leads. The ROI is incredible - we spent ₹1.8L and generated ₹18L in revenue in just 45 days.',
     results: [
       { metric: 'Revenue Generated', value: '₹18L', improvement: '900%' },
       { metric: 'Cost Per Lead', value: '₹1,200', improvement: '60%' },

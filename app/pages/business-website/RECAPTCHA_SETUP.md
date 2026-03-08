@@ -10,7 +10,7 @@ This landing page uses Google reCAPTCHA v3 for bot protection. reCAPTCHA v3 is i
 1. Visit: https://www.google.com/recaptcha/admin
 2. Click "Create" or "Add" to register a new site
 3. Fill in the details:
-   - **Label**: Your site name (e.g., "VedPragya Business Website")
+   - **Label**: Your site name (e.g., "Vedpragya Business Website")
    - **reCAPTCHA type**: Select "reCAPTCHA v3"
    - **Domains**: Add your domains:
      - `localhost` (for development)

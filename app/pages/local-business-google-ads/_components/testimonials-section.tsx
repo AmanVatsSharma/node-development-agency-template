@@ -8,7 +8,7 @@ export function TestimonialsSection() {
       name: "Dr. Rajesh Kumar",
       position: "Owner, City Dental Clinic",
       company: "Healthcare",
-      content: "Rajapragya Bharat transformed our local visibility. We went from 2.1× ROAS to 6.2× ROAS in just 4 months. Our patient base increased by 60%!",
+      content: "Vedpragya Bharat transformed our local visibility. We went from 2.1× ROAS to 6.2× ROAS in just 4 months. Our patient base increased by 60%!",
       rating: 5,
       image: "/testimonial-rajesh.jpg"
     },

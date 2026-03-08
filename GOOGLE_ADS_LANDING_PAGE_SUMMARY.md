@@ -2,7 +2,7 @@
 
 ## ✅ Project Status: **COMPLETE**
 
-A highly converting, premium Google Ads management service landing page has been successfully created for **Rajapragya Bharat Pvt. Ltd.**
+A highly converting, premium Google Ads management service landing page has been successfully created for **Vedpragya Bharat Pvt. Ltd.**
 
 ---
 
@@ -146,7 +146,7 @@ app/pages/google-ads-management/
 ---
 
 ### 6️⃣ Why Choose Us Section 🏆
-**"Why Rajapragya Bharat Pvt. Ltd."**
+**"Why Vedpragya Bharat Pvt. Ltd."**
 
 **5 Key Differentiators:**
 1. 🧠 **Certified Google Ads Experts** - 10+ Years Combined
@@ -718,7 +718,7 @@ The combination of:
 ---
 
 **Built with ❤️ and attention to detail**
-**For Rajapragya Bharat Pvt. Ltd.**
+**For Vedpragya Bharat Pvt. Ltd.**
 **October 2025**
 
 ---

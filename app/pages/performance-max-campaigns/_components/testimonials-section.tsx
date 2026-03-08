@@ -8,7 +8,7 @@ export function TestimonialsSection() {
       name: "Rajesh Kumar",
       position: "Marketing Director, E-commerce Giant",
       company: "E-commerce",
-      content: "Rajapragya Bharat transformed our multi-network campaigns. We went from 3.2× ROAS to 7.2× ROAS in just 6 months. Campaign management became effortless!",
+      content: "Vedpragya Bharat transformed our multi-network campaigns. We went from 3.2× ROAS to 7.2× ROAS in just 6 months. Campaign management became effortless!",
       rating: 5,
       image: "/testimonial-rajesh.jpg"
     },

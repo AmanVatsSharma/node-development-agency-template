@@ -3,7 +3,7 @@
 /**
  * @fileoverview Hero Section - Enterprise Google Ads Management
  * @description High-impact hero section for enterprise-level Google Ads management
- * @author Rajapragya Bharat Pvt. Ltd.
+ * @author Vedpragya Bharat Pvt. Ltd.
  * @version 1.0.0
  */
 

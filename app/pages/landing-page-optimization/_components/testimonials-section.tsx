@@ -8,7 +8,7 @@ export function TestimonialsSection() {
       name: "Rajesh Kumar",
       position: "Founder, E-commerce Store",
       company: "E-commerce",
-      content: "Rajapragya Bharat's landing page optimization transformed our business. We went from 1.2% to 4.8% conversion rate in just 3 months. The results were incredible!",
+      content: "Vedpragya Bharat's landing page optimization transformed our business. We went from 1.2% to 4.8% conversion rate in just 3 months. The results were incredible!",
       rating: 5,
       image: "/testimonial-rajesh.jpg"
     },

@@ -3,7 +3,7 @@
 /**
  * @fileoverview Section Error Boundary - Error handling for individual sections
  * @description Error boundary component to catch and handle errors in individual sections
- * @author Rajapragya Bharat Pvt. Ltd.
+ * @author Vedpragya Bharat Pvt. Ltd.
  * @version 1.0.0
  * 
  * FEATURES:

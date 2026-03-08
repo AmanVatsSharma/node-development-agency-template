@@ -3,7 +3,7 @@
 /**
  * @fileoverview Google Ads Ecosystem Hub - Main showcase page for all Google Ads services
  * @description High-converting ecosystem page showcasing mastery of Google Ads industry
- * @author Rajapragya Bharat Pvt. Ltd.
+ * @author Vedpragya Bharat Pvt. Ltd.
  * @version 1.0.0
  * 
  * MARKETING FOCUS:

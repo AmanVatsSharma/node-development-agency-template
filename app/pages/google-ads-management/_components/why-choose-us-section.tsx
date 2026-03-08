@@ -78,7 +78,7 @@ export function WhyChooseUsSection() {
         >
           <div className="inline-block px-4 sm:px-5 py-2 bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30 rounded-full mb-4 sm:mb-5 border border-blue-200 dark:border-blue-800 text-sm sm:text-base">
             <span className="font-bold text-blue-700 dark:text-blue-300 uppercase tracking-wide">
-              Why Rajapragya Bharat
+              Why Vedpragya Bharat
             </span>
           </div>
 
@@ -135,7 +135,7 @@ export function WhyChooseUsSection() {
             "We don't guess. We analyze, execute & scale."
           </p>
           <p className="text-sm sm:text-base text-blue-100">
-            — Rajapragya Bharat Pvt. Ltd.
+            — Vedpragya Bharat Pvt. Ltd.
           </p>
         </motion.div>
       </div>

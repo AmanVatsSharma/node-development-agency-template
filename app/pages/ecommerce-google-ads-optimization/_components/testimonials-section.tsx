@@ -8,7 +8,7 @@ export function TestimonialsSection() {
       name: "Priya Sharma",
       position: "Founder, Fashion Forward",
       company: "Fashion E-commerce",
-      content: "Rajapragya Bharat transformed our Google Shopping performance. We went from 2.1× ROAS to 8.2× ROAS in just 4 months. Our online sales increased by 300%!",
+      content: "Vedpragya Bharat transformed our Google Shopping performance. We went from 2.1× ROAS to 8.2× ROAS in just 4 months. Our online sales increased by 300%!",
       rating: 5,
       image: "/testimonial-priya.jpg"
     },

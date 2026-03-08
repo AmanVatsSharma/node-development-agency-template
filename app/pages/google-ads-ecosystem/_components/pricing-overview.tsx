@@ -3,7 +3,7 @@
 /**
  * @fileoverview Pricing Overview - Transparent ecosystem pricing showcase
  * @description Component showing comprehensive pricing across all service tiers
- * @author Rajapragya Bharat Pvt. Ltd.
+ * @author Vedpragya Bharat Pvt. Ltd.
  * @version 1.0.0
  * 
  * FEATURES:

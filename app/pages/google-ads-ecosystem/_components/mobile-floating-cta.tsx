@@ -3,7 +3,7 @@
 /**
  * @fileoverview Mobile Floating CTA - Always accessible mobile CTAs
  * @description Floating action buttons for mobile users to maintain conversion opportunities
- * @author Rajapragya Bharat Pvt. Ltd.
+ * @author Vedpragya Bharat Pvt. Ltd.
  * @version 1.0.0
  * 
  * FEATURES:
@@ -59,7 +59,7 @@ export function MobileFloatingCTA() {
 
   const handleEmailClick = () => {
     handleCTAClick('email');
-    window.location.href = 'mailto:info@rajapragyabharat.com';
+    window.location.href = 'mailto:info@vedpragyabharat.com';
   };
 
   const handleWhatsAppClick = () => {

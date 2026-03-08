@@ -3,7 +3,7 @@
 /**
  * @fileoverview Why Choose Us - Key differentiators and expertise showcase
  * @description Component highlighting unique value propositions and competitive advantages
- * @author Rajapragya Bharat Pvt. Ltd.
+ * @author Vedpragya Bharat Pvt. Ltd.
  * @version 1.0.0
  */
 
@@ -174,7 +174,7 @@ export function WhyChooseUsSection() {
           viewport={{ once: true }}
         >
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-            Why Choose Rajapragya Bharat?
+            Why Choose Vedpragya Bharat?
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             We're not just another Google Ads agency. We're your strategic partner in digital growth, 

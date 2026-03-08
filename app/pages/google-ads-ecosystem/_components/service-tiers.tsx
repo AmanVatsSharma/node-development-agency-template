@@ -3,7 +3,7 @@
 /**
  * @fileoverview Service Tiers - Interactive tier-based service showcase
  * @description Component showing service hierarchy with filtering and detailed information
- * @author Rajapragya Bharat Pvt. Ltd.
+ * @author Vedpragya Bharat Pvt. Ltd.
  * @version 1.0.0
  * 
  * FEATURES:

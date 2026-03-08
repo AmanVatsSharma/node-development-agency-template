@@ -3,7 +3,7 @@
 /**
  * @fileoverview ServiceCard Component - Interactive service showcase for Google Ads Ecosystem
  * @description Reusable card component for displaying services with CTAs, pricing, and navigation
- * @author Rajapragya Bharat Pvt. Ltd.
+ * @author Vedpragya Bharat Pvt. Ltd.
  * @version 1.0.0
  * 
  * FEATURES:

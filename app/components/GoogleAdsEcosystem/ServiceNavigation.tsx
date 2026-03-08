@@ -3,7 +3,7 @@
 /**
  * @fileoverview ServiceNavigation Component - Cross-service navigation for Google Ads Ecosystem
  * @description Navigation component that shows related services and ecosystem connections
- * @author Rajapragya Bharat Pvt. Ltd.
+ * @author Vedpragya Bharat Pvt. Ltd.
  * @version 1.0.0
  * 
  * FEATURES:

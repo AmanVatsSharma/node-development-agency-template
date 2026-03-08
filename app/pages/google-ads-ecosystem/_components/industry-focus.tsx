@@ -3,7 +3,7 @@
 /**
  * @fileoverview Industry Focus - Industry-specific service recommendations
  * @description Component showcasing industry expertise and specialized service offerings
- * @author Rajapragya Bharat Pvt. Ltd.
+ * @author Vedpragya Bharat Pvt. Ltd.
  * @version 1.0.0
  * 
  * FEATURES:

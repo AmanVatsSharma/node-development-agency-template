@@ -3,7 +3,7 @@
 /**
  * @fileoverview Final CTA Section - Lead capture with ecosystem context
  * @description High-converting lead form with ecosystem-specific messaging and urgency
- * @author Rajapragya Bharat Pvt. Ltd.
+ * @author Vedpragya Bharat Pvt. Ltd.
  * @version 1.0.0
  * 
  * FEATURES:
@@ -328,7 +328,7 @@ export function FinalCTASection() {
               </a>
               
               <a
-                href="mailto:info@rajapragyabharat.com"
+                href="mailto:info@vedpragyabharat.com"
                 onClick={() => handleCTAClick('email')}
                 className="bg-white/20 backdrop-blur-sm text-white px-8 py-4 rounded-xl font-semibold text-lg hover:bg-white/30 transition-all duration-300 flex items-center justify-center gap-2 border border-white/30"
               >

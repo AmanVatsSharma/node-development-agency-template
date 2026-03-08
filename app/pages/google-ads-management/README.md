@@ -1,6 +1,6 @@
 # Google Ads Management Service Landing Page 📊
 
-A high-converting, premium landing page for Google Ads management services by **Rajapragya Bharat Pvt. Ltd.**
+A high-converting, premium landing page for Google Ads management services by **Vedpragya Bharat Pvt. Ltd.**
 
 ## 🎯 Overview
 
@@ -260,4 +260,4 @@ Every component includes console logging for debugging:
 
 ---
 
-**Built with ❤️ by Rajapragya Bharat Pvt. Ltd.**
+**Built with ❤️ by Vedpragya Bharat Pvt. Ltd.**

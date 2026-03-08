@@ -22,33 +22,33 @@ async function main() {
   let johnSmith, emilyJohnson, michaelChen;
   try {
     johnSmith = await prisma.author.upsert({
-      where: { email: 'john.smith@example.com' },
+      where: { email: 'john.smith@vedpragyabharat.com' },
       update: {},
       create: {
         name: 'John Smith',
         title: 'Lead Node.js Developer',
         avatar: '/images/blog/authors/john-smith.jpg',
-        email: 'john.smith@example.com',
+        email: 'john.smith@vedpragyabharat.com',
       },
     });
     emilyJohnson = await prisma.author.upsert({
-      where: { email: 'emily.johnson@example.com' },
+      where: { email: 'emily.johnson@vedpragyabharat.com' },
       update: {},
       create: {
         name: 'Emily Johnson',
         title: '3D Web Developer',
         avatar: '/images/blog/authors/emily-johnson.jpg',
-        email: 'emily.johnson@example.com',
+        email: 'emily.johnson@vedpragyabharat.com',
       },
     });
     michaelChen = await prisma.author.upsert({
-      where: { email: 'michael.chen@example.com' },
+      where: { email: 'michael.chen@vedpragyabharat.com' },
       update: {},
       create: {
         name: 'Michael Chen',
         title: 'Frontend Architect',
         avatar: '/images/blog/authors/michael-chen.jpg',
-        email: 'michael.chen@example.com',
+        email: 'michael.chen@vedpragyabharat.com',
       },
     });
     console.log('[Seed] Authors created!');
@@ -225,7 +225,7 @@ async function main() {
   // === ADMIN USER (CMS DEMO) ===
   console.log('[Seed] Creating demo user (admin)...');
   try {
-    const adminEmail = 'admin@example.com';
+    const adminEmail = 'admin@vedpragyabharat.com';
     const adminPassword = 'password123';
     const adminName = 'Admin User';
 

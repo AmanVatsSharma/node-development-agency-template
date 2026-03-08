@@ -3,7 +3,7 @@
 /**
  * @fileoverview Scroll to Top - Smooth scroll to top functionality
  * @description Floating button to smoothly scroll back to the top of the page
- * @author Rajapragya Bharat Pvt. Ltd.
+ * @author Vedpragya Bharat Pvt. Ltd.
  * @version 1.0.0
  * 
  * FEATURES:

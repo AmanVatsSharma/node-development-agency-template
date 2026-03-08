@@ -3,7 +3,7 @@
 /**
  * @fileoverview Google Ads Management Service Landing Page - Main Entry Point
  * @description High-converting, premium landing page for Google Ads management services
- * @author Rajapragya Bharat Pvt. Ltd.
+ * @author Vedpragya Bharat Pvt. Ltd.
  * @version 1.0.0
  * 
  * MARKETING FOCUS:

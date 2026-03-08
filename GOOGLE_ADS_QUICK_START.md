@@ -383,7 +383,7 @@ rounded-3xl    /* Large cards */
 
 ### Title Tag
 ```
-Google Ads Management Service | PPC Agency for Leads & Sales | Rajapragya Bharat Pvt. Ltd.
+Google Ads Management Service | PPC Agency for Leads & Sales | Vedpragya Bharat Pvt. Ltd.
 ```
 
 ### Meta Description

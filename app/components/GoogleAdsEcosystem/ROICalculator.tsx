@@ -3,7 +3,7 @@
 /**
  * @fileoverview ROICalculator Component - Interactive ROI demonstration tool
  * @description Dynamic calculator showing potential ROI improvements with Google Ads services
- * @author Rajapragya Bharat Pvt. Ltd.
+ * @author Vedpragya Bharat Pvt. Ltd.
  * @version 1.0.0
  * 
  * FEATURES:

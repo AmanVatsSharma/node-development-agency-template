@@ -3,7 +3,7 @@
 /**
  * @fileoverview FAQ Section - Common questions and answers
  * @description Component addressing common objections and questions about Google Ads services
- * @author Rajapragya Bharat Pvt. Ltd.
+ * @author Vedpragya Bharat Pvt. Ltd.
  * @version 1.0.0
  * 
  * FEATURES:
@@ -337,7 +337,7 @@ export function FAQSection() {
             </Link>
             
             <Link
-              href="mailto:info@rajapragyabharat.com"
+              href="mailto:info@vedpragyabharat.com"
               onClick={() => handleContactClick('email')}
               className="bg-white/20 backdrop-blur-sm text-white px-8 py-4 rounded-xl font-semibold text-lg hover:bg-white/30 transition-all duration-300 flex items-center justify-center gap-2 border border-white/30"
             >

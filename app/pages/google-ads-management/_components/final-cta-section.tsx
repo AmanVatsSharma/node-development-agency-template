@@ -117,7 +117,7 @@ export function FinalCTASection() {
             </h2>
 
             <p className="text-base sm:text-lg md:text-xl text-blue-100 max-w-3xl mx-auto leading-relaxed">
-              Ready to grow with Google Ads that pay back? Let Rajapragya Bharat's experts build and run your entire Google Ads machine — <span className="font-bold text-yellow-400">strategic, profitable & transparent</span>.
+              Ready to grow with Google Ads that pay back? Let Vedpragya Bharat's experts build and run your entire Google Ads machine — <span className="font-bold text-yellow-400">strategic, profitable & transparent</span>.
             </p>
           </motion.div>
 

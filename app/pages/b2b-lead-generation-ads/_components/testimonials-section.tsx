@@ -8,7 +8,7 @@ export function TestimonialsSection() {
       name: "Rajesh Kumar",
       position: "VP Sales, TechSolutions Inc",
       company: "Software & Technology",
-      content: "Rajapragya Bharat transformed our B2B lead generation. We went from 2.1× ROAS to 8.5× ROAS in just 5 months. Lead quality improved dramatically!",
+      content: "Vedpragya Bharat transformed our B2B lead generation. We went from 2.1× ROAS to 8.5× ROAS in just 5 months. Lead quality improved dramatically!",
       rating: 5,
       image: "/testimonial-rajesh.jpg"
     },

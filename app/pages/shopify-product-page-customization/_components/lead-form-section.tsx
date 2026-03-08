@@ -190,7 +190,7 @@ export function LeadFormSection() {
                       required
                       value={formData.email}
                       onChange={(e) => handleChange('email', e.target.value)}
-                      placeholder="john@example.com"
+                      placeholder="you@company.com"
                       className="h-12 text-base"
                     />
                   </div>

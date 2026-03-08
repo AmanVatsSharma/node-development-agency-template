@@ -8,7 +8,7 @@ export function TestimonialsSection() {
       name: "Rajesh Kumar",
       position: "Marketing Director, E-commerce Retailer",
       company: "E-commerce",
-      content: "Rajapragya Bharat's audit transformed our Google Ads. We went from 2.1× ROAS to 5.8× ROAS in just 3 months. The strategic recommendations were game-changing!",
+      content: "Vedpragya Bharat's audit transformed our Google Ads. We went from 2.1× ROAS to 5.8× ROAS in just 3 months. The strategic recommendations were game-changing!",
       rating: 5,
       image: "/testimonial-rajesh.jpg"
     },

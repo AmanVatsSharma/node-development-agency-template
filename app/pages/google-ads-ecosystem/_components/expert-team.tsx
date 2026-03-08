@@ -3,7 +3,7 @@
 /**
  * @fileoverview Expert Team - Team expertise and credibility showcase
  * @description Component highlighting team members, credentials, and expertise
- * @author Rajapragya Bharat Pvt. Ltd.
+ * @author Vedpragya Bharat Pvt. Ltd.
  * @version 1.0.0
  * 
  * FEATURES:
@@ -56,26 +56,28 @@ interface TeamMember {
   isLead?: boolean;
 }
 
+// All team members are employees; none are labeled as 'Founder' or 'CEO'.
+// All emails changed to @vedpragya.com domain.
 const teamMembers: TeamMember[] = [
   {
     id: 'rajesh-kumar',
     name: 'Rajesh Kumar',
-    position: 'Founder & CEO',
+    position: 'Senior Ads Specialist',
     expertise: ['Google Ads Strategy', 'Enterprise Management', 'ROI Optimization'],
     experience: '12+ Years',
     certifications: ['Google Ads Certified', 'Google Analytics Certified', 'Shopping Ads Certified'],
     achievements: ['500+ Successful Campaigns', '₹50Cr+ Revenue Generated', '98% Client Retention'],
-    bio: 'Rajesh founded Rajapragya Bharat with a vision to democratize high-quality digital marketing. With over 12 years of experience, he has helped 500+ businesses achieve their growth goals through strategic Google Ads management.',
+    bio: "Rajesh is a senior specialist in Google Ads, focusing on developing high-performance digital marketing strategies. With over 12 years of experience, he has helped numerous businesses achieve their growth goals through strategic Google Ads management.",
     isLead: true,
     social: {
       linkedin: 'https://linkedin.com/in/rajesh-kumar',
-      email: 'rajesh@rajapragyabharat.com'
+      email: 'rajesh@vedpragya.com'
     }
   },
   {
     id: 'priya-sharma',
     name: 'Priya Sharma',
-    position: 'Head of Strategy',
+    position: 'Strategy Lead',
     expertise: ['E-commerce Optimization', 'Performance Max', 'Conversion Optimization'],
     experience: '8+ Years',
     certifications: ['Google Ads Certified', 'Display Ads Certified', 'Video Ads Certified'],
@@ -83,27 +85,27 @@ const teamMembers: TeamMember[] = [
     bio: 'Priya specializes in e-commerce Google Ads optimization and has helped fashion, electronics, and retail brands achieve remarkable growth. Her data-driven approach ensures every campaign delivers measurable results.',
     social: {
       linkedin: 'https://linkedin.com/in/priya-sharma',
-      email: 'priya@rajapragyabharat.com'
+      email: 'priya@vedpragya.com'
     }
   },
   {
     id: 'amit-patel',
     name: 'Amit Patel',
-    position: 'Lead B2B Specialist',
+    position: 'B2B Specialist',
     expertise: ['B2B Lead Generation', 'Account-Based Marketing', 'LinkedIn Ads'],
     experience: '10+ Years',
     certifications: ['Google Ads Certified', 'LinkedIn Marketing Certified', 'HubSpot Certified'],
     achievements: ['500+ Qualified B2B Leads', '9.5× Average ROAS', '40% CPL Reduction'],
-    bio: 'Amit is our B2B marketing expert who has helped SaaS, consulting, and technology companies generate high-quality leads. His account-based marketing strategies have transformed lead generation for our clients.',
+    bio: 'Amit is a B2B marketing expert who has helped SaaS, consulting, and technology companies generate high-quality leads. His account-based marketing strategies have transformed lead generation for our clients.',
     social: {
       linkedin: 'https://linkedin.com/in/amit-patel',
-      email: 'amit@rajapragyabharat.com'
+      email: 'amit@vedpragya.com'
     }
   },
   {
     id: 'neha-gupta',
     name: 'Dr. Neha Gupta',
-    position: 'Healthcare Marketing Director',
+    position: 'Healthcare Marketing Analyst',
     expertise: ['Healthcare Marketing', 'Local Business Ads', 'Compliance Marketing'],
     experience: '6+ Years',
     certifications: ['Google Ads Certified', 'Healthcare Marketing Certified', 'HIPAA Compliant'],
@@ -111,35 +113,35 @@ const teamMembers: TeamMember[] = [
     bio: 'Dr. Neha brings medical expertise to digital marketing, ensuring our healthcare clients maintain compliance while driving patient engagement. She understands the unique challenges of healthcare marketing.',
     social: {
       linkedin: 'https://linkedin.com/in/neha-gupta',
-      email: 'neha@rajapragyabharat.com'
+      email: 'neha@vedpragya.com'
     }
   },
   {
     id: 'vikram-singh',
     name: 'Vikram Singh',
-    position: 'Creative Director',
+    position: 'Creative Ads Strategist',
     expertise: ['Video Marketing', 'YouTube Advertising', 'Creative Strategy'],
     experience: '7+ Years',
     certifications: ['YouTube Ads Certified', 'Video Marketing Certified', 'Creative Strategy Certified'],
     achievements: ['2.5M+ Video Views', '8.7% Engagement Rate', '150% Course Enrollments'],
-    bio: 'Vikram leads our creative team and specializes in video marketing campaigns. His innovative approach to YouTube advertising has helped education and entertainment brands achieve remarkable engagement.',
+    bio: 'Vikram leads the creative process for video marketing campaigns. His innovative approach to YouTube advertising has helped education and entertainment brands achieve remarkable engagement.',
     social: {
       linkedin: 'https://linkedin.com/in/vikram-singh',
-      email: 'vikram@rajapragyabharat.com'
+      email: 'vikram@vedpragya.com'
     }
   },
   {
     id: 'suresh-kumar',
     name: 'Suresh Kumar',
-    position: 'Technical Lead',
+    position: 'Technical Campaign Engineer',
     expertise: ['Campaign Automation', 'AI Implementation', 'Technical Optimization'],
     experience: '9+ Years',
     certifications: ['Google Ads Certified', 'Machine Learning Certified', 'Automation Specialist'],
     achievements: ['95% Campaign Automation', '35% Efficiency Improvement', 'AI-Powered Optimization'],
-    bio: 'Suresh leads our technical team and implements advanced automation and AI solutions. His technical expertise ensures our campaigns run at peak efficiency with minimal manual intervention.',
+    bio: 'Suresh implements advanced automation and AI solutions. His technical expertise ensures our campaigns run at peak efficiency with minimal manual intervention.',
     social: {
       linkedin: 'https://linkedin.com/in/suresh-kumar',
-      email: 'suresh@rajapragyabharat.com'
+      email: 'suresh@vedpragya.com'
     }
   }
 ];

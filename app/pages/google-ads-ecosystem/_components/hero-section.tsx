@@ -3,7 +3,7 @@
 /**
  * @fileoverview Hero Section - Google Ads Ecosystem Hub
  * @description High-impact hero section showcasing the complete Google Ads ecosystem
- * @author Rajapragya Bharat Pvt. Ltd.
+ * @author Vedpragya Bharat Pvt. Ltd.
  * @version 1.0.0
  */
 

@@ -3,7 +3,7 @@
 /**
  * @fileoverview Case Studies Showcase - Real results across all service types
  * @description Component showcasing success stories and results from different industries and services
- * @author Rajapragya Bharat Pvt. Ltd.
+ * @author Vedpragya Bharat Pvt. Ltd.
  * @version 1.0.0
  * 
  * FEATURES:
@@ -72,7 +72,7 @@ const caseStudies: CaseStudy[] = [
       { metric: 'ROAS', value: '10×', improvement: '400%', icon: TrendingUp }
     ],
     testimonial: {
-      quote: 'Rajapragya transformed our lead generation. We went from struggling to get 5-10 leads per month to consistently generating 50+ high-quality leads. The ROI is incredible.',
+      quote: 'Vedpragya transformed our lead generation. We went from struggling to get 5-10 leads per month to consistently generating 50+ high-quality leads. The ROI is incredible.',
       author: 'Rajesh Kumar',
       position: 'Founder & CEO',
       rating: 5

@@ -3,7 +3,7 @@
 /**
  * @fileoverview Ecosystem Overview - Complete service mastery showcase
  * @description Visual overview of the complete Google Ads ecosystem with interactive elements
- * @author Rajapragya Bharat Pvt. Ltd.
+ * @author Vedpragya Bharat Pvt. Ltd.
  * @version 1.0.0
  * 
  * FEATURES:
