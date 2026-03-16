@@ -11,6 +11,7 @@
     "start": "next start",
     "lint": "next lint",
     "verify:seo": "node scripts/verify-seo-integrity.js",
+    "combine:ai-prompt": "node scripts/combine-for-ai-prompt.js",
     "verify:seo:runtime": "tsx scripts/verify-seo-runtime.ts",
     "test": "jest",
     "analyze": "ANALYZE=true next build",
