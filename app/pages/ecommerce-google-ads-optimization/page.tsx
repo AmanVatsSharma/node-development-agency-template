@@ -21,7 +21,7 @@ export default function EcommerceGoogleAdsOptimizationPage() {
     console.log('[Ecommerce-Google-Ads] Page mounted');
     if (typeof window !== 'undefined' && (window as any).gtag) {
       (window as any).gtag('event', 'page_view', {
-        page_title: 'E-commerce Google Ads Optimization | Shopping Campaigns | Enterprise Hero',
+        page_title: 'E-commerce Google Ads Optimization | Shopping Campaigns | Vedpragya',
         page_location: window.location.href,
         page_path: '/pages/ecommerce-google-ads-optimization'
       });
