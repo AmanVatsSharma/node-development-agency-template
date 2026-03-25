@@ -1,20 +1,31 @@
 import type { Metadata } from 'next';
 import { buildPageMetadata } from '@/app/lib/seo/metadata';
+import { BreadcrumbStructuredData } from '@/app/components/SEO/StructuredData';
+import { SEO_SITE_URL } from '@/app/lib/seo/constants';
 
 export const metadata: Metadata = buildPageMetadata({
-  title: 'Blog & Resources | Enterprise Hero Insights',
+  title: 'Blog & Resources | Vedpragya Insights',
   description:
-    'Explore expert blogs on web development, performance marketing, AI automation, and digital growth from Enterprise Hero.',
+    'Explore expert articles on software development, AI automation, digital marketing, and business growth from Vedpragya — India.',
   path: '/pages/blog',
   keywords: [
-    'enterprise hero blog',
-    'web development insights',
-    'seo and google ads guides',
+    'vedpragya blog',
+    'software development insights',
+    'web development guides',
     'ai automation articles',
     'digital growth resources',
+    'india tech blog',
   ],
 });
 
 export default function BlogLayout({ children }: { children: React.ReactNode }) {
-  return children;
+  return (
+    <>
+      <BreadcrumbStructuredData items={[
+        { name: 'Home', url: SEO_SITE_URL },
+        { name: 'Blog', url: `${SEO_SITE_URL}/pages/blog` },
+      ]} />
+      {children}
+    </>
+  );
 }

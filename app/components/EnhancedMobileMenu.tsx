@@ -1,33 +1,71 @@
 "use client";
 
-/**
- * Enhanced Mobile Menu with Expandable Cards
- * 
- * A beautiful, animated mobile menu with expandable service cards
- * Features smooth animations, backdrop overlay, and outside click detection
- * 
- * @module EnhancedMobileMenu
- * @author Enterprise Hero Development Team
- * @created 2025-10-06
- */
-
-import React, { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { AnimatePresence, motion } from "motion/react";
-import { useOutsideClick } from "../hooks/use-outside-click";
-import { mainNavigation, servicesMegaMenu } from "../data/navigation";
-import { NavbarButton } from "./ui/resizable-navbar";
-import { ServiceIcon } from "./ServiceIcon";
+import { motion, AnimatePresence } from "motion/react";
+import { mainNavigation } from "../data/navigation";
 
-interface ServiceCard {
-  name: string;
-  link: string;
-  description?: string;
-  icon?: string;
-  iconKey?: string;
-  badge?: string;
-  category: string;
-}
+// Same 5-category structure as the desktop mega menu — all 29 links present
+const mobileServiceCategories = [
+  {
+    title: "Web & Dev",
+    accent: "#2563EB",
+    items: [
+      { name: "Next.js Development", href: "/pages/next-js-development", badge: "Popular" },
+      { name: "React.js Development", href: "/pages/reactjs-development", badge: "Hot" },
+      { name: "Web Development", href: "/pages/web-development" },
+      { name: "Website Development", href: "/pages/website-development" },
+      { name: "Mumbai Web Development", href: "/pages/web-development-mumbai" },
+      { name: "Business Websites", href: "/pages/business-website" },
+      { name: "Website Services", href: "/pages/website-services" },
+    ],
+  },
+  {
+    title: "AI & Automation",
+    accent: "#7C3AED",
+    items: [
+      { name: "AI Chatbot Development", href: "/pages/ai-chatbot-development", badge: "AI" },
+      { name: "AI Voice Agents", href: "/pages/ai-voice-agents", badge: "New" },
+      { name: "WhatsApp Business API", href: "/pages/whatsapp-business-api" },
+      { name: "CRM Solutions", href: "/pages/crm" },
+    ],
+  },
+  {
+    title: "E-Commerce",
+    accent: "#059669",
+    items: [
+      { name: "Shopify Headless Migration", href: "/pages/shopify-headless-migration", badge: "New" },
+      { name: "Product Page Customization", href: "/pages/shopify-product-page-customization" },
+      { name: "Shopify Store Setup", href: "/pages/shopify-store-setup" },
+      { name: "E-Commerce Google Ads", href: "/pages/ecommerce-google-ads-optimization" },
+    ],
+  },
+  {
+    title: "Marketing & Ads",
+    accent: "#DC2626",
+    items: [
+      { name: "Google Ads Ecosystem", href: "/pages/google-ads-ecosystem", badge: "Master" },
+      { name: "Google Ads Management", href: "/pages/google-ads-management" },
+      { name: "Enterprise Google Ads", href: "/pages/enterprise-google-ads-management" },
+      { name: "B2B Lead Generation", href: "/pages/b2b-lead-generation-ads" },
+      { name: "Local Business Ads", href: "/pages/local-business-google-ads" },
+      { name: "YouTube Advertising", href: "/pages/youtube-advertising-management" },
+      { name: "Performance Max", href: "/pages/performance-max-campaigns" },
+      { name: "Google Ads Audit", href: "/pages/google-ads-audit-strategy" },
+      { name: "Landing Page Optimization", href: "/pages/landing-page-optimization" },
+      { name: "SEO Audit", href: "/pages/seo-audit", badge: "Free" },
+    ],
+  },
+  {
+    title: "Specialty",
+    accent: "#D97706",
+    items: [
+      { name: "Trading Software", href: "/pages/trading-software" },
+      { name: "Live Market Data API", href: "/pages/nse-mcx-live-market-data" },
+      { name: "Healthcare Software", href: "/pages/healthcare-software-development" },
+    ],
+  },
+];
 
 interface EnhancedMobileMenuProps {
   isOpen: boolean;
@@ -35,307 +73,28 @@ interface EnhancedMobileMenuProps {
 }
 
 export default function EnhancedMobileMenu({ isOpen, onClose }: EnhancedMobileMenuProps) {
-  const [expandedCard, setExpandedCard] = useState<ServiceCard | null>(null);
+  const [openCategory, setOpenCategory] = useState<string | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
-  const id = useId();
 
-  // Prepare all service cards with their categories
-  const serviceCards: ServiceCard[] = servicesMegaMenu.sections.flatMap(section =>
-    section.items.map(item => ({
-      ...item,
-      category: section.title,
-    }))
-  );
-
-  // Handle escape key and body scroll lock
+  // Escape key + body scroll lock
   useEffect(() => {
-    function onKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") {
-        if (expandedCard) {
-          setExpandedCard(null);
-        } else {
-          onClose();
-        }
-      }
-    }
-
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
     if (isOpen) {
       document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
+      window.addEventListener("keydown", onKeyDown);
     }
-
-    window.addEventListener("keydown", onKeyDown);
     return () => {
+      document.body.style.overflow = "";
       window.removeEventListener("keydown", onKeyDown);
-      document.body.style.overflow = "auto";
     };
-  }, [isOpen, expandedCard, onClose]);
-
-  // Close menu when clicking outside
-  useOutsideClick(menuRef, () => {
-    if (isOpen && !expandedCard) {
-      onClose();
-    }
-  });
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
-  return (
-    <>
-      {/* Backdrop Overlay */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40"
-            onClick={() => {
-              if (!expandedCard) onClose();
-            }}
-          />
-        )}
-      </AnimatePresence>
-
-      {/* Mobile Menu Container */}
-      <motion.div
-        ref={menuRef}
-        initial={{ x: "100%" }}
-        animate={{ x: 0 }}
-        exit={{ x: "100%" }}
-        transition={{ type: "spring", damping: 25, stiffness: 200 }}
-        className="fixed right-0 top-0 h-full w-full sm:w-96 bg-white dark:bg-gray-900 z-50 shadow-2xl overflow-hidden"
-      >
-        <div className="h-full flex flex-col">
-          {/* Header */}
-          <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-800">
-            <h2 className="text-xl font-bold text-gray-900 dark:text-white">
-              Menu
-            </h2>
-            <button
-              onClick={onClose}
-              className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-              aria-label="Close menu"
-            >
-              <svg
-                className="w-6 h-6 text-gray-600 dark:text-gray-400"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </button>
-          </div>
-
-          {/* Menu Content */}
-          <div className="flex-1 overflow-y-auto overscroll-contain">
-            {/* Main Navigation Links */}
-            <div className="p-4 space-y-2">
-              {mainNavigation.map((item, idx) => (
-                <motion.div
-                  key={idx}
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: idx * 0.05 }}
-                >
-                  <Link
-                    href={item.link}
-                    onClick={onClose}
-                    className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gradient-to-r hover:from-blue-50 hover:to-cyan-50 dark:hover:from-blue-900/20 dark:hover:to-cyan-900/20 transition-all group"
-                  >
-                    <span className="w-2 h-2 rounded-full bg-blue-500 group-hover:scale-150 transition-transform" />
-                    <span className="font-medium text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400">
-                      {item.name}
-                    </span>
-                  </Link>
-                </motion.div>
-              ))}
-            </div>
-
-            {/* Services Section with Expandable Cards */}
-            <div className="px-4 py-2">
-              <h3 className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider px-4 py-2 mb-2">
-                Our Services
-              </h3>
-              <div className="space-y-2">
-                {serviceCards.map((card, index) => (
-                  <ServiceCardItem
-                    key={index}
-                    card={card}
-                    isExpanded={expandedCard?.name === card.name}
-                    onClick={() => setExpandedCard(card)}
-                    onClose={() => setExpandedCard(null)}
-                    onNavigate={onClose}
-                    layoutId={`card-${card.name}-${id}`}
-                    index={index}
-                  />
-                ))}
-              </div>
-            </div>
-
-            {/* Client Dashboard */}
-            <div className="p-4 border-t border-gray-200 dark:border-gray-800 mt-4">
-              <motion.a
-                href="https://client.vedpragya.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gradient-to-r hover:from-blue-50 hover:to-cyan-50 dark:hover:from-blue-900/20 dark:hover:to-cyan-900/20 transition-all group"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-              >
-                <svg 
-                  xmlns="http://www.w3.org/2000/svg" 
-                  className="w-5 h-5 text-blue-600 dark:text-blue-400" 
-                  fill="none" 
-                  viewBox="0 0 24 24" 
-                  stroke="currentColor"
-                >
-                  <path 
-                    strokeLinecap="round" 
-                    strokeLinejoin="round" 
-                    strokeWidth={2} 
-                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" 
-                  />
-                </svg>
-                <span className="font-medium text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400">
-                  Client Dashboard
-                </span>
-              </motion.a>
-            </div>
-          </div>
-
-          {/* Contact CTA */}
-          <div className="p-6 border-t border-gray-200 dark:border-gray-800">
-            <Link href="/pages/contact" onClick={onClose}>
-              <NavbarButton variant="gradient" as="button" className="w-full text-center">
-                Contact Us
-              </NavbarButton>
-            </Link>
-          </div>
-        </div>
-      </motion.div>
-
-      {/* Expanded Card Modal */}
-      <AnimatePresence>
-        {expandedCard && (
-          <ExpandedCardModal
-            card={expandedCard}
-            onClose={() => setExpandedCard(null)}
-            onNavigate={onClose}
-            layoutId={`card-${expandedCard.name}-${id}`}
-          />
-        )}
-      </AnimatePresence>
-    </>
-  );
-}
-
-/**
- * Service Card Item Component
- */
-interface ServiceCardItemProps {
-  card: ServiceCard;
-  isExpanded: boolean;
-  onClick: () => void;
-  onClose: () => void;
-  onNavigate: () => void;
-  layoutId: string;
-  index: number;
-}
-
-function ServiceCardItem({
-  card,
-  isExpanded,
-  onClick,
-  onNavigate,
-  layoutId,
-  index,
-}: ServiceCardItemProps) {
-  if (isExpanded) return null;
-
-  return (
-    <motion.div
-      layoutId={layoutId}
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.03 }}
-      onClick={onClick}
-      className="relative bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 rounded-xl p-4 cursor-pointer hover:shadow-lg transition-shadow border border-gray-200 dark:border-gray-700 overflow-hidden group"
-    >
-      {/* Hover gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-      
-      <div className="relative flex items-center gap-4">
-        {/* Icon */}
-        <motion.div 
-          className="flex-shrink-0 group-hover:scale-110 transition-transform"
-          whileHover={{ rotate: [0, -10, 10, -10, 0] }}
-          transition={{ duration: 0.5 }}
-        >
-          <ServiceIcon iconKey={card.iconKey as any} emoji={card.icon} size={28} className="text-blue-600 dark:text-blue-400" />
-        </motion.div>
-
-        {/* Content */}
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 mb-1">
-            <h4 className="font-semibold text-gray-900 dark:text-white text-sm truncate">
-              {card.name}
-            </h4>
-            {card.badge && (
-              <span className="text-[9px] px-2 py-0.5 rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-bold whitespace-nowrap">
-                {card.badge}
-              </span>
-            )}
-          </div>
-          <p className="text-xs text-gray-600 dark:text-gray-400 line-clamp-1">
-            {card.description}
-          </p>
-          <p className="text-[10px] text-gray-500 dark:text-gray-500 mt-1">
-            {card.category}
-          </p>
-        </div>
-
-        {/* Arrow */}
-        <svg
-          className="w-5 h-5 text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M9 5l7 7-7 7"
-          />
-        </svg>
-      </div>
-    </motion.div>
-  );
-}
-
-/**
- * Expanded Card Modal Component
- */
-interface ExpandedCardModalProps {
-  card: ServiceCard;
-  onClose: () => void;
-  onNavigate: () => void;
-  layoutId: string;
-}
-
-function ExpandedCardModal({ card, onClose, onNavigate, layoutId }: ExpandedCardModalProps) {
-  const ref = useRef<HTMLDivElement>(null);
-
-  useOutsideClick(ref, onClose);
+  const toggleCategory = (title: string) =>
+    setOpenCategory((prev) => (prev === title ? null : title));
 
   return (
     <>
@@ -344,165 +103,213 @@ function ExpandedCardModal({ card, onClose, onNavigate, layoutId }: ExpandedCard
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 bg-black/60 backdrop-blur-md z-[60]"
+        transition={{ duration: 0.2 }}
+        className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
         onClick={onClose}
+        aria-hidden="true"
       />
 
-      {/* Expanded Card */}
-      <div className="fixed inset-0 grid place-items-center z-[70] p-4">
-        <motion.div
-          layoutId={layoutId}
-          ref={ref}
-          className="w-full max-w-md bg-white dark:bg-gray-900 rounded-3xl shadow-2xl overflow-hidden"
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          exit={{ scale: 0.9, opacity: 0 }}
-        >
-          {/* Close Button */}
+      {/* Slide-in panel */}
+      <motion.div
+        ref={menuRef}
+        initial={{ x: "100%" }}
+        animate={{ x: 0 }}
+        exit={{ x: "100%" }}
+        transition={{ type: "spring", damping: 28, stiffness: 220, mass: 0.8 }}
+        className="fixed right-0 top-0 h-full w-full sm:w-[22rem] bg-white dark:bg-[#080C14] z-50 shadow-[−24px_0_80px_rgba(0,0,0,0.3)] flex flex-col overflow-hidden"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Navigation menu"
+      >
+        {/* ── Header ── */}
+        <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100 dark:border-[#1E293B] shrink-0">
+          <div className="flex items-center gap-2.5">
+            {/* Vedpragya mark */}
+            <svg width="26" height="26" viewBox="0 0 30 30" fill="none" aria-hidden="true">
+              <rect width="30" height="30" rx="8" fill="#0C1B33" />
+              <path d="M7 9L15 21L23 9" stroke="#D4870A" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M10.5 9L15 15.5L19.5 9" stroke="#2563EB" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            <span
+              className="font-bold text-sm text-[#0C1B33] dark:text-white"
+              style={{ fontFamily: "var(--font-sora), sans-serif" }}
+            >
+              Vedpragya
+            </span>
+          </div>
+
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full bg-white dark:bg-gray-800 shadow-lg hover:scale-110 transition-transform z-10"
+            className="flex items-center justify-center w-9 h-9 rounded-lg hover:bg-gray-100 dark:hover:bg-[#151C2B] transition-colors"
+            aria-label="Close menu"
           >
-            <svg
-              className="w-5 h-5 text-gray-600 dark:text-gray-400"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
+            <svg className="w-5 h-5 text-gray-600 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
+        </div>
 
-          {/* Header with Icon */}
-          <div className="relative bg-gradient-to-br from-blue-500 to-cyan-500 p-8 text-center">
-            <motion.div
-              className="mb-4"
-              initial={{ scale: 0, rotate: -180 }}
-              animate={{ scale: 1, rotate: 0 }}
-              transition={{ type: "spring", damping: 15 }}
-            >
-              <ServiceIcon iconKey={card.iconKey as any} emoji={card.icon} size={64} className="text-white" />
-            </motion.div>
-            <motion.h3
-              className="text-2xl font-bold text-white mb-2"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-            >
-              {card.name}
-            </motion.h3>
-            {card.badge && (
-              <motion.span
-                className="inline-block px-3 py-1 rounded-full bg-white/20 backdrop-blur-sm text-white text-xs font-bold"
-                initial={{ opacity: 0, scale: 0 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.2 }}
+        {/* ── Scrollable body ── */}
+        <div className="flex-1 overflow-y-auto overscroll-contain">
+
+          {/* Main nav links */}
+          <div className="px-3 pt-4 pb-2">
+            {mainNavigation.map((item, idx) => (
+              <motion.div
+                key={item.link}
+                initial={{ opacity: 0, x: 12 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: idx * 0.04, ease: [0.22, 1, 0.36, 1] }}
               >
-                {card.badge}
-              </motion.span>
-            )}
+                <Link
+                  href={item.link}
+                  onClick={onClose}
+                  className="flex items-center gap-3 px-3 py-3 rounded-xl text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-[#0C1B33] dark:hover:text-white hover:bg-gray-50 dark:hover:bg-[#151C2B] transition-all min-h-[44px]"
+                >
+                  {item.name}
+                </Link>
+              </motion.div>
+            ))}
           </div>
 
-          {/* Content */}
-          <div className="p-6">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="space-y-4"
+          {/* Divider */}
+          <div className="mx-5 border-t border-gray-100 dark:border-[#1E293B] my-1" />
+
+          {/* Services — accordion by category */}
+          <div className="px-3 pt-2 pb-3">
+            <p
+              className="text-[10px] font-bold text-gray-400 dark:text-gray-600 uppercase tracking-[0.14em] px-3 mb-2"
+              style={{ fontFamily: "var(--font-sora), sans-serif" }}
             >
-              {/* Category */}
-              <div className="flex items-center gap-2 text-sm">
-                <span className="text-gray-500 dark:text-gray-400">Category:</span>
-                <span className="font-semibold text-gray-900 dark:text-white">
-                  {card.category}
-                </span>
-              </div>
+              Services
+            </p>
 
-              {/* Description */}
-              <div>
-                <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-2">
-                  About this service
-                </h4>
-                <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
-                  {card.description}
-                </p>
-              </div>
-
-              {/* Key Features */}
-              <div>
-                <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-3">
-                  What you get
-                </h4>
-                <div className="space-y-2">
-                  {[
-                    "Expert development team",
-                    "Modern technology stack",
-                    "Scalable architecture",
-                    "Ongoing support & maintenance",
-                  ].map((feature, idx) => (
-                    <motion.div
-                      key={idx}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.3 + idx * 0.05 }}
-                      className="flex items-center gap-2"
-                    >
-                      <div className="w-5 h-5 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center flex-shrink-0">
-                        <svg
-                          className="w-3 h-3 text-white"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={3}
-                            d="M5 13l4 4L19 7"
-                          />
-                        </svg>
-                      </div>
-                      <span className="text-sm text-gray-600 dark:text-gray-400">
-                        {feature}
+            {mobileServiceCategories.map((cat, catIdx) => {
+              const isOpen = openCategory === cat.title;
+              return (
+                <motion.div
+                  key={cat.title}
+                  initial={{ opacity: 0, x: 12 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.15 + catIdx * 0.05, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  {/* Category toggle button */}
+                  <button
+                    onClick={() => toggleCategory(cat.title)}
+                    className="w-full flex items-center justify-between px-3 py-3 rounded-xl hover:bg-gray-50 dark:hover:bg-[#151C2B] transition-colors min-h-[44px] group"
+                    aria-expanded={isOpen}
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <span
+                        className="w-2 h-2 rounded-full shrink-0"
+                        style={{ backgroundColor: cat.accent }}
+                      />
+                      <span
+                        className="text-sm font-semibold text-[#0C1B33] dark:text-white"
+                        style={{ fontFamily: "var(--font-sora), sans-serif" }}
+                      >
+                        {cat.title}
                       </span>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
+                      <span className="text-[10px] text-gray-400 dark:text-gray-600">
+                        {cat.items.length}
+                      </span>
+                    </div>
+                    <svg
+                      className={`w-4 h-4 text-gray-400 dark:text-gray-600 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
 
-              {/* CTA Buttons */}
-              <div className="flex gap-3 pt-4">
-                <Link
-                  href={card.link}
-                  onClick={() => {
-                    onClose();
-                    onNavigate();
-                  }}
-                  className="flex-1 px-6 py-3 bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-xl font-semibold hover:shadow-lg hover:scale-105 transition-all text-center"
-                >
-                  Learn More
-                </Link>
-                <Link
-                  href="/pages/contact"
-                  onClick={() => {
-                    onClose();
-                    onNavigate();
-                  }}
-                  className="px-6 py-3 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white rounded-xl font-semibold hover:bg-gray-200 dark:hover:bg-gray-700 transition-all"
-                >
-                  Contact
-                </Link>
-              </div>
-            </motion.div>
+                  {/* Expanded items */}
+                  <AnimatePresence initial={false}>
+                    {isOpen && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+                        className="overflow-hidden"
+                      >
+                        <div className="pl-4 pr-1 pb-1 space-y-0.5">
+                          {cat.items.map((item) => (
+                            <Link
+                              key={item.href}
+                              href={item.href}
+                              onClick={onClose}
+                              className="flex items-center justify-between px-3 py-2.5 rounded-lg text-sm text-gray-600 dark:text-gray-400 hover:text-[#0C1B33] dark:hover:text-white hover:bg-gray-50 dark:hover:bg-[#151C2B] transition-all min-h-[40px] group"
+                            >
+                              <span className="group-hover:translate-x-0.5 transition-transform">
+                                {item.name}
+                              </span>
+                              {item.badge && (
+                                <span
+                                  className="shrink-0 text-[8px] px-1.5 py-0.5 rounded-full font-bold uppercase tracking-wide text-white ml-2"
+                                  style={{ backgroundColor: cat.accent }}
+                                >
+                                  {item.badge}
+                                </span>
+                              )}
+                            </Link>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </motion.div>
+              );
+            })}
+
+            {/* View all services */}
+            <Link
+              href="/pages/services"
+              onClick={onClose}
+              className="flex items-center gap-2 px-3 py-3 mt-1 rounded-xl text-sm font-semibold text-[#2563EB] dark:text-[#60A5FA] hover:bg-blue-50 dark:hover:bg-[#151C2B] transition-all min-h-[44px]"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h10" />
+              </svg>
+              View all 20+ services
+            </Link>
           </div>
-        </motion.div>
-      </div>
+
+          {/* Divider */}
+          <div className="mx-5 border-t border-gray-100 dark:border-[#1E293B] my-1" />
+
+          {/* Client login */}
+          <div className="px-3 py-2">
+            <a
+              href="https://client.vedpragya.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-3 px-3 py-3 rounded-xl text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-[#0C1B33] dark:hover:text-white hover:bg-gray-50 dark:hover:bg-[#151C2B] transition-all min-h-[44px]"
+            >
+              <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              </svg>
+              Client Login
+            </a>
+          </div>
+        </div>
+
+        {/* ── Footer CTA ── */}
+        <div className="px-5 py-4 border-t border-gray-100 dark:border-[#1E293B] shrink-0">
+          <Link
+            href="/pages/contact"
+            onClick={onClose}
+            className="flex items-center justify-center gap-2 w-full px-5 py-3.5 bg-[#0C1B33] dark:bg-[#1A3A6C] hover:bg-[#1A3A6C] dark:hover:bg-[#2563EB] text-white font-bold text-sm rounded-xl transition-all min-h-[52px]"
+            style={{ fontFamily: "var(--font-sora), sans-serif" }}
+          >
+            Start a Project
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+          </Link>
+        </div>
+      </motion.div>
     </>
   );
 }
