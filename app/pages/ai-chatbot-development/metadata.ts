@@ -18,6 +18,15 @@ export const metadata: Metadata = buildPageMetadata({
     'whatsapp chatbot integration',
     'custom gpt chatbot',
     'crm chatbot integration',
+    'ai chatbot for business india',
+    'chatbot development company india',
+    'openai chatbot development',
+    'conversational ai development',
+    'chatgpt integration services',
+    'ai customer support chatbot',
+    'lead generation chatbot',
+    'chatbot for website india',
+    'vedpragya ai chatbot',
   ],
 });
 
