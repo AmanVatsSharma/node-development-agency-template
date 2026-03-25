@@ -1,9 +1,13 @@
 import type { Metadata } from 'next';
 import prisma from '@/app/lib/prisma';
 import { buildPageMetadata } from '@/app/lib/seo/metadata';
+import { ArticleStructuredData, BreadcrumbStructuredData } from '@/app/components/SEO/StructuredData';
+import { companyProfile } from '@/app/data/companyProfile';
+import { SEO_SITE_URL, toAbsoluteSeoUrl } from '@/app/lib/seo/constants';
 
 interface BlogSlugLayoutProps {
   children: React.ReactNode;
+  params: Promise<{ slug: string }>;
 }
 
 interface BlogSlugMetadataParams {
@@ -72,13 +76,14 @@ export async function generateMetadata({ params }: BlogSlugMetadataParams): Prom
       });
 
       return buildPageMetadata({
-        title: `${post.title} | Enterprise Hero Blog`,
+        title: `${post.title} | Vedpragya Blog`,
         description: post.excerpt,
         path: `/pages/blog/${normalizedSlug}`,
         keywords: [
           ...(post.tags || []),
           post.category,
-          'enterprise hero blog',
+          'vedpragya blog',
+          'software development insights',
           'digital growth insights',
         ].filter(Boolean) as string[],
         imagePath: post.imageUrl || '/logo.png',
@@ -94,13 +99,74 @@ export async function generateMetadata({ params }: BlogSlugMetadataParams): Prom
 
   const readableTitle = humanizeSlug(normalizedSlug);
   return buildPageMetadata({
-    title: `${readableTitle} | Enterprise Hero Blog`,
-    description: `Read ${readableTitle} on the Enterprise Hero blog for practical engineering and growth insights.`,
+    title: `${readableTitle} | Vedpragya Blog`,
+    description: `Read ${readableTitle} on the Vedpragya blog for practical software engineering and growth insights.`,
     path: `/pages/blog/${normalizedSlug}`,
-    keywords: [readableTitle, 'enterprise hero blog', 'software and growth insights'],
+    keywords: [readableTitle, 'vedpragya blog', 'software development insights', 'growth insights'],
   });
 }
 
-export default function BlogSlugLayout({ children }: BlogSlugLayoutProps) {
-  return children;
+export default async function BlogSlugLayout({ children, params }: BlogSlugLayoutProps) {
+  const { slug: rawSlug } = await params;
+  const normalizedSlug = normalizeBlogSlugForMetadata(rawSlug);
+
+  let articleData: {
+    headline: string;
+    image: string;
+    datePublished: string;
+    dateModified: string;
+    description: string;
+    url: string;
+  } | null = null;
+
+  try {
+    const post = await prisma.blogPost.findUnique({
+      where: { slug: normalizedSlug },
+      select: {
+        title: true,
+        excerpt: true,
+        imageUrl: true,
+        publishedAt: true,
+        updatedAt: true,
+      },
+    });
+
+    if (post) {
+      articleData = {
+        headline: post.title,
+        image: post.imageUrl ? toAbsoluteSeoUrl(post.imageUrl) : `${SEO_SITE_URL}/logo.png`,
+        datePublished: post.publishedAt.toISOString(),
+        dateModified: post.updatedAt.toISOString(),
+        description: post.excerpt || '',
+        url: toAbsoluteSeoUrl(`/pages/blog/${normalizedSlug}`),
+      };
+    }
+  } catch {
+    // Non-fatal: article schema is a bonus, not a requirement
+  }
+
+  const readableTitle = humanizeSlug(normalizedSlug);
+
+  return (
+    <>
+      <BreadcrumbStructuredData items={[
+        { name: 'Home', url: SEO_SITE_URL },
+        { name: 'Blog', url: `${SEO_SITE_URL}/pages/blog` },
+        { name: articleData?.headline || readableTitle, url: toAbsoluteSeoUrl(`/pages/blog/${normalizedSlug}`) },
+      ]} />
+      {articleData && (
+        <ArticleStructuredData
+          headline={articleData.headline}
+          image={articleData.image}
+          datePublished={articleData.datePublished}
+          dateModified={articleData.dateModified}
+          description={articleData.description}
+          url={articleData.url}
+          author={{ name: companyProfile.founder?.name || companyProfile.brandName, url: SEO_SITE_URL }}
+          publisher={{ name: companyProfile.legalName, logo: `${SEO_SITE_URL}/logo.png` }}
+        />
+      )}
+      {children}
+    </>
+  );
 }
