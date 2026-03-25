@@ -11,7 +11,7 @@ import { ThemeProvider } from "./components/ThemeProvider";
 import { Providers } from "./providers";
 import DeferredAIAgentWidget from './components/AIAgent/DeferredAIAgentWidget';
 import { headers } from 'next/headers';
-import { OrganizationStructuredData, WebsiteStructuredData } from "./components/SEO/StructuredData";
+import { OrganizationStructuredData, WebsiteStructuredData, ProfessionalServiceStructuredData } from "./components/SEO/StructuredData";
 import { companyProfile } from "./data/companyProfile";
 import { SEO_DEFAULT_OG_IMAGE_PATH, SEO_SITE_URL, toAbsoluteSeoUrl } from '@/app/lib/seo/constants';
 
@@ -111,6 +111,7 @@ export default async function RootLayout({
           name={companyProfile.brandName}
           legalName={companyProfile.legalName}
           url={companyProfile.websiteUrl}
+          logo={`${SEO_SITE_URL}/logo.png`}
           contactPoint={{ contactType: "customer service", email: companyProfile.contactEmail }}
           taxId={companyProfile.legal.gst}
           founderName={companyProfile.founder?.name}
@@ -122,9 +123,38 @@ export default async function RootLayout({
           description={metadata.description as string}
           publisher={companyProfile.legalName}
         />
+        <ProfessionalServiceStructuredData
+          name={companyProfile.brandName}
+          legalName={companyProfile.legalName}
+          url={companyProfile.websiteUrl}
+          logo={`${SEO_SITE_URL}/logo.png`}
+          description="Enterprise-grade software development, AI systems, ERP, e-commerce, and digital marketing services."
+          foundingDate={companyProfile.legal.incorporationDateISO}
+          address={{
+            addressLocality: 'Haryana',
+            addressRegion: 'Haryana',
+            addressCountry: 'IN',
+          }}
+          areaServed={['India', 'United States', 'United Kingdom', 'Global']}
+          serviceTypes={[
+            'Web Development',
+            'AI Development',
+            'ERP Software',
+            'E-commerce Development',
+            'Google Ads Management',
+            'SEO Services',
+            'Shopify Development',
+            'Mobile App Development',
+          ]}
+          founderName={companyProfile.founder?.name}
+          contactEmail={companyProfile.contactEmail}
+          sameAs={Object.values(companyProfile.social || {}).filter(Boolean) as string[]}
+        />
         
-        {/* Google Analytics script - replace with your measurement ID */}
-        <GoogleAnalytics measurementId="G-XXXXXXXXXX" />
+        {/* Google Analytics - set NEXT_PUBLIC_GA_MEASUREMENT_ID in your env vars */}
+        {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
+          <GoogleAnalytics measurementId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
+        )}
         
         {/* Google Ads Conversion Tracking - Search Ads Campaign */}
         <GoogleAdsTracking conversionId="AW-17606401808" />

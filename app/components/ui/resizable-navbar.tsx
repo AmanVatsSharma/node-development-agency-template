@@ -456,7 +456,7 @@ export const MobileNavToggle = ({
 export const NavbarLogo = ({
   logoSrc,
   logoAlt = "Logo",
-  text = "Enterprise Hero",
+  text = "Vedpragya",
   href = "/",
   className,
   visible = false,

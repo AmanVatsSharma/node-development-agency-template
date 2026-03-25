@@ -59,6 +59,34 @@ interface FAQStructuredDataProps {
   }[];
 }
 
+interface BreadcrumbItem {
+  name: string;
+  url: string;
+}
+
+interface BreadcrumbStructuredDataProps {
+  items: BreadcrumbItem[];
+}
+
+interface ProfessionalServiceStructuredDataProps {
+  name: string;
+  legalName: string;
+  url: string;
+  logo: string;
+  description: string;
+  foundingDate?: string;
+  address: {
+    addressLocality: string;
+    addressRegion: string;
+    addressCountry: string;
+  };
+  areaServed?: string[];
+  serviceTypes?: string[];
+  founderName?: string;
+  contactEmail?: string;
+  sameAs?: string[];
+}
+
 function normalizeSameAsUrls(sameAs?: string[]): string[] | undefined {
   if (!sameAs || sameAs.length === 0) {
     return undefined;
@@ -240,6 +268,83 @@ export function ArticleStructuredData({
     },
     description,
     url
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+    />
+  );
+}
+
+// ProfessionalService structured data (LocalBusiness subtype)
+export function ProfessionalServiceStructuredData({
+  name,
+  legalName,
+  url,
+  logo,
+  description,
+  foundingDate,
+  address,
+  areaServed,
+  serviceTypes,
+  founderName,
+  contactEmail,
+  sameAs,
+}: ProfessionalServiceStructuredDataProps) {
+  const structuredData: Record<string, unknown> = {
+    '@context': 'https://schema.org',
+    '@type': 'ProfessionalService',
+    name,
+    legalName,
+    url,
+    logo: { '@type': 'ImageObject', url: logo },
+    description,
+    image: logo,
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: address.addressLocality,
+      addressRegion: address.addressRegion,
+      addressCountry: address.addressCountry,
+    },
+  };
+
+  if (foundingDate) structuredData.foundingDate = foundingDate;
+  if (founderName) structuredData.founder = { '@type': 'Person', name: founderName };
+  if (contactEmail) structuredData.email = contactEmail;
+  if (areaServed?.length) structuredData.areaServed = areaServed;
+  if (serviceTypes?.length) structuredData.hasOfferCatalog = {
+    '@type': 'OfferCatalog',
+    name: 'Services',
+    itemListElement: serviceTypes.map((s) => ({
+      '@type': 'Offer',
+      itemOffered: { '@type': 'Service', name: s },
+    })),
+  };
+
+  const normalizedSameAs = normalizeSameAsUrls(sameAs);
+  if (normalizedSameAs?.length) structuredData.sameAs = normalizedSameAs;
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+    />
+  );
+}
+
+// Breadcrumb structured data
+export function BreadcrumbStructuredData({ items }: BreadcrumbStructuredDataProps) {
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.name,
+      item: item.url,
+    })),
   };
 
   return (
