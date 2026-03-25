@@ -2,15 +2,15 @@ import type { Metadata } from "next";
 import { buildPageMetadata } from "@/app/lib/seo/metadata";
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "Privacy Policy | Enterprise Hero - Vedpragya Bharat Private Limited",
+  title: "Privacy Policy | Vedpragya Bharat Private Limited",
   description:
-    "Privacy Policy for Vedpragya Bharat Private Limited (Enterprise Hero). Learn how we protect your data and comply with international privacy standards.",
+    "Privacy Policy for Vedpragya Bharat Private Limited. Learn how we protect your data and comply with international privacy standards.",
   path: "/pages/legal/privacy-policy",
   keywords: [
     "privacy policy",
     "data protection",
     "Vedpragya Bharat",
-    "Enterprise Hero",
+    "vedpragya privacy policy",
     "GDPR compliance",
     "data security",
   ],

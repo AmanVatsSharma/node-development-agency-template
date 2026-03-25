@@ -2,18 +2,18 @@ import type { Metadata } from "next";
 import { buildPageMetadata } from "@/app/lib/seo/metadata";
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "Company Information | Enterprise Hero - Vedpragya Bharat Private Limited",
+  title: "Company Information | Vedpragya Bharat Private Limited",
   description:
-    "Complete company information for Vedpragya Bharat Private Limited (Enterprise Hero). Legal details, registration information, and global operations.",
+    "Complete company information for Vedpragya Bharat Private Limited — CIN, GST, legal details, registration information, and business operations.",
   path: "/pages/legal/company-info",
   keywords: [
     "company information",
     "Vedpragya Bharat",
-    "Enterprise Hero",
+    "vedpragya bharat private limited",
     "legal details",
-    "registration",
+    "CIN U47912HR2025PTC131357",
     "Aman Kumar Sharma",
-    "global offices",
+    "software company india",
   ],
 });
 
