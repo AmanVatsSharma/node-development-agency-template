@@ -1,11 +1,4 @@
-import type { Metadata } from "next";
 import Link from "next/link";
-
-export const metadata: Metadata = {
-  title: "About Vedpragya | Software Development & IT Company — India",
-  description:
-    "Vedpragya Bharat Private Limited — a full-service software development and IT company founded by Aman Kumar Sharma. Building technology that transforms businesses since 2025.",
-};
 
 const milestones = [
   {

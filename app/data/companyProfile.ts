@@ -75,7 +75,12 @@ export const companyProfile: CompanyProfile = {
   //   github: "https://github.com/vedpragya",
   // },
   social: {
-    // Add your social URLs here — see examples above
+    linkedin: "https://www.linkedin.com/company/vedpragya",
+    x: "https://x.com/vedpragya",
+    facebook: "https://www.facebook.com/vedpragya",
+    instagram: "https://www.instagram.com/vedpragya",
+    youtube: "https://www.youtube.com/@vedpragya",
+    github: "https://github.com/vedpragya",
   },
 };
 

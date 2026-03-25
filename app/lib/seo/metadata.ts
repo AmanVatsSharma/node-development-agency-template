@@ -160,7 +160,7 @@ export function buildPageMetadata(options: BuildPageMetadataOptions): Metadata {
     keywords,
     imagePath,
     noIndex = false,
-    locale = 'en_IN',
+    locale = 'en_US',
   } = options;
 
   const normalizedTitle = normalizeMetadataTitle(title);
