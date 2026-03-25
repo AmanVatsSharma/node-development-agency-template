@@ -14,15 +14,16 @@ import { Spotlight } from "@/app/components/ui/spotlight";
 import { buildPageMetadata } from "@/app/lib/seo/metadata";
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "Website Development Services | Enterprise Hero",
+  title: "Website Development Services | Vedpragya — Fast, SEO-Ready Websites",
   description:
-    "Build premium business websites that are fast, conversion-focused, mobile-ready, and SEO-optimized with Enterprise Hero.",
+    "Build premium business websites that are fast, conversion-focused, mobile-ready, and SEO-optimized with Vedpragya — India's enterprise software development company.",
   path: "/pages/website-development",
   keywords: [
-    "website development services",
+    "website development services india",
     "custom website development",
-    "business website agency",
+    "business website agency india",
     "seo optimized website development",
+    "vedpragya web development",
   ],
 });
 

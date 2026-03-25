@@ -16,7 +16,7 @@ import {
   Mail, 
   MapPin, 
   Clock, 
-  CheckCircle, 
+  CheckCircle,
   User,
   Building,
   MessageSquare,
@@ -41,6 +41,8 @@ export function LeadFormSection() {
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState('');
 
   useEffect(() => {
     console.log('[Mumbai-Web-Development] LeadFormSection mounted');
@@ -50,13 +52,30 @@ export function LeadFormSection() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    console.log('[Mumbai-Web-Development] Lead form submitted:', formData);
-    
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    setIsSubmitting(false);
-    // Handle form submission success
+    setSubmitError('');
+    try {
+      const res = await fetch('/api/lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          message: formData.message || undefined,
+          source: 'web-development-mumbai',
+          leadSource: 'Mumbai Web Development Page',
+          raw: {
+            business: formData.business || undefined,
+          },
+        }),
+      });
+      if (!res.ok) throw new Error('Submission failed');
+      setSubmitted(true);
+    } catch {
+      setSubmitError('Something went wrong. Please try again or call us directly.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const fadeInUp = {
@@ -130,6 +149,13 @@ export function LeadFormSection() {
               </p>
             </div>
 
+            {submitted ? (
+              <div className="flex flex-col items-center justify-center py-12 text-center">
+                <CheckCircle className="h-16 w-16 text-green-500 mb-4" />
+                <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Request Received!</h3>
+                <p className="text-slate-600 dark:text-slate-300">Thank you! We'll get back to you within 24 hours with your free quote.</p>
+              </div>
+            ) : (
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
@@ -214,6 +240,12 @@ export function LeadFormSection() {
                 </div>
               </div>
 
+              {submitError && (
+                <p className="text-red-500 text-sm flex items-center gap-2">
+                  <span>⚠</span> {submitError}
+                </p>
+              )}
+
               <Button
                 type="submit"
                 size="lg"
@@ -233,6 +265,7 @@ export function LeadFormSection() {
                 )}
               </Button>
             </form>
+            )}
           </motion.div>
 
           {/* Contact Info & Benefits */}
