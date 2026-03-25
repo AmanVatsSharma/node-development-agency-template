@@ -1,516 +1,362 @@
-'use client';
+import type { Metadata } from "next";
+import Link from "next/link";
 
-/**
- * @fileoverview About Us - Premium Techy Modern Landing Page
- * @description Ultra-compact, mobile-first, illustration-rich About page
- * @version 3.0.0 - TECHY MODERN PREMIUM
- */
+export const metadata: Metadata = {
+  title: "About Vedpragya | Software Development & IT Company — India",
+  description:
+    "Vedpragya Bharat Private Limited — a full-service software development and IT company founded by Aman Kumar Sharma. Building technology that transforms businesses since 2025.",
+};
 
-import React, { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
-import Link from 'next/link';
-import AnimatedIllustration from '../../components/AnimatedIllustration';
-import { companyProfile } from '@/app/data/companyProfile';
+const milestones = [
+  {
+    year: "2025",
+    event: "Founded",
+    desc: "Vedpragya Bharat Private Limited incorporated in Haryana, India by Aman Kumar Sharma.",
+  },
+  {
+    year: "2025",
+    event: "First Enterprise Client",
+    desc: "Delivered BharatERP to first enterprise client in the manufacturing sector.",
+  },
+  {
+    year: "2025",
+    event: "100 Projects",
+    desc: "Crossed 100 delivered projects across web, mobile, AI, and ERP domains.",
+  },
+  {
+    year: "2026",
+    event: "Global Expansion",
+    desc: "Opened offices in Dubai UAE and expanded client base to North America.",
+  },
+  {
+    year: "2026",
+    event: "500+ Projects",
+    desc: "500+ projects delivered. 200+ clients globally. 5 offices on 3 continents.",
+  },
+];
 
-console.log('[About] v3.0 - Techy Modern Premium loaded');
+const values = [
+  {
+    title: "Engineering first",
+    desc: "Every decision starts with the technical fundamentals. We don't cut corners on architecture just to ship faster.",
+  },
+  {
+    title: "Transparency always",
+    desc: "No black boxes, no surprises. Clients have full visibility into progress, code, and decisions at all times.",
+  },
+  {
+    title: "Long-term thinking",
+    desc: "We build software meant to last years — not just pass a demo. Maintainability is a first-class concern.",
+  },
+  {
+    title: "Ownership mentality",
+    desc: "We treat your product like our own. That's why we also build and ship our own products.",
+  },
+];
+
+const team = [
+  {
+    name: "Aman Kumar Sharma",
+    role: "Founder & CEO",
+    bio: "Full-stack engineer and entrepreneur. Built enterprise-grade systems across fintech, logistics, healthcare, and e-commerce. Founded Vedpragya to bring serious engineering to businesses of all sizes.",
+    initials: "AK",
+  },
+];
 
 export default function AboutPage() {
-  const [counters, setCounters] = useState({ clients: 0, projects: 0, countries: 0, team: 0 });
-
-  useEffect(() => {
-    console.log('[About] Initializing...');
-    
-    // Fast counter animation
-    // NOTE (Authenticity): keep these numbers consistent across the site.
-    // If you update them, update the Home page trust indicators too.
-    const targets = { clients: 200, projects: 500, countries: 6, team: 50 };
-    const duration = 1000;
-    const steps = 30;
-    let step = 0;
-
-    const timer = setInterval(() => {
-      step++;
-      const progress = Math.min(step / steps, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      
-      setCounters({
-        clients: Math.floor(targets.clients * eased),
-        projects: Math.floor(targets.projects * eased),
-        countries: Math.floor(targets.countries * eased),
-        team: Math.floor(targets.team * eased),
-      });
-
-      if (step >= steps) {
-        clearInterval(timer);
-        setCounters(targets);
-      }
-    }, duration / steps);
-
-    return () => clearInterval(timer);
-  }, []);
-
   return (
     <div className="w-full">
-      {/* HERO - Techy Modern */}
-      <section className="relative compact-main-hero flex items-center justify-center bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 text-white overflow-hidden">
-        {/* Tech grid background */}
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute inset-0" style={{
-            backgroundImage: `
-              linear-gradient(rgba(6, 182, 212, 0.1) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(6, 182, 212, 0.1) 1px, transparent 1px)
-            `,
-            backgroundSize: '50px 50px'
-          }}></div>
-        </div>
 
-        {/* Floating illustrations */}
-        <div className="absolute top-10 right-10 w-32 h-32 md:w-48 md:h-48 opacity-30 hidden sm:block">
-          <AnimatedIllustration
-            src="/illustrations/undraw_programming.svg"
-            alt="Programming"
-            width={192}
-            height={192}
-            animationType="float"
-            delay={0.2}
-          />
-        </div>
-        <div className="absolute bottom-10 left-10 w-32 h-32 md:w-40 md:h-40 opacity-25 hidden sm:block">
-          <AnimatedIllustration
-            src="/illustrations/undraw_cloud_hosting.svg"
-            alt="Cloud"
-            width={160}
-            height={160}
-            animationType="pulse"
-            delay={0.5}
-          />
-        </div>
+      {/* HERO */}
+      <section className="compact-main-hero bg-[#0C1B33] relative overflow-hidden flex items-center">
+        <div className="absolute inset-0 hero-grid-bg opacity-20 pointer-events-none" />
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-[#2563EB]/8 blur-[120px] pointer-events-none" />
 
-        <div className="container mx-auto px-4 py-16 md:py-20 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="text-center max-w-4xl mx-auto"
-          >
-            {/* Badge */}
-            <div className="inline-block mb-4 px-4 py-2 bg-cyan-500/10 border border-cyan-500/30 rounded-full backdrop-blur-sm">
-              <span className="text-cyan-400 text-xs md:text-sm font-bold uppercase tracking-wider">
-                Incorporated {companyProfile.legal.incorporationDateISO?.slice(0, 4) ?? "—"} • CIN: {companyProfile.legal.cin ?? "—"}
-              </span>
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+          <div className="max-w-3xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#D4870A]/40 bg-[#D4870A]/10 text-[#D4870A] text-xs font-semibold tracking-wide uppercase mb-6">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#D4870A]" />
+              Our Story
             </div>
-
-            {/* Heading */}
-            <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-4 bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent text-balance">
-              {companyProfile.brandName}
+            <h1
+              className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 leading-[1.08] tracking-tight"
+              style={{ fontFamily: "var(--font-sora), sans-serif" }}
+            >
+              We Build Software That{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D4870A] to-[#F59E0B]">
+                Actually Works
+              </span>
             </h1>
-            
-            <p className="text-lg md:text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-              Global development team building modern web and automation systems for startups, SMEs, and enterprise teams.
+            <p
+              className="text-gray-300 text-lg sm:text-xl leading-relaxed max-w-2xl mb-10"
+            >
+              Vedpragya is a full-service software development and IT company
+              based in India with a global client base. We build web apps, AI
+              systems, ERP platforms, and e-commerce solutions that businesses
+              depend on every day.
             </p>
+            <div className="flex flex-wrap gap-3">
+              <Link
+                href="/pages/contact"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-[#D4870A] hover:bg-[#F59E0B] text-white font-bold text-sm rounded-xl transition-all hover:shadow-[0_8px_24px_rgba(212,135,10,0.35)] hover:-translate-y-0.5"
+                style={{ fontFamily: "var(--font-sora), sans-serif" }}
+              >
+                Work With Us
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+              </Link>
+              <Link
+                href="/pages/portfolio"
+                className="inline-flex items-center gap-2 px-6 py-3 border border-white/20 hover:border-white/40 text-white font-semibold text-sm rounded-xl transition-all hover:bg-white/5"
+                style={{ fontFamily: "var(--font-sora), sans-serif" }}
+              >
+                See Our Work
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
 
-            {/* Quick stats - Compact */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 md:gap-6 mb-8 max-w-3xl mx-auto">
-              {[
-                { value: counters.clients, suffix: '+', label: 'Clients' },
-                { value: counters.projects, suffix: '+', label: 'Projects' },
-                { value: counters.countries, suffix: '', label: 'Countries' },
-                { value: counters.team, suffix: '+', label: 'Team' }
-              ].map((stat, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, scale: 0.5 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.3 + i * 0.1, duration: 0.3 }}
-                  className="bg-white/5 backdrop-blur-sm border border-cyan-500/20 rounded-xl p-3 md:p-4 hover:bg-white/10 hover:border-cyan-500/40 transition-all"
+      {/* STATS BAR */}
+      <section className="py-10 bg-white dark:bg-[#080C14] border-b border-gray-100 dark:border-[#1E293B]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:divide-x divide-gray-100 dark:divide-[#1E293B]">
+            {[
+              { num: "500+", label: "Projects Delivered" },
+              { num: "200+", label: "Clients Globally" },
+              { num: "5", label: "Offices" },
+              { num: "7", label: "Products Shipped" },
+            ].map((s) => (
+              <div key={s.label} className="text-center md:text-left md:pl-8 first:pl-0">
+                <p
+                  className="text-3xl sm:text-4xl font-bold text-[#0C1B33] dark:text-white mb-1"
+                  style={{ fontFamily: "var(--font-sora), sans-serif" }}
                 >
-                  <div className="text-2xl md:text-3xl font-bold text-cyan-400">{stat.value}{stat.suffix}</div>
-                  <div className="text-xs md:text-sm text-gray-400">{stat.label}</div>
-                </motion.div>
+                  {s.num}
+                </p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">{s.label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* MISSION */}
+      <section className="compact-main-section bg-[#F4F4F5] dark:bg-[#0F1623]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div>
+              <div className="vp-divider mb-4" />
+              <h2
+                className="text-3xl sm:text-4xl font-bold text-[#0C1B33] dark:text-white mb-6 tracking-tight"
+                style={{ fontFamily: "var(--font-sora), sans-serif" }}
+              >
+                What We Stand For
+              </h2>
+              <p className="text-gray-600 dark:text-gray-300 text-lg leading-relaxed mb-6">
+                Vedpragya was founded on a simple idea: great software is rare,
+                but it doesn&rsquo;t have to be. Most businesses settle for
+                fragile, over-priced, or poorly maintained systems. We believe
+                they deserve better.
+              </p>
+              <p className="text-gray-600 dark:text-gray-300 text-lg leading-relaxed">
+                We bring serious engineering discipline to every project —
+                whether it&rsquo;s a startup&rsquo;s first app or a
+                multinational&rsquo;s digital transformation. No shortcuts. No
+                hand-waving. Just software that works, scales, and lasts.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {values.map((v) => (
+                <div
+                  key={v.title}
+                  className="bg-white dark:bg-[#080C14] rounded-2xl p-6 border border-gray-100 dark:border-[#1E293B]"
+                >
+                  <div className="w-8 h-0.5 bg-gradient-to-r from-[#D4870A] to-[#F59E0B] mb-4 rounded-full" />
+                  <h3
+                    className="font-bold text-[#0C1B33] dark:text-white mb-2"
+                    style={{ fontFamily: "var(--font-sora), sans-serif" }}
+                  >
+                    {v.title}
+                  </h3>
+                  <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
+                    {v.desc}
+                  </p>
+                </div>
               ))}
             </div>
-
-            {/* CTAs - Compact */}
-            <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center">
-              <Link href="/pages/contact" className="px-6 md:px-8 py-3 md:py-4 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-400 hover:to-blue-400 text-white rounded-lg font-bold transition-all duration-300 shadow-lg shadow-cyan-500/50">
-                Start Project →
-              </Link>
-              <Link href="/pages/portfolio" className="px-6 md:px-8 py-3 md:py-4 bg-white/10 border border-white/20 hover:bg-white/20 text-white rounded-lg font-bold transition-all backdrop-blur-sm">
-                View Work
-              </Link>
-            </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
-      {/* GLOBAL OFFICES - Compact Grid */}
-      <section className="compact-main-section bg-white dark:bg-gray-900 relative overflow-hidden">
-        {/* Background illustration */}
-        <div className="absolute top-10 right-10 w-48 h-48 opacity-5 hidden lg:block">
-          <AnimatedIllustration
-            src="/illustrations/undraw_mobile_app.svg"
-            alt="Mobile"
-            width={192}
-            height={192}
-            animationType="scale"
-            delay={0.3}
-          />
-        </div>
-
-        <div className="container mx-auto px-4 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-8 md:mb-12"
+      {/* FOUNDER */}
+      <section className="compact-main-section bg-white dark:bg-[#080C14]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="vp-divider mb-4" />
+          <h2
+            className="text-3xl sm:text-4xl font-bold text-[#0C1B33] dark:text-white mb-14 tracking-tight"
+            style={{ fontFamily: "var(--font-sora), sans-serif" }}
           >
-            <div className="inline-block mb-3 px-4 py-1.5 bg-blue-500/10 border border-blue-500/20 rounded-full">
-              <span className="text-blue-600 dark:text-blue-400 text-xs font-bold uppercase">Global Presence</span>
-            </div>
-            <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold mb-3 md:mb-4 text-balance">6 Global Offices</h2>
-            <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">24/7 development across continents</p>
-          </motion.div>
-
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 max-w-4xl mx-auto">
-            {[
-              { city: 'Gurugram', country: 'India', icon: '🇮🇳', type: 'HQ' },
-              { city: 'Dubai', country: 'UAE', icon: '🇦🇪', type: 'Hub' },
-              { city: 'California', country: 'USA', icon: '🇺🇸', type: 'R&D' },
-              { city: 'Toronto', country: 'Canada', icon: '🇨🇦', type: 'Ops' },
-              { city: 'Shenzhen', country: 'China', icon: '🇨🇳', type: 'APAC' },
-              { city: 'Bangalore', country: 'India', icon: '🇮🇳', type: 'Dev' }
-            ].map((office, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.05 }}
-                className="bg-gradient-to-br from-gray-50 to-white dark:from-gray-800 dark:to-gray-700 p-4 md:p-6 rounded-xl shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all border border-gray-200 dark:border-gray-600"
+            Leadership
+          </h2>
+          {team.map((member) => (
+            <div
+              key={member.name}
+              className="flex flex-col sm:flex-row gap-8 items-start max-w-3xl"
+            >
+              {/* Avatar */}
+              <div className="w-20 h-20 rounded-2xl bg-[#0C1B33] flex items-center justify-center text-white font-bold text-2xl shrink-0"
+                style={{ fontFamily: "var(--font-sora), sans-serif" }}
               >
-                <div className="text-3xl md:text-4xl mb-2">{office.icon}</div>
-                <h3 className="text-lg md:text-xl font-bold mb-0.5">{office.city}</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">{office.country}</p>
-                <span className="inline-block px-2 py-0.5 bg-blue-500/10 text-blue-600 dark:text-blue-400 rounded text-xs font-semibold">{office.type}</span>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* MISSION & VALUES - Split Compact */}
-      <section className="compact-main-section bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 text-white relative overflow-hidden">
-        {/* Illustrations */}
-        <div className="absolute bottom-10 right-10 w-40 h-40 opacity-20 hidden lg:block">
-          <AnimatedIllustration
-            src="/illustrations/undraw_programming.svg"
-            alt="Code"
-            width={160}
-            height={160}
-            animationType="rotate"
-            delay={0.4}
-          />
-        </div>
-
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-5xl mx-auto">
-            {/* Mission */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-xl p-6 md:p-8"
-            >
-              <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center mb-4">
-                <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
+                {member.initials}
               </div>
-              <h2 className="text-2xl md:text-3xl font-bold mb-3">Our Mission</h2>
-              <p className="text-gray-300 mb-4 leading-relaxed">
-                Deliver reliable, scalable solutions with strong engineering fundamentals and clear communication.
-              </p>
-              <ul className="space-y-2 text-sm">
-                {['Enterprise Solutions', '24/7 Support', 'Scalable Architecture'].map((item, i) => (
-                  <li key={i} className="flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-cyan-400"></div>
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-
-            {/* Vision */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-xl p-6 md:p-8"
-            >
-              <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center mb-4">
-                <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                </svg>
+              <div>
+                <h3
+                  className="text-2xl font-bold text-[#0C1B33] dark:text-white mb-1"
+                  style={{ fontFamily: "var(--font-sora), sans-serif" }}
+                >
+                  {member.name}
+                </h3>
+                <p className="text-[#D4870A] font-semibold text-sm mb-4 uppercase tracking-wide">
+                  {member.role}
+                </p>
+                <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                  {member.bio}
+                </p>
               </div>
-              <h2 className="text-2xl md:text-3xl font-bold mb-3">Our Vision</h2>
-              <p className="text-gray-300 mb-4 leading-relaxed">
-                Become a globally trusted engineering partner known for quality, security, and long-term outcomes.
-              </p>
-              <ul className="space-y-2 text-sm">
-                {['Market Leadership', 'Innovation Focus', 'Client Success'].map((item, i) => (
-                  <li key={i} className="flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-purple-400"></div>
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* FOUNDER - Compact Card */}
-      <section className="compact-main-section bg-white dark:bg-gray-900 relative overflow-hidden">
-        {/* Illustration */}
-        <div className="absolute top-10 left-10 w-48 h-48 opacity-5 hidden lg:block">
-          <AnimatedIllustration
-            src="/illustrations/undraw_cloud_hosting.svg"
-            alt="Cloud"
-            width={192}
-            height={192}
-            animationType="float"
-            delay={0.2}
-          />
-        </div>
-
-        <div className="container mx-auto px-4 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-8"
-          >
-            <div className="inline-block mb-3 px-4 py-1.5 bg-purple-500/10 border border-purple-500/20 rounded-full">
-              <span className="text-purple-600 dark:text-purple-400 text-xs font-bold uppercase">Leadership</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-balance">Meet Our Founder</h2>
-          </motion.div>
+          ))}
+        </div>
+      </section>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="max-w-3xl mx-auto"
+      {/* MILESTONES */}
+      <section className="compact-main-section bg-[#0C1B33] relative overflow-hidden">
+        <div className="absolute inset-0 hero-grid-bg opacity-15 pointer-events-none" />
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="vp-divider mb-4" />
+          <h2
+            className="text-3xl sm:text-4xl font-bold text-white mb-14 tracking-tight"
+            style={{ fontFamily: "var(--font-sora), sans-serif" }}
           >
-            <div className="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-700 rounded-xl overflow-hidden shadow-xl border border-gray-200 dark:border-gray-600">
-              <div className="md:flex">
-                <div className="md:w-2/5 bg-gradient-to-br from-blue-600 to-purple-600 p-8 flex flex-col items-center justify-center text-white">
-                  <div className="w-24 h-24 rounded-full bg-white/20 flex items-center justify-center mb-4 border-4 border-white/30">
-                    <svg className="w-12 h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                    </svg>
+            Our Journey
+          </h2>
+          <div className="relative">
+            {/* Vertical line */}
+            <div className="absolute left-5 top-0 bottom-0 w-px bg-white/10 hidden sm:block" />
+            <div className="space-y-8">
+              {milestones.map((m, i) => (
+                <div key={i} className="flex gap-6 sm:gap-8 relative">
+                  {/* Dot */}
+                  <div className="hidden sm:flex items-start shrink-0 w-10 mt-1">
+                    <div className="w-3 h-3 rounded-full bg-[#D4870A] ml-3.5 ring-4 ring-[#0C1B33]" />
                   </div>
-                  <h3 className="text-xl md:text-2xl font-bold text-center">Aman Kumar Sharma</h3>
-                  <p className="text-blue-100 mb-4">Founder & CEO</p>
-                  <div className="grid grid-cols-2 gap-2 text-center text-sm">
-                    <div className="bg-white/10 rounded-lg p-2">
-                      <div className="font-bold">10+</div>
-                      <div className="text-xs opacity-80">Years</div>
+                  <div className="pb-2">
+                    <div className="flex items-center gap-3 mb-1">
+                      <span
+                        className="text-xs font-bold text-[#D4870A] uppercase tracking-widest"
+                        style={{ fontFamily: "var(--font-sora), sans-serif" }}
+                      >
+                        {m.year}
+                      </span>
+                      <span
+                        className="text-base font-bold text-white"
+                        style={{ fontFamily: "var(--font-sora), sans-serif" }}
+                      >
+                        {m.event}
+                      </span>
                     </div>
-                    <div className="bg-white/10 rounded-lg p-2">
-                      <div className="font-bold">500+</div>
-                      <div className="text-xs opacity-80">Clients</div>
-                    </div>
+                    <p className="text-gray-400 text-sm leading-relaxed">{m.desc}</p>
                   </div>
                 </div>
-                <div className="md:w-3/5 p-6 md:p-8">
-                  <h4 className="text-lg md:text-xl font-bold mb-3 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 dark:from-cyan-400 dark:to-pink-400">
-                    Visionary Tech Entrepreneur
-                  </h4>
-                  <p className="text-gray-700 dark:text-gray-300 mb-4 text-sm md:text-base leading-relaxed">
-                    Founder of {companyProfile.legalName} (brand: {companyProfile.brandName}). Focused on building dependable systems and high-performing teams across timezones.
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* OFFICES */}
+      <section className="compact-main-section bg-[#F4F4F5] dark:bg-[#0F1623]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="vp-divider mb-4" />
+          <h2
+            className="text-3xl sm:text-4xl font-bold text-[#0C1B33] dark:text-white mb-14 tracking-tight"
+            style={{ fontFamily: "var(--font-sora), sans-serif" }}
+          >
+            Where We Operate
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {[
+              { location: "Haryana, India", label: "Headquarters", flag: "🇮🇳" },
+              { location: "Dubai, UAE", label: "Middle East Office", flag: "🇦🇪" },
+              { location: "California, USA", label: "North America Office", flag: "🇺🇸" },
+              { location: "Toronto, Canada", label: "Canada Office", flag: "🇨🇦" },
+              { location: "Shenzhen, China", label: "Asia-Pacific Office", flag: "🇨🇳" },
+            ].map((office) => (
+              <div
+                key={office.location}
+                className="bg-white dark:bg-[#080C14] rounded-2xl p-5 border border-gray-100 dark:border-[#1E293B] flex items-center gap-4"
+              >
+                <span className="text-3xl">{office.flag}</span>
+                <div>
+                  <p
+                    className="font-bold text-[#0C1B33] dark:text-white text-sm"
+                    style={{ fontFamily: "var(--font-sora), sans-serif" }}
+                  >
+                    {office.location}
                   </p>
-                  <div className="space-y-2 text-sm">
-                    {[
-                      'Global delivery across multiple timezones',
-                      'Architecture-first delivery and clear documentation',
-                      'Security and reliability as default'
-                    ].map((item, i) => (
-                      <div key={i} className="flex items-start gap-2">
-                        <svg className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                        </svg>
-                        <span className="text-gray-700 dark:text-gray-300">{item}</span>
-                      </div>
-                    ))}
-                  </div>
+                  <p className="text-xs text-gray-400 dark:text-gray-500">{office.label}</p>
                 </div>
               </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* TESTIMONIALS - Compact Grid */}
-      <section className="compact-main-section bg-gray-50 dark:bg-gray-800 relative overflow-hidden">
-        {/* Illustration */}
-        <div className="absolute bottom-10 right-10 w-40 h-40 opacity-5 hidden lg:block">
-          <AnimatedIllustration
-            src="/illustrations/undraw_mobile_app.svg"
-            alt="Mobile"
-            width={160}
-            height={160}
-            animationType="pulse"
-            delay={0.3}
-          />
-        </div>
-
-        <div className="container mx-auto px-4 relative z-10">
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="text-center mb-8 md:mb-12"
-          >
-            <div className="inline-block mb-3 px-4 py-1.5 bg-yellow-500/10 border border-yellow-500/20 rounded-full">
-              <span className="text-yellow-600 dark:text-yellow-400 text-xs font-bold uppercase">Client Success</span>
-            </div>
-            <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-balance">Trusted Worldwide</h2>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 max-w-5xl mx-auto">
-            {[
-              { name: 'Enterprise Client', role: 'Technology Team', quote: 'Strong engineering discipline and clear communication throughout delivery.' },
-              { name: 'FinTech Client', role: 'Engineering Lead', quote: 'Reliable execution with a focus on performance and maintainability.' },
-              { name: 'Healthcare Client', role: 'Product Team', quote: 'Professional collaboration and thoughtful architecture choices.' }
-            ].map((t, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700"
-              >
-                <div className="flex gap-1 mb-3">
-                  {[...Array(5)].map((_, i) => (
-                    <svg key={i} className="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
-                      <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
-                    </svg>
-                  ))}
-                </div>
-                <p className="text-gray-700 dark:text-gray-300 mb-4 text-sm italic">&ldquo;{t.quote}&rdquo;</p>
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center text-white font-bold text-sm">
-                    {t.name.split(' ').map(n => n[0]).join('')}
-                  </div>
-                  <div>
-                    <div className="font-bold text-sm">{t.name}</div>
-                    <div className="text-xs text-gray-600 dark:text-gray-400">{t.role}</div>
-                  </div>
-                </div>
-              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CERTIFICATIONS - Compact Icons */}
-      <section className="compact-main-section bg-white dark:bg-gray-900">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="text-center mb-8"
+      {/* LEGAL INFO */}
+      <section className="py-10 bg-white dark:bg-[#080C14] border-t border-gray-100 dark:border-[#1E293B]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h3
+            className="text-sm font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-4"
+            style={{ fontFamily: "var(--font-sora), sans-serif" }}
           >
-            <div className="inline-block mb-3 px-4 py-1.5 bg-green-500/10 border border-green-500/20 rounded-full">
-              <span className="text-green-600 dark:text-green-400 text-xs font-bold uppercase">Quality Focus</span>
-            </div>
-            <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-balance">Security & Reliability First</h2>
-          </motion.div>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
-            {[
-              { name: 'Security Practices', icon: '🔒' },
-              { name: 'Cloud Delivery', icon: '☁️' },
-              { name: 'Monitoring', icon: '📈' },
-              { name: 'Documentation', icon: '🧾' }
-            ].map((cert, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="bg-gradient-to-br from-gray-50 to-white dark:from-gray-800 dark:to-gray-700 p-6 rounded-xl text-center hover:shadow-xl transition-all border border-gray-200 dark:border-gray-600"
-              >
-                <div className="text-4xl mb-2">{cert.icon}</div>
-                <div className="font-bold text-sm">{cert.name}</div>
-              </motion.div>
-            ))}
+            Legal Details
+          </h3>
+          <div className="flex flex-wrap gap-6 text-sm text-gray-500 dark:text-gray-400">
+            <span><strong className="text-gray-700 dark:text-gray-300">Legal Name:</strong> Vedpragya Bharat Private Limited</span>
+            <span><strong className="text-gray-700 dark:text-gray-300">CIN:</strong> U47912HR2025PTC131357</span>
+            <span><strong className="text-gray-700 dark:text-gray-300">GST:</strong> 06AALCV0051A1ZV</span>
+            <span><strong className="text-gray-700 dark:text-gray-300">Incorporated:</strong> 28 April 2025</span>
           </div>
         </div>
       </section>
 
-      {/* FINAL CTA - Compact & Powerful */}
-      <section className="compact-main-section bg-gradient-to-br from-cyan-600 via-blue-600 to-purple-600 text-white relative overflow-hidden">
-        {/* Illustrations */}
-        <div className="absolute top-10 right-10 w-40 h-40 opacity-20 hidden lg:block">
-          <AnimatedIllustration
-            src="/illustrations/undraw_programming.svg"
-            alt="Code"
-            width={160}
-            height={160}
-            animationType="float"
-            delay={0.2}
-          />
-        </div>
-        <div className="absolute bottom-10 left-10 w-32 h-32 opacity-15 hidden lg:block">
-          <AnimatedIllustration
-            src="/illustrations/undraw_cloud_hosting.svg"
-            alt="Cloud"
-            width={128}
-            height={128}
-            animationType="scale"
-            delay={0.5}
-          />
-        </div>
-
-        <div className="container mx-auto px-4 text-center relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+      {/* CTA */}
+      <section className="compact-main-section bg-[#0C1B33] relative overflow-hidden">
+        <div className="absolute inset-0 hero-grid-bg opacity-15 pointer-events-none" />
+        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2
+            className="text-3xl sm:text-4xl font-bold text-white mb-6 tracking-tight"
+            style={{ fontFamily: "var(--font-sora), sans-serif" }}
           >
-            <h2 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6 text-balance">
-              Ready to Build<br className="md:hidden" /> Something Great?
-            </h2>
-            <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto opacity-90">
-              Tell us what you’re building and we’ll respond with next steps.
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-              <Link href="/pages/contact" className="px-8 py-4 bg-white text-blue-600 hover:bg-gray-100 rounded-lg font-bold text-lg transition-all shadow-xl">
-                Get Started →
-              </Link>
-              <Link href="/pages/services" className="px-8 py-4 bg-white/10 border-2 border-white/30 hover:bg-white/20 text-white rounded-lg font-bold text-lg transition-all backdrop-blur-sm">
-                Our Services
-              </Link>
-            </div>
-
-            <div className="flex flex-wrap justify-center gap-6 text-sm opacity-80">
-              <span>🌍 6 Countries</span>
-              <span>💼 500+ Clients</span>
-              <span>⭐ 99.8% Satisfaction</span>
-              <span>📊 1200+ Projects</span>
-            </div>
-          </motion.div>
+            Ready to Work Together?
+          </h2>
+          <p className="text-gray-400 text-lg mb-8 max-w-xl mx-auto">
+            Tell us about your project. Our team responds within 24 hours with a
+            clear, honest assessment.
+          </p>
+          <Link
+            href="/pages/contact"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-[#D4870A] hover:bg-[#F59E0B] text-white font-bold text-base rounded-xl transition-all hover:shadow-[0_8px_30px_rgba(212,135,10,0.4)] hover:-translate-y-0.5"
+            style={{ fontFamily: "var(--font-sora), sans-serif" }}
+          >
+            Start a Conversation
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+          </Link>
         </div>
       </section>
     </div>
   );
 }
-
-console.log('[About] v3.0 Component loaded successfully');

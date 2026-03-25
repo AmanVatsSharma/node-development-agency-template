@@ -45,7 +45,7 @@ export interface CompanyProfile {
  * Update this file to reflect real/verified public information.
  */
 export const companyProfile: CompanyProfile = {
-  brandName: "Enterprise Hero",
+  brandName: "Vedpragya",
   legalName: "Vedpragya Bharat Private Limited",
   websiteUrl: "https://vedpragya.com",
   contactEmail: "support@vedpragya.com",
