@@ -1,326 +1,255 @@
-"use client";
+import type { Metadata } from "next";
+import Link from "next/link";
 
-import { useEffect, useState } from 'react';
-import Link from 'next/link';
-import { motion, AnimatePresence } from 'framer-motion';
-import AnimatedIllustration from '../../components/AnimatedIllustration';
+export const metadata: Metadata = {
+  title: "Services | Vedpragya — Software Development & IT Solutions",
+  description:
+    "Web & mobile apps, AI automation, e-commerce, ERP, digital marketing, trading platforms — full-service software and IT from Vedpragya.",
+};
 
-// Service data
-const services = [
+const serviceCategories = [
   {
-    id: 'nodejs',
-    title: 'Node.js Development',
-    shortDesc: 'Custom, scalable backend solutions built with Node.js.',
-    fullDesc: 'Our Node.js development services deliver high-performance, scalable backend solutions for enterprises. We specialize in microservices architecture, real-time applications, and API development that powers your business.',
-    icon: '/images/services/nodejs.svg',
-    imageUrl: '/images/services/nodejs-hero.jpg',
-    features: [
-      'Custom API Development',
-      'Microservices Architecture',
-      'Real-time Applications',
-      'Performance Optimization',
-      'Scalable Backend Systems',
-      'Enterprise Integration'
+    id: "web",
+    number: "01",
+    title: "Web & Mobile Development",
+    tagline: "Full-stack applications built to perform at scale.",
+    desc: "From consumer apps to enterprise platforms, we build with Next.js, React, Node.js, and modern architecture patterns. Every product is designed for performance, accessibility, and long-term maintainability.",
+    services: [
+      { name: "Next.js Development", href: "/pages/next-js-development" },
+      { name: "React.js Development", href: "/pages/reactjs-development" },
+      { name: "Custom Web Development", href: "/pages/web-development" },
+      { name: "Business Website", href: "/pages/business-website" },
+      { name: "Website Services", href: "/pages/website-services" },
     ],
-    technologies: ['Node.js', 'Express.js', 'NestJS', 'MongoDB', 'PostgreSQL', 'Redis', 'Docker'],
-    color: 'bg-green-600',
-    gradient: 'from-green-600 to-teal-600',
+    accent: "#2563EB",
+    bg: "from-blue-500/8 to-blue-600/4",
   },
   {
-    id: '3d',
-    title: '3D Interactive Experiences',
-    shortDesc: 'Immersive 3D animations and interactive visualizations.',
-    fullDesc: 'Transform your digital presence with immersive 3D experiences. From product showcases to interactive data visualizations, we create engaging experiences that captivate your audience and elevate your brand.',
-    icon: '/images/services/3d.svg',
-    imageUrl: '/images/services/3d-hero.jpg',
-    features: [
-      'Interactive Product Showcases',
-      '3D Data Visualizations',
-      'WebGL Animations',
-      'Virtual Environments',
-      'Augmented Reality Experiences',
-      'Performance-Optimized Rendering'
+    id: "ai",
+    number: "02",
+    title: "AI & Automation",
+    tagline: "Intelligent systems that work while you sleep.",
+    desc: "AI chatbots, voice agents, workflow automation, and machine learning integrations. We design AI solutions that solve real operational problems — not AI for the sake of buzzwords.",
+    services: [
+      { name: "AI Chatbot Development", href: "/pages/ai-chatbot-development" },
+      { name: "AI Voice Agents", href: "/pages/ai-voice-agents" },
+      { name: "WhatsApp Business API", href: "/pages/whatsapp-business-api" },
     ],
-    technologies: ['Three.js', 'WebGL', 'React Three Fiber', 'GSAP', 'Blender', 'Spline', 'WebXR'],
-    color: 'bg-blue-600',
-    gradient: 'from-blue-600 to-purple-600',
+    accent: "#7C3AED",
+    bg: "from-violet-500/8 to-violet-600/4",
   },
   {
-    id: 'enterprise',
-    title: 'Enterprise Solutions',
-    shortDesc: 'End-to-end enterprise applications with robust architecture.',
-    fullDesc: 'Our enterprise solutions combine robust architecture, security, and scalability to meet your business-critical needs. We build systems that grow with your organization and integrate seamlessly with your existing infrastructure.',
-    icon: '/images/services/enterprise.svg',
-    imageUrl: '/images/services/enterprise-hero.jpg',
-    features: [
-      'Custom Enterprise Applications',
-      'Legacy System Modernization',
-      'Workflow Automation',
-      'Business Intelligence Dashboards',
-      'System Integration',
-      'Multi-tenant Architecture'
+    id: "ecommerce",
+    number: "03",
+    title: "E-Commerce Platforms",
+    tagline: "Online stores engineered to convert.",
+    desc: "Shopify development, headless migrations, product page optimization, and custom e-commerce solutions. We understand conversion, UX, and the operational realities of running an online business.",
+    services: [
+      { name: "Shopify Store Setup", href: "/pages/shopify-store-setup" },
+      { name: "Shopify Headless Migration", href: "/pages/shopify-headless-migration" },
+      { name: "Product Page Customization", href: "/pages/shopify-product-page-customization" },
+      { name: "E-Commerce Google Ads", href: "/pages/ecommerce-google-ads-optimization" },
     ],
-    technologies: ['Next.js', 'TypeScript', 'GraphQL', 'AWS', 'Azure', 'Kubernetes', 'CI/CD'],
-    color: 'bg-indigo-600',
-    gradient: 'from-indigo-600 to-blue-600',
+    accent: "#059669",
+    bg: "from-emerald-500/8 to-emerald-600/4",
   },
   {
-    id: 'api',
-    title: 'API Development',
-    shortDesc: 'Robust, scalable API solutions for seamless integrations.',
-    fullDesc: 'We design and develop robust, well-documented APIs that power your digital ecosystem. From RESTful services to GraphQL endpoints, our APIs provide the foundation for seamless integration and data exchange.',
-    icon: '/images/services/api.svg',
-    imageUrl: '/images/services/api-hero.jpg',
-    features: [
-      'RESTful API Design',
-      'GraphQL Implementation',
-      'API Gateway Solutions',
-      'Swagger/OpenAPI Documentation',
-      'Versioning Strategies',
-      'Security & Authentication'
+    id: "erp",
+    number: "04",
+    title: "ERP & Enterprise Software",
+    tagline: "Mission-critical systems that run businesses.",
+    desc: "Custom ERP systems, CRM platforms, healthcare software, and trading platforms. We have shipped BharatERP — a complete SAP-compatible ERP in Node.js — and apply that same engineering depth to client projects.",
+    services: [
+      { name: "Healthcare Software", href: "/pages/healthcare-software-development" },
+      { name: "Trading Software", href: "/pages/trading-software" },
+      { name: "NSE/MCX Market Data", href: "/pages/nse-mcx-live-market-data" },
+      { name: "CRM Platform", href: "/pages/crm" },
     ],
-    technologies: ['REST', 'GraphQL', 'OpenAPI', 'OAuth', 'JWT', 'API Gateway', 'Microservices'],
-    color: 'bg-orange-600',
-    gradient: 'from-orange-600 to-red-600',
+    accent: "#D97706",
+    bg: "from-amber-500/8 to-amber-600/4",
   },
   {
-    id: 'consulting',
-    title: 'Technical Consulting',
-    shortDesc: 'Expert guidance on architecture, technology, and strategy.',
-    fullDesc: 'Our technical consulting services provide expert guidance on architecture, technology selection, and digital strategy. We help you navigate complex technical decisions to ensure your technology investments deliver maximum value.',
-    icon: '/images/services/consulting.svg',
-    imageUrl: '/images/services/consulting-hero.jpg',
-    features: [
-      'Architecture Review',
-      'Technology Stack Selection',
-      'Performance Optimization',
-      'Security Assessment',
-      'Cloud Migration Strategy',
-      'Team Augmentation'
+    id: "marketing",
+    number: "05",
+    title: "Digital Marketing & Growth",
+    tagline: "Performance marketing backed by data.",
+    desc: "Google Ads management, SEO audits, landing page optimization, B2B lead generation, and YouTube advertising. We run campaigns that drive qualified traffic and measurable ROI.",
+    services: [
+      { name: "Google Ads Management", href: "/pages/google-ads-management" },
+      { name: "Google Ads Ecosystem", href: "/pages/google-ads-ecosystem" },
+      { name: "Enterprise Google Ads", href: "/pages/enterprise-google-ads-management" },
+      { name: "SEO Audit", href: "/pages/seo-audit" },
+      { name: "B2B Lead Generation", href: "/pages/b2b-lead-generation-ads" },
+      { name: "Landing Page Optimization", href: "/pages/landing-page-optimization" },
+      { name: "YouTube Advertising", href: "/pages/youtube-advertising-management" },
+      { name: "Local Business Ads", href: "/pages/local-business-google-ads" },
     ],
-    technologies: ['System Architecture', 'Cloud Strategy', 'DevOps', 'Security', 'Performance', 'Training'],
-    color: 'bg-purple-600',
-    gradient: 'from-purple-600 to-pink-600',
-  }
+    accent: "#DC2626",
+    bg: "from-rose-500/8 to-rose-600/4",
+  },
+  {
+    id: "trading",
+    number: "06",
+    title: "Trading & Finance Technology",
+    tagline: "Real-time financial systems at institutional quality.",
+    desc: "Live market data platforms, algorithmic trading tools, charting software, and fintech infrastructure. We understand the latency, reliability, and compliance requirements of financial software.",
+    services: [
+      { name: "Trading Software Development", href: "/pages/trading-software" },
+      { name: "NSE/MCX Live Market Data", href: "/pages/nse-mcx-live-market-data" },
+    ],
+    accent: "#0D9488",
+    bg: "from-teal-500/8 to-teal-600/4",
+  },
 ];
 
 export default function ServicesPage() {
-  // State for the currently selected service
-  const [selectedService, setSelectedService] = useState(services[0]);
-
-  useEffect(() => {
-    console.log('[ServicesPage] Loaded with default service:', services[0].id);
-  }, []);
-
-  useEffect(() => {
-    console.log('[ServicesPage] Active service changed:', selectedService.id);
-  }, [selectedService.id]);
-  
   return (
     <div className="w-full">
-      {/* Hero Section */}
-      <section className="relative compact-main-hero bg-gradient-to-br from-gray-900 to-gray-800 text-white overflow-hidden">
-        {/* Background Illustrations */}
-        <div className="absolute top-10 right-4 sm:right-10 w-48 h-48 sm:w-64 sm:h-64 opacity-20 hidden sm:block">
-          <AnimatedIllustration
-            src="/illustrations/undraw_programming.svg"
-            alt="Programming illustration"
-            width={256}
-            height={256}
-            animationType="float"
-            delay={0.2}
-          />
-        </div>
-        <div className="absolute bottom-10 left-4 sm:left-10 w-32 h-32 sm:w-48 sm:h-48 opacity-15 hidden sm:block">
-          <AnimatedIllustration
-            src="/illustrations/undraw_cloud_hosting.svg"
-            alt="Cloud hosting illustration"
-            width={192}
-            height={192}
-            animationType="pulse"
-            delay={0.6}
-          />
-        </div>
-        
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-balance">
-              Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">Premium</span> Services
+
+      {/* HERO */}
+      <section className="compact-main-hero bg-[#0C1B33] relative overflow-hidden flex items-center">
+        <div className="absolute inset-0 hero-grid-bg opacity-20 pointer-events-none" />
+        <div className="absolute left-1/2 top-0 -translate-x-1/2 w-[800px] h-[400px] rounded-full bg-[#2563EB]/8 blur-[120px] pointer-events-none" />
+
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+          <div className="max-w-3xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#D4870A]/40 bg-[#D4870A]/10 text-[#D4870A] text-xs font-semibold tracking-wide uppercase mb-6">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#D4870A]" />
+              What We Do
+            </div>
+            <h1
+              className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 leading-[1.08] tracking-tight"
+              style={{ fontFamily: "var(--font-sora), sans-serif" }}
+            >
+              Six Disciplines.{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D4870A] to-[#F59E0B]">
+                One Team.
+              </span>
             </h1>
-            <p className="text-base sm:text-xl text-gray-300 mb-8">
-              Enterprise-grade solutions powered by cutting-edge Node.js development and immersive 3D experiences.
+            <p className="text-gray-300 text-lg sm:text-xl leading-relaxed max-w-2xl">
+              From a startup&rsquo;s first web app to a multinational&rsquo;s
+              digital transformation — we have the depth and breadth to take it
+              on.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Services Navigation & Details */}
-      <section className="compact-main-section bg-white dark:bg-gray-900">
-        <div className="container mx-auto px-4">
-          {/* Service Navigation Tabs */}
-          <div className="touch-chip-row mb-10 md:mb-12 md:flex-wrap md:justify-center md:overflow-visible">
-            {services.map((service) => (
-              <button
-                key={service.id}
-                onClick={() => {
-                  console.log('[ServicesPage] Service tab clicked:', service.id);
-                  setSelectedService(service);
-                }}
-                className={`px-4 py-2.5 rounded-full font-medium whitespace-nowrap transition-all duration-300 ${
-                  selectedService.id === service.id
-                    ? `text-white ${service.color}`
-                    : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
-                }`}
+      {/* SERVICES GRID */}
+      <section className="compact-main-section bg-white dark:bg-[#080C14]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="space-y-20">
+            {serviceCategories.map((cat) => (
+              <div
+                key={cat.id}
+                id={cat.id}
+                className="grid lg:grid-cols-2 gap-12 items-start"
               >
-                {service.title}
-              </button>
-            ))}
-          </div>
-
-          {/* Selected Service Details */}
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={selectedService.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.3 }}
-              className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center"
-            >
-              {/* Service Visual */}
-              <div className="order-2 lg:order-1">
-                <div className={`rounded-2xl overflow-hidden shadow-xl bg-gradient-to-br ${selectedService.gradient} p-1`}>
-                  <div className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden">
-                    <div className="h-52 sm:h-64 bg-gray-200 dark:bg-gray-700 relative">
-                      {/* Placeholder for actual images */}
-                      <div className={`absolute inset-0 bg-gradient-to-br ${selectedService.gradient} opacity-50`}></div>
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className={`w-24 h-24 rounded-full ${selectedService.color} flex items-center justify-center`}>
-                          <svg className="w-12 h-12 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                          </svg>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    {/* Technologies Used */}
-                    <div className="p-5 sm:p-6">
-                      <h3 className="text-lg font-bold mb-3">Technologies</h3>
-                      <div className="flex flex-wrap gap-2">
-                        {selectedService.technologies.map((tech, index) => (
-                          <span 
-                            key={index} 
-                            className="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-full text-sm"
-                          >
-                            {tech}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
+                {/* Left: info */}
+                <div>
+                  <div className="flex items-center gap-3 mb-4">
+                    <span
+                      className="text-xs font-bold uppercase tracking-widest"
+                      style={{ color: cat.accent }}
+                    >
+                      {cat.number}
+                    </span>
+                    <div className="h-px w-8 opacity-30" style={{ backgroundColor: cat.accent }} />
+                  </div>
+                  <h2
+                    className="text-2xl sm:text-3xl font-bold text-[#0C1B33] dark:text-white mb-3 tracking-tight"
+                    style={{ fontFamily: "var(--font-sora), sans-serif" }}
+                  >
+                    {cat.title}
+                  </h2>
+                  <p
+                    className="font-semibold mb-3"
+                    style={{ color: cat.accent, fontFamily: "var(--font-sora), sans-serif" }}
+                  >
+                    {cat.tagline}
+                  </p>
+                  <p className="text-gray-500 dark:text-gray-400 leading-relaxed">
+                    {cat.desc}
+                  </p>
+                  <div className="mt-8">
+                    <Link
+                      href="/pages/contact"
+                      className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#0C1B33] dark:bg-[#1A3A6C] hover:bg-[#1A3A6C] text-white font-semibold text-sm rounded-xl transition-all hover:-translate-y-0.5"
+                      style={{ fontFamily: "var(--font-sora), sans-serif" }}
+                    >
+                      Discuss a Project
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                      </svg>
+                    </Link>
                   </div>
                 </div>
-              </div>
-              
-              {/* Service Description */}
-              <div className="order-1 lg:order-2">
-                <h2 className="text-2xl sm:text-3xl font-bold mb-4 text-gray-800 dark:text-white text-balance">
-                  {selectedService.title}
-                </h2>
-                <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 mb-6">
-                  {selectedService.fullDesc}
-                </p>
-                
-                <div className="mb-8">
-                  <h3 className="text-lg sm:text-xl font-bold mb-4 text-gray-800 dark:text-white">Key Features</h3>
-                  <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    {selectedService.features.map((feature, index) => (
-                      <li key={index} className="flex items-start">
-                        <svg className="w-5 h-5 text-green-500 mr-2 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                        <span className="text-gray-700 dark:text-gray-300">{feature}</span>
+
+                {/* Right: service links */}
+                <div className={`rounded-2xl bg-gradient-to-br ${cat.bg} dark:from-[#0F1623] dark:to-[#0F1623] border border-gray-100 dark:border-[#1E293B] p-6`}>
+                  <p
+                    className="text-[10px] font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-4"
+                    style={{ fontFamily: "var(--font-sora), sans-serif" }}
+                  >
+                    Services in this area
+                  </p>
+                  <ul className="space-y-2">
+                    {cat.services.map((svc) => (
+                      <li key={svc.name}>
+                        <Link
+                          href={svc.href}
+                          className="group flex items-center justify-between p-3 rounded-xl hover:bg-white dark:hover:bg-[#151C2B] transition-colors"
+                        >
+                          <span
+                            className="font-medium text-[#0C1B33] dark:text-gray-200 text-sm group-hover:text-[#0C1B33] dark:group-hover:text-white"
+                          >
+                            {svc.name}
+                          </span>
+                          <svg
+                            className="w-4 h-4 text-gray-300 dark:text-gray-600 group-hover:text-gray-500 dark:group-hover:text-gray-400 transition-colors"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                          </svg>
+                        </Link>
                       </li>
                     ))}
                   </ul>
                 </div>
-                
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <Link 
-                    href="/pages/portfolio" 
-                    className="w-full sm:w-auto px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl sm:rounded-full font-medium text-center transition duration-300"
-                  >
-                    See Related Projects
-                  </Link>
-                  <Link 
-                    href="/pages/contact" 
-                    className="w-full sm:w-auto px-6 py-3 bg-transparent border-2 border-blue-600 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-gray-800 rounded-2xl sm:rounded-full font-medium text-center transition duration-300"
-                  >
-                    Discuss Your Project
-                  </Link>
-                </div>
               </div>
-            </motion.div>
-          </AnimatePresence>
-        </div>
-      </section>
-
-      {/* Service Process */}
-      <section className="compact-main-section bg-gray-50 dark:bg-gray-800">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center mb-12">
-            <h2 className="text-2xl sm:text-3xl font-bold mb-4 text-gray-800 dark:text-white text-balance">Our Service Process</h2>
-            <p className="text-gray-600 dark:text-gray-300">
-              We follow a proven methodology to deliver exceptional results for our clients, ensuring transparent communication and measurable outcomes at every step.
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-            {/* Step 1 */}
-            <div className="bg-white dark:bg-gray-900 p-5 sm:p-6 rounded-xl shadow-lg relative">
-              <div className="w-12 h-12 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-lg mb-4">1</div>
-              <h3 className="text-xl font-bold mb-2 text-gray-800 dark:text-white">Discovery</h3>
-              <p className="text-gray-600 dark:text-gray-300">We analyze your requirements, goals, and challenges to understand your unique needs.</p>
-            </div>
-            
-            {/* Step 2 */}
-            <div className="bg-white dark:bg-gray-900 p-5 sm:p-6 rounded-xl shadow-lg relative">
-              <div className="w-12 h-12 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-lg mb-4">2</div>
-              <h3 className="text-xl font-bold mb-2 text-gray-800 dark:text-white">Strategy</h3>
-              <p className="text-gray-600 dark:text-gray-300">We design a comprehensive solution blueprint and technology roadmap.</p>
-            </div>
-            
-            {/* Step 3 */}
-            <div className="bg-white dark:bg-gray-900 p-5 sm:p-6 rounded-xl shadow-lg relative">
-              <div className="w-12 h-12 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-lg mb-4">3</div>
-              <h3 className="text-xl font-bold mb-2 text-gray-800 dark:text-white">Development</h3>
-              <p className="text-gray-600 dark:text-gray-300">Our expert teams build your solution using agile methodologies and best practices.</p>
-            </div>
-            
-            {/* Step 4 */}
-            <div className="bg-white dark:bg-gray-900 p-5 sm:p-6 rounded-xl shadow-lg relative">
-              <div className="w-12 h-12 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-lg mb-4">4</div>
-              <h3 className="text-xl font-bold mb-2 text-gray-800 dark:text-white">Delivery & Support</h3>
-              <p className="text-gray-600 dark:text-gray-300">We deploy, optimize, and provide ongoing support to ensure long-term success.</p>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="compact-main-section bg-gradient-to-br from-blue-600 to-indigo-700 text-white">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 text-balance">Ready to Transform Your Digital Experience?</h2>
-          <p className="text-base sm:text-xl mb-8 max-w-3xl mx-auto">
-            Let&apos;s discuss how our premium Node.js development and 3D animation expertise can solve your business challenges.
-          </p>
-          <Link 
-            href="/pages/contact" 
-            className="px-8 py-3.5 bg-white text-blue-600 hover:bg-gray-100 rounded-2xl sm:rounded-full font-medium transition duration-300 inline-block"
+      {/* CTA */}
+      <section className="compact-main-section bg-[#0C1B33] relative overflow-hidden">
+        <div className="absolute inset-0 hero-grid-bg opacity-15 pointer-events-none" />
+        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2
+            className="text-3xl sm:text-4xl font-bold text-white mb-6 tracking-tight"
+            style={{ fontFamily: "var(--font-sora), sans-serif" }}
           >
-            Schedule a Consultation
+            Not Sure Where to Start?
+          </h2>
+          <p className="text-gray-400 text-lg mb-8 max-w-xl mx-auto">
+            Tell us about your business challenge. We&rsquo;ll recommend the
+            right solution — and give you an honest estimate.
+          </p>
+          <Link
+            href="/pages/contact"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-[#D4870A] hover:bg-[#F59E0B] text-white font-bold text-base rounded-xl transition-all hover:shadow-[0_8px_30px_rgba(212,135,10,0.4)] hover:-translate-y-0.5"
+            style={{ fontFamily: "var(--font-sora), sans-serif" }}
+          >
+            Talk to Us
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
           </Link>
         </div>
       </section>
     </div>
   );
-} 
+}

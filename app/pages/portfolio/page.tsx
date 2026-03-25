@@ -1,494 +1,417 @@
-"use client";
+import type { Metadata } from "next";
+import Link from "next/link";
 
-import { useEffect, useState } from 'react';
-import Link from 'next/link';
-import { motion, AnimatePresence } from 'framer-motion';
-import AnimatedIllustration from '../../components/AnimatedIllustration';
-
-// Project data
-const projects = [
-  {
-    id: 'enterprise-crm',
-    title: 'Enterprise CRM Platform',
-    category: 'enterprise',
-    tags: ['Node.js', 'Next.js', 'MongoDB', 'Redis', 'Docker'],
-    description: 'A comprehensive CRM solution for enterprise clients featuring real-time analytics, customer journey mapping, and integration with multiple third-party services.',
-    challenge: 'The client needed to replace their legacy CRM system with a modern, scalable solution that could handle their growing customer base and integrate with their existing tools.',
-    solution: 'We built a custom CRM platform using Node.js and Next.js, implementing a microservices architecture for scalability. Real-time features were powered by WebSockets, and we used Redis for caching to ensure optimal performance.',
-    results: ['50% increase in user productivity', '99.9% system uptime', '30% reduction in customer response time', 'Seamless integration with 12+ external services'],
-    imageUrl: '/images/portfolio/enterprise-crm.jpg',
-    color: 'blue'
-  },
-  {
-    id: 'interactive-product-showcase',
-    title: 'Interactive Product Showcase',
-    category: '3d',
-    tags: ['Three.js', 'WebGL', 'React', 'GSAP', 'WebXR'],
-    description: 'An immersive 3D product configurator allowing customers to customize and visualize products in real-time before purchase.',
-    challenge: 'The client wanted to reduce product returns by giving customers a way to accurately visualize customized products before ordering.',
-    solution: 'We developed a WebGL-based 3D product configurator using Three.js and React. The application allowed users to customize products in real-time, view them from any angle, and even experience them in AR on supported devices.',
-    results: ['35% reduction in product returns', '28% increase in average order value', '40% more time spent on product pages', 'Positive customer feedback on the shopping experience'],
-    imageUrl: '/images/portfolio/interactive-product.jpg',
-    color: 'purple'
-  },
-  {
-    id: 'financial-dashboard',
-    title: 'Financial Analytics Dashboard',
-    category: 'enterprise',
-    tags: ['Node.js', 'GraphQL', 'D3.js', 'PostgreSQL', 'Redis'],
-    description: 'A real-time financial analytics platform processing millions of transactions daily with advanced visualization and reporting capabilities.',
-    challenge: 'The financial institution needed a high-performance dashboard to monitor transactions, detect anomalies, and provide insights to their customers.',
-    solution: 'We built a real-time analytics platform with Node.js and GraphQL for the API layer. Complex data visualization was implemented with D3.js, and we optimized database queries and implemented caching for handling millions of transactions.',
-    results: ['Real-time processing of 2M+ daily transactions', 'Detection of fraudulent activities improved by 40%', '60% faster report generation', 'System capable of handling 10x current load'],
-    imageUrl: '/images/portfolio/financial-dashboard.jpg',
-    color: 'green'
-  },
-  {
-    id: 'ecommerce-platform',
-    title: 'Enterprise E-Commerce Platform',
-    category: 'api',
-    tags: ['Node.js', 'Microservices', 'Kubernetes', 'MongoDB', 'Redis', 'Elasticsearch'],
-    description: 'A scalable e-commerce platform supporting multiple vendors, advanced product search, and personalized recommendations.',
-    challenge: 'The client needed to transition from a monolithic e-commerce platform to a scalable solution capable of handling seasonal traffic spikes and supporting their growing vendor network.',
-    solution: 'We implemented a microservices architecture with Node.js, deployed on Kubernetes for automatic scaling. The search functionality was powered by Elasticsearch, and we used machine learning for personalized product recommendations.',
-    results: ['Platform now handles 10x peak traffic without slowdowns', 'Search response time reduced by 70%', '25% increase in conversion rate through personalization', 'Onboarding time for new vendors reduced from weeks to days'],
-    imageUrl: '/images/portfolio/ecommerce-platform.jpg',
-    color: 'orange'
-  },
-  {
-    id: 'iot-dashboard',
-    title: 'IoT Monitoring System',
-    category: 'enterprise',
-    tags: ['Node.js', 'MQTT', 'WebSockets', 'Time-series DB', 'React'],
-    description: 'A real-time IoT monitoring system for industrial equipment with predictive maintenance capabilities.',
-    challenge: 'The manufacturing client needed a system to monitor thousands of IoT devices in real-time and predict maintenance needs to prevent costly equipment failures.',
-    solution: 'We developed a Node.js-based monitoring system that processes data from thousands of sensors in real-time. The system uses machine learning for predictive maintenance and provides a real-time dashboard for monitoring equipment status.',
-    results: ['45% reduction in unexpected equipment downtime', 'Maintenance costs reduced by 30%', 'Real-time monitoring of 5,000+ connected devices', 'Early detection of potential failures'],
-    imageUrl: '/images/portfolio/iot-dashboard.jpg',
-    color: 'teal'
-  },
-  {
-    id: 'virtual-showroom',
-    title: 'Virtual Real Estate Showroom',
-    category: '3d',
-    tags: ['Three.js', 'React', 'WebXR', 'Node.js', 'MongoDB'],
-    description: 'An immersive virtual reality platform allowing potential buyers to tour properties remotely with interactive features.',
-    challenge: "The real estate developer needed a way to showcase properties to international buyers who couldn't visit in person, especially during travel restrictions.",
-    solution: 'We created a WebXR-powered virtual showroom using Three.js and React, allowing users to take virtual tours of properties, interact with features, and visualize different design options.',
-    results: ['40% increase in international buyer engagement', '25% reduction in time-to-sale for featured properties', '60% of buyers made purchasing decisions without physical visits', 'Positive feedback on the immersive experience'],
-    imageUrl: '/images/portfolio/virtual-showroom.jpg',
-    color: 'purple'
-  }
-];
-
-// Categories for filtering
-const categories = [
-  { id: 'all', name: 'All Projects' },
-  { id: 'enterprise', name: 'Enterprise Solutions' },
-  { id: '3d', name: '3D Experiences' },
-  { id: 'api', name: 'API Development' }
-];
-
-const projectColorGradients: Record<string, string> = {
-  blue: 'from-blue-500 to-blue-700',
-  purple: 'from-purple-500 to-purple-700',
-  green: 'from-green-500 to-green-700',
-  orange: 'from-orange-500 to-orange-700',
-  teal: 'from-teal-500 to-teal-700',
+export const metadata: Metadata = {
+  title: "Portfolio | Vedpragya — Products & Client Work",
+  description:
+    "Products we've shipped and client work we're proud of. BharatERP, Promerchants, TradeZen, and 500+ client projects across India, UAE, and the US.",
 };
 
+const products = [
+  {
+    name: "BharatERP",
+    tag: "Enterprise ERP System",
+    desc: "A complete SAP Hana-compatible ERP built in Node.js — finance, inventory, HR, supply chain, and custom modules. Deployed for 12+ enterprise clients in manufacturing and retail.",
+    metrics: [
+      { val: "12+", label: "Enterprise Deployments" },
+      { val: "60%", label: "Cost vs SAP Hana" },
+      { val: "99.9%", label: "Uptime" },
+    ],
+    tags: ["Node.js", "PostgreSQL", "React", "Microservices"],
+    color: "bg-[#0C1B33]",
+    featured: true,
+  },
+  {
+    name: "TradeZen",
+    tag: "Trading & Charting Platform",
+    desc: "Real-time market data platform handling 50,000+ concurrent users with sub-50ms latency. NSE/MCX live feeds and professional charting tools for traders.",
+    metrics: [
+      { val: "50K+", label: "Concurrent Users" },
+      { val: "<50ms", label: "Latency" },
+      { val: "100%", label: "Uptime in market hours" },
+    ],
+    tags: ["WebSocket", "Redis", "Node.js", "Next.js"],
+    color: "bg-emerald-700",
+    featured: false,
+  },
+  {
+    name: "Promerchants",
+    tag: "E-Commerce Platform",
+    desc: "Advanced e-commerce platform built for modern online businesses — multi-vendor support, integrated payments, real-time inventory, and WhatsApp commerce.",
+    metrics: [
+      { val: "50+", label: "Active Merchants" },
+      { val: "99.5%", label: "Uptime" },
+      { val: "3s", label: "Avg page load" },
+    ],
+    tags: ["Next.js", "Node.js", "Stripe", "PostgreSQL"],
+    color: "bg-blue-700",
+    featured: false,
+  },
+  {
+    name: "Waterakt",
+    tag: "WhatsApp Marketing SaaS",
+    desc: "WhatsApp marketing software for e-commerce — automated campaigns, customer segmentation, broadcast messages, and analytics for business owners.",
+    metrics: [
+      { val: "500+", label: "Active Businesses" },
+      { val: "40%", label: "Avg open rate" },
+      { val: "10×", label: "ROI vs email" },
+    ],
+    tags: ["WhatsApp API", "Node.js", "React", "MongoDB"],
+    color: "bg-green-700",
+    featured: false,
+  },
+  {
+    name: "MailZen",
+    tag: "AI Mail Management",
+    desc: "AI-powered enterprise mail management with automated triage, smart replies, workflow automation, and team collaboration features.",
+    metrics: [
+      { val: "70%", label: "Time saved on email" },
+      { val: "AI", label: "Powered triage" },
+      { val: "99%", label: "Accuracy" },
+    ],
+    tags: ["OpenAI", "Node.js", "Next.js", "PostgreSQL"],
+    color: "bg-violet-700",
+    featured: false,
+  },
+  {
+    name: "SwiftShift",
+    tag: "Logistics AI System",
+    desc: "AI-powered couriers and logistics management — route optimization, driver tracking, customer notifications, and supply chain analytics.",
+    metrics: [
+      { val: "25%", label: "Delivery cost reduction" },
+      { val: "AI", label: "Route optimization" },
+      { val: "Real-time", label: "Tracking" },
+    ],
+    tags: ["AI/ML", "Node.js", "React Native", "Maps API"],
+    color: "bg-orange-700",
+    featured: false,
+  },
+  {
+    name: "CodeYog",
+    tag: "EdTech Platform",
+    desc: "Open-source coding learning platform for developers — interactive exercises, project-based learning, community forums, and mentorship matching.",
+    metrics: [
+      { val: "Open", label: "Source" },
+      { val: "1K+", label: "Community members" },
+      { val: "Free", label: "Core features" },
+    ],
+    tags: ["Next.js", "Node.js", "TypeScript", "PostgreSQL"],
+    color: "bg-indigo-700",
+    featured: false,
+  },
+];
+
+const caseStudies = [
+  {
+    client: "Dubai Logistics Hub",
+    industry: "Logistics · UAE",
+    title: "10× call capacity with AI voice automation",
+    desc: "Deployed AI voice agents that handle customer support 24/7 — automating 80% of inquiries and delivering ROI in the first month.",
+    metrics: [
+      { val: "10×", label: "Call Capacity" },
+      { val: "80%", label: "Automation Rate" },
+      { val: "Month 1", label: "Positive ROI" },
+    ],
+    initials: "DL",
+    color: "bg-[#D4870A]",
+  },
+  {
+    client: "GlobalShop Inc.",
+    industry: "E-Commerce · UK",
+    title: "35% conversion uplift with headless Shopify",
+    desc: "Migrated legacy Shopify store to a headless Next.js frontend with new UX — 35% conversion rate increase and 2.4s page speed improvement.",
+    metrics: [
+      { val: "35%", label: "Conversion Uplift" },
+      { val: "-2.4s", label: "Page Load Time" },
+      { val: "4.2×", label: "Mobile Performance" },
+    ],
+    initials: "GS",
+    color: "bg-emerald-700",
+  },
+  {
+    client: "FinanceFlow Canada",
+    industry: "Fintech · Canada",
+    title: "SOC 2 compliant fintech platform in 14 weeks",
+    desc: "Built a full-featured financial management platform with bank-grade security, compliance controls, and real-time reporting — delivered in 14 weeks.",
+    metrics: [
+      { val: "14 wks", label: "Delivery Time" },
+      { val: "SOC 2", label: "Compliant" },
+      { val: "99.99%", label: "Uptime" },
+    ],
+    initials: "FF",
+    color: "bg-[#1A3A6C]",
+  },
+];
+
 export default function PortfolioPage() {
-  // State for filtering and selected project
-  const [filter, setFilter] = useState('all');
-  const [selectedProject, setSelectedProject] = useState<string | null>(null);
-
-  useEffect(() => {
-    console.log('[PortfolioPage] Loaded');
-  }, []);
-
-  useEffect(() => {
-    console.log('[PortfolioPage] Active filter changed:', filter);
-  }, [filter]);
-
-  useEffect(() => {
-    console.log('[PortfolioPage] Selected project changed:', selectedProject ?? 'none');
-  }, [selectedProject]);
-  
-  // Filtered projects based on selected category
-  const filteredProjects = filter === 'all' 
-    ? projects 
-    : projects.filter(project => project.category === filter);
-  
-  // Get the currently selected project details
-  const currentProject = selectedProject 
-    ? projects.find(project => project.id === selectedProject) 
-    : null;
-  
-  // Animation variants for projects grid
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
-  };
-  
-  const projectVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: { duration: 0.4 }
-    }
-  };
-  
   return (
     <div className="w-full">
-      {/* Hero Section */}
-      <section className="relative compact-main-hero bg-gradient-to-br from-gray-900 to-gray-800 text-white overflow-hidden">
-        {/* Background Illustrations */}
-        <div className="absolute top-10 right-4 sm:right-10 w-48 h-48 sm:w-64 sm:h-64 opacity-20 hidden sm:block">
-          <AnimatedIllustration
-            src="/illustrations/undraw_programming.svg"
-            alt="Programming illustration"
-            width={256}
-            height={256}
-            animationType="float"
-            delay={0.2}
-          />
-        </div>
-        <div className="absolute bottom-10 left-4 sm:left-10 w-32 h-32 sm:w-48 sm:h-48 opacity-15 hidden sm:block">
-          <AnimatedIllustration
-            src="/illustrations/undraw_mobile_app.svg"
-            alt="Mobile app illustration"
-            width={192}
-            height={192}
-            animationType="scale"
-            delay={0.6}
-          />
-        </div>
-        
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-balance">
-              Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">Portfolio</span>
-            </h1>
-            <p className="text-base sm:text-xl text-gray-300 mb-8">
-              Explore our showcase of premium Node.js development projects and immersive 3D experiences.
-            </p>
-          </div>
-        </div>
-      </section>
 
-      {/* Project Filters and Grid */}
-      <section className="compact-main-section bg-white dark:bg-gray-900">
-        <div className="container mx-auto px-4">
-          {/* Category Filter */}
-          <div className="touch-chip-row mb-10 md:mb-12 md:flex-wrap md:justify-center md:overflow-visible">
-            {categories.map((category) => (
-              <button
-                key={category.id}
-                onClick={() => {
-                  console.log('[PortfolioPage] Category clicked:', category.id);
-                  setFilter(category.id);
-                }}
-                className={`px-4 py-2.5 rounded-full font-medium whitespace-nowrap transition-all duration-300 ${
-                  filter === category.id
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
-                }`}
-              >
-                {category.name}
-              </button>
-            ))}
-          </div>
+      {/* HERO */}
+      <section className="compact-main-hero bg-[#0C1B33] relative overflow-hidden flex items-center">
+        <div className="absolute inset-0 hero-grid-bg opacity-20 pointer-events-none" />
 
-          {/* Projects Grid */}
-          <motion.div 
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-8"
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-          >
-            {filteredProjects.map((project) => (
-              <motion.div
-                key={project.id}
-                variants={projectVariants}
-                className="group cursor-pointer bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg transition-transform duration-300 hover:shadow-xl md:hover:-translate-y-2"
-                onClick={() => {
-                  console.log('[PortfolioPage] Project card clicked:', project.id);
-                  setSelectedProject(project.id);
-                }}
-              >
-                {/* Project Image / Visual */}
-                <div className="h-44 sm:h-48 bg-gray-200 dark:bg-gray-700 relative overflow-hidden transition-transform duration-500 md:group-hover:scale-105">
-                  <div className={`absolute inset-0 bg-gradient-to-br ${projectColorGradients[project.color] ?? 'from-blue-500 to-blue-700'} opacity-90`}></div>
-                  
-                  {/* Pattern Overlay */}
-                  <div className="absolute inset-0 opacity-10" 
-                       style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '24px 24px' }}>
-                  </div>
-
-                  <div className="absolute inset-0 flex flex-col items-center justify-center text-white p-4 text-center">
-                    <div className="w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center mb-3 shadow-inner">
-                      <span className="text-2xl font-bold">{project.title.substring(0, 2)}</span>
-                    </div>
-                    <span className="text-sm font-medium tracking-wider uppercase opacity-80 bg-black/20 px-3 py-1 rounded-full">
-                      {project.category === '3d' ? 'Interactive 3D' : project.category === 'api' ? 'Backend System' : 'Enterprise App'}
-                    </span>
-                  </div>
-                </div>
-                
-                {/* Project Info */}
-                <div className="p-5 sm:p-6">
-                  <h3 className="text-lg sm:text-xl font-bold mb-2 text-gray-800 dark:text-white text-balance">
-                    {project.title}
-                  </h3>
-                  <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-2">
-                    {project.description}
-                  </p>
-                  
-                  {/* Tags */}
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {project.tags.slice(0, 3).map((tag, index) => (
-                      <span 
-                        key={index} 
-                        className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-full text-xs"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                    {project.tags.length > 3 && (
-                      <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-full text-xs">
-                        +{project.tags.length - 3} more
-                      </span>
-                    )}
-                  </div>
-                  
-                  <button 
-                    className="w-full px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition duration-300"
-                  >
-                    View Case Study
-                  </button>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-          
-          {/* Empty State */}
-          {filteredProjects.length === 0 && (
-            <div className="text-center py-12">
-              <h3 className="text-xl font-medium mb-2 text-gray-800 dark:text-white">No projects found</h3>
-              <p className="text-gray-600 dark:text-gray-300">
-                No projects match the selected category. Please try a different filter.
-              </p>
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+          <div className="max-w-3xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#D4870A]/40 bg-[#D4870A]/10 text-[#D4870A] text-xs font-semibold tracking-wide uppercase mb-6">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#D4870A]" />
+              Our Work
             </div>
-          )}
-        </div>
-      </section>
-
-      {/* Case Study Modal */}
-      <AnimatePresence>
-        {selectedProject && currentProject && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 overflow-y-auto bg-black bg-opacity-80 flex items-center justify-center p-3 sm:p-4"
-            onClick={() => setSelectedProject(null)}
-          >
-            <motion.div
-              initial={{ y: 50, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: 50, opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="bg-white dark:bg-gray-900 rounded-xl max-w-4xl w-full mobile-safe-modal overflow-y-auto"
-              onClick={(e) => e.stopPropagation()}
+            <h1
+              className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 leading-[1.08] tracking-tight"
+              style={{ fontFamily: "var(--font-sora), sans-serif" }}
             >
-              {/* Modal Header */}
-              <div className="h-52 sm:h-64 bg-gray-200 dark:bg-gray-800 relative">
-                {/* Placeholder for actual project images */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${projectColorGradients[currentProject.color] ?? 'from-blue-500 to-blue-700'} opacity-80`}></div>
-                <div className="absolute top-4 right-4">
-                  <button 
-                    onClick={() => setSelectedProject(null)}
-                    className="bg-white/20 backdrop-blur-sm hover:bg-white/30 rounded-full p-2 text-white transition duration-300"
-                  >
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  </button>
-                </div>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white text-center px-4 text-balance">
-                    {currentProject.title}
-                  </h2>
-                </div>
-              </div>
-              
-              {/* Modal Content */}
-              <div className="p-5 sm:p-6 md:p-8">
-                {/* Tags */}
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {currentProject.tags.map((tag, index) => (
-                    <span 
-                      key={index} 
-                      className="px-3 py-1 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full text-sm"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-                
-                {/* Project Description */}
-                <div className="mb-8">
-                  <h3 className="text-xl font-bold mb-3 text-gray-800 dark:text-white">Overview</h3>
-                  <p className="text-gray-600 dark:text-gray-300">
-                    {currentProject.description}
-                  </p>
-                </div>
-                
-                {/* Challenge and Solution */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-8">
-                  <div>
-                    <h3 className="text-xl font-bold mb-3 text-gray-800 dark:text-white">The Challenge</h3>
-                    <p className="text-gray-600 dark:text-gray-300">
-                      {currentProject.challenge}
-                    </p>
-                  </div>
-                  
-                  <div>
-                    <h3 className="text-xl font-bold mb-3 text-gray-800 dark:text-white">Our Solution</h3>
-                    <p className="text-gray-600 dark:text-gray-300">
-                      {currentProject.solution}
-                    </p>
-                  </div>
-                </div>
-                
-                {/* Results */}
-                <div className="mb-8">
-                  <h3 className="text-xl font-bold mb-3 text-gray-800 dark:text-white">The Results</h3>
-                  <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                    {currentProject.results.map((result, index) => (
-                      <li key={index} className="flex items-start">
-                        <svg className="w-5 h-5 text-green-500 mr-2 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                        <span className="text-gray-600 dark:text-gray-300">{result}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                
-                {/* Contact CTA */}
-                <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
-                  <p className="text-gray-600 dark:text-gray-300 mb-4">
-                    Interested in a similar solution for your business?
-                  </p>
-                  <Link
-                    href="/pages/contact"
-                    className="inline-block px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-full font-medium transition duration-300"
-                  >
-                    Contact Us
-                  </Link>
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Testimonials */}
-      <section className="compact-main-section bg-gray-50 dark:bg-gray-800 relative overflow-hidden">
-        {/* Background Illustration */}
-        <div className="absolute top-10 left-4 sm:left-10 w-32 h-32 sm:w-48 sm:h-48 opacity-5 hidden sm:block">
-          <AnimatedIllustration
-            src="/illustrations/undraw_cloud_hosting.svg"
-            alt="Cloud hosting illustration"
-            width={192}
-            height={192}
-            animationType="pulse"
-            delay={0.3}
-          />
-        </div>
-        
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-3xl mx-auto text-center mb-12">
-            <h2 className="text-2xl sm:text-3xl font-bold mb-4 text-gray-800 dark:text-white text-balance">Client Testimonials</h2>
-            <p className="text-gray-600 dark:text-gray-300">
-              Hear what our clients have to say about their experience working with us.
+              Products &{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D4870A] to-[#F59E0B]">
+                Case Studies
+              </span>
+            </h1>
+            <p className="text-gray-300 text-lg sm:text-xl leading-relaxed max-w-2xl">
+              Seven in-house products. 500+ client projects. Real software,
+              real outcomes.
             </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8">
-            {/* Testimonial 1 */}
-            <div className="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-lg">
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center mr-4">
-                  <span className="text-blue-600 dark:text-blue-300 font-bold">RM</span>
-                </div>
-                <div>
-                  <h4 className="font-bold text-gray-800 dark:text-white">Rajiv Menon</h4>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">CTO, FinFlow Enterprise</p>
-                </div>
-              </div>
-              <p className="text-gray-600 dark:text-gray-300 italic">
-                &ldquo;Their expertise in Node.js development and microservices architecture helped us transform our legacy system into a modern, scalable platform. The team&apos;s technical knowledge and commitment to quality are impressive.&rdquo;
-              </p>
-            </div>
-            
-            {/* Testimonial 2 */}
-            <div className="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-lg">
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 rounded-full bg-purple-100 dark:bg-purple-900 flex items-center justify-center mr-4">
-                  <span className="text-purple-600 dark:text-purple-300 font-bold">SJ</span>
-                </div>
-                <div>
-                  <h4 className="font-bold text-gray-800 dark:text-white">Sarah Jenkins</h4>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">Product Lead, StyleHub Global</p>
-                </div>
-              </div>
-              <p className="text-gray-600 dark:text-gray-300 italic">
-                &ldquo;The 3D product configurator transformed our customer experience. Our customers love being able to customize and visualize products before purchase, and we&apos;ve seen a significant decrease in returns.&rdquo;
-              </p>
-            </div>
-            
-            {/* Testimonial 3 */}
-            <div className="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-lg">
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center mr-4">
-                  <span className="text-green-600 dark:text-green-300 font-bold">DK</span>
-                </div>
-                <div>
-                  <h4 className="font-bold text-gray-800 dark:text-white">David Kim</h4>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">CEO, Nexus Analytics</p>
-                </div>
-              </div>
-              <p className="text-gray-600 dark:text-gray-300 italic">
-                &ldquo;Their financial analytics platform has been a game-changer for our institution. The real-time insights and visualization capabilities have improved our decision-making process and helped us better serve our customers.&rdquo;
-              </p>
-            </div>
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="compact-main-section bg-gradient-to-br from-blue-600 to-indigo-700 text-white">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 text-balance">Ready to Start Your Project?</h2>
-          <p className="text-base sm:text-xl mb-8 max-w-3xl mx-auto">
-            Let&apos;s discuss how our expertise in Node.js development and 3D experiences can help bring your vision to life.
-          </p>
-          <Link 
-            href="/pages/contact" 
-            className="px-8 py-3.5 bg-white text-blue-600 hover:bg-gray-100 rounded-2xl sm:rounded-full font-medium transition duration-300 inline-block"
+      {/* IN-HOUSE PRODUCTS */}
+      <section className="compact-main-section bg-white dark:bg-[#080C14]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="vp-divider mb-4" />
+          <h2
+            className="text-3xl sm:text-4xl font-bold text-[#0C1B33] dark:text-white mb-4 tracking-tight"
+            style={{ fontFamily: "var(--font-sora), sans-serif" }}
           >
-            Contact Us Today
+            Products We&rsquo;ve Shipped
+          </h2>
+          <p className="text-gray-500 dark:text-gray-400 text-lg mb-14 max-w-2xl">
+            We don&rsquo;t just build for clients — we build for ourselves.
+            These platforms are live, used by real businesses, and proof of our
+            engineering standard.
+          </p>
+
+          {/* Featured product */}
+          {products
+            .filter((p) => p.featured)
+            .map((p) => (
+              <div
+                key={p.name}
+                className="mb-8 bg-[#F4F4F5] dark:bg-[#0F1623] rounded-3xl border border-gray-100 dark:border-[#1E293B] overflow-hidden"
+              >
+                <div className={`h-2 w-full ${p.color}`} />
+                <div className="p-8 md:p-10">
+                  <div className="grid md:grid-cols-2 gap-10 items-start">
+                    <div>
+                      <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500 block mb-2">
+                        {p.tag}
+                      </span>
+                      <h3
+                        className="text-3xl font-bold text-[#0C1B33] dark:text-white mb-3"
+                        style={{ fontFamily: "var(--font-sora), sans-serif" }}
+                      >
+                        {p.name}
+                      </h3>
+                      <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-6">
+                        {p.desc}
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        {p.tags.map((tag) => (
+                          <span
+                            key={tag}
+                            className="text-xs px-2.5 py-1 rounded-lg bg-white dark:bg-[#151C2B] border border-gray-200 dark:border-[#1E293B] text-gray-600 dark:text-gray-400 font-medium"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-3 gap-4">
+                      {p.metrics.map((m) => (
+                        <div
+                          key={m.label}
+                          className="bg-white dark:bg-[#080C14] rounded-2xl p-5 border border-gray-100 dark:border-[#1E293B] text-center"
+                        >
+                          <p
+                            className="text-2xl font-bold text-[#0C1B33] dark:text-white mb-1"
+                            style={{ fontFamily: "var(--font-sora), sans-serif" }}
+                          >
+                            {m.val}
+                          </p>
+                          <p className="text-xs text-gray-400 dark:text-gray-500 leading-tight">
+                            {m.label}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+
+          {/* Other products */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {products
+              .filter((p) => !p.featured)
+              .map((p) => (
+                <div
+                  key={p.name}
+                  className="bg-[#F4F4F5] dark:bg-[#0F1623] rounded-2xl border border-gray-100 dark:border-[#1E293B] overflow-hidden hover:shadow-[0_12px_40px_rgba(12,27,51,0.08)] dark:hover:shadow-[0_12px_40px_rgba(0,0,0,0.25)] hover:-translate-y-1 transition-all duration-300 flex flex-col"
+                >
+                  <div className={`h-1.5 w-full ${p.color}`} />
+                  <div className="p-6 flex flex-col flex-1">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div
+                        className={`w-10 h-10 rounded-xl ${p.color} flex items-center justify-center text-white font-bold text-base shrink-0`}
+                        style={{ fontFamily: "var(--font-sora), sans-serif" }}
+                      >
+                        {p.name.charAt(0)}
+                      </div>
+                      <div>
+                        <p
+                          className="font-bold text-[#0C1B33] dark:text-white text-sm"
+                          style={{ fontFamily: "var(--font-sora), sans-serif" }}
+                        >
+                          {p.name}
+                        </p>
+                        <p className="text-[10px] text-gray-400 dark:text-gray-500 uppercase tracking-widest font-medium">
+                          {p.tag}
+                        </p>
+                      </div>
+                    </div>
+                    <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed mb-4 flex-1">
+                      {p.desc}
+                    </p>
+                    <div className="grid grid-cols-3 gap-2 mb-4 py-3 border-t border-gray-100 dark:border-[#1E293B]">
+                      {p.metrics.map((m) => (
+                        <div key={m.label} className="text-center">
+                          <p
+                            className="text-sm font-bold text-[#0C1B33] dark:text-white"
+                            style={{ fontFamily: "var(--font-sora), sans-serif" }}
+                          >
+                            {m.val}
+                          </p>
+                          <p className="text-[10px] text-gray-400 dark:text-gray-500 leading-tight">
+                            {m.label}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="flex flex-wrap gap-1">
+                      {p.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="text-[10px] px-2 py-0.5 rounded bg-white dark:bg-[#151C2B] border border-gray-200 dark:border-[#1E293B] text-gray-500 dark:text-gray-400"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CLIENT CASE STUDIES */}
+      <section className="compact-main-section bg-[#F4F4F5] dark:bg-[#0F1623]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="vp-divider mb-4" />
+          <h2
+            className="text-3xl sm:text-4xl font-bold text-[#0C1B33] dark:text-white mb-4 tracking-tight"
+            style={{ fontFamily: "var(--font-sora), sans-serif" }}
+          >
+            Client Results
+          </h2>
+          <p className="text-gray-500 dark:text-gray-400 text-lg mb-14 max-w-2xl">
+            A selection of client projects where our work produced measurable
+            business impact.
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {caseStudies.map((cs) => (
+              <div
+                key={cs.client}
+                className="bg-white dark:bg-[#080C14] rounded-2xl border border-gray-100 dark:border-[#1E293B] overflow-hidden hover:shadow-[0_16px_50px_rgba(12,27,51,0.1)] dark:hover:shadow-[0_16px_50px_rgba(0,0,0,0.3)] hover:-translate-y-1 transition-all duration-300 flex flex-col"
+              >
+                <div className={`h-1.5 ${cs.color}`} />
+                <div className="p-7 flex flex-col flex-1">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div
+                      className={`w-10 h-10 rounded-xl ${cs.color} text-white font-bold text-sm flex items-center justify-center shrink-0`}
+                      style={{ fontFamily: "var(--font-sora), sans-serif" }}
+                    >
+                      {cs.initials}
+                    </div>
+                    <div>
+                      <p
+                        className="text-xs font-bold text-[#0C1B33] dark:text-white"
+                        style={{ fontFamily: "var(--font-sora), sans-serif" }}
+                      >
+                        {cs.client}
+                      </p>
+                      <p className="text-[10px] text-gray-400 dark:text-gray-500 uppercase tracking-widest">
+                        {cs.industry}
+                      </p>
+                    </div>
+                  </div>
+                  <h3
+                    className="text-lg font-bold text-[#0C1B33] dark:text-white mb-3 leading-snug"
+                    style={{ fontFamily: "var(--font-sora), sans-serif" }}
+                  >
+                    {cs.title}
+                  </h3>
+                  <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed mb-5 flex-1">
+                    {cs.desc}
+                  </p>
+                  <div className="grid grid-cols-3 gap-3 pt-4 border-t border-gray-100 dark:border-[#1E293B]">
+                    {cs.metrics.map((m) => (
+                      <div key={m.label} className="text-center">
+                        <p
+                          className="text-base font-bold text-[#0C1B33] dark:text-white"
+                          style={{ fontFamily: "var(--font-sora), sans-serif" }}
+                        >
+                          {m.val}
+                        </p>
+                        <p className="text-[10px] text-gray-400 dark:text-gray-500 leading-tight">
+                          {m.label}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="compact-main-section bg-[#0C1B33] relative overflow-hidden">
+        <div className="absolute inset-0 hero-grid-bg opacity-15 pointer-events-none" />
+        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2
+            className="text-3xl sm:text-4xl font-bold text-white mb-6 tracking-tight"
+            style={{ fontFamily: "var(--font-sora), sans-serif" }}
+          >
+            Let&rsquo;s Build Your Next Success Story
+          </h2>
+          <p className="text-gray-400 text-lg mb-8 max-w-xl mx-auto">
+            Every project starts with a conversation. Tell us what you&rsquo;re
+            trying to build.
+          </p>
+          <Link
+            href="/pages/contact"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-[#D4870A] hover:bg-[#F59E0B] text-white font-bold text-base rounded-xl transition-all hover:shadow-[0_8px_30px_rgba(212,135,10,0.4)] hover:-translate-y-0.5"
+            style={{ fontFamily: "var(--font-sora), sans-serif" }}
+          >
+            Start a Project
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
           </Link>
         </div>
       </section>
     </div>
   );
-} 
+}
