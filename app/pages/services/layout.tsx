@@ -1,20 +1,31 @@
 import type { Metadata } from 'next';
 import { buildPageMetadata } from '@/app/lib/seo/metadata';
+import { BreadcrumbStructuredData } from '@/app/components/SEO/StructuredData';
+import { SEO_SITE_URL } from '@/app/lib/seo/constants';
 
 export const metadata: Metadata = buildPageMetadata({
-  title: 'Services | Enterprise Hero Web, AI & Growth Solutions',
+  title: 'Services | Vedpragya — Web, AI & Growth Solutions',
   description:
-    'Explore Enterprise Hero services including web development, Shopify, AI automation, Google Ads, SEO, and industry-specific software solutions.',
+    'Explore Vedpragya services: web development, Shopify, AI automation, Google Ads management, SEO, ERP, and industry-specific software solutions from India.',
   path: '/pages/services',
   keywords: [
-    'enterprise hero services',
-    'web development agency',
+    'vedpragya services',
+    'web development agency india',
     'ai automation services',
-    'google ads management services',
+    'google ads management india',
     'shopify development services',
+    'software development services india',
   ],
 });
 
 export default function ServicesLayout({ children }: { children: React.ReactNode }) {
-  return children;
+  return (
+    <>
+      <BreadcrumbStructuredData items={[
+        { name: 'Home', url: SEO_SITE_URL },
+        { name: 'Services', url: `${SEO_SITE_URL}/pages/services` },
+      ]} />
+      {children}
+    </>
+  );
 }
