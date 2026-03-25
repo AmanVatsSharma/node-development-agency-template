@@ -1,278 +1,143 @@
 "use client";
 
-/**
- * @fileoverview ProcessTimeline Component - Our Development Process
- * @description Premium timeline showcasing the project delivery process
- * Features:
- * - Vertical timeline with animations
- * - Step-by-step process visualization
- * - Interactive hover effects
- * - Responsive design
- * 
- * @component ProcessTimeline
- * @example
- * <ProcessTimeline />
- */
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
+import Link from "next/link";
 
-import { motion } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
-
-// Console log for debugging
-console.log('[ProcessTimeline] Component loaded');
-
-/**
- * Process Step interface
- */
-interface ProcessStep {
-  id: string;
+interface Step {
   number: number;
   title: string;
-  description: string;
+  desc: string;
   duration: string;
-  deliverables: string[];
-  icon: React.ReactNode;
-  color: string;
 }
 
-/**
- * Step Card Component
- */
-interface StepCardProps {
-  step: ProcessStep;
-  index: number;
-  isLast: boolean;
-}
+const steps: Step[] = [
+  {
+    number: 1,
+    title: "Discovery & Scoping",
+    desc: "We start with listening. Deep-dive workshops, stakeholder interviews, and a precise technical audit. Output: a scoped roadmap, not vague estimates.",
+    duration: "1–2 weeks",
+  },
+  {
+    number: 2,
+    title: "Architecture & Design",
+    desc: "System architecture is decided before any code is written. UX wireframes validated with stakeholders. Design system defined once, used everywhere.",
+    duration: "1–3 weeks",
+  },
+  {
+    number: 3,
+    title: "Agile Development",
+    desc: "Two-week sprints. Working software shipped every cycle. Daily async standups, full visibility into progress via client dashboard.",
+    duration: "6–16 weeks",
+  },
+  {
+    number: 4,
+    title: "QA & Security Review",
+    desc: "Automated test suites, load testing, security audits, and cross-device QA before any feature reaches staging. Zero surprises at launch.",
+    duration: "1–2 weeks",
+  },
+  {
+    number: 5,
+    title: "Launch & Handover",
+    desc: "Smooth production deployment with zero-downtime rollouts. Full documentation, team training, and a monitoring setup that alerts us before you notice issues.",
+    duration: "Ongoing",
+  },
+];
 
-function StepCard({ step, index, isLast }: StepCardProps) {
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.2,
-  });
-  
-  console.log(`[StepCard] Rendering step: ${step.title}`);
-  
+function StepItem({ step, index }: { step: Step; index: number }) {
+  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.15 });
+
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, x: -50 }}
-      animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
-      transition={{ duration: 0.6, delay: index * 0.2 }}
-      className="relative flex gap-8 pb-16 group"
+      initial={{ opacity: 0, x: -20 }}
+      animate={inView ? { opacity: 1, x: 0 } : {}}
+      transition={{ duration: 0.5, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
+      className="relative flex gap-6 md:gap-8"
     >
-      {/* Timeline Line */}
-      <div className="relative flex flex-col items-center">
-        {/* Circle */}
-        <div className={`w-16 h-16 rounded-full bg-gradient-to-br ${step.color} flex items-center justify-center text-white shadow-lg z-10 group-hover:scale-110 transition-transform duration-300`}>
-          {step.icon}
+      {/* Left: number + line */}
+      <div className="flex flex-col items-center shrink-0">
+        <div
+          className="w-10 h-10 rounded-xl bg-[#D4870A] text-white flex items-center justify-center font-bold text-sm shrink-0"
+          style={{ fontFamily: "var(--font-sora), sans-serif" }}
+        >
+          {step.number}
         </div>
-        
-        {/* Vertical Line */}
-        {!isLast && (
-          <div className="w-0.5 flex-grow bg-gradient-to-b from-cyan-500/50 to-blue-500/20 mt-4"></div>
+        {index < steps.length - 1 && (
+          <div className="w-px flex-grow bg-white/10 mt-3 mb-0" />
         )}
       </div>
-      
-      {/* Content */}
-      <div className="flex-1 -mt-2">
-        {/* Card */}
-        <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 border-2 border-gray-200 dark:border-gray-700 hover:border-cyan-500 dark:hover:border-cyan-400 transition-all duration-300 shadow-lg hover:shadow-xl">
-          {/* Header */}
-          <div className="flex items-start justify-between mb-4">
-            <div>
-              <span className={`text-sm font-bold bg-gradient-to-r ${step.color} bg-clip-text text-transparent mb-2 block`}>
-                Step {step.number}
-              </span>
-              <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">
-                {step.title}
-              </h3>
-            </div>
-            <span className="px-4 py-1 bg-cyan-100 dark:bg-cyan-900/30 text-cyan-800 dark:text-cyan-300 rounded-full text-sm font-medium whitespace-nowrap">
-              {step.duration}
-            </span>
-          </div>
-          
-          {/* Description */}
-          <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-            {step.description}
-          </p>
-          
-          {/* Deliverables */}
-          <div>
-            <p className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
-              Key Deliverables:
-            </p>
-            <ul className="space-y-2">
-              {step.deliverables.map((deliverable, idx) => (
-                <li key={idx} className="flex items-start text-sm text-gray-600 dark:text-gray-400">
-                  <svg className="w-5 h-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  {deliverable}
-                </li>
-              ))}
-            </ul>
-          </div>
+
+      {/* Right: content */}
+      <div className={`pb-10 ${index === steps.length - 1 ? "" : ""}`}>
+        <div className="flex flex-wrap items-center gap-3 mb-2">
+          <h3
+            className="text-lg font-bold text-white"
+            style={{ fontFamily: "var(--font-sora), sans-serif" }}
+          >
+            {step.title}
+          </h3>
+          <span className="text-[10px] font-bold text-[#D4870A] uppercase tracking-widest px-2.5 py-1 rounded-full border border-[#D4870A]/30 bg-[#D4870A]/10">
+            {step.duration}
+          </span>
         </div>
+        <p className="text-gray-400 text-sm leading-relaxed max-w-lg">
+          {step.desc}
+        </p>
       </div>
     </motion.div>
   );
 }
 
-/**
- * Main ProcessTimeline Component
- */
 export default function ProcessTimeline() {
-  console.log('[ProcessTimeline] Component rendering');
-  
-  // Process steps data
-  const steps: ProcessStep[] = [
-    {
-      id: 'discovery',
-      number: 1,
-      title: 'Discovery & Planning',
-      description: 'We start by understanding your business goals, target audience, technical requirements, and constraints. Deep-dive workshops and stakeholder interviews ensure we\'re aligned from day one.',
-      duration: '1-2 Weeks',
-      deliverables: [
-        'Project roadmap and timeline',
-        'Technical architecture document',
-        'User stories and requirements',
-        'Risk assessment and mitigation plan'
-      ],
-      color: 'from-blue-500 to-cyan-500',
-      icon: (
-        <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-        </svg>
-      ),
-    },
-    {
-      id: 'design',
-      number: 2,
-      title: 'Design & Prototyping',
-      description: 'Our design team creates intuitive, beautiful interfaces that users love. We prototype key flows and gather feedback before writing a single line of code.',
-      duration: '2-3 Weeks',
-      deliverables: [
-        'UI/UX wireframes and mockups',
-        'Interactive prototypes',
-        'Design system and style guide',
-        'User flow diagrams'
-      ],
-      color: 'from-purple-500 to-pink-500',
-      icon: (
-        <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
-        </svg>
-      ),
-    },
-    {
-      id: 'development',
-      number: 3,
-      title: 'Agile Development',
-      description: 'Our engineers build your solution in 2-week sprints with continuous integration and deployment. You get working software every sprint with full transparency.',
-      duration: '6-12 Weeks',
-      deliverables: [
-        'Clean, well-documented code',
-        'Automated test suites',
-        'Sprint demos and reviews',
-        'Continuous deployment pipeline'
-      ],
-      color: 'from-green-500 to-emerald-500',
-      icon: (
-        <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-        </svg>
-      ),
-    },
-    {
-      id: 'testing',
-      number: 4,
-      title: 'Quality Assurance',
-      description: 'Rigorous testing across devices, browsers, and scenarios ensures your application is bug-free and performs flawlessly under load.',
-      duration: '1-2 Weeks',
-      deliverables: [
-        'Comprehensive test reports',
-        'Performance benchmarks',
-        'Security audit results',
-        'Cross-browser compatibility matrix'
-      ],
-      color: 'from-orange-500 to-red-500',
-      icon: (
-        <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-      ),
-    },
-    {
-      id: 'launch',
-      number: 5,
-      title: 'Launch & Support',
-      description: 'We handle the entire deployment process and provide comprehensive training. Post-launch, we monitor, optimize, and provide ongoing support.',
-      duration: 'Ongoing',
-      deliverables: [
-        'Production deployment',
-        'Team training and documentation',
-        'Performance monitoring setup',
-        '24/7 support and maintenance'
-      ],
-      color: 'from-indigo-500 to-purple-500',
-      icon: (
-        <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-        </svg>
-      ),
-    },
-  ];
-  
+  const [headerRef, headerInView] = useInView({ triggerOnce: true, threshold: 0.1 });
+
   return (
-    <section className="py-20 bg-gray-50 dark:bg-gray-800 relative overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2300ffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-        }}></div>
-      </div>
-      
-      <div className="container mx-auto px-4 relative z-10">
-        {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-gray-800 dark:text-white">
-            Our Proven <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-600">Development Process</span>
-          </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            A battle-tested methodology that delivers exceptional results on time and within budget
-          </p>
-        </motion.div>
-        
-        {/* Timeline */}
-        <div className="max-w-4xl mx-auto">
-          {steps.map((step, index) => (
-            <StepCard
-              key={step.id}
-              step={step}
-              index={index}
-              isLast={index === steps.length - 1}
-            />
-          ))}
+    <section className="compact-main-section bg-[#0C1B33] relative overflow-hidden content-visibility-auto">
+      {/* Ambient */}
+      <div className="absolute inset-0 hero-grid-bg opacity-15 pointer-events-none" />
+      <div className="absolute top-0 right-0 w-[400px] h-[400px] rounded-full bg-[#2563EB]/8 blur-[120px] pointer-events-none" />
+
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid lg:grid-cols-2 gap-16 items-start">
+          {/* Left column — header */}
+          <motion.div
+            ref={headerRef}
+            initial={{ opacity: 0, y: 24 }}
+            animate={headerInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+            className="lg:sticky lg:top-28"
+          >
+            <div className="vp-divider mb-4" />
+            <h2
+              className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight"
+              style={{ fontFamily: "var(--font-sora), sans-serif" }}
+            >
+              How We Deliver
+            </h2>
+            <p className="text-gray-400 text-lg leading-relaxed mb-8">
+              A structured, transparent process that turns complex requirements
+              into reliable software — on time, every time.
+            </p>
+            <Link
+              href="/pages/contact"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-[#D4870A] hover:bg-[#F59E0B] text-white font-bold text-sm rounded-xl transition-all hover:shadow-[0_8px_24px_rgba(212,135,10,0.35)] hover:-translate-y-0.5"
+              style={{ fontFamily: "var(--font-sora), sans-serif" }}
+            >
+              Start Your Project
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </Link>
+          </motion.div>
+
+          {/* Right column — steps */}
+          <div>
+            {steps.map((step, i) => (
+              <StepItem key={step.number} step={step} index={i} />
+            ))}
+          </div>
         </div>
-        
-        {/* Bottom CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mt-16"
-        >
-          <button className="px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold rounded-full hover:shadow-xl transition-all duration-300 hover:scale-105">
-            Start Your Project →
-          </button>
-        </motion.div>
       </div>
     </section>
   );
