@@ -12,8 +12,17 @@ export const metadata: Metadata = buildPageMetadata({
     'nextjs development services',
     'custom nextjs website',
     'nextjs seo optimization',
-    'nextjs agency',
+    'nextjs agency india',
     'react nextjs development',
+    'nextjs developer india',
+    'hire nextjs developer',
+    'nextjs web app development',
+    'nextjs ecommerce development',
+    'nextjs performance optimization',
+    'nextjs full stack development',
+    'server side rendering development',
+    'next js 14 development india',
+    'vedpragya nextjs development',
   ],
 });
 
