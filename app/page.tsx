@@ -5,6 +5,8 @@ import Link from "next/link";
 // ── Client components (hero, product spotlight) ──────────────────────────────
 import HeroSection from "./components/home/HeroSection";
 import ProductSpotlight from "./components/home/ProductSpotlight";
+import WebDevIllustration from "./components/illustrations/WebDevIllustration";
+import ERPIllustration from "./components/illustrations/ERPIllustration";
 
 // ── Below-fold — lazy loaded ──────────────────────────────────────────────────
 const StatsCounter = dynamic(() => import("./components/home/StatsCounter"), {
@@ -226,6 +228,14 @@ export default function Home() {
                     </svg>
                   </div>
                 </div>
+
+                {/* Per-card illustrations on large cards */}
+                {svc.id === "web" && (
+                  <WebDevIllustration className="absolute bottom-3 right-2 w-[130px] opacity-[0.18] pointer-events-none" />
+                )}
+                {svc.id === "erp" && (
+                  <ERPIllustration className="absolute bottom-3 right-2 w-[130px] opacity-[0.18] pointer-events-none" />
+                )}
               </Link>
             ))}
           </div>

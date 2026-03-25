@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import WebDevIllustration from "@/app/components/illustrations/WebDevIllustration";
 
 const cycleWords = ["Web Apps", "AI Systems", "ERP Platforms", "E-Commerce"];
 
@@ -224,7 +225,7 @@ export default function HeroSection() {
             </p>
 
             {/* CTAs */}
-            <div className="flex flex-col sm:flex-row gap-3 mb-12">
+            <div className="flex flex-col sm:flex-row gap-3 mb-10">
               <Link
                 href="/pages/contact"
                 className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#D4870A] hover:bg-[#F59E0B] text-white font-bold text-sm rounded-xl transition-all shadow-[0_4px_24px_rgba(212,135,10,0.4)] hover:shadow-[0_8px_32px_rgba(212,135,10,0.55)] hover:-translate-y-0.5 min-h-[52px]"
@@ -242,6 +243,11 @@ export default function HeroSection() {
               >
                 See Our Work
               </Link>
+            </div>
+
+            {/* Mobile illustration — visible below CTAs on small screens */}
+            <div className="lg:hidden flex justify-center mb-10 px-4">
+              <WebDevIllustration className="w-full max-w-[280px] opacity-80" />
             </div>
 
             {/* Trust strip */}

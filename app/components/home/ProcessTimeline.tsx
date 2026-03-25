@@ -4,6 +4,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { useRef } from "react";
 import Link from "next/link";
+import MarketingIllustration from "@/app/components/illustrations/MarketingIllustration";
 
 interface Step {
   number: number;
@@ -174,6 +175,11 @@ export default function ProcessTimeline() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>
             </Link>
+
+            {/* Decorative illustration */}
+            <div className="hidden md:block mt-8 -mx-2">
+              <MarketingIllustration className="w-full max-w-[260px] opacity-40" />
+            </div>
           </motion.div>
 
           {/* ── Right: timeline steps ── */}

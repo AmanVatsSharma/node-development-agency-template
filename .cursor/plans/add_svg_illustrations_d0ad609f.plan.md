@@ -4,16 +4,16 @@ overview: Add custom inline SVG line-art illustrations in brand colors (navy, el
 todos:
   - id: create-illustrations-folder
     content: Create app/components/illustrations/ with WebDevIllustration, AINetworkIllustration, ERPIllustration, MarketingIllustration, ShopifyIllustration, and index.ts barrel export
-    status: in_progress
+    status: completed
   - id: integrate-hero-mobile
     content: Add WebDevIllustration to HeroSection.tsx for mobile (lg:hidden block below CTA buttons)
-    status: pending
+    status: completed
   - id: integrate-bento-cards
     content: Add WebDevIllustration and ERPIllustration as accent overlays in the two large bento cards in app/page.tsx
-    status: pending
+    status: completed
   - id: integrate-process-timeline
     content: Add a decorative illustration to the ProcessTimeline.tsx section header (md:block right-side accent)
-    status: pending
+    status: completed
 isProject: false
 ---
 
