@@ -26,6 +26,14 @@ export const metadata: Metadata = buildPageMetadata({
     'algo trading platform',
     'real-time trading software',
     'broker back office software',
+    'trading software india',
+    'nse bse trading platform',
+    'custom trading platform development',
+    'fintech software development india',
+    'algorithmic trading software india',
+    'trading platform developer india',
+    'stock broker software india',
+    'vedpragya trading software',
   ],
 });
 

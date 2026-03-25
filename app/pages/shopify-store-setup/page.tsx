@@ -27,9 +27,7 @@
  * @page
  */
 
-import { Metadata } from 'next';
 import dynamic from 'next/dynamic';
-import { buildPageMetadata } from '@/app/lib/seo/metadata';
 
 // Import components
 import HeroSection from '@/app/components/shopify/HeroSection';
@@ -46,19 +44,6 @@ import ContactFormSection from '@/app/components/shopify/ContactFormSection';
 
 console.log('[ShopifyStorePage] Page component loaded');
 
-// SEO Metadata
-export const metadata: Metadata = buildPageMetadata({
-  title: 'Custom Shopify Store Setup & Conversion Optimization',
-  description:
-    'Launch a high-converting Shopify store with custom UX, conversion optimization, and growth-ready implementation.',
-  path: '/pages/shopify-store-setup',
-  keywords: [
-    'shopify store setup',
-    'custom shopify development',
-    'shopify conversion optimization',
-    'shopify theme customization',
-  ],
-});
 
 /**
  * Main Shopify Store Setup Landing Page Component
