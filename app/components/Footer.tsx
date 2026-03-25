@@ -105,20 +105,14 @@ export default function Footer() {
 
           {/* Brand column */}
           <div className="mb-8 lg:mb-0 border-b border-white/8 md:border-none pb-6 md:pb-0 pr-0 lg:pr-8">
-            <Link href="/" className="inline-flex items-center gap-3 mb-5 group">
+            <Link href="/" className="inline-block mb-5 group" aria-label="Vedpragya – Home">
               <Image
                 src="/logo.png"
-                alt="Vedpragya logo"
-                width={44}
-                height={34}
-                className="h-8 w-auto shrink-0 brightness-0 invert group-hover:brightness-100 group-hover:invert-0 transition-all duration-300"
+                alt="Vedpragya"
+                width={770}
+                height={459}
+                className="h-9 w-auto object-contain brightness-0 invert opacity-90 group-hover:opacity-100 transition-opacity duration-200"
               />
-              <span
-                className="font-bold text-lg tracking-tight text-white"
-                style={{ fontFamily: "var(--font-sora), sans-serif" }}
-              >
-                Vedpragya
-              </span>
             </Link>
 
             <p className="text-sm text-white/45 leading-relaxed mb-6 max-w-[260px]">
