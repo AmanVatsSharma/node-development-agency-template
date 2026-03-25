@@ -19,6 +19,14 @@ export const metadata: Metadata = buildPageMetadata({
     'ehr software development',
     'telemedicine platform',
     'hipaa compliant healthcare software',
+    'healthcare software company india',
+    'medical software development india',
+    'hms software india',
+    'clinic management software',
+    'patient management system india',
+    'health tech development india',
+    'digital health solutions india',
+    'vedpragya healthcare software',
   ],
 });
 
