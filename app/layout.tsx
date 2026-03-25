@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Poppins } from "next/font/google";
+import { Sora, DM_Sans } from "next/font/google";
 import "./globals.css";
 import EnhancedHeader from "./components/EnhancedHeader";
 import Footer from "./components/Footer";
@@ -16,35 +16,35 @@ import { companyProfile } from "./data/companyProfile";
 import { SEO_DEFAULT_OG_IMAGE_PATH, SEO_SITE_URL, toAbsoluteSeoUrl } from '@/app/lib/seo/constants';
 
 // Font configuration
-const inter = Inter({
-  variable: "--font-inter",
+const sora = Sora({
+  variable: "--font-sora",
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800"],
   display: "swap",
 });
 
-const poppins = Poppins({
-  variable: "--font-poppins",
-  weight: ["300", "400", "500", "600", "700"],
+const dmSans = DM_Sans({
+  variable: "--font-dm-sans",
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
   display: "swap",
 });
 
 // Metadata for SEO
 export const metadata: Metadata = {
   metadataBase: new URL(SEO_SITE_URL),
-  title: "Enterprise Hero | Vedpragya Bharat Private Limited - Global Node.js Development Agency",
-  description: "Leading enterprise-grade Node.js development and 3D solutions by Vedpragya Bharat Private Limited. Global presence across India, Dubai, California, Toronto, and Shenzhen. Founded by Aman Kumar Sharma.",
-  keywords: "Node.js development, enterprise solutions, Vedpragya Bharat, Aman Kumar Sharma, global tech agency, 3D animations, microservices, API development, enterprise architecture, India, Dubai, California, Toronto, Shenzhen",
-  authors: [{ name: "Aman Kumar Sharma - Founder, Vedpragya Bharat Private Limited" }],
+  title: "Vedpragya | Software Development & IT Solutions Company — India",
+  description: "Vedpragya builds software that transforms businesses. Web apps, AI systems, ERP, e-commerce, digital marketing, and trading platforms. Enterprise-grade engineering from India with global reach.",
+  keywords: "software development, IT solutions, web development, AI development, ERP software, e-commerce development, Vedpragya, Vedpragya Bharat, Aman Kumar Sharma, India, digital transformation",
+  authors: [{ name: "Aman Kumar Sharma — Founder & CEO, Vedpragya Bharat Private Limited" }],
   alternates: {
     canonical: '/',
   },
-  // Add Open Graph data for social sharing
   openGraph: {
-    title: "Enterprise Hero | Vedpragya Bharat Private Limited - Global Node.js Development Agency",
-    description: "Leading enterprise-grade Node.js development and 3D solutions by Vedpragya Bharat Private Limited. Global presence across India, Dubai, California, Toronto, and Shenzhen.",
+    title: "Vedpragya | Software Development & IT Solutions Company",
+    description: "We build software that transforms businesses. Web apps, AI systems, ERP, e-commerce, and digital marketing — enterprise-grade engineering from India.",
     url: SEO_SITE_URL,
-    siteName: "Enterprise Hero",
+    siteName: "Vedpragya",
     locale: "en_US",
     type: "website",
     images: [
@@ -52,15 +52,14 @@ export const metadata: Metadata = {
         url: toAbsoluteSeoUrl(SEO_DEFAULT_OG_IMAGE_PATH),
         width: 1200,
         height: 630,
-        alt: 'Enterprise Hero',
+        alt: 'Vedpragya — Software Development & IT Solutions',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Enterprise Hero | Global Node.js Development Agency',
-    description:
-      'Leading enterprise-grade Node.js development and 3D solutions by Vedpragya Bharat Private Limited.',
+    title: 'Vedpragya | Software Development & IT Solutions',
+    description: 'We build software that transforms businesses — web apps, AI, ERP, e-commerce, and more.',
     images: [toAbsoluteSeoUrl(SEO_DEFAULT_OG_IMAGE_PATH)],
   },
   robots: {
@@ -124,7 +123,7 @@ export default async function RootLayout({
         <GoogleAdsTracking conversionId="AW-17606401808" />
       </head>
       <body
-        className={`${inter.variable} ${poppins.variable} antialiased bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100`}
+        className={`${sora.variable} ${dmSans.variable} font-sans antialiased bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100`}
       >
         <Providers>
           <ThemeProvider

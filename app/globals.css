@@ -1,210 +1,399 @@
 @import 'tailwindcss';
 
 /* ============================================
-   PREMIUM ANIMATIONS & EFFECTS
+   VEDPRAGYA DESIGN SYSTEM — CSS CUSTOM PROPERTIES
    ============================================ */
 
-/* Premium Pulse Glow Animation */
-@keyframes pulse-glow {
-  0%, 100% {
-    text-shadow: 
-      0 0 40px rgba(0, 255, 255, 0.8),
-      0 0 80px rgba(0, 255, 255, 0.4),
-      0 0 120px rgba(0, 255, 65, 0.3);
+@layer base {
+  :root {
+    /* Brand palette */
+    --vp-brand-deep: #0C1B33;
+    --vp-brand: #1A3A6C;
+    --vp-accent: #D4870A;
+    --vp-accent-light: #F59E0B;
+    --vp-electric: #2563EB;
+
+    /* Backgrounds */
+    --vp-bg: #FAFAFA;
+    --vp-bg-card: #FFFFFF;
+    --vp-bg-subtle: #F4F4F5;
+
+    /* Text */
+    --vp-text: #111827;
+    --vp-text-muted: #6B7280;
+    --vp-text-light: #9CA3AF;
+
+    /* Borders */
+    --vp-border: #E5E7EB;
+    --vp-border-subtle: #F3F4F6;
+
+    /* Shadows */
+    --vp-shadow-sm: 0 1px 3px 0 rgba(12, 27, 51, 0.07), 0 1px 2px -1px rgba(12, 27, 51, 0.04);
+    --vp-shadow-md: 0 4px 16px 0 rgba(12, 27, 51, 0.10), 0 2px 6px -1px rgba(12, 27, 51, 0.06);
+    --vp-shadow-lg: 0 12px 40px 0 rgba(12, 27, 51, 0.14), 0 4px 12px -2px rgba(12, 27, 51, 0.08);
+    --vp-shadow-gold: 0 8px 30px 0 rgba(212, 135, 10, 0.22);
   }
-  50% {
-    text-shadow: 
-      0 0 50px rgba(0, 255, 255, 1),
-      0 0 100px rgba(0, 255, 255, 0.6),
-      0 0 150px rgba(0, 255, 65, 0.4);
+
+  .dark {
+    --vp-bg: #080C14;
+    --vp-bg-card: #0F1623;
+    --vp-bg-subtle: #151C2B;
+    --vp-text: #F9FAFB;
+    --vp-text-muted: #9CA3AF;
+    --vp-text-light: #6B7280;
+    --vp-border: #1E293B;
+    --vp-border-subtle: #0F172A;
+    --vp-shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+    --vp-shadow-md: 0 4px 16px 0 rgba(0, 0, 0, 0.4);
+    --vp-shadow-lg: 0 12px 40px 0 rgba(0, 0, 0, 0.5);
+  }
+
+  /* Typography scale */
+  html {
+    font-family: var(--font-dm-sans), system-ui, sans-serif;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-sora), var(--font-dm-sans), system-ui, sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
   }
 }
 
-.animate-pulse-glow {
-  animation: pulse-glow 3s ease-in-out infinite;
+/* ============================================
+   VEDPRAGYA BRAND UTILITIES
+   ============================================ */
+
+/* Primary brand gradient text */
+.vp-gradient-text {
+  background: linear-gradient(135deg, #1A3A6C 0%, #2563EB 60%, #D4870A 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-/* Grid Flow Animation */
-@keyframes grid-flow {
-  0% {
-    transform: translateY(0);
+/* Gold accent text */
+.vp-gold-text {
+  background: linear-gradient(135deg, #D4870A 0%, #F59E0B 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Navy text */
+.vp-navy-text {
+  color: var(--vp-brand-deep);
+}
+
+/* Section backgrounds */
+.vp-section-light {
+  background-color: var(--vp-bg);
+}
+
+.vp-section-subtle {
+  background-color: var(--vp-bg-subtle);
+}
+
+.vp-section-dark {
+  background-color: var(--vp-brand-deep);
+  color: #F9FAFB;
+}
+
+/* Card styles */
+.vp-card {
+  background-color: var(--vp-bg-card);
+  border: 1px solid var(--vp-border);
+  border-radius: 16px;
+  box-shadow: var(--vp-shadow-sm);
+  transition: box-shadow 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
+}
+
+.vp-card:hover {
+  box-shadow: var(--vp-shadow-lg);
+  border-color: rgba(37, 99, 235, 0.3);
+  transform: translateY(-2px);
+}
+
+/* Button styles */
+.vp-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2rem;
+  background-color: var(--vp-brand-deep);
+  color: #FFFFFF;
+  font-family: var(--font-sora), sans-serif;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  text-decoration: none;
+}
+
+.vp-btn-primary:hover {
+  background-color: var(--vp-brand);
+  box-shadow: var(--vp-shadow-md);
+  transform: translateY(-1px);
+}
+
+.vp-btn-accent {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2rem;
+  background-color: var(--vp-accent);
+  color: #FFFFFF;
+  font-family: var(--font-sora), sans-serif;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  text-decoration: none;
+}
+
+.vp-btn-accent:hover {
+  background-color: var(--vp-accent-light);
+  box-shadow: var(--vp-shadow-gold);
+  transform: translateY(-1px);
+}
+
+.vp-btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2rem;
+  background: transparent;
+  color: var(--vp-brand-deep);
+  font-family: var(--font-sora), sans-serif;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  border-radius: 10px;
+  border: 2px solid var(--vp-brand);
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  text-decoration: none;
+}
+
+.vp-btn-outline:hover {
+  background-color: var(--vp-brand-deep);
+  color: #FFFFFF;
+  transform: translateY(-1px);
+}
+
+.dark .vp-btn-outline {
+  color: #F9FAFB;
+  border-color: rgba(249, 250, 251, 0.3);
+}
+
+.dark .vp-btn-outline:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(249, 250, 251, 0.6);
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
+/* Fade up — primary entrance animation */
+@keyframes vp-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
   }
-  100% {
-    transform: translateY(40px);
-  }
-}
-
-/* Home hero grid background (kept in CSS so we can disable on mobile). */
-.hero-grid-bg {
-  background-image: radial-gradient(circle at 2px 2px, rgba(0, 255, 255, 0.15) 1px, transparent 0);
-  background-size: 40px 40px;
-  animation: grid-flow 20s linear infinite;
-}
-
-/* Scroll Pulse Animation */
-@keyframes scroll-pulse {
-  0%, 100% {
+  to {
     opacity: 1;
     transform: translateY(0);
   }
-  50% {
-    opacity: 0.5;
-    transform: translateY(8px);
-  }
+}
+
+.vp-fade-up {
+  animation: vp-fade-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Stagger delays for child elements */
+.vp-stagger-1 { animation-delay: 0.1s; opacity: 0; }
+.vp-stagger-2 { animation-delay: 0.2s; opacity: 0; }
+.vp-stagger-3 { animation-delay: 0.3s; opacity: 0; }
+.vp-stagger-4 { animation-delay: 0.4s; opacity: 0; }
+.vp-stagger-5 { animation-delay: 0.5s; opacity: 0; }
+.vp-stagger-6 { animation-delay: 0.6s; opacity: 0; }
+
+/* Subtle float */
+@keyframes vp-float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+
+.vp-float {
+  animation: vp-float 5s ease-in-out infinite;
+}
+
+/* Marquee scroll */
+@keyframes vp-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.vp-marquee {
+  animation: vp-marquee 28s linear infinite;
+  will-change: transform;
+}
+
+/* Scroll pulse for hero indicator */
+@keyframes scroll-pulse {
+  0%, 100% { opacity: 1; transform: translateY(0); }
+  50% { opacity: 0.4; transform: translateY(8px); }
 }
 
 .animate-scroll-pulse {
   animation: scroll-pulse 2s ease-in-out infinite;
 }
 
-/* Premium Shimmer Effect */
-@keyframes shimmer {
-  0% {
-    background-position: -1000px 0;
-  }
-  100% {
-    background-position: 1000px 0;
-  }
-}
-
-.shimmer {
-  background: linear-gradient(
-    to right,
-    transparent 0%,
-    rgba(255, 255, 255, 0.3) 50%,
-    transparent 100%
-  );
-  background-size: 1000px 100%;
-  animation: shimmer 3s infinite;
-}
-
-/* Premium Card Hover Effect */
-.premium-card {
-  position: relative;
-  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-.premium-card::before {
-  content: '';
-  position: absolute;
-  inset: -2px;
-  border-radius: inherit;
-  padding: 2px;
-  background: linear-gradient(
-    45deg,
-    rgba(0, 255, 255, 0.5),
-    rgba(0, 255, 65, 0.5),
-    rgba(0, 128, 255, 0.5)
-  );
-  -webkit-mask: 
-    linear-gradient(#fff 0 0) content-box, 
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  opacity: 0;
-  transition: opacity 0.5s ease;
-}
-
-.premium-card:hover::before {
-  opacity: 1;
-}
-
-/* Premium Floating Animation */
+/* Legacy float (keep for backward compat) */
 @keyframes float {
-  0%, 100% {
-    transform: translateY(0) rotate(0deg);
-  }
-  33% {
-    transform: translateY(-20px) rotate(2deg);
-  }
-  66% {
-    transform: translateY(-10px) rotate(-2deg);
-  }
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  33% { transform: translateY(-20px) rotate(2deg); }
+  66% { transform: translateY(-10px) rotate(-2deg); }
 }
 
 .animate-float {
   animation: float 6s ease-in-out infinite;
 }
 
-/* Premium Scale on View */
+/* Legacy shimmer */
+@keyframes shimmer {
+  0% { background-position: -1000px 0; }
+  100% { background-position: 1000px 0; }
+}
+
+.shimmer {
+  background: linear-gradient(to right, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%);
+  background-size: 1000px 100%;
+  animation: shimmer 3s infinite;
+}
+
+/* Scale in */
 @keyframes scale-in {
-  from {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+  from { opacity: 0; transform: scale(0.92); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 .scale-in-view {
-  animation: scale-in 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+  animation: scale-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Grid flow for hero bg */
+@keyframes grid-flow {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(40px); }
+}
+
+.hero-grid-bg {
+  background-image: radial-gradient(circle at 2px 2px, rgba(37, 99, 235, 0.12) 1px, transparent 0);
+  background-size: 44px 44px;
+  animation: grid-flow 24s linear infinite;
+}
+
+/* Legacy pulse glow — kept for backward compat, but muted */
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.85; }
+  50% { opacity: 1; }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
 }
 
 /* ============================================
-   GLASSMORPHISM EFFECTS
+   LEGACY GLASSMORPHISM (backward compat)
    ============================================ */
 
 .glass-premium {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 
-    0 8px 32px 0 rgba(0, 255, 255, 0.15),
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 8px 32px 0 rgba(12, 27, 51, 0.12);
 }
 
 .glass-premium-dark {
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 
-    0 8px 32px 0 rgba(0, 255, 255, 0.2),
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+  background: rgba(15, 22, 35, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.35);
+}
+
+/* Premium card (legacy) */
+.premium-card {
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.premium-card::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(26, 58, 108, 0.4), rgba(37, 99, 235, 0.3), rgba(212, 135, 10, 0.3));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.premium-card:hover::before {
+  opacity: 1;
+}
+
+/* Legacy gradient text */
+.gradient-text-premium {
+  background: linear-gradient(135deg, #1A3A6C 0%, #2563EB 60%, #D4870A 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 /* ============================================
    PERFORMANCE OPTIMIZATIONS
    ============================================ */
 
-/* Hardware acceleration */
 .gpu-accelerated {
   transform: translateZ(0);
   will-change: transform, opacity;
 }
 
-/* Reduce motion for accessibility */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
+  *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
 }
 
-/**
- * Mobile performance defaults (smooth > flashy).
- *
- * We intentionally disable continuous animations on small screens to reduce
- * jank from constant repaints (blur + gradients + animation is expensive on mobile GPUs).
- */
 @media (max-width: 640px) {
-  .hero-grid-bg {
-    animation: none !important;
-  }
-
-  /* Disable common "always running" animations on mobile. */
+  .hero-grid-bg,
   .animate-float,
+  .vp-float,
   .animate-bounce,
   .animate-pulse,
   .animate-ping,
   .animate-scroll-pulse,
-  .animate-pulse-glow {
+  .animate-pulse-glow,
+  .vp-marquee {
     animation: none !important;
   }
 }
@@ -213,7 +402,6 @@
    UTILITY CLASSES
    ============================================ */
 
-/* Hide scrollbar for horizontal scroll sections */
 .hide-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -223,7 +411,6 @@
   display: none;
 }
 
-/* Smooth scroll snap for mobile carousels */
 .snap-x {
   scroll-snap-type: x mandatory;
 }
@@ -232,30 +419,19 @@
   scroll-snap-align: start;
 }
 
-/* Premium Gradient Text */
-.gradient-text-premium {
-  background: linear-gradient(
-    135deg,
-    #00ff41 0%,
-    #00ffff 50%,
-    #0080ff 100%
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Prevent layout shift on load */
 .content-visibility-auto {
   content-visibility: auto;
   contain-intrinsic-size: 500px;
 }
 
+.text-balance {
+  text-wrap: balance;
+}
+
 /* ============================================
-   MAIN PAGES: MOBILE-COMPACT UTILITIES
+   MAIN PAGES: LAYOUT UTILITIES
    ============================================ */
 
-/* Shared hero rhythm for Home + main navigation pages. */
 .compact-main-hero {
   min-height: min(88vh, 46rem);
   padding-top: clamp(3.5rem, 8vw, 6rem);
@@ -268,13 +444,11 @@
   }
 }
 
-/* Shared section rhythm so stacks feel tighter on phones. */
 .compact-main-section {
   padding-top: clamp(2.75rem, 7vw, 5.5rem);
   padding-bottom: clamp(2.75rem, 7vw, 5.5rem);
 }
 
-/* Horizontal chip rows for touch-friendly filters/tabs. */
 .touch-chip-row {
   display: flex;
   gap: 0.625rem;
@@ -288,12 +462,40 @@
   display: none;
 }
 
-/* Clamp modal body height for small devices. */
 .mobile-safe-modal {
   max-height: min(86vh, 920px);
 }
 
-/* Balanced heading line breaks on modern browsers. */
-.text-balance {
-  text-wrap: balance;
+/* ============================================
+   VEDPRAGYA SECTION DIVIDER
+   ============================================ */
+
+.vp-divider {
+  width: 48px;
+  height: 3px;
+  background: linear-gradient(90deg, #D4870A, #F59E0B);
+  border-radius: 2px;
+}
+
+/* Animated underline for headings */
+.vp-underline {
+  position: relative;
+  display: inline-block;
+}
+
+.vp-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, #D4870A, #F59E0B);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.vp-underline:hover::after {
+  transform: scaleX(1);
 }
