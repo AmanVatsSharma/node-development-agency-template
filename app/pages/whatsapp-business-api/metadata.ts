@@ -32,6 +32,14 @@ export const metadata: Metadata = buildPageMetadata({
     'whatsapp chatbot integration',
     'whatsapp crm integration',
     'meta cloud api setup',
+    'whatsapp business api india',
+    'whatsapp marketing automation india',
+    'whatsapp api setup india',
+    'whatsapp for business india',
+    'whatsapp bulk messaging india',
+    'whatsapp sales automation',
+    'whatsapp api developer india',
+    'vedpragya whatsapp api',
   ],
 });
 
