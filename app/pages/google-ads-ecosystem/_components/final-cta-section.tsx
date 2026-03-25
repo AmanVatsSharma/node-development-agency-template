@@ -172,14 +172,34 @@ export function FinalCTASection() {
     }
 
     setIsSubmitting(true);
-    console.log('[FinalCTASection] Form submitted:', formData);
 
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubmitting(false);
+    try {
+      const res = await fetch('/api/lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          message: formData.message || undefined,
+          budget: formData.monthlyBudget || undefined,
+          source: 'google-ads-ecosystem',
+          leadSource: 'Google Ads Ecosystem Page',
+          raw: {
+            businessName: formData.businessName,
+            website: formData.website || undefined,
+            industry: formData.industry,
+            primaryGoal: formData.primaryGoal,
+            currentChallenges: formData.currentChallenges,
+            preferredServices: formData.preferredServices,
+            timeline: formData.timeline || undefined,
+          },
+        }),
+      });
+      if (!res.ok) throw new Error('Submission failed');
+
       setIsSubmitted(true);
-      
-      // Track conversion
+
       if (typeof window !== 'undefined' && (window as any).gtag) {
         (window as any).gtag('event', 'lead_form_submit', {
           form_type: 'ecosystem_lead_form',
@@ -189,7 +209,11 @@ export function FinalCTASection() {
           page_location: window.location.pathname
         });
       }
-    }, 2000);
+    } catch {
+      setErrors({ submit: 'Something went wrong. Please try again or call us directly.' });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleCTAClick = (ctaType: string) => {
@@ -566,6 +590,12 @@ export function FinalCTASection() {
                   placeholder="Tell us more about your business and goals..."
                 />
               </div>
+
+              {errors.submit && (
+                <p className="text-red-500 text-sm flex items-center gap-2">
+                  <span>⚠</span> {errors.submit}
+                </p>
+              )}
 
               {/* Submit Button */}
               <motion.button
