@@ -1,11 +1,4 @@
-import type { Metadata } from "next";
 import Link from "next/link";
-
-export const metadata: Metadata = {
-  title: "Portfolio | Vedpragya — Products & Client Work",
-  description:
-    "Products we've shipped and client work we're proud of. BharatERP, Promerchants, TradeZen, and 500+ client projects across India, UAE, and the US.",
-};
 
 const products = [
   {

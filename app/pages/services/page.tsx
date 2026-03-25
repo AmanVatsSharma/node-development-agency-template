@@ -1,11 +1,4 @@
-import type { Metadata } from "next";
 import Link from "next/link";
-
-export const metadata: Metadata = {
-  title: "Services | Vedpragya — Software Development & IT Solutions",
-  description:
-    "Web & mobile apps, AI automation, e-commerce, ERP, digital marketing, trading platforms — full-service software and IT from Vedpragya.",
-};
 
 const serviceCategories = [
   {
