@@ -4,7 +4,7 @@ overview: Add custom inline SVG line-art illustrations in brand colors (navy, el
 todos:
   - id: create-illustrations-folder
     content: Create app/components/illustrations/ with WebDevIllustration, AINetworkIllustration, ERPIllustration, MarketingIllustration, ShopifyIllustration, and index.ts barrel export
-    status: pending
+    status: in_progress
   - id: integrate-hero-mobile
     content: Add WebDevIllustration to HeroSection.tsx for mobile (lg:hidden block below CTA buttons)
     status: pending
