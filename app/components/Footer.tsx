@@ -1,18 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
-
-// Vedpragya monogram (same as header)
-function FooterMark() {
-  return (
-    <svg width="32" height="32" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <rect width="30" height="30" rx="8" fill="#1A3A6C" />
-      <path d="M7 9L15 21L23 9" stroke="#D4870A" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M10.5 9L15 15.5L19.5 9" stroke="#60A5FA" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
 
 // Collapsible section for mobile
 function FooterSection({ title, children }: { title: string; children: React.ReactNode }) {
@@ -116,7 +106,13 @@ export default function Footer() {
           {/* Brand column */}
           <div className="mb-8 lg:mb-0 border-b border-white/8 md:border-none pb-6 md:pb-0 pr-0 lg:pr-8">
             <Link href="/" className="inline-flex items-center gap-3 mb-5 group">
-              <FooterMark />
+              <Image
+                src="/logo.png"
+                alt="Vedpragya logo"
+                width={44}
+                height={34}
+                className="h-8 w-auto shrink-0 brightness-0 invert group-hover:brightness-100 group-hover:invert-0 transition-all duration-300"
+              />
               <span
                 className="font-bold text-lg tracking-tight text-white"
                 style={{ fontFamily: "var(--font-sora), sans-serif" }}

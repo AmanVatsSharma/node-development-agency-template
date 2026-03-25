@@ -62,6 +62,13 @@ export const metadata: Metadata = {
     description: 'We build software that transforms businesses — web apps, AI, ERP, e-commerce, and more.',
     images: [toAbsoluteSeoUrl(SEO_DEFAULT_OG_IMAGE_PATH)],
   },
+  icons: {
+    icon: [
+      { url: '/logo_favicon.png', type: 'image/png' },
+    ],
+    apple: '/logo_favicon.png',
+    shortcut: '/logo_favicon.png',
+  },
   robots: {
     index: true,
     follow: true,
@@ -97,7 +104,7 @@ export default async function RootLayout({
         <link rel="manifest" href="/manifest.json" />
         
         {/* Theme color for better SEO and PWA */}
-        <meta name="theme-color" content="#3b82f6" />
+        <meta name="theme-color" content="#0C1B33" />
 
         {/* Structured Data (JSON-LD) - Authentic company identity */}
         <OrganizationStructuredData
