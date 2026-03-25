@@ -329,21 +329,15 @@ export default function EnhancedHeader() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 sm:h-[68px]">
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-2.5 group shrink-0">
+            <Link href="/" className="flex items-center shrink-0 group" aria-label="Vedpragya – Home">
               <Image
                 src="/logo.png"
-                alt="Vedpragya logo"
-                width={36}
-                height={28}
-                className="shrink-0 group-hover:scale-105 transition-transform duration-200 h-7 w-auto"
+                alt="Vedpragya"
+                width={770}
+                height={459}
+                className="h-8 sm:h-9 w-auto object-contain group-hover:opacity-90 transition-opacity duration-200 dark:brightness-0 dark:invert"
                 priority
               />
-              <span
-                className="font-bold text-[1.05rem] tracking-tight text-[#0C1B33] dark:text-white"
-                style={{ fontFamily: "var(--font-sora), sans-serif" }}
-              >
-                Vedpragya
-              </span>
             </Link>
 
             {/* Desktop nav */}

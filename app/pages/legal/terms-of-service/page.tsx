@@ -2,17 +2,17 @@ import type { Metadata } from "next";
 import { buildPageMetadata } from "@/app/lib/seo/metadata";
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "Terms of Service | Enterprise Hero - Vedpragya Bharat Private Limited",
+  title: "Terms of Service | Vedpragya Bharat Private Limited",
   description:
-    "Terms of Service for Vedpragya Bharat Private Limited (Enterprise Hero). Legal terms and conditions for our enterprise-grade Node.js development services.",
+    "Terms of Service for Vedpragya Bharat Private Limited. Legal terms and conditions for our enterprise-grade software development and digital services.",
   path: "/pages/legal/terms-of-service",
   keywords: [
     "terms of service",
     "legal terms",
     "Vedpragya Bharat",
-    "Enterprise Hero",
+    "vedpragya terms of service",
     "service agreement",
-    "legal compliance",
+    "software development terms",
   ],
 });
 

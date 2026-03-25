@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion, AnimatePresence } from "motion/react";
 import { mainNavigation } from "../data/navigation";
 
@@ -199,19 +200,16 @@ export default function EnhancedMobileMenu({ isOpen, onClose }: EnhancedMobileMe
 
         {/* ── Header ── */}
         <div className="relative z-10 flex items-center justify-between px-5 py-4 border-b border-gray-100 dark:border-[#1E293B] shrink-0">
-          <div className="flex items-center gap-2.5">
-            <svg width="28" height="28" viewBox="0 0 30 30" fill="none" aria-hidden="true">
-              <rect width="30" height="30" rx="8" fill="#0C1B33" />
-              <path d="M7 9L15 21L23 9" stroke="#D4870A" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-              <path d="M10.5 9L15 15.5L19.5 9" stroke="#2563EB" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-            <span
-              className="font-bold text-base text-[#0C1B33] dark:text-white tracking-tight"
-              style={{ fontFamily: "var(--font-sora), sans-serif" }}
-            >
-              Vedpragya
-            </span>
-          </div>
+          <Link href="/" onClick={onClose} aria-label="Vedpragya – Home">
+            <Image
+              src="/logo.png"
+              alt="Vedpragya"
+              width={770}
+              height={459}
+              className="h-8 w-auto object-contain dark:brightness-0 dark:invert"
+              priority
+            />
+          </Link>
           <button
             onClick={onClose}
             className="flex items-center justify-center w-9 h-9 rounded-xl bg-gray-100 dark:bg-[#151C2B] hover:bg-gray-200 dark:hover:bg-[#1E293B] transition-colors"
