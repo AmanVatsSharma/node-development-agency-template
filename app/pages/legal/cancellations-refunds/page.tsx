@@ -2,17 +2,17 @@ import type { Metadata } from "next";
 import { buildPageMetadata } from "@/app/lib/seo/metadata";
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "Cancellations & Refunds Policy | Enterprise Hero - Vedpragya Bharat Private Limited",
+  title: "Cancellations & Refunds Policy | Vedpragya Bharat Private Limited",
   description:
-    "Cancellations and Refunds Policy for Vedpragya Bharat Private Limited (Enterprise Hero). Comprehensive refund terms for software development and digital services.",
+    "Cancellations and Refunds Policy for Vedpragya Bharat Private Limited. Comprehensive refund terms for software development and digital services.",
   path: "/pages/legal/cancellations-refunds",
   keywords: [
     "refund policy",
     "cancellation policy",
     "service refunds",
     "Vedpragya Bharat",
-    "Enterprise Hero",
-    "refund terms",
+    "vedpragya refund policy",
+    "software development refund terms",
   ],
 });
 
