@@ -10,15 +10,16 @@ import { SectionErrorBoundary } from "@/app/components/common/SectionErrorBounda
 import { buildPageMetadata } from "@/app/lib/seo/metadata";
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "Website Services | Enterprise Hero",
+  title: "Website Services | Vedpragya — Web Development & Optimization",
   description:
-    "Comprehensive website services including UX, development, optimization, and growth support for businesses worldwide.",
+    "Comprehensive website services by Vedpragya including UX design, development, performance optimization, and growth support for businesses in India and globally.",
   path: "/pages/website-services",
   keywords: [
-    "website services",
+    "website services india",
     "web development services",
-    "ui ux services",
+    "ui ux design services",
     "business website optimization",
+    "vedpragya website services",
   ],
 });
 

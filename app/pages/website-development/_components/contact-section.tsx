@@ -1,16 +1,46 @@
 'use client'
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { Button } from "@/app/components/ui/button";
 import { Spotlight } from "@/app/components/ui/spotlight";
-import { Mail, Phone, MapPin, Send } from "lucide-react";
+import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle } from "lucide-react";
 
 export function ContactSection() {
   const { ref, inView } = useInView({
     threshold: 0.1,
     triggerOnce: true,
   });
+
+  const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setError('');
+    try {
+      const res = await fetch('/api/lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          message: formData.subject ? `${formData.subject}: ${formData.message}` : formData.message,
+          source: 'website-development',
+          leadSource: 'Website Development Page',
+        }),
+      });
+      if (!res.ok) throw new Error('Submission failed');
+      setSubmitted(true);
+    } catch {
+      setError('Something went wrong. Please try again or contact us directly.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <section className="py-20 relative overflow-hidden" id="contact">
@@ -56,71 +86,95 @@ export function ContactSection() {
             transition={{ duration: 0.5, delay: 0.3 }}
           >
             <Spotlight className="rounded-2xl bg-background border border-border/50 p-8">
-              <form className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {submitted ? (
+                <div className="flex flex-col items-center justify-center h-full py-16 text-center">
+                  <CheckCircle className="w-16 h-16 text-green-500 mb-4" />
+                  <h3 className="text-2xl font-bold mb-2">Message Sent!</h3>
+                  <p className="text-muted-foreground">Thank you for reaching out. We'll get back to you within 24 hours.</p>
+                </div>
+              ) : (
+                <form className="space-y-6" onSubmit={handleSubmit}>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <label htmlFor="name" className="block text-sm font-medium mb-2">
+                        Your Name
+                      </label>
+                      <input
+                        type="text"
+                        id="name"
+                        value={formData.name}
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        className="w-full px-4 py-3 rounded-lg border border-border bg-background/50 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                        placeholder="John Doe"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="email" className="block text-sm font-medium mb-2">
+                        Email Address
+                      </label>
+                      <input
+                        type="email"
+                        id="email"
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        className="w-full px-4 py-3 rounded-lg border border-border bg-background/50 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                        placeholder="you@company.com"
+                        required
+                      />
+                    </div>
+                  </div>
+
                   <div>
-                    <label htmlFor="name" className="block text-sm font-medium mb-2">
-                      Your Name
+                    <label htmlFor="subject" className="block text-sm font-medium mb-2">
+                      Subject
                     </label>
                     <input
                       type="text"
-                      id="name"
+                      id="subject"
+                      value={formData.subject}
+                      onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                       className="w-full px-4 py-3 rounded-lg border border-border bg-background/50 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-                      placeholder="John Doe"
+                      placeholder="How can we help you?"
                       required
                     />
                   </div>
+
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium mb-2">
-                      Email Address
+                    <label htmlFor="message" className="block text-sm font-medium mb-2">
+                      Message
                     </label>
-                    <input
-                      type="email"
-                      id="email"
-                      className="w-full px-4 py-3 rounded-lg border border-border bg-background/50 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-                      placeholder="you@company.com"
+                    <textarea
+                      id="message"
+                      rows={5}
+                      value={formData.message}
+                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                      className="w-full px-4 py-3 rounded-lg border border-border bg-background/50 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all resize-none"
+                      placeholder="Tell us about your project..."
                       required
-                    />
+                    ></textarea>
                   </div>
-                </div>
-                
-                <div>
-                  <label htmlFor="subject" className="block text-sm font-medium mb-2">
-                    Subject
-                  </label>
-                  <input
-                    type="text"
-                    id="subject"
-                    className="w-full px-4 py-3 rounded-lg border border-border bg-background/50 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-                    placeholder="How can we help you?"
-                    required
-                  />
-                </div>
-                
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium mb-2">
-                    Message
-                  </label>
-                  <textarea
-                    id="message"
-                    rows={5}
-                    className="w-full px-4 py-3 rounded-lg border border-border bg-background/50 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all resize-none"
-                    placeholder="Tell us about your project..."
-                    required
-                  ></textarea>
-                </div>
-                
-                <div>
-                  <Button
-                    type="submit"
-                    variant="default" 
-                    className="w-full py-6 rounded-lg flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700"
-                  >
-                    Send Message
-                    <Send size={16} />
-                  </Button>
-                </div>
-              </form>
+
+                  {error && (
+                    <div className="flex items-center gap-2 text-red-500 text-sm">
+                      <AlertCircle size={16} />
+                      {error}
+                    </div>
+                  )}
+
+                  <div>
+                    <Button
+                      type="submit"
+                      variant="default"
+                      disabled={isSubmitting}
+                      className="w-full py-6 rounded-lg flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 disabled:opacity-60"
+                    >
+                      {isSubmitting ? 'Sending...' : 'Send Message'}
+                      <Send size={16} />
+                    </Button>
+                  </div>
+                </form>
+              )}
             </Spotlight>
           </motion.div>
           
