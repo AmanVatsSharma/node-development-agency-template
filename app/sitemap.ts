@@ -99,14 +99,37 @@ function mergeDuplicateSitemapEntry(
   return existingEntry;
 }
 
+const HIGH_PRIORITY_SERVICE_ROUTES = new Set([
+  '/pages/web-development',
+  '/pages/web-development-mumbai',
+  '/pages/website-development',
+  '/pages/website-services',
+  '/pages/business-website',
+  '/pages/google-ads-management',
+  '/pages/seo-audit',
+  '/pages/next-js-development',
+  '/pages/reactjs-development',
+  '/pages/ai-chatbot-development',
+  '/pages/ai-voice-agents',
+  '/pages/whatsapp-business-api',
+  '/pages/healthcare-software-development',
+  '/pages/trading-software',
+  '/pages/crm',
+  '/pages/shopify-store-setup',
+]);
+
 function getPriorityForRoute(path: string): number {
   if (path === '/') return 1.0;
   if (path === '/pages/services') return 0.95;
-  if (path === '/pages/contact') return 0.92;
+  if (path === '/pages/contact') return 0.94;
+  if (path === '/pages/about') return 0.92;
+  if (HIGH_PRIORITY_SERVICE_ROUTES.has(path)) return 0.90;
   if (path.startsWith('/pages/google-ads')) return 0.88;
   if (path.startsWith('/pages/shopify')) return 0.86;
-  if (path.startsWith('/pages/')) return 0.8;
-  return 0.7;
+  if (path.startsWith('/pages/legal/')) return 0.30;
+  if (path === '/pages/crm/demo') return 0.65;
+  if (path.startsWith('/pages/')) return 0.80;
+  return 0.70;
 }
 
 function getChangeFrequencyForRoute(path: string): MetadataRoute.Sitemap[number]['changeFrequency'] {
@@ -174,14 +197,18 @@ async function getBlogEntries(): Promise<DynamicBlogEntry[]> {
  */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes = getStaticSeoRoutes();
-  const now = new Date();
+
+  // Use a stable reference date for static pages rather than `new Date()`
+  // so the sitemap is deterministic and does not trigger unnecessary re-crawling.
+  const STATIC_PAGES_LAST_MODIFIED = new Date('2026-03-01T00:00:00.000Z');
 
   const staticEntries: MetadataRoute.Sitemap = staticRoutes.map((route) => ({
     url: toAbsoluteSeoUrl(route),
-    lastModified: now,
+    lastModified: STATIC_PAGES_LAST_MODIFIED,
     changeFrequency: getChangeFrequencyForRoute(route),
     priority: getPriorityForRoute(route),
   }));
+
 
   const blogEntries = await getBlogEntries();
   const dynamicBlogEntries: MetadataRoute.Sitemap = blogEntries.map((entry) => ({

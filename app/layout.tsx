@@ -80,6 +80,11 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
+  verification: {
+    // Replace with your actual Google Search Console verification code
+    // Get it from: https://search.google.com/search-console
+    google: 'REPLACE_WITH_YOUR_GSC_VERIFICATION_CODE',
+  },
 };
 
 export default async function RootLayout({
@@ -100,6 +105,14 @@ export default async function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        {/* Preconnect to critical third-party origins for faster resource loading */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+        <link rel="dns-prefetch" href="https://googleads.g.doubleclick.net" />
+        <link rel="dns-prefetch" href="https://www.googleadservices.com" />
+
         {/* Add Web App Manifest for PWA support */}
         <link rel="manifest" href="/manifest.json" />
         
