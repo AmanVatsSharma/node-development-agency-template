@@ -60,9 +60,22 @@ export const companyProfile: CompanyProfile = {
     name: "Aman Kumar Sharma",
     title: "Founder & CEO",
   },
-  // IMPORTANT: Keep these undefined unless you have the exact URLs.
+  // IMPORTANT: Fill in your actual verified social profile URLs below.
+  // These are used in the Organization + ProfessionalService JSON-LD sameAs field,
+  // which directly boosts Google Knowledge Panel and brand authority.
+  // Only add URLs you have verified ownership of.
+  //
   // Example:
-  // social: { linkedin: "https://www.linkedin.com/company/<your-handle>" }
-  social: {},
+  // social: {
+  //   linkedin: "https://www.linkedin.com/company/vedpragya",
+  //   x: "https://x.com/vedpragya",
+  //   facebook: "https://www.facebook.com/vedpragya",
+  //   instagram: "https://www.instagram.com/vedpragya",
+  //   youtube: "https://www.youtube.com/@vedpragya",
+  //   github: "https://github.com/vedpragya",
+  // },
+  social: {
+    // Add your social URLs here — see examples above
+  },
 };
 

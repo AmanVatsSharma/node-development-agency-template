@@ -52,7 +52,7 @@ export const metadata: Metadata = {
         url: toAbsoluteSeoUrl(SEO_DEFAULT_OG_IMAGE_PATH),
         width: 1200,
         height: 630,
-        alt: 'Vedpragya — Software Development & IT Solutions',
+        alt: 'Vedpragya — Software Development & IT Solutions | India',
       },
     ],
   },

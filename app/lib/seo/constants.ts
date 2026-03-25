@@ -65,8 +65,8 @@ export const SEO_SITE_URL = getCanonicalSiteUrl();
 export const SEO_BRAND_NAME = companyProfile.brandName;
 export const SEO_LEGAL_NAME = companyProfile.legalName;
 export const SEO_DEFAULT_DESCRIPTION =
-  'Enterprise-grade web development, AI automation, and growth-focused digital services by Enterprise Hero.';
-export const SEO_DEFAULT_OG_IMAGE_PATH = '/logo.png';
+  'Enterprise-grade software development, AI systems, ERP, and digital services by Vedpragya — India.';
+export const SEO_DEFAULT_OG_IMAGE_PATH = '/og-default.jpg';
 export const SEO_BLOCKED_ROUTE_PREFIXES = ['/admin', '/api', '/login'] as const;
 export const SEO_ROBOTS_DISALLOW_PATHS = SEO_BLOCKED_ROUTE_PREFIXES;
 
