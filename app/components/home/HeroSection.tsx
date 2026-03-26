@@ -6,6 +6,25 @@ import WebDevIllustration from "@/app/components/illustrations/WebDevIllustratio
 
 const cycleWords = ["Web Apps", "AI Systems", "ERP Platforms", "E-Commerce"];
 
+// Animated floating shape component
+function AnimatedAccent() {
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {/* Floating hexagon — top right */}
+      <div 
+        className="absolute top-20 right-10 w-32 h-32 rounded-3xl border border-[#2563EB]/15 opacity-30 vp-float"
+        style={{ transform: "rotate(45deg)" }}
+      />
+      
+      {/* Floating circle — bottom left */}
+      <div 
+        className="absolute bottom-32 -left-16 w-48 h-48 rounded-full border border-[#D4870A]/10 opacity-20"
+        style={{ animation: "vp-float 7s ease-in-out infinite reverse" }}
+      />
+    </div>
+  );
+}
+
 // Dashboard product mockup — right-side visual
 function DashboardVisual() {
   return (
@@ -157,6 +176,9 @@ export default function HeroSection() {
     <section className="relative min-h-screen flex items-center vp-mesh-navy overflow-hidden">
       {/* ── Backgrounds ── */}
 
+      {/* Animated accent shapes */}
+      <AnimatedAccent />
+
       {/* Dot grid */}
       <div className="absolute inset-0 hero-grid-bg opacity-25 pointer-events-none" />
 
@@ -183,25 +205,25 @@ export default function HeroSection() {
 
           {/* ── Left: copy ── */}
           <div>
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#D4870A]/40 bg-[#D4870A]/10 text-[#D4870A] text-xs font-semibold tracking-wide uppercase mb-8">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#D4870A] animate-pulse" />
-              Vedpragya — India · UAE · USA
+            {/* Premium badge with authority messaging */}
+            <div className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full border border-[#D4870A]/40 bg-gradient-to-r from-[#D4870A]/15 to-[#D4870A]/5 text-[#F59E0B] text-xs font-semibold tracking-widest uppercase mb-8">
+              <span className="w-2 h-2 rounded-full bg-[#F59E0B] animate-pulse" />
+              Enterprise-Grade Software
             </div>
 
-            {/* Three-line editorial headline */}
+            {/* Three-line editorial headline with stronger authority */}
             <h1
-              className="font-bold text-white leading-[1.0] tracking-tight mb-8"
+              className="font-bold text-white leading-[1.0] tracking-tight mb-6"
               style={{ fontFamily: "var(--font-sora), sans-serif" }}
             >
               {/* Line 1 — static */}
-              <span className="block text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-white/75">
-                We Build
+              <span className="block text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-white/80">
+                We Engineer
               </span>
 
-              {/* Line 2 — animated cycling word, biggest */}
+              {/* Line 2 — animated cycling word, biggest with enhanced gradient */}
               <span
-                className="block text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-transparent bg-clip-text bg-gradient-to-r from-[#D4870A] to-[#F59E0B]"
+                className="block text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-transparent bg-clip-text bg-gradient-to-r from-[#F59E0B] via-[#D4870A] to-[#F59E0B]"
                 style={{
                   opacity: animating ? 0 : 1,
                   transform: animating ? "translateY(10px)" : "translateY(0)",
@@ -211,61 +233,74 @@ export default function HeroSection() {
                 {cycleWords[wordIndex]}
               </span>
 
-              {/* Line 3 — static closer */}
-              <span className="block text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-white">
-                That Last.
+              {/* Line 3 — stronger closer emphasizing impact */}
+              <span className="block text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-white/85">
+                With Impact.
               </span>
             </h1>
 
-            {/* Sub-headline */}
-            <p className="text-base sm:text-lg lg:text-xl text-gray-400 max-w-lg leading-relaxed mb-10">
-              From a startup&rsquo;s first app to a multinational&rsquo;s digital
-              transformation — Vedpragya engineers software that scales, performs,
-              and delivers real business outcomes.
+            {/* Enhanced sub-headline emphasizing expertise and value */}
+            <p className="text-base sm:text-lg lg:text-xl text-gray-300 max-w-2xl leading-relaxed mb-3">
+              From enterprise transformations to innovative startups — Vedpragya delivers award-winning software that drives measurable business results. Trusted by global leaders.
             </p>
 
-            {/* CTAs */}
-            <div className="flex flex-col sm:flex-row gap-3 mb-10">
+            {/* Trust indicators */}
+            <div className="flex items-center gap-6 mb-10 flex-wrap">
+              <div className="flex items-center gap-2">
+                <span className="text-[#D4870A] font-bold">★★★★★</span>
+                <span className="text-sm text-gray-400">4.9/5 Client Rating</span>
+              </div>
+              <div className="w-px h-5 bg-white/10" />
+              <div className="text-sm text-gray-400">
+                <span className="text-[#F59E0B] font-semibold">500+</span> Projects · <span className="text-[#F59E0B] font-semibold">200+</span> Clients
+              </div>
+            </div>
+
+            {/* Enhanced CTAs with better visual hierarchy */}
+            <div className="flex flex-col sm:flex-row gap-4 mb-12">
               <Link
                 href="/pages/contact"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#D4870A] hover:bg-[#F59E0B] text-white font-bold text-sm rounded-xl transition-all shadow-[0_4px_24px_rgba(212,135,10,0.4)] hover:shadow-[0_8px_32px_rgba(212,135,10,0.55)] hover:-translate-y-0.5 min-h-[52px]"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-[#D4870A] to-[#F59E0B] hover:from-[#F59E0B] hover:to-[#FCA311] text-white font-bold text-base rounded-xl transition-all shadow-[0_6px_28px_rgba(212,135,10,0.45)] hover:shadow-[0_10px_40px_rgba(212,135,10,0.6)] hover:-translate-y-1 min-h-[56px] group"
                 style={{ fontFamily: "var(--font-sora), sans-serif" }}
               >
-                Start a Project
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                Start Your Project
+                <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
               </Link>
               <Link
                 href="/pages/portfolio"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 border border-white/20 hover:border-white/35 text-white font-semibold text-sm rounded-xl transition-all hover:bg-white/5 min-h-[52px]"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 border border-white/25 hover:border-white/40 text-white font-semibold text-base rounded-xl transition-all hover:bg-white/8 backdrop-blur-sm min-h-[56px] group"
                 style={{ fontFamily: "var(--font-sora), sans-serif" }}
               >
-                See Our Work
+                Explore Our Work
+                <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
               </Link>
             </div>
 
             {/* Mobile illustration — visible below CTAs on small screens */}
-            <div className="lg:hidden flex justify-center mb-10 px-4">
+            <div className="lg:hidden flex justify-center mb-12 px-4">
               <WebDevIllustration className="w-full max-w-[280px] opacity-80" />
             </div>
 
-            {/* Trust strip */}
-            <div className="flex flex-wrap items-center gap-x-8 gap-y-3 pt-8 border-t border-white/10">
+            {/* Strength indicators — replaced simple trust strip */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-8 border-t border-white/10">
               {[
-                { num: "500+", label: "Projects Delivered" },
-                { num: "200+", label: "Clients Globally" },
-                { num: "5", label: "Offices" },
-                { num: "99%", label: "Retention" },
+                { num: "500+", label: "Projects Delivered", icon: "✓" },
+                { num: "200+", label: "Happy Clients", icon: "★" },
+                { num: "15+", label: "Years Experience", icon: "⚡" },
+                { num: "99.9%", label: "Uptime Avg", icon: "◉" },
               ].map((s) => (
-                <div key={s.label} className="flex items-baseline gap-2">
-                  <span
-                    className="text-xl font-bold text-white"
+                <div key={s.label} className="text-left">
+                  <p
+                    className="text-2xl md:text-3xl font-bold text-[#F59E0B] mb-1"
                     style={{ fontFamily: "var(--font-sora), sans-serif" }}
                   >
                     {s.num}
-                  </span>
-                  <span className="text-xs text-gray-500">{s.label}</span>
+                  </p>
+                  <p className="text-xs md:text-sm text-gray-400 leading-snug">{s.label}</p>
                 </div>
               ))}
             </div>
@@ -278,10 +313,15 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* Scroll cue */}
-      <div className="absolute bottom-7 left-1/2 -translate-x-1/2 hidden sm:flex flex-col items-center gap-2 opacity-25 pointer-events-none">
-        <span className="text-white text-[9px] font-medium tracking-[0.22em] uppercase">Scroll</span>
-        <div className="w-px h-10 bg-gradient-to-b from-white/80 to-transparent" />
+      {/* Enhanced scroll cue with better visibility */}
+      <div className="absolute bottom-7 left-1/2 -translate-x-1/2 hidden sm:flex flex-col items-center gap-3 opacity-35 pointer-events-none hover:opacity-60 transition-opacity">
+        <span className="text-white text-[10px] font-medium tracking-widest uppercase">Explore More</span>
+        <div className="flex flex-col items-center">
+          <div className="w-px h-12 bg-gradient-to-b from-white/80 to-transparent" />
+          <svg className="w-4 h-4 text-white/60 animate-bounce mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+          </svg>
+        </div>
       </div>
     </section>
   );
