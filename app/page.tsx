@@ -54,57 +54,69 @@ const services = [
     icon: "web",
     title: "Web & Mobile Apps",
     desc: "Scalable Next.js, React, and Node.js applications — performant, accessible, and built to last.",
+    subtext: "Enterprise-Grade Development",
     href: "/pages/web-development",
     accentLight: "#2563EB",
     accentDark: "#60A5FA",
     large: true,
     bgPattern: true,
+    stats: "500+ Apps Deployed",
   },
   {
     id: "ai",
     icon: "ai",
     title: "AI & Automation",
     desc: "Chatbots, voice agents, and intelligent workflow automations that solve real operational problems.",
+    subtext: "AI-Powered Intelligence",
     href: "/pages/ai-chatbot-development",
     accentLight: "#7C3AED",
     accentDark: "#A78BFA",
+    stats: "150+ AI Projects",
   },
   {
     id: "ecommerce",
     icon: "ecommerce",
     title: "E-Commerce Platforms",
     desc: "Shopify, headless stores, and WhatsApp commerce — engineered to convert.",
+    subtext: "Conversion-Optimized",
     href: "/pages/shopify-store-setup",
     accentLight: "#059669",
     accentDark: "#34D399",
+    stats: "₹500Cr+ GMV Managed",
   },
   {
     id: "erp",
     icon: "erp",
     title: "ERP & Enterprise Software",
     desc: "Custom ERP systems and CRM platforms that run core business operations.",
+    subtext: "Enterprise Operations",
     href: "/pages/services",
     accentLight: "#D97706",
     accentDark: "#FCD34D",
     large: true,
+    stats: "80+ Enterprise Clients",
   },
   {
     id: "marketing",
     icon: "marketing",
     title: "Digital Marketing",
     desc: "Google Ads, SEO, and performance campaigns with measurable ROI.",
+    subtext: "Data-Driven Growth",
     href: "/pages/google-ads-management",
     accentLight: "#DC2626",
     accentDark: "#F87171",
+    stats: "₹100Cr+ Managed Spend",
   },
   {
     id: "trading",
     icon: "trading",
     title: "Trading & Finance Tech",
     desc: "Real-time market data platforms and financial analytics at institutional quality.",
+    subtext: "Institutional-Grade",
     href: "/pages/trading-software",
     accentLight: "#0D9488",
     accentDark: "#2DD4BF",
+    stats: "10M+ Daily Transactions",
   },
 ];
 
@@ -148,27 +160,39 @@ export default function Home() {
       {/* ══════════════════════════════════════
           SERVICES — Bento grid
       ══════════════════════════════════════ */}
-      <section className="compact-main-section bg-white dark:bg-[#080C14] overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="compact-main-section bg-white dark:bg-[#080C14] overflow-hidden relative">
+        {/* Subtle background accent */}
+        <div className="absolute inset-0 pointer-events-none opacity-40 dark:opacity-30">
+          <div className="absolute top-0 right-0 w-96 h-96 rounded-full blur-3xl" 
+            style={{ backgroundColor: "rgba(37, 99, 235, 0.05)" }} />
+          <div className="absolute bottom-0 left-0 w-72 h-72 rounded-full blur-3xl"
+            style={{ backgroundColor: "rgba(212, 135, 10, 0.04)" }} />
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           {/* Header */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12">
-            <div className="max-w-xl">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12">
+            <div className="max-w-2xl">
               <div className="vp-divider mb-4" />
               <h2
-                className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#0C1B33] dark:text-white mb-3 tracking-tight"
+                className="text-4xl sm:text-5xl md:text-6xl font-bold text-[#0C1B33] dark:text-white mb-4 tracking-tight leading-[1.1]"
                 style={{ fontFamily: "var(--font-sora), sans-serif" }}
               >
-                What We Build
+                What We <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2563EB] to-[#D4870A]">Build</span>
               </h2>
-              <p className="text-gray-500 dark:text-gray-400 text-lg leading-relaxed">
-                Six disciplines. One integrated team. Every project engineered to last.
+              <p className="text-gray-600 dark:text-gray-300 text-lg leading-relaxed mb-3">
+                Six disciplines. One integrated team. Custom solutions engineered for enterprise-scale impact.
               </p>
+              <div className="flex items-center gap-3 text-sm">
+                <span className="w-2 h-2 rounded-full bg-[#D4870A]" />
+                <span className="text-gray-500 dark:text-gray-400">All services backed by 99.9% uptime SLA</span>
+              </div>
             </div>
             <Link
               href="/pages/services"
-              className="shrink-0 inline-flex items-center gap-2 text-[#2563EB] dark:text-[#60A5FA] font-semibold text-sm hover:underline"
+              className="shrink-0 inline-flex items-center gap-2 px-6 py-3 text-[#2563EB] dark:text-[#60A5FA] font-bold text-base bg-[#2563EB]/8 dark:bg-[#2563EB]/10 rounded-lg hover:bg-[#2563EB]/15 transition-colors border border-[#2563EB]/20"
             >
-              View all services
+              View All
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>
@@ -176,33 +200,58 @@ export default function Home() {
           </div>
 
           {/* Bento grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
             {services.map((svc) => (
               <Link
                 key={svc.id}
                 href={svc.href}
-                className={`vp-bento-card group flex flex-col p-6 sm:p-7 min-h-[180px] ${
-                  svc.large ? "lg:row-span-2 lg:min-h-[360px]" : ""
-                } ${svc.bgPattern ? "bg-[#F8FAFF] dark:bg-[#0A1628]" : ""}`}
+                className={`vp-bento-card group relative flex flex-col p-7 sm:p-8 min-h-[220px] rounded-2xl transition-all duration-300 overflow-hidden border border-gray-200/50 dark:border-white/8 hover:border-gray-300 dark:hover:border-white/15 hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] dark:hover:shadow-[0_20px_40px_rgba(0,0,0,0.4)] ${
+                  svc.large ? "lg:row-span-2 lg:min-h-[420px]" : ""
+                } ${svc.bgPattern ? "bg-gradient-to-br from-[#F8FAFF] to-[#F3F7FF] dark:from-[#0A1628] dark:to-[#0F1E30]" : "bg-white dark:bg-[#0C1723]"}`}
               >
+                {/* Animated gradient border on hover */}
+                <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                  style={{
+                    background: `linear-gradient(135deg, ${svc.accentLight}20, ${svc.accentLight}05)`,
+                  }}
+                />
+
                 {/* Pattern overlay for large card */}
                 {svc.bgPattern && (
                   <div
-                    className="absolute inset-0 opacity-[0.04] dark:opacity-[0.07] pointer-events-none"
+                    className="absolute inset-0 opacity-[0.03] dark:opacity-[0.06] pointer-events-none"
                     style={{
                       backgroundImage: "radial-gradient(circle at 2px 2px, currentColor 1px, transparent 0)",
-                      backgroundSize: "24px 24px",
+                      backgroundSize: "28px 28px",
                       color: svc.accentLight,
                     }}
                   />
                 )}
 
                 <div className="relative z-10 flex flex-col h-full">
+                  {/* Subheading badge */}
+                  <div className="flex items-center gap-2 mb-4">
+                    <span 
+                      className="text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-widest"
+                      style={{
+                        backgroundColor: `${svc.accentLight}12`,
+                        color: svc.accentLight,
+                      }}
+                    >
+                      {svc.subtext}
+                    </span>
+                    {svc.stats && (
+                      <span className="text-xs text-gray-400 dark:text-gray-500">
+                        {svc.stats}
+                      </span>
+                    )}
+                  </div>
+
                   {/* Icon */}
                   <div
-                    className="inline-flex p-2.5 rounded-xl mb-4 w-fit group-hover:scale-110 transition-transform duration-300"
+                    className="inline-flex p-3.5 rounded-xl mb-5 w-fit group-hover:scale-110 transition-transform duration-300 group-hover:shadow-lg"
                     style={{
-                      backgroundColor: `${svc.accentLight}14`,
+                      backgroundColor: `${svc.accentLight}18`,
                       color: svc.accentLight,
                     }}
                   >
@@ -210,20 +259,20 @@ export default function Home() {
                   </div>
 
                   <h3
-                    className="text-lg font-bold text-[#0C1B33] dark:text-white mb-2 leading-snug"
+                    className="text-xl sm:text-2xl font-bold text-[#0C1B33] dark:text-white mb-3 leading-tight tracking-tight"
                     style={{ fontFamily: "var(--font-sora), sans-serif" }}
                   >
                     {svc.title}
                   </h3>
-                  <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed flex-1">
+                  <p className="text-base text-gray-600 dark:text-gray-400 leading-relaxed flex-1 mb-5">
                     {svc.desc}
                   </p>
 
-                  {/* Arrow link */}
-                  <div className="flex items-center gap-1.5 mt-4 text-xs font-bold group-hover:gap-2.5 transition-all"
+                  {/* Arrow link with enhanced styling */}
+                  <div className="inline-flex items-center gap-2 text-sm font-bold group-hover:gap-3 transition-all"
                     style={{ color: svc.accentLight }}>
-                    <span>Learn more</span>
-                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <span>Explore</span>
+                    <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                     </svg>
                   </div>
@@ -231,10 +280,10 @@ export default function Home() {
 
                 {/* Per-card illustrations on large cards */}
                 {svc.id === "web" && (
-                  <WebDevIllustration className="absolute bottom-3 right-2 w-[130px] opacity-[0.18] pointer-events-none" />
+                  <WebDevIllustration className="absolute bottom-4 right-3 w-[140px] opacity-[0.15] pointer-events-none group-hover:opacity-[0.22] transition-opacity duration-300" />
                 )}
                 {svc.id === "erp" && (
-                  <ERPIllustration className="absolute bottom-3 right-2 w-[130px] opacity-[0.18] pointer-events-none" />
+                  <ERPIllustration className="absolute bottom-4 right-3 w-[140px] opacity-[0.15] pointer-events-none group-hover:opacity-[0.22] transition-opacity duration-300" />
                 )}
               </Link>
             ))}
