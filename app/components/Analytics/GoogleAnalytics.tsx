@@ -5,55 +5,137 @@ import { usePathname, useSearchParams } from 'next/navigation';
 import { useEffect, Suspense } from 'react';
 
 interface GoogleAnalyticsProps {
-  measurementId: string;
+  measurementId?: string;
+  adsConversionId?: string;
 }
 
-// Internal component that uses useSearchParams
-function GoogleAnalyticsContent({ measurementId }: GoogleAnalyticsProps) {
+const CONSENT_STORAGE_KEY = 'analytics-consent';
+
+type ConsentState = 'granted' | 'denied';
+
+const getConsentState = (): ConsentState => {
+  if (typeof window === 'undefined') {
+    return 'denied';
+  }
+
+  const storedConsent = window.localStorage.getItem(CONSENT_STORAGE_KEY);
+  if (storedConsent === 'granted' || storedConsent === 'denied') {
+    return storedConsent;
+  }
+
+  // Respect browser-level privacy signal when no explicit app preference exists.
+  if (window.navigator.doNotTrack === '1') {
+    return 'denied';
+  }
+
+  return 'granted';
+};
+
+const buildPageLocation = (pathname: string, searchParams: URLSearchParams | null) => {
+  const query = searchParams?.toString();
+  return `${window.location.origin}${pathname}${query ? `?${query}` : ''}`;
+};
+
+// Internal component that uses Next.js navigation hooks.
+function GoogleAnalyticsContent({ measurementId }: { measurementId?: string }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  
-  // Track page views when the route changes
+
   useEffect(() => {
-    if (pathname && window.gtag) {
-      // Construct the full URL from pathname and search params
-      let url = pathname;
-      if (searchParams?.toString()) {
-        url += `?${searchParams.toString()}`;
-      }
-      
-      // Send page view event to Google Analytics
+    if (!pathname || !window.gtag) {
+      return;
+    }
+
+    const consentState = getConsentState();
+    if (measurementId) {
       window.gtag('config', measurementId, {
-        page_path: url,
+        page_path: pathname,
+        page_location: buildPageLocation(pathname, searchParams),
+        anonymize_ip: true,
       });
     }
+
+    window.gtag('event', 'page_view', {
+      page_path: pathname,
+      page_location: buildPageLocation(pathname, searchParams),
+      send_to: measurementId,
+      non_interaction: true,
+      consent_state: consentState,
+    });
   }, [pathname, searchParams, measurementId]);
-  
+
   return null;
 }
 
 /**
- * Google Analytics integration component for Next.js
- * This component initializes GA4 and tracks page views automatically
+ * Unified Google tag integration for GA4 + Google Ads.
+ *
+ * Enterprise-oriented defaults:
+ * - Single shared gtag bootstrap to prevent duplicate initialization.
+ * - Consent mode defaults to denied until consent state is resolved.
+ * - IP anonymization enabled for analytics config calls.
  */
-export default function GoogleAnalytics({ measurementId }: GoogleAnalyticsProps) {
+export default function GoogleAnalytics({ measurementId, adsConversionId }: GoogleAnalyticsProps) {
+  const primaryTagId = measurementId || adsConversionId;
+
+  if (!primaryTagId) {
+    return null;
+  }
+
   return (
     <>
-      {/* Google Analytics Script */}
       <Script
-        src={`https://www.googletagmanager.com/gtag/js?id=${measurementId}`}
+        id="google-tag-script"
+        src={`https://www.googletagmanager.com/gtag/js?id=${primaryTagId}`}
         strategy="afterInteractive"
       />
-      <Script id="google-analytics" strategy="afterInteractive">
+
+      <Script id="google-tag-init" strategy="afterInteractive">
         {`
           window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', '${measurementId}', {
-            page_path: window.location.pathname,
+          function gtag(){window.dataLayer.push(arguments);}
+          window.gtag = window.gtag || gtag;
+
+          // Consent Mode v2 defaults (privacy-safe by default)
+          window.gtag('consent', 'default', {
+            ad_storage: 'denied',
+            ad_user_data: 'denied',
+            ad_personalization: 'denied',
+            analytics_storage: 'denied',
+            wait_for_update: 500
           });
+
+          window.gtag('set', {
+            url_passthrough: true,
+            ads_data_redaction: true
+          });
+
+          window.gtag('js', new Date());
+
+          ${measurementId ? `window.gtag('config', '${measurementId}', { send_page_view: false, anonymize_ip: true });` : ''}
+          ${adsConversionId ? `window.gtag('config', '${adsConversionId}');` : ''}
         `}
       </Script>
+
+      <Script id="google-tag-consent-state" strategy="afterInteractive">
+        {`
+          (function applyStoredConsent() {
+            var storedConsent = window.localStorage.getItem('${CONSENT_STORAGE_KEY}');
+            var doNotTrackEnabled = window.navigator && window.navigator.doNotTrack === '1';
+            var resolvedConsent = (storedConsent === 'granted' || storedConsent === 'denied')
+              ? storedConsent
+              : (doNotTrackEnabled ? 'denied' : 'granted');
+
+            window.gtag && window.gtag('consent', 'update', {
+              analytics_storage: resolvedConsent,
+              ad_storage: resolvedConsent,
+              ad_user_data: resolvedConsent,
+              ad_personalization: resolvedConsent,
+            });
+          })();
+        `}
+      </Script>
+
       <Suspense fallback={null}>
         <GoogleAnalyticsContent measurementId={measurementId} />
       </Suspense>
@@ -61,56 +143,28 @@ export default function GoogleAnalytics({ measurementId }: GoogleAnalyticsProps)
   );
 }
 
-// Types for window object with gtag function
-// Extended to support both Google Analytics and Google Ads
+// Types for window object with gtag function.
 declare global {
   interface Window {
-    dataLayer?: any[];
+    dataLayer?: unknown[];
     gtag?: (
       command: 'js' | 'config' | 'event' | 'set' | 'consent',
       targetIdOrDate: string | Date,
-      config?: Record<string, any>,
+      config?: Record<string, unknown>,
     ) => void;
   }
 }
 
-// Utility functions for tracking events
+// Utility function for generic event tracking.
 export const trackEvent = (
   action: string,
   category: string,
   label: string,
-  value?: number
+  value?: number,
 ) => {
   window.gtag?.('event', action, {
     event_category: category,
     event_label: label,
-    value: value,
+    value,
   });
 };
-
-// Example usage:
-// 
-// // In your layout.tsx or app.tsx file:
-// import GoogleAnalytics from '@/components/Analytics/GoogleAnalytics';
-//
-// export default function RootLayout({ children }) {
-//   return (
-//     <html lang="en">
-//       <head>
-//         <GoogleAnalytics measurementId="G-XXXXXXXXXX" />
-//       </head>
-//       <body>{children}</body>
-//     </html>
-//   );
-// }
-//
-// // For event tracking in any component:
-// import { trackEvent } from '@/components/Analytics/GoogleAnalytics';
-//
-// function ContactForm() {
-//   const handleSubmit = (e) => {
-//     // Form submission logic
-//     trackEvent('submit', 'contact_form', 'Contact form submitted');
-//   };
-//   // ...
-// } 
