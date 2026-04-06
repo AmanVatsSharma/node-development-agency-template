@@ -6,7 +6,6 @@ import Footer from "./components/Footer";
 import ServiceWorkerManager from './components/ServiceWorkerManager';
 import { initPerformanceMonitoring } from '../utils/performanceMonitoring';
 import GoogleAnalytics from './components/Analytics/GoogleAnalytics';
-import GoogleAdsTracking from './components/Analytics/GoogleAdsTracking';
 import { ThemeProvider } from "./components/ThemeProvider";
 import { Providers } from "./providers";
 import DeferredAIAgentWidget from './components/AIAgent/DeferredAIAgentWidget';
@@ -164,13 +163,11 @@ export default async function RootLayout({
           sameAs={Object.values(companyProfile.social || {}).filter(Boolean) as string[]}
         />
         
-        {/* Google Analytics - set NEXT_PUBLIC_GA_MEASUREMENT_ID in your env vars */}
-        {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
-          <GoogleAnalytics measurementId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
-        )}
-        
-        {/* Google Ads Conversion Tracking - Search Ads Campaign */}
-        <GoogleAdsTracking conversionId="AW-17606401808" />
+        {/* Unified Google Tag (GA4 + Google Ads) */}
+        <GoogleAnalytics
+          measurementId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}
+          adsConversionId={process.env.NEXT_PUBLIC_GOOGLE_ADS_ID || 'AW-17606401808'}
+        />
       </head>
       <body
         className={`${sora.variable} ${dmSans.variable} font-sans antialiased bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100`}

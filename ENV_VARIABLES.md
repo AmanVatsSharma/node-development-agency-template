@@ -24,11 +24,14 @@ ZOHO_REFRESH_TOKEN="your-zoho-refresh-token"
 ZOHO_DOMAIN="https://www.zohoapis.com"
 
 # ============================================
-# Google Ads Integration
+# Google Tag / Analytics Integration
 # ============================================
-GOOGLE_CONVERSION_ID="AW-123456789"
+# Public IDs injected into browser for GA4 + Google Ads tag initialization.
+NEXT_PUBLIC_GA_MEASUREMENT_ID="G-XXXXXXXXXX"
+NEXT_PUBLIC_GOOGLE_ADS_ID="AW-123456789"
+
+# Optional server-side Google Ads API key (if you use backend conversion APIs later)
 GOOGLE_API_KEY="your-google-api-key"
-GA_MEASUREMENT_ID="G-XXXXXXXXXX"
 
 # ============================================
 # SEO / Canonical Site URL (Required for production)
@@ -58,7 +61,7 @@ GA_MEASUREMENT_ID="G-XXXXXXXXXX"
 1. **Copy configuration**: Create `.env.local` in project root
 2. **Set admin password**: Choose a strong password for ADMIN_PASSWORD
 3. **Configure Zoho**: Get credentials from https://api-console.zoho.com/
-4. **Configure Google**: Get conversion ID from Google Ads console
+4. **Configure Google Tag**: Set GA4 Measurement ID and Google Ads Conversion ID
 5. **Run migrations**: `pnpm db:push`
 6. **Start server**: `pnpm dev`
 
