@@ -156,6 +156,7 @@ export default function EnhancedHeader() {
                       alt="Vedpragya"
                       width={770}
                       height={459}
+                      sizes="140px"
                       className="h-7 w-auto object-contain transition-opacity duration-200 group-hover:opacity-90 dark:brightness-0 dark:invert"
                       priority
                     />
@@ -231,6 +232,7 @@ export default function EnhancedHeader() {
                       alt="Vedpragya"
                       width={770}
                       height={459}
+                      sizes="140px"
                       className="h-7 sm:h-8 w-auto object-contain transition-opacity duration-200 group-hover:opacity-90 dark:brightness-0 dark:invert"
                       priority
                     />

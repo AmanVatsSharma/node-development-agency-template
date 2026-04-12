@@ -34,6 +34,62 @@ function formatDate(dateString: string) {
   return new Date(dateString).toLocaleDateString('en-US', options);
 }
 
+function NewsletterWidget() {
+  const [email, setEmail] = useState('');
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) return;
+    setStatus('submitting');
+    try {
+      await axios.post('/api/newsletter', { email });
+      setStatus('success');
+      setEmail('');
+    } catch {
+      setStatus('error');
+    }
+  };
+
+  return (
+    <div className="bg-blue-50 dark:bg-gray-800 rounded-xl p-5 sm:p-6">
+      <h3 className="text-lg font-bold mb-3 text-gray-800 dark:text-white">Newsletter</h3>
+      <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">
+        Subscribe to get the latest articles and resources delivered straight to your inbox.
+      </p>
+      {status === 'success' ? (
+        <p className="text-green-600 dark:text-green-400 text-sm font-medium">You&apos;re subscribed!</p>
+      ) : (
+        <form onSubmit={handleSubmit}>
+          <input
+            type="email"
+            placeholder="Your email address"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            className="w-full px-4 py-2 mb-3 text-gray-700 bg-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          {status === 'error' && (
+            <p className="text-red-500 text-xs mb-2">Something went wrong. Try again.</p>
+          )}
+          <button
+            type="submit"
+            disabled={status === 'submitting'}
+            className="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors disabled:opacity-60"
+          >
+            {status === 'submitting' ? 'Subscribing…' : 'Subscribe'}
+          </button>
+        </form>
+      )}
+    </div>
+  );
+}
+
+// Duplicate declaration removed — formatDate defined once above
+  const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+  return new Date(dateString).toLocaleDateString('en-US', options);
+}
+
 export function BlogClient({ initialPosts }: { initialPosts: BlogPost[] }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
@@ -203,14 +259,7 @@ export function BlogClient({ initialPosts }: { initialPosts: BlogPost[] }) {
                   </li>
                 ))}
               </ul>
-              <div className="bg-blue-50 dark:bg-gray-800 rounded-xl p-5 sm:p-6">
-                <h3 className="text-lg font-bold mb-3 text-gray-800 dark:text-white">Newsletter</h3>
-                <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">
-                  Subscribe to get the latest articles and resources delivered straight to your inbox.
-                </p>
-                <input type="email" placeholder="Your email address" className="w-full px-4 py-2 mb-3 text-gray-700 bg-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                <button className="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors">Subscribe</button>
-              </div>
+              <NewsletterWidget />
             </div>
           </div>
 

@@ -206,6 +206,7 @@ export default function EnhancedMobileMenu({ isOpen, onClose }: EnhancedMobileMe
               alt="Vedpragya"
               width={770}
               height={459}
+              sizes="140px"
               className="h-8 w-auto object-contain dark:brightness-0 dark:invert"
               priority
             />

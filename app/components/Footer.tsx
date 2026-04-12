@@ -108,6 +108,7 @@ export default function Footer() {
                 alt="Vedpragya"
                 width={770}
                 height={459}
+                sizes="160px"
                 className="h-9 w-auto object-contain brightness-0 invert opacity-90 group-hover:opacity-100 transition-opacity duration-200"
               />
             </Link>

@@ -9,6 +9,8 @@ import GoogleAnalytics from './components/Analytics/GoogleAnalytics';
 import { ThemeProvider } from "./components/ThemeProvider";
 import { Providers } from "./providers";
 import DeferredAIAgentWidget from './components/AIAgent/DeferredAIAgentWidget';
+import ClarityAnalytics from './components/Analytics/ClarityAnalytics';
+import WhatsAppFloatingButton from './components/WhatsAppFloatingButton';
 import { headers } from 'next/headers';
 import { OrganizationStructuredData, WebsiteStructuredData, ProfessionalServiceStructuredData } from "./components/SEO/StructuredData";
 import { companyProfile } from "./data/companyProfile";
@@ -170,6 +172,8 @@ export default async function RootLayout({
           measurementId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}
           adsConversionId={process.env.NEXT_PUBLIC_GOOGLE_ADS_ID || 'AW-17606401808'}
         />
+        {/* Microsoft Clarity — heatmaps + session recordings */}
+        <ClarityAnalytics />
       </head>
       <body
         className={`${sora.variable} ${dmSans.variable} font-sans antialiased bg-white text-gray-900`}
@@ -199,6 +203,8 @@ export default async function RootLayout({
             <ServiceWorkerManager />
             {/* AI Sales Agent - Available on every page except admin */}
             {!isAdminRoute && <DeferredAIAgentWidget />}
+            {/* WhatsApp Floating Button - Always visible on non-admin pages */}
+            {!isAdminRoute && <WhatsAppFloatingButton />}
           </ThemeProvider>
         </Providers>
       </body>
