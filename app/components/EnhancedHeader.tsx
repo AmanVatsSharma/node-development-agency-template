@@ -4,7 +4,6 @@ import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { AnimatePresence, motion } from "motion/react";
-import { ThemeToggle } from "./ThemeToggle";
 import { mainNavigation } from "../data/navigation";
 import EnhancedMobileMenu from "./EnhancedMobileMenu";
 
@@ -188,7 +187,6 @@ export default function EnhancedHeader() {
                   </nav>
 
                   <div className="flex items-center gap-1.5">
-                    <ThemeToggle />
                     <Link
                       href="/pages/contact"
                       className="hidden lg:inline-flex items-center gap-1.5 px-4 py-2 bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-semibold text-sm rounded-lg transition-all shadow-[0_2px_8px_rgba(37,99,235,0.30)] hover:shadow-[0_4px_16px_rgba(37,99,235,0.40)] min-h-[40px]"
@@ -264,7 +262,6 @@ export default function EnhancedHeader() {
                   </nav>
 
                   <div className="flex items-center gap-1.5">
-                    <ThemeToggle />
                     <Link
                       href="/pages/contact"
                       className="hidden lg:inline-flex items-center gap-1.5 px-4 py-2 bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-semibold text-sm rounded-lg transition-all shadow-[0_2px_8px_rgba(37,99,235,0.30)] hover:shadow-[0_4px_16px_rgba(37,99,235,0.40)] min-h-[44px]"

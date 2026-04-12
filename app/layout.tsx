@@ -170,13 +170,12 @@ export default async function RootLayout({
         />
       </head>
       <body
-        className={`${sora.variable} ${dmSans.variable} font-sans antialiased bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100`}
+        className={`${sora.variable} ${dmSans.variable} font-sans antialiased bg-white text-gray-900`}
       >
         <Providers>
           <ThemeProvider
             attribute="class"
-            defaultTheme="system"
-            enableSystem
+            forcedTheme="light"
             disableTransitionOnChange
           >
             {isAdminRoute ? (
@@ -190,7 +189,7 @@ export default async function RootLayout({
                 {/* New Enhanced Header with resizable navbar - Cool scroll effect! */}
                 <EnhancedHeader />
                 {/* Slightly tighter top spacing on mobile while keeping desktop clearance */}
-                <main className="flex-grow pt-14 sm:pt-[60px]">{children}</main>
+                <main className="flex-grow pt-[80px]">{children}</main>
                 <Footer />
               </div>
             )}
