@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import { WobbleCard } from "@/app/components/ui/wobble-card";
 
 interface Differentiator {
   id: string;
@@ -90,23 +91,24 @@ function DiffCard({ d, index }: { d: Differentiator; index: number }) {
       initial={{ opacity: 0, y: 18 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.48, delay: index * 0.07, ease: [0.22, 1, 0.36, 1] }}
-      className="group p-5 rounded-2xl border border-gray-100 dark:border-[#1E293B] bg-white dark:bg-[#080C14] hover:border-[#D4870A]/30 dark:hover:border-[#D4870A]/25 transition-all duration-300 hover:shadow-[0_10px_30px_rgba(12,27,51,0.08)] dark:hover:shadow-[0_10px_30px_rgba(0,0,0,0.25)] hover:-translate-y-0.5"
     >
-      <div className="w-8 h-8 rounded-lg bg-[#0C1B33] dark:bg-[#1A3A6C] text-[#D4870A] flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300 shrink-0">
-        {d.icon}
-      </div>
-      <h3
-        className="text-sm font-bold text-[#0C1B33] dark:text-white mb-1.5 leading-snug"
-        style={{ fontFamily: "var(--font-sora), sans-serif" }}
+      <WobbleCard
+        containerClassName="bg-white dark:bg-[#0F1623] border border-gray-100 dark:border-[#1E293B] min-h-[160px]"
+        className="p-5"
       >
-        {d.title}
-      </h3>
-      <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed mb-2.5">
-        {d.desc}
-      </p>
-      <span className="text-[10px] font-bold text-[#D4870A] uppercase tracking-wider">
-        {d.highlight}
-      </span>
+        <div className="w-8 h-8 rounded-lg bg-[#EFF6FF] dark:bg-[#1E3A5F] text-[#2563EB] flex items-center justify-center mb-3 shrink-0">
+          {d.icon}
+        </div>
+        <h3
+          className="text-sm font-bold text-[#0C1B33] dark:text-white mb-1.5 leading-snug"
+          style={{ fontFamily: "var(--font-sora), sans-serif" }}
+        >
+          {d.title}
+        </h3>
+        <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
+          {d.desc}
+        </p>
+      </WobbleCard>
     </motion.div>
   );
 }
@@ -136,19 +138,16 @@ export default function WhyChooseUs() {
             transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
             className="lg:sticky lg:top-28"
           >
-            <div className="vp-divider mb-5" />
             <h2
               className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0C1B33] dark:text-white mb-6 tracking-tight leading-[1.1]"
               style={{ fontFamily: "var(--font-sora), sans-serif" }}
             >
               Why businesses{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D4870A] to-[#F59E0B]">
-                choose us
-              </span>
+              <span className="text-[#2563EB]">choose us</span>
             </h2>
 
             {/* Pull quote */}
-            <blockquote className="border-l-2 border-[#D4870A] pl-5 mb-8">
+            <blockquote className="border-l-2 border-[#0C1B33] dark:border-white/20 pl-5 mb-8">
               <p className="text-base text-gray-600 dark:text-gray-300 leading-relaxed italic">
                 &ldquo;Built to last. Engineered to scale.
                 Transparent by design.&rdquo;

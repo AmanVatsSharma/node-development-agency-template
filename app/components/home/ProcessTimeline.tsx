@@ -4,7 +4,6 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { useRef } from "react";
 import Link from "next/link";
-import MarketingIllustration from "@/app/components/illustrations/MarketingIllustration";
 
 interface Step {
   number: number;
@@ -64,7 +63,7 @@ function StepItem({ step, index, total }: { step: Step; index: number; total: nu
           initial={{ scale: 0 }}
           animate={inView ? { scale: 1 } : {}}
           transition={{ duration: 0.35, delay: index * 0.1 + 0.1, type: "spring", stiffness: 200 }}
-          className="w-10 h-10 rounded-xl bg-[#D4870A] text-white flex items-center justify-center font-bold text-sm shrink-0 z-10 shadow-[0_4px_16px_rgba(212,135,10,0.4)]"
+          className="w-10 h-10 rounded-xl bg-[#2563EB] text-white flex items-center justify-center font-bold text-sm shrink-0 z-10 shadow-[0_4px_16px_rgba(37,99,235,0.30)]"
           style={{ fontFamily: "var(--font-sora), sans-serif" }}
         >
           {step.number}
@@ -80,7 +79,7 @@ function StepItem({ step, index, total }: { step: Step; index: number; total: nu
               initial={{ scaleY: 0 }}
               animate={inView ? { scaleY: 1 } : {}}
               transition={{ duration: 0.6, delay: index * 0.1 + 0.3, ease: "easeOut" }}
-              className="absolute inset-0 origin-top bg-gradient-to-b from-[#D4870A] to-[#D4870A]/20"
+              className="absolute inset-0 origin-top bg-gradient-to-b from-[#2563EB] to-[#2563EB]/15"
             />
           </div>
         )}
@@ -100,7 +99,7 @@ function StepItem({ step, index, total }: { step: Step; index: number; total: nu
           >
             {step.title}
           </h3>
-          <span className="text-[10px] font-bold text-[#D4870A] uppercase tracking-widest px-2.5 py-1 rounded-full border border-[#D4870A]/25 bg-[#D4870A]/10 shrink-0">
+          <span className="text-[10px] font-medium text-white/50 uppercase tracking-widest px-2.5 py-1 rounded-full border border-white/10 bg-white/[0.04] shrink-0">
             {step.duration}
           </span>
         </div>
@@ -116,9 +115,7 @@ export default function ProcessTimeline() {
   const [headerRef, headerInView] = useInView({ triggerOnce: true, threshold: 0.1 });
 
   return (
-    <section className="compact-main-section vp-mesh-navy relative overflow-hidden content-visibility-auto">
-      <div className="absolute inset-0 hero-grid-bg opacity-15 pointer-events-none" />
-
+    <section className="compact-main-section bg-[#0A1628] relative overflow-hidden content-visibility-auto">
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-14 lg:gap-20 items-start">
 
@@ -130,15 +127,12 @@ export default function ProcessTimeline() {
             transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
             className="lg:sticky lg:top-28"
           >
-            <div className="vp-divider mb-5" />
             <h2
               className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6 tracking-tight"
               style={{ fontFamily: "var(--font-sora), sans-serif" }}
             >
               How We{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D4870A] to-[#F59E0B]">
-                Deliver
-              </span>
+              <span className="text-[#2563EB]">Deliver</span>
             </h2>
             <p className="text-gray-400 text-base sm:text-lg leading-relaxed mb-8 max-w-sm">
               A structured, transparent process that turns complex requirements
@@ -167,7 +161,7 @@ export default function ProcessTimeline() {
 
             <Link
               href="/pages/contact"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-[#D4870A] hover:bg-[#F59E0B] text-white font-bold text-sm rounded-xl transition-all hover:shadow-[0_8px_24px_rgba(212,135,10,0.35)] hover:-translate-y-0.5 min-h-[48px]"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-bold text-sm rounded-xl transition-all shadow-[0_4px_16px_rgba(37,99,235,0.25)] hover:shadow-[0_8px_24px_rgba(37,99,235,0.40)] hover:-translate-y-0.5 min-h-[48px]"
               style={{ fontFamily: "var(--font-sora), sans-serif" }}
             >
               Start Your Project
@@ -175,11 +169,6 @@ export default function ProcessTimeline() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>
             </Link>
-
-            {/* Decorative illustration */}
-            <div className="hidden md:block mt-8 -mx-2">
-              <MarketingIllustration className="w-full max-w-[260px] opacity-40" />
-            </div>
           </motion.div>
 
           {/* ── Right: timeline steps ── */}

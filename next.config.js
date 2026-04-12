@@ -13,7 +13,9 @@ module.exports = (phase) => {
   const nextConfig = {
     reactStrictMode: true,
     images: {
-      domains: ['enterprisehero.com'],
+      remotePatterns: [
+        { protocol: 'https', hostname: 'enterprisehero.com' },
+      ],
       formats: ['image/avif', 'image/webp'],
     },
     eslint: {

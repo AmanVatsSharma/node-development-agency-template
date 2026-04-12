@@ -11,6 +11,21 @@ import { TextGenerateEffect } from "@/app/components/ui/text-generate-effect";
 
 // Animated background component with moving particles
 const ParticlesBackground = ({ className }: { className?: string }) => {
+  const [particles, setParticles] = useState<Array<{
+    width: number; height: number; top: number; left: number; duration: number; delay: number;
+  }>>([]);
+
+  useEffect(() => {
+    setParticles(Array.from({ length: 20 }, () => ({
+      width: Math.random() * 40 + 10,
+      height: Math.random() * 40 + 10,
+      top: Math.random() * 100,
+      left: Math.random() * 100,
+      duration: Math.random() * 10 + 10,
+      delay: Math.random() * 5,
+    })));
+  }, []);
+
   return (
     <div className={cn("absolute inset-0 overflow-hidden", className)}>
       <div className="absolute top-0 left-0 right-0 bottom-0 z-[-1]">
@@ -18,17 +33,17 @@ const ParticlesBackground = ({ className }: { className?: string }) => {
           <div className="h-full w-full bg-background">
             <div className="absolute inset-0 [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]">
               <div className="particles-container absolute inset-0 flex items-center justify-center">
-                {Array.from({ length: 20 }).map((_, i) => (
+                {particles.map((p, i) => (
                   <div
                     key={i}
                     className="absolute rounded-full bg-slate-400/10 mix-blend-overlay"
                     style={{
-                      width: `${Math.random() * 40 + 10}px`,
-                      height: `${Math.random() * 40 + 10}px`,
-                      top: `${Math.random() * 100}%`,
-                      left: `${Math.random() * 100}%`,
-                      animation: `float ${Math.random() * 10 + 10}s ease-in-out infinite`,
-                      animationDelay: `-${Math.random() * 5}s`,
+                      width: `${p.width}px`,
+                      height: `${p.height}px`,
+                      top: `${p.top}%`,
+                      left: `${p.left}%`,
+                      animation: `float ${p.duration}s ease-in-out infinite`,
+                      animationDelay: `-${p.delay}s`,
                     }}
                   />
                 ))}

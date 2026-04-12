@@ -26,8 +26,6 @@ import {
 
 import React, { useRef, useState, useEffect } from "react";
 
-// Console log for component initialization (debugging aid)
-console.log("🎨 [ResizableNavbar] Component module loaded");
 
 
 interface NavbarProps {

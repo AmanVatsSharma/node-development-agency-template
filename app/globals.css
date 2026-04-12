@@ -9,9 +9,14 @@
     /* Brand palette */
     --vp-brand-deep: #0C1B33;
     --vp-brand: #1A3A6C;
-    --vp-accent: #D4870A;
+    --vp-accent: #D4870A;        /* Gold — brand-only, NOT interactive */
     --vp-accent-light: #F59E0B;
     --vp-electric: #2563EB;
+
+    /* CTA — single interactive accent (all buttons, links, interactive elements) */
+    --vp-cta: #2563EB;
+    --vp-cta-hover: #1D4ED8;
+    --vp-cta-shadow: 0 8px 24px rgba(37, 99, 235, 0.30);
 
     /* Backgrounds */
     --vp-bg: #FAFAFA;
@@ -31,7 +36,13 @@
     --vp-shadow-sm: 0 1px 3px 0 rgba(12, 27, 51, 0.07), 0 1px 2px -1px rgba(12, 27, 51, 0.04);
     --vp-shadow-md: 0 4px 16px 0 rgba(12, 27, 51, 0.10), 0 2px 6px -1px rgba(12, 27, 51, 0.06);
     --vp-shadow-lg: 0 12px 40px 0 rgba(12, 27, 51, 0.14), 0 4px 12px -2px rgba(12, 27, 51, 0.08);
-    --vp-shadow-gold: 0 8px 30px 0 rgba(212, 135, 10, 0.22);
+    --vp-shadow-gold: 0 8px 30px 0 rgba(212, 135, 10, 0.22); /* kept for compat */
+
+    /* Display typography scale */
+    --vp-text-display-xl: clamp(3.5rem, 8vw, 6.5rem);    /* 56px → 104px */
+    --vp-text-display-lg: clamp(2.75rem, 6vw, 5rem);      /* 44px → 80px */
+    --vp-text-display-md: clamp(2rem, 4.5vw, 3.5rem);     /* 32px → 56px */
+    --vp-text-section:    clamp(1.75rem, 3.5vw, 2.75rem); /* 28px → 44px */
   }
 
   .dark {
@@ -59,10 +70,19 @@
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-sora), var(--font-dm-sans), system-ui, sans-serif;
     font-weight: 700;
-    letter-spacing: -0.02em;
-    line-height: 1.15;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
   }
 }
+
+/* ============================================
+   DISPLAY TYPOGRAPHY UTILITIES
+   ============================================ */
+
+.text-display-xl { font-size: var(--vp-text-display-xl); }
+.text-display-lg { font-size: var(--vp-text-display-lg); }
+.text-display-md { font-size: var(--vp-text-display-md); }
+.text-section    { font-size: var(--vp-text-section); }
 
 /* ============================================
    VEDPRAGYA BRAND UTILITIES
@@ -103,34 +123,33 @@
   color: #F9FAFB;
 }
 
-/* Card styles */
+/* Card styles — no border, elevated shadow (Apple style) */
 .vp-card {
   background-color: var(--vp-bg-card);
-  border: 1px solid var(--vp-border);
-  border-radius: 16px;
-  box-shadow: var(--vp-shadow-sm);
-  transition: box-shadow 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0 2px 12px rgba(12, 27, 51, 0.06), 0 1px 3px rgba(12, 27, 51, 0.04);
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
 }
 
 .vp-card:hover {
-  box-shadow: var(--vp-shadow-lg);
-  border-color: rgba(37, 99, 235, 0.3);
+  box-shadow: 0 16px 48px rgba(12, 27, 51, 0.11), 0 4px 12px rgba(12, 27, 51, 0.07);
   transform: translateY(-2px);
 }
 
-/* Button styles */
+/* Button styles — electric blue CTA */
 .vp-btn-primary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
   padding: 0.875rem 2rem;
-  background-color: var(--vp-brand-deep);
+  background-color: var(--vp-cta);
   color: #FFFFFF;
   font-family: var(--font-sora), sans-serif;
   font-weight: 600;
   font-size: 0.9375rem;
-  border-radius: 10px;
+  border-radius: 8px;
   border: none;
   cursor: pointer;
   transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
@@ -138,23 +157,24 @@
 }
 
 .vp-btn-primary:hover {
-  background-color: var(--vp-brand);
-  box-shadow: var(--vp-shadow-md);
+  background-color: var(--vp-cta-hover);
+  box-shadow: var(--vp-cta-shadow);
   transform: translateY(-1px);
 }
 
+/* DEPRECATED — .vp-btn-accent (gold button) retired, use .vp-btn-primary instead */
 .vp-btn-accent {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
   padding: 0.875rem 2rem;
-  background-color: var(--vp-accent);
+  background-color: var(--vp-cta);
   color: #FFFFFF;
   font-family: var(--font-sora), sans-serif;
   font-weight: 600;
   font-size: 0.9375rem;
-  border-radius: 10px;
+  border-radius: 8px;
   border: none;
   cursor: pointer;
   transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
@@ -162,8 +182,8 @@
 }
 
 .vp-btn-accent:hover {
-  background-color: var(--vp-accent-light);
-  box-shadow: var(--vp-shadow-gold);
+  background-color: var(--vp-cta-hover);
+  box-shadow: var(--vp-cta-shadow);
   transform: translateY(-1px);
 }
 
@@ -248,6 +268,17 @@
 .vp-marquee {
   animation: vp-marquee 28s linear infinite;
   will-change: transform;
+}
+
+/* Aceternity Infinite Moving Cards scroll */
+@keyframes scroll {
+  to {
+    transform: translate(calc(-50% - 0.5rem));
+  }
+}
+
+.animate-scroll {
+  animation: scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite;
 }
 
 /* Scroll pulse for hero indicator */
@@ -437,9 +468,9 @@
    ============================================ */
 
 .compact-main-hero {
-  min-height: min(88vh, 46rem);
-  padding-top: clamp(3.5rem, 8vw, 6rem);
-  padding-bottom: clamp(3rem, 7vw, 5rem);
+  min-height: min(92vh, 52rem);
+  padding-top: clamp(5rem, 10vw, 7rem);
+  padding-bottom: clamp(3.5rem, 7vw, 5.5rem);
 }
 
 @media (min-width: 768px) {
@@ -449,8 +480,8 @@
 }
 
 .compact-main-section {
-  padding-top: clamp(2.75rem, 7vw, 5.5rem);
-  padding-bottom: clamp(2.75rem, 7vw, 5.5rem);
+  padding-top: clamp(5rem, 10vw, 8rem);
+  padding-bottom: clamp(5rem, 10vw, 8rem);
 }
 
 .touch-chip-row {
@@ -471,71 +502,38 @@
 }
 
 /* ============================================
-   GRAIN TEXTURE OVERLAY
+   GRAIN TEXTURE OVERLAY — REMOVED
+   (was opacity:0.02 — invisible but added a composited layer)
    ============================================ */
-
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 9999;
-  opacity: 0.02;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
-  background-size: 128px 128px;
-}
-
-.dark body::after {
-  opacity: 0.035;
-}
 
 /* ============================================
    BENTO GRID SYSTEM
    ============================================ */
 
-/* Bento card — base */
+/* Bento card — no border, elevated shadow (Apple style) */
 .vp-bento-card {
   position: relative;
   background: #FFFFFF;
-  border: 1px solid #E5E7EB;
+  border: none;
   border-radius: 20px;
   overflow: hidden;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
-}
-
-.vp-bento-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 20px;
-  padding: 1px;
-  background: linear-gradient(135deg, rgba(37, 99, 235, 0), rgba(37, 99, 235, 0.4), rgba(212, 135, 10, 0.3));
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  opacity: 0;
-  transition: opacity 0.35s ease;
-  pointer-events: none;
-}
-
-.vp-bento-card:hover::before {
-  opacity: 1;
+  box-shadow: 0 1px 6px rgba(12, 27, 51, 0.06), 0 1px 3px rgba(12, 27, 51, 0.04);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
 .vp-bento-card:hover {
-  box-shadow: 0 20px 60px rgba(12, 27, 51, 0.12);
+  box-shadow: 0 20px 60px rgba(12, 27, 51, 0.11), 0 4px 12px rgba(12, 27, 51, 0.07);
   transform: translateY(-3px);
 }
 
 /* Dark mode bento card */
 .dark .vp-bento-card {
   background: #0F1623;
-  border-color: #1E293B;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
 }
 
 .dark .vp-bento-card:hover {
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
-  border-color: rgba(37, 99, 235, 0.3);
 }
 
 /* Bento grid layout (desktop) */
@@ -633,7 +631,7 @@ body::after {
   background-color: #080C14;
   background-image:
     radial-gradient(ellipse 60% 50% at 10% 20%, rgba(37, 99, 235, 0.12) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 40% at 90% 80%, rgba(212, 135, 10, 0.08) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 40% at 90% 80%, rgba(37, 99, 235, 0.06) 0%, transparent 55%),
     radial-gradient(ellipse 40% 35% at 50% 50%, rgba(26, 58, 108, 0.06) 0%, transparent 50%);
 }
 
@@ -641,7 +639,7 @@ body::after {
   background-color: #0C1B33;
   background-image:
     radial-gradient(ellipse 70% 60% at 80% 10%, rgba(37, 99, 235, 0.15) 0%, transparent 55%),
-    radial-gradient(ellipse 50% 50% at 20% 80%, rgba(212, 135, 10, 0.10) 0%, transparent 50%);
+    radial-gradient(ellipse 50% 50% at 20% 80%, rgba(37, 99, 235, 0.08) 0%, transparent 50%);
 }
 
 /* ============================================
@@ -659,7 +657,7 @@ body::after {
   top: 0;
   transform: translateX(-50%);
   width: 1px;
-  background: linear-gradient(to bottom, #D4870A, rgba(212, 135, 10, 0.1));
+  background: linear-gradient(to bottom, #2563EB, rgba(37, 99, 235, 0.1));
   transform-origin: top;
 }
 
@@ -670,7 +668,7 @@ body::after {
 .vp-divider {
   width: 48px;
   height: 3px;
-  background: linear-gradient(90deg, #D4870A, #F59E0B);
+  background: linear-gradient(90deg, #2563EB, #60A5FA);
   border-radius: 2px;
 }
 
@@ -687,7 +685,7 @@ body::after {
   left: 0;
   width: 100%;
   height: 2px;
-  background: linear-gradient(90deg, #D4870A, #F59E0B);
+  background: linear-gradient(90deg, #2563EB, #60A5FA);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);

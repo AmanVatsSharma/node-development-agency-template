@@ -65,7 +65,7 @@ const caseStudies: CaseStudy[] = [
       { value: "Month 1", label: "Positive ROI" },
     ],
     tags: ["AI Voice", "Node.js", "Twilio", "OpenAI"],
-    accentColor: "#D4870A",
+    accentColor: "#7C3AED",
   },
 ];
 
@@ -153,8 +153,7 @@ function CaseStudyCard({ cs, index }: { cs: CaseStudy; index: number }) {
           {/* "Read more" — always visible (works on touch) */}
           <button
             onClick={() => setExpanded((v) => !v)}
-            className="text-xs font-bold underline-offset-2 hover:underline transition-colors min-h-[36px] flex items-center gap-1"
-            style={{ color: cs.accentColor }}
+            className="text-xs font-bold underline-offset-2 hover:underline transition-colors min-h-[36px] flex items-center gap-1 text-[#2563EB]"
           >
             {expanded ? "Show less" : "Read more"}
             <svg
@@ -195,7 +194,6 @@ export default function CaseStudyShowcase() {
           className="flex flex-col md:flex-row md:items-end justify-between gap-5 mb-12"
         >
           <div className="max-w-xl">
-            <div className="vp-divider mb-4" />
             <h2
               className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#0C1B33] dark:text-white mb-3 tracking-tight"
               style={{ fontFamily: "var(--font-sora), sans-serif" }}

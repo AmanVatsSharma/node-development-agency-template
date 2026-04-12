@@ -7,10 +7,13 @@ import HeroSection from "./components/home/HeroSection";
 import ProductSpotlight from "./components/home/ProductSpotlight";
 import WebDevIllustration from "./components/illustrations/WebDevIllustration";
 import ERPIllustration from "./components/illustrations/ERPIllustration";
+import { BentoGrid, BentoGridItem } from "./components/ui/bento-grid";
+import { Spotlight } from "./components/ui/spotlight";
+import { MovingBorder } from "./components/ui/moving-border";
 
 // ── Below-fold — lazy loaded ──────────────────────────────────────────────────
 const StatsCounter = dynamic(() => import("./components/home/StatsCounter"), {
-  loading: () => <div className="py-16 bg-[#0C1B33]" />,
+  loading: () => <div className="py-16 bg-white dark:bg-[#080C14]" />,
   ssr: true,
 });
 const WhyChooseUs = dynamic(() => import("./components/home/WhyChooseUs"), {
@@ -22,7 +25,7 @@ const CaseStudyShowcase = dynamic(() => import("./components/home/CaseStudyShowc
   ssr: true,
 });
 const ProcessTimeline = dynamic(() => import("./components/home/ProcessTimeline"), {
-  loading: () => <div className="py-16 bg-[#0C1B33]" />,
+  loading: () => <div className="py-16 bg-[#0A1628]" />,
   ssr: true,
 });
 const TestimonialCarousel = dynamic(() => import("./components/home/TestimonialCarousel"), {
@@ -55,10 +58,7 @@ const services = [
     title: "Web & Mobile Apps",
     desc: "Scalable Next.js, React, and Node.js applications — performant, accessible, and built to last.",
     href: "/pages/web-development",
-    accentLight: "#2563EB",
-    accentDark: "#60A5FA",
     large: true,
-    bgPattern: true,
   },
   {
     id: "ai",
@@ -66,8 +66,6 @@ const services = [
     title: "AI & Automation",
     desc: "Chatbots, voice agents, and intelligent workflow automations that solve real operational problems.",
     href: "/pages/ai-chatbot-development",
-    accentLight: "#7C3AED",
-    accentDark: "#A78BFA",
   },
   {
     id: "ecommerce",
@@ -75,8 +73,6 @@ const services = [
     title: "E-Commerce Platforms",
     desc: "Shopify, headless stores, and WhatsApp commerce — engineered to convert.",
     href: "/pages/shopify-store-setup",
-    accentLight: "#059669",
-    accentDark: "#34D399",
   },
   {
     id: "erp",
@@ -84,8 +80,6 @@ const services = [
     title: "ERP & Enterprise Software",
     desc: "Custom ERP systems and CRM platforms that run core business operations.",
     href: "/pages/services",
-    accentLight: "#D97706",
-    accentDark: "#FCD34D",
     large: true,
   },
   {
@@ -94,8 +88,6 @@ const services = [
     title: "Digital Marketing",
     desc: "Google Ads, SEO, and performance campaigns with measurable ROI.",
     href: "/pages/google-ads-management",
-    accentLight: "#DC2626",
-    accentDark: "#F87171",
   },
   {
     id: "trading",
@@ -103,8 +95,6 @@ const services = [
     title: "Trading & Finance Tech",
     desc: "Real-time market data platforms and financial analytics at institutional quality.",
     href: "/pages/trading-software",
-    accentLight: "#0D9488",
-    accentDark: "#2DD4BF",
   },
 ];
 
@@ -122,7 +112,7 @@ export default function Home() {
     <div className="w-full">
 
       {/* ══════════════════════════════════════
-          HERO — split layout, word cycling
+          HERO
       ══════════════════════════════════════ */}
       <HeroSection />
 
@@ -137,7 +127,7 @@ export default function Home() {
                 key={i}
                 className="inline-flex items-center gap-3 sm:gap-4 px-4 sm:px-6 text-xs sm:text-sm font-semibold uppercase tracking-widest text-gray-400 dark:text-gray-600"
               >
-                <span className="w-1 h-1 rounded-full bg-[#D4870A]/50 shrink-0" />
+                <span className="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600 shrink-0" />
                 {name}
               </span>
             ))}
@@ -146,14 +136,13 @@ export default function Home() {
       </section>
 
       {/* ══════════════════════════════════════
-          SERVICES — Bento grid
+          SERVICES — Aceternity BentoGrid
       ══════════════════════════════════════ */}
       <section className="compact-main-section bg-white dark:bg-[#080C14] overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12">
             <div className="max-w-xl">
-              <div className="vp-divider mb-4" />
               <h2
                 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#0C1B33] dark:text-white mb-3 tracking-tight"
                 style={{ fontFamily: "var(--font-sora), sans-serif" }}
@@ -175,70 +164,26 @@ export default function Home() {
             </Link>
           </div>
 
-          {/* Bento grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5">
+          {/* Aceternity BentoGrid */}
+          <BentoGrid className="lg:grid-rows-2">
             {services.map((svc) => (
-              <Link
+              <BentoGridItem
                 key={svc.id}
+                title={svc.title}
+                description={svc.desc}
                 href={svc.href}
-                className={`vp-bento-card group flex flex-col p-6 sm:p-7 min-h-[180px] ${
-                  svc.large ? "lg:row-span-2 lg:min-h-[360px]" : ""
-                } ${svc.bgPattern ? "bg-[#F8FAFF] dark:bg-[#0A1628]" : ""}`}
-              >
-                {/* Pattern overlay for large card */}
-                {svc.bgPattern && (
-                  <div
-                    className="absolute inset-0 opacity-[0.04] dark:opacity-[0.07] pointer-events-none"
-                    style={{
-                      backgroundImage: "radial-gradient(circle at 2px 2px, currentColor 1px, transparent 0)",
-                      backgroundSize: "24px 24px",
-                      color: svc.accentLight,
-                    }}
-                  />
-                )}
-
-                <div className="relative z-10 flex flex-col h-full">
-                  {/* Icon */}
-                  <div
-                    className="inline-flex p-2.5 rounded-xl mb-4 w-fit group-hover:scale-110 transition-transform duration-300"
-                    style={{
-                      backgroundColor: `${svc.accentLight}14`,
-                      color: svc.accentLight,
-                    }}
-                  >
-                    <SvcIcon type={svc.icon} />
-                  </div>
-
-                  <h3
-                    className="text-lg font-bold text-[#0C1B33] dark:text-white mb-2 leading-snug"
-                    style={{ fontFamily: "var(--font-sora), sans-serif" }}
-                  >
-                    {svc.title}
-                  </h3>
-                  <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed flex-1">
-                    {svc.desc}
-                  </p>
-
-                  {/* Arrow link */}
-                  <div className="flex items-center gap-1.5 mt-4 text-xs font-bold group-hover:gap-2.5 transition-all"
-                    style={{ color: svc.accentLight }}>
-                    <span>Learn more</span>
-                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                    </svg>
-                  </div>
-                </div>
-
-                {/* Per-card illustrations on large cards */}
-                {svc.id === "web" && (
-                  <WebDevIllustration className="absolute bottom-3 right-2 w-[130px] opacity-[0.18] pointer-events-none" />
-                )}
-                {svc.id === "erp" && (
-                  <ERPIllustration className="absolute bottom-3 right-2 w-[130px] opacity-[0.18] pointer-events-none" />
-                )}
-              </Link>
+                icon={<SvcIcon type={svc.icon} />}
+                className={svc.large ? "lg:row-span-2 lg:min-h-[360px]" : ""}
+                header={
+                  svc.id === "web" ? (
+                    <WebDevIllustration className="absolute bottom-3 right-2 w-[130px] opacity-[0.08] pointer-events-none" />
+                  ) : svc.id === "erp" ? (
+                    <ERPIllustration className="absolute bottom-3 right-2 w-[130px] opacity-[0.08] pointer-events-none" />
+                  ) : undefined
+                }
+              />
             ))}
-          </div>
+          </BentoGrid>
         </div>
       </section>
 
@@ -273,25 +218,19 @@ export default function Home() {
       <TestimonialCarousel />
 
       {/* ══════════════════════════════════════
-          FINAL CTA
+          FINAL CTA — Spotlight + MovingBorder
       ══════════════════════════════════════ */}
-      <section className="compact-main-section vp-mesh-navy relative overflow-hidden">
-        <div className="absolute inset-0 hero-grid-bg opacity-20 pointer-events-none" />
+      <Spotlight
+        className="compact-main-section bg-[#080C14] relative overflow-hidden"
+        fill="rgba(37,99,235,0.10)"
+      >
         <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#D4870A]/30 bg-[#D4870A]/10 text-[#D4870A] text-xs font-semibold tracking-wide uppercase mb-8">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#D4870A]" />
-            Let&rsquo;s Build Together
-          </div>
-
           <h2
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-[1.1] tracking-tight"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-[1.05] tracking-tight"
             style={{ fontFamily: "var(--font-sora), sans-serif" }}
           >
             Ready to Build Something{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D4870A] to-[#F59E0B]">
-              That Lasts?
-            </span>
+            <span className="text-[#2563EB]">That Lasts?</span>
           </h2>
 
           <p className="text-gray-400 text-lg sm:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
@@ -300,16 +239,19 @@ export default function Home() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-            <Link
+            <MovingBorder
+              as={Link}
               href="/pages/contact"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#D4870A] hover:bg-[#F59E0B] text-white font-bold text-base rounded-xl transition-all shadow-[0_4px_20px_rgba(212,135,10,0.35)] hover:shadow-[0_8px_30px_rgba(212,135,10,0.5)] hover:-translate-y-0.5 min-h-[52px]"
+              duration={3000}
+              containerClassName="rounded-xl p-[1.5px]"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-bold text-base rounded-[10px] transition-colors min-h-[52px]"
               style={{ fontFamily: "var(--font-sora), sans-serif" }}
             >
               Start Your Project
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>
-            </Link>
+            </MovingBorder>
             <Link
               href="/pages/services"
               className="inline-flex items-center justify-center gap-2 px-8 py-4 border border-white/20 hover:border-white/40 text-white font-semibold text-base rounded-xl transition-all hover:bg-white/5 min-h-[52px]"
@@ -329,7 +271,7 @@ export default function Home() {
             ].map((s) => (
               <div key={s.label} className="text-center">
                 <p
-                  className="text-3xl font-bold text-white mb-1"
+                  className="text-4xl font-bold text-white mb-1"
                   style={{ fontFamily: "var(--font-sora), sans-serif" }}
                 >
                   {s.num}
@@ -339,7 +281,7 @@ export default function Home() {
             ))}
           </div>
         </div>
-      </section>
+      </Spotlight>
     </div>
   );
 }

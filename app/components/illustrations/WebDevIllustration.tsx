@@ -93,7 +93,7 @@ export default function WebDevIllustration({ className = "" }: Props) {
         <motion.rect x="222" y="174" width="2.5" height="14" rx="1.5" fill="#D4870A"
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: [1, 0, 1] } : {}}
-          transition={{ duration: 0.85, repeat: Infinity, ease: "steps(1)", delay: 1.5 }}
+          transition={{ duration: 0.5, repeat: Infinity, repeatType: "reverse", ease: "linear", delay: 1.5 }}
         />
 
         {/* ── Floating { } badge ── */}

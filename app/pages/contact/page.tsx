@@ -122,12 +122,12 @@ export default function ContactPage() {
       {/* HERO */}
       <section className="compact-main-hero bg-[#0C1B33] relative overflow-hidden flex items-center">
         <div className="absolute inset-0 hero-grid-bg opacity-20 pointer-events-none" />
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-[#D4870A]/8 blur-[120px] pointer-events-none" />
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-[#2563EB]/8 blur-[120px] pointer-events-none" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#D4870A]/40 bg-[#D4870A]/10 text-[#D4870A] text-xs font-semibold tracking-wide uppercase mb-6">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#D4870A]" />
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#2563EB]/40 bg-[#2563EB]/10 text-[#60A5FA] text-xs font-semibold tracking-wide uppercase mb-6">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#2563EB]" />
               Get in Touch
             </div>
             <h1
@@ -135,7 +135,7 @@ export default function ContactPage() {
               style={{ fontFamily: "var(--font-sora), sans-serif" }}
             >
               Start Your{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D4870A] to-[#F59E0B]">
+              <span className="text-[#2563EB]">
                 Project
               </span>
             </h1>
@@ -312,8 +312,8 @@ export default function ContactPage() {
               {/* Response promise */}
               <div className="p-6 rounded-2xl bg-[#F4F4F5] dark:bg-[#0F1623] border border-gray-100 dark:border-[#1E293B]">
                 <div className="flex items-center gap-3 mb-3">
-                  <div className="w-10 h-10 rounded-xl bg-[#D4870A]/15 flex items-center justify-center">
-                    <svg className="w-5 h-5 text-[#D4870A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="w-10 h-10 rounded-xl bg-[#2563EB]/15 flex items-center justify-center">
+                    <svg className="w-5 h-5 text-[#2563EB]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </div>

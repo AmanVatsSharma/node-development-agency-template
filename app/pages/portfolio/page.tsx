@@ -106,7 +106,7 @@ const caseStudies = [
       { val: "Month 1", label: "Positive ROI" },
     ],
     initials: "DL",
-    color: "bg-[#D4870A]",
+    color: "bg-violet-700",
   },
   {
     client: "GlobalShop Inc.",
@@ -146,8 +146,8 @@ export default function PortfolioPage() {
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#D4870A]/40 bg-[#D4870A]/10 text-[#D4870A] text-xs font-semibold tracking-wide uppercase mb-6">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#D4870A]" />
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#2563EB]/40 bg-[#2563EB]/10 text-[#60A5FA] text-xs font-semibold tracking-wide uppercase mb-6">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#2563EB]" />
               Our Work
             </div>
             <h1
@@ -155,7 +155,7 @@ export default function PortfolioPage() {
               style={{ fontFamily: "var(--font-sora), sans-serif" }}
             >
               Products &{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D4870A] to-[#F59E0B]">
+              <span className="text-[#2563EB]">
                 Case Studies
               </span>
             </h1>
@@ -395,7 +395,7 @@ export default function PortfolioPage() {
           </p>
           <Link
             href="/pages/contact"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-[#D4870A] hover:bg-[#F59E0B] text-white font-bold text-base rounded-xl transition-all hover:shadow-[0_8px_30px_rgba(212,135,10,0.4)] hover:-translate-y-0.5"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-bold text-base rounded-xl transition-all shadow-[0_4px_20px_rgba(37,99,235,0.35)] hover:shadow-[0_8px_30px_rgba(37,99,235,0.5)] hover:-translate-y-0.5"
             style={{ fontFamily: "var(--font-sora), sans-serif" }}
           >
             Start a Project

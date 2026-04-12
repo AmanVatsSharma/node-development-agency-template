@@ -67,8 +67,8 @@ export default function AboutPage() {
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#D4870A]/40 bg-[#D4870A]/10 text-[#D4870A] text-xs font-semibold tracking-wide uppercase mb-6">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#D4870A]" />
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#2563EB]/40 bg-[#2563EB]/10 text-[#60A5FA] text-xs font-semibold tracking-wide uppercase mb-6">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#2563EB]" />
               Our Story
             </div>
             <h1
@@ -76,7 +76,7 @@ export default function AboutPage() {
               style={{ fontFamily: "var(--font-sora), sans-serif" }}
             >
               We Build Software That{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D4870A] to-[#F59E0B]">
+              <span className="text-[#2563EB]">
                 Actually Works
               </span>
             </h1>
@@ -91,7 +91,7 @@ export default function AboutPage() {
             <div className="flex flex-wrap gap-3">
               <Link
                 href="/pages/contact"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-[#D4870A] hover:bg-[#F59E0B] text-white font-bold text-sm rounded-xl transition-all hover:shadow-[0_8px_24px_rgba(212,135,10,0.35)] hover:-translate-y-0.5"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-bold text-sm rounded-xl transition-all shadow-[0_4px_16px_rgba(37,99,235,0.25)] hover:shadow-[0_8px_24px_rgba(37,99,235,0.40)] hover:-translate-y-0.5"
                 style={{ fontFamily: "var(--font-sora), sans-serif" }}
               >
                 Work With Us
@@ -166,7 +166,7 @@ export default function AboutPage() {
                   key={v.title}
                   className="bg-white dark:bg-[#080C14] rounded-2xl p-6 border border-gray-100 dark:border-[#1E293B]"
                 >
-                  <div className="w-8 h-0.5 bg-gradient-to-r from-[#D4870A] to-[#F59E0B] mb-4 rounded-full" />
+                  <div className="w-8 h-0.5 bg-gradient-to-r from-[#2563EB] to-[#60A5FA] mb-4 rounded-full" />
                   <h3
                     className="font-bold text-[#0C1B33] dark:text-white mb-2"
                     style={{ fontFamily: "var(--font-sora), sans-serif" }}
@@ -211,7 +211,7 @@ export default function AboutPage() {
                 >
                   {member.name}
                 </h3>
-                <p className="text-[#D4870A] font-semibold text-sm mb-4 uppercase tracking-wide">
+                <p className="text-[#2563EB] font-semibold text-sm mb-4 uppercase tracking-wide">
                   {member.role}
                 </p>
                 <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
@@ -242,12 +242,12 @@ export default function AboutPage() {
                 <div key={i} className="flex gap-6 sm:gap-8 relative">
                   {/* Dot */}
                   <div className="hidden sm:flex items-start shrink-0 w-10 mt-1">
-                    <div className="w-3 h-3 rounded-full bg-[#D4870A] ml-3.5 ring-4 ring-[#0C1B33]" />
+                    <div className="w-3 h-3 rounded-full bg-[#2563EB] ml-3.5 ring-4 ring-[#0C1B33]" />
                   </div>
                   <div className="pb-2">
                     <div className="flex items-center gap-3 mb-1">
                       <span
-                        className="text-xs font-bold text-[#D4870A] uppercase tracking-widest"
+                        className="text-xs font-bold text-[#60A5FA] uppercase tracking-widest"
                         style={{ fontFamily: "var(--font-sora), sans-serif" }}
                       >
                         {m.year}
@@ -340,7 +340,7 @@ export default function AboutPage() {
           </p>
           <Link
             href="/pages/contact"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-[#D4870A] hover:bg-[#F59E0B] text-white font-bold text-base rounded-xl transition-all hover:shadow-[0_8px_30px_rgba(212,135,10,0.4)] hover:-translate-y-0.5"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-bold text-base rounded-xl transition-all shadow-[0_4px_20px_rgba(37,99,235,0.35)] hover:shadow-[0_8px_30px_rgba(37,99,235,0.5)] hover:-translate-y-0.5"
             style={{ fontFamily: "var(--font-sora), sans-serif" }}
           >
             Start a Conversation

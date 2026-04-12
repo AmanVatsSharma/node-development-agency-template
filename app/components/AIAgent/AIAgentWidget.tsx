@@ -36,7 +36,9 @@ export default function AIAgentWidget() {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to load AI agent configuration');
+        // DB unavailable or misconfigured — widget stays hidden, no error overlay
+        console.warn('[AI Agent Widget] Config unavailable (status:', response.status, ')');
+        return;
       }
 
       const data = await response.json();

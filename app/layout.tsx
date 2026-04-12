@@ -190,7 +190,7 @@ export default async function RootLayout({
                 {/* New Enhanced Header with resizable navbar - Cool scroll effect! */}
                 <EnhancedHeader />
                 {/* Slightly tighter top spacing on mobile while keeping desktop clearance */}
-                <main className="flex-grow pt-16 sm:pt-20">{children}</main>
+                <main className="flex-grow pt-14 sm:pt-[60px]">{children}</main>
                 <Footer />
               </div>
             )}

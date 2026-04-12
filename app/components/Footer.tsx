@@ -95,13 +95,10 @@ export default function Footer() {
 
   return (
     <footer className="bg-[#060A10] text-white relative overflow-hidden">
-      {/* Ambient glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] rounded-full bg-[#1A3A6C]/15 blur-[120px] pointer-events-none" />
-
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* ── Main grid ── */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1fr_1fr] gap-0 lg:gap-8 pt-14 pb-6 border-b border-white/8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1fr_1fr] gap-0 lg:gap-8 pt-20 pb-6 border-b border-white/8">
 
           {/* Brand column */}
           <div className="mb-8 lg:mb-0 border-b border-white/8 md:border-none pb-6 md:pb-0 pr-0 lg:pr-8">
@@ -120,7 +117,7 @@ export default function Footer() {
             </p>
 
             {/* Made in India badge */}
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/4 mb-6">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/15 bg-white/[0.06] mb-6">
               <span className="text-base">🇮🇳</span>
               <span className="text-xs text-white/50 font-medium" style={{ fontFamily: "var(--font-sora), sans-serif" }}>
                 Made in India
@@ -143,7 +140,7 @@ export default function Footer() {
 
           {/* Products */}
           <FooterSection title="Products">
-            <ul className="space-y-0">
+            <ul className="space-y-0.5">
               {footerLinks.products.map((l) => (
                 <li key={l.label}><FooterLink href={l.href} label={l.label} /></li>
               ))}
@@ -152,7 +149,7 @@ export default function Footer() {
 
           {/* Services */}
           <FooterSection title="Services">
-            <ul className="space-y-0">
+            <ul className="space-y-0.5">
               {footerLinks.services.map((l) => (
                 <li key={l.label}><FooterLink href={l.href} label={l.label} /></li>
               ))}
@@ -161,7 +158,7 @@ export default function Footer() {
 
           {/* Company */}
           <FooterSection title="Company">
-            <ul className="space-y-0">
+            <ul className="space-y-0.5">
               {footerLinks.company.map((l) => (
                 <li key={l.label}><FooterLink href={l.href} label={l.label} external={l.external} /></li>
               ))}
@@ -170,7 +167,7 @@ export default function Footer() {
 
           {/* Legal */}
           <FooterSection title="Legal">
-            <ul className="space-y-0">
+            <ul className="space-y-0.5">
               {footerLinks.legal.map((l) => (
                 <li key={l.label}><FooterLink href={l.href} label={l.label} /></li>
               ))}
@@ -207,11 +204,11 @@ export default function Footer() {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="your@email.com"
                   required
-                  className="flex-1 px-4 py-2.5 bg-white/6 border border-white/12 rounded-lg text-sm text-white placeholder-white/30 focus:outline-none focus:border-[#D4870A]/50 transition-colors min-h-[44px]"
+                  className="flex-1 px-4 py-2.5 bg-white/6 border border-white/12 rounded-lg text-sm text-white placeholder-white/30 focus:outline-none focus:border-[#2563EB]/50 transition-colors min-h-[44px]"
                 />
                 <button
                   type="submit"
-                  className="px-4 py-2.5 bg-[#D4870A] hover:bg-[#F59E0B] text-white font-semibold text-sm rounded-lg transition-colors shrink-0 min-h-[44px]"
+                  className="px-4 py-2.5 bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-semibold text-sm rounded-lg transition-colors shrink-0 min-h-[44px]"
                   style={{ fontFamily: "var(--font-sora), sans-serif" }}
                 >
                   Subscribe
@@ -222,7 +219,7 @@ export default function Footer() {
         </div>
 
         {/* ── Bottom bar ── */}
-        <div className="py-6">
+        <div className="py-8">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             {/* Copyright + legal info */}
             <div className="text-xs text-white/25 leading-relaxed space-y-1">
@@ -263,7 +260,7 @@ export default function Footer() {
                   key={s.label}
                   href={s.href}
                   aria-label={s.label}
-                  className="w-8 h-8 flex items-center justify-center rounded-lg border border-white/10 text-white/30 hover:text-white/70 hover:border-white/20 transition-all"
+                  className="w-9 h-9 flex items-center justify-center rounded-lg border border-white/10 text-white/40 hover:text-white/80 hover:border-white/20 transition-all"
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     {s.icon}
