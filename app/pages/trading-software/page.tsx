@@ -1,5 +1,3 @@
-'use client';
-
 /**
  * @fileoverview Trading Software Landing Page - Main Entry Point
  * @description High-converting landing page for enterprise trading platform
@@ -15,8 +13,6 @@
  * - Typography: Poppins Bold (Headings) • Inter Regular (Body) • Mono (Numbers)
  * - Tone: Premium • Enterprise • Scalable • "Future of Trading Technology"
  */
-
-import React, { useEffect } from 'react';
 
 // Section Components
 import { HeroSection } from './_components/hero-section';
@@ -67,33 +63,8 @@ import { SectionErrorBoundary } from './_components/section-error-boundary';
  * - Premium, techy aesthetic with trading terminal vibes
  */
 export default function TradingSoftwarePage() {
-  useEffect(() => {
-    console.log('[Trading-Software] Page mounted');
-    console.log('[Trading-Software] User Agent:', navigator.userAgent);
-    console.log('[Trading-Software] Viewport:', {
-      width: window.innerWidth,
-      height: window.innerHeight
-    });
-
-    // Track page view
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('event', 'page_view', {
-        page_title: 'Trading Software for Brokers - Enterprise Platform',
-        page_location: window.location.href,
-        page_path: '/pages/trading-software'
-      });
-      console.log('[Trading-Software] Google Analytics page view tracked');
-    }
-
-    return () => {
-      console.log('[Trading-Software] Page unmounted');
-    };
-  }, []);
-
   return (
     <main className="min-h-screen bg-gradient-to-b from-[#0A1628] via-[#0d1b2e] to-[#0A1628]">
-      {/* Console log for debugging section rendering */}
-      {console.log('[Trading-Software] Rendering all sections')}
       
       {/* 1. Hero - "Enterprise-Grade Trading Platform Built for Modern Brokers" */}
       <SectionErrorBoundary name="HeroSection">

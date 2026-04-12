@@ -1,5 +1,3 @@
-'use client';
-
 /**
  * @fileoverview Mumbai Web Development Landing Page - Main Entry Point
  * @description High-converting, Mumbai-focused landing page for web development services
@@ -22,8 +20,6 @@
  * - Accessibility-first approach (ARIA labels, semantic HTML)
  */
 
-import React, { useEffect } from 'react';
-
 // Section Components - MUMBAI-FOCUSED WEB DEVELOPMENT
 import { HeroSection } from './_components/hero-section';
 import { TrustSignalsSection } from './_components/trust-signals-section';
@@ -40,49 +36,7 @@ import { MobileFloatingCTA } from './_components/mobile-floating-cta';
 import { ScrollToTop } from './_components/scroll-to-top';
 import { SectionErrorBoundary } from './_components/section-error-boundary';
 
-console.log('[Mumbai-Web-Development] Main page component loaded');
-
-/**
- * Mumbai Web Development Landing Page Component
- * CONVERSION OPTIMIZED VERSION 1.0
- * 
- * MUMBAI-FOCUSED CONVERSION FLOW:
- * 1. Hero - Mumbai skyline + 3D website showcase
- * 2. Trust Signals - Mumbai client logos + stats
- * 3. Services - Comprehensive web development grid
- * 4. Portfolio - Mumbai-based case studies with results
- * 5. Pricing - Transparent INR pricing with Mumbai focus
- * 6. Testimonials - Mumbai client success stories
- * 7. Process - Our 5-step development process
- * 8. Technology - Tech stack and expertise
- * 9. Lead Form - Free consultation booking
- * 10. FAQ - Address common concerns
- * 11. Final CTA - Strong urgency + FOMO
- * 12. Mobile Floating CTA - Always-visible contact
- * 
- * KEY FEATURES:
- * - Mumbai-specific messaging and targeting
- * - 3D interactive website showcase
- * - Multiple lead capture touchpoints
- * - Mobile-first responsive design
- * - Comprehensive error handling
- * - SEO-optimized for Mumbai market
- */
 export default function MumbaiWebDevelopmentPage() {
-  useEffect(() => {
-    console.log('[Mumbai-Web-Development] Page mounted - Mumbai-focused web development');
-    console.log('[Mumbai-Web-Development] User Agent:', navigator.userAgent);
-    console.log('[Mumbai-Web-Development] Viewport:', {
-      width: window.innerWidth,
-      height: window.innerHeight
-    });
-    console.log('[Mumbai-Web-Development] Mumbai market targeting active');
-
-    return () => {
-      console.log('[Mumbai-Web-Development] Page unmounted');
-    };
-  }, []);
-
   return (
     <main className="min-h-screen">
       {/* Hero Section - Mumbai skyline + 3D website showcase */}

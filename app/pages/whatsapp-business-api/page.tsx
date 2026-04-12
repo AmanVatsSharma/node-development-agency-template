@@ -1,5 +1,3 @@
-'use client';
-
 /**
  * @fileoverview WhatsApp Business API Landing Page - Main Entry Point
  * @description Ultra-premium, highly converting landing page for WhatsApp Business API services
@@ -36,8 +34,6 @@
  * 15. Mobile Floating CTA - Always-visible contact
  */
 
-import React, { useEffect } from 'react';
-
 // Section Components - CONVERSION OPTIMIZED
 import { HeroSection } from './_components/hero-section';
 import { WhyWhatsAppSection } from './_components/why-whatsapp-section';
@@ -57,63 +53,7 @@ import { MobileFloatingCTA } from './_components/mobile-floating-cta';
 import { ScrollToTop } from './_components/scroll-to-top';
 import { SectionErrorBoundary } from './_components/section-error-boundary';
 
-console.log('[WhatsApp-API] Main page component loaded');
-
-/**
- * WhatsApp Business API Landing Page Component
- * CONVERSION OPTIMIZED VERSION 1.0
- * 
- * KEY FEATURES:
- * - Mobile-first responsive design (perfect on 375px)
- * - Multiple lead capture points (5+ CTAs)
- * - Professional animations with Framer Motion
- * - Trust signals and social proof throughout
- * - Indian market optimization
- * - Technical authority establishment
- * - Clear ROI demonstration
- * - Google Ads conversion tracking ready
- * 
- * PERFORMANCE:
- * - Component-based architecture
- * - Error boundaries per section
- * - Comprehensive logging for debugging
- * - Accessibility-first (ARIA labels, semantic HTML)
- * - Fast loading with lazy loading
- */
 export default function WhatsAppBusinessAPIPage() {
-  useEffect(() => {
-    console.log('[WhatsApp-API] Page mounted');
-    console.log('[WhatsApp-API] User Agent:', navigator.userAgent);
-    console.log('[WhatsApp-API] Viewport:', {
-      width: window.innerWidth,
-      height: window.innerHeight
-    });
-
-    // Track page view for Google Analytics
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('event', 'page_view', {
-        page_title: 'WhatsApp Business API Integration Services',
-        page_location: window.location.href,
-        page_path: '/pages/whatsapp-business-api'
-      });
-    }
-
-    // Track time on page
-    const startTime = Date.now();
-    return () => {
-      const timeOnPage = Math.round((Date.now() - startTime) / 1000);
-      console.log('[WhatsApp-API] Page unmounted, time on page:', timeOnPage, 'seconds');
-      
-      if (typeof window !== 'undefined' && (window as any).gtag) {
-        (window as any).gtag('event', 'time_on_page', {
-          event_category: 'Engagement',
-          event_label: 'WhatsApp API Landing',
-          value: timeOnPage
-        });
-      }
-    };
-  }, []);
-
   return (
     <main className="min-h-screen bg-white dark:bg-gray-900">
       {/* 1. Hero Section - Strong Value Proposition */}
@@ -194,5 +134,3 @@ export default function WhatsAppBusinessAPIPage() {
     </main>
   );
 }
-
-console.log('[WhatsApp-API] Page export successful');

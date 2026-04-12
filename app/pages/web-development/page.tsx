@@ -2,8 +2,7 @@
 // This page composes multiple premium sections into a high-converting layout.
 // It relies on reusable sections already used elsewhere in the codebase + two new sections (services grid, pricing).
 
-'use client'
-import React, { useEffect } from "react";
+import React from "react";
 import { SectionErrorBoundary } from "@/app/components/common/SectionErrorBoundary";
 import { HeroSection as WDHero } from "@/app/pages/website-development/_components/hero-section";
 import { ServicesGridSection } from "@/app/pages/web-development/_components/services-grid-section";
@@ -16,11 +15,6 @@ import { AnimatedBannerCta as WDBannerCta } from "@/app/pages/website-developmen
 import { ContactSection as WDContact } from "@/app/pages/website-development/_components/contact-section";
 
 function WebDevelopmentPage() {
-  useEffect(() => {
-    console.log('[Web-Development] page mounted');
-    return () => console.log('[Web-Development] page unmounted');
-  }, []);
-
   return (
     <>
       {/* Hero */}

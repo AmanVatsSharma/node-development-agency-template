@@ -1,7 +1,3 @@
-'use client';
-
-import React, { useEffect } from 'react';
-import { motion } from 'framer-motion';
 import { ServiceNavigation } from '@/app/components/GoogleAdsEcosystem/ServiceNavigation';
 import { ROICalculator } from '@/app/components/GoogleAdsEcosystem/ROICalculator';
 import { SectionErrorBoundary } from './_components/section-error-boundary';
@@ -17,20 +13,6 @@ import { MobileFloatingCTA } from './_components/mobile-floating-cta';
 import { ScrollToTop } from './_components/scroll-to-top';
 
 export default function LocalBusinessGoogleAdsPage() {
-  useEffect(() => {
-    console.log('[Local-Business-Google-Ads] Page mounted');
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('event', 'page_view', {
-        page_title: 'Local Business Google Ads | Local SEO & Ads | Vedpragya',
-        page_location: window.location.href,
-        page_path: '/pages/local-business-google-ads'
-      });
-    }
-    return () => {
-      console.log('[Local-Business-Google-Ads] Page unmounted');
-    };
-  }, []);
-
   return (
     <main className="min-h-screen">
       {/* Hero Section */}

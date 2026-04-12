@@ -1,5 +1,3 @@
-'use client';
-
 /**
  * @fileoverview Shopify Product Page Customization Landing Page - Main Entry Point
  * @description High-converting, production-ready landing page for Shopify product page customization
@@ -34,8 +32,6 @@
  * 14. Scroll to Top - UX enhancement
  */
 
-import React, { useEffect } from 'react';
-
 // Section Components - CONVERSION OPTIMIZED
 import { HeroSection } from './_components/hero-section';
 import { ProblemSolutionSection } from './_components/problem-solution-section';
@@ -53,55 +49,7 @@ import { MobileFloatingCTA } from './_components/mobile-floating-cta';
 import { ScrollToTop } from './_components/scroll-to-top';
 import { SectionErrorBoundary } from './_components/section-error-boundary';
 
-console.log('[Shopify-Product-Page] Main page component loaded');
-
-/**
- * Shopify Product Page Customization Landing Page Component
- * CONVERSION OPTIMIZED VERSION 1.0
- * 
- * CONVERSION-FOCUSED FLOW:
- * - Multiple lead capture points throughout the page
- * - Trust signals and social proof strategically placed
- * - Clear CTAs with contrasting gold color
- * - Mobile-first design for thumb-reach optimization
- * - Performance optimized for fast loading
- * - Comprehensive error handling and logging
- * 
- * KEY FEATURES:
- * - Before/After product page visualization
- * - Interactive animations and micro-interactions
- * - Multi-step lead form with WhatsApp alternative
- * - Case study carousel with real metrics
- * - FAQ accordion for objection handling
- * - Sticky mobile CTA bar
- * - Scroll to top functionality
- * - Google Ads conversion tracking
- */
 export default function ShopifyProductPageCustomizationPage() {
-  useEffect(() => {
-    console.log('[Shopify-Product-Page] Page mounted');
-    console.log('[Shopify-Product-Page] User Agent:', navigator.userAgent);
-    console.log('[Shopify-Product-Page] Viewport:', {
-      width: window.innerWidth,
-      height: window.innerHeight
-    });
-
-    // Track page view for Google Ads
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('event', 'page_view', {
-        page_title: 'Shopify Product Page Customization Services',
-        page_location: window.location.href,
-        page_path: '/pages/shopify-product-page-customization',
-        value: 35000, // Average package value
-        currency: 'INR',
-      });
-    }
-
-    return () => {
-      console.log('[Shopify-Product-Page] Page unmounted');
-    };
-  }, []);
-
   return (
     <main className="min-h-screen">
       {/* Hero Section - "Turn Your Product Page into a Sales Engine" */}
@@ -172,5 +120,3 @@ export default function ShopifyProductPageCustomizationPage() {
     </main>
   );
 }
-
-console.log('[Shopify-Product-Page] Main page component exported');

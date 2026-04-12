@@ -16,6 +16,7 @@ export interface BuildPageMetadataOptions {
   imagePath?: string;
   noIndex?: boolean;
   locale?: string;
+  ogType?: 'website' | 'article';
 }
 
 function normalizeMetadataTitle(title: string): string {
@@ -161,6 +162,7 @@ export function buildPageMetadata(options: BuildPageMetadataOptions): Metadata {
     imagePath,
     noIndex = false,
     locale = 'en_US',
+    ogType = 'website',
   } = options;
 
   const normalizedTitle = normalizeMetadataTitle(title);
@@ -198,7 +200,7 @@ export function buildPageMetadata(options: BuildPageMetadataOptions): Metadata {
       url: canonicalUrl,
       siteName: SEO_BRAND_NAME,
       locale,
-      type: 'website',
+      type: ogType,
       images: [
         {
           url: openGraphImageUrl,

@@ -87,6 +87,7 @@ export async function generateMetadata({ params }: BlogSlugMetadataParams): Prom
           'digital growth insights',
         ].filter(Boolean) as string[],
         imagePath: post.imageUrl || '/logo.png',
+        ogType: 'article',
       });
     }
   } catch (error) {

@@ -1,5 +1,3 @@
-'use client';
-
 /**
  * @fileoverview NSE/MCX Live Market Data API Landing Page - Main Entry Point
  * @description Ultra-premium, highly converting landing page for market data API services
@@ -40,8 +38,6 @@
  * 18. Scroll To Top - UX enhancement
  */
 
-import React, { useEffect } from 'react';
-
 // Section Components - CONVERSION OPTIMIZED
 import { HeroSection } from './_components/hero-section';
 import { WhyLiveDataSection } from './_components/why-live-data-section';
@@ -63,63 +59,7 @@ import { MobileFloatingCTA } from './_components/mobile-floating-cta';
 import { ScrollToTop } from './_components/scroll-to-top';
 import { SectionErrorBoundary } from './_components/section-error-boundary';
 
-console.log('[Market-Data-API] Main page component loaded');
-
-/**
- * NSE/MCX Live Market Data API Landing Page Component
- * CONVERSION OPTIMIZED VERSION 1.0
- * 
- * KEY FEATURES:
- * - Futuristic, techy, financial market design
- * - Real-time data visualization and animations
- * - Multiple lead capture points (5+ CTAs)
- * - Professional 3D effects with Framer Motion
- * - Trust signals and technical credibility throughout
- * - Developer-friendly with code examples
- * - Clear ROI and performance metrics demonstration
- * - Google Ads conversion tracking ready
- * 
- * PERFORMANCE:
- * - Component-based architecture
- * - Error boundaries per section
- * - Comprehensive logging for debugging
- * - Accessibility-first (ARIA labels, semantic HTML)
- * - Fast loading with optimized animations
- */
 export default function NSEMCXLiveMarketDataPage() {
-  useEffect(() => {
-    console.log('[Market-Data-API] Page mounted');
-    console.log('[Market-Data-API] User Agent:', navigator.userAgent);
-    console.log('[Market-Data-API] Viewport:', {
-      width: window.innerWidth,
-      height: window.innerHeight
-    });
-
-    // Track page view for Google Analytics
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('event', 'page_view', {
-        page_title: 'NSE MCX Live Market Data API',
-        page_location: window.location.href,
-        page_path: '/pages/nse-mcx-live-market-data'
-      });
-    }
-
-    // Track time on page
-    const startTime = Date.now();
-    return () => {
-      const timeOnPage = Math.round((Date.now() - startTime) / 1000);
-      console.log('[Market-Data-API] Page unmounted, time on page:', timeOnPage, 'seconds');
-      
-      if (typeof window !== 'undefined' && (window as any).gtag) {
-        (window as any).gtag('event', 'time_on_page', {
-          event_category: 'Engagement',
-          event_label: 'Market Data API Landing',
-          value: timeOnPage
-        });
-      }
-    };
-  }, []);
-
   return (
     <main className="min-h-screen bg-white dark:bg-gray-900">
       {/* 1. Hero Section - Animated Stock Ticker + Live Data Viz */}
@@ -210,5 +150,3 @@ export default function NSEMCXLiveMarketDataPage() {
     </main>
   );
 }
-
-console.log('[Market-Data-API] Page export successful');

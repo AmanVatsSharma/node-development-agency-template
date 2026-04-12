@@ -1,7 +1,3 @@
-'use client';
-
-import React, { useEffect } from 'react';
-import { motion } from 'framer-motion';
 import { ServiceNavigation } from '@/app/components/GoogleAdsEcosystem/ServiceNavigation';
 import { ROICalculator } from '@/app/components/GoogleAdsEcosystem/ROICalculator';
 import { SectionErrorBoundary } from './_components/section-error-boundary';
@@ -17,20 +13,6 @@ import { MobileFloatingCTA } from './_components/mobile-floating-cta';
 import { ScrollToTop } from './_components/scroll-to-top';
 
 export default function B2BLeadGenerationAdsPage() {
-  useEffect(() => {
-    console.log('[B2B-Lead-Generation] Page mounted');
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('event', 'page_view', {
-        page_title: 'B2B Lead Generation Ads | High-Quality Leads | Enterprise Hero',
-        page_location: window.location.href,
-        page_path: '/pages/b2b-lead-generation-ads'
-      });
-    }
-    return () => {
-      console.log('[B2B-Lead-Generation] Page unmounted');
-    };
-  }, []);
-
   return (
     <main className="min-h-screen">
       {/* Hero Section */}

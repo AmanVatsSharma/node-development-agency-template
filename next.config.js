@@ -55,7 +55,7 @@ module.exports = (phase) => {
       },
       images: {
         ...nextConfig.images,
-        minimumCacheTTL: 60,
+        minimumCacheTTL: 31536000,
       },
       experimental: {
         optimizeCss: true,

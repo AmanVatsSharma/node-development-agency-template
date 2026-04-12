@@ -1,5 +1,3 @@
-'use client';
-
 /**
  * @fileoverview EnterpriseHero CRM - Main Showcase Page
  * @description Premium self-hosted CRM built on BharatERP stack
@@ -33,8 +31,6 @@
  * - SEO optimized
  */
 
-import React, { useEffect } from 'react';
-
 // Section Components
 import { HeroSection } from './_components/hero-section';
 import { AboutSection } from './_components/about-section';
@@ -52,43 +48,7 @@ import { SectionErrorBoundary } from './_components/section-error-boundary';
 import { ScrollToTop } from './_components/scroll-to-top';
 import { MobileFloatingCTA } from './_components/mobile-floating-cta';
 
-console.log('[CRM] Main page component loaded');
-
-/**
- * EnterpriseHero CRM Landing Page
- * Premium showcase page for self-hosted enterprise CRM
- * 
- * CONVERSION OPTIMIZED:
- * - Multiple demo request CTAs throughout
- * - Trust signals and social proof
- * - Clear value proposition
- * - Mobile-first design for India's mobile-heavy market
- * - Performance optimized for fast loading
- */
 export default function CRMPage() {
-  useEffect(() => {
-    console.log('[CRM] Page mounted');
-    console.log('[CRM] User Agent:', navigator.userAgent);
-    console.log('[CRM] Viewport:', {
-      width: window.innerWidth,
-      height: window.innerHeight
-    });
-
-    // Track page view for Google Ads
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('event', 'page_view', {
-        page_title: 'EnterpriseHero CRM - Self-Hosted Enterprise Solution',
-        page_location: window.location.href,
-        page_path: '/crm'
-      });
-      console.log('[CRM] Google Ads page view tracked');
-    }
-
-    return () => {
-      console.log('[CRM] Page unmounted');
-    };
-  }, []);
-
   return (
     <main className="min-h-screen bg-white dark:bg-gray-950">
       {/* Hero Section - "Your Business. Your Data. Your CRM." */}

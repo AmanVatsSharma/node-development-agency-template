@@ -1,5 +1,3 @@
-'use client';
-
 /**
  * @fileoverview Enterprise Google Ads Management - Tier 1 Service Page
  * @description High-converting landing page for enterprise-level Google Ads management services
@@ -13,9 +11,6 @@
  * - Comprehensive service coverage
  * - High-value lead generation
  */
-
-import React, { useEffect } from 'react';
-import { motion } from 'framer-motion';
 
 // Section Components
 import { HeroSection } from './_components/hero-section';
@@ -34,31 +29,7 @@ import { SectionErrorBoundary } from './_components/section-error-boundary';
 import { ServiceNavigation } from '@/app/components/GoogleAdsEcosystem/ServiceNavigation';
 import { ROICalculator } from '@/app/components/GoogleAdsEcosystem/ROICalculator';
 
-console.log('[Enterprise-Google-Ads] Main page component loaded');
-
 export default function EnterpriseGoogleAdsManagementPage() {
-  useEffect(() => {
-    console.log('[Enterprise-Google-Ads] Page mounted');
-    console.log('[Enterprise-Google-Ads] User Agent:', navigator.userAgent);
-    console.log('[Enterprise-Google-Ads] Viewport:', {
-      width: window.innerWidth,
-      height: window.innerHeight
-    });
-
-    // Track page view for Google Analytics
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('event', 'page_view', {
-        page_title: 'Enterprise Google Ads Management | Dedicated PPC Team | Vedpragya',
-        page_location: window.location.href,
-        page_path: '/pages/enterprise-google-ads-management'
-      });
-    }
-
-    return () => {
-      console.log('[Enterprise-Google-Ads] Page unmounted');
-    };
-  }, []);
-
   return (
     <main className="min-h-screen">
       {/* Hero Section - Enterprise Positioning */}

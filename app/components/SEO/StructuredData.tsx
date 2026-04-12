@@ -1,6 +1,6 @@
 import React from 'react';
 import { companyProfile } from '@/app/data/companyProfile';
-import { SEO_DEFAULT_DESCRIPTION } from '@/app/lib/seo/constants';
+import { SEO_DEFAULT_DESCRIPTION, SEO_SITE_URL } from '@/app/lib/seo/constants';
 
 interface OrganizationStructuredDataProps {
   name?: string;
@@ -148,8 +148,7 @@ function normalizeSameAsUrls(sameAs?: string[]): string[] | undefined {
 // Default data
 const defaultOrganization = {
   name: companyProfile.brandName,
-  // NOTE: Keep logo optional/real. If you add a real logo asset, set it explicitly.
-  logo: undefined as string | undefined,
+  logo: `${SEO_SITE_URL}/logo.png`,
   url: companyProfile.websiteUrl,
   contactPoint: {
     contactType: 'customer service',

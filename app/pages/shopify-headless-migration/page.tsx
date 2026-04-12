@@ -1,5 +1,3 @@
-'use client';
-
 /**
  * @fileoverview Shopify Headless Migration Landing Page - Premium Enterprise Service
  * @description Ultra-premium, high-converting landing page for Shopify → Next.js/Hydrogen migration
@@ -43,12 +41,6 @@
  * - Transparent pricing in INR
  */
 
-import React, { useEffect } from 'react';
-
-// SEO NOTE: Add metadata in layout.tsx or create a metadata file
-// Since this is a 'use client' component, metadata must be set in parent layout
-// See QUICK_START.md for SEO setup instructions
-
 // Section Components - CONVERSION OPTIMIZED
 import { HeroSection } from './_components/hero-section';
 import { WhyHeadlessSection } from './_components/why-headless-section';
@@ -64,92 +56,7 @@ import { MobileFloatingCTA } from './_components/mobile-floating-cta';
 import { ScrollToTop } from './_components/scroll-to-top';
 import { SectionErrorBoundary } from '@/app/components/common/SectionErrorBoundary';
 
-console.log('[Shopify-Headless] Main page component loaded');
-console.log('[Shopify-Headless] Brand Colors - Primary: #0F172A, Accent: #00E0B8');
-
-/**
- * Shopify Headless Migration Landing Page Component
- * ULTRA-PREMIUM VERSION 1.0 - $10k+ PROJECT POSITIONING
- * 
- * CONVERSION-FOCUSED FLOW:
- * 1. Hero - "Go Headless. Go Limitless." with neural-line animation
- * 2. Why Go Headless - Comparison table (Traditional vs Headless)
- * 3. What You Get - 5 service modules with detailed deliverables
- * 4. Pricing Plans - 3-tier transparent pricing (₹1L - ₹5L+)
- * 5. Add-Ons - Premium additional services
- * 6. Process - 6-step transparent workflow
- * 7. Tech Stack - Technical credibility showcase
- * 8. Why Vedpragya Bharat - USPs and guarantees
- * 9. Case Studies - Real results with metrics
- * 10. Final CTA - WhatsApp integration + demo booking
- * 11. Mobile Floating CTA - Always-visible contact buttons
- * 
- * KEY FEATURES:
- * - Mobile-first, app-like interface
- * - Premium animations with Framer Motion
- * - Multiple lead capture points
- * - WhatsApp integration for instant contact
- * - Google Ads conversion tracking
- * - Core Web Vitals 95+ optimized
- * - SEO metadata and structured data
- * 
- * TARGET AUDIENCE:
- * - Global e-commerce brands
- * - High-ticket D2C brands
- * - Enterprise Shopify Plus clients
- * - Agencies looking for white-label partners
- */
 export default function ShopifyHeadlessMigrationPage() {
-  useEffect(() => {
-    console.log('[Shopify-Headless] Page mounted');
-    console.log('[Shopify-Headless] User Agent:', navigator.userAgent);
-    console.log('[Shopify-Headless] Viewport:', {
-      width: window.innerWidth,
-      height: window.innerHeight,
-      isMobile: window.innerWidth < 768
-    });
-    console.log('[Shopify-Headless] Page loaded at:', new Date().toISOString());
-
-    // Track page view for analytics
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      console.log('[Shopify-Headless] Tracking Google Analytics page view');
-      (window as any).gtag('event', 'page_view', {
-        page_title: 'Shopify Headless Migration Services',
-        page_location: window.location.href,
-        page_path: '/pages/shopify-headless-migration',
-        service_type: 'headless_migration',
-        ticket_size: 'high_ticket'
-      });
-    }
-
-    // Track scroll depth for conversion optimization
-    let maxScroll = 0;
-    const trackScrollDepth = () => {
-      const scrollPercentage = Math.round(
-        (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100
-      );
-      
-      if (scrollPercentage > maxScroll && scrollPercentage % 25 === 0) {
-        maxScroll = scrollPercentage;
-        console.log('[Shopify-Headless] Scroll depth:', scrollPercentage + '%');
-        
-        if ((window as any).gtag) {
-          (window as any).gtag('event', 'scroll_depth', {
-            depth_percentage: scrollPercentage,
-            page_path: '/pages/shopify-headless-migration'
-          });
-        }
-      }
-    };
-
-    window.addEventListener('scroll', trackScrollDepth);
-
-    return () => {
-      console.log('[Shopify-Headless] Page unmounted');
-      window.removeEventListener('scroll', trackScrollDepth);
-    };
-  }, []);
-
   return (
     <main className="min-h-screen bg-[#F9FAFB] dark:bg-[#0F172A]">
       {/* Hero Section - Strong Value Proposition with Neural Animation */}

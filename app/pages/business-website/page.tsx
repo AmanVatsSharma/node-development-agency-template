@@ -1,5 +1,3 @@
-'use client';
-
 /**
  * @fileoverview Business Website Landing Page - Main Entry Point
  * @description High-converting, enterprise-grade landing page for Indian businesses
@@ -20,8 +18,6 @@
  * - Accessibility-first approach (ARIA labels, semantic HTML)
  */
 
-import React, { useEffect } from 'react';
-
 // Section Components - SIMPLIFIED WITH DEVICE SHOWCASE ONLY
 import { HeroSection } from './_components/hero-section'; // Clean text-only hero
 import { ClientLogosSection } from './_components/client-logos-section';
@@ -38,52 +34,7 @@ import { MobileFloatingCTA } from './_components/mobile-floating-cta';
 import { ScrollToTop } from './_components/scroll-to-top';
 import { SectionErrorBoundary } from './_components/section-error-boundary';
 
-console.log('[Business-Website] Main page component loaded');
-
-/**
- * Business Website Landing Page Component
- * CONVERSION OPTIMIZED VERSION 2.0
- * 
- * CONVERSION-FOCUSED FLOW WITH DEVICE SHOWCASE ONLY:
- * 1. Hero - Clean text-only (no illustration)
- * 2. Client Logos - Instant credibility with tech partners
- * 3. Trust Signals - Stats and social proof (500+ clients)
- * 4. Services - Visual service grid with pricing
- * 5. Device Showcase - ✅ ONLY ILLUSTRATION: 3-Device Responsive Design
- * 6. Recent Projects - Real results with metrics
- * 7. Pricing - Enhanced with urgency & better CTAs
- * 8. Testimonials - Photos + specific results
- * 9. Lead Form - Sticky on desktop, optimized CTAs
- * 10. FAQ - Address final objections
- * 11. Final CTA - Strong urgency & FOMO
- * 12. Mobile Floating CTA - Always-visible contact buttons
- * 
- * KEY IMPROVEMENTS V2.0:
- * - ✅ Option 1: Website Transformation in Hero (before/after comparison)
- * - ✅ Option 2: Growth Dashboard (India map, metrics, revenue charts)
- * - ✅ Option 3: 3-Device Showcase (responsive design demonstration)
- * - Action-specific CTAs throughout
- * - Multiple urgency indicators (slots left)
- * - Enhanced visual hierarchy & spacing
- * - Mobile-first sticky elements
- * - Real project showcases with metrics
- * - Trust signals in every section
- */
 export default function BusinessWebsitePage() {
-  useEffect(() => {
-    console.log('[Business-Website] SIMPLIFIED Page mounted - Device Showcase ONLY');
-    console.log('[Business-Website] User Agent:', navigator.userAgent);
-    console.log('[Business-Website] Viewport:', {
-      width: window.innerWidth,
-      height: window.innerHeight
-    });
-    console.log('[Business-Website] Conversion optimization features active');
-
-    return () => {
-      console.log('[Business-Website] Page unmounted');
-    };
-  }, []);
-
   return (
     <main className="min-h-screen">
       {/* Hero Section - Clean text-only, no illustrations */}

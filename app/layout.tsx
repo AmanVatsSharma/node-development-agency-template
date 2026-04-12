@@ -57,6 +57,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
+    site: '@vedpragya',
+    creator: '@vedpragya',
     title: 'Vedpragya | Software Development & IT Solutions',
     description: 'We build software that transforms businesses — web apps, AI, ERP, e-commerce, and more.',
     images: [toAbsoluteSeoUrl(SEO_DEFAULT_OG_IMAGE_PATH)],

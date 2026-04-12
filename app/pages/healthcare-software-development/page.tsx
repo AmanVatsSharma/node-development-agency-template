@@ -1,5 +1,3 @@
-'use client';
-
 /**
  * @fileoverview Healthcare Software Development Landing Page - Main Entry Point
  * @description High-converting, production-ready landing page for Healthcare Software Development services
@@ -34,8 +32,6 @@
  * 13. Mobile Floating CTA - Always accessible
  */
 
-import React, { useEffect } from 'react';
-
 // Section Components - CONVERSION OPTIMIZED
 import { HeroSection } from './_components/hero-section';
 import { ProblemSolutionSection } from './_components/problem-solution-section';
@@ -53,43 +49,7 @@ import { MobileFloatingCTA } from './_components/mobile-floating-cta';
 import { ScrollToTop } from './_components/scroll-to-top';
 import { SectionErrorBoundary } from './_components/section-error-boundary';
 
-console.log('[Healthcare-Software-Dev] Main page component loaded');
-
-/**
- * Healthcare Software Development Landing Page Component
- * CONVERSION OPTIMIZED VERSION 1.0
- * 
- * CONVERSION-FOCUSED FLOW:
- * - Multiple lead capture points throughout the page
- * - Trust signals and social proof strategically placed
- * - Clear CTAs with contrasting colors
- * - Mobile-first design for India's mobile-heavy market
- * - Performance optimized for fast loading
- * - Healthcare industry specific content and imagery
- */
 export default function HealthcareSoftwareDevelopmentPage() {
-  useEffect(() => {
-    console.log('[Healthcare-Software-Dev] Page mounted');
-    console.log('[Healthcare-Software-Dev] User Agent:', navigator.userAgent);
-    console.log('[Healthcare-Software-Dev] Viewport:', {
-      width: window.innerWidth,
-      height: window.innerHeight
-    });
-
-    // Track page view for Google Ads
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('event', 'page_view', {
-        page_title: 'Healthcare Software Development Services',
-        page_location: window.location.href,
-        page_path: '/pages/healthcare-software-development'
-      });
-    }
-
-    return () => {
-      console.log('[Healthcare-Software-Dev] Page unmounted');
-    };
-  }, []);
-
   return (
     <main className="min-h-screen">
       {/* Hero Section - "Transform Healthcare with Cutting-Edge Software" */}

@@ -1,5 +1,3 @@
-'use client';
-
 /**
  * @fileoverview ReactJS Web App Development Landing Page - Main Entry Point
  * @description High-converting, production-ready landing page for ReactJS development services
@@ -20,8 +18,6 @@
  * - Mobile-first responsive design with app-like experience
  */
 
-import React, { useEffect } from 'react';
-
 // Section Components - CONVERSION OPTIMIZED
 import { HeroSection } from './_components/hero-section';
 import { WhyReactSection } from './_components/why-react-section';
@@ -39,58 +35,7 @@ import { MobileFloatingCTA } from './_components/mobile-floating-cta';
 import { ScrollToTop } from './_components/scroll-to-top';
 import { SectionErrorBoundary } from './_components/section-error-boundary';
 
-console.log('[ReactJS-Dev] Main page component loaded');
-
-/**
- * ReactJS Web App Development Landing Page Component
- * CONVERSION OPTIMIZED VERSION 1.0
- * 
- * CONVERSION-FOCUSED FLOW:
- * 1. Hero - Strong value proposition with React branding
- * 2. Why ReactJS - Education + Authority building
- * 3. Our Expertise - Show React ecosystem mastery
- * 4. Services - Complete service offerings with clear deliverables
- * 5. Case Studies - Real results with metrics and swipeable cards
- * 6. Tech Stack - Show technical expertise with logos grid
- * 7. Why Choose Us - Trust signals and differentiators
- * 8. Workflow - 5-step transparent process timeline
- * 9. Pricing - Transparent INR pricing with packages
- * 10. Testimonials - Social proof from satisfied clients
- * 11. Lead Form - Strategic placement with multiple CTAs
- * 12. FAQ - Address final objections
- * 13. Mobile Floating CTA - Always-visible contact buttons
- * 
- * KEY FEATURES:
- * - Multiple lead capture points
- * - Performance-focused messaging
- * - Technical authority establishment
- * - Clear ROI demonstration
- * - Trust signals throughout
- * - Mobile-first design with app-like experience
- */
 export default function ReactJSDevelopmentPage() {
-  useEffect(() => {
-    console.log('[ReactJS-Dev] Page mounted');
-    console.log('[ReactJS-Dev] User Agent:', navigator.userAgent);
-    console.log('[ReactJS-Dev] Viewport:', {
-      width: window.innerWidth,
-      height: window.innerHeight
-    });
-
-    // Track page view
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('event', 'page_view', {
-        page_title: 'ReactJS Web App Development Services',
-        page_location: window.location.href,
-        page_path: '/pages/reactjs-development'
-      });
-    }
-
-    return () => {
-      console.log('[ReactJS-Dev] Page unmounted');
-    };
-  }, []);
-
   return (
     <main className="min-h-screen">
       {/* Hero Section - Strong Value Proposition */}

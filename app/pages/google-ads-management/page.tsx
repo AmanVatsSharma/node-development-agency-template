@@ -1,5 +1,3 @@
-'use client';
-
 /**
  * @fileoverview Google Ads Management Service Landing Page - Main Entry Point
  * @description High-converting, premium landing page for Google Ads management services
@@ -20,8 +18,6 @@
  * - Google Ads brand colors: Royal Blue (#1A73E8) + Yellow (#FABB05)
  */
 
-import React, { useEffect } from 'react';
-
 // Section Components - CONVERSION OPTIMIZED FOR GOOGLE ADS
 import { HeroSection } from './_components/hero-section';
 import { ProblemSolutionSection } from './_components/problem-solution-section';
@@ -39,57 +35,7 @@ import { MobileFloatingCTA } from './_components/mobile-floating-cta';
 import { ScrollToTop } from './_components/scroll-to-top';
 import { SectionErrorBoundary } from './_components/section-error-boundary';
 
-console.log('[Google-Ads] Main page component loaded');
-
-/**
- * Google Ads Management Landing Page Component
- * CONVERSION OPTIMIZED VERSION 1.0
- * 
- * CONVERSION-FOCUSED FLOW:
- * 1. Hero - Drive qualified leads with performance-focused Google Ads
- * 2. Problem/Solution - Address common Google Ads pain points
- * 3. Services - Complete campaign types & deliverables
- * 4. Process - 5-step proven system
- * 5. Case Studies - Real ROI results with metrics
- * 6. Why Choose Us - Key differentiators & expertise
- * 7. Testimonials - Social proof from successful clients
- * 8. Pricing - Transparent 3-tier plans (₹25K, ₹35K, ₹50K+)
- * 9. Dashboard - Show reporting transparency
- * 10. Integrations - Full-stack marketing tools
- * 11. FAQ - Address final objections
- * 12. Final CTA - Lead form with strong urgency
- * 
- * KEY FEATURES:
- * - Multiple strategic lead capture points
- * - ROI-obsessed messaging throughout
- * - Data-driven approach emphasis
- * - Clear ROAS demonstration
- * - Trust signals & certifications
- * - Mobile-first premium design
- */
 export default function GoogleAdsManagementPage() {
-  useEffect(() => {
-    console.log('[Google-Ads] Page mounted');
-    console.log('[Google-Ads] User Agent:', navigator.userAgent);
-    console.log('[Google-Ads] Viewport:', {
-      width: window.innerWidth,
-      height: window.innerHeight
-    });
-
-    // Track page view for Google Analytics
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('event', 'page_view', {
-        page_title: 'Google Ads Management Service | Enterprise Hero',
-        page_location: window.location.href,
-        page_path: '/pages/google-ads-management'
-      });
-    }
-
-    return () => {
-      console.log('[Google-Ads] Page unmounted');
-    };
-  }, []);
-
   return (
     <main className="min-h-screen">
       {/* Hero Section - Drive Clicks into Customers */}

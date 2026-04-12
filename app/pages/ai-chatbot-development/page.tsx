@@ -1,5 +1,3 @@
-'use client';
-
 /**
  * @fileoverview AI Chatbot Development Landing Page - Main Entry Point
  * @description High-converting, production-ready landing page for AI Chatbot development services
@@ -32,8 +30,6 @@
  * 12. Mobile Floating CTA - Always accessible
  */
 
-import React, { useEffect } from 'react';
-
 // Section Components - CONVERSION OPTIMIZED
 import { HeroSection } from './_components/hero-section';
 import { WhyChatbotsSection } from './_components/why-chatbots-section';
@@ -50,42 +46,7 @@ import { MobileFloatingCTA } from './_components/mobile-floating-cta';
 import { ScrollToTop } from './_components/scroll-to-top';
 import { SectionErrorBoundary } from './_components/section-error-boundary';
 
-console.log('[AI-Chatbot-Dev] Main page component loaded');
-
-/**
- * AI Chatbot Development Landing Page Component
- * CONVERSION OPTIMIZED VERSION 1.0
- * 
- * CONVERSION-FOCUSED FLOW:
- * - Multiple lead capture points throughout the page
- * - Trust signals and social proof strategically placed
- * - Clear CTAs with contrasting colors
- * - Mobile-first design for India's mobile-heavy market
- * - Performance optimized for fast loading
- */
 export default function AIChatbotDevelopmentPage() {
-  useEffect(() => {
-    console.log('[AI-Chatbot-Dev] Page mounted');
-    console.log('[AI-Chatbot-Dev] User Agent:', navigator.userAgent);
-    console.log('[AI-Chatbot-Dev] Viewport:', {
-      width: window.innerWidth,
-      height: window.innerHeight
-    });
-
-    // Track page view for Google Ads
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('event', 'page_view', {
-        page_title: 'AI Chatbot Development Services',
-        page_location: window.location.href,
-        page_path: '/pages/ai-chatbot-development'
-      });
-    }
-
-    return () => {
-      console.log('[AI-Chatbot-Dev] Page unmounted');
-    };
-  }, []);
-
   return (
     <main className="min-h-screen">
       {/* Hero Section - "Turn Conversations into Conversions" */}

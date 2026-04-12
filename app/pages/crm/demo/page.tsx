@@ -1,5 +1,3 @@
-'use client';
-
 /**
  * @fileoverview EnterpriseHero CRM - Demo Request Page
  * @description Lead capture and onboarding experience for CRM demo requests
@@ -22,8 +20,6 @@
  * - SEO optimized
  */
 
-import React, { useEffect } from 'react';
-
 // Section Components
 import { DemoHeroSection } from './_components/demo-hero-section';
 import { DemoFormSection } from './_components/demo-form-section';
@@ -35,50 +31,7 @@ import { ContactSupportSection } from './_components/contact-support-section';
 import { SectionErrorBoundary } from '../_components/section-error-boundary';
 import { ScrollToTop } from '../_components/scroll-to-top';
 
-console.log('[CRM-Demo] Demo page component loaded');
-
-/**
- * CRM Demo Request Page
- * Lead capture and personalized demo onboarding
- * 
- * CONVERSION OPTIMIZED:
- * - Clear value proposition
- * - Comprehensive form with module selection
- * - Trust signals throughout
- * - Process transparency
- * - Multiple support channels
- */
 export default function CRMDemoPage() {
-  useEffect(() => {
-    console.log('[CRM-Demo] Demo page mounted');
-    console.log('[CRM-Demo] User Agent:', navigator.userAgent);
-    console.log('[CRM-Demo] Viewport:', {
-      width: window.innerWidth,
-      height: window.innerHeight
-    });
-
-    // Track page view for Google Ads
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('event', 'page_view', {
-        page_title: 'Request CRM Demo - EnterpriseHero',
-        page_location: window.location.href,
-        page_path: '/crm/demo'
-      });
-      console.log('[CRM-Demo] Google Ads page view tracked');
-    }
-
-    // Scroll to form if hash is present
-    if (window.location.hash === '#form') {
-      setTimeout(() => {
-        document.getElementById('demo-form')?.scrollIntoView({ behavior: 'smooth' });
-      }, 500);
-    }
-
-    return () => {
-      console.log('[CRM-Demo] Demo page unmounted');
-    };
-  }, []);
-
   return (
     <main className="min-h-screen bg-white dark:bg-gray-950">
       {/* Demo Hero - Introduction */}

@@ -1,5 +1,3 @@
-'use client';
-
 /**
  * @fileoverview AI Voice Agents Landing Page - Main Entry Point
  * @description High-converting landing page for AI Voice Agent services
@@ -13,8 +11,6 @@
  * - Typography: Poppins SemiBold (Headings) • Inter Regular (Body)
  * - Tone: Confident • Reliable • Scalable • "Future of Voice Support"
  */
-
-import React, { useEffect } from 'react';
 
 // Section Components
 import { HeroSection } from './_components/hero-section';
@@ -62,28 +58,6 @@ import { SectionErrorBoundary } from './_components/section-error-boundary';
  * - Technical authority establishment
  */
 export default function AIVoiceAgentsPage() {
-  useEffect(() => {
-    console.log('[AI-Voice-Agents] Page mounted');
-    console.log('[AI-Voice-Agents] User Agent:', navigator.userAgent);
-    console.log('[AI-Voice-Agents] Viewport:', {
-      width: window.innerWidth,
-      height: window.innerHeight
-    });
-
-    // Track page view
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('event', 'page_view', {
-        page_title: 'AI Voice Agents - Call Handling Automation',
-        page_location: window.location.href,
-        page_path: '/pages/ai-voice-agents'
-      });
-    }
-
-    return () => {
-      console.log('[AI-Voice-Agents] Page unmounted');
-    };
-  }, []);
-
   return (
     <main className="min-h-screen bg-white dark:bg-gray-900">
       {/* 1. Hero - "Your AI Receptionist That Never Misses a Call" */}
