@@ -1,4 +1,7 @@
 import Link from "next/link";
+import { BackgroundBeams } from "@/app/components/ui/background-beams";
+import { Spotlight } from "@/app/components/ui/spotlight";
+import { MovingBorder } from "@/app/components/ui/moving-border";
 
 const products = [
   {
@@ -11,7 +14,8 @@ const products = [
       { val: "99.9%", label: "Uptime" },
     ],
     tags: ["Node.js", "PostgreSQL", "React", "Microservices"],
-    color: "bg-[#0C1B33]",
+    accentBg: "bg-[#0C1B33]",
+    accentHex: "#0C1B33",
     featured: true,
   },
   {
@@ -24,7 +28,8 @@ const products = [
       { val: "100%", label: "Uptime in market hours" },
     ],
     tags: ["WebSocket", "Redis", "Node.js", "Next.js"],
-    color: "bg-emerald-700",
+    accentBg: "bg-emerald-700",
+    accentHex: "#047857",
     featured: false,
   },
   {
@@ -37,7 +42,8 @@ const products = [
       { val: "3s", label: "Avg page load" },
     ],
     tags: ["Next.js", "Node.js", "Stripe", "PostgreSQL"],
-    color: "bg-blue-700",
+    accentBg: "bg-blue-700",
+    accentHex: "#1D4ED8",
     featured: false,
   },
   {
@@ -50,7 +56,8 @@ const products = [
       { val: "10×", label: "ROI vs email" },
     ],
     tags: ["WhatsApp API", "Node.js", "React", "MongoDB"],
-    color: "bg-green-700",
+    accentBg: "bg-green-700",
+    accentHex: "#15803D",
     featured: false,
   },
   {
@@ -63,7 +70,8 @@ const products = [
       { val: "99%", label: "Accuracy" },
     ],
     tags: ["OpenAI", "Node.js", "Next.js", "PostgreSQL"],
-    color: "bg-violet-700",
+    accentBg: "bg-violet-700",
+    accentHex: "#6D28D9",
     featured: false,
   },
   {
@@ -76,7 +84,8 @@ const products = [
       { val: "Real-time", label: "Tracking" },
     ],
     tags: ["AI/ML", "Node.js", "React Native", "Maps API"],
-    color: "bg-orange-700",
+    accentBg: "bg-orange-700",
+    accentHex: "#C2410C",
     featured: false,
   },
   {
@@ -89,7 +98,8 @@ const products = [
       { val: "Free", label: "Core features" },
     ],
     tags: ["Next.js", "Node.js", "TypeScript", "PostgreSQL"],
-    color: "bg-indigo-700",
+    accentBg: "bg-indigo-700",
+    accentHex: "#4338CA",
     featured: false,
   },
 ];
@@ -106,7 +116,8 @@ const caseStudies = [
       { val: "Month 1", label: "Positive ROI" },
     ],
     initials: "DL",
-    color: "bg-violet-700",
+    accentBg: "bg-violet-700",
+    accentHex: "#6D28D9",
   },
   {
     client: "GlobalShop Inc.",
@@ -119,7 +130,8 @@ const caseStudies = [
       { val: "4.2×", label: "Mobile Performance" },
     ],
     initials: "GS",
-    color: "bg-emerald-700",
+    accentBg: "bg-emerald-700",
+    accentHex: "#047857",
   },
   {
     client: "FinanceFlow Canada",
@@ -132,7 +144,8 @@ const caseStudies = [
       { val: "99.99%", label: "Uptime" },
     ],
     initials: "FF",
-    color: "bg-[#1A3A6C]",
+    accentBg: "bg-[#1A3A6C]",
+    accentHex: "#1A3A6C",
   },
 ];
 
@@ -140,78 +153,78 @@ export default function PortfolioPage() {
   return (
     <div className="w-full">
 
-      {/* HERO */}
-      <section className="compact-main-hero bg-[#0C1B33] relative overflow-hidden flex items-center">
-        <div className="absolute inset-0 hero-grid-bg opacity-20 pointer-events-none" />
-
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#2563EB]/40 bg-[#2563EB]/10 text-[#60A5FA] text-xs font-semibold tracking-wide uppercase mb-6">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#2563EB]" />
-              Our Work
+      {/* ── HERO ─────────────────────────────────────────────────────────────── */}
+      <section className="compact-main-hero bg-[#080C14] relative overflow-hidden flex items-center">
+        <BackgroundBeams />
+        <Spotlight className="absolute inset-0 w-full h-full" fill="rgba(37,99,235,0.10)">
+          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-24 md:py-32">
+            <div className="max-w-3xl">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#2563EB]/40 bg-[#2563EB]/10 text-[#60A5FA] text-xs font-semibold tracking-wide uppercase mb-6">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#2563EB]" />
+                Our Work
+              </div>
+              <h1
+                className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 leading-[1.08] tracking-tight"
+                style={{ fontFamily: "var(--font-sora), sans-serif" }}
+              >
+                Products &amp;{" "}
+                <span className="text-[#2563EB]">Case Studies</span>
+              </h1>
+              <p className="text-gray-300 text-lg sm:text-xl leading-relaxed max-w-2xl">
+                Seven in-house products. 500+ client projects. Real software, real outcomes.
+              </p>
             </div>
-            <h1
-              className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 leading-[1.08] tracking-tight"
-              style={{ fontFamily: "var(--font-sora), sans-serif" }}
-            >
-              Products &{" "}
-              <span className="text-[#2563EB]">
-                Case Studies
-              </span>
-            </h1>
-            <p className="text-gray-300 text-lg sm:text-xl leading-relaxed max-w-2xl">
-              Seven in-house products. 500+ client projects. Real software,
-              real outcomes.
-            </p>
           </div>
-        </div>
+        </Spotlight>
       </section>
 
-      {/* IN-HOUSE PRODUCTS */}
-      <section className="compact-main-section bg-white dark:bg-[#080C14]">
+      {/* ── IN-HOUSE PRODUCTS ─────────────────────────────────────────────────── */}
+      <section className="compact-main-section bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="vp-divider mb-4" />
-          <h2
-            className="text-3xl sm:text-4xl font-bold text-[#0C1B33] dark:text-white mb-4 tracking-tight"
-            style={{ fontFamily: "var(--font-sora), sans-serif" }}
-          >
-            Products We&rsquo;ve Shipped
-          </h2>
-          <p className="text-gray-500 dark:text-gray-400 text-lg mb-14 max-w-2xl">
-            We don&rsquo;t just build for clients — we build for ourselves.
-            These platforms are live, used by real businesses, and proof of our
-            engineering standard.
-          </p>
+          <div className="mb-12">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#2563EB]/30 bg-[#2563EB]/8 text-[#2563EB] text-xs font-semibold tracking-wide uppercase mb-4">
+              In-House Products
+            </div>
+            <h2
+              className="text-3xl sm:text-4xl font-bold text-[#0C1B33] mb-4 tracking-tight"
+              style={{ fontFamily: "var(--font-sora), sans-serif" }}
+            >
+              Products We&rsquo;ve Shipped
+            </h2>
+            <p className="text-gray-500 text-lg max-w-2xl">
+              We don&rsquo;t just build for clients — we build for ourselves. These platforms are
+              live, used by real businesses, and proof of our engineering standard.
+            </p>
+          </div>
 
-          {/* Featured product */}
+          {/* Featured product — BharatERP */}
           {products
             .filter((p) => p.featured)
             .map((p) => (
               <div
                 key={p.name}
-                className="mb-8 bg-[#F4F4F5] dark:bg-[#0F1623] rounded-3xl border border-gray-100 dark:border-[#1E293B] overflow-hidden"
+                className="mb-8 rounded-3xl border border-gray-100 bg-[#F4F4F5] overflow-hidden shadow-[0_8px_32px_rgba(12,27,51,0.08)]"
               >
-                <div className={`h-2 w-full ${p.color}`} />
+                {/* Color accent bar */}
+                <div className={`h-2 w-full ${p.accentBg}`} />
                 <div className="p-8 md:p-10">
                   <div className="grid md:grid-cols-2 gap-10 items-start">
                     <div>
-                      <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500 block mb-2">
+                      <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400 block mb-2">
                         {p.tag}
                       </span>
                       <h3
-                        className="text-3xl font-bold text-[#0C1B33] dark:text-white mb-3"
+                        className="text-3xl font-bold text-[#0C1B33] mb-3"
                         style={{ fontFamily: "var(--font-sora), sans-serif" }}
                       >
                         {p.name}
                       </h3>
-                      <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-6">
-                        {p.desc}
-                      </p>
+                      <p className="text-gray-600 leading-relaxed mb-6">{p.desc}</p>
                       <div className="flex flex-wrap gap-2">
                         {p.tags.map((tag) => (
                           <span
                             key={tag}
-                            className="text-xs px-2.5 py-1 rounded-lg bg-white dark:bg-[#151C2B] border border-gray-200 dark:border-[#1E293B] text-gray-600 dark:text-gray-400 font-medium"
+                            className="text-xs px-2.5 py-1 rounded-lg bg-white border border-gray-200 text-gray-600 font-medium"
                           >
                             {tag}
                           </span>
@@ -222,17 +235,15 @@ export default function PortfolioPage() {
                       {p.metrics.map((m) => (
                         <div
                           key={m.label}
-                          className="bg-white dark:bg-[#080C14] rounded-2xl p-5 border border-gray-100 dark:border-[#1E293B] text-center"
+                          className="bg-white rounded-2xl p-5 border border-gray-100 text-center shadow-[0_4px_16px_rgba(12,27,51,0.06)]"
                         >
                           <p
-                            className="text-2xl font-bold text-[#0C1B33] dark:text-white mb-1"
+                            className="text-2xl font-bold text-[#0C1B33] mb-1"
                             style={{ fontFamily: "var(--font-sora), sans-serif" }}
                           >
                             {m.val}
                           </p>
-                          <p className="text-xs text-gray-400 dark:text-gray-500 leading-tight">
-                            {m.label}
-                          </p>
+                          <p className="text-xs text-gray-400 leading-tight">{m.label}</p>
                         </div>
                       ))}
                     </div>
@@ -241,59 +252,60 @@ export default function PortfolioPage() {
               </div>
             ))}
 
-          {/* Other products */}
+          {/* Non-featured products grid — permanent shadows (not hover-only) */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {products
               .filter((p) => !p.featured)
               .map((p) => (
                 <div
                   key={p.name}
-                  className="bg-[#F4F4F5] dark:bg-[#0F1623] rounded-2xl border border-gray-100 dark:border-[#1E293B] overflow-hidden hover:shadow-[0_12px_40px_rgba(12,27,51,0.08)] dark:hover:shadow-[0_12px_40px_rgba(0,0,0,0.25)] hover:-translate-y-1 transition-all duration-300 flex flex-col"
+                  className="bg-white rounded-2xl border border-gray-100 overflow-hidden flex flex-col shadow-[0_8px_32px_rgba(12,27,51,0.08)] hover:shadow-[0_20px_56px_rgba(12,27,51,0.14)] hover:-translate-y-1 transition-all duration-300"
                 >
-                  <div className={`h-1.5 w-full ${p.color}`} />
+                  {/* Accent bar */}
+                  <div className={`h-1.5 w-full ${p.accentBg}`} />
                   <div className="p-6 flex flex-col flex-1">
                     <div className="flex items-center gap-3 mb-3">
                       <div
-                        className={`w-10 h-10 rounded-xl ${p.color} flex items-center justify-center text-white font-bold text-base shrink-0`}
+                        className={`w-10 h-10 rounded-xl ${p.accentBg} flex items-center justify-center text-white font-bold text-base shrink-0`}
                         style={{ fontFamily: "var(--font-sora), sans-serif" }}
                       >
                         {p.name.charAt(0)}
                       </div>
                       <div>
                         <p
-                          className="font-bold text-[#0C1B33] dark:text-white text-sm"
+                          className="font-bold text-[#0C1B33] text-sm"
                           style={{ fontFamily: "var(--font-sora), sans-serif" }}
                         >
                           {p.name}
                         </p>
-                        <p className="text-[10px] text-gray-400 dark:text-gray-500 uppercase tracking-widest font-medium">
+                        <p className="text-[10px] text-gray-400 uppercase tracking-widest font-medium">
                           {p.tag}
                         </p>
                       </div>
                     </div>
-                    <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed mb-4 flex-1">
-                      {p.desc}
-                    </p>
-                    <div className="grid grid-cols-3 gap-2 mb-4 py-3 border-t border-gray-100 dark:border-[#1E293B]">
+                    <p className="text-sm text-gray-500 leading-relaxed mb-4 flex-1">{p.desc}</p>
+
+                    {/* Metrics row */}
+                    <div className="grid grid-cols-3 gap-2 mb-4 py-3 border-t border-gray-100">
                       {p.metrics.map((m) => (
                         <div key={m.label} className="text-center">
                           <p
-                            className="text-sm font-bold text-[#0C1B33] dark:text-white"
+                            className="text-sm font-bold text-[#0C1B33]"
                             style={{ fontFamily: "var(--font-sora), sans-serif" }}
                           >
                             {m.val}
                           </p>
-                          <p className="text-[10px] text-gray-400 dark:text-gray-500 leading-tight">
-                            {m.label}
-                          </p>
+                          <p className="text-[10px] text-gray-400 leading-tight">{m.label}</p>
                         </div>
                       ))}
                     </div>
+
+                    {/* Tech tags */}
                     <div className="flex flex-wrap gap-1">
                       {p.tags.map((tag) => (
                         <span
                           key={tag}
-                          className="text-[10px] px-2 py-0.5 rounded bg-white dark:bg-[#151C2B] border border-gray-200 dark:border-[#1E293B] text-gray-500 dark:text-gray-400"
+                          className="text-[10px] px-2 py-0.5 rounded bg-[#F4F4F5] border border-gray-100 text-gray-500"
                         >
                           {tag}
                         </span>
@@ -306,69 +318,70 @@ export default function PortfolioPage() {
         </div>
       </section>
 
-      {/* CLIENT CASE STUDIES */}
-      <section className="compact-main-section bg-[#F4F4F5] dark:bg-[#0F1623]">
+      {/* ── CLIENT CASE STUDIES ───────────────────────────────────────────────── */}
+      <section className="compact-main-section bg-[#F4F4F5]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="vp-divider mb-4" />
-          <h2
-            className="text-3xl sm:text-4xl font-bold text-[#0C1B33] dark:text-white mb-4 tracking-tight"
-            style={{ fontFamily: "var(--font-sora), sans-serif" }}
-          >
-            Client Results
-          </h2>
-          <p className="text-gray-500 dark:text-gray-400 text-lg mb-14 max-w-2xl">
-            A selection of client projects where our work produced measurable
-            business impact.
-          </p>
+          <div className="mb-12">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#2563EB]/30 bg-[#2563EB]/8 text-[#2563EB] text-xs font-semibold tracking-wide uppercase mb-4">
+              Client Results
+            </div>
+            <h2
+              className="text-3xl sm:text-4xl font-bold text-[#0C1B33] mb-4 tracking-tight"
+              style={{ fontFamily: "var(--font-sora), sans-serif" }}
+            >
+              Client Results
+            </h2>
+            <p className="text-gray-500 text-lg max-w-2xl">
+              A selection of client projects where our work produced measurable business impact.
+            </p>
+          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {caseStudies.map((cs) => (
               <div
                 key={cs.client}
-                className="bg-white dark:bg-[#080C14] rounded-2xl border border-gray-100 dark:border-[#1E293B] overflow-hidden hover:shadow-[0_16px_50px_rgba(12,27,51,0.1)] dark:hover:shadow-[0_16px_50px_rgba(0,0,0,0.3)] hover:-translate-y-1 transition-all duration-300 flex flex-col"
+                className="bg-white rounded-2xl border border-gray-100 overflow-hidden flex flex-col shadow-[0_8px_32px_rgba(12,27,51,0.08)] hover:shadow-[0_20px_56px_rgba(12,27,51,0.14)] hover:-translate-y-1 transition-all duration-300"
               >
-                <div className={`h-1.5 ${cs.color}`} />
+                <div className={`h-1.5 ${cs.accentBg}`} />
                 <div className="p-7 flex flex-col flex-1">
                   <div className="flex items-center gap-3 mb-4">
                     <div
-                      className={`w-10 h-10 rounded-xl ${cs.color} text-white font-bold text-sm flex items-center justify-center shrink-0`}
+                      className={`w-10 h-10 rounded-xl ${cs.accentBg} text-white font-bold text-sm flex items-center justify-center shrink-0`}
                       style={{ fontFamily: "var(--font-sora), sans-serif" }}
                     >
                       {cs.initials}
                     </div>
                     <div>
                       <p
-                        className="text-xs font-bold text-[#0C1B33] dark:text-white"
+                        className="text-xs font-bold text-[#0C1B33]"
                         style={{ fontFamily: "var(--font-sora), sans-serif" }}
                       >
                         {cs.client}
                       </p>
-                      <p className="text-[10px] text-gray-400 dark:text-gray-500 uppercase tracking-widest">
+                      <p className="text-[10px] text-gray-400 uppercase tracking-widest">
                         {cs.industry}
                       </p>
                     </div>
                   </div>
                   <h3
-                    className="text-lg font-bold text-[#0C1B33] dark:text-white mb-3 leading-snug"
+                    className="text-lg font-bold text-[#0C1B33] mb-3 leading-snug"
                     style={{ fontFamily: "var(--font-sora), sans-serif" }}
                   >
                     {cs.title}
                   </h3>
-                  <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed mb-5 flex-1">
-                    {cs.desc}
-                  </p>
-                  <div className="grid grid-cols-3 gap-3 pt-4 border-t border-gray-100 dark:border-[#1E293B]">
+                  <p className="text-sm text-gray-500 leading-relaxed mb-5 flex-1">{cs.desc}</p>
+
+                  {/* Metrics */}
+                  <div className="grid grid-cols-3 gap-3 pt-4 border-t border-gray-100">
                     {cs.metrics.map((m) => (
                       <div key={m.label} className="text-center">
                         <p
-                          className="text-base font-bold text-[#0C1B33] dark:text-white"
+                          className="text-base font-bold text-[#0C1B33]"
                           style={{ fontFamily: "var(--font-sora), sans-serif" }}
                         >
                           {m.val}
                         </p>
-                        <p className="text-[10px] text-gray-400 dark:text-gray-500 leading-tight">
-                          {m.label}
-                        </p>
+                        <p className="text-[10px] text-gray-400 leading-tight">{m.label}</p>
                       </div>
                     ))}
                   </div>
@@ -379,32 +392,36 @@ export default function PortfolioPage() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="compact-main-section bg-[#0C1B33] relative overflow-hidden">
-        <div className="absolute inset-0 hero-grid-bg opacity-15 pointer-events-none" />
-        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2
-            className="text-3xl sm:text-4xl font-bold text-white mb-6 tracking-tight"
-            style={{ fontFamily: "var(--font-sora), sans-serif" }}
-          >
-            Let&rsquo;s Build Your Next Success Story
-          </h2>
-          <p className="text-gray-400 text-lg mb-8 max-w-xl mx-auto">
-            Every project starts with a conversation. Tell us what you&rsquo;re
-            trying to build.
-          </p>
-          <Link
-            href="/pages/contact"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-bold text-base rounded-xl transition-all shadow-[0_4px_20px_rgba(37,99,235,0.35)] hover:shadow-[0_8px_30px_rgba(37,99,235,0.5)] hover:-translate-y-0.5"
-            style={{ fontFamily: "var(--font-sora), sans-serif" }}
-          >
-            Start a Project
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-            </svg>
-          </Link>
-        </div>
+      {/* ── FINAL CTA ─────────────────────────────────────────────────────────── */}
+      <section className="compact-main-section bg-[#080C14] relative overflow-hidden">
+        <BackgroundBeams />
+        <Spotlight className="absolute inset-0 w-full h-full" fill="rgba(37,99,235,0.10)">
+          <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-20">
+            <h2
+              className="text-3xl sm:text-4xl font-bold text-white mb-6 tracking-tight"
+              style={{ fontFamily: "var(--font-sora), sans-serif" }}
+            >
+              Let&rsquo;s Build Your Next Success Story
+            </h2>
+            <p className="text-gray-400 text-lg mb-10 max-w-xl mx-auto">
+              Every project starts with a conversation. Tell us what you&rsquo;re trying to build.
+            </p>
+            <MovingBorder
+              as={Link}
+              href="/pages/contact"
+              duration={3000}
+              containerClassName="rounded-xl p-[1.5px] inline-block"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-[#2563EB] rounded-[10px] text-white font-bold text-base hover:bg-[#1D4ED8] transition-colors"
+            >
+              <span style={{ fontFamily: "var(--font-sora), sans-serif" }}>Start a Project</span>
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </MovingBorder>
+          </div>
+        </Spotlight>
       </section>
+
     </div>
   );
 }
