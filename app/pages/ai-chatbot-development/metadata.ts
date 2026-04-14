@@ -74,39 +74,6 @@ export const structuredData = {
     }
   ],
   
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '5.0',
-    reviewCount: '50'
-  },
-  
-  review: [
-    {
-      '@type': 'Review',
-      author: {
-        '@type': 'Person',
-        name: 'Arjun Mehra'
-      },
-      reviewRating: {
-        '@type': 'Rating',
-        ratingValue: '5'
-      },
-      reviewBody: 'Our AI chatbot from Vedpragya Bharat is like having a sales team that never sleeps. We closed ₹3 L+ extra in a month.'
-    },
-    {
-      '@type': 'Review',
-      author: {
-        '@type': 'Person',
-        name: 'Kritika S.'
-      },
-      reviewRating: {
-        '@type': 'Rating',
-        ratingValue: '5'
-      },
-      reviewBody: 'They understand AI like artists understand colors. It\'s not just code — it\'s experience.'
-    }
-  ],
-  
   serviceType: [
     'AI Chatbot Development',
     'Custom Chatbot Integration',

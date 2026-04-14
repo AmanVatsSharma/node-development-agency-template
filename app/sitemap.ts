@@ -200,7 +200,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Use a stable reference date for static pages rather than `new Date()`
   // so the sitemap is deterministic and does not trigger unnecessary re-crawling.
-  const STATIC_PAGES_LAST_MODIFIED = new Date('2026-03-01T00:00:00.000Z');
+  const STATIC_PAGES_LAST_MODIFIED = new Date('2026-04-14T00:00:00.000Z');
 
   const staticEntries: MetadataRoute.Sitemap = staticRoutes.map((route) => ({
     url: toAbsoluteSeoUrl(route),

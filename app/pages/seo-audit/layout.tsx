@@ -96,11 +96,6 @@ function StructuredData() {
         }
       ]
     },
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "4.9",
-      "reviewCount": "500"
-    }
   };
 
   const breadcrumbSchema = {
