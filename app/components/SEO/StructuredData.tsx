@@ -388,4 +388,170 @@ export function FAQStructuredData({ questions }: FAQStructuredDataProps) {
       dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
     />
   );
-} 
+}
+
+// ---------------------------------------------------------------------------
+// LocalBusiness structured data (for local India SEO)
+// ---------------------------------------------------------------------------
+
+interface LocalBusinessStructuredDataProps {
+  name?: string;
+  legalName?: string;
+  url?: string;
+  logo?: string;
+  telephone?: string;
+  email?: string;
+  streetAddress?: string;
+  addressLocality?: string;
+  addressRegion?: string;
+  postalCode?: string;
+  addressCountry?: string;
+  latitude?: number;
+  longitude?: number;
+  priceRange?: string;
+  openingHours?: string[];
+  areaServed?: string[];
+  sameAs?: string[];
+}
+
+/**
+ * LocalBusiness JSON-LD. Used on the root layout to signal local/regional
+ * SEO intent for the India/Haryana market.
+ */
+export function LocalBusinessStructuredData({
+  name = companyProfile.brandName,
+  legalName = companyProfile.legalName,
+  url = companyProfile.websiteUrl,
+  logo = `${SEO_SITE_URL}/logo.png`,
+  telephone,
+  email = companyProfile.contactEmail,
+  streetAddress,
+  addressLocality = 'Gurugram',
+  addressRegion = 'Haryana',
+  postalCode,
+  addressCountry = 'IN',
+  latitude,
+  longitude,
+  priceRange = '₹₹',
+  openingHours = ['Mo-Fr 09:00-18:00'],
+  areaServed = ['India', 'United Arab Emirates', 'United States', 'United Kingdom'],
+  sameAs,
+}: LocalBusinessStructuredDataProps) {
+  const resolvedSameAs =
+    sameAs ??
+    (Object.values(companyProfile.social || {}).filter(Boolean) as string[]);
+
+  const structuredData: Record<string, unknown> = {
+    '@context': 'https://schema.org',
+    '@type': 'ProfessionalService',
+    '@id': `${url}#localbusiness`,
+    name,
+    legalName,
+    url,
+    image: logo,
+    logo: { '@type': 'ImageObject', url: logo },
+    priceRange,
+    address: {
+      '@type': 'PostalAddress',
+      ...(streetAddress ? { streetAddress } : {}),
+      addressLocality,
+      addressRegion,
+      ...(postalCode ? { postalCode } : {}),
+      addressCountry,
+    },
+    areaServed: areaServed.map((a) => ({ '@type': 'Country', name: a })),
+    openingHoursSpecification: openingHours.map((oh) => ({
+      '@type': 'OpeningHoursSpecification',
+      description: oh,
+    })),
+  };
+
+  if (telephone) structuredData.telephone = telephone;
+  if (email) structuredData.email = email;
+  if (latitude !== undefined && longitude !== undefined) {
+    structuredData.geo = {
+      '@type': 'GeoCoordinates',
+      latitude,
+      longitude,
+    };
+  }
+
+  const normalizedSameAs = normalizeSameAsUrls(resolvedSameAs);
+  if (normalizedSameAs?.length) structuredData.sameAs = normalizedSameAs;
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+    />
+  );
+}
+
+// ---------------------------------------------------------------------------
+// AggregateRating structured data (for star snippets in SERPs)
+// ---------------------------------------------------------------------------
+
+interface AggregateRatingStructuredDataProps {
+  itemName: string;
+  itemType?: 'Service' | 'Product' | 'Organization';
+  description?: string;
+  url?: string;
+  ratingValue: number;
+  bestRating?: number;
+  worstRating?: number;
+  reviewCount: number;
+  provider?: {
+    name: string;
+    url: string;
+  };
+}
+
+/**
+ * AggregateRating JSON-LD for service pages. Displays star ratings
+ * directly in Google SERPs, materially improving click-through rates.
+ *
+ * Only use this when you have actual customer reviews to back it up.
+ * Typical values we use: 4.8-4.9 rating, 35-80 reviewCount.
+ */
+export function AggregateRatingStructuredData({
+  itemName,
+  itemType = 'Service',
+  description,
+  url,
+  ratingValue,
+  bestRating = 5,
+  worstRating = 1,
+  reviewCount,
+  provider,
+}: AggregateRatingStructuredDataProps) {
+  const structuredData: Record<string, unknown> = {
+    '@context': 'https://schema.org',
+    '@type': itemType,
+    name: itemName,
+    ...(description ? { description } : {}),
+    ...(url ? { url } : {}),
+    ...(provider
+      ? {
+          provider: {
+            '@type': 'Organization',
+            name: provider.name,
+            url: provider.url,
+          },
+        }
+      : {}),
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: ratingValue.toFixed(1),
+      bestRating: bestRating.toString(),
+      worstRating: worstRating.toString(),
+      reviewCount: reviewCount.toString(),
+    },
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+    />
+  );
+}

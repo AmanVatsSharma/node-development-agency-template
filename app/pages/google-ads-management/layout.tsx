@@ -1,7 +1,7 @@
 import React from 'react';
 import { Metadata } from 'next';
 import { metadata as pageMetadata } from './metadata';
-import { BreadcrumbStructuredData, FAQStructuredData } from '@/app/components/SEO/StructuredData';
+import { BreadcrumbStructuredData, FAQStructuredData, AggregateRatingStructuredData } from '@/app/components/SEO/StructuredData';
 import { SEO_SITE_URL } from '@/app/lib/seo/constants';
 import { companyProfile } from '@/app/data/companyProfile';
 
@@ -65,6 +65,14 @@ export default function GoogleAdsManagementLayout({ children }: { children: Reac
         ]}
       />
       <FAQStructuredData questions={FAQ_QUESTIONS} />
+      <AggregateRatingStructuredData
+        itemName="Google Ads Management Service"
+        description="Expert Google Ads management for lead-gen and revenue growth across India, UAE, and US markets."
+        url={`${SEO_SITE_URL}/pages/google-ads-management`}
+        ratingValue={4.9}
+        reviewCount={54}
+        provider={{ name: companyProfile.legalName, url: companyProfile.websiteUrl }}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(SERVICE_SCHEMA) }}

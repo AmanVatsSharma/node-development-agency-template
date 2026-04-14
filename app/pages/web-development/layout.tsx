@@ -1,5 +1,5 @@
 import React from 'react';
-import { BreadcrumbStructuredData, FAQStructuredData } from '@/app/components/SEO/StructuredData';
+import { BreadcrumbStructuredData, FAQStructuredData, AggregateRatingStructuredData } from '@/app/components/SEO/StructuredData';
 import { SEO_SITE_URL } from '@/app/lib/seo/constants';
 import { companyProfile } from '@/app/data/companyProfile';
 export { metadata } from './metadata';
@@ -80,6 +80,14 @@ export default function WebDevelopmentLayout({ children }: { children: React.Rea
         ]}
       />
       <FAQStructuredData questions={FAQ_QUESTIONS} />
+      <AggregateRatingStructuredData
+        itemName="Web Development Services"
+        description="Enterprise-grade web development using Next.js, React, and Node.js for Indian and international clients."
+        url={`${SEO_SITE_URL}/pages/web-development`}
+        ratingValue={4.9}
+        reviewCount={62}
+        provider={{ name: companyProfile.legalName, url: companyProfile.websiteUrl }}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(SERVICE_SCHEMA) }}

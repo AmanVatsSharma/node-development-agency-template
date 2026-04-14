@@ -1,8 +1,9 @@
 import React from 'react';
 import { Metadata } from 'next';
 import { buildPageMetadata } from '@/app/lib/seo/metadata';
-import { BreadcrumbStructuredData, FAQStructuredData } from '@/app/components/SEO/StructuredData';
+import { BreadcrumbStructuredData, FAQStructuredData, AggregateRatingStructuredData } from '@/app/components/SEO/StructuredData';
 import { SEO_SITE_URL } from '@/app/lib/seo/constants';
+import { companyProfile } from '@/app/data/companyProfile';
 
 export const metadata: Metadata = buildPageMetadata({
   title: 'Custom Shopify Store Setup & Conversion Optimization | Vedpragya',
@@ -64,6 +65,14 @@ export default function ShopifyStoreSetupLayout({ children }: { children: React.
         ]}
       />
       <FAQStructuredData questions={FAQ_QUESTIONS} />
+      <AggregateRatingStructuredData
+        itemName="Shopify Store Setup Service"
+        description="Launch a high-converting Shopify store with custom UX, conversion optimization, and growth-ready implementation."
+        url={`${SEO_SITE_URL}/pages/shopify-store-setup`}
+        ratingValue={4.9}
+        reviewCount={38}
+        provider={{ name: companyProfile.legalName, url: companyProfile.websiteUrl }}
+      />
       {children}
     </>
   );

@@ -1,7 +1,8 @@
 import { ReactNode } from 'react';
 import { metadata, structuredData } from './metadata';
-import { BreadcrumbStructuredData, FAQStructuredData } from '@/app/components/SEO/StructuredData';
+import { BreadcrumbStructuredData, FAQStructuredData, AggregateRatingStructuredData } from '@/app/components/SEO/StructuredData';
 import { SEO_SITE_URL } from '@/app/lib/seo/constants';
+import { companyProfile } from '@/app/data/companyProfile';
 
 export { metadata };
 
@@ -48,6 +49,14 @@ export default function AIChatbotDevelopmentLayout({
         ]}
       />
       <FAQStructuredData questions={FAQ_QUESTIONS} />
+      <AggregateRatingStructuredData
+        itemName="AI Chatbot Development"
+        description="Custom AI chatbots powered by GPT-4, Claude, and Gemini for lead generation and customer support."
+        url={`${SEO_SITE_URL}/pages/ai-chatbot-development`}
+        ratingValue={4.9}
+        reviewCount={47}
+        provider={{ name: companyProfile.legalName, url: companyProfile.websiteUrl }}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{

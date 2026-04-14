@@ -1,6 +1,5 @@
 import type { MetadataRoute } from 'next';
-import prisma from '@/app/lib/prisma';
-import { blogPosts as fallbackBlogPosts } from '@/app/data/blogPosts';
+import { getAllBlogPosts } from '@/app/lib/blog';
 import { getStaticSeoRoutes } from '@/app/lib/seo/routes';
 import { toAbsoluteSeoUrl } from '@/app/lib/seo/constants';
 
@@ -22,6 +21,12 @@ const BLOG_SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const HIGH_PRIORITY_SERVICE_ROUTES = new Set([
   '/pages/web-development',
   '/pages/web-development-mumbai',
+  '/pages/web-development-delhi',
+  '/pages/web-development-bangalore',
+  '/pages/web-development-gurgaon',
+  '/pages/web-development-pune',
+  '/pages/web-development-hyderabad',
+  '/pages/web-development-noida',
   '/pages/website-development',
   '/pages/website-services',
   '/pages/business-website',
@@ -29,6 +34,7 @@ const HIGH_PRIORITY_SERVICE_ROUTES = new Set([
   '/pages/seo-audit',
   '/pages/next-js-development',
   '/pages/reactjs-development',
+  '/pages/nodejs-development',
   '/pages/ai-chatbot-development',
   '/pages/ai-voice-agents',
   '/pages/whatsapp-business-api',
@@ -126,6 +132,15 @@ const ROUTE_LAST_MODIFIED_MAP: Record<string, Date> = {
   '/pages/shopify-headless-migration': new Date('2026-04-14T00:00:00.000Z'),
   '/pages/shopify-product-page-customization': new Date('2026-04-14T00:00:00.000Z'),
 
+  // New city landing pages launched in April 2026 SEO pass
+  '/pages/web-development-delhi': new Date('2026-04-14T00:00:00.000Z'),
+  '/pages/web-development-bangalore': new Date('2026-04-14T00:00:00.000Z'),
+  '/pages/web-development-gurgaon': new Date('2026-04-14T00:00:00.000Z'),
+  '/pages/web-development-pune': new Date('2026-04-14T00:00:00.000Z'),
+  '/pages/web-development-hyderabad': new Date('2026-04-14T00:00:00.000Z'),
+  '/pages/web-development-noida': new Date('2026-04-14T00:00:00.000Z'),
+  '/pages/nodejs-development': new Date('2026-04-14T00:00:00.000Z'),
+
   // Legal pages — stable; set to incorporation date to avoid false freshness signals
   '/pages/legal/privacy-policy': new Date('2025-04-28T00:00:00.000Z'),
   '/pages/legal/terms-of-service': new Date('2025-04-28T00:00:00.000Z'),
@@ -150,7 +165,7 @@ function getLastModifiedForRoute(path: string): Date {
 
 function normalizeAndFilterBlogEntries(
   entries: DynamicBlogEntry[],
-  source: 'database' | 'fallback',
+  source: 'database' | 'fallback' | 'filesystem',
 ): DynamicBlogEntry[] {
   const sanitizedEntries: DynamicBlogEntry[] = [];
   let skippedInvalidSlugCount = 0;
@@ -257,54 +272,25 @@ function getBlogPostPriority(updatedAt: Date): number {
   return 0.72;
 }
 
-async function getBlogEntries(): Promise<DynamicBlogEntry[]> {
+function getBlogEntries(): DynamicBlogEntry[] {
   try {
-    const posts = await prisma.blogPost.findMany({
-      select: {
-        slug: true,
-        updatedAt: true,
-      },
-      orderBy: {
-        updatedAt: 'desc',
-      },
+    const posts = getAllBlogPosts();
+    const mappedEntries = posts.map((post) => ({
+      slug: post.slug,
+      updatedAt: new Date(post.updatedAt || post.publishedAt),
+    }));
+    const normalized = normalizeAndFilterBlogEntries(mappedEntries, 'filesystem');
+    console.log('[SEO] Sitemap blog entries loaded from filesystem', {
+      count: normalized.length,
+      originalCount: mappedEntries.length,
     });
-
-    if (posts.length > 0) {
-      const normalizedDatabaseEntries = normalizeAndFilterBlogEntries(posts, 'database');
-
-      if (normalizedDatabaseEntries.length > 0) {
-        console.log('[SEO] Sitemap blog entries loaded from database', {
-          count: normalizedDatabaseEntries.length,
-          originalCount: posts.length,
-        });
-        return normalizedDatabaseEntries;
-      }
-
-      console.warn(
-        '[SEO] Database blog entries were invalid for sitemap. Falling back to static data.',
-        {
-          count: posts.length,
-        },
-      );
-    }
+    return normalized;
   } catch (error) {
-    console.error('[SEO] Failed to load blog posts from database for sitemap. Falling back to static data.', {
+    console.error('[SEO] Failed to load blog posts from filesystem for sitemap.', {
       error: error instanceof Error ? error.message : String(error),
     });
+    return [];
   }
-
-  const fallbackEntries = fallbackBlogPosts.map((post) => ({
-    slug: post.slug,
-    updatedAt: new Date(post.publishedAt),
-  }));
-  const normalizedFallbackEntries = normalizeAndFilterBlogEntries(fallbackEntries, 'fallback');
-
-  console.log('[SEO] Sitemap blog entries loaded from static fallback', {
-    count: normalizedFallbackEntries.length,
-    originalCount: fallbackEntries.length,
-  });
-
-  return normalizedFallbackEntries;
 }
 
 // ---------------------------------------------------------------------------
@@ -327,7 +313,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: getPriorityForRoute(route),
   }));
 
-  const blogEntries = await getBlogEntries();
+  const blogEntries = getBlogEntries();
   const dynamicBlogEntries: MetadataRoute.Sitemap = blogEntries.map((entry) => ({
     url: toAbsoluteSeoUrl(`/pages/blog/${entry.slug}`),
     lastModified: entry.updatedAt,
