@@ -5,9 +5,12 @@ import path from 'node:path';
 
 /**
  * Routes that should always be indexable even if navigation data changes.
- * Core + high-priority landing pages.
+ * Covers core navigational pages AND all high-priority service landing pages.
+ * Add new routes here the moment they go live — do not wait for navigation
+ * to pick them up automatically.
  */
 const CORE_STATIC_ROUTES = [
+  // Core navigational pages
   '/',
   '/pages/about',
   '/pages/services',
@@ -15,9 +18,38 @@ const CORE_STATIC_ROUTES = [
   '/pages/portfolio',
   '/pages/resources',
   '/pages/blog',
+
+  // Web development services (primary revenue category)
+  '/pages/web-development',
   '/pages/website-development',
   '/pages/business-website',
   '/pages/website-services',
+  '/pages/web-development-mumbai',
+  '/pages/next-js-development',
+  '/pages/reactjs-development',
+
+  // AI & automation services
+  '/pages/ai-chatbot-development',
+  '/pages/ai-voice-agents',
+  '/pages/whatsapp-business-api',
+  '/pages/crm',
+
+  // Google Ads ecosystem (high commercial intent)
+  '/pages/google-ads-management',
+  '/pages/google-ads-ecosystem',
+  '/pages/seo-audit',
+
+  // E-commerce
+  '/pages/shopify-store-setup',
+  '/pages/shopify-headless-migration',
+  '/pages/shopify-product-page-customization',
+
+  // Trading & finance
+  '/pages/trading-software',
+  '/pages/nse-mcx-live-market-data',
+
+  // Healthcare
+  '/pages/healthcare-software-development',
 ];
 
 /**

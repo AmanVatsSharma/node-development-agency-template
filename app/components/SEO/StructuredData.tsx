@@ -33,6 +33,7 @@ interface WebsiteStructuredDataProps {
   name?: string;
   description?: string;
   publisher?: string;
+  enableSearchAction?: boolean;
 }
 
 interface ArticleStructuredDataProps {
@@ -212,9 +213,10 @@ export function WebsiteStructuredData({
   url = defaultOrganization.url,
   name = defaultOrganization.name,
   description = SEO_DEFAULT_DESCRIPTION,
-  publisher = defaultOrganization.name
+  publisher = defaultOrganization.name,
+  enableSearchAction = false,
 }: WebsiteStructuredDataProps) {
-  const structuredData = {
+  const structuredData: Record<string, unknown> = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     url,
@@ -223,8 +225,19 @@ export function WebsiteStructuredData({
     publisher: {
       '@type': 'Organization',
       name: publisher
-    }
+    },
   };
+
+  if (enableSearchAction) {
+    structuredData.potentialAction = {
+      '@type': 'SearchAction',
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: `${url.replace(/\/$/, '')}/?s={search_term_string}`,
+      },
+      'query-input': 'required name=search_term_string',
+    };
+  }
 
   return (
     <script
