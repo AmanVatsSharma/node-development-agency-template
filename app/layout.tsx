@@ -12,7 +12,7 @@ import DeferredAIAgentWidget from './components/AIAgent/DeferredAIAgentWidget';
 import ClarityAnalytics from './components/Analytics/ClarityAnalytics';
 import WhatsAppFloatingButton from './components/WhatsAppFloatingButton';
 import { headers } from 'next/headers';
-import { OrganizationStructuredData, WebsiteStructuredData, ProfessionalServiceStructuredData, FAQStructuredData } from "./components/SEO/StructuredData";
+import { OrganizationStructuredData, WebsiteStructuredData, ProfessionalServiceStructuredData, FAQStructuredData, LocalBusinessStructuredData } from "./components/SEO/StructuredData";
 import { companyProfile } from "./data/companyProfile";
 import { SEO_DEFAULT_OG_IMAGE_PATH, SEO_SITE_URL, toAbsoluteSeoUrl } from '@/app/lib/seo/constants';
 
@@ -187,7 +187,16 @@ export default async function RootLayout({
           contactEmail={companyProfile.contactEmail}
           sameAs={Object.values(companyProfile.social || {}).filter(Boolean) as string[]}
         />
-        
+        {/* LocalBusiness schema — boosts local India SEO + map signals */}
+        <LocalBusinessStructuredData
+          addressLocality="Gurugram"
+          addressRegion="Haryana"
+          addressCountry="IN"
+          priceRange="₹₹"
+          openingHours={['Mo-Fr 09:00-18:00']}
+          areaServed={['India', 'United Arab Emirates', 'United States', 'United Kingdom', 'Canada']}
+        />
+
         {/* Unified Google Tag (GA4 + Google Ads) */}
         <GoogleAnalytics
           measurementId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}

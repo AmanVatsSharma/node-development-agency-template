@@ -1,6 +1,27 @@
 import type { ReactElement } from "react";
+import type { Metadata } from "next";
 import dynamic from "next/dynamic";
 import Link from "next/link";
+import { buildPageMetadata } from "@/app/lib/seo/metadata";
+
+export const metadata: Metadata = buildPageMetadata({
+  title: "Web Development, AI & Google Ads Agency India | Vedpragya",
+  description:
+    "Vedpragya builds enterprise websites, Next.js apps, AI chatbots, Shopify stores, and Google Ads campaigns that generate real leads. Trusted by businesses in India, UAE, and the US. Get a free proposal.",
+  path: "/",
+  keywords: [
+    "web development company india",
+    "next.js development india",
+    "react development india",
+    "node.js development india",
+    "ai chatbot development india",
+    "google ads agency india",
+    "shopify development india",
+    "healthcare software development india",
+    "vedpragya",
+    "software agency india",
+  ],
+});
 
 // ── Client components (hero, product spotlight) ──────────────────────────────
 import HeroSection from "./components/home/HeroSection";

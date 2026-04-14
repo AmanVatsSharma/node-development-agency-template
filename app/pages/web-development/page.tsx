@@ -4,6 +4,7 @@
 
 import React from "react";
 import { SectionErrorBoundary } from "@/app/components/common/SectionErrorBoundary";
+import { RelatedBlogPosts } from "@/app/components/RelatedBlogPosts";
 import { HeroSection as WDHero } from "@/app/pages/website-development/_components/hero-section";
 import { ServicesGridSection } from "@/app/pages/web-development/_components/services-grid-section";
 import { ServicesSection as WDServices } from "@/app/pages/website-development/_components/services-section";
@@ -61,6 +62,9 @@ function WebDevelopmentPage() {
       <SectionErrorBoundary name="Contact">
         <WDContact />
       </SectionErrorBoundary>
+
+      {/* Related blog posts — internal linking to topical content */}
+      <RelatedBlogPosts category="web-development" />
     </>
   );
 }
