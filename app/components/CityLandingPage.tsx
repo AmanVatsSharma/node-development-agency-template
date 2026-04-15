@@ -8,27 +8,41 @@ import type { ReactElement } from 'react';
  * Pune, etc.) so we can SEO-target "web development company [city]" keywords
  * without duplicating a huge component tree per city.
  *
- * Each city page renders <CityLandingPage {...config} /> with city-specific
- * H1, body copy, neighbourhoods, and testimonial.
+ * IMPORTANT — Avoiding doorway/duplicate-content penalties:
+ * Each city page MUST pass substantial unique content via the `localContent`
+ * prop so Google doesn't flag these as doorway pages under the Helpful
+ * Content Update. Shared shell + unique local copy is fine; identical
+ * copy with only the city name swapped is not.
  */
+
+export interface LocalFaq {
+  q: string;
+  a: string;
+}
 
 export interface CityLandingPageProps {
   /** Full display name of the city, e.g. "Delhi NCR" */
   cityName: string;
-  /** Short name for URL + copy, e.g. "Delhi" */
+  /** Short name for URL + copy, e.g. "delhi" */
   citySlug: string;
   /** State or region, e.g. "Delhi NCR", "Karnataka" */
   region: string;
-  /** Short intro tagline */
+  /** Short intro tagline (unique per city) */
   tagline: string;
   /** Local neighbourhoods / business districts to reference */
   neighborhoods: string[];
-  /** Local testimonial — one-liner + author name + role */
-  testimonial: {
-    quote: string;
-    author: string;
-    role: string;
-  };
+  /**
+   * Substantial unique content for this specific city. At least 400-500
+   * words describing the local business ecosystem, common industries,
+   * and why Vedpragya is a good fit for that market.
+   *
+   * Rendered as paragraphs — use array of strings.
+   */
+  localMarketContent: string[];
+  /** Common local industries we serve in this city */
+  localIndustries: { name: string; description: string }[];
+  /** City-specific FAQs (3-5, unique to the city) */
+  localFaqs: LocalFaq[];
 }
 
 export function CityLandingPage({
@@ -37,8 +51,11 @@ export function CityLandingPage({
   region,
   tagline,
   neighborhoods,
-  testimonial,
+  localMarketContent,
+  localIndustries,
+  localFaqs,
 }: CityLandingPageProps): ReactElement {
+  void citySlug;
   return (
     <main className="min-h-screen bg-white dark:bg-gray-950 text-gray-900 dark:text-white">
       {/* Hero */}
@@ -72,47 +89,69 @@ export function CityLandingPage({
         </div>
       </section>
 
-      {/* Intro */}
+      {/* Local market — UNIQUE per city (primary content that prevents doorway-page penalty) */}
       <section className="py-20 bg-white dark:bg-gray-950">
         <div className="container mx-auto px-4 max-w-4xl">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">
-            Custom Websites &amp; Web Apps for {cityName} Businesses
+            Web Development for {cityName}&apos;s Business Ecosystem
           </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
-            Vedpragya helps {cityName} businesses ship fast, SEO-optimized, conversion-focused
-            websites. From small business brochures to enterprise web applications, our team
-            delivers production-grade builds using <strong>Next.js, React, Node.js,</strong> and
-            modern cloud infrastructure.
-          </p>
-          <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
-            We work with companies across {cityName} — including {neighborhoods.join(', ')} — on
-            custom websites, e-commerce platforms, SaaS applications, and AI-powered tools. Our
-            delivery is fully remote, fast, and backed by a Haryana-based agency registered as
-            Vedpragya Bharat Private Limited.
-          </p>
-          <p className="text-lg text-gray-600 dark:text-gray-300">
-            Whether you&apos;re a D2C startup, a professional services firm, a SaaS company, or an
-            established enterprise, we bring the same engineering discipline and design quality to
-            every project.
+          {localMarketContent.map((paragraph, index) => (
+            <p
+              key={index}
+              className="text-lg text-gray-600 dark:text-gray-300 mb-6"
+            >
+              {paragraph}
+            </p>
+          ))}
+          <p className="text-base text-gray-500 dark:text-gray-400">
+            Serving businesses across {neighborhoods.join(', ')} and nearby{' '}
+            {cityName} business districts — delivered fully remote by a
+            Haryana-registered agency (Vedpragya Bharat Private Limited).
           </p>
         </div>
       </section>
 
-      {/* Services */}
+      {/* Local industries — UNIQUE per city */}
       <section className="py-20 bg-gray-50 dark:bg-gray-900">
         <div className="container mx-auto px-4 max-w-5xl">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">
+            Industries We Serve in {cityName}
+          </h2>
+          <p className="text-lg text-gray-600 dark:text-gray-300 text-center max-w-3xl mx-auto mb-12">
+            {cityName}&apos;s economy has its own mix of industries. Here are the
+            sectors we&apos;re most experienced with locally.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {localIndustries.map((industry) => (
+              <div
+                key={industry.name}
+                className="p-6 rounded-2xl bg-white dark:bg-gray-950 shadow-sm border border-gray-100 dark:border-gray-800"
+              >
+                <h3 className="text-xl font-bold mb-2">{industry.name}</h3>
+                <p className="text-gray-600 dark:text-gray-300">
+                  {industry.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Services */}
+      <section className="py-20 bg-white dark:bg-gray-950">
+        <div className="container mx-auto px-4 max-w-5xl">
           <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
-            Web Development Services We Offer in {cityName}
+            Web Development Services We Offer
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
               {
                 title: 'Custom Business Websites',
-                body: `Fast, mobile-first business websites for ${cityName} companies — built with Next.js and Tailwind CSS.`,
+                body: 'Fast, mobile-first business websites built with Next.js and Tailwind CSS.',
               },
               {
                 title: 'E-commerce Development',
-                body: 'Shopify, headless Shopify, and WooCommerce stores with Razorpay/Cashfree checkout and GST support.',
+                body: 'Shopify, headless Shopify, and WooCommerce stores with Razorpay / Cashfree checkout and GST support.',
               },
               {
                 title: 'SaaS & Web Applications',
@@ -128,7 +167,7 @@ export function CityLandingPage({
               },
               {
                 title: 'AI-Powered Tools',
-                body: `AI chatbots, voice agents, and LLM apps integrated into your ${cityName} business website.`,
+                body: 'AI chatbots, voice agents, and LLM applications integrated into your business website.',
               },
             ].map((item) => (
               <div
@@ -144,10 +183,10 @@ export function CityLandingPage({
       </section>
 
       {/* Pricing */}
-      <section id="pricing" className="py-20 bg-white dark:bg-gray-950">
+      <section id="pricing" className="py-20 bg-gray-50 dark:bg-gray-900">
         <div className="container mx-auto px-4 max-w-5xl">
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">
-            Transparent Pricing for {cityName} Businesses
+            Transparent Pricing
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-300 text-center max-w-3xl mx-auto mb-12">
             Fixed-scope quotes. INR pricing. No surprises.
@@ -196,7 +235,7 @@ export function CityLandingPage({
                 className={`rounded-2xl p-8 ${
                   tier.highlighted
                     ? 'bg-blue-600 text-white shadow-2xl md:scale-105'
-                    : 'bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800'
+                    : 'bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-800'
                 }`}
               >
                 <h3 className="text-2xl font-bold mb-1">{tier.name}</h3>
@@ -205,7 +244,13 @@ export function CityLandingPage({
                   {tier.features.map((f) => (
                     <li key={f} className="flex items-start">
                       <span className="mr-2">✓</span>
-                      <span className={tier.highlighted ? 'text-blue-50' : 'text-gray-600 dark:text-gray-300'}>
+                      <span
+                        className={
+                          tier.highlighted
+                            ? 'text-blue-50'
+                            : 'text-gray-600 dark:text-gray-300'
+                        }
+                      >
                         {f}
                       </span>
                     </li>
@@ -227,57 +272,23 @@ export function CityLandingPage({
         </div>
       </section>
 
-      {/* Testimonial */}
-      <section className="py-20 bg-gray-50 dark:bg-gray-900">
-        <div className="container mx-auto px-4 max-w-3xl">
-          <figure className="bg-white dark:bg-gray-950 rounded-2xl p-8 md:p-12 shadow-sm border border-gray-100 dark:border-gray-800 text-center">
-            <blockquote className="text-2xl italic text-gray-800 dark:text-gray-200 mb-6">
-              &ldquo;{testimonial.quote}&rdquo;
-            </blockquote>
-            <figcaption>
-              <p className="font-semibold">{testimonial.author}</p>
-              <p className="text-gray-500 dark:text-gray-400 text-sm">{testimonial.role}</p>
-            </figcaption>
-          </figure>
-        </div>
-      </section>
-
-      {/* FAQ */}
+      {/* FAQ — city-specific */}
       <section className="py-20 bg-white dark:bg-gray-950">
         <div className="container mx-auto px-4 max-w-3xl">
           <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
-            Frequently Asked Questions
+            Frequently Asked Questions ({cityName})
           </h2>
           <div className="space-y-6">
-            {[
-              {
-                q: `Do you offer web development services in ${cityName}?`,
-                a: `Yes — we work with ${cityName} businesses across ${neighborhoods.slice(0, 2).join(', ')} and all other areas, fully remote.`,
-              },
-              {
-                q: `How much does a website cost for a ${cityName} business?`,
-                a: `Our ${cityName} packages start at ₹49,000 for business websites and scale up to ₹10,00,000+ for custom web applications.`,
-              },
-              {
-                q: `Can you work remotely with clients in ${cityName}?`,
-                a: `Yes. We deliver entirely remote with video calls, shared project tools, and fast communication. Most of our ${cityName} clients never need an in-person meeting.`,
-              },
-              {
-                q: `What technology do you use?`,
-                a: `Next.js, React, Node.js, TypeScript, PostgreSQL, and modern cloud infrastructure (AWS, Vercel). All production code is TypeScript by default.`,
-              },
-              {
-                q: `How long does a ${cityName} website take to build?`,
-                a: `Typical timelines: 2 weeks for simple business websites, 4–5 weeks for custom designs, 8–14 weeks for web applications.`,
-              },
-            ].map((faq) => (
+            {localFaqs.map((faq) => (
               <details
                 key={faq.q}
                 className="group bg-gray-50 dark:bg-gray-900 rounded-xl p-6 border border-gray-200 dark:border-gray-800"
               >
                 <summary className="font-semibold cursor-pointer list-none flex justify-between items-center">
                   {faq.q}
-                  <span className="text-blue-500 group-open:rotate-180 transition-transform">▼</span>
+                  <span className="text-blue-500 group-open:rotate-180 transition-transform">
+                    ▼
+                  </span>
                 </summary>
                 <p className="mt-3 text-gray-600 dark:text-gray-300">{faq.a}</p>
               </details>
@@ -290,11 +301,12 @@ export function CityLandingPage({
       <section className="py-20 bg-blue-600 text-white">
         <div className="container mx-auto px-4 text-center max-w-3xl">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Ready to Build Your Website in {cityName}?
+            Ready to Build Your Website?
           </h2>
           <p className="text-xl mb-8 text-blue-100">
-            Book a free 30-minute consultation. We&apos;ll review your requirements and send a
-            written proposal with scope, timeline, and price.
+            Book a free 30-minute consultation. We&apos;ll review your
+            requirements and send a written proposal with scope, timeline, and
+            price.
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
             <Link
@@ -310,9 +322,6 @@ export function CityLandingPage({
               See All Web Dev Services
             </Link>
           </div>
-          <p className="mt-6 text-sm text-blue-200">
-            Canonical URL: <span className="font-mono">/pages/web-development-{citySlug}</span>
-          </p>
         </div>
       </section>
     </main>

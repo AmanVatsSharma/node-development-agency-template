@@ -54,3 +54,4 @@ next-env.d.ts
 
 # rust
 rust/hero-sim-wasm/target/
+.claude/
