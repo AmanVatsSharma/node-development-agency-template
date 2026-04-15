@@ -10,7 +10,6 @@ readTime: 45
 author: "Aman Kumar Sharma"
 authorTitle: "Founder, Vedpragya"
 featured: false
-image: "/images/blog/whatsapp-ai-chatbot.jpg"
 ---
 
 With 98% open rates and 2+ billion users, WhatsApp is THE channel for customer engagement in India. Here's how to leverage AI chatbots on WhatsApp.

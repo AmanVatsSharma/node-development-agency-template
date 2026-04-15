@@ -10,7 +10,6 @@ readTime: 38
 author: "Aman Kumar Sharma"
 authorTitle: "Founder, Vedpragya"
 featured: true
-image: "/images/blog/shopify-headless-guide.jpg"
 ---
 
 Headless commerce is the biggest trend in e-commerce. Here's your complete guide to going headless with Shopify.

@@ -10,7 +10,6 @@ readTime: 26
 author: "Aman Kumar Sharma"
 authorTitle: "Founder, Vedpragya"
 featured: false
-image: "/images/blog/ai-chatbot-ecommerce.jpg"
 ---
 
 Every Indian e-commerce brand we work with is dealing with the same three problems: cart abandonment (68–78% of carts abandoned), slow customer support (responses taking hours instead of minutes), and low repeat purchase rates (60–70% of customers never buy again). AI chatbots fix all three — without hiring more support staff. Here's the 2025 playbook based on real implementations with 50+ Indian e-commerce brands.

@@ -10,7 +10,6 @@ readTime: 25
 author: "Aman Kumar Sharma"
 authorTitle: "Founder, Vedpragya"
 featured: false
-image: "/images/blog/ai-voice-agents.jpg"
 ---
 
 Imagine a customer support agent who:

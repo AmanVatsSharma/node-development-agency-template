@@ -10,7 +10,6 @@ readTime: 35
 author: "Aman Kumar Sharma"
 authorTitle: "Founder, Vedpragya"
 featured: true
-image: "/images/blog/web-dev-cost.jpg"
 ---
 
 "How much will my website cost?" is the single most-asked question we hear. After building 150+ websites across India, UAE, and the US, here's the real, no-fluff answer.

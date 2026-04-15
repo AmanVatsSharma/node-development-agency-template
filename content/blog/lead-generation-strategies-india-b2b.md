@@ -10,7 +10,6 @@ readTime: 16
 author: "Aman Kumar Sharma"
 authorTitle: "Founder, Vedpragya"
 featured: false
-image: "/images/blog/b2b-lead-gen.jpg"
 ---
 
 B2B lead generation in India is harder than it used to be. Ad costs keep rising, email deliverability is a mess, and buyers ignore cold calls. But there are strategies that still work remarkably well — if you know which channels to focus on and how to execute them.

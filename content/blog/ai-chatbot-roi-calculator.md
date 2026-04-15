@@ -10,7 +10,6 @@ readTime: 15
 author: "Aman Kumar Sharma"
 authorTitle: "Founder, Vedpragya"
 featured: true
-image: "/images/blog/ai-chatbot-roi.jpg"
 ---
 
 If you're not using an AI chatbot in 2025, you're literally watching money walk away from your website. Let me show you the exact numbers based on 50+ real implementations across India, UAE, and the US.

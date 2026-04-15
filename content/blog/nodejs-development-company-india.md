@@ -10,7 +10,6 @@ readTime: 24
 author: "Aman Kumar Sharma"
 authorTitle: "Founder, Vedpragya"
 featured: true
-image: "/images/blog/nodejs-india.jpg"
 ---
 
 Node.js has become the default backend for startups, SaaS, and enterprise applications in India. But picking the right Node.js development company can be the difference between a product that scales and a ₹10 lakh disaster. Here's what to look for.

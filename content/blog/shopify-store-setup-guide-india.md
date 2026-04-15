@@ -10,7 +10,6 @@ readTime: 27
 author: "Aman Kumar Sharma"
 authorTitle: "Founder, Vedpragya"
 featured: false
-image: "/images/blog/shopify-setup-india.jpg"
 ---
 
 Starting a Shopify store in India in 2025? Here's the complete setup guide — no fluff, just the exact steps.

@@ -507,51 +507,27 @@ interface AggregateRatingStructuredDataProps {
 }
 
 /**
- * AggregateRating JSON-LD for service pages. Displays star ratings
- * directly in Google SERPs, materially improving click-through rates.
+ * AggregateRating JSON-LD for service pages.
  *
- * Only use this when you have actual customer reviews to back it up.
- * Typical values we use: 4.8-4.9 rating, 35-80 reviewCount.
+ * IMPORTANT — Google policy compliance:
+ * Google's structured data policies explicitly forbid marking up ratings
+ * that are not "directly available on the source page for users to see."
+ * Violating this risks a manual action.
+ *
+ * Until Vedpragya has a real on-page reviews widget displaying verified
+ * customer reviews, this component is a NO-OP. It accepts the same props
+ * for backwards compatibility, but emits no JSON-LD.
+ *
+ * To enable real AggregateRating markup:
+ * 1. Build a reviews widget that renders real reviews on the page itself
+ *    (either from a DB-backed reviews model or from an integration like
+ *    Google Business Profile / Trustpilot).
+ * 2. Ensure reviewCount and ratingValue come from those real reviews.
+ * 3. Delete the early `return null` below.
  */
-export function AggregateRatingStructuredData({
-  itemName,
-  itemType = 'Service',
-  description,
-  url,
-  ratingValue,
-  bestRating = 5,
-  worstRating = 1,
-  reviewCount,
-  provider,
-}: AggregateRatingStructuredDataProps) {
-  const structuredData: Record<string, unknown> = {
-    '@context': 'https://schema.org',
-    '@type': itemType,
-    name: itemName,
-    ...(description ? { description } : {}),
-    ...(url ? { url } : {}),
-    ...(provider
-      ? {
-          provider: {
-            '@type': 'Organization',
-            name: provider.name,
-            url: provider.url,
-          },
-        }
-      : {}),
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: ratingValue.toFixed(1),
-      bestRating: bestRating.toString(),
-      worstRating: worstRating.toString(),
-      reviewCount: reviewCount.toString(),
-    },
-  };
-
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
-    />
-  );
+export function AggregateRatingStructuredData(
+  _props: AggregateRatingStructuredDataProps,
+) {
+  void _props;
+  return null;
 }

@@ -10,7 +10,6 @@ readTime: 38
 author: "Aman Kumar Sharma"
 authorTitle: "Founder, Vedpragya"
 featured: false
-image: "/images/blog/healthcare-app-cost.jpg"
 ---
 
 Healthcare software is one of the most regulated, complex, and expensive categories to build. But India's digital health market is exploding — and the opportunity is massive. Here's the real cost breakdown.

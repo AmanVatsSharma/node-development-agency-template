@@ -10,7 +10,6 @@ readTime: 28
 author: "Aman Kumar Sharma"
 authorTitle: "Founder, Vedpragya"
 featured: false
-image: "/images/blog/trading-india.jpg"
 ---
 
 India's retail trading boom (12+ crore demat accounts, ₹50+ trillion market cap) has created massive demand for custom trading platforms. But trading software is among the hardest categories to build right — combining real-time systems, strict regulatory compliance, high availability requirements, and massive scalability challenges. Here's what it actually takes to succeed.

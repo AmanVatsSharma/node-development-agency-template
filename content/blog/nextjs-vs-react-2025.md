@@ -10,7 +10,6 @@ readTime: 27
 author: "Aman Kumar Sharma"
 authorTitle: "Founder, Vedpragya"
 featured: false
-image: "/images/blog/nextjs-vs-react.jpg"
 ---
 
 In 2025, "Next.js vs React" is the most asked front-end question we hear from founders. The confusion is understandable — Next.js *is* React, just with superpowers. Here's how to actually choose.

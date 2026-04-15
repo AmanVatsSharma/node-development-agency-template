@@ -10,7 +10,6 @@ readTime: 42
 author: "Aman Kumar Sharma"
 authorTitle: "Founder, Vedpragya"
 featured: false
-image: "/images/blog/shopify-cro.jpg"
 ---
 
 After optimizing 100+ Shopify stores, these 15 tactics consistently boost conversions. Real data included.

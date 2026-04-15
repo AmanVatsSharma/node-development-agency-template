@@ -10,7 +10,6 @@ readTime: 38
 author: "Aman Kumar Sharma"
 authorTitle: "Founder, Vedpragya"
 featured: false
-image: "/images/blog/shopify-vs-woocommerce.jpg"
 ---
 
 "Shopify or WooCommerce?" is the e-commerce question we hear most from Indian founders. After building stores on both for 5+ years, here's our blunt take.

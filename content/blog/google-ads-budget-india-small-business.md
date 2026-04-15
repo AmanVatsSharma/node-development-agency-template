@@ -10,7 +10,6 @@ readTime: 35
 author: "Aman Kumar Sharma"
 authorTitle: "Founder, Vedpragya"
 featured: true
-image: "/images/blog/google-ads-budget.jpg"
 ---
 
 "How much should I spend on Google Ads?" — I get this question from Indian business owners every single week. The honest answer: it depends on your industry, goal, and where you are in your growth. Here's a real framework.

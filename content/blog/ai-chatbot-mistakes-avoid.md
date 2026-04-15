@@ -10,7 +10,6 @@ readTime: 42
 author: "Aman Kumar Sharma"
 authorTitle: "Founder, Vedpragya"
 featured: false
-image: "/images/blog/chatbot-mistakes.jpg"
 ---
 
 After deploying 50+ AI chatbots, we've seen these mistakes tank conversion rates. Here's what to avoid.

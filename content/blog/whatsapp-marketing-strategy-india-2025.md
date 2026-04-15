@@ -10,7 +10,6 @@ readTime: 42
 author: "Aman Kumar Sharma"
 authorTitle: "Founder, Vedpragya"
 featured: false
-image: "/images/blog/whatsapp-marketing.jpg"
 ---
 
 WhatsApp has 500+ million active users in India. That's the adult population. Yet most Indian businesses use it like a glorified SMS channel. Here's how to do it properly in 2025.

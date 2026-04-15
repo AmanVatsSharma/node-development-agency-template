@@ -10,7 +10,6 @@ readTime: 28
 author: "Aman Kumar Sharma"
 authorTitle: "Founder, Vedpragya"
 featured: true
-image: "/images/blog/ai-comparison.jpg"
 ---
 
 Choosing the right AI model for your chatbot can make or break your customer experience. Let's compare the top 3 AI models with real data.

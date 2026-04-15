@@ -10,7 +10,6 @@ readTime: 24
 author: "Aman Kumar Sharma"
 authorTitle: "Founder, Vedpragya"
 featured: false
-image: "/images/blog/seo-vs-ads.jpg"
 ---
 
 "Should I do SEO or Google Ads?" is the classic false dilemma. The honest answer: **both, in the right proportion, for the right reasons**. Here's how to decide.

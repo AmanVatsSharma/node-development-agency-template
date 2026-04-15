@@ -10,7 +10,6 @@ readTime: 23
 author: "Aman Kumar Sharma"
 authorTitle: "Founder, Vedpragya"
 featured: false
-image: "/images/blog/website-design-cost.jpg"
 ---
 
 "How much does a good website design cost in India?" We get asked this daily. Here's the honest, unvarnished answer — broken down by type, quality, and what you actually get.

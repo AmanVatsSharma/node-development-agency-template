@@ -10,7 +10,6 @@ readTime: 26
 author: "Aman Kumar Sharma"
 authorTitle: "Founder, Vedpragya"
 featured: false
-image: "/images/blog/mvp-india.jpg"
 ---
 
 Most startups overbuild their MVPs. They spend ₹15 lakhs on "v1" when a ₹3 lakh tight-scope MVP would have validated faster. Here's the honest math on MVP development costs in India.

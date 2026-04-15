@@ -10,7 +10,6 @@ readTime: 25
 author: "Aman Kumar Sharma"
 authorTitle: "Founder, Vedpragya"
 featured: false
-image: "/images/blog/crm-india.jpg"
 ---
 
 Every Indian business growing past 10 sales leads per week hits the same wall: spreadsheets stop working. Excel sheets become unreliable, data gets lost, team members can't access information simultaneously, and customer context becomes impossible to track. Picking the right CRM — and actually getting your team to use it — is the difference between scaling and stalling.

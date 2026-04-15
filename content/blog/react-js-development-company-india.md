@@ -10,7 +10,6 @@ readTime: 18
 author: "Aman Kumar Sharma"
 authorTitle: "Founder, Vedpragya"
 featured: false
-image: "/images/blog/react-india.jpg"
 ---
 
 React.js is the most popular frontend framework in the world, and India has thousands of "React developers." Quality ranges from world-class to disastrous. Here's how to hire the right partner without overpaying or getting burned.
