@@ -5,8 +5,8 @@ excerpt: "An honest, hands-on comparison of Shopify and WooCommerce for Indian b
 category: shopify
 tags: ["shopify", "woocommerce", "comparison", "india", "ecommerce"]
 publishedAt: "2026-03-24"
-updatedAt: "2026-04-14"
-readTime: 11
+updatedAt: "2026-04-15"
+readTime: 25
 author: "Aman Kumar Sharma"
 authorTitle: "Founder, Vedpragya"
 featured: false

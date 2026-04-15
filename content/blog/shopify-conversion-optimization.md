@@ -6,7 +6,7 @@ category: shopify
 tags: ["Shopify", "Conversion Optimization", "CRO", "E-commerce"]
 publishedAt: "2024-11-08"
 updatedAt: "2026-04-14"
-readTime: 12
+readTime: 26
 author: "Aman Kumar Sharma"
 authorTitle: "Founder, Vedpragya"
 featured: false

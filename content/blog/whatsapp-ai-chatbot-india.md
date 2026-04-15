@@ -5,8 +5,8 @@ excerpt: "Everything you need to know about building a WhatsApp AI chatbot for t
 category: whatsapp
 tags: ["WhatsApp", "AI Chatbot", "India", "Business Communication"]
 publishedAt: "2024-11-05"
-updatedAt: "2026-04-14"
-readTime: 12
+updatedAt: "2026-04-15"
+readTime: 25
 author: "Aman Kumar Sharma"
 authorTitle: "Founder, Vedpragya"
 featured: false
