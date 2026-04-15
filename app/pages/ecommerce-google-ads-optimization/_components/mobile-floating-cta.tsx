@@ -1,3 +1,10 @@
+'use client';
+
+// SEO note: this is a floating UI widget (mobile-only sticky CTA button).
+// It contains no unique page content — only a "Call Now" / "Schedule" button
+// pair that mirrors links already present in the page hero. Marking it as a
+// Client Component does NOT hurt SEO: Next.js still server-renders the
+// initial HTML, and Googlebot already has the primary CTAs from the page body.
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Phone, X, ArrowRight } from 'lucide-react';

@@ -1,3 +1,11 @@
+"use client";
+
+// SEO note: "use client" does NOT hurt SEO. Next.js still server-renders
+// Client Components on the initial request, so Googlebot reads the fully
+// rendered HTML. The directive only controls *where the component hydrates*
+// (on the client too, for interactivity), not whether it is crawlable.
+// All FAQ questions, CTA copy, and content remain in the initial HTML.
+
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Minus } from 'lucide-react';

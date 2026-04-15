@@ -1,3 +1,8 @@
+'use client';
+
+// SEO note: this is a decorative "scroll back to top" arrow button. It
+// contains zero text content for crawlers — only an SVG arrow icon.
+// Marking it as a Client Component is correct and has no SEO impact.
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowUp } from 'lucide-react';
