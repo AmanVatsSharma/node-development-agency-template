@@ -141,7 +141,7 @@ export function FAQSection() {
             Still have questions? Our team is here to help!
           </p>
           <a
-            href="mailto:support@vedpragya.com"
+            href="mailto:support@vedpragya.com,sales@vedpragya.com"
             className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[#00FF88] to-[#00CC70] text-[#0B1E39] font-black rounded-xl shadow-lg hover:shadow-2xl hover:shadow-[#00FF88]/50 transition-all duration-300 hover:scale-105"
           >
             📧 Contact Support

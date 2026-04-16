@@ -33,7 +33,8 @@ const serviceOptions = [
 ];
 
 const offices = [
-  { flag: "🇮🇳", country: "India", detail: "Haryana (HQ)", label: "Headquarters" },
+  { flag: "🇮🇳", country: "India", detail: "Registered Office: Bhiwani, Haryana", label: "Headquarters" },
+  { flag: "🇮🇳", country: "India", detail: "Corporate Office: Greater Noida (NX One, Tech Zone IV)", label: "Corporate Office" },
   { flag: "🇦🇪", country: "UAE", detail: "Dubai", label: "Middle East" },
   { flag: "🇺🇸", country: "USA", detail: "California", label: "North America" },
   { flag: "🇨🇦", country: "Canada", detail: "Toronto", label: "Canada" },
@@ -379,6 +380,17 @@ export default function ContactPage() {
                   </div>
                   <span className="font-medium text-sm">support@vedpragya.com</span>
                 </a>
+                <a
+                  href="mailto:sales@vedpragya.com"
+                  className="mt-2 flex items-center gap-3 text-[#0C1B33] hover:text-[#2563EB] transition-colors group"
+                >
+                  <div className="w-8 h-8 rounded-lg bg-gray-50 border border-gray-100 flex items-center justify-center shrink-0 group-hover:bg-[#2563EB]/8 transition-colors">
+                    <svg className="w-4 h-4 text-gray-400 group-hover:text-[#2563EB] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                  <span className="font-medium text-sm">sales@vedpragya.com</span>
+                </a>
               </div>
 
               {/* Office locations */}
@@ -424,7 +436,8 @@ export default function ContactPage() {
                   <strong className="text-[#0C1B33]">Vedpragya Bharat Private Limited</strong><br />
                   CIN: U47912HR2025PTC131357<br />
                   GST: 06AALCV0051A1ZV<br />
-                  Haryana, India
+                  Registered Address: C/o Aditi, Madhur Colony, Haluwas Opp Bansilal Park, Bhiwani, Bhiwani, Bhiwani - 127021, Haryana<br />
+                  Corporate Office: NX One, Tech Zone IV, Greater Noida
                 </p>
               </div>
             </div>

@@ -56,6 +56,8 @@ export default function CompanyInfoPage() {
                     <p><strong>Company Type:</strong> Private Limited Company</p>
                     <p><strong>Incorporation Date:</strong> April 28, 2025</p>
                     <p><strong>Registration State:</strong> Haryana, India</p>
+                    <p><strong>Registered Address:</strong> C/o Aditi, Madhur Colony, Haluwas Opp Bansilal Park, Bhiwani, Bhiwani, Bhiwani - 127021, Haryana</p>
+                    <p><strong>Corporate Office:</strong> NX One, Tech Zone IV, Greater Noida</p>
                   </div>
                 </div>
                 <div>
@@ -115,8 +117,8 @@ export default function CompanyInfoPage() {
                     <h3 className="text-xl font-bold">India (Headquarters)</h3>
                   </div>
                   <div className="space-y-2 text-gray-700 dark:text-gray-300">
-                    <p><strong>Gurugram:</strong> Main corporate office</p>
-                    <p><strong>Noida:</strong> Development center</p>
+                    <p><strong>Bhiwani:</strong> Registered office</p>
+                    <p><strong>Greater Noida:</strong> Main corporate office (NX One, Tech Zone IV)</p>
                     <p><strong>Bangalore:</strong> Innovation hub</p>
                     <p className="text-sm text-blue-600 dark:text-blue-400 mt-3">
                       CIN: U47912HR2025PTC131357
@@ -258,7 +260,7 @@ export default function CompanyInfoPage() {
                 <div>
                   <h3 className="text-xl font-semibold mb-4">General Inquiries</h3>
                   <div className="space-y-2 text-gray-700 dark:text-gray-300">
-                    <p><strong>Email:</strong> info@enterprisehero.com</p>
+                    <p><strong>Email:</strong> support@vedpragya.com / sales@vedpragya.com</p>
                     <p><strong>Website:</strong> www.enterprisehero.com</p>
                     <p><strong>Business Hours:</strong> 24/7 Global Support</p>
                   </div>

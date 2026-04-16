@@ -663,7 +663,7 @@ export function LeadFormSection() {
                       We've received your request. Our team will contact you within 2 hours!
                     </p>
                     <p className="text-sm text-gray-600 dark:text-gray-400">
-                      Check your phone for a call from +91 9963730111 or email at support@vedpragya.com
+                      Check your phone for a call from +91 9963730111 or email at support@vedpragya.com / sales@vedpragya.com
                     </p>
                   </motion.div>
                 )}
