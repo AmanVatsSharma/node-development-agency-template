@@ -188,6 +188,15 @@ export default function EnhancedHeader() {
                   </nav>
 
                   <div className="flex items-center gap-1.5">
+                    <a
+                      href="https://client.vedpragya.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hidden lg:inline-flex items-center gap-1.5 px-3.5 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-[#0C1B33] dark:hover:text-white hover:bg-gray-100 dark:hover:bg-[#151C2B] rounded-lg transition-all min-h-[40px]"
+                      style={{ fontFamily: "var(--font-sora), sans-serif" }}
+                    >
+                      Client Dashboard
+                    </a>
                     <Link
                       href="/pages/contact"
                       className="hidden lg:inline-flex items-center gap-1.5 px-4 py-2 bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-semibold text-sm rounded-lg transition-all shadow-[0_2px_8px_rgba(37,99,235,0.30)] hover:shadow-[0_4px_16px_rgba(37,99,235,0.40)] min-h-[40px]"
@@ -264,6 +273,15 @@ export default function EnhancedHeader() {
                   </nav>
 
                   <div className="flex items-center gap-1.5">
+                    <a
+                      href="https://client.vedpragya.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hidden lg:inline-flex items-center gap-1.5 px-3.5 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-[#0C1B33] dark:hover:text-white hover:bg-gray-100 dark:hover:bg-[#151C2B] rounded-lg transition-all min-h-[44px]"
+                      style={{ fontFamily: "var(--font-sora), sans-serif" }}
+                    >
+                      Client Dashboard
+                    </a>
                     <Link
                       href="/pages/contact"
                       className="hidden lg:inline-flex items-center gap-1.5 px-4 py-2 bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-semibold text-sm rounded-lg transition-all shadow-[0_2px_8px_rgba(37,99,235,0.30)] hover:shadow-[0_4px_16px_rgba(37,99,235,0.40)] min-h-[44px]"
