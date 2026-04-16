@@ -149,7 +149,7 @@ export default async function RootLayout({
           },
           {
             question: 'How do I get a project quote from Vedpragya?',
-            answer: 'Visit vedpragya.com/pages/contact or email support@vedpragya.com to share your project requirements. We provide free project consultations and detailed proposals within 24–48 hours.',
+            answer: 'Visit vedpragya.com/pages/contact or email support@vedpragya.com / sales@vedpragya.com to share your project requirements. We provide free project consultations and detailed proposals within 24–48 hours.',
           },
           {
             question: 'How many projects has Vedpragya delivered?',
