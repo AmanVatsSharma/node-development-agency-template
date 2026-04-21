@@ -4,7 +4,7 @@ import { Spotlight } from "@/app/components/ui/spotlight";
 import { MovingBorder } from "@/app/components/ui/moving-border";
 
 const milestones = [
-  { year: "2025", event: "Founded", desc: "Vedpragya Bharat Private Limited incorporated in Haryana, India by Aman Kumar Sharma." },
+  { year: "2025", event: "Founded", desc: "Vedpragya Bharat Private Limited was founded in Haryana, India by Aman Kumar Sharma." },
   { year: "2025", event: "First Enterprise Client", desc: "Delivered BharatERP to first enterprise client in the manufacturing sector." },
   { year: "2025", event: "100 Projects", desc: "Crossed 100 delivered projects across web, mobile, AI, and ERP domains." },
   { year: "2026", event: "Global Expansion", desc: "Opened offices in Dubai UAE and expanded client base to North America." },

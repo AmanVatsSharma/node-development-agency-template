@@ -166,7 +166,6 @@ export default async function RootLayout({
           url={companyProfile.websiteUrl}
           logo={`${SEO_SITE_URL}/logo.png`}
           description="Enterprise-grade software development, AI systems, ERP, e-commerce, and digital marketing services."
-          foundingDate={companyProfile.legal.incorporationDateISO}
           address={{
             addressLocality: 'Haryana',
             addressRegion: 'Haryana',

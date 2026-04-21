@@ -4,7 +4,7 @@
  *
  * WHY THIS EXISTS:
  * - Avoids "fake" / placeholder data (e.g. random US address, "#" social links)
- * - Keeps legal identifiers consistent everywhere (CIN/GST/incorporation date)
+ * - Keeps legal identifiers consistent everywhere (CIN/GST/registration state)
  * - Makes it easy to update without hunting through many pages/components
  *
  * GUIDELINES (Authenticity-first):
@@ -29,7 +29,6 @@ export interface CompanyProfile {
   legal: {
     cin?: string;
     gst?: string;
-    incorporationDateISO?: string; // e.g. "2025-04-28"
     registrationState?: string; // e.g. "Haryana, India"
   };
   founder?: {
@@ -52,8 +51,6 @@ export const companyProfile: CompanyProfile = {
   legal: {
     cin: "U47912HR2025PTC131357",
     gst: "06AALCV0051A1ZV",
-    // Source: /pages/legal/company-info
-    incorporationDateISO: "2025-04-28",
     registrationState: "Haryana, India",
   },
   founder: {

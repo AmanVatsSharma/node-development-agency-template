@@ -141,12 +141,12 @@ const ROUTE_LAST_MODIFIED_MAP: Record<string, Date> = {
   '/pages/web-development-noida': new Date('2026-04-14T00:00:00.000Z'),
   '/pages/nodejs-development': new Date('2026-04-14T00:00:00.000Z'),
 
-  // Legal pages — stable; set to incorporation date to avoid false freshness signals
-  '/pages/legal/privacy-policy': new Date('2025-04-28T00:00:00.000Z'),
-  '/pages/legal/terms-of-service': new Date('2025-04-28T00:00:00.000Z'),
-  '/pages/legal/cancellations-refunds': new Date('2025-04-28T00:00:00.000Z'),
-  '/pages/legal/shipping-policy': new Date('2025-04-28T00:00:00.000Z'),
-  '/pages/legal/company-info': new Date('2025-04-28T00:00:00.000Z'),
+  // Legal pages — stable; use a fixed baseline date to avoid false freshness signals
+  '/pages/legal/privacy-policy': new Date('2025-01-01T00:00:00.000Z'),
+  '/pages/legal/terms-of-service': new Date('2025-01-01T00:00:00.000Z'),
+  '/pages/legal/cancellations-refunds': new Date('2025-01-01T00:00:00.000Z'),
+  '/pages/legal/shipping-policy': new Date('2025-01-01T00:00:00.000Z'),
+  '/pages/legal/company-info': new Date('2025-01-01T00:00:00.000Z'),
 };
 
 /**
