@@ -54,7 +54,6 @@ export default function CompanyInfoPage() {
                     <p><strong>Legal Name:</strong> Vedpragya Bharat Private Limited</p>
                     <p><strong>Brand Name:</strong> Enterprise Hero</p>
                     <p><strong>Company Type:</strong> Private Limited Company</p>
-                    <p><strong>Incorporation Date:</strong> April 28, 2025</p>
                     <p><strong>Registration State:</strong> Haryana, India</p>
                     <p><strong>Registered Address:</strong> C/o Aditi, Madhur Colony, Haluwas Opp Bansilal Park, Bhiwani, Bhiwani, Bhiwani - 127021, Haryana</p>
                     <p><strong>Corporate Office:</strong> NX One, Tech Zone IV, Greater Noida</p>
