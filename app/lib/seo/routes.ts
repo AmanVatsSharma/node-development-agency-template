@@ -34,6 +34,7 @@ const CORE_STATIC_ROUTES = [
   '/pages/next-js-development',
   '/pages/reactjs-development',
   '/pages/nodejs-development',
+  '/pages/saas-website-design',
 
   // AI & automation services
   '/pages/ai-chatbot-development',
@@ -93,6 +94,7 @@ const ALL_STATIC_PAGE_ROUTES = [
   '/pages/portfolio',
   '/pages/reactjs-development',
   '/pages/resources',
+  '/pages/saas-website-design',
   '/pages/seo-audit',
   '/pages/services',
   '/pages/shopify-headless-migration',
