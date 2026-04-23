@@ -34,6 +34,7 @@ import { FinalCTASection } from './_components/final-cta-section';
 import { MobileFloatingCTA } from './_components/mobile-floating-cta';
 import { ScrollToTop } from './_components/scroll-to-top';
 import { SectionErrorBoundary } from './_components/section-error-boundary';
+import { RelatedServicesStrip } from '@/app/components/RelatedServicesStrip';
 
 export default function NextJsDevelopmentPage() {
   return (
@@ -97,6 +98,18 @@ export default function NextJsDevelopmentPage() {
       <SectionErrorBoundary name="FinalCTASection">
         <FinalCTASection />
       </SectionErrorBoundary>
+
+      {/* Related Services - Internal linking */}
+      <RelatedServicesStrip
+        heading="Explore related services"
+        services={[
+          { label: 'SaaS Website Design', href: '/pages/saas-website-design' },
+          { label: 'ReactJS Development', href: '/pages/reactjs-development' },
+          { label: 'Node.js Development', href: '/pages/nodejs-development' },
+          { label: 'Web Development India', href: '/pages/web-development' },
+          { label: 'AI Chatbot Development', href: '/pages/ai-chatbot-development' },
+        ]}
+      />
 
       {/* Scroll To Top - UX Enhancement */}
       <ScrollToTop />

@@ -117,6 +117,13 @@ const services = [
     desc: "Real-time market data platforms and financial analytics at institutional quality.",
     href: "/pages/trading-software",
   },
+  {
+    id: "saas",
+    icon: "web",
+    title: "SaaS Website Design",
+    desc: "High-converting SaaS marketing sites, landing pages, and pricing pages built with Next.js and Framer Motion.",
+    href: "/pages/saas-website-design",
+  },
 ];
 
 // Deduplicated tech logo strip items (doubled for seamless loop)
