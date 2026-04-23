@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import type { ReactElement } from 'react';
 import { RelatedBlogPosts } from '@/app/components/RelatedBlogPosts';
+import { RelatedServicesStrip } from '@/app/components/RelatedServicesStrip';
 
 /**
  * Node.js Development service landing page.
@@ -268,6 +269,18 @@ export default function NodeJSDevelopmentPage(): ReactElement {
 
       {/* Related blog posts — internal linking for topical authority */}
       <RelatedBlogPosts category="nodejs" />
+
+      {/* Related services — internal linking */}
+      <RelatedServicesStrip
+        heading="Explore related services"
+        services={[
+          { label: 'SaaS Website Design', href: '/pages/saas-website-design' },
+          { label: 'Next.js Development', href: '/pages/next-js-development' },
+          { label: 'ReactJS Development', href: '/pages/reactjs-development' },
+          { label: 'AI Chatbot Development', href: '/pages/ai-chatbot-development' },
+          { label: 'Web Development India', href: '/pages/web-development' },
+        ]}
+      />
 
       {/* CTA */}
       <section className="py-20 bg-emerald-600 text-white">

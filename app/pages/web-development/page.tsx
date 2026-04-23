@@ -5,6 +5,7 @@
 import React from "react";
 import { SectionErrorBoundary } from "@/app/components/common/SectionErrorBoundary";
 import { RelatedBlogPosts } from "@/app/components/RelatedBlogPosts";
+import { RelatedServicesStrip } from "@/app/components/RelatedServicesStrip";
 import { HeroSection as WDHero } from "@/app/pages/website-development/_components/hero-section";
 import { ServicesGridSection } from "@/app/pages/web-development/_components/services-grid-section";
 import { ServicesSection as WDServices } from "@/app/pages/website-development/_components/services-section";
@@ -65,6 +66,19 @@ function WebDevelopmentPage() {
 
       {/* Related blog posts — internal linking to topical content */}
       <RelatedBlogPosts category="web-development" />
+
+      {/* Related services — internal linking */}
+      <RelatedServicesStrip
+        heading="Explore related services"
+        services={[
+          { label: 'SaaS Website Design', href: '/pages/saas-website-design' },
+          { label: 'Next.js Development', href: '/pages/next-js-development' },
+          { label: 'ReactJS Development', href: '/pages/reactjs-development' },
+          { label: 'Node.js Development', href: '/pages/nodejs-development' },
+          { label: 'Shopify Store Setup', href: '/pages/shopify-store-setup' },
+          { label: 'AI Chatbot Development', href: '/pages/ai-chatbot-development' },
+        ]}
+      />
     </>
   );
 }

@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import type { ReactElement } from 'react';
+import { RelatedServicesStrip } from '@/app/components/RelatedServicesStrip';
 
 /**
  * Shared city landing page component.
@@ -324,6 +325,19 @@ export function CityLandingPage({
           </div>
         </div>
       </section>
+
+      {/* Related services — internal linking */}
+      <RelatedServicesStrip
+        heading="Explore our services"
+        services={[
+          { label: 'SaaS Website Design', href: '/pages/saas-website-design' },
+          { label: 'Next.js Development', href: '/pages/next-js-development' },
+          { label: 'ReactJS Development', href: '/pages/reactjs-development' },
+          { label: 'Node.js Development', href: '/pages/nodejs-development' },
+          { label: 'AI Chatbot Development', href: '/pages/ai-chatbot-development' },
+          { label: 'Google Ads Management', href: '/pages/google-ads-management' },
+        ]}
+      />
     </main>
   );
 }

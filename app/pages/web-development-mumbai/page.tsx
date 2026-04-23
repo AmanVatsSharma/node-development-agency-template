@@ -35,6 +35,7 @@ import { FinalCTASection } from './_components/final-cta-section';
 import { MobileFloatingCTA } from './_components/mobile-floating-cta';
 import { ScrollToTop } from './_components/scroll-to-top';
 import { SectionErrorBoundary } from './_components/section-error-boundary';
+import { RelatedServicesStrip } from '@/app/components/RelatedServicesStrip';
 
 export default function MumbaiWebDevelopmentPage() {
   return (
@@ -93,6 +94,19 @@ export default function MumbaiWebDevelopmentPage() {
       <SectionErrorBoundary name="FinalCTASection">
         <FinalCTASection />
       </SectionErrorBoundary>
+
+      {/* Related services — internal linking */}
+      <RelatedServicesStrip
+        heading="Explore related services"
+        services={[
+          { label: 'SaaS Website Design', href: '/pages/saas-website-design' },
+          { label: 'Next.js Development', href: '/pages/next-js-development' },
+          { label: 'ReactJS Development', href: '/pages/reactjs-development' },
+          { label: 'Node.js Development', href: '/pages/nodejs-development' },
+          { label: 'AI Chatbot Development', href: '/pages/ai-chatbot-development' },
+          { label: 'Web Development India', href: '/pages/web-development' },
+        ]}
+      />
 
       {/* Scroll To Top - Smooth scroll to top */}
       <ScrollToTop />

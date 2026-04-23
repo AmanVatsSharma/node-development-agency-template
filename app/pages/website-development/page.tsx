@@ -10,6 +10,7 @@ import { ContactSection } from "./_components/contact-section";
 import { HeroParallax } from "@/app/components/ui/hero-parallax";
 import { StickyScroll } from "@/app/components/ui/sticky-scroll-reveal";
 import { Spotlight } from "@/app/components/ui/spotlight";
+import { RelatedServicesStrip } from "@/app/components/RelatedServicesStrip";
 
 const products = [
   {
@@ -175,6 +176,16 @@ export default function Home() {
         <SectionErrorBoundary name="ContactSection"><ContactSection /></SectionErrorBoundary>
       </Spotlight>
 
+      <RelatedServicesStrip
+        heading="Explore related services"
+        services={[
+          { label: 'SaaS Website Design', href: '/pages/saas-website-design' },
+          { label: 'Next.js Development', href: '/pages/next-js-development' },
+          { label: 'ReactJS Development', href: '/pages/reactjs-development' },
+          { label: 'Node.js Development', href: '/pages/nodejs-development' },
+          { label: 'Shopify Store Setup', href: '/pages/shopify-store-setup' },
+        ]}
+      />
     </>
   );
 }
