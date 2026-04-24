@@ -77,7 +77,7 @@ If you're serious about "lean MVP," at least 60% of your initial feature list sh
 - Timeline: 6 weeks
 - Result: 40 paying subscribers in month 1 → validated product
 
-**B2B analytics SaaS, Gurgaon**
+**B2B analytics [SaaS](/pages/saas-website-design), Gurgaon**
 - Scope: Login, connect Google Analytics, generate weekly report, Stripe subscription
 - Cost: ₹5,80,000
 - Timeline: 9 weeks
@@ -104,7 +104,7 @@ A bloated ₹15 lakh "MVP" locks you into:
 
 ## What To Avoid
 
-1. **Over-engineering the backend** — Next.js API routes are fine for MVPs
+1. **Over-engineering the backend** — [Next.js](/pages/next-js-development) API routes are fine for MVPs
 2. **Custom design system** — use shadcn/ui
 3. **Native iOS + Android apps** — web first, app second
 4. **Complex infrastructure** — Vercel + Neon + Stripe is enough

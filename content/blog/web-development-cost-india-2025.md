@@ -21,7 +21,7 @@ featured: true
 | Website Type | Cost Range (INR) | Timeline |
 |---|---|---|
 | Basic 5-page website | ₹25,000 – ₹75,000 | 2–3 weeks |
-| Business website (CMS) | ₹75,000 – ₹2,00,000 | 3–5 weeks |
+| [Business website](/pages/business-website) (CMS) | ₹75,000 – ₹2,00,000 | 3–5 weeks |
 | E-commerce (Shopify/WooCommerce) | ₹1,50,000 – ₹5,00,000 | 5–8 weeks |
 | Custom web application (Next.js) | ₹3,00,000 – ₹15,00,000 | 8–16 weeks |
 | Enterprise platform | ₹10,00,000 – ₹50,00,000+ | 4–12 months |
