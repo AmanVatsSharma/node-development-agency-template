@@ -7,6 +7,7 @@ import {
 import { companyProfile } from '@/app/data/companyProfile';
 import { SEO_SITE_URL, toAbsoluteSeoUrl } from '@/app/lib/seo/constants';
 import { getBlogPost } from '@/app/lib/blog';
+import prisma from '@/app/lib/prisma';
 
 interface BlogSlugLayoutProps {
   children: React.ReactNode;
@@ -54,24 +55,31 @@ export async function generateMetadata({ params }: BlogSlugMetadataParams): Prom
   const normalizedSlug = normalizeBlogSlugForMetadata(rawSlug);
 
   try {
-    const post = await getBlogPost(normalizedSlug);
+    const dbPost = await prisma.blogPost.findUnique({ where: { slug: normalizedSlug } });
+    const post = dbPost ?? await getBlogPost(normalizedSlug);
     if (post) {
-      console.log('[SEO] Blog slug metadata generated from filesystem', {
+      const title = (dbPost as { title?: string } | null)?.title ?? (post as { title?: string }).title ?? normalizedSlug;
+      const excerpt = (dbPost as { excerpt?: string } | null)?.excerpt ?? (post as { excerpt?: string }).excerpt ?? '';
+      const image = (dbPost as { image?: string | null } | null)?.image ?? (post as { image?: string }).image ?? '/logo.png';
+      const tags = (post as { tags?: string[] }).tags ?? [];
+      const category = (post as { category?: string }).category ?? '';
+      console.log('[SEO] Blog slug metadata generated', {
+        source: dbPost ? 'database' : 'filesystem',
         requestedSlug: rawSlug,
         canonicalSlug: normalizedSlug,
       });
       return buildPageMetadata({
-        title: `${post.title} | Vedpragya Blog`,
-        description: post.excerpt,
+        title: `${title} | Vedpragya Blog`,
+        description: excerpt,
         path: `/pages/blog/${normalizedSlug}`,
         keywords: [
-          ...(post.tags || []),
-          post.category,
+          ...tags,
+          category,
           'vedpragya blog',
           'software development insights',
           'digital growth insights',
         ].filter(Boolean) as string[],
-        imagePath: post.image || '/logo.png',
+        imagePath: image || '/logo.png',
         ogType: 'article',
       });
     }

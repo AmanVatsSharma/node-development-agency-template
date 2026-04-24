@@ -1,6 +1,7 @@
 import React from 'react';
 import { companyProfile } from '@/app/data/companyProfile';
-import { SEO_DEFAULT_DESCRIPTION, SEO_SITE_URL } from '@/app/lib/seo/constants';
+import { SEO_DEFAULT_DESCRIPTION } from '@/app/lib/seo/constants';
+import { SEO_SITE_URL } from '@/app/lib/seo/constants';
 
 interface OrganizationStructuredDataProps {
   name?: string;

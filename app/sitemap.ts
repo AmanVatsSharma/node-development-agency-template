@@ -2,6 +2,7 @@ import type { MetadataRoute } from 'next';
 import { getAllBlogPosts } from '@/app/lib/blog';
 import { getStaticSeoRoutes } from '@/app/lib/seo/routes';
 import { toAbsoluteSeoUrl } from '@/app/lib/seo/constants';
+import prisma from '@/app/lib/prisma';
 
 type DynamicBlogEntry = {
   slug: string;
@@ -52,7 +53,7 @@ function getPriorityForRoute(path: string): number {
 
   // Core navigational pages
   if (path === '/pages/services') return 0.95;
-  if (path === '/pages/contact') return 0.94;
+  if (path === '/pages/contact') return 0.92;
   if (path === '/pages/about') return 0.92;
 
   // Portfolio is a key trust signal; blog drives recurring traffic
@@ -254,12 +255,11 @@ function mergeDuplicateSitemapEntry(
 
 /**
  * Assign blog post priority based on how recently it was updated.
- * More recently updated posts are promoted slightly so Googlebot discovers
- * new/refreshed content faster.
+ * Baseline is 0.78 for posts updated within 30 days. Older posts taper down.
  *
  * Tiers:
  *   < 7 days old   → 0.80
- *   < 30 days old  → 0.78
+ *   < 30 days old  → 0.78  (baseline)
  *   < 90 days old  → 0.75
  *   older          → 0.72
  */
@@ -273,24 +273,39 @@ function getBlogPostPriority(updatedAt: Date): number {
   return 0.72;
 }
 
-function getBlogEntries(): DynamicBlogEntry[] {
+async function getBlogEntries(): Promise<DynamicBlogEntry[]> {
+  const fallbackBlogPosts = getAllBlogPosts();
+  const staticFallback: DynamicBlogEntry[] = fallbackBlogPosts.map((post) => ({
+    slug: post.slug,
+    updatedAt: new Date(post.publishedAt),
+  }));
+
+  let dbEntries: DynamicBlogEntry[] | null = null;
+
   try {
-    const posts = getAllBlogPosts();
-    const mappedEntries = posts.map((post) => ({
-      slug: post.slug,
-      updatedAt: new Date(post.updatedAt || post.publishedAt),
-    }));
-    const normalized = normalizeAndFilterBlogEntries(mappedEntries, 'filesystem');
-    console.log('[SEO] Sitemap blog entries loaded from filesystem', {
-      count: normalized.length,
-      originalCount: mappedEntries.length,
+    const rows = await prisma.blogPost.findMany({
+      select: { slug: true, updatedAt: true },
+      orderBy: { updatedAt: 'desc' },
     });
-    return normalized;
+    const normalized = normalizeAndFilterBlogEntries(rows, 'database');
+
+    if (normalized.length === 0) {
+      console.warn('[SEO] Database blog entries were invalid for sitemap. Falling back to static data.');
+      const fallbackNormalized = normalizeAndFilterBlogEntries(staticFallback, 'fallback');
+      console.log('[SEO] Sitemap blog entries loaded from static fallback', { count: fallbackNormalized.length });
+      return fallbackNormalized;
+    }
+
+    dbEntries = normalized;
+    console.log('[SEO] Sitemap blog entries loaded from database', { count: dbEntries.length });
+    return dbEntries;
   } catch (error) {
-    console.error('[SEO] Failed to load blog posts from filesystem for sitemap.', {
+    console.error('[SEO] Failed to load blog posts from database for sitemap. Falling back to static data.', {
       error: error instanceof Error ? error.message : String(error),
     });
-    return [];
+    const fallbackNormalized = normalizeAndFilterBlogEntries(staticFallback, 'fallback');
+    console.log('[SEO] Sitemap blog entries loaded from static fallback', { count: fallbackNormalized.length });
+    return fallbackNormalized;
   }
 }
 
@@ -314,7 +329,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: getPriorityForRoute(route),
   }));
 
-  const blogEntries = getBlogEntries();
+  const blogEntries = await getBlogEntries();
+  // Blog detail entries: priority: 0.78 is the 30-day baseline (recency tiers above/below)
   const dynamicBlogEntries: MetadataRoute.Sitemap = blogEntries.map((entry) => ({
     url: toAbsoluteSeoUrl(`/pages/blog/${entry.slug}`),
     lastModified: entry.updatedAt,

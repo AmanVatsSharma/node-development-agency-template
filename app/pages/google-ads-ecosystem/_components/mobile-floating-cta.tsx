@@ -59,7 +59,7 @@ export function MobileFloatingCTA() {
 
   const handleEmailClick = () => {
     handleCTAClick('email');
-    window.location.href = 'mailto:info@vedpragyabharat.com';
+    window.location.href = 'mailto:info@vedpragya.com';
   };
 
   const handleWhatsAppClick = () => {

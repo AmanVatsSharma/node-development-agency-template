@@ -222,7 +222,7 @@ export default function TermsOfServicePage() {
                   <strong>GST:</strong> 06AALCV0051A1ZV
                 </p>
                 <p className="text-gray-700 dark:text-gray-300 mb-2">
-                  <strong>Email:</strong> legal@vedpragyabharat.com
+                  <strong>Email:</strong> legal@vedpragya.com
                 </p>
                 <p className="text-gray-700 dark:text-gray-300">
                   <strong>Global Offices:</strong> India (HQ), Dubai, California, Toronto, Shenzhen
