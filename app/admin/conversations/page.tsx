@@ -401,24 +401,24 @@ export default function AdminConversationsListPage() {
               />
             </div>
           </div>
-          <Select value={statusFilter} onValueChange={setStatusFilter}>
+          <Select value={statusFilter || 'all'} onValueChange={(val) => setStatusFilter(val === 'all' ? '' : val)}>
             <SelectTrigger className="w-40">
               <SelectValue placeholder="All statuses" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">All</SelectItem>
+              <SelectItem value="all">All</SelectItem>
               <SelectItem value="active">Active</SelectItem>
               <SelectItem value="converted">Converted</SelectItem>
               <SelectItem value="abandoned">Abandoned</SelectItem>
               <SelectItem value="closed">Closed</SelectItem>
             </SelectContent>
           </Select>
-          <Select value={leadFilter} onValueChange={setLeadFilter}>
+          <Select value={leadFilter || 'all'} onValueChange={(val) => setLeadFilter(val === 'all' ? '' : val)}>
             <SelectTrigger className="w-40">
               <SelectValue placeholder="All leads" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">All</SelectItem>
+              <SelectItem value="all">All</SelectItem>
               <SelectItem value="leads">Leads only</SelectItem>
               <SelectItem value="no_leads">Without leads</SelectItem>
             </SelectContent>
