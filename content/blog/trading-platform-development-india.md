@@ -12,7 +12,7 @@ authorTitle: "Founder, Vedpragya"
 featured: false
 ---
 
-India's retail trading boom (12+ crore demat accounts, ₹50+ trillion market cap) has created massive demand for custom trading platforms. But trading software is among the hardest categories to build right — combining real-time systems, strict regulatory compliance, high availability requirements, and massive scalability challenges. Here's what it actually takes to succeed.
+India's retail trading boom (12+ crore demat accounts, ₹50+ trillion market cap) has created massive demand for custom [trading software](/pages/trading-software). But trading software is among the hardest categories to build right — combining real-time systems, strict regulatory compliance, high availability requirements, and massive scalability challenges. Here's what it actually takes to succeed.
 
 ## What a Trading Platform Actually Needs
 
@@ -371,7 +371,7 @@ Standard model: Percentage of brokerage commission. If broker gets ₹50/trade f
 ## Our Experience
 
 We've built:
-- **NSE/MCX live market data streaming APIs** (sub-100ms latency)
+- **[NSE/MCX live market data](/pages/nse-mcx-live-market-data) streaming APIs** (sub-100ms latency)
 - **Custom OMS backends for prop desks** (handling 10K+ orders/day)
 - **Broker admin dashboards** (full settlement, reporting, compliance)
 - **Real-time charting frontends** (TradingView integration)

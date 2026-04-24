@@ -12,7 +12,7 @@ authorTitle: "Founder, Vedpragya"
 featured: false
 ---
 
-B2B lead generation in India is harder than it used to be. Ad costs keep rising, email deliverability is a mess, and buyers ignore cold calls. But there are strategies that still work remarkably well — if you know which channels to focus on and how to execute them.
+[B2B lead generation](/pages/b2b-lead-generation-ads) in India is harder than it used to be. Ad costs keep rising, email deliverability is a mess, and buyers ignore cold calls. But there are strategies that still work remarkably well — if you know which channels to focus on and how to execute them.
 
 We've run 50+ B2B lead generation campaigns for software companies, agencies, and service businesses across India. Here's what actually converts leads into meetings and meetings into customers in 2025.
 
@@ -73,7 +73,7 @@ Most B2B companies waste money on Google Ads by targeting too broad or showing a
 - Cost per lead: ₹1,000–₹5,000
 - Lead to customer conversion: 5–20%
 
-**Real case study:** A Bangalore-based software company spent ₹3 lakhs/month on Google Ads, generated 45 leads/month, converted 4-5 to customers at ₹15 lakh deal value. ROI: 2,000%+ within 6 weeks.
+**Real case study:** A Bangalore-based software company spent ₹3 lakhs/month on [Google Ads](/pages/google-ads-management), generated 45 leads/month, converted 4-5 to customers at ₹15 lakh deal value. ROI: 2,000%+ within 6 weeks.
 
 **Cost:** ₹2-10 lakhs/month in ad spend (depending on scale)
 

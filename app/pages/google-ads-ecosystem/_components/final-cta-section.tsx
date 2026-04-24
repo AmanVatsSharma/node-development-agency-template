@@ -352,7 +352,7 @@ export function FinalCTASection() {
               </a>
               
               <a
-                href="mailto:info@vedpragyabharat.com"
+                href="mailto:info@vedpragya.com"
                 onClick={() => handleCTAClick('email')}
                 className="bg-white/20 backdrop-blur-sm text-white px-8 py-4 rounded-xl font-semibold text-lg hover:bg-white/30 transition-all duration-300 flex items-center justify-center gap-2 border border-white/30"
               >

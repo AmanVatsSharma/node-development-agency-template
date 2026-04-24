@@ -288,7 +288,7 @@ Not legally, but DPDP Act compliance is now mandatory. If you serve NRI or forei
 **What's the cheapest way to start a healthcare app?**
 Start with a tightly-scoped MVP (₹4–6 lakhs) focused on the single workflow that drives revenue — usually appointment booking + teleconsult.
 
-**How do I choose between building a web app, mobile app, or both?**
+**How do I choose between building a [web application](/pages/web-development), mobile app, or both?**
 Doctors prefer web (desktop workstations). Patients prefer mobile (smartphones). Build both. Web-first for doctors, mobile-first for patients.
 
 **What's the most complex integration?**
@@ -311,7 +311,7 @@ Initial audit: ₹2-8 lakhs. Ongoing: ₹50,000-2,00,000/year for audits and inf
 
 ## Building Healthcare Software?
 
-Vedpragya has deep healthcare software experience — telemedicine, HIMS, lab platforms, pharmacy. We handle compliance, integrations, and production-grade security.
+Vedpragya has deep [healthcare software](/pages/healthcare-software-development) experience — telemedicine, HIMS, lab platforms, pharmacy. We handle compliance, integrations, and production-grade security.
 
 We've built:
 - 4 telemedicine platforms (50+ doctors, 5,000+ patients combined)

@@ -101,14 +101,14 @@ function verifyCanonicalSeoConstants(): void {
     });
   }
 
-  const expectedOrigin = getCanonicalOrigin(companyProfile.websiteUrl);
+  const normalizedCompanyProfileOrigin = getCanonicalOrigin(companyProfile.websiteUrl);
   const actualOrigin = getCanonicalOrigin(SEO_SITE_URL);
-  if (actualOrigin !== expectedOrigin) {
+  if (actualOrigin !== normalizedCompanyProfileOrigin) {
     logError('SEO_SITE_URL should match normalized companyProfile.websiteUrl origin', {
       SEO_SITE_URL,
       actualOrigin,
       companyProfileWebsiteUrl: companyProfile.websiteUrl,
-      expectedOrigin,
+      normalizedCompanyProfileOrigin,
     });
   }
 

@@ -12,7 +12,7 @@ authorTitle: "Founder, Vedpragya"
 featured: true
 ---
 
-Choosing the right AI model for your chatbot can make or break your customer experience. Let's compare the top 3 AI models with real data.
+Choosing the right AI model for your [chatbot](/pages/ai-chatbot-development) can make or break your customer experience. Let's compare the top 3 AI models with real data.
 
 ## Quick Comparison Table
 
@@ -110,7 +110,7 @@ An e-commerce store using Gemini:
 
 ## Our Recommendation
 
-We offer **multi-provider AI** in our chatbots, so you can:
+We offer **multi-provider AI** in our chatbots for any [web application](/pages/web-development), so you can:
 
 1. **Start with GPT-4** for quality and maturity
 2. **Switch to Claude** if you need long context

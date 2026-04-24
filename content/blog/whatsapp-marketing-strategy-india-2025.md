@@ -81,7 +81,7 @@ Approval takes 24–48 hours. Rejections happen if templates look spammy or viol
 ### Phase 4: Automation & AI
 Manual WhatsApp doesn't scale past ~500 customers. You need:
 
-- **Chatbot for replies** — answers FAQs 24/7, transfers hot leads to humans
+- **[AI chatbot](/pages/ai-chatbot-development) for replies** — answers FAQs 24/7, transfers hot leads to humans
 - **Broadcast tools** — send to tens of thousands via approved templates
 - **Segmentation** — target by purchase history, location, engagement
 - **CRM sync** — Zoho, HubSpot, Salesforce integrations
@@ -267,7 +267,7 @@ Meta will ban your number if you violate these. Recovery is painful.
 ## Building Your WhatsApp Marketing Stack
 
 ### Software Layers:
-1. **WhatsApp Business API** (official, via BSP)
+1. **[WhatsApp Business API](/pages/whatsapp-business-api)** (official, via BSP)
 2. **Broadcast platform** (Wati, Interakt, Gallabox, or custom)
 3. **CRM integration** (sync with Zoho, HubSpot, etc.)
 4. **Chatbot for automation** (handles FAQ, lead qualification)

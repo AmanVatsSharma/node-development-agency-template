@@ -12,7 +12,7 @@ authorTitle: "Founder, Vedpragya"
 featured: false
 ---
 
-After optimizing 100+ Shopify stores, these 15 tactics consistently boost conversions. Real data included.
+After optimizing 100+ [Shopify stores](/pages/shopify-store-setup), these 15 tactics consistently boost conversions. Real data included.
 
 ## 1. Add Trust Badges Above Fold
 
@@ -174,7 +174,7 @@ After optimizing 100+ Shopify stores, these 15 tactics consistently boost conver
 **CRO Implementation (8 weeks):**
 
 **Week 1-2: Audit & Planning**
-- Heatmap analysis showed 65% of traffic bouncing from product pages
+- Heatmap analysis showed 65% of traffic bouncing from [product pages](/pages/shopify-product-page-customization)
 - Users clicking on product images but no 360° view
 - Checkout had 5 steps with mandatory account creation
 

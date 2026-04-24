@@ -12,7 +12,7 @@ authorTitle: "Founder, Vedpragya"
 featured: true
 ---
 
-If you're not using an AI chatbot in 2025, you're literally watching money walk away from your website. Let me show you the exact numbers based on 50+ real implementations across India, UAE, and the US.
+If you're not using an [AI chatbot](/pages/ai-chatbot-development) in 2025, you're literally watching money walk away from your website. Let me show you the exact numbers based on 50+ real implementations across India, UAE, and the US.
 
 ## The Reality Check: What's Your Baseline?
 
@@ -133,7 +133,7 @@ Use this formula:
 (Monthly Website Visitors × Conversion Rate Increase % × Avg Order Value) - Monthly Chatbot Cost = Monthly Net Benefit
 ```
 
-**Example for a ₹5 crore/year e-commerce business:**
+**Example for a ₹5 crore/year [e-commerce](/pages/business-website) business:**
 - 25,000 monthly visitors
 - Current conversion rate: 2%
 - Avg order value: ₹8,000

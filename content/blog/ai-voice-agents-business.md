@@ -19,7 +19,7 @@ Imagine a customer support agent who:
 - Costs 90% less than human agents
 - Never has a bad day
 
-Welcome to AI voice agents in 2025.
+Welcome to [AI voice agents](/pages/ai-voice-agents) in 2025.
 
 ## What Are AI Voice Agents?
 
@@ -66,7 +66,7 @@ Real estate agencies are using AI to qualify leads:
 - Transfer hot leads to sales team
 
 ### 4. Customer Support
-Tech companies handling tier-1 support:
+Tech companies handling tier-1 support via [AI chatbot](/pages/ai-chatbot-development):
 - Account balance inquiries
 - Password resets
 - Order status checks

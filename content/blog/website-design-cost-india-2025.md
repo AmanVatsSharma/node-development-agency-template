@@ -12,13 +12,13 @@ authorTitle: "Founder, Vedpragya"
 featured: false
 ---
 
-"How much does a good website design cost in India?" We get asked this daily. Here's the honest, unvarnished answer — broken down by type, quality, and what you actually get.
+"How much does a good [website design](/pages/business-website) cost in India?" We get asked this daily. Here's the honest, unvarnished answer — broken down by type, quality, and what you actually get.
 
 ## Quick Price Reference
 
 | Website Type | Cheap Template | Quality Custom | Premium Custom |
 |---|---|---|---|
-| Business website (5–10 pages) | ₹15,000 | ₹75,000–₹1,50,000 | ₹2,50,000+ |
+| [Business website](/pages/business-website) (5–10 pages) | ₹15,000 | ₹75,000–₹1,50,000 | ₹2,50,000+ |
 | Corporate / agency | ₹35,000 | ₹1,25,000–₹2,50,000 | ₹4,00,000+ |
 | E-commerce | ₹45,000 | ₹1,50,000–₹3,50,000 | ₹6,00,000+ |
 | SaaS landing + app shell | ₹60,000 | ₹2,00,000–₹4,50,000 | ₹8,00,000+ |
@@ -66,7 +66,7 @@ A custom website at ₹2 lakh that converts at 4% earns 4–8× more than a ₹2
 - Cost: ₹1,85,000 one-time
 - Result: 8 qualified project enquiries/month (vs 1 before)
 
-**SaaS startup (B2B analytics)** — Marketing site + dashboard shell + blog + docs
+**[SaaS](/pages/website-development) startup (B2B analytics)** — Marketing site + dashboard shell + blog + docs
 - Cost: ₹4,80,000 one-time
 - Result: 14% signup conversion rate
 
@@ -99,7 +99,7 @@ A useful rule: **budget 1–3% of your first year's projected online revenue** o
 
 ## Detailed Cost Breakdown: Business Website Example
 
-**Project: B2B SaaS landing page + documentation site** (₹2,00,000)
+**Project: B2B [SaaS](/pages/website-development) landing page + documentation site** (₹2,00,000)
 
 | Component | Cost | Time | Details |
 |---|---|---|---|

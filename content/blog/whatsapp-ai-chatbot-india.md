@@ -12,7 +12,7 @@ authorTitle: "Founder, Vedpragya"
 featured: false
 ---
 
-With 98% open rates and 2+ billion users, WhatsApp is THE channel for customer engagement in India. Here's how to leverage AI chatbots on WhatsApp.
+With 98% open rates and 2+ billion users, WhatsApp is THE channel for customer engagement in India. Here's how to leverage [AI chatbots](/pages/ai-chatbot-development) on WhatsApp.
 
 ## Why WhatsApp for India?
 
@@ -26,7 +26,7 @@ WhatsApp isn't just a messaging app in India — it's the default communication 
 
 ## Official WhatsApp Business API
 
-You MUST use the official API. No unofficial solutions!
+You MUST use the official [WhatsApp Business API](/pages/whatsapp-business-api). No unofficial solutions!
 
 ### Requirements:
 1. Registered business in India

@@ -351,7 +351,7 @@ Shopify Admin (Product Management)
 ## Frequently Asked Questions
 
 **How much does a Shopify headless migration cost in India?**
-Our headless Shopify builds start at ₹1,00,000 for basic stores and range to ₹5,00,000+ for enterprise projects with custom features.
+Our [headless migration](/pages/shopify-headless-migration) builds start at ₹1,00,000 for basic stores and range to ₹5,00,000+ for enterprise projects with custom features.
 
 **Does headless Shopify improve SEO?**
 Yes — page speed improvements alone typically drive a 30-50% increase in organic traffic within 6 months.
@@ -369,7 +369,7 @@ Yes, but it's not ideal. Your product data lives in Shopify, so you can switch f
 Headless handles large catalogs better with proper caching strategies. ISR (Incremental Static Regeneration) allows handling dynamic catalogs efficiently.
 
 **Do I need to rewrite everything?**
-Not everything. Shopify admin remains the same. You're rebuilding the customer-facing storefront only.
+Not everything. Shopify admin remains the same. You're rebuilding the customer-facing [Shopify store](/pages/shopify-store-setup) only.
 
 **What about mobile apps? Can I leverage the same backend?**
 Yes! This is a key advantage of headless. You can build iOS/Android apps using the same Shopify Storefront API.
