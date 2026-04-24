@@ -248,16 +248,19 @@ model Lead {
   campaign   String?
   leadSource String?
   raw        Json?
-  status     String   @default("pending") // pending, pushed, failed
-  zohoLeadId String?
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  status        String   @default("pending") // pending, pushed, failed (Zoho CRM push status)
+  zohoLeadId    String?
+  contactStatus String   @default("new") // new, contacted, ignored, fake, interested, converted
+  contactNotes  String?  @db.Text
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
   // Relations
   healthcareMetadata HealthcareLeadMetadata?
 
   @@index([createdAt])
   @@index([status])
+  @@index([contactStatus])
 }
 
 // Logs for all integration interactions (Zoho + Google)
