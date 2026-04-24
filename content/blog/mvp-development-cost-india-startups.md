@@ -45,7 +45,7 @@ Sweet spot for most Indian early-stage startups: **₹4,00,000–₹8,00,000 ove
 
 ## The MVP Stack We Recommend
 
-- **Frontend:** Next.js + Tailwind + shadcn/ui
+- **Frontend:** [Next.js](/pages/next-js-development) + Tailwind + shadcn/ui
 - **Backend:** Next.js API routes or separate Node.js (Fastify)
 - **Database:** PostgreSQL with Prisma
 - **Auth:** NextAuth or Clerk
@@ -112,7 +112,7 @@ A bloated ₹15 lakh "MVP" locks you into:
 
 ## Detailed Cost Breakdown: SaaS MVP Example
 
-Let's walk through an actual ₹6 lakh SaaS MVP to show where money goes:
+Let's walk through an actual ₹6 lakh [SaaS](/pages/saas-website-design) MVP to show where money goes:
 
 ### Example: Analytics Dashboard for Shopify Stores
 

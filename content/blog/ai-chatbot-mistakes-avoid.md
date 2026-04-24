@@ -12,7 +12,7 @@ authorTitle: "Founder, Vedpragya"
 featured: false
 ---
 
-After deploying 50+ AI chatbots, we've seen these mistakes tank conversion rates. Here's what to avoid.
+After deploying 50+ [AI chatbots](/pages/ai-chatbot-development), we've seen these mistakes tank conversion rates. Here's what to avoid.
 
 ## Mistake #1: No Clear Purpose
 
@@ -82,7 +82,7 @@ This increases relevance by 2-3× immediately.
 **The Problem:** "Your request has been submitted. We will contact you."
 
 **The Fix:** Add personality:
-"Awesome! I've sent your details to Rajesh (our Shopify expert). He'll WhatsApp you within 2 hours. Meanwhile, check out this case study: [link]"
+"Awesome! I've sent your details to Rajesh (our Shopify expert). He'll [WhatsApp](/pages/whatsapp-business-api) you within 2 hours. Meanwhile, check out this case study: [link]"
 
 **Result:** 35% higher satisfaction score
 

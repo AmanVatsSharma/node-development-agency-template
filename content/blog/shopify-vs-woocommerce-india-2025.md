@@ -16,7 +16,7 @@ featured: false
 
 ## The 30-Second Answer
 
-- **Shopify** — if you want to focus on selling, not managing. Faster to launch, easier to scale, more reliable. Costs more long-term.
+- **[Shopify](/pages/shopify-store-setup)** — if you want to focus on selling, not managing. Faster to launch, easier to scale, more reliable. Costs more long-term.
 - **WooCommerce** — if you already run on WordPress, have technical resources, or need unusual customization. Cheaper on paper, costlier in hidden maintenance.
 
 For **70% of Indian e-commerce businesses**, Shopify wins. For **30%** — specifically content-heavy sites, niche marketplaces, or ultra-custom builds — WooCommerce is better.
@@ -173,7 +173,7 @@ For **70% of Indian e-commerce businesses**, Shopify wins. For **30%** — speci
 - Wanted to own the data
 
 **Costs:**
-- Setup: ₹1,50,000 (custom WordPress + WooCommerce development)
+- Setup: ₹1,50,000 (custom WordPress + [web development](/pages/web-development))
 - Hosting (managed WordPress): ₹4,500/month
 - Plugins: ₹3,000/month
 - Developer (2 FTE for ongoing): ₹80,000/month

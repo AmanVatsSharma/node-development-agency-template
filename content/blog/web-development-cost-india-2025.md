@@ -36,7 +36,7 @@ A 5-page brochure site is nothing like a multi-vendor marketplace with real-time
 ### 2. Technology Stack
 - **WordPress + theme**: cheapest, fastest, limited flexibility
 - **Shopify**: best for product-focused e-commerce
-- **Next.js/React**: premium performance, great SEO, highest build quality
+- **[Next.js/React](/pages/next-js-development)**: premium performance, great SEO, highest build quality
 - **Custom Node.js backend**: needed for complex logic, integrations, real-time features
 
 ### 3. Design Quality
@@ -53,7 +53,7 @@ Hosting, domain, SSL, maintenance, security updates: ₹500–₹15,000/month de
 
 ## Real Project Budgets (From Our Portfolio)
 
-### Local gym in Gurgaon — Business website with online class booking
+### Local gym in Gurgaon — [Business website](/pages/business-website) with online class booking
 - **Scope:** 8 pages, custom design, Razorpay integration, admin dashboard for class management
 - **Features:** 
   - Schedule management with instructor profiles
@@ -67,7 +67,7 @@ Hosting, domain, SSL, maintenance, security updates: ₹500–₹15,000/month de
 - **Outcome:** Within 3 months, converted 22% of website visitors to paid members (₹28L annual recurring revenue from online bookings alone)
 
 ### D2C fashion brand — Shopify headless store
-- **Scope:** 120 products, custom Next.js frontend, Algolia search, WhatsApp integration
+- **Scope:** 120 products, custom [Next.js](/pages/next-js-development) frontend, Algolia search, WhatsApp integration
 - **Features:**
   - Custom product pages with 360° imagery
   - Smart search with Algolia (typo-tolerant, synonym-aware)

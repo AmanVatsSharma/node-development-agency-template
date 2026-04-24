@@ -28,7 +28,7 @@ featured: false
 ## When Google Ads Wins
 
 1. **You need leads this week** — SEO cannot deliver in under 3 months
-2. **You're testing a new offer** — Ads let you validate messaging fast
+2. **You're testing a new offer** — [Google Ads](/pages/google-ads-management) let you validate messaging fast
 3. **You're running seasonal sales** — Festive sales, product launches
 4. **You're in a category with unclear search intent**
 5. **Your competitors dominate organic results** — buying the top slot is the only way in
@@ -88,7 +88,7 @@ SEO is a long bet. If you can't afford to wait 6–9 months for results, you'll 
 ## What Most Indian Businesses Get Wrong
 
 1. **Starting SEO too late** — Year 2+ is too late; start the foundation on day 1
-2. **Treating SEO as blog posts** — SEO is metadata, schema, links, architecture, *and* content
+2. **Treating [SEO](/pages/seo-audit) as blog posts** — SEO is metadata, schema, links, architecture, *and* content
 3. **Treating Ads as a silver bullet** — CPCs only go up. Ads without better unit economics doesn't scale
 4. **Not tracking leads to revenue** — Measuring clicks, not customers
 

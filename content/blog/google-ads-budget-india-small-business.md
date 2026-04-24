@@ -16,7 +16,7 @@ featured: true
 
 ## The Minimum You Need to Even Start
 
-**Do not run Google Ads in India with less than ₹25,000/month.** Below that, you cannot gather enough data to optimize anything, and you'll waste your budget.
+**Do not run [Google Ads](/pages/google-ads-management) in India with less than ₹25,000/month.** Below that, you cannot gather enough data to optimize anything, and you'll waste your budget.
 
 Here's why: Google's algorithms need ~30 conversions/month to exit the "learning phase." If each conversion costs ₹800, you need ₹24,000 just for the algorithm to work.
 
@@ -161,7 +161,7 @@ Breakdown:
 - **CPL target:** ₹25,000 (for high-value services)
 - **Required budget:** ₹1.5-1.8 lakhs
 
-### Template 3: Local Business (Gym/Salon)
+### Template 3: [Local Business](/pages/local-business-google-ads) (Gym/Salon)
 - Monthly memberships target: 10
 - Membership value: ₹5,000
 - Conversion rate: 8% (1 member per 12-13 inquiries)

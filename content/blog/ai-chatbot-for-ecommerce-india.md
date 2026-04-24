@@ -12,7 +12,7 @@ authorTitle: "Founder, Vedpragya"
 featured: false
 ---
 
-Every Indian e-commerce brand we work with is dealing with the same three problems: cart abandonment (68–78% of carts abandoned), slow customer support (responses taking hours instead of minutes), and low repeat purchase rates (60–70% of customers never buy again). AI chatbots fix all three — without hiring more support staff. Here's the 2025 playbook based on real implementations with 50+ Indian e-commerce brands.
+Every Indian e-commerce brand we work with is dealing with the same three problems: cart abandonment (68–78% of carts abandoned), slow customer support (responses taking hours instead of minutes), and low repeat purchase rates (60–70% of customers never buy again). [AI chatbots](/pages/ai-chatbot-development) fix all three — without hiring more support staff. Here's the 2025 playbook based on real implementations with 50+ Indian e-commerce brands.
 
 ## What E-commerce AI Chatbots Actually Do Well (With Metrics)
 
@@ -21,7 +21,7 @@ Every Indian e-commerce brand we work with is dealing with the same three proble
    - Handles 70% of "What do you have in X category?" queries
    - Learns from filters customers apply and suggests similar products
 
-2. **Cart recovery** — Automatic WhatsApp nudges with personalized discount codes
+2. **Cart recovery** — Automatic [WhatsApp](/pages/whatsapp-business-api) nudges with personalized discount codes
    - Recovers 15–25% of abandoned carts (standard: 8–12% recovery rate)
    - 2–3 messages over 24 hours with escalating incentives
    - Per-customer tracking of abandonment patterns

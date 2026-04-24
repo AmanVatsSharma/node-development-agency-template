@@ -268,7 +268,7 @@ For each product, include:
 - Fix any broken links or payment issues
 
 ### Week 2–4
-- A/B test product page layouts
+- A/B test [product page](/pages/shopify-product-page-customization) layouts
 - Optimize product images and descriptions
 - Test different CTAs ("Add to Cart" vs "Buy Now")
 - Implement email sequences (welcome, cart recovery, post-purchase)
@@ -341,7 +341,7 @@ Not ideal. Customers want variety. Minimum recommended: 25–50 products (even i
 
 ## Ready to Launch Your Store?
 
-We help Indian brands set up Shopify stores with complete Indian payment + shipping + GST compliance. We handle setup, optimization, and post-launch support.
+We help Indian brands [set up your Shopify store](/pages/shopify-store-setup) with complete Indian payment + shipping + GST compliance. We handle setup, optimization, and post-launch support.
 
 **What's included:**
 - Complete store setup (7–10 days)

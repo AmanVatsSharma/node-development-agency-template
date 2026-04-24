@@ -12,7 +12,7 @@ authorTitle: "Founder, Vedpragya"
 featured: false
 ---
 
-Every Indian business growing past 10 sales leads per week hits the same wall: spreadsheets stop working. Excel sheets become unreliable, data gets lost, team members can't access information simultaneously, and customer context becomes impossible to track. Picking the right CRM — and actually getting your team to use it — is the difference between scaling and stalling.
+Every Indian business growing past 10 sales leads per week hits the same wall: spreadsheets stop working. Excel sheets become unreliable, data gets lost, team members can't access information simultaneously, and customer context becomes impossible to track. Picking the right [CRM software](/pages/crm) — and actually getting your team to use it — is the difference between scaling and stalling.
 
 This guide covers everything you need to know: real cost comparisons, India-specific considerations, implementation challenges, and whether custom development makes sense for your business.
 
@@ -274,7 +274,7 @@ HubSpot's free tier is the cheapest real CRM (unlimited contacts, basic automati
 Yes — it's designed for Indian tax and compliance requirements, has the largest community of Indian users, and integrates well with Indian payment gateways and accounting software. 68% of Indian SMBs using paid CRMs choose Zoho.
 
 **When does custom CRM development make sense?**
-Custom CRM development makes sense when you have:
+[Custom CRM development](/pages/web-development) makes sense when you have:
 1. 15+ sales team members (ROI math works)
 2. Unique sales processes that off-the-shelf CRMs can't support
 3. Long-term commitment to owning your tech stack

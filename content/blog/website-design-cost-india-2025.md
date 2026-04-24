@@ -12,7 +12,7 @@ authorTitle: "Founder, Vedpragya"
 featured: false
 ---
 
-"How much does a good website design cost in India?" We get asked this daily. Here's the honest, unvarnished answer — broken down by type, quality, and what you actually get.
+"How much does a good [website design](/pages/business-website) cost in India?" We get asked this daily. Here's the honest, unvarnished answer — broken down by type, quality, and what you actually get.
 
 ## Quick Price Reference
 
@@ -66,7 +66,7 @@ A custom website at ₹2 lakh that converts at 4% earns 4–8× more than a ₹2
 - Cost: ₹1,85,000 one-time
 - Result: 8 qualified project enquiries/month (vs 1 before)
 
-**SaaS startup (B2B analytics)** — Marketing site + dashboard shell + blog + docs
+**[SaaS](/pages/website-development) startup (B2B analytics)** — Marketing site + dashboard shell + blog + docs
 - Cost: ₹4,80,000 one-time
 - Result: 14% signup conversion rate
 
