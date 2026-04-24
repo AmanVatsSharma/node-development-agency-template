@@ -18,7 +18,7 @@ featured: false
 
 | Website Type | Cheap Template | Quality Custom | Premium Custom |
 |---|---|---|---|
-| Business website (5–10 pages) | ₹15,000 | ₹75,000–₹1,50,000 | ₹2,50,000+ |
+| [Business website](/pages/business-website) (5–10 pages) | ₹15,000 | ₹75,000–₹1,50,000 | ₹2,50,000+ |
 | Corporate / agency | ₹35,000 | ₹1,25,000–₹2,50,000 | ₹4,00,000+ |
 | E-commerce | ₹45,000 | ₹1,50,000–₹3,50,000 | ₹6,00,000+ |
 | SaaS landing + app shell | ₹60,000 | ₹2,00,000–₹4,50,000 | ₹8,00,000+ |
@@ -99,7 +99,7 @@ A useful rule: **budget 1–3% of your first year's projected online revenue** o
 
 ## Detailed Cost Breakdown: Business Website Example
 
-**Project: B2B SaaS landing page + documentation site** (₹2,00,000)
+**Project: B2B [SaaS](/pages/website-development) landing page + documentation site** (₹2,00,000)
 
 | Component | Cost | Time | Details |
 |---|---|---|---|
