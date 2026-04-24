@@ -1,6 +1,6 @@
 /**
  * Dashboard Statistics API
- * 
+ *
  * Provides aggregate statistics for the admin dashboard
  */
 
@@ -11,7 +11,10 @@ const prisma = new PrismaClient();
 
 export async function GET(req: NextRequest) {
   try {
-    // Get counts from database
+    const todayStart = new Date(new Date().setHours(0, 0, 0, 0));
+    const weekAgo = new Date();
+    weekAgo.setDate(weekAgo.getDate() - 7);
+
     const [
       blogPostsCount,
       featuredBlogPosts,
@@ -28,6 +31,16 @@ export async function GET(req: NextRequest) {
       activeNewsletter,
       integrationSettings,
       recentLogs,
+      // Leads funnel
+      leadsTotal,
+      leadsNew,
+      leadsContacted,
+      leadsInterested,
+      leadsConverted,
+      leadsToday,
+      // AI Agent
+      aiConvsToday,
+      aiLeadsToday,
     ] = await Promise.all([
       prisma.blogPost.count(),
       prisma.blogPost.count({ where: { featured: true } }),
@@ -47,22 +60,24 @@ export async function GET(req: NextRequest) {
         take: 5,
         orderBy: { createdAt: 'desc' },
       }),
+      // Leads from Lead table
+      prisma.lead.count(),
+      prisma.lead.count({ where: { contactStatus: 'new' } }),
+      prisma.lead.count({ where: { contactStatus: 'contacted' } }),
+      prisma.lead.count({ where: { contactStatus: 'interested' } }),
+      prisma.lead.count({ where: { contactStatus: 'converted' } }),
+      prisma.lead.count({ where: { createdAt: { gte: todayStart } } }),
+      // AI conversations today
+      prisma.aIConversation.count({ where: { createdAt: { gte: todayStart } } }),
+      prisma.aIConversation.count({ where: { createdAt: { gte: todayStart }, leadCaptured: true } }),
     ]);
-
-    // Calculate recent counts (last 7 days)
-    const weekAgo = new Date();
-    weekAgo.setDate(weekAgo.getDate() - 7);
 
     const [recentBlogPosts, todayContacts, recentNewsletter, errorLogs] = await Promise.all([
       prisma.blogPost.count({
         where: { createdAt: { gte: weekAgo } },
       }),
       prisma.contactSubmission.count({
-        where: {
-          createdAt: {
-            gte: new Date(new Date().setHours(0, 0, 0, 0)),
-          },
-        },
+        where: { createdAt: { gte: todayStart } },
       }),
       prisma.newsletterSubscription.count({
         where: { createdAt: { gte: weekAgo } },
@@ -81,11 +96,11 @@ export async function GET(req: NextRequest) {
       projects: {
         total: projectsCount,
         featured: featuredProjects,
-        active: projectsCount, // Could be refined with additional logic
+        active: projectsCount,
       },
       resources: {
         total: resourcesCount,
-        downloads: 0, // Would need tracking implementation
+        downloads: 0,
       },
       services: {
         total: servicesCount,
@@ -110,9 +125,21 @@ export async function GET(req: NextRequest) {
         googleConfigured: !!integrationSettings?.googleConversionId,
         errors: errorLogs,
       },
+      leads: {
+        total: leadsTotal,
+        new: leadsNew,
+        contacted: leadsContacted,
+        interested: leadsInterested,
+        converted: leadsConverted,
+        today: leadsToday,
+      },
+      aiAgent: {
+        conversationsToday: aiConvsToday,
+        leadsToday: aiLeadsToday,
+        conversionRate: aiConvsToday > 0 ? Math.round((aiLeadsToday / aiConvsToday) * 100) : 0,
+      },
     };
 
-    // Format recent activity
     const recentActivity = recentLogs.map((log) => ({
       id: log.id,
       type: log.type,
@@ -121,10 +148,7 @@ export async function GET(req: NextRequest) {
       status: log.level === 'error' ? 'error' : log.level === 'warn' ? 'warning' : 'success',
     }));
 
-    return NextResponse.json({
-      stats,
-      recentActivity,
-    });
+    return NextResponse.json({ stats, recentActivity });
   } catch (error) {
     console.error('[Dashboard API] Error:', error);
     return NextResponse.json(

@@ -18,15 +18,25 @@ export async function GET(req: NextRequest) {
       orderBy: { createdAt: 'desc' },
     });
 
-    // Fetch from Lead table
+    // Fetch from Lead table (include healthcare metadata for lead scores)
     const leads = await prisma.lead.findMany({
       orderBy: { createdAt: 'desc' },
+      include: {
+        healthcareMetadata: {
+          select: {
+            leadScore: true,
+            qualificationLevel: true,
+            priority: true,
+          },
+        },
+      },
     });
 
     // Normalize both into unified format
     const unifiedLeads = [
       ...contactSubmissions.map(c => ({
         id: c.id,
+        tableSource: 'contact' as const,
         name: c.name,
         email: c.email,
         phone: c.phone || undefined,
@@ -36,14 +46,23 @@ export async function GET(req: NextRequest) {
         budget: c.budget || undefined,
         timeline: c.timeline || undefined,
         source: c.source || undefined,
-        status: c.status,
-        notes: c.notes || undefined,
-        conversionType: 'form' as const, // ContactSubmission is always form
+        // For ContactSubmission, status IS the contact pipeline status
+        contactStatus: c.status as string,
+        contactNotes: c.notes || undefined,
+        zohoStatus: undefined, // ContactSubmission doesn't push to Zoho
+        zohoLeadId: undefined,
+        leadScore: undefined,
+        qualificationLevel: undefined,
+        priority: undefined,
+        leadSource: undefined,
+        campaign: undefined,
+        conversionType: 'form' as const,
         createdAt: c.createdAt.toISOString(),
         updatedAt: c.updatedAt.toISOString(),
       })),
       ...leads.map(l => ({
         id: l.id,
+        tableSource: 'lead' as const,
         name: l.name || 'Unknown',
         email: l.email || 'No email',
         phone: l.phone || undefined,
@@ -52,12 +71,17 @@ export async function GET(req: NextRequest) {
         service: undefined,
         budget: undefined,
         timeline: undefined,
-        source: l.leadSource || l.source || undefined,
-        status: l.status,
-        notes: undefined,
+        source: l.source || undefined,
+        contactStatus: l.contactStatus,
+        contactNotes: l.contactNotes || undefined,
+        zohoStatus: l.status, // 'pending' | 'pushed' | 'failed'
+        zohoLeadId: l.zohoLeadId || undefined,
+        leadScore: l.healthcareMetadata?.leadScore ?? undefined,
+        qualificationLevel: l.healthcareMetadata?.qualificationLevel ?? undefined,
+        priority: l.healthcareMetadata?.priority ?? undefined,
         leadSource: l.leadSource || undefined,
         campaign: l.campaign || undefined,
-        conversionType: undefined, // Lead table doesn't track conversion type yet
+        conversionType: undefined,
         createdAt: l.createdAt.toISOString(),
         updatedAt: l.updatedAt.toISOString(),
       })),
@@ -84,28 +108,42 @@ export async function GET(req: NextRequest) {
 export async function PUT(req: NextRequest) {
   try {
     const data = await req.json();
-    console.log('[Leads API] Updating lead:', data.id);
+    console.log('[Leads API] Updating lead:', data.id, data.tableSource);
 
-    // Try updating ContactSubmission first
-    try {
+    if (data.tableSource === 'contact') {
+      // ContactSubmission — status field serves as contact pipeline status
       const updated = await prisma.contactSubmission.update({
         where: { id: data.id },
         data: {
-          status: data.status,
-          notes: data.notes,
+          status: data.contactStatus ?? data.status,
+          notes: data.contactNotes ?? data.notes,
         },
       });
       console.log('[Leads API] Updated ContactSubmission:', data.id);
       return NextResponse.json({ lead: updated });
-    } catch {
-      // If not found, try Lead table
+    }
+
+    // Lead table — update contactStatus and contactNotes
+    try {
       const updated = await prisma.lead.update({
         where: { id: data.id },
         data: {
-          status: data.status,
+          contactStatus: data.contactStatus,
+          contactNotes: data.contactNotes,
         },
       });
       console.log('[Leads API] Updated Lead:', data.id);
+      return NextResponse.json({ lead: updated });
+    } catch {
+      // Fall back to ContactSubmission if Lead not found
+      const updated = await prisma.contactSubmission.update({
+        where: { id: data.id },
+        data: {
+          status: data.contactStatus ?? data.status,
+          notes: data.contactNotes ?? data.notes,
+        },
+      });
+      console.log('[Leads API] Updated ContactSubmission (fallback):', data.id);
       return NextResponse.json({ lead: updated });
     }
   } catch (error) {
