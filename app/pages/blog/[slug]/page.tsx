@@ -1,11 +1,15 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import type { Metadata } from 'next';
 import {
   getBlogPost,
   getBlogPostSlugs,
   getRelatedBlogPosts,
   getCategoryServiceLink,
 } from '@/app/lib/blog';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+import { SEO_SITE_URL, toAbsoluteSeoUrl } from '@/app/lib/seo/constants';
+import { ArticleStructuredData } from '@/app/components/SEO/StructuredData';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -19,6 +23,26 @@ export async function generateStaticParams() {
   const slugs = getBlogPostSlugs();
   console.log('[Blog] generateStaticParams', { count: slugs.length });
   return slugs.map((slug) => ({ slug }));
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const post = await getBlogPost(slug);
+
+  if (!post) {
+    return {};
+  }
+
+  const canonicalPath = `/pages/blog/${post.slug}`;
+  const ogImage = post.image ?? '/og-default.jpg';
+
+  return buildPageMetadata({
+    title: `${post.title} | Vedpragya`,
+    description: post.excerpt,
+    path: canonicalPath,
+    imagePath: ogImage,
+    ogType: 'article',
+  });
 }
 
 function formatDate(dateString: string) {
@@ -43,6 +67,17 @@ export default async function BlogPostPage({ params }: PageProps) {
 
   return (
     <div className="w-full">
+      <ArticleStructuredData
+        headline={post.title}
+        image={post.image ? toAbsoluteSeoUrl(post.image) : toAbsoluteSeoUrl('/og-default.jpg')}
+        datePublished={post.publishedAt}
+        dateModified={post.updatedAt ?? post.publishedAt}
+        author={{ name: post.author, url: SEO_SITE_URL }}
+        publisher={{ name: 'Vedpragya', logo: toAbsoluteSeoUrl('/icon.png') }}
+        description={post.excerpt}
+        url={toAbsoluteSeoUrl(`/pages/blog/${post.slug}`)}
+      />
+
       {/* Hero Section */}
       <section className="relative py-20 bg-gradient-to-br from-gray-900 to-gray-800 text-white">
         <div className="container mx-auto px-4">
