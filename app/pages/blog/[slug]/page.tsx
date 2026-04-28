@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import {
@@ -6,9 +7,39 @@ import {
   getRelatedBlogPosts,
   getCategoryServiceLink,
 } from '@/app/lib/blog';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const post = await getBlogPost(slug);
+
+  if (!post) {
+    return { title: 'Post Not Found | Vedpragya Blog' };
+  }
+
+  const base = buildPageMetadata({
+    title: `${post.title} | Vedpragya Blog`,
+    description: post.excerpt,
+    path: `/pages/blog/${post.slug}`,
+    keywords: post.tags,
+    ogType: 'article',
+  });
+
+  return {
+    ...base,
+    openGraph: {
+      ...base.openGraph,
+      type: 'article',
+      publishedTime: new Date(post.publishedAt).toISOString(),
+      ...(post.updatedAt ? { modifiedTime: new Date(post.updatedAt).toISOString() } : {}),
+      authors: [post.author],
+      tags: post.tags,
+    },
+  };
 }
 
 /**

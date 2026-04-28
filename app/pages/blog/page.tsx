@@ -1,5 +1,22 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getAllBlogPosts, getAllBlogCategories } from '@/app/lib/blog';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Web Development & AI Blog India | Vedpragya',
+  description:
+    'Practical guides on web development, AI chatbots, Next.js, Shopify, Google Ads, and digital growth for Indian businesses. Written by Vedpragya engineers.',
+  path: '/pages/blog',
+  keywords: [
+    'web development blog india',
+    'nextjs tutorial india',
+    'ai chatbot development guide',
+    'shopify development india',
+    'google ads tips india',
+    'software development blog',
+  ],
+});
 
 /**
  * Blog listing page.
