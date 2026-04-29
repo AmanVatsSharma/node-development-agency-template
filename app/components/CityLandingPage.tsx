@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import type { ReactElement } from 'react';
 import { RelatedServicesStrip } from '@/app/components/RelatedServicesStrip';
+import { CityLeadForm } from '@/app/components/CityLeadForm';
 
 /**
  * Shared city landing page component.
@@ -74,7 +75,7 @@ export function CityLandingPage({
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
               <Link
-                href="/pages/contact"
+                href="#get-proposal"
                 className="px-8 py-4 bg-blue-500 hover:bg-blue-600 text-white rounded-full font-semibold transition"
               >
                 Get a Free Proposal
@@ -298,8 +299,51 @@ export function CityLandingPage({
         </div>
       </section>
 
+      {/* Inline Lead Capture Form */}
+      <section id="get-proposal" className="py-20 bg-white dark:bg-gray-950">
+        <div className="container mx-auto px-4 max-w-5xl">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+            {/* Left: value prop */}
+            <div>
+              <p className="uppercase tracking-widest text-sm text-blue-600 dark:text-blue-400 font-semibold mb-3">
+                Free Consultation
+              </p>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+                Get a Written Proposal for Your {cityName} Project
+              </h2>
+              <p className="text-lg text-gray-600 dark:text-gray-300 mb-8">
+                Share your requirements and we&apos;ll send a fixed-price quote with
+                scope, timeline, and team composition — usually within 2 business hours.
+              </p>
+              <ul className="space-y-3">
+                {[
+                  'Fixed-scope quotes. No hourly surprises.',
+                  'INR pricing. GST invoice included.',
+                  'Dedicated project manager from day one.',
+                  '100% remote — video calls during IST hours.',
+                ].map((point) => (
+                  <li key={point} className="flex items-start gap-3 text-gray-700 dark:text-gray-300">
+                    <span className="mt-1 flex-shrink-0 w-5 h-5 rounded-full bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center">
+                      <svg className="w-3 h-3 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </span>
+                    {point}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Right: form */}
+            <div className="bg-gray-50 dark:bg-gray-900 rounded-2xl p-8 border border-gray-100 dark:border-gray-800">
+              <CityLeadForm cityName={cityName} citySlug={citySlug} />
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* CTA */}
-      <section className="py-20 bg-blue-600 text-white">
+      <section className="py-16 bg-blue-600 text-white">
         <div className="container mx-auto px-4 text-center max-w-3xl">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             Ready to Build Your Website?
@@ -311,7 +355,7 @@ export function CityLandingPage({
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
             <Link
-              href="/pages/contact"
+              href="#get-proposal"
               className="inline-block px-8 py-4 bg-white text-blue-600 hover:bg-gray-100 rounded-full font-semibold transition"
             >
               Book a Free Consultation
