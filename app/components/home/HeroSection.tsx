@@ -127,12 +127,20 @@ export default function HeroSection() {
 
             {/* Headline */}
             <h1
-              className="text-display-xl font-bold text-white leading-[1.05] tracking-tight mb-8"
+              className="text-display-xl font-bold text-white leading-[1.05] tracking-tight mb-4"
               style={{ fontFamily: "var(--font-sora), sans-serif" }}
             >
-              We Build Software<br />
-              <span style={{ color: "#D4870A" }}>That Lasts.</span>
+              India&rsquo;s Web Development<br />
+              <span style={{ color: "#D4870A" }}>&amp; AI Agency.</span>
             </h1>
+
+            {/* Brand sub-hook */}
+            <p
+              className="text-xl sm:text-2xl font-semibold text-white/60 tracking-tight mb-6"
+              style={{ fontFamily: "var(--font-sora), sans-serif" }}
+            >
+              We Build Software That Lasts.
+            </p>
 
             {/* Sub-headline */}
             <p className="text-base sm:text-lg lg:text-xl text-gray-400 max-w-lg leading-relaxed mb-10">
