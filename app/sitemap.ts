@@ -64,13 +64,13 @@ const ROUTE_LAST_MODIFIED_MAP: Record<string, Date> = {
   '/pages/shopify-headless-migration': new Date('2026-04-14T00:00:00.000Z'),
   '/pages/shopify-product-page-customization': new Date('2026-04-14T00:00:00.000Z'),
 
-  // New city landing pages launched in April 2026 SEO pass
-  '/pages/web-development-delhi': new Date('2026-04-14T00:00:00.000Z'),
-  '/pages/web-development-bangalore': new Date('2026-04-14T00:00:00.000Z'),
-  '/pages/web-development-gurgaon': new Date('2026-04-14T00:00:00.000Z'),
-  '/pages/web-development-pune': new Date('2026-04-14T00:00:00.000Z'),
-  '/pages/web-development-hyderabad': new Date('2026-04-14T00:00:00.000Z'),
-  '/pages/web-development-noida': new Date('2026-04-14T00:00:00.000Z'),
+  // City landing pages — updated April 2026 with inline lead capture form
+  '/pages/web-development-delhi': new Date('2026-04-29T00:00:00.000Z'),
+  '/pages/web-development-bangalore': new Date('2026-04-29T00:00:00.000Z'),
+  '/pages/web-development-gurgaon': new Date('2026-04-29T00:00:00.000Z'),
+  '/pages/web-development-pune': new Date('2026-04-29T00:00:00.000Z'),
+  '/pages/web-development-hyderabad': new Date('2026-04-29T00:00:00.000Z'),
+  '/pages/web-development-noida': new Date('2026-04-29T00:00:00.000Z'),
   '/pages/nodejs-development': new Date('2026-04-14T00:00:00.000Z'),
 
   // Legal pages — stable; use a fixed baseline date to avoid false freshness signals
