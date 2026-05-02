@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { buildPageMetadata } from "@/app/lib/seo/metadata";
+import { getAllBlogPosts, type BlogPostSummary } from "@/app/lib/blog";
 
 export const metadata: Metadata = buildPageMetadata({
   title: "Web Development, AI & Google Ads Agency India | Vedpragya",
@@ -134,8 +135,62 @@ const techStrip = [
   "Shopify", "Redis", "Docker", "Stripe", "TypeScript", "Prisma",
 ];
 
+// ── Blog card ─────────────────────────────────────────────────────────────────
+
+const CATEGORY_LABEL: Record<string, string> = {
+  "web-development": "Web Dev",
+  nextjs: "Next.js",
+  reactjs: "React",
+  nodejs: "Node.js",
+  ai: "AI",
+  "ai-chatbot": "AI Chatbot",
+  "ai-voice": "AI Voice",
+  shopify: "Shopify",
+  ecommerce: "E-commerce",
+  "google-ads": "Google Ads",
+  seo: "SEO",
+  healthcare: "Healthcare",
+  trading: "Trading",
+  crm: "CRM",
+  whatsapp: "WhatsApp",
+  marketing: "Marketing",
+};
+
+function BlogCard({ post }: { post: BlogPostSummary }) {
+  const label = CATEGORY_LABEL[post.category] ?? post.category;
+  return (
+    <Link
+      href={`/pages/blog/${post.slug}`}
+      className="group flex flex-col gap-4 p-6 rounded-2xl border border-gray-200 dark:border-[#1E293B] bg-white dark:bg-[#0C1220] hover:border-[#2563EB]/40 dark:hover:border-[#2563EB]/40 transition-colors"
+    >
+      <div className="flex items-center justify-between gap-2">
+        <span className="text-xs font-semibold uppercase tracking-widest text-[#2563EB] dark:text-[#60A5FA]">
+          {label}
+        </span>
+        <span className="text-xs text-gray-400 dark:text-gray-500 shrink-0">{post.readTime} min read</span>
+      </div>
+      <h3 className="text-[1.0625rem] font-semibold leading-snug text-[#0C1B33] dark:text-white group-hover:text-[#2563EB] dark:group-hover:text-[#60A5FA] transition-colors line-clamp-2">
+        {post.title}
+      </h3>
+      <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed line-clamp-2 flex-1">
+        {post.excerpt}
+      </p>
+      <span className="inline-flex items-center gap-1 text-sm font-semibold text-[#2563EB] dark:text-[#60A5FA] mt-auto">
+        Read article
+        <svg className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+        </svg>
+      </span>
+    </Link>
+  );
+}
+
 // ── Page ──────────────────────────────────────────────────────────────────────
-export default function Home() {
+export default async function Home() {
+  const featuredPosts = getAllBlogPosts()
+    .filter((p) => p.featured)
+    .slice(0, 3);
+
   return (
     <div className="w-full">
 
@@ -244,6 +299,43 @@ export default function Home() {
           TESTIMONIALS
       ══════════════════════════════════════ */}
       <TestimonialCarousel />
+
+      {/* ══════════════════════════════════════
+          FROM THE BLOG
+      ══════════════════════════════════════ */}
+      {featuredPosts.length > 0 && (
+        <section className="compact-main-section bg-[#F4F4F5] dark:bg-[#0F1623]">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
+              <div className="max-w-xl">
+                <h2
+                  className="text-3xl sm:text-4xl font-bold text-[#0C1B33] dark:text-white mb-2 tracking-tight"
+                  style={{ fontFamily: "var(--font-sora), sans-serif" }}
+                >
+                  From the Blog
+                </h2>
+                <p className="text-gray-500 dark:text-gray-400 text-lg">
+                  Practical guides on web development, AI, and digital growth for Indian businesses.
+                </p>
+              </div>
+              <Link
+                href="/pages/blog"
+                className="shrink-0 inline-flex items-center gap-2 text-[#2563EB] dark:text-[#60A5FA] font-semibold text-sm hover:underline"
+              >
+                View all articles
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+              </Link>
+            </div>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              {featuredPosts.map((post) => (
+                <BlogCard key={post.slug} post={post} />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* ══════════════════════════════════════
           FINAL CTA — Spotlight + MovingBorder
