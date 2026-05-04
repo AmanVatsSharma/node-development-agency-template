@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
 import React from "react";
 import { SectionErrorBoundary } from "@/app/components/common/SectionErrorBoundary";
 import { RelatedBlogPosts } from "@/app/components/RelatedBlogPosts";
@@ -14,25 +15,22 @@ import { FAQSection as WDFAQ } from "@/app/pages/website-development/_components
 import { AnimatedBannerCta as WDBannerCta } from "@/app/pages/website-development/_components/animated-banner-cta";
 import { ContactSection as WDContact } from "@/app/pages/website-development/_components/contact-section";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: 'Web Development Company India | Custom Websites & Web Apps — Vedpragya',
   description: 'Vedpragya is a web development company in India specialising in Next.js, React, Node.js, SaaS apps, e-commerce, and enterprise web solutions. 500+ projects delivered. Free consultation in 24 h.',
-  keywords: 'web development company india, web development services, hire web developer india, next.js development, react development, node.js development, custom web app development, saas development india, web development agency',
-  alternates: {
-    canonical: '/pages/web-development',
-  },
-  openGraph: {
-    title: 'Web Development Company India | Vedpragya',
-    description: 'Custom websites, web apps, SaaS platforms, and e-commerce solutions — enterprise-grade web development from India. 500+ projects delivered.',
-    url: 'https://vedpragya.com/pages/web-development',
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Web Development Company India | Vedpragya',
-    description: 'Custom websites, web apps, SaaS platforms, and e-commerce — 500+ projects delivered from India.',
-  },
-};
+  path: '/pages/web-development',
+  keywords: [
+    'web development company india',
+    'web development services',
+    'hire web developer india',
+    'next.js development',
+    'react development',
+    'node.js development',
+    'custom web app development',
+    'saas development india',
+    'web development agency',
+  ],
+});
 
 const faqQuestions = [
   {

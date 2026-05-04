@@ -1,28 +1,23 @@
 import type { Metadata } from "next";
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
 import Link from "next/link";
 import { BackgroundBeams } from "@/app/components/ui/background-beams";
 import { Spotlight } from "@/app/components/ui/spotlight";
 import { MovingBorder } from "@/app/components/ui/moving-border";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: 'About Vedpragya | Engineering-First Software Agency — India',
   description: 'Vedpragya Bharat Private Limited is an engineering-first software agency founded in Haryana, India. 500+ projects delivered across web, AI, ERP, and e-commerce for clients in India, UAE, USA, and Canada.',
-  keywords: 'about vedpragya, software agency india, web development company about, vedpragya bharat private limited, aman kumar sharma, software engineering firm india',
-  alternates: {
-    canonical: '/pages/about',
-  },
-  openGraph: {
-    title: 'About Vedpragya | Engineering-First Software Agency',
-    description: 'Founded in Haryana, India. 500+ projects. Offices in India, UAE, USA, Canada, and China. We build software that outlives the projects that spawn it.',
-    url: 'https://vedpragya.com/pages/about',
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'About Vedpragya | Engineering-First Software Agency',
-    description: 'Founded in Haryana, India. 500+ projects. Engineering-first, transparency-always.',
-  },
-};
+  path: '/pages/about',
+  keywords: [
+    'about vedpragya',
+    'software agency india',
+    'web development company about',
+    'vedpragya bharat private limited',
+    'aman kumar sharma',
+    'software engineering firm india',
+  ],
+});
 
 const milestones = [
   { year: "2025", event: "Founded", desc: "Vedpragya Bharat Private Limited was founded in Haryana, India by Aman Kumar Sharma." },
