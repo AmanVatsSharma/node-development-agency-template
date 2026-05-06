@@ -166,6 +166,13 @@ export default function LeadsAdminPage() {
     }
   };
 
+  const getWhatsAppUrl = (phone: string, name: string) => {
+    const cleanPhone = phone.replace(/\D/g, '');
+    // If it doesn't start with a country code, we might need to assume one, 
+    // but for now we'll just use the digits provided.
+    return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(`Hello ${name}`)}`;
+  };
+
   const exportToCSV = () => {
     const headers = ['ID', 'Name', 'Email', 'Phone', 'Company', 'Message', 'Service', 'Budget', 'Source', 'Contact Status', 'Zoho Status', 'Zoho Lead ID', 'Lead Score', 'Notes', 'Created At'];
     const rows = filteredLeads.map(lead => [
@@ -369,6 +376,17 @@ export default function LeadsAdminPage() {
                         )}
                       </div>
                       <div className="flex items-center gap-2 shrink-0">
+                        {lead.phone && (
+                          <Button 
+                            variant="outline" 
+                            size="sm"
+                            className="text-green-600 border-green-200 hover:bg-green-50 dark:border-green-900/30 dark:hover:bg-green-900/20"
+                            title="Message on WhatsApp"
+                            onClick={() => window.open(getWhatsAppUrl(lead.phone!, lead.name), '_blank')}
+                          >
+                            <MessageCircle className="h-4 w-4" />
+                          </Button>
+                        )}
                         <Button variant="outline" size="sm" onClick={() => setViewingLead(lead)}>
                           <Eye className="h-4 w-4" />
                         </Button>
@@ -434,45 +452,107 @@ export default function LeadsAdminPage() {
             <CardContent className="space-y-4 max-h-[80vh] overflow-y-auto">
               {/* Contact info */}
               <div className="grid grid-cols-2 gap-4">
-                <div><Label>Name</Label><p className="text-sm font-medium mt-1">{viewingLead.name}</p></div>
-                <div><Label>Email</Label><p className="text-sm font-medium mt-1">{viewingLead.email}</p></div>
+                <div>
+                  <Label className="text-slate-500 dark:text-slate-400">Name</Label>
+                  <p className="text-sm font-semibold mt-1 text-slate-900 dark:text-slate-100">{viewingLead.name}</p>
+                </div>
+                <div>
+                  <Label className="text-slate-500 dark:text-slate-400">Email</Label>
+                  <p className="text-sm font-semibold mt-1 text-slate-900 dark:text-slate-100">{viewingLead.email}</p>
+                </div>
               </div>
               {(viewingLead.phone || viewingLead.company) && (
                 <div className="grid grid-cols-2 gap-4">
-                  {viewingLead.phone && <div><Label>Phone</Label><p className="text-sm font-medium mt-1">{viewingLead.phone}</p></div>}
-                  {viewingLead.company && <div><Label>Company</Label><p className="text-sm font-medium mt-1">{viewingLead.company}</p></div>}
+                  {viewingLead.phone && (
+                    <div>
+                      <Label className="text-slate-500 dark:text-slate-400">Phone</Label>
+                      <div className="flex items-center gap-2 mt-1">
+                        <p className="text-sm font-semibold text-slate-900 dark:text-slate-100">{viewingLead.phone}</p>
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          className="h-7 px-2 text-green-600 hover:text-green-700 hover:bg-green-50 dark:hover:bg-green-900/20"
+                          onClick={() => window.open(getWhatsAppUrl(viewingLead.phone!, viewingLead.name), '_blank')}
+                        >
+                          <MessageCircle className="h-3.5 w-3.5 mr-1" />
+                          WhatsApp
+                        </Button>
+                      </div>
+                    </div>
+                  )}
+                  {viewingLead.company && (
+                    <div>
+                      <Label className="text-slate-500 dark:text-slate-400">Company</Label>
+                      <p className="text-sm font-semibold mt-1 text-slate-900 dark:text-slate-100">{viewingLead.company}</p>
+                    </div>
+                  )}
                 </div>
               )}
               {viewingLead.message && (
-                <div><Label>Message</Label><p className="text-sm mt-1 p-3 bg-slate-50 dark:bg-slate-800 rounded-lg">{viewingLead.message}</p></div>
+                <div>
+                  <Label className="text-slate-500 dark:text-slate-400">Message</Label>
+                  <p className="text-sm mt-1 p-3 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-200 rounded-lg border border-slate-100 dark:border-slate-700">
+                    {viewingLead.message}
+                  </p>
+                </div>
               )}
               {(viewingLead.budget || viewingLead.service || viewingLead.timeline) && (
                 <div className="grid grid-cols-3 gap-3">
-                  {viewingLead.service && <div><Label>Service</Label><p className="text-sm font-medium mt-1">{viewingLead.service}</p></div>}
-                  {viewingLead.budget && <div><Label>Budget</Label><p className="text-sm font-medium mt-1">{viewingLead.budget}</p></div>}
-                  {viewingLead.timeline && <div><Label>Timeline</Label><p className="text-sm font-medium mt-1">{viewingLead.timeline}</p></div>}
+                  {viewingLead.service && (
+                    <div>
+                      <Label className="text-slate-500 dark:text-slate-400">Service</Label>
+                      <p className="text-sm font-semibold mt-1 text-slate-900 dark:text-slate-100">{viewingLead.service}</p>
+                    </div>
+                  )}
+                  {viewingLead.budget && (
+                    <div>
+                      <Label className="text-slate-500 dark:text-slate-400">Budget</Label>
+                      <p className="text-sm font-semibold mt-1 text-slate-900 dark:text-slate-100">{viewingLead.budget}</p>
+                    </div>
+                  )}
+                  {viewingLead.timeline && (
+                    <div>
+                      <Label className="text-slate-500 dark:text-slate-400">Timeline</Label>
+                      <p className="text-sm font-semibold mt-1 text-slate-900 dark:text-slate-100">{viewingLead.timeline}</p>
+                    </div>
+                  )}
                 </div>
               )}
 
               {/* Metadata row */}
-              <div className="flex flex-wrap gap-2 p-3 bg-slate-50 dark:bg-slate-800 rounded-lg">
+              <div className="flex flex-wrap gap-4 p-3 bg-slate-50 dark:bg-slate-800/50 rounded-lg border border-slate-100 dark:border-slate-700">
                 {(viewingLead.source || viewingLead.leadSource) && (
-                  <div className="text-xs"><span className="text-slate-500">Source: </span><span className="font-medium">{viewingLead.source || viewingLead.leadSource}</span></div>
+                  <div className="text-xs">
+                    <span className="text-slate-500 dark:text-slate-400">Source: </span>
+                    <span className="font-semibold text-slate-900 dark:text-slate-200">{viewingLead.source || viewingLead.leadSource}</span>
+                  </div>
                 )}
                 {viewingLead.campaign && (
-                  <div className="text-xs"><span className="text-slate-500">Campaign: </span><span className="font-medium">{viewingLead.campaign}</span></div>
+                  <div className="text-xs">
+                    <span className="text-slate-500 dark:text-slate-400">Campaign: </span>
+                    <span className="font-semibold text-slate-900 dark:text-slate-200">{viewingLead.campaign}</span>
+                  </div>
                 )}
                 {viewingLead.leadScore && (
-                  <div className="text-xs"><span className="text-slate-500">Lead Score: </span><span className="font-medium">{viewingLead.leadScore} ({viewingLead.qualificationLevel})</span></div>
+                  <div className="text-xs">
+                    <span className="text-slate-500 dark:text-slate-400">Lead Score: </span>
+                    <span className="font-semibold text-slate-900 dark:text-slate-200">{viewingLead.leadScore} ({viewingLead.qualificationLevel})</span>
+                  </div>
                 )}
                 {viewingLead.zohoStatus && (
-                  <div className="text-xs"><span className="text-slate-500">CRM Status: </span><span className="font-medium">{viewingLead.zohoStatus}</span></div>
+                  <div className="text-xs">
+                    <span className="text-slate-500 dark:text-slate-400">CRM Status: </span>
+                    <span className="font-semibold text-slate-900 dark:text-slate-200">{viewingLead.zohoStatus}</span>
+                  </div>
                 )}
                 {viewingLead.zohoLeadId && (
-                  <div className="text-xs"><span className="text-slate-500">Zoho ID: </span><span className="font-medium font-mono">{viewingLead.zohoLeadId}</span></div>
+                  <div className="text-xs">
+                    <span className="text-slate-500 dark:text-slate-400">Zoho ID: </span>
+                    <span className="font-semibold font-mono text-slate-900 dark:text-slate-200">{viewingLead.zohoLeadId}</span>
+                  </div>
                 )}
                 {viewingLead.source === 'ai_agent' && viewingLead.campaign && (
-                  <a href={`/admin/conversations?path=${encodeURIComponent(viewingLead.campaign)}`} target="_blank" className="text-xs text-blue-600 hover:underline flex items-center gap-1">
+                  <a href={`/admin/conversations?path=${encodeURIComponent(viewingLead.campaign)}`} target="_blank" className="text-xs text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1 font-medium">
                     <ExternalLink className="h-3 w-3" /> View AI Conversation
                   </a>
                 )}
@@ -480,7 +560,7 @@ export default function LeadsAdminPage() {
 
               {/* Notes */}
               <div>
-                <Label htmlFor="notes">Internal Notes</Label>
+                <Label htmlFor="notes" className="text-slate-500 dark:text-slate-400">Internal Notes</Label>
                 <Textarea
                   id="notes"
                   value={viewingLead.contactNotes || ''}
@@ -493,7 +573,7 @@ export default function LeadsAdminPage() {
 
               {/* Pipeline Status Selector */}
               <div>
-                <Label>Pipeline Status</Label>
+                <Label className="text-slate-500 dark:text-slate-400">Pipeline Status</Label>
                 <div className="flex flex-wrap gap-2 mt-2">
                   {ALL_STATUSES.map(s => {
                     const cfg = CONTACT_STATUS_CONFIG[s];
@@ -503,7 +583,7 @@ export default function LeadsAdminPage() {
                         key={s}
                         onClick={() => setViewingLead({ ...viewingLead, contactStatus: s })}
                         className={`px-3 py-1.5 rounded-full text-sm font-medium border transition-all ${
-                          isActive ? `${cfg.color} ${cfg.bg} ${cfg.border} ring-2 ring-offset-1 ring-current` : 'text-slate-500 border-slate-200 dark:border-slate-700 hover:border-slate-400'
+                          isActive ? `${cfg.color} ${cfg.bg} ${cfg.border} ring-2 ring-offset-1 ring-current` : 'text-slate-500 border-slate-200 dark:border-slate-700 hover:border-slate-400 dark:text-slate-400'
                         }`}
                       >
                         {cfg.label}
