@@ -63,6 +63,7 @@ const ROUTE_LAST_MODIFIED_MAP: Record<string, Date> = {
   '/pages/nse-mcx-live-market-data': new Date('2026-04-14T00:00:00.000Z'),
   '/pages/shopify-headless-migration': new Date('2026-04-14T00:00:00.000Z'),
   '/pages/shopify-product-page-customization': new Date('2026-04-14T00:00:00.000Z'),
+  '/pages/saas-website-design': new Date('2026-05-06T00:00:00.000Z'),
 
   // City landing pages — updated April 2026 with inline lead capture form
   '/pages/web-development-delhi': new Date('2026-04-29T00:00:00.000Z'),

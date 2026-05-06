@@ -3,10 +3,10 @@ slug: web-development-cost-india-2025
 title: "Web Development Cost in India 2025: Complete Pricing Guide"
 excerpt: "How much does web development actually cost in India? A transparent, detailed breakdown of website pricing across simple, business, and enterprise tiers — with real project budgets."
 category: web-development
-tags: ["web development cost", "india", "pricing", "website cost"]
+tags: ["web development cost india 2025", "website development cost india", "how much does a website cost in india", "web development pricing india", "website cost india"]
 publishedAt: "2026-04-01"
-updatedAt: "2026-04-14"
-readTime: 35
+updatedAt: "2026-05-06"
+readTime: 8
 author: "Aman Kumar Sharma"
 authorTitle: "Founder, Vedpragya"
 featured: true
