@@ -83,6 +83,8 @@ export const CATEGORY_TO_SERVICE_URL: Record<string, { label: string; url: strin
   'crm': { label: 'Enterprise CRM', url: '/pages/crm' },
   'whatsapp': { label: 'WhatsApp Business API', url: '/pages/whatsapp-business-api' },
   'marketing': { label: 'Google Ads Management', url: '/pages/google-ads-management' },
+  'saas': { label: 'SaaS Website Design', url: '/pages/saas-website-design' },
+  'saas-website-design': { label: 'SaaS Website Design', url: '/pages/saas-website-design' },
   'business': { label: 'All Services', url: '/pages/services' },
 };
 
