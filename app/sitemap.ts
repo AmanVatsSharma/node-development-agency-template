@@ -72,6 +72,7 @@ const ROUTE_LAST_MODIFIED_MAP: Record<string, Date> = {
   '/pages/web-development-pune': new Date('2026-04-29T00:00:00.000Z'),
   '/pages/web-development-hyderabad': new Date('2026-04-29T00:00:00.000Z'),
   '/pages/web-development-noida': new Date('2026-04-29T00:00:00.000Z'),
+  '/pages/web-development-mumbai': new Date('2026-05-07T00:00:00.000Z'),
   '/pages/nodejs-development': new Date('2026-04-14T00:00:00.000Z'),
 
   // Legal pages — stable; use a fixed baseline date to avoid false freshness signals

@@ -60,7 +60,7 @@ export async function generateMetadata({ params }: BlogSlugMetadataParams): Prom
     if (post) {
       const title = (dbPost as { title?: string } | null)?.title ?? (post as { title?: string }).title ?? normalizedSlug;
       const excerpt = (dbPost as { excerpt?: string } | null)?.excerpt ?? (post as { excerpt?: string }).excerpt ?? '';
-      const image = (dbPost as { image?: string | null } | null)?.image ?? (post as { image?: string }).image ?? '/logo.png';
+      const image = (dbPost as { image?: string | null } | null)?.image ?? (post as { image?: string }).image ?? '/og-default.jpg';
       const tags = (post as { tags?: string[] }).tags ?? [];
       const category = (post as { category?: string }).category ?? '';
       console.log('[SEO] Blog slug metadata generated', {
@@ -79,7 +79,7 @@ export async function generateMetadata({ params }: BlogSlugMetadataParams): Prom
           'software development insights',
           'digital growth insights',
         ].filter(Boolean) as string[],
-        imagePath: image || '/logo.png',
+        imagePath: image || '/og-default.jpg',
         ogType: 'article',
       });
     }
@@ -118,7 +118,7 @@ export default async function BlogSlugLayout({ children, params }: BlogSlugLayou
     if (post) {
       articleData = {
         headline: post.title,
-        image: post.image ? toAbsoluteSeoUrl(post.image) : `${SEO_SITE_URL}/logo.png`,
+        image: toAbsoluteSeoUrl(`/pages/blog/${normalizedSlug}/opengraph-image`),
         datePublished: new Date(post.publishedAt).toISOString(),
         dateModified: new Date(post.updatedAt || post.publishedAt).toISOString(),
         description: post.excerpt || '',
