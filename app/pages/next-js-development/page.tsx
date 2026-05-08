@@ -1,3 +1,13 @@
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Next.js Development Company India | App Router Experts | Vedpragya',
+  description: 'Vedpragya specialises in Next.js 15 development — full-stack apps, SaaS platforms, headless CMS integrations, and performance-optimised marketing sites. Serving Indian and global clients.',
+  path: '/pages/next-js-development',
+  keywords: ['next.js development india', 'nextjs company india', 'next.js developer india', 'next.js 15 development', 'hire nextjs developer india'],
+});
+
 /**
  * @fileoverview Next.js Web Development Landing Page - Main Entry Point
  * @description High-converting, production-ready landing page for Next.js development services

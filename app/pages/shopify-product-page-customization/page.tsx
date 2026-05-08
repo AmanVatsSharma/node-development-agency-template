@@ -1,3 +1,13 @@
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Shopify Product Page Customization India | CRO Experts | Vedpragya',
+  description: 'Boost Shopify conversion rates with custom product page designs, variant pickers, review integrations, and A/B tested layouts. Vedpragya builds high-converting Shopify product pages for Indian brands.',
+  path: '/pages/shopify-product-page-customization',
+  keywords: ['shopify product page customization india', 'shopify pdp optimization', 'shopify conversion rate optimization', 'shopify page design india'],
+});
+
 /**
  * @fileoverview Shopify Product Page Customization Landing Page - Main Entry Point
  * @description High-converting, production-ready landing page for Shopify product page customization

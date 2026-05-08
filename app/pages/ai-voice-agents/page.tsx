@@ -1,3 +1,13 @@
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'AI Voice Agent Development India | Voice AI Solutions | Vedpragya',
+  description: 'Deploy AI-powered voice agents for inbound support, outbound sales, and 24/7 call handling. Vedpragya builds production-grade voice AI integrations for Indian enterprises.',
+  path: '/pages/ai-voice-agents',
+  keywords: ['ai voice agent development india', 'voice ai india', 'ai call center india', 'conversational voice ai', 'ivr replacement ai india'],
+});
+
 /**
  * @fileoverview AI Voice Agents Landing Page - Main Entry Point
  * @description High-converting landing page for AI Voice Agent services

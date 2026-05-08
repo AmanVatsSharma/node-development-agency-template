@@ -1,3 +1,13 @@
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Web Development, AI & Digital Services | Vedpragya',
+  description: "Explore Vedpragya's full range of services: enterprise web development, AI chatbots, Google Ads, Shopify stores, healthcare software, and trading platforms for businesses in India and globally.",
+  path: '/pages/services',
+  keywords: ['web development services india', 'software development agency india', 'digital services company india', 'vedpragya services'],
+});
+
 import Link from "next/link";
 import { BackgroundBeams } from "@/app/components/ui/background-beams";
 import { Spotlight } from "@/app/components/ui/spotlight";

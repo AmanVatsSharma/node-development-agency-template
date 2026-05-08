@@ -1,3 +1,13 @@
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Web Development Company Mumbai | Top Agency | Vedpragya',
+  description: "Leading web development agency serving Mumbai. Vedpragya builds enterprise-grade websites, e-commerce platforms, and AI chatbots for Mumbai's financial, media, and startup sectors.",
+  path: '/pages/web-development-mumbai',
+  keywords: ['web development company mumbai', 'website development mumbai', 'web developer mumbai', 'software company mumbai', 'digital agency mumbai'],
+});
+
 /**
  * @fileoverview Mumbai Web Development Landing Page - Main Entry Point
  * @description High-converting, Mumbai-focused landing page for web development services

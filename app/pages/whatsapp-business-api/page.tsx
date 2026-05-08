@@ -1,3 +1,13 @@
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'WhatsApp Business API Integration India | Vedpragya',
+  description: 'Integrate WhatsApp Business API for automated customer messaging, order updates, support bots, and sales flows. Vedpragya delivers BSP-approved WhatsApp solutions for Indian businesses.',
+  path: '/pages/whatsapp-business-api',
+  keywords: ['whatsapp business api india', 'whatsapp api integration india', 'whatsapp chatbot india', 'whatsapp automation india', 'whatsapp commerce india'],
+});
+
 /**
  * @fileoverview WhatsApp Business API Landing Page - Main Entry Point
  * @description Ultra-premium, highly converting landing page for WhatsApp Business API services

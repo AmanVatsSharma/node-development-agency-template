@@ -1,3 +1,13 @@
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'SEO Audit Services India | Technical & On-Page Audit | Vedpragya',
+  description: "Comprehensive SEO audits covering technical health, on-page optimisation, Core Web Vitals, crawlability, and keyword gap analysis. Vedpragya's audits come with a prioritised fix roadmap.",
+  path: '/pages/seo-audit',
+  keywords: ['seo audit india', 'technical seo audit india', 'seo audit agency india', 'website seo audit', 'on-page seo audit india'],
+});
+
 /**
  * @fileoverview SEO Audit Landing Page - Main Entry Point
  * @description High-converting SEO audit landing page with instant audit widget

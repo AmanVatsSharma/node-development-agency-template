@@ -1,3 +1,13 @@
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Web Development Company Bangalore | Top Agency | Vedpragya',
+  description: 'Looking for a web development company in Bangalore? Vedpragya builds enterprise websites, Next.js apps, and AI solutions for startups and enterprises in Bangalore and the broader Karnataka tech ecosystem.',
+  path: '/pages/web-development-bangalore',
+  keywords: ['web development company bangalore', 'website development bangalore', 'web developer bangalore', 'software company bangalore', 'next.js developer bangalore'],
+});
+
 import { CityLandingPage } from '@/app/components/CityLandingPage';
 
 export default function BangaloreWebDevelopmentPage() {

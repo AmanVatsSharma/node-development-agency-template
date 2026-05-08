@@ -1,3 +1,13 @@
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Web Development Resources & Guides | Vedpragya',
+  description: 'Free resources, guides, and tools for founders, developers, and marketers — covering web development, AI integrations, Google Ads, and Shopify from the Vedpragya team.',
+  path: '/pages/resources',
+  keywords: ['web development resources', 'software development guides', 'digital marketing resources india', 'vedpragya resources'],
+});
+
 import { ResourcesClient } from './_components/resources-client';
 import { Resource } from '../../types/blog';
 

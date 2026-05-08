@@ -1,3 +1,13 @@
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Portfolio — Web Dev & AI Projects | Vedpragya',
+  description: "Browse Vedpragya's portfolio of delivered projects: enterprise web apps, AI chatbots, Shopify stores, Google Ads campaigns, and healthcare software for clients across India and globally.",
+  path: '/pages/portfolio',
+  keywords: ['web development portfolio india', 'software agency portfolio india', 'vedpragya portfolio', 'web design portfolio india'],
+});
+
 import Link from "next/link";
 import { BackgroundBeams } from "@/app/components/ui/background-beams";
 import { Spotlight } from "@/app/components/ui/spotlight";

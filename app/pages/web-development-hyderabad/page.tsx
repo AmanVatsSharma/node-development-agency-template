@@ -1,3 +1,13 @@
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Web Development Company Hyderabad | Top Agency | Vedpragya',
+  description: "Trusted web development company in Hyderabad. Vedpragya delivers full-stack web applications, Shopify stores, and AI-powered digital solutions for Hyderabad's fast-growing tech community.",
+  path: '/pages/web-development-hyderabad',
+  keywords: ['web development company hyderabad', 'website development hyderabad', 'web developer hyderabad', 'software company hyderabad', 'react developer hyderabad'],
+});
+
 import { CityLandingPage } from '@/app/components/CityLandingPage';
 
 export default function HyderabadWebDevelopmentPage() {

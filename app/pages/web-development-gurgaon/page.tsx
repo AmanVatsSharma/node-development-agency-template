@@ -1,3 +1,13 @@
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Web Development Company Gurgaon | Premium Agency | Vedpragya',
+  description: "Premium web development agency in Gurgaon. Vedpragya builds high-performance Next.js websites, SaaS platforms, and AI integrations for Gurgaon's corporate and startup ecosystem.",
+  path: '/pages/web-development-gurgaon',
+  keywords: ['web development company gurgaon', 'website development gurgaon', 'web developer gurgaon', 'software company gurgaon', 'next.js gurgaon'],
+});
+
 import { CityLandingPage } from '@/app/components/CityLandingPage';
 
 export default function GurgaonWebDevelopmentPage() {

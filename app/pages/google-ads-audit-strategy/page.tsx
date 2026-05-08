@@ -1,3 +1,13 @@
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Google Ads Audit & Strategy India | Free Account Review | Vedpragya',
+  description: "Get a professional Google Ads account audit with actionable insights on wasted spend, Quality Score improvements, and growth opportunities. Vedpragya's audits drive measurable ROAS improvements.",
+  path: '/pages/google-ads-audit-strategy',
+  keywords: ['google ads audit india', 'google ads account audit', 'google ads strategy india', 'free google ads audit india', 'ppc audit india'],
+});
+
 import { ServiceNavigation } from '@/app/components/GoogleAdsEcosystem/ServiceNavigation';
 import { ROICalculator } from '@/app/components/GoogleAdsEcosystem/ROICalculator';
 import { SectionErrorBoundary } from './_components/section-error-boundary';

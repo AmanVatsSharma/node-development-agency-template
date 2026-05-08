@@ -1,3 +1,13 @@
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Website Development Company India | Next.js & React | Vedpragya',
+  description: 'Vedpragya builds fast, SEO-optimised websites using Next.js, React, and modern web standards. Perfect for startups, SaaS companies, and enterprises across India.',
+  path: '/pages/website-development',
+  keywords: ['website development company india', 'web development india', 'nextjs website development india', 'react website india'],
+});
+
 import React from "react";
 import { SectionErrorBoundary } from "@/app/components/common/SectionErrorBoundary";
 import { HeroSection } from "./_components/hero-section";

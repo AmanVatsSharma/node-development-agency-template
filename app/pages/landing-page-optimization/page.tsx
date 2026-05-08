@@ -1,3 +1,13 @@
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Landing Page Optimization India | CRO & A/B Testing | Vedpragya',
+  description: 'Improve landing page conversion rates with data-driven CRO: A/B testing, heatmap analysis, UX redesigns, and speed optimisation. Vedpragya builds landing pages that convert more paid traffic.',
+  path: '/pages/landing-page-optimization',
+  keywords: ['landing page optimization india', 'cro agency india', 'landing page design india', 'a/b testing india', 'conversion rate optimization india'],
+});
+
 import { ServiceNavigation } from '@/app/components/GoogleAdsEcosystem/ServiceNavigation';
 import { ROICalculator } from '@/app/components/GoogleAdsEcosystem/ROICalculator';
 import { SectionErrorBoundary } from './_components/section-error-boundary';

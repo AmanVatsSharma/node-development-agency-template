@@ -1,3 +1,13 @@
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Business Website Design & Development India | Vedpragya',
+  description: 'Get a professional business website that generates leads and builds credibility. Vedpragya designs and develops conversion-optimised business sites for SMEs and enterprises in India.',
+  path: '/pages/business-website',
+  keywords: ['business website development india', 'professional business website india', 'company website design india', 'small business website india'],
+});
+
 /**
  * @fileoverview Business Website Landing Page - Main Entry Point
  * @description High-converting, enterprise-grade landing page for Indian businesses
