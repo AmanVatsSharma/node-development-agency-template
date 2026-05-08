@@ -1,3 +1,13 @@
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'B2B Lead Generation Ads India | Google & LinkedIn PPC | Vedpragya',
+  description: 'Run high-intent B2B lead generation campaigns on Google Ads and LinkedIn. Vedpragya builds full-funnel paid campaigns that fill your sales pipeline with qualified business leads.',
+  path: '/pages/b2b-lead-generation-ads',
+  keywords: ['b2b lead generation ads india', 'b2b google ads india', 'b2b digital advertising india', 'lead generation agency india', 'b2b ppc india'],
+});
+
 import { ServiceNavigation } from '@/app/components/GoogleAdsEcosystem/ServiceNavigation';
 import { ROICalculator } from '@/app/components/GoogleAdsEcosystem/ROICalculator';
 import { SectionErrorBoundary } from './_components/section-error-boundary';

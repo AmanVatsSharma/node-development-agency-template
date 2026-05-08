@@ -1,3 +1,13 @@
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'ReactJS Development Company India | UI Engineering | Vedpragya',
+  description: 'Expert React development for web apps, dashboards, and interactive UIs. Vedpragya builds performant React applications using React 19, TypeScript, and modern state management for businesses in India.',
+  path: '/pages/reactjs-development',
+  keywords: ['reactjs development india', 'react development company india', 'react developer india', 'hire react developer india', 'react app development india'],
+});
+
 /**
  * @fileoverview ReactJS Web App Development Landing Page - Main Entry Point
  * @description High-converting, production-ready landing page for ReactJS development services

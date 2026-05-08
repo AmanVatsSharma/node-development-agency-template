@@ -1,3 +1,13 @@
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Enterprise Google Ads Management India | ₹50L+ Ad Budgets | Vedpragya',
+  description: "Strategic Google Ads management for large-spend enterprise accounts. Vedpragya's team handles complex multi-campaign structures, cross-channel attribution, and board-level reporting for Indian enterprises.",
+  path: '/pages/enterprise-google-ads-management',
+  keywords: ['enterprise google ads management', 'large budget google ads india', 'enterprise ppc management india', 'google ads enterprise agency'],
+});
+
 /**
  * @fileoverview Enterprise Google Ads Management - Tier 1 Service Page
  * @description High-converting landing page for enterprise-level Google Ads management services

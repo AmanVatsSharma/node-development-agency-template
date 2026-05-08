@@ -1,3 +1,13 @@
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Custom CRM Development India | Tailored CRM Systems | Vedpragya',
+  description: 'Vedpragya builds custom CRM systems tailored to your sales workflow — lead tracking, pipeline management, WhatsApp integration, and automated follow-ups for Indian SMEs and enterprises.',
+  path: '/pages/crm',
+  keywords: ['custom crm development india', 'crm software india', 'crm development company india', 'sales crm india', 'bespoke crm india'],
+});
+
 /**
  * @fileoverview EnterpriseHero CRM - Main Showcase Page
  * @description Premium self-hosted CRM built on BharatERP stack

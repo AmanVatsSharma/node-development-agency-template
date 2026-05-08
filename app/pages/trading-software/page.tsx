@@ -1,3 +1,13 @@
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Trading Software Development India | Algo & Platform Dev | Vedpragya',
+  description: 'Custom trading platform development: algorithmic trading engines, broker back-office systems, real-time analytics dashboards, and mobile trading apps for Indian financial institutions.',
+  path: '/pages/trading-software',
+  keywords: ['trading software development india', 'algo trading software india', 'trading platform development', 'broker software india', 'financial software india'],
+});
+
 /**
  * @fileoverview Trading Software Landing Page - Main Entry Point
  * @description High-converting landing page for enterprise trading platform

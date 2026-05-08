@@ -1,3 +1,13 @@
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Healthcare Software Development India | Custom Medical Tech | Vedpragya',
+  description: 'Vedpragya builds HIPAA-aware healthcare software: patient portals, EMR integrations, telemedicine platforms, and hospital management systems for clinics and health-tech startups in India.',
+  path: '/pages/healthcare-software-development',
+  keywords: ['healthcare software development india', 'medical software development india', 'hospital management system india', 'health tech company india', 'emr software india'],
+});
+
 /**
  * @fileoverview Healthcare Software Development Landing Page - Main Entry Point
  * @description High-converting, production-ready landing page for Healthcare Software Development services

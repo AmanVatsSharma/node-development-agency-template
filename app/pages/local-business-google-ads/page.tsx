@@ -1,3 +1,13 @@
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Local Business Google Ads India | Location-Targeted PPC | Vedpragya',
+  description: 'Drive local foot traffic and calls with precision geo-targeted Google Ads campaigns. Vedpragya specialises in Google Ads for local businesses, clinics, and service providers across India.',
+  path: '/pages/local-business-google-ads',
+  keywords: ['local business google ads india', 'local ppc india', 'google ads for local business india', 'location based google ads india'],
+});
+
 import { ServiceNavigation } from '@/app/components/GoogleAdsEcosystem/ServiceNavigation';
 import { ROICalculator } from '@/app/components/GoogleAdsEcosystem/ROICalculator';
 import { SectionErrorBoundary } from './_components/section-error-boundary';

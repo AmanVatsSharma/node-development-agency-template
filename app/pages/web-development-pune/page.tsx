@@ -1,3 +1,13 @@
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Web Development Company Pune | Top Agency | Vedpragya',
+  description: "Vedpragya is a trusted web development partner in Pune — delivering Next.js apps, SaaS platforms, and digital marketing solutions for Pune's rapidly expanding tech and manufacturing sectors.",
+  path: '/pages/web-development-pune',
+  keywords: ['web development company pune', 'website development pune', 'web developer pune', 'software company pune', 'it company pune'],
+});
+
 import { CityLandingPage } from '@/app/components/CityLandingPage';
 
 export default function PuneWebDevelopmentPage() {

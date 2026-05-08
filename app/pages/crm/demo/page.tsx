@@ -1,3 +1,13 @@
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'CRM Demo — See Vedpragya CRM in Action',
+  description: "Request a live demo of Vedpragya's custom CRM platform. See lead management, pipeline views, and WhatsApp integration tailored to your business workflow.",
+  path: '/pages/crm/demo',
+  keywords: ['crm demo india', 'custom crm demo', 'vedpragya crm'],
+});
+
 /**
  * @fileoverview EnterpriseHero CRM - Demo Request Page
  * @description Lead capture and onboarding experience for CRM demo requests

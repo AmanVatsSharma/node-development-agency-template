@@ -1,3 +1,13 @@
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Web Development Company Delhi | Top Agency | Vedpragya',
+  description: 'Top-rated web development company serving Delhi NCR. Vedpragya delivers enterprise websites, custom web apps, and digital marketing for businesses across Delhi, Noida, and Faridabad.',
+  path: '/pages/web-development-delhi',
+  keywords: ['web development company delhi', 'website development delhi', 'web developer delhi', 'software company delhi', 'web design delhi'],
+});
+
 import { CityLandingPage } from '@/app/components/CityLandingPage';
 
 export default function DelhiWebDevelopmentPage() {

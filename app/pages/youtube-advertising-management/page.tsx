@@ -1,3 +1,13 @@
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'YouTube Advertising Management India | Video Ads Agency | Vedpragya',
+  description: 'Run high-impact YouTube ad campaigns: TrueView, bumper ads, and connected TV. Vedpragya manages YouTube advertising strategy, creative briefing, and campaign optimisation for Indian brands.',
+  path: '/pages/youtube-advertising-management',
+  keywords: ['youtube advertising india', 'youtube ads management india', 'youtube ads agency india', 'video advertising india', 'youtube marketing india'],
+});
+
 import { ServiceNavigation } from '@/app/components/GoogleAdsEcosystem/ServiceNavigation';
 import { ROICalculator } from '@/app/components/GoogleAdsEcosystem/ROICalculator';
 import { SectionErrorBoundary } from './_components/section-error-boundary';

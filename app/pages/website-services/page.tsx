@@ -1,3 +1,13 @@
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Professional Website Services India — Design, Dev & SEO | Vedpragya',
+  description: 'End-to-end website services: UI/UX design, front-end development, back-end engineering, SEO, and ongoing support. Vedpragya delivers complete digital products for Indian businesses.',
+  path: '/pages/website-services',
+  keywords: ['website services india', 'web design and development india', 'website development company india', 'professional website india'],
+});
+
 import React from "react";
 import { ServicesHero } from "./_components/services-hero-section";
 import { ServicesList } from "./_components/services-list-section";

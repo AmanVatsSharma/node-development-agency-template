@@ -1,3 +1,13 @@
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Performance Max Campaign Management India | PMax Experts | Vedpragya',
+  description: 'Expert Performance Max campaign setup, optimisation, and reporting for Indian advertisers. Vedpragya leverages asset groups, audience signals, and smart bidding to maximise conversions across all Google channels.',
+  path: '/pages/performance-max-campaigns',
+  keywords: ['performance max campaigns india', 'pmax google ads india', 'performance max management india', 'google performance max agency india'],
+});
+
 import { ServiceNavigation } from '@/app/components/GoogleAdsEcosystem/ServiceNavigation';
 import { ROICalculator } from '@/app/components/GoogleAdsEcosystem/ROICalculator';
 import { SectionErrorBoundary } from './_components/section-error-boundary';

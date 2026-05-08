@@ -1,3 +1,13 @@
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Google Ads Ecosystem Management India | Full-Funnel PPC | Vedpragya',
+  description: 'Manage your entire Google Ads ecosystem: Search, Shopping, Display, YouTube, Performance Max, and Demand Gen. Vedpragya unifies your paid search stack for maximum ROAS.',
+  path: '/pages/google-ads-ecosystem',
+  keywords: ['google ads ecosystem india', 'google ads management india', 'full funnel google ads', 'google ads agency india', 'ppc management india'],
+});
+
 /**
  * @fileoverview Google Ads Ecosystem Hub - Main showcase page for all Google Ads services
  * @description High-converting ecosystem page showcasing mastery of Google Ads industry

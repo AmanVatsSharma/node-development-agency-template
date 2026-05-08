@@ -1,3 +1,13 @@
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Shopify Store Setup & Development India | Vedpragya',
+  description: 'Professional Shopify store setup, custom theme development, payment gateway integration, and app configuration. Vedpragya launches full e-commerce operations for Indian D2C brands.',
+  path: '/pages/shopify-store-setup',
+  keywords: ['shopify store setup india', 'shopify development india', 'shopify developer india', 'shopify store india', 'e-commerce store india'],
+});
+
 /**
  * Shopify Store Setup Landing Page
  * 

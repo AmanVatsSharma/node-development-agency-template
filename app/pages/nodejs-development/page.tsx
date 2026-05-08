@@ -1,3 +1,13 @@
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Node.js Development Company India | Backend & API Experts | Vedpragya',
+  description: 'Production-grade Node.js backend development: REST APIs, GraphQL servers, microservices, real-time applications, and cloud deployments. Vedpragya builds scalable Node.js systems for Indian enterprises.',
+  path: '/pages/nodejs-development',
+  keywords: ['node.js development india', 'nodejs backend development india', 'node.js company india', 'nodejs api development india', 'hire node.js developer india'],
+});
+
 import Link from 'next/link';
 import type { ReactElement } from 'react';
 import { RelatedBlogPosts } from '@/app/components/RelatedBlogPosts';
