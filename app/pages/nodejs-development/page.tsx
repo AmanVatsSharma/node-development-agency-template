@@ -1,3 +1,21 @@
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Node.js Development Company India | Hire Node Developers — Vedpragya',
+  description: 'Expert Node.js development for APIs, microservices, real-time apps, and backends. Express, NestJS, Prisma. Top Node.js agency in India. Free consultation.',
+  path: '/pages/nodejs-development',
+  keywords: [
+    'node.js development company india',
+    'hire node.js developer india',
+    'node.js backend development india',
+    'express.js development india',
+    'nestjs development india',
+    'node.js api development',
+    'microservices development india',
+  ],
+});
+
 import Link from 'next/link';
 import type { ReactElement } from 'react';
 import { RelatedBlogPosts } from '@/app/components/RelatedBlogPosts';

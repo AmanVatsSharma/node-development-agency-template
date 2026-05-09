@@ -1,3 +1,21 @@
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Services — Web Development, AI, Shopify & Google Ads | Vedpragya',
+  description: 'Vedpragya offers web development, AI chatbots, Shopify development, Google Ads management, and more. India\'s full-service digital agency. Explore all services.',
+  path: '/pages/services',
+  keywords: [
+    'web development services india',
+    'digital agency india',
+    'it services india',
+    'software development services india',
+    'ai development services india',
+    'google ads services india',
+    'full service agency india',
+  ],
+});
+
 import Link from "next/link";
 import { BackgroundBeams } from "@/app/components/ui/background-beams";
 import { Spotlight } from "@/app/components/ui/spotlight";

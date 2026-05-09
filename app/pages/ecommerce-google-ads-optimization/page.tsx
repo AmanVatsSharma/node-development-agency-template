@@ -1,3 +1,21 @@
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'E-commerce Google Ads Optimization India | ROAS Specialist — Vedpragya',
+  description: 'Scale your e-commerce revenue with Google Shopping, Performance Max, and Dynamic Search Ads. ROAS-focused PPC management for Indian e-commerce. Free audit.',
+  path: '/pages/ecommerce-google-ads-optimization',
+  keywords: [
+    'ecommerce google ads india',
+    'google shopping ads india',
+    'ecommerce ppc management india',
+    'roas optimization india',
+    'performance max ecommerce india',
+    'shopify google ads india',
+    'ecommerce ads agency india',
+  ],
+});
+
 import { ServiceNavigation } from '@/app/components/GoogleAdsEcosystem/ServiceNavigation';
 import { ROICalculator } from '@/app/components/GoogleAdsEcosystem/ROICalculator';
 import { SectionErrorBoundary } from './_components/section-error-boundary';

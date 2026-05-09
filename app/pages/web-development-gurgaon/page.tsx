@@ -1,3 +1,21 @@
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Web Development Company in Gurgaon | Corporate & SaaS — Vedpragya',
+  description: 'Web development for Gurgaon enterprises and startups. Next.js, React, enterprise portals, SaaS dashboards. DLF Cyber City to Sohna Road. Free proposal.',
+  path: '/pages/web-development-gurgaon',
+  keywords: [
+    'web development company gurgaon',
+    'website development gurgaon',
+    'software development company gurgaon',
+    'next.js developer gurgaon',
+    'enterprise web development gurgaon',
+    'web agency gurgaon',
+    'it company gurgaon',
+  ],
+});
+
 import { CityLandingPage } from '@/app/components/CityLandingPage';
 
 export default function GurgaonWebDevelopmentPage() {

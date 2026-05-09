@@ -1,3 +1,21 @@
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Web Development Company in Mumbai | Agency for Startups — Vedpragya',
+  description: 'Custom web development for Mumbai businesses. Next.js, React, fintech and D2C expertise. BKC, Andheri, Lower Parel specialists. Enterprise quality, startup speed.',
+  path: '/pages/web-development-mumbai',
+  keywords: [
+    'web development company mumbai',
+    'website development company mumbai',
+    'software development mumbai',
+    'next.js developer mumbai',
+    'react developer mumbai',
+    'it company mumbai',
+    'web agency mumbai',
+  ],
+});
+
 /**
  * @fileoverview Mumbai Web Development Landing Page - Main Entry Point
  * @description High-converting, Mumbai-focused landing page for web development services

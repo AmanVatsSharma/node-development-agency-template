@@ -1,3 +1,21 @@
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'AI Chatbot Development Company India | Custom Chatbots — Vedpragya',
+  description: 'Custom AI chatbot development for websites, WhatsApp, and apps. GPT-4, Claude, Gemini integrations. Sales, support, and lead-gen bots. Vedpragya — India. Get a free demo.',
+  path: '/pages/ai-chatbot-development',
+  keywords: [
+    'ai chatbot development india',
+    'custom chatbot development',
+    'chatbot development company india',
+    'gpt chatbot development',
+    'ai chatbot for website',
+    'whatsapp chatbot development india',
+    'conversational ai development',
+  ],
+});
+
 /**
  * @fileoverview AI Chatbot Development Landing Page - Main Entry Point
  * @description High-converting, production-ready landing page for AI Chatbot development services

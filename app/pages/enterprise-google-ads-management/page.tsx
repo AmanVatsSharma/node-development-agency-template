@@ -1,3 +1,21 @@
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Enterprise Google Ads Management India | Large-Scale PPC — Vedpragya',
+  description: 'Enterprise-grade Google Ads management for large budgets and complex campaigns. Multi-account, multi-market PPC strategy. India-based enterprise PPC team. Free audit.',
+  path: '/pages/enterprise-google-ads-management',
+  keywords: [
+    'enterprise google ads management india',
+    'large scale ppc management india',
+    'enterprise ppc agency india',
+    'high budget google ads india',
+    'enterprise sem agency india',
+    'corporate google ads management',
+    'enterprise digital marketing india',
+  ],
+});
+
 /**
  * @fileoverview Enterprise Google Ads Management - Tier 1 Service Page
  * @description High-converting landing page for enterprise-level Google Ads management services

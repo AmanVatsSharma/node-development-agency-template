@@ -1,3 +1,21 @@
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Google Ads Management Agency India | PPC Services — Vedpragya',
+  description: 'Performance-driven Google Ads management for Indian businesses. Search, Shopping, Display, and YouTube campaigns. Certified PPC agency. Free Google Ads audit.',
+  path: '/pages/google-ads-management',
+  keywords: [
+    'google ads management india',
+    'google ads agency india',
+    'ppc management india',
+    'google adwords agency india',
+    'pay per click management india',
+    'google ads expert india',
+    'sem agency india',
+  ],
+});
+
 /**
  * @fileoverview Google Ads Management Service Landing Page - Main Entry Point
  * @description High-converting, premium landing page for Google Ads management services

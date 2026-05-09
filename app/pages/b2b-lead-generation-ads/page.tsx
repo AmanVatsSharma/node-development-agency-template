@@ -1,3 +1,21 @@
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'B2B Lead Generation Google Ads India | B2B PPC Agency — Vedpragya',
+  description: 'B2B lead generation via Google Ads Search and Display campaigns. Qualified pipeline, not just clicks. Vedpragya — India\'s specialist B2B PPC agency. Free audit.',
+  path: '/pages/b2b-lead-generation-ads',
+  keywords: [
+    'b2b lead generation google ads india',
+    'b2b ppc agency india',
+    'b2b google ads management india',
+    'b2b digital marketing india',
+    'lead generation ads india',
+    'b2b demand generation india',
+    'google ads b2b campaigns india',
+  ],
+});
+
 import { ServiceNavigation } from '@/app/components/GoogleAdsEcosystem/ServiceNavigation';
 import { ROICalculator } from '@/app/components/GoogleAdsEcosystem/ROICalculator';
 import { SectionErrorBoundary } from './_components/section-error-boundary';

@@ -1,3 +1,21 @@
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Free SEO Audit India | Technical SEO Audit Service — Vedpragya',
+  description: 'Get a free technical SEO audit for your website. Core Web Vitals, crawl errors, schema, backlinks, and on-page issues. India-based SEO experts. Instant results.',
+  path: '/pages/seo-audit',
+  keywords: [
+    'free seo audit india',
+    'technical seo audit india',
+    'website seo audit india',
+    'seo audit service india',
+    'core web vitals audit india',
+    'on-page seo audit india',
+    'seo health check india',
+  ],
+});
+
 /**
  * @fileoverview SEO Audit Landing Page - Main Entry Point
  * @description High-converting SEO audit landing page with instant audit widget

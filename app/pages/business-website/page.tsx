@@ -1,3 +1,21 @@
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Business Website Design & Development India | Starting ₹9,999 — Vedpragya',
+  description: 'Professional business websites for Indian companies. Clean design, fast load times, mobile-first, and lead capture built in. Plans from ₹9,999. Free consultation.',
+  path: '/pages/business-website',
+  keywords: [
+    'business website design india',
+    'business website development india',
+    'professional website india',
+    'company website design india',
+    'small business website india',
+    'website for business india',
+    'affordable website design india',
+  ],
+});
+
 /**
  * @fileoverview Business Website Landing Page - Main Entry Point
  * @description High-converting, enterprise-grade landing page for Indian businesses

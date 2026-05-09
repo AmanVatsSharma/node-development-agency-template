@@ -1,3 +1,21 @@
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Google Ads Ecosystem — Full-Stack PPC Agency India | Vedpragya',
+  description: 'End-to-end Google Ads ecosystem: Search, Shopping, Performance Max, YouTube, B2B, local, and e-commerce campaigns. India\'s full-stack PPC agency. Free strategy call.',
+  path: '/pages/google-ads-ecosystem',
+  keywords: [
+    'google ads ecosystem india',
+    'full service google ads agency india',
+    'google ads services india',
+    'ppc agency india',
+    'google ads specialist india',
+    'performance max agency india',
+    'google ads campaign management india',
+  ],
+});
+
 /**
  * @fileoverview Google Ads Ecosystem Hub - Main showcase page for all Google Ads services
  * @description High-converting ecosystem page showcasing mastery of Google Ads industry

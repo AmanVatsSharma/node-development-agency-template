@@ -1,3 +1,21 @@
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Portfolio — Web Development & AI Projects | Vedpragya India',
+  description: 'Explore Vedpragya\'s portfolio of web development, AI chatbot, SaaS, Shopify, and Google Ads projects. 500+ projects for startups and enterprises across India.',
+  path: '/pages/portfolio',
+  keywords: [
+    'web development portfolio india',
+    'software agency portfolio india',
+    'next.js project portfolio',
+    'react projects india',
+    'vedpragya portfolio',
+    'web design case studies india',
+    'it agency work samples india',
+  ],
+});
+
 import Link from "next/link";
 import { BackgroundBeams } from "@/app/components/ui/background-beams";
 import { Spotlight } from "@/app/components/ui/spotlight";

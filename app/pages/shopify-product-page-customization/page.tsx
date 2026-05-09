@@ -1,3 +1,21 @@
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Shopify Product Page Customization India | CRO Design — Vedpragya',
+  description: 'Custom Shopify product page design that converts. Metafields, upsells, custom sections, and trust badges. Expert Shopify developers in India. Free CRO audit.',
+  path: '/pages/shopify-product-page-customization',
+  keywords: [
+    'shopify product page customization india',
+    'shopify product page design',
+    'shopify cro optimization india',
+    'shopify liquid development india',
+    'shopify section customization',
+    'shopify metafields developer',
+    'shopify conversion optimization india',
+  ],
+});
+
 /**
  * @fileoverview Shopify Product Page Customization Landing Page - Main Entry Point
  * @description High-converting, production-ready landing page for Shopify product page customization
