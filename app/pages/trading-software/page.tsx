@@ -1,3 +1,21 @@
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Trading Software Development Company India — Vedpragya',
+  description: 'Custom trading platform development: algo trading, order management, risk systems, and broker terminals. NSE/BSE/MCX integrated. India-based fintech team. Free proposal.',
+  path: '/pages/trading-software',
+  keywords: [
+    'trading software development india',
+    'algo trading software development',
+    'trading platform development india',
+    'broker software development india',
+    'nse bse trading software',
+    'order management system development',
+    'fintech software development india',
+  ],
+});
+
 /**
  * @fileoverview Trading Software Landing Page - Main Entry Point
  * @description High-converting landing page for enterprise trading platform

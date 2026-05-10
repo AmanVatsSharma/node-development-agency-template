@@ -1,3 +1,21 @@
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Healthcare Software Development Company India — Vedpragya',
+  description: 'Custom healthcare software: HMIS, EMR, telemedicine apps, and patient portals. HIPAA-aware development. India-based healthcare tech team. Free proposal.',
+  path: '/pages/healthcare-software-development',
+  keywords: [
+    'healthcare software development india',
+    'hmis software development india',
+    'emr software development',
+    'telemedicine app development india',
+    'hospital management software india',
+    'healthcare it company india',
+    'patient portal development india',
+  ],
+});
+
 /**
  * @fileoverview Healthcare Software Development Landing Page - Main Entry Point
  * @description High-converting, production-ready landing page for Healthcare Software Development services

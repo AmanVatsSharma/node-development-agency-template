@@ -1,3 +1,21 @@
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'AI Voice Agent Development India | Voice Bots & IVR — Vedpragya',
+  description: 'Build custom AI voice agents for inbound sales, support, and IVR automation. Twilio, ElevenLabs, Whisper integrations. India-based AI voice agency. Get a free demo.',
+  path: '/pages/ai-voice-agents',
+  keywords: [
+    'ai voice agent development india',
+    'voice bot development india',
+    'ai ivr development',
+    'conversational voice ai',
+    'twilio voice agent india',
+    'elevenlabs integration india',
+    'ai phone agent development',
+  ],
+});
+
 /**
  * @fileoverview AI Voice Agents Landing Page - Main Entry Point
  * @description High-converting landing page for AI Voice Agent services

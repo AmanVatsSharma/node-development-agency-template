@@ -1,3 +1,21 @@
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'YouTube Advertising Management India | YouTube Ads Agency — Vedpragya',
+  description: 'YouTube ad campaigns that drive brand awareness and conversions. In-stream, discovery, and Shorts ads. India-based YouTube advertising agency. Free strategy call.',
+  path: '/pages/youtube-advertising-management',
+  keywords: [
+    'youtube advertising management india',
+    'youtube ads agency india',
+    'youtube marketing india',
+    'youtube ad campaign india',
+    'video advertising india',
+    'youtube instream ads india',
+    'youtube ads management india',
+  ],
+});
+
 import { ServiceNavigation } from '@/app/components/GoogleAdsEcosystem/ServiceNavigation';
 import { ROICalculator } from '@/app/components/GoogleAdsEcosystem/ROICalculator';
 import { SectionErrorBoundary } from './_components/section-error-boundary';

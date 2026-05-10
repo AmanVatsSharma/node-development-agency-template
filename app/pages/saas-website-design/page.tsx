@@ -1,3 +1,21 @@
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'SaaS Website Design & Development Agency India — Vedpragya',
+  description: 'Build a high-converting SaaS website with Vedpragya. Next.js, React, Framer Motion — conversion-optimised SaaS landing pages and web apps. Free proposal in 24h.',
+  path: '/pages/saas-website-design',
+  keywords: [
+    'saas website design india',
+    'saas landing page design',
+    'saas web development india',
+    'framer developer india',
+    'next.js saas website',
+    'saas ui design agency',
+    'startup website design india',
+  ],
+});
+
 import { HeroSection } from './_components/hero-section';
 import { WhatWeBuildSection } from './_components/what-we-build-section';
 import { WhyUsSection } from './_components/why-us-section';

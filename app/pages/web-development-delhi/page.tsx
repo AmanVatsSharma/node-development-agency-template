@@ -1,3 +1,21 @@
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Web Development Company in Delhi | Websites & Web Apps — Vedpragya',
+  description: 'Custom website and web app development in Delhi. Next.js, React, and Node.js for Delhi businesses. Fast delivery, enterprise quality. Free proposal in 24h.',
+  path: '/pages/web-development-delhi',
+  keywords: [
+    'web development company delhi',
+    'website development company delhi',
+    'web development services delhi',
+    'react developer delhi',
+    'next.js developer delhi',
+    'software development company delhi',
+    'hire web developer delhi',
+  ],
+});
+
 import { CityLandingPage } from '@/app/components/CityLandingPage';
 import type { Metadata } from 'next';
 import { buildPageMetadata } from '@/app/lib/seo/metadata';

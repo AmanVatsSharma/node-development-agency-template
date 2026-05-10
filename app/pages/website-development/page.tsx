@@ -1,3 +1,21 @@
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Website Development Company India | Custom Websites — Vedpragya',
+  description: 'Custom website development for businesses, startups, and enterprises in India. Next.js, React, responsive design, and SEO built in. 500+ projects delivered. Free proposal.',
+  path: '/pages/website-development',
+  keywords: [
+    'website development company india',
+    'website development services india',
+    'custom website development india',
+    'professional website development india',
+    'website development agency india',
+    'responsive website development india',
+    'website developer india',
+  ],
+});
+
 import React from "react";
 import { SectionErrorBoundary } from "@/app/components/common/SectionErrorBoundary";
 import { HeroSection } from "./_components/hero-section";

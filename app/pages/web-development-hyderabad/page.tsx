@@ -1,3 +1,21 @@
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Web Development Company in Hyderabad | Tech Agency — Vedpragya',
+  description: 'Expert web development in Hyderabad for pharma, IT, and startup clients. Next.js, React, Node.js. HITEC City and Gachibowli specialists. Free consultation.',
+  path: '/pages/web-development-hyderabad',
+  keywords: [
+    'web development company hyderabad',
+    'website development company hyderabad',
+    'software development company hyderabad',
+    'next.js developer hyderabad',
+    'react developer hyderabad',
+    'it company hyderabad',
+    'web agency hyderabad',
+  ],
+});
+
 import { CityLandingPage } from '@/app/components/CityLandingPage';
 import type { Metadata } from 'next';
 import { buildPageMetadata } from '@/app/lib/seo/metadata';

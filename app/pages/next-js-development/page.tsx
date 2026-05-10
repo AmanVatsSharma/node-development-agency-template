@@ -1,3 +1,21 @@
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Next.js Development Company India | Next.js Agency — Vedpragya',
+  description: 'Hire expert Next.js developers in India. We build fast, SEO-ready Next.js websites and SaaS apps using App Router, RSC, and Tailwind. 500+ projects. Free consultation.',
+  path: '/pages/next-js-development',
+  keywords: [
+    'next.js development company india',
+    'hire next.js developer india',
+    'next.js agency india',
+    'next.js web app development',
+    'next.js 15 development',
+    'react next.js development india',
+    'app router development',
+  ],
+});
+
 /**
  * @fileoverview Next.js Web Development Landing Page - Main Entry Point
  * @description High-converting, production-ready landing page for Next.js development services

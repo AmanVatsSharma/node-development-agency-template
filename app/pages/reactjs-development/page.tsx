@@ -1,3 +1,21 @@
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'React.js Development Company India | Hire React Developers — Vedpragya',
+  description: 'Expert React.js development for SPAs, dashboards, and enterprise web apps. Hooks, Redux, React Query, TypeScript. Top React agency in India. Free proposal in 24h.',
+  path: '/pages/reactjs-development',
+  keywords: [
+    'react.js development company india',
+    'hire react developer india',
+    'reactjs web app development',
+    'react frontend development india',
+    'react spa development',
+    'react dashboard development',
+    'react typescript development india',
+  ],
+});
+
 /**
  * @fileoverview ReactJS Web App Development Landing Page - Main Entry Point
  * @description High-converting, production-ready landing page for ReactJS development services

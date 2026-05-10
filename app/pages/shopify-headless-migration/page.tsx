@@ -1,3 +1,21 @@
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Shopify Headless Migration to Next.js & Hydrogen — Vedpragya India',
+  description: 'Migrate your Shopify store to headless Next.js or Hydrogen for blazing-fast performance. Expert Shopify headless developers in India. Free migration audit.',
+  path: '/pages/shopify-headless-migration',
+  keywords: [
+    'shopify headless migration india',
+    'shopify to next.js migration',
+    'shopify hydrogen development india',
+    'headless shopify development',
+    'shopify headless commerce india',
+    'shopify frontend migration',
+    'next.js shopify storefront',
+  ],
+});
+
 /**
  * @fileoverview Shopify Headless Migration Landing Page - Premium Enterprise Service
  * @description Ultra-premium, high-converting landing page for Shopify → Next.js/Hydrogen migration

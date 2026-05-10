@@ -1,3 +1,21 @@
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Website Design & Development Services India — Vedpragya',
+  description: 'Full-stack website services: design, development, hosting, SEO, and maintenance. One agency for your complete web presence. India-based team. Free consultation.',
+  path: '/pages/website-services',
+  keywords: [
+    'website services india',
+    'website design services india',
+    'website development services india',
+    'web design company india',
+    'website maintenance india',
+    'full stack web services india',
+    'website agency india',
+  ],
+});
+
 import React from "react";
 import type { Metadata } from 'next';
 import { buildPageMetadata } from '@/app/lib/seo/metadata';

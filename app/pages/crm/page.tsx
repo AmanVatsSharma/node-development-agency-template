@@ -1,3 +1,21 @@
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Custom CRM Development India | Self-Hosted CRM Software — Vedpragya',
+  description: 'Custom CRM and ERP development for Indian businesses. Self-hosted, white-label, fully owned. Leads, pipelines, billing, and automation. Get a free demo.',
+  path: '/pages/crm',
+  keywords: [
+    'custom crm development india',
+    'crm software development india',
+    'self-hosted crm india',
+    'erp crm development india',
+    'white label crm india',
+    'crm for indian businesses',
+    'custom erp development india',
+  ],
+});
+
 /**
  * @fileoverview EnterpriseHero CRM - Main Showcase Page
  * @description Premium self-hosted CRM built on BharatERP stack

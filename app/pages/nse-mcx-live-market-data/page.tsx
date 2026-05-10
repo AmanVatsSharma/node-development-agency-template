@@ -1,3 +1,21 @@
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'NSE MCX Live Market Data API Integration India — Vedpragya',
+  description: 'Real-time NSE, BSE, and MCX live market data API integration for trading platforms and fintech apps. Low-latency feeds, WebSocket streaming. India. Free demo.',
+  path: '/pages/nse-mcx-live-market-data',
+  keywords: [
+    'nse live market data api india',
+    'mcx live data api integration',
+    'real-time stock data api india',
+    'nse bse mcx api developer',
+    'market data feed integration',
+    'websocket market data india',
+    'live stock price api india',
+  ],
+});
+
 /**
  * @fileoverview NSE/MCX Live Market Data API Landing Page - Main Entry Point
  * @description Ultra-premium, highly converting landing page for market data API services
