@@ -21,6 +21,23 @@ import { SectionErrorBoundary } from './_components/section-error-boundary';
 
 // Interactive client sections (filters, calculator)
 import { EcosystemInteractive } from './_components/ecosystem-interactive';
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Google Ads Full Ecosystem India | Search, Shopping & YouTube — Vedpragya',
+  description: 'Complete Google Ads management across Search, Shopping, Display, Performance Max, and YouTube for Indian businesses. One agency, every channel, maximum ROI.',
+  path: '/pages/google-ads-ecosystem',
+  keywords: [
+    'google ads ecosystem india',
+    'full funnel google ads india',
+    'google ads agency india',
+    'google search ads india',
+    'google shopping ads india',
+    'google display ads india',
+    'performance marketing india',
+  ],
+});
 
 export default function GoogleAdsEcosystemPage() {
   return (

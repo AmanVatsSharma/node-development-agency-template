@@ -35,6 +35,23 @@ import { MobileFloatingCTA } from './_components/mobile-floating-cta';
 import { ScrollToTop } from './_components/scroll-to-top';
 import { SectionErrorBoundary } from './_components/section-error-boundary';
 import { RelatedServicesStrip } from '@/app/components/RelatedServicesStrip';
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'ReactJS Development Company India | Hire React Developers — Vedpragya',
+  description: 'Top ReactJS development company in India. Build fast, scalable web apps with React 19, TypeScript, and modern state management. Startups to enterprise. Free consultation.',
+  path: '/pages/reactjs-development',
+  keywords: [
+    'reactjs development company india',
+    'hire react developer india',
+    'react js development services india',
+    'react app development india',
+    'react developer india',
+    'react 19 development',
+    'frontend development india',
+  ],
+});
 
 export default function ReactJSDevelopmentPage() {
   return (

@@ -11,6 +11,23 @@ import { FAQSection } from './_components/faq-section';
 import { FinalCTASection } from './_components/final-cta-section';
 import { MobileFloatingCTA } from './_components/mobile-floating-cta';
 import { ScrollToTop } from './_components/scroll-to-top';
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Google Ads for Local Business India | Location-Targeted PPC — Vedpragya',
+  description: 'Google Ads management for local businesses across India. City-targeted search campaigns, Google Maps ads, and call extensions. Generate calls and walk-ins. Free setup audit.',
+  path: '/pages/local-business-google-ads',
+  keywords: [
+    'google ads local business india',
+    'local ppc india',
+    'google maps ads india',
+    'local search ads india',
+    'google ads for small business india',
+    'local google ads agency india',
+    'city targeted google ads india',
+  ],
+});
 
 export default function LocalBusinessGoogleAdsPage() {
   return (

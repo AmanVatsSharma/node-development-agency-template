@@ -58,6 +58,23 @@ import { FinalCTASection } from './_components/final-cta-section';
 import { MobileFloatingCTA } from './_components/mobile-floating-cta';
 import { ScrollToTop } from './_components/scroll-to-top';
 import { SectionErrorBoundary } from './_components/section-error-boundary';
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'NSE MCX Live Market Data API India | Real-Time Feed Integration — Vedpragya',
+  description: 'Real-time NSE, MCX, and BSE market data API integration for trading apps, dashboards, and brokers. WebSocket feeds, tick data, historical OHLCV. Custom development. Free scoping call.',
+  path: '/pages/nse-mcx-live-market-data',
+  keywords: [
+    'nse live market data api india',
+    'mcx live data api india',
+    'stock market data api india',
+    'real-time market data feed india',
+    'nse api integration india',
+    'trading data api india',
+    'stock tick data india',
+  ],
+});
 
 export default function NSEMCXLiveMarketDataPage() {
   return (

@@ -33,6 +33,23 @@ import { FinalCTASection } from './_components/final-cta-section';
 import { MobileFloatingCTA } from './_components/mobile-floating-cta';
 import { ScrollToTop } from './_components/scroll-to-top';
 import { SectionErrorBoundary } from './_components/section-error-boundary';
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Business Website Development India | Professional Web Design — Vedpragya',
+  description: 'Professional business website development for Indian companies. Responsive design, fast loading, WhatsApp integration, and lead capture. Starting ₹9,999. Delivered in 7 days.',
+  path: '/pages/business-website',
+  keywords: [
+    'business website development india',
+    'professional website design india',
+    'company website india',
+    'small business website india',
+    'business website designer india',
+    'website for business india',
+    'corporate website india',
+  ],
+});
 
 export default function BusinessWebsitePage() {
   return (

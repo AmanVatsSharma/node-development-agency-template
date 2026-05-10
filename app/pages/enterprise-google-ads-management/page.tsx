@@ -28,6 +28,22 @@ import { SectionErrorBoundary } from './_components/section-error-boundary';
 // Shared Components
 import { ServiceNavigation } from '@/app/components/GoogleAdsEcosystem/ServiceNavigation';
 import { ROICalculator } from '@/app/components/GoogleAdsEcosystem/ROICalculator';
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Enterprise Google Ads Management India | High-Spend PPC Agency — Vedpragya',
+  description: 'Dedicated Google Ads management for enterprise accounts spending ₹5L+ per month. Strategic media buying, custom attribution, and executive reporting. Talk to a strategist today.',
+  path: '/pages/enterprise-google-ads-management',
+  keywords: [
+    'enterprise google ads management india',
+    'enterprise ppc agency india',
+    'large account google ads india',
+    'google ads for enterprise india',
+    'high spend ppc management india',
+    'enterprise paid search india',
+  ],
+});
 
 export default function EnterpriseGoogleAdsManagementPage() {
   return (

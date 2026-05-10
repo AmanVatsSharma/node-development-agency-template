@@ -1,4 +1,21 @@
 import { CityLandingPage } from '@/app/components/CityLandingPage';
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Web Development Company Noida | IT & Edtech Specialists — Vedpragya',
+  description: "Web development for Noida's IT services, BPO, and edtech companies. Custom Next.js apps, enterprise portals, and scalable APIs. Fully remote. Free consultation.",
+  path: '/pages/web-development-noida',
+  keywords: [
+    'web development company noida',
+    'website development noida',
+    'web developer noida',
+    'it company noida',
+    'software company noida',
+    'edtech development noida',
+    'react developer noida',
+  ],
+});
 
 export default function NoidaWebDevelopmentPage() {
   return (

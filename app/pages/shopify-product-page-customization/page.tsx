@@ -48,6 +48,23 @@ import { FinalCTASection } from './_components/final-cta-section';
 import { MobileFloatingCTA } from './_components/mobile-floating-cta';
 import { ScrollToTop } from './_components/scroll-to-top';
 import { SectionErrorBoundary } from './_components/section-error-boundary';
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Shopify Product Page Customization India | CRO & Design — Vedpragya',
+  description: 'Custom Shopify product page design for higher conversions. Metafield sections, custom components, trust signals, and A/B tested layouts. Boost your add-to-cart rate. Free review.',
+  path: '/pages/shopify-product-page-customization',
+  keywords: [
+    'shopify product page customization india',
+    'shopify product page design india',
+    'shopify page builder india',
+    'shopify cro india',
+    'shopify theme customization india',
+    'shopify developer india',
+    'shopify conversion optimization india',
+  ],
+});
 
 export default function ShopifyProductPageCustomizationPage() {
   return (
