@@ -11,6 +11,23 @@ import { HeroParallax } from "@/app/components/ui/hero-parallax";
 import { StickyScroll } from "@/app/components/ui/sticky-scroll-reveal";
 import { Spotlight } from "@/app/components/ui/spotlight";
 import { RelatedServicesStrip } from "@/app/components/RelatedServicesStrip";
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Website Development Company India | Modern Web Solutions — Vedpragya',
+  description: 'Full-stack website development for Indian businesses and startups. Landing pages, e-commerce, SaaS apps, and enterprise portals. React, Next.js, Node.js. Free consultation.',
+  path: '/pages/website-development',
+  keywords: [
+    'website development company india',
+    'website development services india',
+    'hire website developer india',
+    'full stack website development india',
+    'website agency india',
+    'web design company india',
+    'website developer india',
+  ],
+});
 
 const products = [
   {

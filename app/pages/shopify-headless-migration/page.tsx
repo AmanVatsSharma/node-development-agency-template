@@ -55,6 +55,23 @@ import { FinalCTASection } from './_components/final-cta-section';
 import { MobileFloatingCTA } from './_components/mobile-floating-cta';
 import { ScrollToTop } from './_components/scroll-to-top';
 import { SectionErrorBoundary } from '@/app/components/common/SectionErrorBoundary';
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Shopify Headless Migration to Next.js India | Hydrogen — Vedpragya',
+  description: 'Migrate your Shopify store to headless Next.js or Hydrogen for 3× faster page loads and full design freedom. Expert migration team in India. Free performance audit.',
+  path: '/pages/shopify-headless-migration',
+  keywords: [
+    'shopify headless migration india',
+    'shopify to next.js migration india',
+    'shopify hydrogen development india',
+    'headless commerce india',
+    'shopify headless agency india',
+    'shopify next.js india',
+    'headless shopify india',
+  ],
+});
 
 export default function ShopifyHeadlessMigrationPage() {
   return (

@@ -5,6 +5,23 @@ import { TechStackSection } from './_components/tech-stack-section';
 import { LeadFormSection } from './_components/lead-form-section';
 import { FAQSection } from './_components/faq-section';
 import { FinalCtaSection } from './_components/final-cta-section';
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'SaaS Website Design India | Next.js UI/UX for Startups — Vedpragya',
+  description: 'High-converting SaaS landing pages and marketing sites for Indian startups. Next.js, Framer Motion, and type-forward design. Onboarding flows, pricing pages, and demo CTAs. Free brief.',
+  path: '/pages/saas-website-design',
+  keywords: [
+    'saas website design india',
+    'saas landing page design india',
+    'saas ui ux design india',
+    'saas marketing website india',
+    'next.js saas website',
+    'saas website agency india',
+    'framer developer india',
+  ],
+});
 
 export default function SaasWebsiteDesignPage() {
   return (

@@ -34,6 +34,23 @@ import { FinalCTASection } from './_components/final-cta-section';
 import { MobileFloatingCTA } from './_components/mobile-floating-cta';
 import { ScrollToTop } from './_components/scroll-to-top';
 import { SectionErrorBoundary } from './_components/section-error-boundary';
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Google Ads Management Agency India | PPC Experts — Vedpragya',
+  description: 'Certified Google Ads management for Indian businesses. Search, Display, Shopping, and Performance Max campaigns. ROI-focused. ₹25K–₹50K+ retainers. Free audit call.',
+  path: '/pages/google-ads-management',
+  keywords: [
+    'google ads management india',
+    'google ads agency india',
+    'ppc management india',
+    'google ads expert india',
+    'google ads consultant india',
+    'paid ads agency india',
+    'google ads management services',
+  ],
+});
 
 export default function GoogleAdsManagementPage() {
   return (

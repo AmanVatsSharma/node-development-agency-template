@@ -1,4 +1,21 @@
 import { CityLandingPage } from '@/app/components/CityLandingPage';
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Web Development Company Gurgaon | Local Haryana Agency — Vedpragya',
+  description: 'Your local web development partner in Gurgaon. Haryana-registered agency building corporate websites, SaaS platforms, and enterprise web apps for Gurgaon businesses. Free quote.',
+  path: '/pages/web-development-gurgaon',
+  keywords: [
+    'web development company gurgaon',
+    'website development gurgaon',
+    'web developer gurgaon',
+    'software company gurgaon',
+    'it company gurgaon',
+    'web agency gurgaon',
+    'nextjs developer gurgaon',
+  ],
+});
 
 export default function GurgaonWebDevelopmentPage() {
   return (

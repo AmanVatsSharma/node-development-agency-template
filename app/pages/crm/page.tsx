@@ -47,6 +47,23 @@ import { FinalCTASection } from './_components/final-cta-section';
 import { SectionErrorBoundary } from './_components/section-error-boundary';
 import { ScrollToTop } from './_components/scroll-to-top';
 import { MobileFloatingCTA } from './_components/mobile-floating-cta';
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'EnterpriseHero CRM — Self-Hosted CRM for Indian Businesses | Vedpragya',
+  description: 'A self-hosted, open-core CRM built for Indian B2B teams. Lead pipeline, sales automation, WhatsApp sync, and custom workflows. One-time setup. Your data, your server.',
+  path: '/pages/crm',
+  keywords: [
+    'self hosted crm india',
+    'crm software india',
+    'open source crm india',
+    'b2b crm india',
+    'sales crm india',
+    'custom crm development india',
+    'lead management software india',
+  ],
+});
 
 export default function CRMPage() {
   return (

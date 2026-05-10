@@ -11,6 +11,23 @@ import { FAQSection } from './_components/faq-section';
 import { FinalCTASection } from './_components/final-cta-section';
 import { MobileFloatingCTA } from './_components/mobile-floating-cta';
 import { ScrollToTop } from './_components/scroll-to-top';
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Landing Page Optimization India | CRO for Google Ads — Vedpragya',
+  description: 'Conversion rate optimization and landing page design for Google Ads campaigns in India. A/B testing, heatmaps, and copy that converts. Increase leads without increasing ad spend.',
+  path: '/pages/landing-page-optimization',
+  keywords: [
+    'landing page optimization india',
+    'cro india',
+    'conversion rate optimization india',
+    'landing page design india',
+    'google ads landing page india',
+    'ab testing india',
+    'ppc landing page india',
+  ],
+});
 
 export default function LandingPageOptimizationPage() {
   return (

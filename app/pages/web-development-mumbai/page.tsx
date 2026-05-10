@@ -36,6 +36,23 @@ import { MobileFloatingCTA } from './_components/mobile-floating-cta';
 import { ScrollToTop } from './_components/scroll-to-top';
 import { SectionErrorBoundary } from './_components/section-error-boundary';
 import { RelatedServicesStrip } from '@/app/components/RelatedServicesStrip';
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Web Development Company Mumbai | Custom Web Apps & SaaS — Vedpragya',
+  description: "Top web development company for Mumbai businesses. Custom websites, SaaS platforms, e-commerce, and fintech web apps. Next.js, React, Node.js. Free consultation.",
+  path: '/pages/web-development-mumbai',
+  keywords: [
+    'web development company mumbai',
+    'website development mumbai',
+    'web developer mumbai',
+    'software company mumbai',
+    'saas development mumbai',
+    'fintech development mumbai',
+    'react developer mumbai',
+  ],
+});
 
 export default function MumbaiWebDevelopmentPage() {
   return (

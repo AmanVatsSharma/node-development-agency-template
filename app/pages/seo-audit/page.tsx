@@ -27,6 +27,23 @@ import { TestimonialsSection } from './_components/testimonials-section';
 import { FAQSection } from './_components/faq-section';
 import { FinalCTASection } from './_components/final-cta-section';
 import { SectionErrorBoundary } from '../business-website/_components/section-error-boundary';
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Free SEO Audit India | Website Technical SEO Analysis — Vedpragya',
+  description: 'Get a free technical SEO audit for your website. We check Core Web Vitals, indexation, schema, on-page signals, and backlink gaps. Instant report. No credit card required.',
+  path: '/pages/seo-audit',
+  keywords: [
+    'free seo audit india',
+    'website seo audit india',
+    'technical seo audit india',
+    'seo analysis india',
+    'core web vitals audit',
+    'seo agency india',
+    'website audit india',
+  ],
+});
 
 export default function SEOAuditPage() {
   return (

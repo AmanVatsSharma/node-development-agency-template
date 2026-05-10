@@ -1,4 +1,21 @@
 import { CityLandingPage } from '@/app/components/CityLandingPage';
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Web Development Company Pune | SaaS & Enterprise Apps — Vedpragya',
+  description: "Custom web development for Pune's IT, manufacturing, and education sectors. SaaS platforms, enterprise web apps, and e-commerce built with Next.js and React. Free consultation.",
+  path: '/pages/web-development-pune',
+  keywords: [
+    'web development company pune',
+    'website development pune',
+    'web developer pune',
+    'saas development pune',
+    'it company pune',
+    'software development company pune',
+    'react developer pune',
+  ],
+});
 
 export default function PuneWebDevelopmentPage() {
   return (

@@ -1,5 +1,22 @@
 import Link from "next/link";
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
 import { BackgroundBeams } from "@/app/components/ui/background-beams";
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Our Services | Web Dev, AI, Google Ads & Shopify — Vedpragya',
+  description: 'Vedpragya offers web development, AI chatbots, Google Ads management, Shopify development, and ERP solutions for Indian businesses. End-to-end digital product studio.',
+  path: '/pages/services',
+  keywords: [
+    'web development services india',
+    'ai development services india',
+    'google ads services india',
+    'shopify services india',
+    'software development services india',
+    'digital agency services india',
+    'vedpragya services',
+  ],
+});
 import { Spotlight } from "@/app/components/ui/spotlight";
 import { MovingBorder } from "@/app/components/ui/moving-border";
 import { BentoGrid, BentoGridItem } from "@/app/components/ui/bento-grid";

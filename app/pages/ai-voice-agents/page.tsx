@@ -57,6 +57,24 @@ import { SectionErrorBoundary } from './_components/section-error-boundary';
  * - Indian market focus (INR pricing, regional languages)
  * - Technical authority establishment
  */
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/app/lib/seo/metadata';
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'AI Voice Agents Development India | Conversational AI — Vedpragya',
+  description: 'Build AI voice agents for sales, support, and scheduling. Powered by LLMs with natural Hindi and English speech. Reduce call centre costs by 60%. Free demo.',
+  path: '/pages/ai-voice-agents',
+  keywords: [
+    'ai voice agent development india',
+    'conversational ai india',
+    'voice ai bot india',
+    'ai phone agent india',
+    'voice chatbot development india',
+    'llm voice agent',
+    'ai call centre india',
+  ],
+});
+
 export default function AIVoiceAgentsPage() {
   return (
     <main className="min-h-screen bg-white dark:bg-gray-900">
