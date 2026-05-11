@@ -103,20 +103,27 @@ export async function POST(request: NextRequest) {
       
       console.log(`[API/Contact] Synced to Zoho: ${zohoLeadId}`);
     } catch (zohoError: any) {
-      console.error('[API/Contact] Zoho sync failed:', zohoError.message);
-      // We don't fail the request, just log it. The lead is safe in our DB.
-      // Optionally queue for retry (simplified here compared to /api/lead)
+      console.error('[API/Contact] Zoho sync failed, queuing for retry:', zohoError.message);
       await prisma.lead.update({
         where: { id: lead.id },
         data: { status: 'failed' }
       });
-      
+      await prisma.integrationRetry.create({
+        data: {
+          type: 'zoho_lead',
+          payload: { leadId: lead.id },
+          attempts: 0,
+          status: 'queued',
+          nextRunAt: new Date(Date.now() + 60 * 1000),
+          lastError: String(zohoError?.message || zohoError),
+        },
+      });
       await prisma.integrationLog.create({
         data: {
           type: 'lead_submit',
           provider: 'zoho',
           level: 'error',
-          message: `Zoho submission failed for contact form lead ${lead.id}`,
+          message: `Zoho submission failed for contact form lead ${lead.id}; queued for retry`,
           error: String(zohoError?.message || zohoError),
           correlationId,
         },
