@@ -67,9 +67,11 @@ export async function GET(request: NextRequest) {
       where: { createdAt: { gte: new Date(Date.now() - 24 * 60 * 60 * 1000) } }
     });
 
+    // Count only conversations that resulted in a successful lead conversion
+    // i.e., those marked with status 'converted' (set by /api/ai-agent/convert-lead after saving Lead)
     const conversionsToday = await prisma.aIConversation.count({
       where: {
-        leadCaptured: true,
+        status: 'converted',
         createdAt: { gte: new Date(Date.now() - 24 * 60 * 60 * 1000) }
       }
     });
