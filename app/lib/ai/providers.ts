@@ -15,6 +15,7 @@ export interface AIProviderConfig {
   provider: 'openai' | 'claude' | 'gemini';
   apiKey: string;
   model: string;
+  baseUrl?: string; // Custom base URL for API endpoints
   temperature?: number;
   maxTokens?: number;
 }
@@ -88,15 +89,31 @@ export class OpenAIProvider {
 
 /**
  * Claude (Anthropic) Provider
+ * Supports custom base URL for enterprise deployments (AWS Bedrock, Azure AI, custom proxies)
  */
 export class ClaudeProvider {
   private apiKey: string;
   private model: string;
-  private baseURL = 'https://api.anthropic.com/v1';
+  private baseURL: string;
 
-  constructor(apiKey: string, model: string = 'claude-sonnet-4-5') {
+  constructor(apiKey: string, model: string = 'claude-sonnet-4-5', baseUrl?: string) {
     this.apiKey = apiKey;
     this.model = model;
+    this.baseURL = baseUrl || 'https://api.anthropic.com/v1';
+  }
+
+  /**
+   * Detect if the base URL uses OpenAI-compatible format
+   * Used for AWS Bedrock, Azure AI, and other compatible endpoints
+   */
+  private isOpenAIFormat(): boolean {
+    return (
+      this.baseURL.includes('/v1/chat') ||
+      this.baseURL.includes('/chat/completions') ||
+      this.baseURL.includes('azure') ||
+      this.baseURL.includes('bedrock') ||
+      this.baseURL.includes('openai')
+    );
   }
 
   async chat(
@@ -105,52 +122,109 @@ export class ClaudeProvider {
     maxTokens: number = 2000
   ): Promise<AIResponse> {
     try {
-      // Claude requires system message separate from messages array
-      const systemMessage = messages.find(m => m.role === 'system');
-      const conversationMessages = messages
-        .filter(m => m.role !== 'system')
-        .map(m => ({
-          role: m.role as 'user' | 'assistant',
-          content: m.content,
-        }));
-
-      const response = await fetch(`${this.baseURL}/messages`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-api-key': this.apiKey,
-          'anthropic-version': '2023-06-01',
-        },
-        body: JSON.stringify({
-          model: this.model,
-          messages: conversationMessages,
-          system: systemMessage?.content || '',
-          temperature,
-          max_tokens: maxTokens,
-        }),
-      });
-
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(`Claude API error: ${error.error?.message || response.statusText}`);
+      if (this.isOpenAIFormat()) {
+        return this.chatOpenAIFormat(messages, temperature, maxTokens);
       }
-
-      const data = await response.json();
-      const content = data.content?.[0];
-
-      return {
-        content: content?.text || '',
-        usage: data.usage ? {
-          promptTokens: data.usage.input_tokens,
-          completionTokens: data.usage.output_tokens,
-          totalTokens: data.usage.input_tokens + data.usage.output_tokens,
-        } : undefined,
-        finishReason: data.stop_reason,
-      };
+      return this.chatAnthropicFormat(messages, temperature, maxTokens);
     } catch (error) {
       console.error('[Claude Provider] Error:', error);
       throw error;
     }
+  }
+
+  /**
+   * Standard Anthropic API format
+   */
+  private async chatAnthropicFormat(
+    messages: AIMessage[],
+    temperature: number,
+    maxTokens: number
+  ): Promise<AIResponse> {
+    const systemMessage = messages.find(m => m.role === 'system');
+    const conversationMessages = messages
+      .filter(m => m.role !== 'system')
+      .map(m => ({
+        role: m.role as 'user' | 'assistant',
+        content: m.content,
+      }));
+
+    const response = await fetch(`${this.baseURL}/messages`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': this.apiKey,
+        'anthropic-version': '2023-06-01',
+      },
+      body: JSON.stringify({
+        model: this.model,
+        messages: conversationMessages,
+        system: systemMessage?.content || '',
+        temperature,
+        max_tokens: maxTokens,
+      }),
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(`Claude API error: ${error.error?.message || response.statusText}`);
+    }
+
+    const data = await response.json();
+    const content = data.content?.[0];
+
+    return {
+      content: content?.text || '',
+      usage: data.usage ? {
+        promptTokens: data.usage.input_tokens,
+        completionTokens: data.usage.output_tokens,
+        totalTokens: data.usage.input_tokens + data.usage.output_tokens,
+      } : undefined,
+      finishReason: data.stop_reason,
+    };
+  }
+
+  /**
+   * OpenAI-compatible format (for Azure AI, AWS Bedrock, custom proxies)
+   */
+  private async chatOpenAIFormat(
+    messages: AIMessage[],
+    temperature: number,
+    maxTokens: number
+  ): Promise<AIResponse> {
+    const response = await fetch(`${this.baseURL}/chat/completions`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.apiKey}`,
+      },
+      body: JSON.stringify({
+        model: this.model,
+        messages: messages.map(m => ({
+          role: m.role === 'system' ? 'system' : m.role,
+          content: m.content,
+        })),
+        temperature,
+        max_tokens: maxTokens,
+      }),
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(`Claude API error: ${error.error?.message || response.statusText}`);
+    }
+
+    const data = await response.json();
+    const choice = data.choices?.[0];
+
+    return {
+      content: choice?.message?.content || '',
+      usage: data.usage ? {
+        promptTokens: data.usage.prompt_tokens,
+        completionTokens: data.usage.completion_tokens,
+        totalTokens: data.usage.total_tokens,
+      } : undefined,
+      finishReason: choice?.finish_reason,
+    };
   }
 }
 
@@ -237,7 +311,7 @@ export class AIProviderFactory {
       case 'openai':
         return new OpenAIProvider(config.apiKey, config.model);
       case 'claude':
-        return new ClaudeProvider(config.apiKey, config.model);
+        return new ClaudeProvider(config.apiKey, config.model, config.baseUrl);
       case 'gemini':
         return new GeminiProvider(config.apiKey, config.model);
       default:

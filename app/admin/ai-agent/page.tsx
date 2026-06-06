@@ -220,9 +220,9 @@ export default function AIAgentAdminPage() {
         <title>AI Agent Configuration - Admin</title>
       </head>
 
-      <div className="min-h-screen bg-slate-50 dark:bg-slate-950">
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
         {/* Header */}
-        <header className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 sticky top-0 z-50">
+        <header className="bg-gradient-to-r from-purple-900/80 to-indigo-900/80 backdrop-blur-lg border-b border-purple-800/30 sticky top-0 z-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
@@ -258,7 +258,7 @@ export default function AIAgentAdminPage() {
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
           {/* Stats Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <Card>
+            <Card className="bg-gradient-to-br from-purple-800/40 to-indigo-800/40 backdrop-blur-md border-purple-700/30 hover:border-purple-500/30 transition-all duration-300">
               <CardContent className="pt-6">
                 <div className="flex items-center justify-between">
                   <div>
@@ -399,9 +399,24 @@ export default function AIAgentAdminPage() {
                           <SelectValue placeholder="Select provider" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="openai">OpenAI (GPT)</SelectItem>
-                          <SelectItem value="claude">Anthropic (Claude)</SelectItem>
-                          <SelectItem value="gemini">Google (Gemini)</SelectItem>
+                          <SelectItem value="openai">
+                            <div className="flex items-center gap-2">
+                              <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                              OpenAI (GPT)
+                            </div>
+                          </SelectItem>
+                          <SelectItem value="claude">
+                            <div className="flex items-center gap-2">
+                              <div className="w-3 h-3 bg-purple-500 rounded-full"></div>
+                              Claude (Anthropic)
+                            </div>
+                          </SelectItem>
+                          <SelectItem value="gemini">
+                            <div className="flex items-center gap-2">
+                              <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
+                              Gemini
+                            </div>
+                          </SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
@@ -419,6 +434,22 @@ export default function AIAgentAdminPage() {
                         {config?.hasApiKey ? 'API key is configured' : 'No API key configured'}
                       </p>
                     </div>
+
+                    {/* Base URL - Custom Endpoint */}
+                    {config?.provider === 'claude' && (
+                      <div className="space-y-2">
+                        <Label htmlFor="baseUrl">Base URL (Optional)</Label>
+                        <Input
+                          id="baseUrl"
+                          placeholder={config?.baseUrl || 'https://api.anthropic.com/v1'}
+                          value={config?.baseUrl || ''}
+                          onChange={(e) => setConfig({ ...config, baseUrl: e.target.value })}
+                        />
+                        <p className="text-xs text-slate-500">
+                          Leave empty to use default Anthropic API. Use for custom endpoints (AWS Bedrock, Azure AI, proxy servers)
+                        </p>
+                      </div>
+                    )}
 
                     {/* Model Selection */}
                     <div className="space-y-2">

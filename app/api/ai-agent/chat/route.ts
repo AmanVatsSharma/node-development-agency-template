@@ -77,6 +77,7 @@ export async function POST(request: NextRequest) {
         provider: config.provider as 'openai' | 'claude' | 'gemini',
         apiKey: config.apiKey,
         model: config.model,
+        baseUrl: config.baseUrl || undefined,
         temperature: config.temperature,
         maxTokens: config.maxTokens,
       },

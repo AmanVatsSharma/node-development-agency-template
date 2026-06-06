@@ -111,6 +111,7 @@ export async function POST(request: NextRequest) {
       greetingDelay: parseInt(body.greetingDelay),
       widgetPosition: body.widgetPosition,
       primaryColor: body.primaryColor,
+      baseUrl: body.baseUrl || null,
     };
 
     // Only update API key if provided
@@ -138,6 +139,7 @@ export async function POST(request: NextRequest) {
         id: config.id,
         provider: config.provider,
         model: config.model,
+        baseUrl: config.baseUrl,
         agentName: config.agentName,
         agentRole: config.agentRole,
         companyName: config.companyName,

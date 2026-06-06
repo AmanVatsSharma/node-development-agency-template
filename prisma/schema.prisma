@@ -304,6 +304,7 @@ model AIAgentConfig {
   provider          String   @default("openai") // "openai", "claude", "gemini"
   apiKey            String? // Encrypted API key
   model             String   @default("gpt-4o") // Model name (gpt-4o, claude-sonnet-4-5, gemini-2.0-flash-exp)
+  baseUrl           String? // Custom base URL for API endpoints
   agentName         String   @default("Nova") // Brand name for the AI agent
   agentRole         String   @default("AI Sales Assistant") // Agent's role
   companyName       String   @default("Vedpragya Bharat") // Your company name
