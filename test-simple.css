@@ -1,0 +1,10 @@
+@import 'tailwindcss';
+
+body {
+  background-color: red;
+}
+
+.test {
+  color: white;
+  padding: 20px;
+}
