@@ -66,23 +66,6 @@ import { FinalCTASection } from './_components/final-cta-section';
 import { MobileFloatingCTA } from './_components/mobile-floating-cta';
 import { ScrollToTop } from './_components/scroll-to-top';
 import { SectionErrorBoundary } from './_components/section-error-boundary';
-import type { Metadata } from 'next';
-import { buildPageMetadata } from '@/app/lib/seo/metadata';
-
-export const metadata: Metadata = buildPageMetadata({
-  title: 'Healthcare Software Development India | HIPAA-Ready Systems — Vedpragya',
-  description: 'Custom healthcare software development for Indian clinics, hospitals, and healthtech startups. EMR, telemedicine, HL7 FHIR APIs, and patient management systems. HIPAA-ready. Free consultation.',
-  path: '/pages/healthcare-software-development',
-  keywords: [
-    'healthcare software development india',
-    'health tech software company india',
-    'hospital management software india',
-    'emr software development india',
-    'telemedicine app development india',
-    'healthcare app development',
-    'medical software india',
-  ],
-});
 
 export default function HealthcareSoftwareDevelopmentPage() {
   return (

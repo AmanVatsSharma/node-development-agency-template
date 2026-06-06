@@ -53,23 +53,6 @@ import { MobileFloatingCTA } from './_components/mobile-floating-cta';
 import { ScrollToTop } from './_components/scroll-to-top';
 import { SectionErrorBoundary } from './_components/section-error-boundary';
 import { RelatedServicesStrip } from '@/app/components/RelatedServicesStrip';
-import type { Metadata } from 'next';
-import { buildPageMetadata } from '@/app/lib/seo/metadata';
-
-export const metadata: Metadata = buildPageMetadata({
-  title: 'Next.js Development Company India | App Router Experts — Vedpragya',
-  description: 'Hire Next.js developers in India. We build blazing-fast, SEO-optimised Next.js 15 apps with App Router, TypeScript, and Tailwind. From MVPs to enterprise platforms. Free consultation.',
-  path: '/pages/next-js-development',
-  keywords: [
-    'next.js development company india',
-    'hire next.js developer india',
-    'nextjs development services india',
-    'next.js 15 development',
-    'next.js app router development',
-    'next.js agency india',
-    'react next.js developer',
-  ],
-});
 
 export default function NextJsDevelopmentPage() {
   return (

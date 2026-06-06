@@ -18,22 +18,6 @@ export const metadata: Metadata = buildPageMetadata({
 
 import { ResourcesClient } from './_components/resources-client';
 import { Resource } from '../../types/blog';
-import type { Metadata } from 'next';
-import { buildPageMetadata } from '@/app/lib/seo/metadata';
-
-export const metadata: Metadata = buildPageMetadata({
-  title: 'Free Web Dev & AI Resources | Guides & Tools — Vedpragya',
-  description: 'Free resources for founders and engineering teams: web development guides, AI integration tutorials, Shopify tips, and Google Ads checklists. Curated by Vedpragya.',
-  path: '/pages/resources',
-  keywords: [
-    'web development resources india',
-    'free developer guides india',
-    'nextjs tutorials india',
-    'ai development resources',
-    'shopify development guides',
-    'google ads resources india',
-  ],
-});
 
 async function getInitialResources(): Promise<Resource[]> {
   try {

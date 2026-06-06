@@ -29,23 +29,6 @@ import { FAQSection } from './_components/faq-section';
 import { FinalCTASection } from './_components/final-cta-section';
 import { MobileFloatingCTA } from './_components/mobile-floating-cta';
 import { ScrollToTop } from './_components/scroll-to-top';
-import type { Metadata } from 'next';
-import { buildPageMetadata } from '@/app/lib/seo/metadata';
-
-export const metadata: Metadata = buildPageMetadata({
-  title: 'B2B Lead Generation Ads India | Google Ads for B2B — Vedpragya',
-  description: 'Google Ads campaigns built specifically for B2B lead generation in India. Target decision-makers, generate quality MQLs, and track cost-per-lead. Free strategy call.',
-  path: '/pages/b2b-lead-generation-ads',
-  keywords: [
-    'b2b lead generation ads india',
-    'b2b google ads india',
-    'b2b ppc india',
-    'lead generation ads india',
-    'b2b digital marketing india',
-    'google ads b2b india',
-    'b2b paid search india',
-  ],
-});
 
 export default function B2BLeadGenerationAdsPage() {
   return (

@@ -18,25 +18,6 @@ export const metadata: Metadata = buildPageMetadata({
 
 import Link from 'next/link';
 import type { ReactElement } from 'react';
-import type { Metadata } from 'next';
-import { RelatedBlogPosts } from '@/app/components/RelatedBlogPosts';
-import { RelatedServicesStrip } from '@/app/components/RelatedServicesStrip';
-import { buildPageMetadata } from '@/app/lib/seo/metadata';
-
-export const metadata: Metadata = buildPageMetadata({
-  title: 'Node.js Development Company India | Hire Node.js Developers — Vedpragya',
-  description: 'Expert Node.js development company in India. We build scalable APIs, real-time apps, and microservices with Node.js, Express, and NestJS. Hire Node.js developers. Free consultation.',
-  path: '/pages/nodejs-development',
-  keywords: [
-    'node.js development company india',
-    'hire node.js developer india',
-    'nodejs development services india',
-    'node.js backend development',
-    'express.js development india',
-    'nestjs development india',
-    'api development india',
-  ],
-});
 
 /**
  * Node.js Development service landing page.

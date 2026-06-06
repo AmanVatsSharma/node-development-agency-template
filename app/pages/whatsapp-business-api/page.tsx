@@ -70,23 +70,6 @@ import { FinalCTASection } from './_components/final-cta-section';
 import { MobileFloatingCTA } from './_components/mobile-floating-cta';
 import { ScrollToTop } from './_components/scroll-to-top';
 import { SectionErrorBoundary } from './_components/section-error-boundary';
-import type { Metadata } from 'next';
-import { buildPageMetadata } from '@/app/lib/seo/metadata';
-
-export const metadata: Metadata = buildPageMetadata({
-  title: 'WhatsApp Business API Integration India | Automation & Bots — Vedpragya',
-  description: 'Official WhatsApp Business API integration for Indian businesses. Automated notifications, AI chatbots, CRM sync, and bulk messaging. Starting ₹15K/month. Free demo.',
-  path: '/pages/whatsapp-business-api',
-  keywords: [
-    'whatsapp business api india',
-    'whatsapp api integration india',
-    'whatsapp chatbot india',
-    'whatsapp automation india',
-    'whatsapp business solution provider india',
-    'whatsapp crm integration',
-    'bulk whatsapp messaging india',
-  ],
-});
 
 export default function WhatsAppBusinessAPIPage() {
   return (

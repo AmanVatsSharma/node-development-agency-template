@@ -80,23 +80,6 @@ import { SectionErrorBoundary } from './_components/section-error-boundary';
  * - Technical authority establishment
  * - Premium, techy aesthetic with trading terminal vibes
  */
-import type { Metadata } from 'next';
-import { buildPageMetadata } from '@/app/lib/seo/metadata';
-
-export const metadata: Metadata = buildPageMetadata({
-  title: 'Trading Software Development India | Algo & HFT Platforms — Vedpragya',
-  description: 'Custom trading software development — algo trading, HFT platforms, NSE/BSE broker tools, and market data dashboards. Built for speed, reliability, and SEBI compliance. Free scoping call.',
-  path: '/pages/trading-software',
-  keywords: [
-    'trading software development india',
-    'algo trading platform development india',
-    'hft trading software india',
-    'stock market software development',
-    'nse bse trading platform',
-    'broker software development india',
-    'fintech software india',
-  ],
-});
 
 export default function TradingSoftwarePage() {
   return (

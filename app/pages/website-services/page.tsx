@@ -17,24 +17,6 @@ export const metadata: Metadata = buildPageMetadata({
 });
 
 import React from "react";
-import type { Metadata } from 'next';
-import { buildPageMetadata } from '@/app/lib/seo/metadata';
-import { ServicesHero } from "./_components/services-hero-section";
-
-export const metadata: Metadata = buildPageMetadata({
-  title: 'Website Services India | Web Design, Dev & Maintenance — Vedpragya',
-  description: 'End-to-end website services for Indian businesses. Design, development, hosting, maintenance, and SEO. One agency for everything. Fixed pricing, fast delivery.',
-  path: '/pages/website-services',
-  keywords: [
-    'website services india',
-    'web design services india',
-    'website maintenance india',
-    'website development services india',
-    'web agency india',
-    'website company india',
-    'web services india',
-  ],
-});
 import { ServicesList } from "./_components/services-list-section";
 import { ProcessSection } from "./_components/process-section";
 import { TechnologiesSection } from "./_components/technologies-section";

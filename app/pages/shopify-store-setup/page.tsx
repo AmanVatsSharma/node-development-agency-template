@@ -60,23 +60,6 @@ import ResultsSection from '@/app/components/shopify/ResultsSection';
 import FinalCTASection from '@/app/components/shopify/FinalCTASection';
 import ContactFormSection from '@/app/components/shopify/ContactFormSection';
 
-import type { Metadata } from 'next';
-import { buildPageMetadata } from '@/app/lib/seo/metadata';
-
-export const metadata: Metadata = buildPageMetadata({
-  title: 'Shopify Store Setup India | E-Commerce Agency — Vedpragya',
-  description: 'Professional Shopify store setup for Indian businesses. Theme customisation, payment gateway integration (Razorpay, UPI), product catalogue, and launch. Starting ₹9,999. Free quote.',
-  path: '/pages/shopify-store-setup',
-  keywords: [
-    'shopify store setup india',
-    'shopify development india',
-    'shopify agency india',
-    'shopify store india',
-    'ecommerce store setup india',
-    'shopify developer india',
-    'shopify razorpay integration india',
-  ],
-});
 
 console.log('[ShopifyStorePage] Page component loaded');
 

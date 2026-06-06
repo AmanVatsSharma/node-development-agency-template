@@ -17,23 +17,6 @@ export const metadata: Metadata = buildPageMetadata({
 });
 
 import Link from "next/link";
-import type { Metadata } from 'next';
-import { buildPageMetadata } from '@/app/lib/seo/metadata';
-import { BackgroundBeams } from "@/app/components/ui/background-beams";
-
-export const metadata: Metadata = buildPageMetadata({
-  title: 'Portfolio | Web Dev, AI & SaaS Case Studies — Vedpragya',
-  description: 'See what Vedpragya has built: AI voice systems, headless Shopify migrations, fintech platforms, and SaaS products. Real outcomes, real clients across India, UAE, and the US.',
-  path: '/pages/portfolio',
-  keywords: [
-    'web development portfolio india',
-    'software agency portfolio india',
-    'case studies web development',
-    'next.js portfolio india',
-    'saas development examples india',
-    'vedpragya portfolio',
-  ],
-});
 import { Spotlight } from "@/app/components/ui/spotlight";
 import { MovingBorder } from "@/app/components/ui/moving-border";
 

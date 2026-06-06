@@ -17,23 +17,6 @@ export const metadata: Metadata = buildPageMetadata({
 });
 
 import { CityLandingPage } from '@/app/components/CityLandingPage';
-import type { Metadata } from 'next';
-import { buildPageMetadata } from '@/app/lib/seo/metadata';
-
-export const metadata: Metadata = buildPageMetadata({
-  title: 'Web Development Company Delhi NCR | Next.js & React Agency — Vedpragya',
-  description: 'Top web development company in Delhi NCR. Custom websites, SaaS apps, and e-commerce for Delhi businesses. Next.js, React, Node.js. Haryana-registered. Free consultation.',
-  path: '/pages/web-development-delhi',
-  keywords: [
-    'web development company delhi',
-    'web development delhi ncr',
-    'website development delhi',
-    'web developer delhi',
-    'react developer delhi',
-    'nextjs developer delhi',
-    'software company delhi ncr',
-  ],
-});
 
 export default function DelhiWebDevelopmentPage() {
   return (

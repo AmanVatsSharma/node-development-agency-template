@@ -17,23 +17,6 @@ export const metadata: Metadata = buildPageMetadata({
 });
 
 import { CityLandingPage } from '@/app/components/CityLandingPage';
-import type { Metadata } from 'next';
-import { buildPageMetadata } from '@/app/lib/seo/metadata';
-
-export const metadata: Metadata = buildPageMetadata({
-  title: "Web Development Company Hyderabad | Pharma & SaaS Tech — Vedpragya",
-  description: "Web development for Hyderabad's pharma, healthtech, and SaaS industries. Next.js, TypeScript, and enterprise engineering. HIPAA-ready systems available. Free consultation.",
-  path: '/pages/web-development-hyderabad',
-  keywords: [
-    'web development company hyderabad',
-    'website development hyderabad',
-    'web developer hyderabad',
-    'software company hyderabad',
-    'saas development hyderabad',
-    'healthtech development hyderabad',
-    'it company hyderabad',
-  ],
-});
 
 export default function HyderabadWebDevelopmentPage() {
   return (

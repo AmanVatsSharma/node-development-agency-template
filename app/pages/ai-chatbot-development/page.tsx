@@ -63,23 +63,6 @@ import { FinalCTASection } from './_components/final-cta-section';
 import { MobileFloatingCTA } from './_components/mobile-floating-cta';
 import { ScrollToTop } from './_components/scroll-to-top';
 import { SectionErrorBoundary } from './_components/section-error-boundary';
-import type { Metadata } from 'next';
-import { buildPageMetadata } from '@/app/lib/seo/metadata';
-
-export const metadata: Metadata = buildPageMetadata({
-  title: 'AI Chatbot Development India | GPT-4, Claude & Gemini Bots — Vedpragya',
-  description: 'Custom AI chatbot development for Indian businesses. GPT-4, Claude, Gemini. WhatsApp, web, and API integrations. Sales bots, support bots, voice agents. Starting ₹49K. Free demo.',
-  path: '/pages/ai-chatbot-development',
-  keywords: [
-    'ai chatbot development india',
-    'custom ai chatbot india',
-    'gpt chatbot development india',
-    'ai chatbot company india',
-    'whatsapp ai bot india',
-    'chatbot development services',
-    'llm chatbot india',
-  ],
-});
 
 export default function AIChatbotDevelopmentPage() {
   return (

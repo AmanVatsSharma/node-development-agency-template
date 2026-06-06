@@ -29,23 +29,6 @@ import { FAQSection } from './_components/faq-section';
 import { FinalCTASection } from './_components/final-cta-section';
 import { MobileFloatingCTA } from './_components/mobile-floating-cta';
 import { ScrollToTop } from './_components/scroll-to-top';
-import type { Metadata } from 'next';
-import { buildPageMetadata } from '@/app/lib/seo/metadata';
-
-export const metadata: Metadata = buildPageMetadata({
-  title: 'Google Ads Audit & Strategy India | Free PPC Account Review — Vedpragya',
-  description: 'Free Google Ads audit for Indian businesses. We identify wasted spend, missed opportunities, and quality score issues. Data-driven strategy session included. Book now.',
-  path: '/pages/google-ads-audit-strategy',
-  keywords: [
-    'google ads audit india',
-    'ppc audit india',
-    'google ads strategy india',
-    'google ads account review india',
-    'adwords audit india',
-    'google ads consultant india',
-    'ppc strategy india',
-  ],
-});
 
 export default function GoogleAdsAuditStrategyPage() {
   return (

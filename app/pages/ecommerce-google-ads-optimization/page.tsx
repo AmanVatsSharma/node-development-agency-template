@@ -29,23 +29,6 @@ import { FAQSection } from './_components/faq-section';
 import { FinalCTASection } from './_components/final-cta-section';
 import { MobileFloatingCTA } from './_components/mobile-floating-cta';
 import { ScrollToTop } from './_components/scroll-to-top';
-import type { Metadata } from 'next';
-import { buildPageMetadata } from '@/app/lib/seo/metadata';
-
-export const metadata: Metadata = buildPageMetadata({
-  title: 'E-Commerce Google Ads Optimization India | Shopping & PMax — Vedpragya',
-  description: 'Google Shopping, Performance Max, and Dynamic Search Ads for Indian e-commerce. Lower ACOS, higher ROAS. Shopify, WooCommerce, custom stores. Free account audit.',
-  path: '/pages/ecommerce-google-ads-optimization',
-  keywords: [
-    'ecommerce google ads india',
-    'google shopping ads india',
-    'ecommerce ppc india',
-    'shopify google ads india',
-    'roas optimization india',
-    'performance max ecommerce india',
-    'google ads for online store india',
-  ],
-});
 
 export default function EcommerceGoogleAdsOptimizationPage() {
   return (

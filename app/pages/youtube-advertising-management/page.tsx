@@ -29,23 +29,6 @@ import { FAQSection } from './_components/faq-section';
 import { FinalCTASection } from './_components/final-cta-section';
 import { MobileFloatingCTA } from './_components/mobile-floating-cta';
 import { ScrollToTop } from './_components/scroll-to-top';
-import type { Metadata } from 'next';
-import { buildPageMetadata } from '@/app/lib/seo/metadata';
-
-export const metadata: Metadata = buildPageMetadata({
-  title: 'YouTube Advertising Management India | Video Ads Agency — Vedpragya',
-  description: 'YouTube video ad campaigns for Indian brands. In-stream, bumper, and discovery ads. Creative strategy, targeting, and conversion tracking. Reach crores of viewers. Free brief.',
-  path: '/pages/youtube-advertising-management',
-  keywords: [
-    'youtube advertising india',
-    'youtube ads management india',
-    'youtube video ads india',
-    'youtube marketing agency india',
-    'youtube ads agency india',
-    'video advertising india',
-    'youtube campaign management india',
-  ],
-});
 
 export default function YouTubeAdvertisingManagementPage() {
   return (

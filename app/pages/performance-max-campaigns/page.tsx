@@ -29,22 +29,6 @@ import { FAQSection } from './_components/faq-section';
 import { FinalCTASection } from './_components/final-cta-section';
 import { MobileFloatingCTA } from './_components/mobile-floating-cta';
 import { ScrollToTop } from './_components/scroll-to-top';
-import type { Metadata } from 'next';
-import { buildPageMetadata } from '@/app/lib/seo/metadata';
-
-export const metadata: Metadata = buildPageMetadata({
-  title: 'Performance Max Campaigns India | PMax Google Ads Management — Vedpragya',
-  description: 'Expert Performance Max (PMax) campaign management for Indian businesses. Asset group strategy, audience signals, and ROAS optimisation across Google channels. Free consultation.',
-  path: '/pages/performance-max-campaigns',
-  keywords: [
-    'performance max campaigns india',
-    'pmax google ads india',
-    'google performance max india',
-    'pmax management india',
-    'performance max agency india',
-    'google ads pmax india',
-  ],
-});
 
 export default function PerformanceMaxCampaignsPage() {
   return (
