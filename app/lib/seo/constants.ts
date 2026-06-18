@@ -71,6 +71,21 @@ export const SEO_BLOCKED_ROUTE_PREFIXES = ['/admin', '/api', '/login'] as const;
 export const SEO_ROBOTS_DISALLOW_PATHS = SEO_BLOCKED_ROUTE_PREFIXES;
 
 /**
+ * Routes whose page metadata declares `noIndex: true`. The sitemap MUST NOT
+ * include these — Google's sitemap protocol requires sitemaps to list only
+ * pages intended for indexing, and a noindexed entry in a sitemap is treated
+ * as a soft protocol violation that erodes crawl trust across the whole file.
+ *
+ * Add a route here whenever a page's `buildPageMetadata({ noIndex: true })`
+ * is set. This list is the single source of truth — both the sitemap
+ * generator and any future sitemap-validation tooling read from it.
+ */
+export const NOINDEXED_ROUTES: readonly string[] = [
+  '/pages/nse-mcx-live-market-data',
+  '/pages/trading-software',
+] as const;
+
+/**
  * Convert any path/URL into an absolute URL on canonical site domain.
  * - Absolute URLs are returned as-is.
  * - Relative paths are joined with SEO_SITE_URL.
