@@ -27,7 +27,6 @@ const serviceOptions = [
   { value: "ecommerce", label: "E-Commerce Platform" },
   { value: "erp", label: "ERP / Enterprise Software" },
   { value: "marketing", label: "Digital Marketing" },
-  { value: "trading", label: "Trading & Finance Tech" },
   { value: "consulting", label: "Technical Consulting" },
   { value: "other", label: "Something else" },
 ];

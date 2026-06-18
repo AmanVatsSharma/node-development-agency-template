@@ -102,8 +102,6 @@ const mobileServiceCategories = [
       </svg>
     ),
     items: [
-      { name: "Trading Software", href: "/pages/trading-software" },
-      { name: "Live Market Data API", href: "/pages/nse-mcx-live-market-data" },
       { name: "Healthcare Software", href: "/pages/healthcare-software-development" },
     ],
   },

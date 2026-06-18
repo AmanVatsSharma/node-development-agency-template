@@ -57,13 +57,6 @@ function MarketingIcon() {
     </svg>
   );
 }
-function TradingIcon() {
-  return (
-    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-    </svg>
-  );
-}
 
 const serviceCategories = [
   {
@@ -120,11 +113,9 @@ const serviceCategories = [
     number: "04",
     title: "ERP & Enterprise Software",
     tagline: "Mission-critical systems that run businesses.",
-    desc: "Custom ERP systems, CRM platforms, healthcare software, and trading platforms. We have shipped BharatERP — a complete SAP-compatible ERP in Node.js — and apply that same engineering depth to client projects.",
+    desc: "Custom ERP systems, CRM platforms, and healthcare software. We have shipped BharatERP — a complete SAP-compatible ERP in Node.js — and apply that same engineering depth to client projects.",
     services: [
       { name: "Healthcare Software", href: "/pages/healthcare-software-development" },
-      { name: "Trading Software", href: "/pages/trading-software" },
-      { name: "NSE/MCX Market Data", href: "/pages/nse-mcx-live-market-data" },
       { name: "CRM Platform", href: "/pages/crm" },
     ],
     icon: <ERPIcon />,
@@ -152,20 +143,6 @@ const serviceCategories = [
     large: false,
     href: "/pages/google-ads-management",
   },
-  {
-    id: "trading",
-    number: "06",
-    title: "Trading & Finance Technology",
-    tagline: "Real-time financial systems at institutional quality.",
-    desc: "Live market data platforms, algorithmic trading tools, charting software, and fintech infrastructure. We understand the latency, reliability, and compliance requirements of financial software.",
-    services: [
-      { name: "Trading Software Development", href: "/pages/trading-software" },
-      { name: "NSE/MCX Live Market Data", href: "/pages/nse-mcx-live-market-data" },
-    ],
-    icon: <TradingIcon />,
-    large: false,
-    href: "/pages/trading-software",
-  },
 ];
 
 export default function ServicesPage() {
@@ -186,7 +163,7 @@ export default function ServicesPage() {
                 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 leading-[1.08] tracking-tight"
                 style={{ fontFamily: "var(--font-sora), sans-serif" }}
               >
-                Six Disciplines.{" "}
+                Five Disciplines.{" "}
                 <span className="text-[#2563EB]">One Team.</span>
               </h1>
               <p className="text-gray-300 text-lg sm:text-xl leading-relaxed max-w-2xl">

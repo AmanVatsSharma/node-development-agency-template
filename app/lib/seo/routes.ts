@@ -52,10 +52,6 @@ const CORE_STATIC_ROUTES = [
   '/pages/shopify-headless-migration',
   '/pages/shopify-product-page-customization',
 
-  // Trading & finance
-  '/pages/trading-software',
-  '/pages/nse-mcx-live-market-data',
-
   // Healthcare
   '/pages/healthcare-software-development',
 ];
@@ -87,7 +83,6 @@ const ALL_STATIC_PAGE_ROUTES = [
   '/pages/legal/shipping-policy',
   '/pages/legal/terms-of-service',
   '/pages/local-business-google-ads',
-  '/pages/nse-mcx-live-market-data',
   '/pages/next-js-development',
   '/pages/nodejs-development',
   '/pages/performance-max-campaigns',
@@ -100,7 +95,6 @@ const ALL_STATIC_PAGE_ROUTES = [
   '/pages/shopify-headless-migration',
   '/pages/shopify-product-page-customization',
   '/pages/shopify-store-setup',
-  '/pages/trading-software',
   '/pages/web-development',
   '/pages/web-development-bangalore',
   '/pages/web-development-delhi',

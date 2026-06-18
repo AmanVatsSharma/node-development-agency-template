@@ -14,8 +14,6 @@
  * - Next.js Development
  * - AI Voice Agents
  * - Business Website Development
- * - Trading Software Development
- * - NSE/MCX Live Market Data
  * - CRM Development
  * - Web Development
  */
@@ -319,56 +317,6 @@ We work with businesses of all sizes from startups to enterprises.`,
   },
 
   // ===== SPECIALIZED BUSINESS APPLICATIONS =====
-  {
-    title: 'Trading Software Development',
-    slug: 'trading-software',
-    summary: 'Real-time trading platforms with charting, order execution, and market data integration.',
-    description: `Build powerful trading platforms with real-time market data, advanced charting, and automated trading capabilities.
-
-Trading Platform Features:
-- Real-time market data feeds (NSE, BSE, MCX, Forex)
-- Advanced charting with TradingView integration
-- Multi-exchange order execution
-- Portfolio management and tracking
-- Automated trading strategies (algo trading)
-- Risk management and stop-loss automation
-- Options chain and analysis tools
-- Technical indicators and backtesting
-- Multi-user support with role-based access
-- Mobile app with real-time notifications
-
-Perfect for brokers, trading firms, and fintech startups.`,
-    icon: 'bar-chart',
-    imageUrl: '/images/services/trading-software.jpg',
-    order: 13,
-    featured: false,
-  },
-
-  {
-    title: 'NSE/MCX Live Market Data',
-    slug: 'nse-mcx-live-market-data',
-    summary: 'Real-time market data integration from NSE, BSE, MCX, and global exchanges.',
-    description: `Get live market data feeds with millisecond latency for stocks, commodities, currencies, and derivatives.
-
-Market Data Solutions:
-- Real-time price feeds (NSE, BSE, MCX, Forex)
-- Historical data access and analysis
-- WebSocket streaming for real-time updates
-- Market depth and order book data
-- Corporate actions and events
-- Options chain data
-- Commodity futures and spot prices
-- Custom data APIs and webhooks
-- Data normalization and cleaning
-- Cloud infrastructure for high availability
-
-Perfect for trading platforms, investment apps, and financial analytics tools.`,
-    icon: 'activity',
-    imageUrl: '/images/services/market-data.jpg',
-    order: 14,
-    featured: false,
-  },
-
   {
     title: 'CRM Development',
     slug: 'crm',

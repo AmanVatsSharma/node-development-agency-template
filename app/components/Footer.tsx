@@ -47,7 +47,6 @@ const footerLinks = {
     { href: "/pages/shopify-store-setup", label: "E-Commerce" },
     { href: "/pages/services", label: "ERP & Enterprise" },
     { href: "/pages/google-ads-management", label: "Digital Marketing" },
-    { href: "/pages/trading-software", label: "Trading & Finance" },
   ],
   company: [
     { href: "/pages/about", label: "About Us" },

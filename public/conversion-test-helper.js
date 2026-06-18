@@ -50,11 +50,6 @@
       'business_website_call_click',
       'business_website_whatsapp_click'
     ],
-    'nse-mcx-live-market-data': [
-      'nse_mcx_live_market_data_lead_submit',
-      'nse_mcx_live_market_data_call_click',
-      'nse_mcx_live_market_data_whatsapp_click'
-    ],
     'ai-voice-agents': [
       'ai_voice_agents_lead_submit',
       'ai_voice_agents_call_click',

@@ -102,7 +102,7 @@ const FAQ_QUESTIONS = [
   {
     question: 'Do you build real-time Node.js applications?',
     answer:
-      'Yes. We build real-time features using WebSockets, Socket.io, and Redis Pub/Sub — including chat applications, live trading dashboards, notification systems, and collaborative tools.',
+      'Yes. We build real-time features using WebSockets, Socket.io, and Redis Pub/Sub — including chat applications, live dashboards, notification systems, and collaborative tools.',
   },
   {
     question: 'Can you take over an existing Node.js codebase?',

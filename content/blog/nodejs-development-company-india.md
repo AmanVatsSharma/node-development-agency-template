@@ -65,7 +65,7 @@ PostgreSQL + Prisma is the modern default. Great companies also know when to rea
 |---|---|---|
 | REST API + Auth (MVP) | ₹1,50,000 – ₹4,00,000 | 3–5 weeks |
 | SaaS backend (multi-tenant) | ₹5,00,000 – ₹12,00,000 | 8–14 weeks |
-| Real-time app (chat/trading/dashboard) | ₹6,00,000 – ₹18,00,000 | 10–16 weeks |
+| Real-time app (chat/collaboration/dashboard) | ₹6,00,000 – ₹18,00,000 | 10–16 weeks |
 | Enterprise microservices | ₹15,00,000 – ₹50,00,000+ | 4–8 months |
 
 Hourly rates for senior Node.js developers in India: ₹1,200–₹2,500/hr.
@@ -90,7 +90,7 @@ A good Node.js company will answer all seven without hesitation.
 - **Deployment:** Docker + GitHub Actions + AWS ECS/Fargate or Cloud Run
 - **Handover:** Complete source, infrastructure-as-code, runbooks, documentation
 
-We've built Node.js backends powering fintech, healthcare, trading, and e-commerce products across India and UAE.
+We've built Node.js backends powering fintech, healthcare, SaaS, and e-commerce products across India and UAE.
 
 ## Real Project Case Studies
 
@@ -287,7 +287,7 @@ Absolutely. Netflix, PayPal, LinkedIn, Uber, all run critical workloads on Node.
 - **Deployment:** Docker + GitHub Actions + AWS ECS/Fargate or Cloud Run
 - **Handover:** Complete source, infrastructure-as-code, runbooks, documentation
 
-We've built Node.js backends powering fintech, healthcare, trading, and e-commerce products across India and UAE. Average project: ₹8–15 lakhs, 10–16 weeks, delivered with full ownership and zero lock-in.
+We've built Node.js backends powering fintech, healthcare, SaaS, and e-commerce products across India and UAE. Average project: ₹8–15 lakhs, 10–16 weeks, delivered with full ownership and zero lock-in.
 
 ## Ready to Hire a Node.js Team?
 

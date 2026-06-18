@@ -371,8 +371,6 @@ export async function POST(req: NextRequest) {
       conversionEventType = 'ai_voice_agents_lead_submit';
     } else if (source === 'seo-audit') {
       conversionEventType = 'seo_audit_lead_submit';
-    } else if (source === 'nse-mcx-live-market-data') {
-      conversionEventType = 'nse_mcx_live_market_data_lead_submit';
     } else if (source === 'healthcare-software-development') {
       conversionEventType = 'healthcare_software_development_lead_submit';
     }

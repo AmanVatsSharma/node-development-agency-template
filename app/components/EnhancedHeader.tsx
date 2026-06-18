@@ -53,8 +53,6 @@ const megaMenuColumns = [
   {
     title: "Specialty",
     items: [
-      { name: "Trading Software", href: "/pages/trading-software", badge: "New" },
-      { name: "Live Market Data API", href: "/pages/nse-mcx-live-market-data", badge: "Live" },
       { name: "Healthcare Software", href: "/pages/healthcare-software-development" },
     ],
   },

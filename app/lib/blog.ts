@@ -45,6 +45,19 @@ export interface BlogPostFrontmatter {
   authorTitle?: string;
   featured?: boolean;
   image?: string;
+  /**
+   * When true, the post is excluded from all listings, the sitemap, and
+   * `generateStaticParams`. The slug still returns 404 if visited directly.
+   * Used to temporarily unpublish content without deleting the file.
+   */
+  draft?: boolean;
+  /**
+   * When true, the post is excluded from listings and the sitemap but its
+   * page still renders. Use this for posts you want reachable by direct URL
+   * but hidden from navigation. (Currently treated the same as `draft` for
+   * the public surface — only direct file access differs.)
+   */
+  unlisted?: boolean;
 }
 
 /** Blog post summary — same fields as frontmatter, no rendered body. */
@@ -79,7 +92,6 @@ export const CATEGORY_TO_SERVICE_URL: Record<string, { label: string; url: strin
   'google-ads': { label: 'Google Ads Management', url: '/pages/google-ads-management' },
   'seo': { label: 'Free SEO Audit', url: '/pages/seo-audit' },
   'healthcare': { label: 'Healthcare Software Development', url: '/pages/healthcare-software-development' },
-  'trading': { label: 'Trading Software', url: '/pages/trading-software' },
   'crm': { label: 'Enterprise CRM', url: '/pages/crm' },
   'whatsapp': { label: 'WhatsApp Business API', url: '/pages/whatsapp-business-api' },
   'marketing': { label: 'Google Ads Management', url: '/pages/google-ads-management' },
@@ -175,6 +187,8 @@ function parseFrontmatterFromFile(filename: string): BlogPost | null {
     authorTitle: data.authorTitle ? String(data.authorTitle) : 'Founder, Vedpragya',
     featured: Boolean(data.featured),
     image: data.image ? String(data.image) : undefined,
+    draft: Boolean(data.draft),
+    unlisted: Boolean(data.unlisted),
     contentMarkdown: parsed.content,
     contentHtml: '', // filled later by renderMarkdownToHtml
   };
@@ -207,6 +221,7 @@ async function renderMarkdownToHtml(markdown: string): Promise<string> {
 
 /**
  * Return all blog post summaries, sorted newest first. No HTML rendering.
+ * Excludes posts marked `draft: true` or `unlisted: true` in frontmatter.
  */
 export function getAllBlogPosts(): BlogPostSummary[] {
   const filenames = readBlogDirectorySafely();
@@ -217,39 +232,53 @@ export function getAllBlogPosts(): BlogPostSummary[] {
     if (post) posts.push(post);
   }
 
-  const sortedPosts = posts.sort((a, b) => {
+  const visiblePosts = posts.filter((p) => !p.draft && !p.unlisted);
+
+  const sortedPosts = visiblePosts.sort((a, b) => {
     const aTime = new Date(a.publishedAt).getTime();
     const bTime = new Date(b.publishedAt).getTime();
     return bTime - aTime;
   });
 
-  console.log('[Blog] getAllBlogPosts', { count: sortedPosts.length });
+  console.log('[Blog] getAllBlogPosts', {
+    total: posts.length,
+    visible: sortedPosts.length,
+    hidden: posts.length - sortedPosts.length,
+  });
 
   // Strip markdown/html for summary usage
   return sortedPosts.map((post) => {
     const {
       contentMarkdown: _contentMarkdown,
       contentHtml: _contentHtml,
+      draft: _draft,
+      unlisted: _unlisted,
       ...rest
     } = post;
     void _contentMarkdown;
     void _contentHtml;
+    void _draft;
+    void _unlisted;
     return rest;
   });
 }
 
 /**
- * Return slugs for generateStaticParams.
+ * Return slugs for generateStaticParams. Excludes draft and unlisted posts
+ * so they are not pre-rendered and don't appear in the sitemap.
  */
 export function getBlogPostSlugs(): string[] {
   return readBlogDirectorySafely()
-    .map((filename) => slugFromFilename(filename))
+    .map((filename) => parseFrontmatterFromFile(filename))
+    .filter((post): post is BlogPost => post !== null)
+    .filter((post) => !post.draft && !post.unlisted)
+    .map((post) => post.slug)
     .filter((slug) => isValidSlug(slug));
 }
 
 /**
  * Return a single blog post by slug, with rendered HTML.
- * Returns null if not found.
+ * Returns null if not found. Draft/unlisted posts return null too.
  */
 export async function getBlogPost(slug: string): Promise<BlogPost | null> {
   const normalizedSlug = slug.trim().toLowerCase();
@@ -261,6 +290,14 @@ export async function getBlogPost(slug: string): Promise<BlogPost | null> {
   const filename = `${normalizedSlug}.md`;
   const post = parseFrontmatterFromFile(filename);
   if (!post) return null;
+  if (post.draft || post.unlisted) {
+    console.log('[Blog] getBlogPost — post is hidden', {
+      slug: normalizedSlug,
+      draft: post.draft,
+      unlisted: post.unlisted,
+    });
+    return null;
+  }
 
   post.contentHtml = await renderMarkdownToHtml(post.contentMarkdown);
   return post;

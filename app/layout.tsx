@@ -35,7 +35,7 @@ const dmSans = DM_Sans({
 export const metadata: Metadata = {
   metadataBase: new URL(SEO_SITE_URL),
   title: "Vedpragya | Software Development & IT Solutions Company — India",
-  description: "Vedpragya builds software that transforms businesses. Web apps, AI systems, ERP, e-commerce, digital marketing, and trading platforms. Enterprise-grade engineering from India with global reach.",
+  description: "Vedpragya builds software that transforms businesses. Web apps, AI systems, ERP, e-commerce, and digital marketing. Enterprise-grade engineering from India with global reach.",
   keywords: "software development company india, web development services india, AI development company, nextjs development agency, custom software development, IT solutions india, digital transformation india, Vedpragya, shopify development india, google ads management india, SEO services india, enterprise software development, react development india, node.js development, ecommerce development india",
   authors: [{ name: "Aman Kumar Sharma — Founder & CEO, Vedpragya Bharat Private Limited" }],
   alternates: {
@@ -141,7 +141,7 @@ export default async function RootLayout({
         <FAQStructuredData questions={[
           {
             question: 'What services does Vedpragya offer?',
-            answer: 'Vedpragya offers web development, AI chatbot and voice agent development, e-commerce (Shopify) solutions, custom CRM and ERP software, trading software, Google Ads management, and SEO services — serving businesses across India, UAE, USA, UK, and Canada.',
+            answer: 'Vedpragya offers web development, AI chatbot and voice agent development, e-commerce (Shopify) solutions, custom CRM and ERP software, Google Ads management, and SEO services — serving businesses across India, UAE, USA, UK, and Canada.',
           },
           {
             question: 'Where is Vedpragya located?',
@@ -153,7 +153,7 @@ export default async function RootLayout({
           },
           {
             question: 'How many projects has Vedpragya delivered?',
-            answer: 'Vedpragya has delivered 500+ projects for businesses across India and internationally — spanning web applications, AI systems, e-commerce platforms, trading software, and digital marketing campaigns.',
+            answer: 'Vedpragya has delivered 500+ projects for businesses across India and internationally — spanning web applications, AI systems, e-commerce platforms, and digital marketing campaigns.',
           },
           {
             question: 'Does Vedpragya work with international clients?',

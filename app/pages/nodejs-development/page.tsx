@@ -85,7 +85,7 @@ export default function NodeJSDevelopmentPage(): ReactElement {
               {
                 title: 'Real-time ready',
                 body:
-                  'Native WebSockets, Socket.io, Redis Pub/Sub — perfect for chat, trading, dashboards, and notifications.',
+                  'Native WebSockets, Socket.io, Redis Pub/Sub — perfect for chat, collaboration tools, live dashboards, and notifications.',
               },
               {
                 title: 'Cloud-native',
@@ -135,7 +135,7 @@ export default function NodeJSDevelopmentPage(): ReactElement {
               {
                 title: 'Real-Time Applications',
                 body:
-                  'Live chat, trading dashboards, notification systems, and collaborative tools using WebSockets and Redis Pub/Sub.',
+                  'Live chat, real-time dashboards, notification systems, and collaborative tools using WebSockets and Redis Pub/Sub.',
               },
               {
                 title: 'Multi-Tenant SaaS Backends',

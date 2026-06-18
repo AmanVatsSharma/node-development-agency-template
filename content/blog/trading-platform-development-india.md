@@ -10,7 +10,12 @@ readTime: 28
 author: "Aman Kumar Sharma"
 authorTitle: "Founder, Vedpragya"
 featured: false
+draft: true
+unlisted: true
 ---
+
+<!-- TEMPORARILY UNPUBLISHED — Trading content hidden from site on 2026-06-18.
+     To restore, set draft: false and unlisted: false in frontmatter above. -->
 
 India's retail trading boom (12+ crore demat accounts, ₹50+ trillion market cap) has created massive demand for custom [trading software](/pages/trading-software). But trading software is among the hardest categories to build right — combining real-time systems, strict regulatory compliance, high availability requirements, and massive scalability challenges. Here's what it actually takes to succeed.
 
