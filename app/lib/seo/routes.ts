@@ -1,5 +1,5 @@
 import { footerNavigation, mainNavigation, servicesMegaMenu } from '@/app/data/navigation';
-import { SEO_BLOCKED_ROUTE_PREFIXES } from '@/app/lib/seo/constants';
+import { NOINDEXED_ROUTES, SEO_BLOCKED_ROUTE_PREFIXES } from '@/app/lib/seo/constants';
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -246,6 +246,10 @@ export function getStaticSeoRoutes(): string[] {
   const addRoute = (candidate: string) => {
     const normalized = normalizeRoute(candidate);
     if (!normalized) {
+      return;
+    }
+    // Skip noindexed routes — they must not appear in the sitemap.
+    if (NOINDEXED_ROUTES.includes(normalized)) {
       return;
     }
     routeSet.add(normalized);
