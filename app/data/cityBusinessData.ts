@@ -96,26 +96,11 @@ export const cityBusinessData: Record<string, CityBusinessData> = {
 };
 
 /**
- * Lookup helper: derive the city slug from a route segment like
- * "web-development-delhi" or "delhi-web-development".
- */
-export function getCityDataForRoute(route: string): CityBusinessData | null {
-  const slug = route.split('/').pop()?.toLowerCase() ?? '';
-  // Direct match first (e.g. "delhi").
-  if (cityBusinessData[slug]) return cityBusinessData[slug];
-  // Try splitting on every hyphen so "web-development-delhi" -> "delhi".
-  const segments = slug.split('-');
-  for (const segment of segments) {
-    if (cityBusinessData[segment]) return cityBusinessData[segment];
-  }
-  return null;
-}
-
-/**
- * The HQ city (parent organization location) — used as the
- * Organization / ProfessionalService address in structured data.
- * Vedpragya Bharat Private Limited is registered in Haryana, India
- * (CIN: U47912HR2025PTC131357), so we use Gurugram (Haryana) as HQ.
+ * The HQ city (parent organization location) — used as the default
+ * addressLocality / addressRegion / geo for LocalBusiness JSON-LD when no
+ * cityData override is passed. Vedpragya Bharat Private Limited is
+ * registered in Haryana, India (CIN: U47912HR2025PTC131357), so Gurugram
+ * (Haryana) is the HQ.
  */
 export const hqBusinessData: CityBusinessData = {
   name: 'Gurugram',

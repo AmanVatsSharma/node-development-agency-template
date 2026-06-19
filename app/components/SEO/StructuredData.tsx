@@ -1,5 +1,6 @@
 import React from 'react';
 import { companyProfile } from '@/app/data/companyProfile';
+import { hqBusinessData, type CityBusinessData } from '@/app/data/cityBusinessData';
 import { SEO_DEFAULT_DESCRIPTION } from '@/app/lib/seo/constants';
 import { SEO_SITE_URL } from '@/app/lib/seo/constants';
 
@@ -396,19 +397,13 @@ export function FAQStructuredData({ questions }: FAQStructuredDataProps) {
 // ---------------------------------------------------------------------------
 
 /**
- * Subset of CityBusinessData needed at render time. We re-declare the shape
- * (instead of importing the interface) so this component stays usable even if
- * the city data module is re-organized.
+ * Type alias for the city override prop. Re-exported from cityBusinessData
+ * so the city data module remains the single source of truth.
  */
-interface LocalBusinessCityOverride {
-  name: string;
-  city: string;
-  region: string;
-  regionCode: string;
-  country: string;
-  latitude: number;
-  longitude: number;
-}
+type LocalBusinessCityOverride = Pick<
+  CityBusinessData,
+  'name' | 'city' | 'region' | 'regionCode' | 'country' | 'latitude' | 'longitude'
+>;
 
 interface LocalBusinessStructuredDataProps {
   name?: string;
@@ -451,12 +446,12 @@ export function LocalBusinessStructuredData({
   telephone,
   email = companyProfile.contactEmail,
   streetAddress,
-  addressLocality = 'Gurugram',
-  addressRegion = 'Haryana',
+  addressLocality = hqBusinessData.city,
+  addressRegion = hqBusinessData.region,
   postalCode,
-  addressCountry = 'IN',
-  latitude,
-  longitude,
+  addressCountry = hqBusinessData.country,
+  latitude = hqBusinessData.latitude,
+  longitude = hqBusinessData.longitude,
   priceRange = '₹₹',
   openingHours = ['Mo-Fr 09:00-18:00'],
   areaServed = ['India', 'United Arab Emirates', 'United States', 'United Kingdom'],
