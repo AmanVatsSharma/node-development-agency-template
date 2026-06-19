@@ -48,9 +48,11 @@ function readJpegDimensions(filePath) {
       const segLength = buffer.readUInt16BE(offset + 2);
       // SOF0 (0xC0) through SOF15 (0xCF) all contain dimensions, except DHT (0xC4) and JPG (0xC8).
       if (marker >= 0xc0 && marker <= 0xcf && marker !== 0xc4 && marker !== 0xc8) {
+        // JPEG SOF segment: length(2) precision(1) height(2) width(2).
+        // Height comes BEFORE width in the segment.
         return {
-          width: buffer.readUInt16BE(offset + 5),
-          height: buffer.readUInt16BE(offset + 7),
+          height: buffer.readUInt16BE(offset + 5),
+          width: buffer.readUInt16BE(offset + 7),
         };
       }
       offset += 2 + segLength;
