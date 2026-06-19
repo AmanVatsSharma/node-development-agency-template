@@ -5,9 +5,11 @@ import {
   BreadcrumbStructuredData,
   FAQStructuredData,
   AggregateRatingStructuredData,
+  LocalBusinessStructuredData,
 } from '@/app/components/SEO/StructuredData';
 import { SEO_SITE_URL } from '@/app/lib/seo/constants';
 import { companyProfile } from '@/app/data/companyProfile';
+import { cityBusinessData } from '@/app/data/cityBusinessData';
 
 export const metadata: Metadata = buildPageMetadata({
   title: 'Web Development Company in Bangalore | Vedpragya',
@@ -85,6 +87,7 @@ export default function BangaloreWebDevelopmentLayout({ children }: { children: 
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(SERVICE_SCHEMA) }}
       />
+      <LocalBusinessStructuredData cityData={cityBusinessData.bangalore} />
       {children}
     </>
   );

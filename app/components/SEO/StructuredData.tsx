@@ -395,6 +395,21 @@ export function FAQStructuredData({ questions }: FAQStructuredDataProps) {
 // LocalBusiness structured data (for local India SEO)
 // ---------------------------------------------------------------------------
 
+/**
+ * Subset of CityBusinessData needed at render time. We re-declare the shape
+ * (instead of importing the interface) so this component stays usable even if
+ * the city data module is re-organized.
+ */
+interface LocalBusinessCityOverride {
+  name: string;
+  city: string;
+  region: string;
+  regionCode: string;
+  country: string;
+  latitude: number;
+  longitude: number;
+}
+
 interface LocalBusinessStructuredDataProps {
   name?: string;
   legalName?: string;
@@ -413,11 +428,20 @@ interface LocalBusinessStructuredDataProps {
   openingHours?: string[];
   areaServed?: string[];
   sameAs?: string[];
+  /**
+   * Optional city-specific override. When provided, the rendered JSON-LD
+   * uses the city's addressLocality / addressRegion / geo coordinates and
+   * emits a `City` schema for `areaServed` instead of the default country
+   * list. Used by city landing pages (Delhi, Mumbai, ...) to signal
+   * locality to Google.
+   */
+  cityData?: LocalBusinessCityOverride;
 }
 
 /**
  * LocalBusiness JSON-LD. Used on the root layout to signal local/regional
- * SEO intent for the India/Haryana market.
+ * SEO intent for the India/Haryana market. On city landing pages, pass
+ * `cityData` to localize the address and emit a `City` areaServed entry.
  */
 export function LocalBusinessStructuredData({
   name = companyProfile.brandName,
@@ -437,10 +461,20 @@ export function LocalBusinessStructuredData({
   openingHours = ['Mo-Fr 09:00-18:00'],
   areaServed = ['India', 'United Arab Emirates', 'United States', 'United Kingdom'],
   sameAs,
+  cityData,
 }: LocalBusinessStructuredDataProps) {
   const resolvedSameAs =
     sameAs ??
     (Object.values(companyProfile.social || {}).filter(Boolean) as string[]);
+
+  // When cityData is provided, override the address fields and emit a
+  // single City schema in areaServed. Falls back to the default country
+  // list otherwise.
+  const effectiveAddressLocality = cityData?.city ?? addressLocality;
+  const effectiveAddressRegion = cityData?.region ?? addressRegion;
+  const effectiveAddressCountry = cityData?.country ?? addressCountry;
+  const effectiveLatitude = cityData?.latitude ?? latitude;
+  const effectiveLongitude = cityData?.longitude ?? longitude;
 
   const structuredData: Record<string, unknown> = {
     '@context': 'https://schema.org',
@@ -455,12 +489,23 @@ export function LocalBusinessStructuredData({
     address: {
       '@type': 'PostalAddress',
       ...(streetAddress ? { streetAddress } : {}),
-      addressLocality,
-      addressRegion,
+      addressLocality: effectiveAddressLocality,
+      addressRegion: effectiveAddressRegion,
       ...(postalCode ? { postalCode } : {}),
-      addressCountry,
+      addressCountry: effectiveAddressCountry,
     },
-    areaServed: areaServed.map((a) => ({ '@type': 'Country', name: a })),
+    areaServed: cityData
+      ? [
+          {
+            '@type': 'City',
+            name: cityData.city,
+            ...(cityData.regionCode
+              ? { containedInPlace: { '@type': 'AdministrativeArea', name: cityData.region } }
+              : {}),
+            addressCountry: cityData.country,
+          },
+        ]
+      : areaServed.map((a) => ({ '@type': 'Country', name: a })),
     openingHoursSpecification: openingHours.map((oh) => ({
       '@type': 'OpeningHoursSpecification',
       description: oh,
@@ -469,11 +514,11 @@ export function LocalBusinessStructuredData({
 
   if (telephone) structuredData.telephone = telephone;
   if (email) structuredData.email = email;
-  if (latitude !== undefined && longitude !== undefined) {
+  if (effectiveLatitude !== undefined && effectiveLongitude !== undefined) {
     structuredData.geo = {
       '@type': 'GeoCoordinates',
-      latitude,
-      longitude,
+      latitude: effectiveLatitude,
+      longitude: effectiveLongitude,
     };
   }
 

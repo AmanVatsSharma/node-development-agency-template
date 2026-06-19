@@ -1,8 +1,9 @@
 import React from 'react';
 import { metadata } from './metadata';
-import { BreadcrumbStructuredData, FAQStructuredData } from '@/app/components/SEO/StructuredData';
+import { BreadcrumbStructuredData, FAQStructuredData, LocalBusinessStructuredData } from '@/app/components/SEO/StructuredData';
 import { SEO_SITE_URL } from '@/app/lib/seo/constants';
 import { companyProfile } from '@/app/data/companyProfile';
+import { cityBusinessData } from '@/app/data/cityBusinessData';
 
 export { metadata };
 
@@ -68,6 +69,7 @@ export default function MumbaiWebDevelopmentLayout({ children }: { children: Rea
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(SERVICE_SCHEMA) }}
       />
+      <LocalBusinessStructuredData cityData={cityBusinessData.mumbai} />
       {children}
     </>
   );
