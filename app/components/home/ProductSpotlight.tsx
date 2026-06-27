@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { TrendingUp, ShoppingBag, Building2, Truck, Mail, MessageCircle } from "lucide-react";
 
 // ─── Shared fade-up animation ─────────────────────────────────────────────────
 const fadeUp = (i: number) => ({
@@ -79,11 +80,17 @@ function CardWhaterakt() {
   return (
     <motion.div
       {...fadeUp(0)}
-      className="lg:col-span-2 lg:row-span-2 relative rounded-3xl overflow-hidden flex flex-col min-h-[380px] lg:min-h-0 bg-white dark:bg-[#0F1623]"
+      className="group lg:col-span-2 lg:row-span-2 relative rounded-3xl overflow-hidden flex flex-col min-h-[380px] lg:min-h-0 bg-white dark:bg-[#0F1623]"
       style={{ border: "1px solid rgba(22,163,74,0.2)" }}
     >
       <div className="absolute top-0 left-0 w-full h-1" style={{ background: "linear-gradient(to right, #16a34a, #4ade80)" }} />
       <DotGrid color="rgba(22,163,74,0.05)" />
+      
+      {/* Huge background watermark icon */}
+      <MessageCircle 
+        className="absolute top-1/2 left-1/2 -translate-y-1/2 translate-x-10 w-96 h-96 text-green-500/5 -rotate-12 group-hover:rotate-0 group-hover:scale-110 transition-transform duration-700 pointer-events-none hidden md:block" 
+        strokeWidth={0.5}
+      />
 
       {/* Glow effect */}
       <div
@@ -195,13 +202,18 @@ function CardTradeZen() {
   return (
     <motion.div
       {...fadeUp(1)}
-      className="relative rounded-3xl overflow-hidden flex flex-col min-h-[220px]"
+      className="group relative rounded-3xl overflow-hidden flex flex-col min-h-[260px]"
       style={{ background: "#052e16" }}
     >
       <DotGrid color="rgba(255,255,255,0.04)" />
       <div
         className="absolute top-0 right-0 w-40 h-40 pointer-events-none"
         style={{ background: "radial-gradient(circle at top right, rgba(5,150,105,0.35) 0%, transparent 70%)" }}
+      />
+      
+      <TrendingUp 
+        className="absolute bottom-12 -right-4 w-40 h-40 text-emerald-400/10 group-hover:-translate-y-4 group-hover:scale-110 transition-transform duration-700 pointer-events-none" 
+        strokeWidth={1}
       />
 
       <div className="relative z-10 flex flex-col h-full p-6">
@@ -260,11 +272,16 @@ function CardPromerchants() {
   return (
     <motion.div
       {...fadeUp(2)}
-      className="relative rounded-3xl overflow-hidden flex flex-col bg-white dark:bg-[#0F1623] min-h-[220px] shadow-[0_8px_32px_rgba(12,27,51,0.08)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.3)]"
+      className="group relative rounded-3xl overflow-hidden flex flex-col bg-white dark:bg-[#0F1623] min-h-[260px] shadow-[0_8px_32px_rgba(12,27,51,0.08)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.3)]"
       style={{ border: "1px solid rgba(37,99,235,0.12)" }}
     >
       {/* Blue top bar */}
       <div className="h-1 w-full" style={{ background: "linear-gradient(to right, #2563EB, #60A5FA)" }} />
+
+      <ShoppingBag 
+        className="absolute bottom-12 -right-4 w-40 h-40 text-blue-500/5 dark:text-blue-400/10 -rotate-12 group-hover:rotate-0 group-hover:scale-110 transition-transform duration-700 pointer-events-none" 
+        strokeWidth={1}
+      />
 
       <div className="relative z-10 flex flex-col h-full p-6">
         <span
@@ -312,13 +329,18 @@ function CardBharatERP() {
   return (
     <motion.div
       {...fadeUp(3)}
-      className="relative rounded-3xl overflow-hidden flex flex-col min-h-[220px]"
+      className="group relative rounded-3xl overflow-hidden flex flex-col min-h-[260px]"
       style={{ background: "#0C1B33" }}
     >
       <DotGrid color="rgba(255,255,255,0.04)" />
       <div
         className="absolute top-0 right-0 w-40 h-40 pointer-events-none"
         style={{ background: "radial-gradient(circle at top right, rgba(212,135,10,0.3) 0%, transparent 70%)" }}
+      />
+      
+      <Building2 
+        className="absolute bottom-12 -right-4 w-40 h-40 text-orange-400/10 group-hover:-translate-y-4 group-hover:scale-110 transition-transform duration-700 pointer-events-none" 
+        strokeWidth={1}
       />
       <div className="relative z-10 flex flex-col h-full p-6">
         <span
@@ -364,10 +386,15 @@ function CardSwiftShift() {
   return (
     <motion.div
       {...fadeUp(4)}
-      className="relative rounded-3xl overflow-hidden flex flex-col bg-white dark:bg-[#0F1623] min-h-[220px] shadow-[0_8px_32px_rgba(12,27,51,0.08)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.3)]"
+      className="group relative rounded-3xl overflow-hidden flex flex-col bg-white dark:bg-[#0F1623] min-h-[260px] shadow-[0_8px_32px_rgba(12,27,51,0.08)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.3)]"
       style={{ border: "1px solid rgba(194,65,12,0.15)" }}
     >
       <div className="h-1 w-full" style={{ background: "linear-gradient(to right, #c2410c, #fb923c)" }} />
+
+      <Truck 
+        className="absolute bottom-12 -right-4 w-40 h-40 text-orange-600/5 dark:text-orange-500/10 group-hover:translate-x-4 group-hover:scale-110 transition-transform duration-700 pointer-events-none" 
+        strokeWidth={1}
+      />
 
       <div className="relative z-10 flex flex-col h-full p-6">
         <span
@@ -415,13 +442,18 @@ function CardMailZen() {
   return (
     <motion.div
       {...fadeUp(5)}
-      className="lg:col-span-2 relative rounded-3xl overflow-hidden flex flex-col sm:flex-row min-h-[200px]"
+      className="group lg:col-span-2 relative rounded-3xl overflow-hidden flex flex-col sm:flex-row min-h-[240px]"
       style={{ background: "#1e0a3c" }}
     >
       <DotGrid color="rgba(167,139,250,0.06)" />
       <div
         className="absolute inset-0 pointer-events-none"
         style={{ background: "radial-gradient(ellipse at 30% 50%, rgba(124,58,237,0.3) 0%, transparent 60%)" }}
+      />
+      
+      <Mail 
+        className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-10 w-56 h-56 text-purple-400/10 group-hover:scale-110 transition-transform duration-700 pointer-events-none hidden md:block" 
+        strokeWidth={1}
       />
 
       {/* Left — content */}
