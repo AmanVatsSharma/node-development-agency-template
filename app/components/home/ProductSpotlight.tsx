@@ -73,51 +73,59 @@ function Metric({
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// CARD A — BharatERP: Large 2×2, dark navy hero card
+// CARD A — Whaterakt: Large 2×2, white/dark green hero card
 // ─────────────────────────────────────────────────────────────────────────────
-function CardBharatERP() {
+function CardWhaterakt() {
   return (
     <motion.div
       {...fadeUp(0)}
-      className="lg:col-span-2 lg:row-span-2 relative rounded-3xl overflow-hidden flex flex-col min-h-[380px] lg:min-h-0"
-      style={{ background: "#0C1B33" }}
+      className="lg:col-span-2 lg:row-span-2 relative rounded-3xl overflow-hidden flex flex-col min-h-[380px] lg:min-h-0 bg-white dark:bg-[#0F1623]"
+      style={{ border: "1px solid rgba(22,163,74,0.2)" }}
     >
-      <DotGrid />
+      <div className="absolute top-0 left-0 w-full h-1" style={{ background: "linear-gradient(to right, #16a34a, #4ade80)" }} />
+      <DotGrid color="rgba(22,163,74,0.05)" />
 
-      {/* Gold top-left glow */}
+      {/* Glow effect */}
       <div
         className="absolute -top-20 -left-20 w-80 h-80 pointer-events-none"
-        style={{ background: "radial-gradient(circle, rgba(212,135,10,0.18) 0%, transparent 70%)" }}
+        style={{ background: "radial-gradient(circle, rgba(22,163,74,0.1) 0%, transparent 70%)" }}
       />
 
       <div className="relative z-10 flex flex-col h-full p-7 sm:p-8">
-        {/* Category + name */}
         <div className="mb-auto">
-          <span
-            className="inline-block text-[10px] font-bold uppercase tracking-[0.16em] px-2.5 py-1 rounded-full mb-4"
-            style={{ color: "#D4870A", background: "rgba(212,135,10,0.12)", border: "1px solid rgba(212,135,10,0.25)" }}
-          >
-            Enterprise ERP
-          </span>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-2">
+            <span
+              className="inline-block text-[10px] font-bold uppercase tracking-[0.16em] px-2.5 py-1 rounded-full w-fit"
+              style={{ color: "#16a34a", background: "rgba(22,163,74,0.1)", border: "1px solid rgba(22,163,74,0.2)" }}
+            >
+              India's Best WhatsApp Marketing Software
+            </span>
+            <span className="text-[10px] text-gray-500 font-semibold uppercase tracking-widest">
+              Powered by Vedpragya
+            </span>
+          </div>
+
+          <div className="mb-5">
+            <img src="/logos/whaterakt-logo.png" alt="Whaterakt Logo" className="h-10 sm:h-12 w-auto object-contain" />
+          </div>
 
           <h3
-            className="text-4xl sm:text-5xl font-black text-white leading-[0.95] tracking-tight mb-3"
+            className="text-4xl sm:text-5xl font-black text-[#0C1B33] dark:text-white leading-[0.95] tracking-tight mb-3"
             style={{ fontFamily: "var(--font-sora), sans-serif" }}
           >
-            Bharat<span style={{ color: "#D4870A" }}>ERP</span>
+            A Nation Leading <span style={{ color: "#16a34a" }}>Product.</span>
           </h3>
 
-          <p className="text-white/50 text-sm font-medium mb-6 max-w-sm">
-            SAP-level ERP at a fraction of the cost — finance, inventory, HR, supply chain, and custom modules in one platform.
+          <p className="text-gray-500 text-sm font-medium mb-6 max-w-md leading-relaxed">
+            Broadcasts, flows, shared inbox, templates, AI, payments — all under one roof. Reach millions instantly with 10x ROI vs email. Our very own flagship product.
           </p>
 
-          {/* Module chips */}
           <div className="flex flex-wrap gap-2 mb-8">
-            {["Finance", "HR & Payroll", "Inventory", "Supply Chain", "CRM"].map((m) => (
+            {["Campaigns", "Segmentation", "AI Chatbots", "Payments", "Shared Inbox"].map((m) => (
               <span
                 key={m}
                 className="text-[10px] font-semibold px-2.5 py-1 rounded-lg"
-                style={{ background: "rgba(255,255,255,0.06)", color: "rgba(255,255,255,0.55)", border: "1px solid rgba(255,255,255,0.08)" }}
+                style={{ background: "rgba(22,163,74,0.08)", color: "#16a34a", border: "1px solid rgba(22,163,74,0.2)" }}
               >
                 {m}
               </span>
@@ -125,40 +133,40 @@ function CardBharatERP() {
           </div>
         </div>
 
-        {/* Big cost-saving headline */}
+        {/* Big impact headline */}
         <div
           className="rounded-2xl p-5 mb-6"
-          style={{ background: "rgba(212,135,10,0.1)", border: "1px solid rgba(212,135,10,0.2)" }}
+          style={{ background: "rgba(22,163,74,0.05)", border: "1px solid rgba(22,163,74,0.15)" }}
         >
-          <p className="text-white/40 text-xs font-medium uppercase tracking-widest mb-1">Cost vs SAP Hana</p>
+          <p className="text-gray-500 text-xs font-medium uppercase tracking-widest mb-1">Scale of Operations</p>
           <p
-            className="text-5xl font-black text-white leading-none"
+            className="text-5xl font-black text-[#0C1B33] dark:text-white leading-none"
             style={{ fontFamily: "var(--font-sora), sans-serif" }}
           >
-            60<span className="text-2xl align-top mt-2 inline-block" style={{ color: "#D4870A" }}>%</span>
-            <span className="text-lg font-medium text-white/40 ml-2">less</span>
+            240<span className="text-2xl align-top mt-2 inline-block" style={{ color: "#16a34a" }}>M+</span>
+            <span className="text-lg font-medium text-gray-400 ml-2">msgs / month</span>
           </p>
         </div>
 
         {/* Bottom metrics strip */}
         <div
-          className="flex items-center gap-6 pt-5"
-          style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}
+          className="flex items-center gap-4 sm:gap-6 pt-5 flex-wrap"
+          style={{ borderTop: "1px solid rgba(12,27,51,0.07)" }}
         >
-          <Metric val="12+" label="Enterprise Clients" light />
-          <div className="w-px h-8 bg-white/10" />
-          <Metric val="99.9%" label="Uptime SLA" light />
-          <div className="w-px h-8 bg-white/10" />
-          <Metric val="SAP" label="Compatible" light />
+          <Metric val="4,200+" label="Active Teams" />
+          <div className="w-px h-8 bg-gray-200 dark:bg-gray-800 hidden sm:block" />
+          <Metric val="98.4%" label="Delivery Rate" />
+          <div className="w-px h-8 bg-gray-200 dark:bg-gray-800 hidden sm:block" />
+          <Metric val="10x" label="Better ROI" />
 
-          <div className="ml-auto flex gap-1.5">
-            {["Node.js", "PostgreSQL", "React"].map((t) => (
+          <div className="ml-auto hidden lg:flex gap-1.5">
+            {["Next.js", "Cloud API", "AI"].map((t) => (
               <Tag
                 key={t}
                 label={t}
-                color="rgba(255,255,255,0.5)"
-                bg="rgba(255,255,255,0.06)"
-                border="rgba(255,255,255,0.1)"
+                color="#16a34a"
+                bg="rgba(22,163,74,0.1)"
+                border="rgba(22,163,74,0.2)"
               />
             ))}
           </div>
@@ -286,50 +294,51 @@ function CardPromerchants() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// CARD D — Waterakt: White, green WhatsApp energy
+// CARD D — BharatERP: Small 1x1, dark navy card
 // ─────────────────────────────────────────────────────────────────────────────
-function CardWaterakt() {
+function CardBharatERP() {
   return (
     <motion.div
       {...fadeUp(3)}
-      className="relative rounded-3xl overflow-hidden flex flex-col bg-white dark:bg-[#0F1623] min-h-[220px] shadow-[0_8px_32px_rgba(12,27,51,0.08)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.3)]"
-      style={{ border: "1px solid rgba(22,163,74,0.15)" }}
+      className="relative rounded-3xl overflow-hidden flex flex-col min-h-[220px]"
+      style={{ background: "#0C1B33" }}
     >
-      <div className="h-1 w-full" style={{ background: "linear-gradient(to right, #16a34a, #4ade80)" }} />
-
+      <DotGrid color="rgba(255,255,255,0.04)" />
+      <div
+        className="absolute top-0 right-0 w-40 h-40 pointer-events-none"
+        style={{ background: "radial-gradient(circle at top right, rgba(212,135,10,0.3) 0%, transparent 70%)" }}
+      />
       <div className="relative z-10 flex flex-col h-full p-6">
         <span
           className="text-[10px] font-bold uppercase tracking-widest mb-3 inline-block"
-          style={{ color: "#16a34a" }}
+          style={{ color: "#D4870A" }}
         >
-          WhatsApp Marketing
+          Enterprise ERP
         </span>
         <h3
-          className="text-xl font-black text-[#0C1B33] dark:text-white mb-1"
+          className="text-xl font-black text-white mb-1"
           style={{ fontFamily: "var(--font-sora), sans-serif" }}
         >
-          Waterakt
+          BharatERP
         </h3>
-        <p className="text-gray-400 dark:text-gray-500 text-xs mb-auto">
-          Campaigns · Segmentation · Broadcast
-        </p>
+        <p className="text-white/40 text-xs mb-auto">Finance · HR · Inventory</p>
 
         <div className="mt-4">
           <p
             className="text-5xl font-black leading-none mb-1"
-            style={{ color: "#16a34a", fontFamily: "var(--font-sora), sans-serif" }}
+            style={{ color: "#D4870A", fontFamily: "var(--font-sora), sans-serif" }}
           >
-            10×
+            60%
           </p>
-          <p className="text-xs text-gray-400">ROI vs Email</p>
+          <p className="text-xs text-white/40">Less than SAP</p>
         </div>
-
+        
         <div
           className="flex gap-4 mt-3 pt-3"
-          style={{ borderTop: "1px solid rgba(12,27,51,0.07)" }}
+          style={{ borderTop: "1px solid rgba(255,255,255,0.07)" }}
         >
-          <Metric val="500+" label="Businesses" />
-          <Metric val="40%" label="Open Rate" />
+          <Metric val="12+" label="Clients" light />
+          <Metric val="99.9%" label="SLA" light />
         </div>
       </div>
     </motion.div>
@@ -495,18 +504,18 @@ export default function ProductSpotlight() {
 
         {/* Bento grid:
             ┌─────────────────────────┬──────────────┐
-            │  BharatERP (2×2)        │  TradeZen    │
+            │  Whaterakt (2×2)        │  TradeZen    │
             │                         ├──────────────┤
             │                         │  Promerchants│
             ├──────────┬──────────────┴──────────────┤
-            │ Waterakt │  SwiftShift  │  (MailZen 2-col below) │
+            │ BharatERP│  SwiftShift  │  (MailZen 2-col below) │
             └──────────┴──────────────┘
         */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5 auto-rows-auto">
-          <CardBharatERP />
+          <CardWhaterakt />
           <CardTradeZen />
           <CardPromerchants />
-          <CardWaterakt />
+          <CardBharatERP />
           <CardSwiftShift />
           <CardMailZen />
         </div>
