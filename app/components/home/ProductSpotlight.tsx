@@ -131,6 +131,18 @@ function CardWhaterakt() {
               </span>
             ))}
           </div>
+
+          <div className="mb-8">
+            <a 
+              href="https://whaterakt.com" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#16a34a] hover:bg-[#15803d] text-white font-bold text-sm rounded-xl transition-all shadow-[0_4px_14px_rgba(22,163,74,0.35)] hover:shadow-[0_6px_20px_rgba(22,163,74,0.5)] transform hover:-translate-y-0.5 w-fit"
+            >
+              Explore Whaterakt
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+            </a>
+          </div>
         </div>
 
         {/* Big impact headline */}
@@ -479,21 +491,22 @@ export default function ProductSpotlight() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12">
-          <div>
-            <h2
-              className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#0C1B33] dark:text-white mb-3 tracking-tight"
-              style={{ fontFamily: "var(--font-sora), sans-serif" }}
-            >
-              Products We&rsquo;ve Shipped
-            </h2>
-            <p className="text-gray-500 dark:text-gray-400 text-lg max-w-xl">
-              We don&rsquo;t just build for clients — we ship our own products. Real software in production, proving our standard every day.
-            </p>
-          </div>
+        <div className="flex flex-col items-center text-center mb-16">
+          <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#2563EB]/10 text-[#2563EB] dark:bg-[#60A5FA]/10 dark:text-[#60A5FA] text-[10px] font-bold tracking-[0.15em] uppercase mb-5">
+            What We Build
+          </span>
+          <h2
+            className="text-4xl sm:text-5xl md:text-6xl font-black text-[#0C1B33] dark:text-white tracking-tight mb-5"
+            style={{ fontFamily: "var(--font-sora), sans-serif" }}
+          >
+            Our Flagship <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2563EB] to-[#a78bfa]">Products.</span>
+          </h2>
+          <p className="text-gray-500 dark:text-gray-400 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed mb-6">
+            We don&rsquo;t just build for clients — we engineer and scale our own industry-leading products. Experience our standards in production.
+          </p>
           <Link
             href="/pages/portfolio"
-            className="shrink-0 inline-flex items-center gap-2 text-[#2563EB] dark:text-[#60A5FA] font-semibold text-sm hover:underline"
+            className="inline-flex items-center gap-1.5 text-[#2563EB] dark:text-[#60A5FA] font-semibold hover:underline"
           >
             View full portfolio
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
