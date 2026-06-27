@@ -67,10 +67,10 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: '/logo_favicon.png', type: 'image/png' },
+      { url: '/logo.png', type: 'image/png' },
     ],
-    apple: '/logo_favicon.png',
-    shortcut: '/logo_favicon.png',
+    apple: '/logo.png',
+    shortcut: '/logo.png',
   },
   robots: {
     index: true,
@@ -102,6 +102,7 @@ export default async function RootLayout({
   const headersList = await headers();
   const pathname = headersList.get('x-pathname') || '';
   const isAdminRoute = pathname.startsWith('/admin');
+  const isHomePage = pathname === '/';
 
   return (
     <html lang="en" suppressHydrationWarning>
@@ -223,8 +224,8 @@ export default async function RootLayout({
               <div className="flex flex-col min-h-screen">
                 {/* New Enhanced Header with resizable navbar - Cool scroll effect! */}
                 <EnhancedHeader />
-                {/* Slightly tighter top spacing on mobile while keeping desktop clearance */}
-                <main className="flex-grow pt-[80px]">{children}</main>
+                {/* Dynamically adjust top spacing: 0 for homepage to let hero bleed, 80px for others */}
+                <main className={`flex-grow ${isHomePage ? 'pt-0' : 'pt-[80px]'}`}>{children}</main>
                 <Footer />
               </div>
             )}

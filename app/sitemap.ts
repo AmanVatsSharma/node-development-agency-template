@@ -2,6 +2,7 @@ import type { MetadataRoute } from 'next';
 import { getAllBlogPosts } from '@/app/lib/blog';
 import { getStaticSeoRoutes } from '@/app/lib/seo/routes';
 import { toAbsoluteSeoUrl } from '@/app/lib/seo/constants';
+import { getRouteLastModified } from '@/app/lib/seo/lastmod';
 import prisma from '@/app/lib/prisma';
 
 type DynamicBlogEntry = {
@@ -36,88 +37,6 @@ function getChangeFrequencyForRoute(path: string): MetadataRoute.Sitemap[number]
   if (path === '/pages/blog') return 'daily';
   if (path.startsWith('/pages/blog/')) return 'weekly';
   return 'monthly';
-}
-
-// ---------------------------------------------------------------------------
-// Per-route lastModified overrides
-// ---------------------------------------------------------------------------
-
-/**
- * Explicit lastModified dates for pages that have a known meaningful update.
- * Pages not in this map use STATIC_PAGES_LAST_MODIFIED as their fallback.
- *
- * Update a route's date here whenever its content is significantly changed so
- * Googlebot knows to re-crawl it promptly.
- */
-const ROUTE_LAST_MODIFIED_MAP: Record<string, Date> = {
-  // Homepage — updated with every major release
-  '/': new Date('2026-04-14T00:00:00.000Z'),
-
-  // Pages updated in the April 2026 SEO pass (added FAQ + Breadcrumb schemas)
-  '/pages/ai-chatbot-development': new Date('2026-04-14T00:00:00.000Z'),
-  '/pages/ai-voice-agents': new Date('2026-04-14T00:00:00.000Z'),
-  '/pages/next-js-development': new Date('2026-04-14T00:00:00.000Z'),
-  '/pages/healthcare-software-development': new Date('2026-04-14T00:00:00.000Z'),
-  '/pages/whatsapp-business-api': new Date('2026-04-14T00:00:00.000Z'),
-  '/pages/shopify-headless-migration': new Date('2026-04-14T00:00:00.000Z'),
-  '/pages/shopify-product-page-customization': new Date('2026-04-14T00:00:00.000Z'),
-  '/pages/saas-website-design': new Date('2026-05-09T00:00:00.000Z'),
-
-  // Day-1 SEO pass: added per-page metadata to all 40 landing pages
-  '/pages/ai-chatbot-development': new Date('2026-05-09T00:00:00.000Z'),
-  '/pages/ai-voice-agents': new Date('2026-05-09T00:00:00.000Z'),
-  '/pages/next-js-development': new Date('2026-05-09T00:00:00.000Z'),
-  '/pages/reactjs-development': new Date('2026-05-09T00:00:00.000Z'),
-  '/pages/nodejs-development': new Date('2026-05-09T00:00:00.000Z'),
-  '/pages/whatsapp-business-api': new Date('2026-05-09T00:00:00.000Z'),
-  '/pages/healthcare-software-development': new Date('2026-05-09T00:00:00.000Z'),
-  '/pages/shopify-store-setup': new Date('2026-05-09T00:00:00.000Z'),
-  '/pages/shopify-headless-migration': new Date('2026-05-09T00:00:00.000Z'),
-  '/pages/shopify-product-page-customization': new Date('2026-05-09T00:00:00.000Z'),
-  '/pages/crm': new Date('2026-05-09T00:00:00.000Z'),
-  '/pages/google-ads-management': new Date('2026-05-09T00:00:00.000Z'),
-  '/pages/google-ads-ecosystem': new Date('2026-05-09T00:00:00.000Z'),
-  '/pages/b2b-lead-generation-ads': new Date('2026-05-09T00:00:00.000Z'),
-  '/pages/ecommerce-google-ads-optimization': new Date('2026-05-09T00:00:00.000Z'),
-  '/pages/enterprise-google-ads-management': new Date('2026-05-09T00:00:00.000Z'),
-  '/pages/google-ads-audit-strategy': new Date('2026-05-09T00:00:00.000Z'),
-  '/pages/local-business-google-ads': new Date('2026-05-09T00:00:00.000Z'),
-  '/pages/performance-max-campaigns': new Date('2026-05-09T00:00:00.000Z'),
-  '/pages/youtube-advertising-management': new Date('2026-05-09T00:00:00.000Z'),
-  '/pages/landing-page-optimization': new Date('2026-05-09T00:00:00.000Z'),
-  '/pages/seo-audit': new Date('2026-05-09T00:00:00.000Z'),
-  '/pages/business-website': new Date('2026-05-09T00:00:00.000Z'),
-  '/pages/website-development': new Date('2026-05-09T00:00:00.000Z'),
-  '/pages/website-services': new Date('2026-05-09T00:00:00.000Z'),
-  '/pages/services': new Date('2026-05-09T00:00:00.000Z'),
-  '/pages/portfolio': new Date('2026-05-09T00:00:00.000Z'),
-  '/pages/resources': new Date('2026-05-09T00:00:00.000Z'),
-
-  // City landing pages — updated April 2026 with inline lead capture form
-  '/pages/web-development-delhi': new Date('2026-04-29T00:00:00.000Z'),
-  '/pages/web-development-bangalore': new Date('2026-04-29T00:00:00.000Z'),
-  '/pages/web-development-gurgaon': new Date('2026-04-29T00:00:00.000Z'),
-  '/pages/web-development-pune': new Date('2026-04-29T00:00:00.000Z'),
-  '/pages/web-development-hyderabad': new Date('2026-04-29T00:00:00.000Z'),
-  '/pages/web-development-noida': new Date('2026-04-29T00:00:00.000Z'),
-  '/pages/nodejs-development': new Date('2026-04-14T00:00:00.000Z'),
-
-  // Legal pages — stable; use a fixed baseline date to avoid false freshness signals
-  '/pages/legal/privacy-policy': new Date('2025-01-01T00:00:00.000Z'),
-  '/pages/legal/terms-of-service': new Date('2025-01-01T00:00:00.000Z'),
-  '/pages/legal/cancellations-refunds': new Date('2025-01-01T00:00:00.000Z'),
-  '/pages/legal/shipping-policy': new Date('2025-01-01T00:00:00.000Z'),
-  '/pages/legal/company-info': new Date('2025-01-01T00:00:00.000Z'),
-};
-
-/**
- * Fallback lastModified date for all static pages that don't have an explicit
- * override. Use a stable date to keep the sitemap deterministic.
- */
-const STATIC_PAGES_LAST_MODIFIED = new Date('2026-04-14T00:00:00.000Z');
-
-function getLastModifiedForRoute(path: string): Date {
-  return ROUTE_LAST_MODIFIED_MAP[path] ?? STATIC_PAGES_LAST_MODIFIED;
 }
 
 // ---------------------------------------------------------------------------
@@ -265,7 +184,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const staticEntries: MetadataRoute.Sitemap = staticRoutes.map((route) => ({
     url: toAbsoluteSeoUrl(route),
-    lastModified: getLastModifiedForRoute(route),
+    lastModified: getRouteLastModified(route),
     changeFrequency: getChangeFrequencyForRoute(route),
     priority: getPriorityForRoute(route),
   }));
