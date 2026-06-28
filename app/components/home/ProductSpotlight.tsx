@@ -240,7 +240,7 @@ function CardTradeZen() {
         >
           TradeZen
         </h3>
-        <p className="text-white/40 text-xs mb-auto">NSE · MCX · Live Feeds · Pro Charting</p>
+        <p className="text-white/40 text-xs mb-auto">Live Feeds · Pro Charting</p>
 
         {/* Hero stat */}
         <div className="mt-4 mb-3">
