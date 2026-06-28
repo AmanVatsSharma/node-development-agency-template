@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { TrendingUp, ShoppingBag, Building2, Truck, Mail, MessageCircle } from "lucide-react";
+import { TrendingUp, ShoppingBag, Building2, Truck, Mail, MessageCircle, Headphones } from "lucide-react";
 
 // ─── Shared fade-up animation ─────────────────────────────────────────────────
 const fadeUp = (i: number) => ({
@@ -323,6 +323,128 @@ function CardPromerchants() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
+// CARD C2 — DialN: Large 2×2, white/dark indigo AI Voice card
+// ─────────────────────────────────────────────────────────────────────────────
+function CardDialN() {
+  return (
+    <motion.div
+      {...fadeUp(2.5)}
+      className="group lg:col-span-2 lg:row-span-2 relative rounded-3xl overflow-hidden flex flex-col min-h-[380px] lg:min-h-0 bg-white dark:bg-[#0F1623]"
+      style={{ border: "1px solid rgba(99,102,241,0.2)" }}
+    >
+      <div className="absolute top-0 left-0 w-full h-1" style={{ background: "linear-gradient(to right, #6366f1, #a855f7)" }} />
+      <DotGrid color="rgba(99,102,241,0.05)" />
+      
+      {/* Huge background watermark icon */}
+      <Headphones 
+        className="absolute top-1/2 left-1/2 -translate-y-1/2 translate-x-10 w-96 h-96 text-indigo-500/5 -rotate-12 group-hover:rotate-0 group-hover:scale-110 transition-transform duration-700 pointer-events-none hidden md:block" 
+        strokeWidth={0.5}
+      />
+
+      {/* Glow effect */}
+      <div
+        className="absolute -top-20 -left-20 w-80 h-80 pointer-events-none"
+        style={{ background: "radial-gradient(circle, rgba(99,102,241,0.1) 0%, transparent 70%)" }}
+      />
+
+      <div className="relative z-10 flex flex-col h-full p-7 sm:p-8">
+        <div className="mb-auto">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-2">
+            <span
+              className="inline-block text-[10px] font-bold uppercase tracking-[0.16em] px-2.5 py-1 rounded-full w-fit"
+              style={{ color: "#6366f1", background: "rgba(99,102,241,0.1)", border: "1px solid rgba(99,102,241,0.2)" }}
+            >
+              AI Voice Calling Platform
+            </span>
+            <span className="text-[10px] text-gray-500 font-semibold uppercase tracking-widest">
+              Powered by Vedpragya
+            </span>
+          </div>
+
+          <div className="mb-5">
+            <img src="/logos/dialn-logo.svg" alt="DialN Logo" className="h-10 sm:h-12 w-auto object-contain" />
+          </div>
+
+          <h3
+            className="text-4xl sm:text-5xl font-black text-[#0C1B33] dark:text-white leading-[0.95] tracking-tight mb-3"
+            style={{ fontFamily: "var(--font-sora), sans-serif" }}
+          >
+            Voice Calling <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#6366f1] to-[#a855f7]">Reimagined.</span>
+          </h3>
+
+          <p className="text-gray-500 text-sm font-medium mb-6 max-w-md leading-relaxed">
+            Deploy intelligent AI voice agents for inbound support and outbound sales. They sound human, never sleep, and scale infinitely without any hardware.
+          </p>
+
+          <div className="flex flex-wrap gap-2 mb-8">
+            {["Inbound AI", "Outbound Sales", "CRM Sync", "11+ Languages", "24/7 Availability"].map((m) => (
+              <span
+                key={m}
+                className="text-[10px] font-semibold px-2.5 py-1 rounded-lg"
+                style={{ background: "rgba(99,102,241,0.08)", color: "#6366f1", border: "1px solid rgba(99,102,241,0.2)" }}
+              >
+                {m}
+              </span>
+            ))}
+          </div>
+
+          <div className="mb-8">
+            <a 
+              href="https://dialn.vedpragya.com" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-[#6366f1] to-[#a855f7] hover:from-[#4f46e5] hover:to-[#9333ea] text-white font-bold text-sm rounded-xl transition-all shadow-[0_4px_14px_rgba(99,102,241,0.35)] hover:shadow-[0_6px_20px_rgba(99,102,241,0.5)] transform hover:-translate-y-0.5 w-fit"
+            >
+              Explore DialN
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+            </a>
+          </div>
+        </div>
+
+        {/* Big impact headline */}
+        <div
+          className="rounded-2xl p-5 mb-6"
+          style={{ background: "rgba(99,102,241,0.05)", border: "1px solid rgba(99,102,241,0.15)" }}
+        >
+          <p className="text-gray-500 text-xs font-medium uppercase tracking-widest mb-1">Call Volume Handled</p>
+          <p
+            className="text-5xl font-black text-[#0C1B33] dark:text-white leading-none"
+            style={{ fontFamily: "var(--font-sora), sans-serif" }}
+          >
+            1.5<span className="text-2xl align-top mt-2 inline-block" style={{ color: "#6366f1" }}>M+</span>
+            <span className="text-lg font-medium text-gray-400 ml-2">mins / month</span>
+          </p>
+        </div>
+
+        {/* Bottom metrics strip */}
+        <div
+          className="flex items-center gap-4 sm:gap-6 pt-5 flex-wrap"
+          style={{ borderTop: "1px solid rgba(12,27,51,0.07)" }}
+        >
+          <Metric val="<500ms" label="Response Latency" />
+          <div className="w-px h-8 bg-gray-200 dark:bg-gray-800 hidden sm:block" />
+          <Metric val="100%" label="Automated" />
+          <div className="w-px h-8 bg-gray-200 dark:bg-gray-800 hidden sm:block" />
+          <Metric val="24/7" label="Uptime" />
+
+          <div className="ml-auto hidden lg:flex gap-1.5">
+            {["Next.js", "AI Models", "WebRTC"].map((t) => (
+              <Tag
+                key={t}
+                label={t}
+                color="#6366f1"
+                bg="rgba(99,102,241,0.1)"
+                border="rgba(99,102,241,0.2)"
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 // CARD D — BharatERP: Small 1x1, dark navy card
 // ─────────────────────────────────────────────────────────────────────────────
 function CardBharatERP() {
@@ -560,8 +682,11 @@ export default function ProductSpotlight() {
           <CardWhaterakt />
           <CardTradeZen />
           <CardPromerchants />
+          
+          <CardDialN />
           <CardBharatERP />
           <CardSwiftShift />
+          
           <CardMailZen />
         </div>
       </div>
