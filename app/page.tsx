@@ -79,7 +79,6 @@ const services = [
     title: "Web & Mobile Apps",
     desc: "Scalable Next.js, React, and Node.js applications — performant, accessible, and built to last.",
     href: "/pages/web-development",
-    large: true,
   },
   {
     id: "ai",
@@ -101,7 +100,6 @@ const services = [
     title: "ERP & Enterprise Software",
     desc: "Custom ERP systems and CRM platforms that run core business operations.",
     href: "/pages/services",
-    large: true,
   },
   {
     id: "marketing",
