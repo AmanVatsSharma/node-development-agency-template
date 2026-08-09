@@ -312,9 +312,6 @@ export default function ConsultationForm({
   // Main form component
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      {/* Console log for form render */}
-      {console.log('[ConsultationForm] Rendering form fields')}
-      
       {/* Name & Email */}
       <div className={`grid grid-cols-1 ${compact ? 'md:grid-cols-1' : 'md:grid-cols-2'} gap-4`}>
         <div>

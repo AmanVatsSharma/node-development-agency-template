@@ -73,9 +73,6 @@ export default function FreeConsultationBanner() {
         data-consultation-banner
         className="relative py-16 lg:py-20 bg-gradient-to-br from-cyan-600 via-blue-600 to-indigo-700 text-white overflow-hidden"
       >
-        {/* Console log for section render */}
-        {console.log('[FreeConsultationBanner] Rendering banner section')}
-        
         {/* Animated Background Elements */}
         <div className="absolute inset-0 opacity-20">
           <div className="absolute top-20 left-10 w-72 h-72 bg-white rounded-full blur-3xl animate-pulse"></div>
