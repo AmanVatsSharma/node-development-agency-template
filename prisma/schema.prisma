@@ -368,7 +368,6 @@ model AIAnalytics {
   @@index([pageUrl])
 }
 
-<<<<<<< HEAD
 // Healthcare Lead Metadata - Extended lead information for healthcare software inquiries
 model HealthcareLeadMetadata {
   id     String @id @default(cuid())
