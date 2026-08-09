@@ -39,7 +39,7 @@ export default function HeroSection() {
       />
       <div className="absolute inset-0 hero-grid-bg pointer-events-none" />
 
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-16 lg:pt-16 lg:pb-24">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 pb-16 lg:pt-32 lg:pb-24">
         <div className="grid lg:grid-cols-[52%_48%] gap-10 xl:gap-16 items-center">
           {/* ── Left: copy ── */}
           <div>
