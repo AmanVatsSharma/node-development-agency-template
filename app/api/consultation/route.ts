@@ -28,9 +28,21 @@ export async function POST(request: NextRequest) {
   console.log('[ConsultationAPI] POST request received');
 
   try {
-    // Parse request body
-    const body = await request.json();
-    console.log('[ConsultationAPI] Request body:', JSON.stringify(body, null, 2));
+    // Parse request body with error handling
+    let body;
+    try {
+      body = await request.json();
+      console.log('[ConsultationAPI] Request body:', JSON.stringify(body, null, 2));
+    } catch (parseError) {
+      console.error('[ConsultationAPI] Failed to parse request body:', parseError);
+      return NextResponse.json(
+        { 
+          error: 'Invalid request body',
+          message: 'Request body must be valid JSON'
+        },
+        { status: 400 }
+      );
+    }
 
     // Validate required fields
     const { name, email, serviceInterest, preferredDate, preferredTime } = body;
@@ -38,7 +50,10 @@ export async function POST(request: NextRequest) {
     if (!name || !email || !serviceInterest || !preferredDate || !preferredTime) {
       console.error('[ConsultationAPI] Missing required fields');
       return NextResponse.json(
-        { error: 'Missing required fields' },
+        { 
+          error: 'Missing required fields',
+          message: 'Name, email, service interest, preferred date, and preferred time are required'
+        },
         { status: 400 }
       );
     }
@@ -48,28 +63,68 @@ export async function POST(request: NextRequest) {
     if (!emailRegex.test(email)) {
       console.error('[ConsultationAPI] Invalid email format:', email);
       return NextResponse.json(
-        { error: 'Invalid email format' },
+        { 
+          error: 'Invalid email format',
+          message: 'Please provide a valid email address'
+        },
         { status: 400 }
       );
     }
 
     console.log('[ConsultationAPI] Validation passed, creating consultation request');
 
-    // Create consultation request in database
-    const consultation = await prisma.consultationRequest.create({
-      data: {
-        name: name.trim(),
-        email: email.trim().toLowerCase(),
-        phone: body.phone?.trim() || null,
-        company: body.company?.trim() || null,
-        serviceInterest,
-        preferredDate,
-        preferredTime,
-        message: body.message?.trim() || null,
-        status: 'pending',
-        source: body.source || 'landing_page',
-      },
-    });
+    // Create consultation request in database with better error handling
+    let consultation;
+    try {
+      consultation = await prisma.consultationRequest.create({
+        data: {
+          name: name.trim(),
+          email: email.trim().toLowerCase(),
+          phone: body.phone?.trim() || null,
+          company: body.company?.trim() || null,
+          serviceInterest,
+          preferredDate,
+          preferredTime,
+          message: body.message?.trim() || null,
+          status: 'pending',
+          source: body.source || 'landing_page',
+        },
+      });
+      
+      console.log('[ConsultationAPI] Consultation request created:', consultation.id);
+    } catch (dbError: any) {
+      console.error('[ConsultationAPI] Database error:', dbError);
+      
+      // Provide helpful error messages
+      if (dbError.code === 'P2002') {
+        return NextResponse.json(
+          { 
+            error: 'Duplicate request',
+            message: 'A consultation request with this email already exists'
+          },
+          { status: 409 }
+        );
+      }
+      
+      if (dbError.code === 'P2021' || dbError.message?.includes('does not exist')) {
+        return NextResponse.json(
+          { 
+            error: 'Database not initialized',
+            message: 'ConsultationRequest table does not exist. Please run: npx prisma migrate dev'
+          },
+          { status: 500 }
+        );
+      }
+      
+      return NextResponse.json(
+        { 
+          error: 'Database error',
+          message: `Failed to save consultation request: ${dbError.message || 'Unknown error'}`,
+          hint: 'Database migration may be pending. Run: npx prisma migrate dev'
+        },
+        { status: 500 }
+      );
+    }
 
     console.log('[ConsultationAPI] Consultation request created:', consultation.id);
 

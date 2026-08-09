@@ -32,17 +32,55 @@ export default function AdminConversationDetailPage() {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(`/api/ai-agent/conversations/${conversationId}`);
-      const data = await res.json();
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+      
+      const res = await fetch(`/api/ai-agent/conversations/${conversationId}`, {
+        signal: controller.signal
+      });
+      
+      clearTimeout(timeoutId);
+      
+      // Try to parse JSON response
+      let data;
+      try {
+        data = await res.json();
+      } catch (parseError) {
+        console.error('[Admin Conversation Detail] Failed to parse response:', parseError);
+        throw new Error('Server returned invalid response. Database may not be initialized.');
+      }
+      
       if (!res.ok || !data.success) {
         console.error('[Admin Conversation Detail] Failed to load conversation', data);
-        throw new Error(data.error || 'Failed to load conversation');
+        
+        // Handle specific error cases
+        if (res.status === 500) {
+          throw new Error(
+            'Database error: AIConversation table may not exist.\n\n' +
+            'Run: npx prisma migrate dev\n' +
+            'Then refresh this page.'
+          );
+        }
+        
+        throw new Error(data.error || data.message || 'Failed to load conversation');
       }
       console.log('[Admin Conversation Detail] Conversation loaded', { id: data.conversation?.id, messages: data.conversation?.messageCount });
       setConversation(data.conversation);
     } catch (err: any) {
       console.error('[Admin Conversation Detail] Error:', err);
-      setError(err.message || 'Failed to load conversation');
+      
+      // User-friendly error messages
+      let errorMessage = 'Failed to load conversation';
+      
+      if (err.name === 'AbortError') {
+        errorMessage = 'Request timeout: Server is taking too long to respond';
+      } else if (err.message?.includes('Failed to fetch')) {
+        errorMessage = 'Network error: Unable to connect to server';
+      } else if (err.message) {
+        errorMessage = err.message;
+      }
+      
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -97,9 +135,26 @@ export default function AdminConversationDetailPage() {
         </Card>
       ) : error ? (
         <Card>
-          <CardContent className="py-10 text-center text-red-600">
-            <AlertCircle className="h-6 w-6 mx-auto mb-2" />
-            {error}
+          <CardContent className="py-10">
+            <div className="bg-red-50 dark:bg-red-900/30 border-2 border-red-200 dark:border-red-800 text-red-800 dark:text-red-200 p-6 rounded-lg">
+              <div className="flex items-start gap-3">
+                <AlertCircle className="h-6 w-6 flex-shrink-0 mt-0.5" />
+                <div className="flex-1">
+                  <p className="font-bold text-lg mb-2">Unable to Load Conversation</p>
+                  <p className="whitespace-pre-line text-sm mb-4">{error}</p>
+                  <div className="flex gap-2">
+                    <Button variant="outline" size="sm" onClick={loadConversation}>
+                      <RefreshCw className="h-4 w-4 mr-2" /> Try Again
+                    </Button>
+                    <Link href="/admin/conversations">
+                      <Button variant="outline" size="sm">
+                        <ArrowLeft className="h-4 w-4 mr-2" /> Back to List
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
           </CardContent>
         </Card>
       ) : !conversation ? (
