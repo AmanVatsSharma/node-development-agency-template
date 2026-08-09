@@ -94,4 +94,26 @@
   .vp-gold-text {
     color: #D4870A;
   }
+
+  /* Hero dotted grid texture — near-invisible, premium feel */
+  .hero-grid-bg {
+    background-image: radial-gradient(circle, #111827 1px, transparent 1px);
+    background-size: 24px 24px;
+    opacity: 0.03;
+  }
+
+  /* Hero mount reveal — used with JS-toggled --visible modifier */
+  .hero-reveal {
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 400ms ease-out, transform 400ms ease-out;
+  }
+  .hero-reveal--visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-reveal { opacity: 1; transform: none; transition: none; }
+  }
 }
