@@ -22,7 +22,7 @@ import { useEffect, useState } from 'react';
  * 
  * @example
  * // In layout.tsx:
- * <GoogleAdsTracking conversionId="AW-17606401808" />
+ * <GoogleAdsTracking conversionId={GOOGLE_CONVERSION_ID} />
  */
 
 interface GoogleAdsTrackingProps {

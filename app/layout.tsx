@@ -13,6 +13,7 @@ import ClarityAnalytics from './components/Analytics/ClarityAnalytics';
 import WhatsAppFloatingButton from './components/WhatsAppFloatingButton';
 import { headers } from 'next/headers';
 import { OrganizationStructuredData, WebsiteStructuredData, ProfessionalServiceStructuredData, FAQStructuredData, LocalBusinessStructuredData } from "./components/SEO/StructuredData";
+import { getActiveAdsConversionId } from "./lib/googleAds";
 import { companyProfile } from "./data/companyProfile";
 import { SEO_DEFAULT_OG_IMAGE_PATH, SEO_SITE_URL, toAbsoluteSeoUrl } from '@/app/lib/seo/constants';
 
@@ -103,6 +104,11 @@ export default async function RootLayout({
   const pathname = headersList.get('x-pathname') || '';
   const isAdminRoute = pathname.startsWith('/admin');
   const isHomePage = pathname === '/';
+
+  // Resolve the active Google Ads tag/conversion ID from the admin-managed DB row,
+  // falling back to env / config constant. Single source of truth for both the page
+  // tag and server-side conversion tracking.
+  const activeAdsConversionId = await getActiveAdsConversionId();
 
   return (
     <html lang="en" suppressHydrationWarning>
@@ -200,7 +206,7 @@ export default async function RootLayout({
         {/* Unified Google Tag (GA4 + Google Ads) */}
         <GoogleAnalytics
           measurementId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}
-          adsConversionId={process.env.NEXT_PUBLIC_GOOGLE_ADS_ID || 'AW-17606401808'}
+          adsConversionId={activeAdsConversionId}
         />
         {/* Microsoft Clarity — heatmaps + session recordings */}
         <ClarityAnalytics />

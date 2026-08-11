@@ -86,6 +86,29 @@ export type ConversionEventType =
 // ============================================
 
 /**
+ * Resolve the active Google Ads conversion/tag ID for the page-level <GoogleAnalytics> tag.
+ *
+ * Single source of truth: admin-managed IntegrationSettings.googleConversionId (DB)
+ * takes precedence, then NEXT_PUBLIC_GOOGLE_ADS_ID env, then the GOOGLE_CONVERSION_ID
+ * constant in config/conversion-labels.ts. This keeps the page tag in lockstep with
+ * server-side conversion tracking (getGoogleConfig), so changing the ID in the admin
+ * Integrations dashboard updates BOTH paths on the next render. Never throws — on any
+ * DB error it falls back silently so a page view never breaks.
+ *
+ * @returns {Promise<string>} the active AW-XXXXXXXXXX id
+ */
+export async function getActiveAdsConversionId(): Promise<string> {
+  const fallback =
+    process.env.NEXT_PUBLIC_GOOGLE_ADS_ID || getGoogleAdsConfig().conversionId;
+  try {
+    const settings = await prisma.integrationSettings.findFirst();
+    return settings?.googleConversionId || fallback;
+  } catch {
+    return fallback;
+  }
+}
+
+/**
  * Get Google Ads configuration (DB > Hardcoded)
  * @returns {Promise<{conversionId: string, labels: Record<string, string>}>}
  */

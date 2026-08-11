@@ -9,6 +9,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { X, Send, MessageCircle, Minimize2, Sparkles, User } from 'lucide-react';
+import { GOOGLE_CONVERSION_ID } from '@/config/conversion-labels';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -183,7 +184,7 @@ export default function ChatWidget({ config }: ChatWidgetProps) {
           // Fire Google Ads conversion event
           if (typeof window !== 'undefined' && (window as any).gtag) {
             (window as any).gtag('event', 'conversion', {
-              send_to: 'AW-17606401808/ai_agent_lead_conversion',
+              send_to: `${GOOGLE_CONVERSION_ID}/ai_agent_lead_conversion`,
               value: 1.0,
               currency: 'INR',
             });

@@ -26,7 +26,7 @@
  * Format: AW-XXXXXXXXXX
  * Same for all conversion events across the website
  */
-export const GOOGLE_CONVERSION_ID = 'AW-17606401808'; // ⚠️ REPLACE WITH YOUR CONVERSION ID
+export const GOOGLE_CONVERSION_ID = 'AW-18287815079'; // Active Google Ads account (admin-managed via Integrations)
 
 // ============================================
 // CONVERSION LABELS BY LANDING PAGE

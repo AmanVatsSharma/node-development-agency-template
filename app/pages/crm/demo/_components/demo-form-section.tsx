@@ -29,6 +29,7 @@ import {
   MessageSquare
 } from 'lucide-react';
 import { fireConversion } from '@/utils/conversions';
+import { GOOGLE_CONVERSION_ID } from '@/config/conversion-labels';
 
 console.log('[CRM-Demo] DemoFormSection component loaded');
 
@@ -119,7 +120,7 @@ export function DemoFormSection() {
       // Track conversion
       if (typeof window !== 'undefined' && (window as any).gtag) {
         (window as any).gtag('event', 'conversion', {
-          send_to: 'AW-17606401808/demo_request',
+          send_to: `${GOOGLE_CONVERSION_ID}/demo_request`,
           value: 1.0,
           currency: 'INR'
         });
