@@ -224,5 +224,95 @@ export const blogPosts: BlogPost[] = [
     tags: ['React', 'State Management', 'Redux', 'Context API'],
     imageUrl: '/images/blog/react-state-management.jpg',
     featured: false
+  },
+  {
+    id: '4',
+    slug: 'web-development-cost-india-2025',
+    title: 'Web Development Cost in India (2025 Pricing Guide)',
+    excerpt: 'A transparent breakdown of web development costs in India for 2025 — from a basic business site to a full-stack SaaS product. Includes agency vs freelancer pricing, what drives cost, and how to get an accurate quote.',
+    content: `
+      <h2>Why Indian Web Development Costs Vary So Wildly</h2>
+      <p>Type "web development cost India" into Google and you'll see quotes that range from ₹15,000 to ₹50 lakh for what sounds like the same thing. That spread isn't noise — it reflects genuinely different work. A five-page brochure site built on a WordPress theme is not the same product as a multi-tenant SaaS platform built on Next.js with a custom design system. This guide maps the actual cost tiers so you can benchmark accurately before you talk to a vendor.</p>
+
+      <h2>Web Development Cost in India: 2025 Benchmark Table</h2>
+      <p>The table below covers common project types, typical complexity, and what a reputable Indian agency charges in 2025. Freelancer rates are 40–60% lower but come with different risk and capacity trade-offs (discussed below).</p>
+      <table>
+        <thead>
+          <tr><th>Project Type</th><th>Agency Range (INR)</th><th>Agency Range (USD)</th><th>Timeline</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>5–10 page business website (template-based)</td><td>₹25,000 – ₹60,000</td><td>$300 – $720</td><td>1–2 weeks</td></tr>
+          <tr><td>Custom design business website (no CMS)</td><td>₹60,000 – ₹1,50,000</td><td>$720 – $1,800</td><td>3–5 weeks</td></tr>
+          <tr><td>WordPress / Webflow site with CMS</td><td>₹80,000 – ₹2,00,000</td><td>$960 – $2,400</td><td>3–6 weeks</td></tr>
+          <tr><td>E-commerce (Shopify, up to 500 products)</td><td>₹1,00,000 – ₹4,00,000</td><td>$1,200 – $4,800</td><td>4–8 weeks</td></tr>
+          <tr><td>Custom web application / SaaS MVP</td><td>₹5,00,000 – ₹20,00,000</td><td>$6,000 – $24,000</td><td>3–6 months</td></tr>
+          <tr><td>Enterprise portal / multi-tenant SaaS</td><td>₹20,00,000+</td><td>$24,000+</td><td>6–12 months</td></tr>
+        </tbody>
+      </table>
+      <p><em>Rates reflect 2025 market pricing for established Indian agencies with 5+ person teams. Solo freelancers typically bill 40–60% lower with longer timelines and limited post-launch support.</em></p>
+
+      <h2>What Drives Web Development Cost in India</h2>
+      <p>Every line in the table above is the output of four core variables. Understanding them lets you scope a project before you get a quote — and helps you evaluate whether a quote is realistic.</p>
+
+      <h3>1. Design complexity</h3>
+      <p>A site built from an existing UI kit (Tailwind components, Shadcn, Radix) is 60–70% cheaper than one where a designer produces original layouts for every section. If your brand requires pixel-perfect custom motion and illustration, budget accordingly — a dedicated design phase alone costs ₹50,000 – ₹2,00,000 depending on page count and fidelity.</p>
+
+      <h3>2. Technology stack</h3>
+      <p>WordPress with a premium theme is the cheapest option to build. <a href="/pages/next-js-development">Next.js custom development</a> costs more because it requires engineers who understand React server components, edge caching, and TypeScript — but the performance and SEO output are meaningfully better. The stack you choose will also affect your long-term maintenance cost, so factor both into the budget.</p>
+
+      <h3>3. Feature scope</h3>
+      <p>Authentication, payment gateways, third-party API integrations, admin dashboards, and role-based permissions each add 1–4 weeks of engineering. A common mistake is quoting a "simple website" and then adding features that push it into SaaS territory — scope creep is the single biggest driver of cost overruns.</p>
+
+      <h3>4. Ongoing support &amp; hosting</h3>
+      <p>Most Indian agencies charge ₹5,000 – ₹20,000/month for maintenance retainers covering security patches, uptime monitoring, and minor updates. Hosting is typically ₹3,000 – ₹15,000/month depending on traffic and infrastructure (shared hosting vs. dedicated VPS vs. cloud).</p>
+
+      <h2>Agency vs. Freelancer: Real Trade-offs</h2>
+      <p>The pricing gap between an agency and a freelancer is real, but so are the differences in what you're buying.</p>
+      <ul>
+        <li><strong>Capacity:</strong> A freelancer working solo can't run design, frontend, backend, and QA in parallel. Agencies can. For a project with a hard deadline, this matters.</li>
+        <li><strong>Continuity:</strong> If a freelancer gets sick, changes career, or gets poached, your project stalls. Agencies have handoff processes.</li>
+        <li><strong>Accountability:</strong> An agency has a business reputation and legal entity to protect. A freelancer's accountability is personal — variable quality.</li>
+        <li><strong>Cost:</strong> For a straightforward 6-page brochure site with no custom features, a skilled freelancer is perfectly fine and meaningfully cheaper. For anything involving a database, payments, or multi-user state, the agency risk premium is usually worth paying.</li>
+      </ul>
+
+      <h2>How to Get an Accurate Web Development Quote in India</h2>
+      <p>Most projects go over budget because the brief was underspecified, not because the vendor was dishonest. Before you ask for a quote, nail down these five things:</p>
+      <ol>
+        <li><strong>Page list with purpose:</strong> Not just "10 pages" but which pages, what each one does, and whether any require dynamic data.</li>
+        <li><strong>User roles:</strong> Who logs in? What can they do? Authenticated features multiply cost fast.</li>
+        <li><strong>Integrations:</strong> List every third-party tool (CRM, payment gateway, analytics, chatbot) the site needs to connect to.</li>
+        <li><strong>Content ownership:</strong> Do you supply copy and images, or does the vendor write and source them? Content production adds ₹30,000 – ₹1,50,000 to any project.</li>
+        <li><strong>Success metric:</strong> What does a successful launch look like — traffic, conversions, leads per month? This shapes technical decisions that affect cost.</li>
+      </ol>
+
+      <h2>Red Flags in a Web Development Quote</h2>
+      <p>Indian web development pricing has a long tail of low-quality vendors. Watch for these:</p>
+      <ul>
+        <li>Quotes with no line items — "complete website ₹35,000" tells you nothing about scope or quality.</li>
+        <li>No mention of who owns the source code and domain post-delivery.</li>
+        <li>Promises of "SEO included" with no specifics — SEO is ongoing work, not a build-time checkbox.</li>
+        <li>Portfolios with no verifiable live URLs or client names.</li>
+        <li>Timelines that seem impossibly fast (1 week for a custom e-commerce site).</li>
+      </ul>
+
+      <h2>Why Location Matters Less Than It Used To</h2>
+      <p>The old logic was: Delhi and Mumbai agencies charge more, smaller cities charge less. That gap has compressed. Remote-first work means a Pune-based team competes on the same talent market as a Bangalore one. The more relevant filter is agency size, specialisation, and portfolio match to your project type.</p>
+      <p>Vedpragya works with B2B and SaaS clients globally from India, with pricing in the mid-to-upper Indian agency range — reflecting a <a href="/pages/web-development">custom-code-first approach</a> (no page builders, no low-code shortcuts) and a focus on performance and long-term maintainability. See our <a href="/pages/contact">contact page</a> for a free scoping call.</p>
+
+      <h2>Summary: What to Budget in 2025</h2>
+      <p>If you need a polished business website with a modern design and no custom backend logic, budget ₹80,000 – ₹2,00,000 with an Indian agency. If you're building a SaaS product or a web app with user accounts and a database, start at ₹5,00,000 and expect 3–5 months. If someone quotes significantly below these numbers for comparable scope, ask exactly what they're leaving out.</p>
+      <p>The cheapest quote is rarely the cheapest project once you factor in rework, delays, and future migration costs.</p>
+    `,
+    author: {
+      name: 'Aman Vats Sharma',
+      avatar: '/images/blog/authors/aman-vats-sharma.jpg',
+      title: 'Founder, Vedpragya'
+    },
+    publishedAt: '2025-10-01',
+    readTime: 7,
+    category: 'business',
+    tags: ['Web Development', 'Pricing', 'India', 'Agency', 'Cost Guide', '2025'],
+    imageUrl: '/images/blog/web-development-cost-india-2025.jpg',
+    featured: true
   }
 ]; 
