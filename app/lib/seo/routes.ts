@@ -107,6 +107,8 @@ const ALL_STATIC_PAGE_ROUTES = [
   '/pages/website-services',
   '/pages/whatsapp-business-api',
   '/pages/youtube-advertising-management',
+  '/pages/nse-mcx-live-market-data',
+  '/pages/trading-software',
 ];
 
 /**
