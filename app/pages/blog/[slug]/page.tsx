@@ -8,6 +8,11 @@ import {
   getCategoryServiceLink,
 } from '@/app/lib/blog';
 import { buildPageMetadata } from '@/app/lib/seo/metadata';
+import {
+  ArticleStructuredData,
+  BreadcrumbStructuredData,
+} from '@/app/components/SEO/StructuredData';
+import { SEO_SITE_URL } from '@/app/lib/seo/constants';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -72,8 +77,28 @@ export default async function BlogPostPage({ params }: PageProps) {
   const relatedPosts = getRelatedBlogPosts(post.category, post.slug, 3);
   const serviceLink = getCategoryServiceLink(post.category);
 
+  const postUrl = `${SEO_SITE_URL}/pages/blog/${post.slug}`;
+  const ogImage = post.image ?? `${SEO_SITE_URL}/og-image.png`;
+
   return (
     <div className="w-full">
+      <ArticleStructuredData
+        headline={post.title}
+        image={ogImage}
+        datePublished={new Date(post.publishedAt).toISOString()}
+        dateModified={post.updatedAt ? new Date(post.updatedAt).toISOString() : new Date(post.publishedAt).toISOString()}
+        author={{ name: post.author, url: SEO_SITE_URL }}
+        publisher={{ name: 'Vedpragya', logo: `${SEO_SITE_URL}/logo.png` }}
+        description={post.excerpt}
+        url={postUrl}
+      />
+      <BreadcrumbStructuredData
+        items={[
+          { name: 'Home', url: SEO_SITE_URL },
+          { name: 'Blog', url: `${SEO_SITE_URL}/pages/blog` },
+          { name: post.title, url: postUrl },
+        ]}
+      />
       {/* Hero Section */}
       <section className="relative py-20 bg-gradient-to-br from-gray-900 to-gray-800 text-white">
         <div className="container mx-auto px-4">
