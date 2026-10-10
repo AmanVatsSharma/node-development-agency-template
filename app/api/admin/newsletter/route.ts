@@ -5,9 +5,8 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';
+import prisma from '@/app/lib/prisma';
 
-const prisma = new PrismaClient();
 
 // GET - List all newsletter subscriptions
 export async function GET(req: NextRequest) {

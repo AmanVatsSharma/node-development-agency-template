@@ -4,9 +4,8 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';
+import prisma from '@/app/lib/prisma';
 
-const prisma = new PrismaClient();
 
 // GET - Fetch all leads from both tables
 export async function GET(req: NextRequest) {

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/app/lib/prisma';
 import { upsertIntegrationSettingsFromEnv } from '@/app/lib/zohoService';
+import { maskIntegrationSettings, stripMaskedSecrets } from '@/app/lib/secretMask';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -14,7 +15,7 @@ export async function GET() {
       await upsertIntegrationSettingsFromEnv();
       settings = await prisma.integrationSettings.findFirst();
     }
-    return NextResponse.json({ settings });
+    return NextResponse.json({ settings: maskIntegrationSettings(settings) });
   } catch (error: any) {
     return NextResponse.json(
       { error: String(error?.message || error) },
@@ -37,15 +38,17 @@ export async function POST(req: NextRequest) {
       'googleEventLabels',
     ];
     for (const k of keys) if (k in body) allowed[k] = body[k];
+    // The UI posts masked secrets back unchanged; never persist those.
+    const writable = stripMaskedSecrets(allowed);
 
     const exists = await prisma.integrationSettings.findFirst();
     let settings;
     if (exists) {
-      settings = await prisma.integrationSettings.update({ where: { id: exists.id }, data: allowed });
+      settings = await prisma.integrationSettings.update({ where: { id: exists.id }, data: writable });
     } else {
-      settings = await prisma.integrationSettings.create({ data: allowed });
+      settings = await prisma.integrationSettings.create({ data: writable });
     }
-    return NextResponse.json({ settings });
+    return NextResponse.json({ settings: maskIntegrationSettings(settings) });
   } catch (error: any) {
     return NextResponse.json(
       { error: String(error?.message || error) },
@@ -53,5 +56,3 @@ export async function POST(req: NextRequest) {
     );
   }
 }
-
-

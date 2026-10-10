@@ -4,10 +4,9 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';
+import prisma from '@/app/lib/prisma';
 import { createZohoLead } from '@/app/lib/zohoService';
 
-const prisma = new PrismaClient();
 
 function isAuthenticated(req: NextRequest) {
   const cookie = req.cookies.get('admin_session')?.value;
