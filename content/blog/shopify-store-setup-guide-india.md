@@ -352,7 +352,7 @@ We help Indian brands [set up your Shopify store](/pages/shopify-store-setup) wi
 - Performance optimization
 - Post-launch support (30 days included)
 
-**[Get Your Shopify Store Setup](/pages/shopify-development)** — Starting from ₹50,000
+**[Get Your Shopify Store Setup](/pages/shopify-store-setup)** — Starting from ₹50,000
 
 **Investment:** ₹49,000–₹1,99,000 depending on product count and customization.
 

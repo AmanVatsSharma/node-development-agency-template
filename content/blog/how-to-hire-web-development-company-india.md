@@ -10,7 +10,6 @@ readTime: 14
 author: "Aman Kumar Sharma"
 authorTitle: "Founder, Vedpragya"
 featured: true
-image: "/images/blog/hire-web-development-company-india.jpg"
 ---
 
 You've decided your business needs a proper website or web application. You've Googled "web development company India," got 500 results, and now you're not sure who to trust or how to evaluate them.

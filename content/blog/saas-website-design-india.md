@@ -10,7 +10,6 @@ readTime: 12
 author: "Aman Kumar Sharma"
 authorTitle: "Founder, Vedpragya"
 featured: true
-image: "/images/blog/saas-website-design-india.jpg"
 ---
 
 Most SaaS founders underestimate their marketing website until their first big sales call, when a prospect asks for the URL and the site looks like it was built on a free Wix trial. Or worse — it loads in 5 seconds on mobile, the pricing page buries the CTA, and the "get started" button goes to a broken form.
