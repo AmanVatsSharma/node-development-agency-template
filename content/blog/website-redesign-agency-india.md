@@ -11,7 +11,6 @@ readTime: 12
 author: "Aman Kumar Sharma"
 authorTitle: "Founder, Vedpragya"
 featured: false
-image: "/images/blog/website-redesign-agency-india.jpg"
 ---
 
 Your website is costing you leads. Not because it looks broken — but because it was built for a business you were three years ago. The messaging is off, the stack is slow, and the conversion paths are invisible. You know it needs a redesign; you're not sure how to scope it, what to budget, or how to choose an agency that will actually deliver.
