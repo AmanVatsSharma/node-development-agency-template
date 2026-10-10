@@ -50,6 +50,8 @@ const footerLinks = {
   ],
   company: [
     { href: "/pages/about", label: "About Us" },
+    { href: "/pages/founder", label: "Our Founder" },
+    { href: "/pages/team", label: "Our Team" },
     { href: "/pages/portfolio", label: "Portfolio" },
     { href: "/pages/blog", label: "Blog" },
     { href: "/pages/resources", label: "Resources" },

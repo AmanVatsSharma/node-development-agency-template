@@ -4,6 +4,7 @@ import Link from "next/link";
 import { BackgroundBeams } from "@/app/components/ui/background-beams";
 import { Spotlight } from "@/app/components/ui/spotlight";
 import { MovingBorder } from "@/app/components/ui/moving-border";
+import { companyProfile } from "@/app/data/companyProfile";
 
 export const metadata: Metadata = buildPageMetadata({
   title: 'About Vedpragya | Engineering-First Software Agency — India',
@@ -210,7 +211,13 @@ export default function AboutPage() {
                   >
                     Aman Kumar Sharma
                   </p>
-                  <p className="text-sm text-[#2563EB] font-semibold mt-0.5">Founder &amp; CEO</p>
+                  <p className="text-sm text-[#2563EB] font-semibold mt-0.5">{companyProfile.founder?.title}</p>
+                  <Link
+                    href="/pages/founder"
+                    className="inline-block mt-2 text-sm font-semibold text-[#2563EB] hover:underline"
+                  >
+                    Read full profile →
+                  </Link>
                 </div>
               </div>
 

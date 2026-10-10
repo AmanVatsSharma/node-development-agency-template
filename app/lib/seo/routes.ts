@@ -13,6 +13,8 @@ const CORE_STATIC_ROUTES = [
   // Core navigational pages
   '/',
   '/pages/about',
+  '/pages/founder',
+  '/pages/team',
   '/pages/services',
   '/pages/contact',
   '/pages/portfolio',

@@ -55,7 +55,7 @@ export const companyProfile: CompanyProfile = {
   },
   founder: {
     name: "Aman Kumar Sharma",
-    title: "Founder & CEO",
+    title: "Founder & Operations Head",
   },
   // IMPORTANT: Fill in your actual verified social profile URLs below.
   // These are used in the Organization + ProfessionalService JSON-LD sameAs field,

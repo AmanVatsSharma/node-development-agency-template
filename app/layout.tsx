@@ -38,7 +38,7 @@ export const metadata: Metadata = {
   title: "Vedpragya | Software Development & IT Solutions Company — India",
   description: "Vedpragya builds software that transforms businesses. Web apps, AI systems, ERP, e-commerce, and digital marketing. Enterprise-grade engineering from India with global reach.",
   keywords: "software development company india, web development services india, AI development company, nextjs development agency, custom software development, IT solutions india, digital transformation india, Vedpragya, shopify development india, google ads management india, SEO services india, enterprise software development, react development india, node.js development, ecommerce development india",
-  authors: [{ name: "Aman Kumar Sharma — Founder & CEO, Vedpragya Bharat Private Limited" }],
+  authors: [{ name: "Aman Kumar Sharma — Founder & Operations Head, Vedpragya Bharat Private Limited" }],
   alternates: {
     canonical: '/',
   },
