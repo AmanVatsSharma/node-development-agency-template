@@ -28,8 +28,7 @@ import bcrypt from 'bcryptjs';
 // Import data modules
 import { servicesData } from './seed-data/services';
 import { authorsData } from './seed-data/authors';
-import { blogPostsData } from './seed-data/blog-posts';
-import { blogPostsPart2Data } from './seed-data/blog-posts-part2';
+import { FOUNDER_TEAM_MEMBER } from '../app/data/founder';
 import { resourcesData } from './seed-data/resources';
 
 const prisma = new PrismaClient({
@@ -82,7 +81,6 @@ async function main() {
   console.log('📊 Data to be seeded:');
   console.log(`   - Services: ${servicesData.length}`);
   console.log(`   - Authors: ${authorsData.length}`);
-  console.log(`   - Blog Posts: ${blogPostsData.length + blogPostsPart2Data.length}`);
   console.log(`   - Resources: ${resourcesData.length}`);
   console.log('');
 
@@ -152,61 +150,9 @@ async function main() {
     
     logInfo(`Total services processed: ${servicesCreated}/${servicesData.length}`);
 
-    // ========================================
-    // 3. SEED BLOG POSTS
-    // ========================================
-    logSection('STEP 3: Seeding Blog Posts');
-    
-    const allBlogPosts = [...blogPostsData, ...blogPostsPart2Data];
-    let postsCreated = 0;
-    
-    for (const postData of allBlogPosts) {
-      try {
-        // Get author ID from our map
-        const authorId = authorMap.get(postData.authorEmail);
-        
-        if (!authorId) {
-          logError(`Author not found for post: ${postData.title} (email: ${postData.authorEmail})`);
-          continue;
-        }
-        
-        const post = await prisma.blogPost.upsert({
-          where: { slug: postData.slug },
-          update: {
-            title: postData.title,
-            excerpt: postData.excerpt,
-            content: postData.content,
-            publishedAt: new Date(postData.publishedAt),
-            readTime: postData.readTime,
-            category: postData.category,
-            tags: postData.tags,
-            imageUrl: postData.imageUrl,
-            featured: postData.featured,
-            authorId: authorId,
-          },
-          create: {
-            slug: postData.slug,
-            title: postData.title,
-            excerpt: postData.excerpt,
-            content: postData.content,
-            publishedAt: new Date(postData.publishedAt),
-            readTime: postData.readTime,
-            category: postData.category,
-            tags: postData.tags,
-            imageUrl: postData.imageUrl,
-            featured: postData.featured,
-            authorId: authorId,
-          },
-        });
-        
-        postsCreated++;
-        logSuccess(`Created/Updated blog post: ${post.title}`);
-      } catch (error) {
-        logError(`Failed to create blog post: ${postData.title}`, error);
-      }
-    }
-    
-    logInfo(`Total blog posts processed: ${postsCreated}/${allBlogPosts.length}`);
+    // Blog posts are NOT seeded: the public blog reads content/blog/*.md plus
+    // posts written in the admin editor (see app/lib/blog.ts).
+
 
     // ========================================
     // 4. SEED RESOURCES
@@ -291,41 +237,9 @@ async function main() {
     // ========================================
     logSection('STEP 6: Seeding Team Members');
     
-    const teamMembers = [
-      {
-        id: 'team-ceo-1',
-        name: 'Rajesh Kumar',
-        position: 'CEO & Full-Stack Architect',
-        bio: 'Rajesh leads Vedpragya Bharat with 10+ years of experience in enterprise software development. He specializes in AI integration, scalable architectures, and technical leadership.',
-        avatar: '/images/team/rajesh-kumar.jpg',
-        order: 1,
-        linkedIn: 'https://linkedin.com/in/rajeshkumar',
-        github: 'https://github.com/rajeshkumar',
-        active: true,
-      },
-      {
-        id: 'team-lead-2',
-        name: 'Priya Sharma',
-        position: 'E-commerce Solutions Lead',
-        bio: 'Priya has transformed 100+ Shopify stores with headless commerce. She combines technical expertise with deep e-commerce knowledge to deliver high-converting solutions.',
-        avatar: '/images/team/priya-sharma.jpg',
-        order: 2,
-        linkedIn: 'https://linkedin.com/in/priyasharma',
-        active: true,
-      },
-      {
-        id: 'team-dev-3',
-        name: 'Amit Patel',
-        position: 'Frontend Architect',
-        bio: 'Amit creates beautiful, performant UIs with React and Next.js. His expertise in 3D web experiences (Three.js) brings unique visual appeal to every project.',
-        avatar: '/images/team/amit-patel.jpg',
-        order: 3,
-        linkedIn: 'https://linkedin.com/in/amitpatel',
-        github: 'https://github.com/amitpatel',
-        active: true,
-      },
-    ];
-    
+    // Only real people are seeded; add teammates through /admin/team.
+    const teamMembers = [FOUNDER_TEAM_MEMBER];
+
     for (const member of teamMembers) {
       try {
         const teamMember = await prisma.teamMember.upsert({

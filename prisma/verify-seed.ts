@@ -23,12 +23,12 @@ async function verify() {
     const teamMembers = await prisma.teamMember.count();
 
     console.log('📊 Database Record Counts:');
-    console.log(`   ✅ Authors: ${authors} (Expected: 5)`);
+    console.log(`   ✅ Authors: ${authors} (Expected: 1+)`);
     console.log(`   ✅ Services: ${services} (Expected: 15)`);
-    console.log(`   ✅ Blog Posts: ${blogPosts} (Expected: 7+)`);
+    console.log(`   ✅ Blog Posts: ${blogPosts} (Expected: 0+ — public blog posts live in content/blog)`);
     console.log(`   ✅ Resources: ${resources} (Expected: 15)`);
     console.log(`   ✅ Users: ${users} (Expected: 1)`);
-    console.log(`   ✅ Team Members: ${teamMembers} (Expected: 3)`);
+    console.log(`   ✅ Team Members: ${teamMembers} (Expected: 1+)`);
     console.log('');
 
     // Verify key records
