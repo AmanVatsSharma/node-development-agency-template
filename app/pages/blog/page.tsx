@@ -21,13 +21,13 @@ export const metadata: Metadata = buildPageMetadata({
 /**
  * Blog listing page.
  *
- * File-based: reads all posts from content/blog/*.md at build/request time.
- * Server-rendered — every post title, excerpt, and link is in the HTML
+ * Reads content/blog/*.md plus admin-written BlogPost rows (database wins on
+ * slug). Server-rendered — every post title, excerpt, and link is in the HTML
  * that Googlebot sees on the first crawl.
  */
-export default function BlogPage() {
-  const posts = getAllBlogPosts();
-  const categories = getAllBlogCategories();
+export default async function BlogPage() {
+  const posts = await getAllBlogPosts();
+  const categories = await getAllBlogCategories();
 
   const featuredPosts = posts.filter((p) => p.featured).slice(0, 3);
   const regularPosts = posts.filter((p) => !featuredPosts.includes(p));

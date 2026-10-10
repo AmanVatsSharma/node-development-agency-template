@@ -2,7 +2,7 @@
  * @fileoverview
  * File-based blog system.
  *
- * Source: content/blog/*.md
+ * Source: content/blog/*.md merged with the BlogPost table (database wins on slug).
  *
  * Each blog post is a Markdown file with YAML frontmatter:
  * ---
@@ -27,6 +27,9 @@ import matter from 'gray-matter';
 import { remark } from 'remark';
 import remarkGfm from 'remark-gfm';
 import remarkHtml from 'remark-html';
+import { cache } from 'react';
+import { fetchDbBlogRow, fetchDbBlogSummaries } from '@/app/lib/blogDb';
+import { dbRowToSummary, looksLikeHtml, mergeBlogSummaries } from '@/app/lib/blogMerge';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -217,13 +220,19 @@ async function renderMarkdownToHtml(markdown: string): Promise<string> {
 
 // ---------------------------------------------------------------------------
 // Public API
+//
+// Posts come from two sources that are merged by slug:
+//   1. content/blog/*.md  (git-versioned files)
+//   2. the BlogPost table (written by the admin blog editor)
+// When both define a slug the database copy wins. If the database is
+// unreachable the site serves the file-based posts only.
 // ---------------------------------------------------------------------------
 
 /**
- * Return all blog post summaries, sorted newest first. No HTML rendering.
+ * File-based summaries only (no database), newest first.
  * Excludes posts marked `draft: true` or `unlisted: true` in frontmatter.
  */
-export function getAllBlogPosts(): BlogPostSummary[] {
+function getAllFileBlogPosts(): BlogPostSummary[] {
   const filenames = readBlogDirectorySafely();
   const posts: BlogPost[] = [];
 
@@ -240,7 +249,7 @@ export function getAllBlogPosts(): BlogPostSummary[] {
     return bTime - aTime;
   });
 
-  console.log('[Blog] getAllBlogPosts', {
+  console.log('[Blog] getAllFileBlogPosts', {
     total: posts.length,
     visible: sortedPosts.length,
     hidden: posts.length - sortedPosts.length,
@@ -264,27 +273,52 @@ export function getAllBlogPosts(): BlogPostSummary[] {
 }
 
 /**
- * Return slugs for generateStaticParams. Excludes draft and unlisted posts
- * so they are not pre-rendered and don't appear in the sitemap.
+ * All public post summaries (files + database), newest first.
+ * Memoized per request with React's cache(): every route in this app renders
+ * dynamically (the root layout reads headers), so without this the list,
+ * related posts and sitemap would each hit the database separately.
  */
-export function getBlogPostSlugs(): string[] {
-  return readBlogDirectorySafely()
-    .map((filename) => parseFrontmatterFromFile(filename))
-    .filter((post): post is BlogPost => post !== null)
-    .filter((post) => !post.draft && !post.unlisted)
-    .map((post) => post.slug)
-    .filter((slug) => isValidSlug(slug));
+export const getAllBlogPosts = cache(async (): Promise<BlogPostSummary[]> => {
+  const filePosts = getAllFileBlogPosts();
+  const dbPosts = await fetchDbBlogSummaries();
+  const merged = mergeBlogSummaries(filePosts, dbPosts);
+  console.log('[Blog] getAllBlogPosts (merged)', {
+    files: filePosts.length,
+    database: dbPosts.length,
+    merged: merged.length,
+  });
+  return merged;
+});
+
+/** Slugs for generateStaticParams and the sitemap (files + database). */
+export async function getBlogPostSlugs(): Promise<string[]> {
+  return (await getAllBlogPosts()).map((post) => post.slug);
 }
 
 /**
  * Return a single blog post by slug, with rendered HTML.
- * Returns null if not found. Draft/unlisted posts return null too.
+ * Database copy wins over the file copy. Returns null if not found; draft and
+ * unlisted file posts return null too.
+ * Memoized per request with React's cache(): metadata, structured data and the
+ * page all ask for the same post and should share one database lookup.
  */
-export async function getBlogPost(slug: string): Promise<BlogPost | null> {
+export const getBlogPost = cache(async (slug: string): Promise<BlogPost | null> => {
   const normalizedSlug = slug.trim().toLowerCase();
   if (!isValidSlug(normalizedSlug)) {
     console.warn('[Blog] getBlogPost received invalid slug', { slug });
     return null;
+  }
+
+  const dbRow = await fetchDbBlogRow(normalizedSlug);
+  const dbSummary = dbRow ? dbRowToSummary(dbRow) : null;
+  if (dbRow && dbSummary) {
+    return {
+      ...dbSummary,
+      contentMarkdown: dbRow.content,
+      contentHtml: looksLikeHtml(dbRow.content)
+        ? dbRow.content
+        : await renderMarkdownToHtml(dbRow.content),
+    };
   }
 
   const filename = `${normalizedSlug}.md`;
@@ -301,19 +335,19 @@ export async function getBlogPost(slug: string): Promise<BlogPost | null> {
 
   post.contentHtml = await renderMarkdownToHtml(post.contentMarkdown);
   return post;
-}
+});
 
 /**
  * Return up to `limit` related blog posts in the same category,
  * excluding the given slug.
  */
-export function getRelatedBlogPosts(
+export async function getRelatedBlogPosts(
   category: string,
   excludeSlug?: string,
   limit: number = 3,
-): BlogPostSummary[] {
+): Promise<BlogPostSummary[]> {
   const normalizedCategory = category.toLowerCase();
-  const allPosts = getAllBlogPosts();
+  const allPosts = await getAllBlogPosts();
 
   const sameCategory = allPosts.filter(
     (post) => post.category === normalizedCategory && post.slug !== excludeSlug,
@@ -330,11 +364,9 @@ export function getRelatedBlogPosts(
   return [...sameCategory, ...others].slice(0, limit);
 }
 
-/**
- * Return all unique categories (for filter UIs / sitemap, etc.)
- */
-export function getAllBlogCategories(): string[] {
-  const allPosts = getAllBlogPosts();
+/** All unique categories (for filter UIs). */
+export async function getAllBlogCategories(): Promise<string[]> {
+  const allPosts = await getAllBlogPosts();
   const categorySet = new Set<string>();
   allPosts.forEach((post) => categorySet.add(post.category));
   return Array.from(categorySet).sort();

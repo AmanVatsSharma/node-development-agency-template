@@ -52,7 +52,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
  * get instant static responses. Essential for SEO and crawl efficiency.
  */
 export async function generateStaticParams() {
-  const slugs = getBlogPostSlugs();
+  const slugs = await getBlogPostSlugs();
   console.log('[Blog] generateStaticParams', { count: slugs.length });
   return slugs.map((slug) => ({ slug }));
 }
@@ -74,7 +74,7 @@ export default async function BlogPostPage({ params }: PageProps) {
     notFound();
   }
 
-  const relatedPosts = getRelatedBlogPosts(post.category, post.slug, 3);
+  const relatedPosts = await getRelatedBlogPosts(post.category, post.slug, 3);
   const serviceLink = getCategoryServiceLink(post.category);
 
   const postUrl = `${SEO_SITE_URL}/pages/blog/${post.slug}`;

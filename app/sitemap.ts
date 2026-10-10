@@ -3,7 +3,6 @@ import { getAllBlogPosts } from '@/app/lib/blog';
 import { getStaticSeoRoutes } from '@/app/lib/seo/routes';
 import { toAbsoluteSeoUrl } from '@/app/lib/seo/constants';
 import { getRouteLastModified } from '@/app/lib/seo/lastmod';
-import prisma from '@/app/lib/prisma';
 
 type DynamicBlogEntry = {
   slug: string;
@@ -134,39 +133,16 @@ function mergeDuplicateSitemapEntry(
 const BLOG_DETAIL_PRIORITY = 0.78;
 
 async function getBlogEntries(): Promise<DynamicBlogEntry[]> {
-  const fallbackBlogPosts = getAllBlogPosts();
-  const staticFallback: DynamicBlogEntry[] = fallbackBlogPosts.map((post) => ({
+  // getAllBlogPosts() already merges markdown files with database posts and
+  // never throws, so every published post is listed regardless of source.
+  const posts = await getAllBlogPosts();
+  const entries: DynamicBlogEntry[] = posts.map((post) => ({
     slug: post.slug,
-    updatedAt: new Date(post.publishedAt),
+    updatedAt: new Date(post.updatedAt ?? post.publishedAt),
   }));
-
-  let dbEntries: DynamicBlogEntry[] | null = null;
-
-  try {
-    const rows = await prisma.blogPost.findMany({
-      select: { slug: true, updatedAt: true },
-      orderBy: { updatedAt: 'desc' },
-    });
-    const normalized = normalizeAndFilterBlogEntries(rows, 'database');
-
-    if (normalized.length === 0) {
-      console.warn('[SEO] Database blog entries were invalid for sitemap. Falling back to static data.');
-      const fallbackNormalized = normalizeAndFilterBlogEntries(staticFallback, 'fallback');
-      console.log('[SEO] Sitemap blog entries loaded from static fallback', { count: fallbackNormalized.length });
-      return fallbackNormalized;
-    }
-
-    dbEntries = normalized;
-    console.log('[SEO] Sitemap blog entries loaded from database', { count: dbEntries.length });
-    return dbEntries;
-  } catch (error) {
-    console.error('[SEO] Failed to load blog posts from database for sitemap. Falling back to static data.', {
-      error: error instanceof Error ? error.message : String(error),
-    });
-    const fallbackNormalized = normalizeAndFilterBlogEntries(staticFallback, 'fallback');
-    console.log('[SEO] Sitemap blog entries loaded from static fallback', { count: fallbackNormalized.length });
-    return fallbackNormalized;
-  }
+  const normalized = normalizeAndFilterBlogEntries(entries, 'filesystem');
+  console.log('[SEO] Sitemap blog entries loaded', { count: normalized.length });
+  return normalized;
 }
 
 // ---------------------------------------------------------------------------

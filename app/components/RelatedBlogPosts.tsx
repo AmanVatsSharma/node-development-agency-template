@@ -24,12 +24,12 @@ interface RelatedBlogPostsProps {
  * between commercial content and informational content — important for
  * topical authority and SEO.
  */
-export function RelatedBlogPosts({
+export async function RelatedBlogPosts({
   category,
   heading = 'Related Insights from Our Blog',
   limit = 3,
 }: RelatedBlogPostsProps) {
-  const posts = getRelatedBlogPosts(category, undefined, limit);
+  const posts = await getRelatedBlogPosts(category, undefined, limit);
 
   if (posts.length === 0) return null;
 

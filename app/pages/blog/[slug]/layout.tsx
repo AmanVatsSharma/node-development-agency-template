@@ -7,7 +7,6 @@ import {
 import { companyProfile } from '@/app/data/companyProfile';
 import { SEO_SITE_URL, toAbsoluteSeoUrl } from '@/app/lib/seo/constants';
 import { getBlogPost } from '@/app/lib/blog';
-import prisma from '@/app/lib/prisma';
 
 interface BlogSlugLayoutProps {
   children: React.ReactNode;
@@ -47,24 +46,23 @@ function humanizeSlug(slug: string): string {
 }
 
 /**
- * Dynamic metadata per blog post. Reads from the filesystem-backed blog
- * system (content/blog/*.md). No DB dependency.
+ * Dynamic metadata per blog post. Reads from the merged blog source
+ * (markdown files + admin-written database posts, database wins on slug).
  */
 export async function generateMetadata({ params }: BlogSlugMetadataParams): Promise<Metadata> {
   const { slug: rawSlug } = await params;
   const normalizedSlug = normalizeBlogSlugForMetadata(rawSlug);
 
   try {
-    const dbPost = await prisma.blogPost.findUnique({ where: { slug: normalizedSlug } });
-    const post = dbPost ?? await getBlogPost(normalizedSlug);
+    const post = await getBlogPost(normalizedSlug);
     if (post) {
-      const title = (dbPost as { title?: string } | null)?.title ?? (post as { title?: string }).title ?? normalizedSlug;
-      const excerpt = (dbPost as { excerpt?: string } | null)?.excerpt ?? (post as { excerpt?: string }).excerpt ?? '';
-      const image = (dbPost as { image?: string | null } | null)?.image ?? (post as { image?: string }).image ?? '/og-default.jpg';
-      const tags = (post as { tags?: string[] }).tags ?? [];
-      const category = (post as { category?: string }).category ?? '';
+      const title = post.title;
+      const excerpt = post.excerpt;
+      const image = post.image ?? '/og-default.jpg';
+      const tags = post.tags;
+      const category = post.category;
       console.log('[SEO] Blog slug metadata generated', {
-        source: dbPost ? 'database' : 'filesystem',
+        source: 'merged',
         requestedSlug: rawSlug,
         canonicalSlug: normalizedSlug,
       });

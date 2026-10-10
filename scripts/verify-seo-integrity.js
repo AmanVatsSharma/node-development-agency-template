@@ -1479,8 +1479,9 @@ function verifySitemapImplementationInvariants() {
       reason: 'sitemap output should be sorted deterministically',
     },
     {
-      pattern: /fallbackBlogPosts/,
-      reason: 'sitemap should keep blog fallback source for DB outage scenarios',
+      pattern: /await getAllBlogPosts\(\)/,
+      reason:
+        'sitemap should load blog entries via getAllBlogPosts(), which merges markdown files with database posts and falls back to files when the database is unavailable',
     },
     {
       pattern: /const BLOG_SLUG_PATTERN = \/\^\[a-z0-9\]\+\(\?:-\[a-z0-9\]\+\)\*\$\/;/,
@@ -1499,20 +1500,8 @@ function verifySitemapImplementationInvariants() {
       reason: 'sitemap should resolve duplicate URL conflicts through explicit merge policy',
     },
     {
-      pattern: /prisma\.blogPost\.findMany\(/,
-      reason: 'sitemap should load dynamic blog entries via prisma.blogPost.findMany()',
-    },
-    {
-      pattern: /select:\s*\{[\s\S]*slug:\s*true[\s\S]*updatedAt:\s*true[\s\S]*\}/,
-      reason: 'sitemap blog query should select slug + updatedAt fields for stable URL/date output',
-    },
-    {
-      pattern: /orderBy:\s*\{[\s\S]*updatedAt:\s*['"`]desc['"`][\s\S]*\}/,
-      reason: 'sitemap blog query should keep updatedAt descending order for deterministic selection',
-    },
-    {
-      pattern: /fallbackBlogPosts\.map\(\(post\)\s*=>\s*\(\{[\s\S]*slug:\s*post\.slug[\s\S]*updatedAt:\s*new Date\(post\.publishedAt\)[\s\S]*\}\)\)/,
-      reason: 'sitemap fallback entries should derive slug and updatedAt from fallback blog post data',
+      pattern: /posts\.map\(\(post\)\s*=>\s*\(\{[\s\S]*slug:\s*post\.slug[\s\S]*updatedAt:\s*new Date\(post\.updatedAt \?\? post\.publishedAt\)[\s\S]*\}\)\)/,
+      reason: 'sitemap blog entries should derive slug and lastmod (updatedAt, else publishedAt) from the merged blog post data',
     },
     {
       pattern: /toAbsoluteSeoUrl\(`\/pages\/blog\/\$\{entry\.slug\}`\)/,
@@ -1535,22 +1524,8 @@ function verifySitemapImplementationInvariants() {
       reason: 'sitemap should retain filtered-entry diagnostics for malformed slug/date data',
     },
     {
-      pattern:
-        /console\.warn\([\s\S]*'\[SEO\] Database blog entries were invalid for sitemap\. Falling back to static data\.'/,
-      reason: 'sitemap should retain fallback warning when database entries are unusable for sitemap output',
-    },
-    {
-      pattern:
-        /console\.error\('\[SEO\] Failed to load blog posts from database for sitemap\. Falling back to static data\.'/,
-      reason: 'sitemap should retain explicit database-failure fallback error logging for operational debugging',
-    },
-    {
-      pattern: /console\.log\('\[SEO\] Sitemap blog entries loaded from database'/,
-      reason: 'sitemap should retain database-source entry count logging',
-    },
-    {
-      pattern: /console\.log\('\[SEO\] Sitemap blog entries loaded from static fallback'/,
-      reason: 'sitemap should retain static-fallback entry count logging',
+      pattern: /console\.log\('\[SEO\] Sitemap blog entries loaded'/,
+      reason: 'sitemap should retain blog entry count logging',
     },
     {
       pattern: /console\.log\('\[SEO\] Sitemap generated'/,
@@ -1586,12 +1561,21 @@ function verifySitemapImplementationInvariants() {
     },
   ];
 
-  const violations = requiredPatterns
-    .filter(({ pattern }) => !pattern.test(sitemapContent))
-    .map(({ reason }) => ({
-      file: path.relative(ROOT_DIR, SITEMAP_FILE),
-      reason,
-    }));
+  const forbiddenPatterns = [
+    {
+      pattern: /from '@\/app\/lib\/prisma'|prisma\.blogPost/,
+      reason:
+        'sitemap must not query the database directly; blog entries must come from getAllBlogPosts() so markdown and database posts cannot diverge (database-failure fallback lives in app/lib/blogDb.ts)',
+    },
+  ];
+
+  const violations = [
+    ...requiredPatterns.filter(({ pattern }) => !pattern.test(sitemapContent)),
+    ...forbiddenPatterns.filter(({ pattern }) => pattern.test(sitemapContent)),
+  ].map(({ reason }) => ({
+    file: path.relative(ROOT_DIR, SITEMAP_FILE),
+    reason,
+  }));
 
   if (violations.length > 0) {
     logError('Sitemap implementation invariant check failed', { violations });
@@ -1707,8 +1691,9 @@ function verifyBlogSlugMetadataImplementationInvariants() {
       reason: 'Blog slug metadata should canonicalize dynamic path using normalized slug value',
     },
     {
-      pattern: /prisma\.blogPost\.findUnique[\s\S]*where:\s*\{\s*slug:\s*normalizedSlug\s*\}/,
-      reason: 'Blog slug metadata should attempt database-backed lookup using normalized slug',
+      pattern: /await getBlogPost\(normalizedSlug\)/,
+      reason:
+        'Blog slug metadata should resolve the post (database first, then markdown) via getBlogPost() using the normalized slug',
     },
     {
       pattern: /post\.excerpt/,
@@ -1737,6 +1722,84 @@ function verifyBlogSlugMetadataImplementationInvariants() {
   }
 
   logInfo('Blog slug metadata implementation invariant check passed');
+  return { passed: true, violations: [] };
+}
+
+/**
+ * The public blog merges markdown files with admin-written database posts.
+ * The database-outage fallback (and its logging) lives in app/lib/blogDb.ts
+ * and the merge policy in app/lib/blog.ts, so those are the files guarded here.
+ */
+function verifyBlogDataSourceInvariants() {
+  const targets = [
+    {
+      file: path.join(APP_DIR, 'lib', 'blogDb.ts'),
+      requiredPatterns: [
+        {
+          pattern: /prisma\.blogPost\.findMany\(/,
+          reason: 'blog data layer should load database posts via prisma.blogPost.findMany()',
+        },
+        {
+          pattern: /prisma\.blogPost\.findUnique\(/,
+          reason: 'blog data layer should look up a single database post via prisma.blogPost.findUnique()',
+        },
+        {
+          pattern: /withTimeout\(/,
+          reason: 'database calls should be time-bounded so a slow or suspended database cannot block page rendering',
+        },
+        {
+          pattern: /serving file-based posts only/,
+          reason: 'blog data layer should log explicit database-failure fallback for operational debugging',
+        },
+        {
+          pattern: /return \[\];/,
+          reason: 'blog list lookup should fall back to an empty database result (files only) on failure',
+        },
+        {
+          pattern: /return null;/,
+          reason: 'blog single lookup should fall back to null (file lookup) on failure',
+        },
+      ],
+    },
+    {
+      file: path.join(APP_DIR, 'lib', 'blog.ts'),
+      requiredPatterns: [
+        {
+          pattern: /mergeBlogSummaries\(filePosts,\s*dbPosts\)/,
+          reason: 'blog library should merge markdown file posts with database posts by slug',
+        },
+        {
+          pattern: /await fetchDbBlogRow\(/,
+          reason: 'getBlogPost should consult the database before the markdown file (database wins on slug)',
+        },
+        {
+          pattern: /console\.log\('\[Blog\] getAllBlogPosts \(merged\)'/,
+          reason: 'blog library should log merged post counts (files/database/merged) for operational visibility',
+        },
+      ],
+    },
+  ];
+
+  const violations = [];
+  for (const { file, requiredPatterns } of targets) {
+    if (!fs.existsSync(file)) {
+      violations.push({ file: path.relative(ROOT_DIR, file), reason: 'blog data source file is missing' });
+      continue;
+    }
+    const content = fs.readFileSync(file, 'utf8');
+    for (const { pattern, reason } of requiredPatterns) {
+      if (!pattern.test(content)) {
+        violations.push({ file: path.relative(ROOT_DIR, file), reason });
+      }
+    }
+  }
+
+  if (violations.length > 0) {
+    logError('Blog data source invariant check failed', { violations });
+    return { passed: false, violations };
+  }
+
+  logInfo('Blog data source invariant check passed');
   return { passed: true, violations: [] };
 }
 
@@ -2039,6 +2102,7 @@ function main() {
     verifyRootStructuredDataWiring(),
     verifyStructuredDataComponentInvariants(),
     verifyBlogSlugMetadataImplementationInvariants(),
+    verifyBlogDataSourceInvariants(),
     verifySeoRuntimeScriptInvariants(),
     verifyLegacyFilesRemoved(),
   ];

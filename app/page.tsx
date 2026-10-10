@@ -176,7 +176,7 @@ function BlogCard({ post }: { post: BlogPostSummary }) {
 
 // ── Page ──────────────────────────────────────────────────────────────────────
 export default async function Home() {
-  const featuredPosts = getAllBlogPosts()
+  const featuredPosts = (await getAllBlogPosts())
     .filter((p) => p.featured)
     .slice(0, 3);
 
