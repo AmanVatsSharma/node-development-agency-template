@@ -16,7 +16,14 @@ npm run build:wasm       # Build Rust WASM module (hero-sim-wasm) — optional s
 npm run lint             # ESLint via next lint
 
 # Testing
-npm test                 # Run Jest test suite
+npm test                 # Run Jest test suite (jest.config.mjs, uses next/jest)
+
+# Blog content audit (frontmatter, broken images/links, thin content)
+npx tsx scripts/audit-blog.ts
+
+# Prisma/tsx scripts do not read .env.local — load it explicitly:
+#   npx dotenv-cli -e .env.local -- <command>
+# (prisma/.env is tracked and holds a stale URL; do not rely on it)
 
 # Database
 npm run db:migrate       # Run Prisma migrations (dev)
@@ -79,6 +86,10 @@ instrumentation.ts    — Next.js instrumentation hook
 **Admin route detection** (`app/layout.tsx`): Middleware sets an `x-pathname` response header on every request. The root layout reads this header to decide whether to render the site header/footer (skipped for `/admin/*`).
 
 **Company identity** (`app/data/companyProfile.ts`): All brand names, legal identifiers (CIN/GST), social links, and contact info flow from this one file into UI components, SEO metadata, and JSON-LD structured data. Update here, not in scattered components.
+
+**Blog** (`app/lib/blog.ts`): public posts are `content/blog/*.md` merged with admin-written `BlogPost` rows (`app/lib/blogDb.ts`); the database wins on a slug collision, and if the database is slow or down the site serves the markdown files only. Unpublished markdown posts use `draft: true`. The sitemap and `/pages/blog` both go through `getAllBlogPosts()`.
+
+**Founder / Team** (`app/data/founder.ts`): founder copy for `/pages/founder`, `/pages/team`, the About card and the seeds. Name/title come from `companyProfile.ts`. The team grid reads active `TeamMember` rows and falls back to the founder if the database is unreachable. Seeds create real people only — add teammates in `/admin/team`.
 
 **SEO metadata** (`app/lib/seo/`): `constants.ts` exports `SEO_SITE_URL` (resolved from `NEXT_PUBLIC_SITE_URL` → `NEXT_PUBLIC_APP_URL` → company profile URL). Use `toAbsoluteSeoUrl()` to build absolute URLs for OG images and canonicals.
 
